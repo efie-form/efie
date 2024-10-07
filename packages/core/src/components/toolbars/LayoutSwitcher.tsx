@@ -1,6 +1,6 @@
-import {FaMobileScreen, FaDesktop} from 'react-icons/fa6';
-import {useState} from 'react';
-import cn from '../../lib/cn.ts';
+import { FaDesktop, FaMobileScreen } from 'react-icons/fa6';
+import { useState } from 'react';
+import { cn } from '../../lib/utils.ts';
 
 function LayoutSwitcher() {
   const [isMobile, setIsMobile] = useState(false);

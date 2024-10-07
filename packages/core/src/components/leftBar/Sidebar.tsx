@@ -1,10 +1,9 @@
-import {HiMiniSquaresPlus} from 'react-icons/hi2';
-import {TiFlowMerge} from 'react-icons/ti';
-import {LuListTree} from 'react-icons/lu';
-import {useState} from 'react';
-import cn from '../../lib/cn.ts';
-import {fieldGroup} from '../../lib/fields.ts';
+import { HiMiniSquaresPlus } from 'react-icons/hi2';
+import { TiFlowMerge } from 'react-icons/ti';
+import { LuListTree } from 'react-icons/lu';
+import { useState } from 'react';
 import FieldsTab from './tabs/FieldsTab.tsx';
+import { cn } from '../../lib/utils.ts';
 
 const tabs = [
   {
