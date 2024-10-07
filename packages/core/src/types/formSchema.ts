@@ -130,12 +130,17 @@ export interface FormFieldVideo {
   };
 }
 
-export interface FormFieldColumns {
+export interface FormFieldRow {
   id: string;
-  type: 'columns';
+  type: 'row';
+  children: FormFieldColumn[];
+}
+
+export interface FormFieldColumn {
+  id: string;
+  type: 'column';
   props: {
-    columns: number;
-    order: string[][];
+    width: number;
   };
   children: FormField[];
 }
@@ -161,7 +166,8 @@ export type FormField =
   | FormFieldParagraph
   | FormFieldImage
   | FormFieldVideo
-  | FormFieldColumns
+  | FormFieldRow
+  | FormFieldColumn
   | FormFieldBlock;
 
 export type FormFieldType = FormField['type'];

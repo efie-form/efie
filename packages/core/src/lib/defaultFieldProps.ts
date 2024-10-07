@@ -1,7 +1,7 @@
 import type {
   FormField,
   FormFieldBlock,
-  FormFieldColumns,
+  FormFieldColumn,
   FormFieldDate,
   FormFieldDateTime,
   FormFieldDivider,
@@ -130,11 +130,15 @@ const video: Omit<FormFieldVideo, 'id'> = {
   },
 };
 
-const columns: Omit<FormFieldColumns, 'id'> = {
-  type: 'columns',
+const row: Omit<FormFieldBlock, 'id'> = {
+  type: 'block',
+  children: [],
+};
+
+const column: Omit<FormFieldColumn, 'id'> = {
+  type: 'column',
   props: {
-    columns: 2,
-    order: [],
+    width: 100,
   },
   children: [],
 };
@@ -149,7 +153,8 @@ const defaultFieldProps = {
   longText,
   block,
   multipleChoice,
-  columns,
+  row,
+  column,
   date,
   dateTime,
   divider,

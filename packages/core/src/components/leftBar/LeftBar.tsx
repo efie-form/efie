@@ -24,7 +24,7 @@ const tabs = [
   },
 ];
 
-function Sidebar() {
+function LeftBar() {
   const [activeTab, setActiveTab] = useState(tabs[0].id);
   const TabContent = tabs.find((tab) => tab.id === activeTab)?.tab;
 
@@ -33,6 +33,7 @@ function Sidebar() {
       <div className="w-12 bg-neutral-100/40 h-full">
         {tabs.map((tab) => (
           <div
+            key={tab.id}
             className={cn(
               'p-3.5 hover:bg-neutral-200/30 cursor-pointer transition-all duration-100',
               {
@@ -52,4 +53,4 @@ function Sidebar() {
   );
 }
 
-export default Sidebar;
+export default LeftBar;

@@ -8,7 +8,7 @@ function FieldsTab() {
   return (
     <div className="px-4 py-2">
       {fieldGroup.map((group) => (
-        <div className="mb-4">
+        <div key={group.id} className="mb-4">
           <p className="text-neutral-700 text-lg">{group.label}</p>
           <div className="flex flex-col gap-1.5 mt-3">
             {group.children.map((field) => (

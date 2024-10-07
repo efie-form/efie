@@ -11,13 +11,15 @@ export default function useDropZone() {
   const { dragType, draggingNewFieldType } = useDragStore();
   const { getValues, setValue } = useFormContext<FormSchema>();
 
-  const dragOverHandler = useThrottle(() => {
+  const dragOverHandler = useThrottle((e: DragEvent<HTMLDivElement>) => {
     if (!isValidDropTarget()) return;
+    const parentId = findDropPosition(e.target);
+    console.log('dragOverHandler', parentId);
   }, 150);
 
   const onDragOver = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
-    dragOverHandler();
+    dragOverHandler(e);
   };
 
   const onDrop = (e: DragEvent<HTMLDivElement>) => {

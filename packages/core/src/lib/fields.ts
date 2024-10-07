@@ -1,23 +1,3 @@
-// type FieldType =
-//   | 'short-text'
-//   | 'long-text'
-//   | 'number'
-//   | 'single-choice'
-//   | 'multiple-choice'
-//   | 'date'
-//   | 'time'
-//   | 'datetime'
-//   | 'uploader'
-//   | 'button'
-//   | 'divider'
-//   | 'header'
-//   | 'paragraph'
-//   | 'image'
-//   | 'video'
-//   | 'columns'
-//   | 'block'
-//   | 'page';
-
 import type { ElementType } from 'react';
 import {
   LuCalendar,
@@ -135,7 +115,7 @@ export const fieldGroup: FieldGroup[] = [
     label: 'Layout',
     children: [
       {
-        type: 'columns',
+        type: 'column',
         label: 'Columns',
         Icon: HiOutlineViewColumns,
       },
