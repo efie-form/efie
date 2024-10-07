@@ -2,7 +2,6 @@ import useDropZone from '../lib/hooks/useDropZone.ts';
 import { useFormContext } from 'react-hook-form';
 import type { FormSchema } from '../types/formSchema.ts';
 import RenderField from './RenderField.tsx';
-import Placeholder from './Placeholder.tsx';
 
 function FormContent() {
   const dropZoneProps = useDropZone();
@@ -15,7 +14,6 @@ function FormContent() {
           {watch('form.fields').map((field) => (
             <RenderField field={field} key={field.id} />
           ))}
-          <Placeholder />
         </div>
       </div>
     </div>
