@@ -1,6 +1,12 @@
 import type { FormField } from '../types/formSchema.ts';
 import useMoveField from '../lib/hooks/useMoveField.ts';
-import { DATASET_FORM_FIELD } from '../lib/constant.ts';
+import {
+  DATASET_DROP_ZONE,
+  DATASET_FORM_FIELD,
+  DROP_ZONE_TYPE,
+} from '../lib/constant.ts';
+import ColumnsField from './fieldContents/ColumnsField.tsx';
+import RowField from './fieldContents/RowField.tsx';
 
 interface RenderFieldProps {
   field: FormField;
@@ -13,8 +19,11 @@ function RenderField({ field }: RenderFieldProps) {
     <>
       <div
         key={field.id}
-        className="p-4 border border-white hover:border-neutral-100 rounded-lg cursor-grab transform bg-white"
-        {...{ [DATASET_FORM_FIELD]: field.id }}
+        className="border border-white hover:border-neutral-100 rounded-lg cursor-grab transform bg-white"
+        {...{
+          [DATASET_FORM_FIELD]: field.id,
+          [DATASET_DROP_ZONE]: DROP_ZONE_TYPE.field,
+        }}
         {...registerProps(field.id)}
       >
         <FieldItem field={field} />
@@ -25,11 +34,15 @@ function RenderField({ field }: RenderFieldProps) {
 
 function FieldItem({ field }: RenderFieldProps) {
   switch (field.type) {
+    case 'row':
+      return <RowField field={field} />;
+    case 'column':
+      return <ColumnsField field={field} />;
     default:
       return (
-        <span>
+        <div className="px-4 py-2">
           {field.id} {field.type}
-        </span>
+        </div>
       );
   }
 }

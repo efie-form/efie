@@ -1,23 +1,36 @@
-import findNearestFieldId from './findNearestFieldId.ts';
-import { DATASET_FORM_FIELD } from './constant.ts';
+import findNearestField from './findNearestField.ts';
+import { DATASET_FORM_FIELD, DROP_ZONE_TYPE } from './constant.ts';
 
 export default function getDropPosition(e: EventTarget, position: 1 | -1) {
   if (!isHTMLElement(e)) return null;
-  const overFieldId = findNearestFieldId(e);
-  if (!overFieldId) return null;
-  const overFieldNode = document.querySelector(
-    `[${DATASET_FORM_FIELD}="${overFieldId}"]`
-  );
-  if (!overFieldNode) return null;
+  const nearestField = findNearestField(e);
+  if (!nearestField) return null;
+  const {
+    fieldId: overFieldId,
+    dropZoneType: overDropZoneType,
+    element: overFieldNode,
+  } = nearestField;
 
-  if (overFieldId === 'root') {
+  if (overDropZoneType === DROP_ZONE_TYPE.root) {
     // special case for handle root
-    return 'root';
+    return DROP_ZONE_TYPE.root;
+  }
+
+  if (overDropZoneType === DROP_ZONE_TYPE.emptyColumn) {
+    // special case for handle empty column
+    return {
+      dropZoneType: DROP_ZONE_TYPE.emptyColumn,
+      parentId: overFieldId,
+      index: 0,
+    };
   }
 
   // find parent field id
-  const parentId = findNearestFieldId(overFieldNode.parentElement);
+  const parentId = findNearestField(overFieldNode.parentElement);
   if (!parentId) return null;
+  const { fieldId: parentFieldId, dropZoneType: parentDropZoneType } = parentId;
+
+  if (!parentDropZoneType) return null;
 
   // list children but exclude placeholder/field to move itself if there is
   const parentNode = overFieldNode.parentNode;
@@ -35,7 +48,8 @@ export default function getDropPosition(e: EventTarget, position: 1 | -1) {
   const insertIndex = position === 1 ? overFieldIndex + 1 : overFieldIndex;
 
   return {
-    parentId,
+    parentId: parentFieldId,
+    dropZoneType: parentDropZoneType,
     index: insertIndex,
   };
 }

@@ -1,7 +1,7 @@
 import useThrottle from './useThrottle.ts';
 import type { DragEvent } from 'react';
 import { useDragStore } from '../state/drag.state.ts';
-import { DATASET_FORM_FIELD } from '../constant.ts';
+import { DATASET_DROP_ZONE, DROP_ZONE_TYPE } from '../constant.ts';
 import insertField from '../insertField.ts';
 import { useFormContext } from 'react-hook-form';
 import type { FormSchema } from '../../types/formSchema.ts';
@@ -17,10 +17,8 @@ export default function useDropZone() {
     if (!isValidDropTarget()) return;
     if (!isHTMLElement(e.target)) return;
     registerDragEvent(e);
-    if (dragType === 'new') {
-      const result = getDropPosition(e.target, direction);
-      console.log(result);
-    }
+    const result = getDropPosition(e.target, direction);
+    console.log(result);
   }, 150);
 
   const onDragOver = (e: DragEvent<HTMLDivElement>) => {
@@ -39,16 +37,16 @@ export default function useDropZone() {
         const newFields = insertField(
           getValues('form.fields'),
           draggingNewFieldType,
+          DROP_ZONE_TYPE.root,
           'root',
           getValues('form.fields').length
         );
         setValue('form.fields', newFields);
-      }
-
-      if (result !== 'root') {
+      } else {
         const newFields = insertField(
           getValues('form.fields'),
           draggingNewFieldType,
+          result.dropZoneType,
           result.parentId,
           result.index
         );
@@ -60,7 +58,7 @@ export default function useDropZone() {
   return {
     onDragOver,
     onDrop,
-    [DATASET_FORM_FIELD]: 'root',
+    [DATASET_DROP_ZONE]: DROP_ZONE_TYPE.root,
   };
 }
 

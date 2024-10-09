@@ -12,32 +12,39 @@ import type {
   FormFieldMultipleChoice,
   FormFieldNumber,
   FormFieldParagraph,
+  FormFieldRow,
   FormFieldShortText,
   FormFieldSingleChoice,
   FormFieldTime,
   FormFieldType,
   FormFieldVideo,
 } from '../types/formSchema.ts';
+import { generateId } from './utils.ts';
 
-const shortText: Omit<FormFieldShortText, 'id'> = {
+const ID_LENGTH = 10;
+
+const shortText = (): FormFieldShortText => ({
+  id: generateId(ID_LENGTH),
   type: 'shortText',
   props: {
     label: 'Short Text',
     placeholder: 'Enter the placeholder',
     required: false,
   },
-};
+});
 
-const longText: Omit<FormFieldLongText, 'id'> = {
+const longText = (): FormFieldLongText => ({
+  id: generateId(ID_LENGTH),
   type: 'longText',
   props: {
     label: 'Long Text',
     placeholder: 'Enter the placeholder',
     required: false,
   },
-};
+});
 
-const number: Omit<FormFieldNumber, 'id'> = {
+const number = (): FormFieldNumber => ({
+  id: generateId(ID_LENGTH),
   type: 'number',
   props: {
     label: 'Number',
@@ -46,107 +53,138 @@ const number: Omit<FormFieldNumber, 'id'> = {
     min: null,
     max: null,
   },
-};
+});
 
-const singleChoice: Omit<FormFieldSingleChoice, 'id'> = {
+const singleChoice = (): FormFieldSingleChoice => ({
+  id: generateId(ID_LENGTH),
   type: 'singleChoice',
   props: {
     label: 'Single Choice',
     options: [],
     required: false,
   },
-};
+});
 
-const multipleChoice: Omit<FormFieldMultipleChoice, 'id'> = {
+const multipleChoice = (): FormFieldMultipleChoice => ({
+  id: generateId(ID_LENGTH),
   type: 'multipleChoice',
   props: {
     label: 'Multiple Choice',
     options: [],
     required: false,
   },
-};
+});
 
-const date: Omit<FormFieldDate, 'id'> = {
+const date = (): FormFieldDate => ({
+  id: generateId(ID_LENGTH),
   type: 'date',
   props: {
     label: 'Date',
     required: false,
   },
-};
+});
 
-const time: Omit<FormFieldTime, 'id'> = {
+const time = (): FormFieldTime => ({
+  id: generateId(ID_LENGTH),
   type: 'time',
   props: {
     label: 'Time',
     required: false,
   },
-};
+});
 
-const dateTime: Omit<FormFieldDateTime, 'id'> = {
+const dateTime = (): FormFieldDateTime => ({
+  id: generateId(ID_LENGTH),
   type: 'dateTime',
   props: {
     label: 'Date & Time',
     required: false,
   },
-};
+});
 
-const file: Omit<FormFieldFile, 'id'> = {
+const file = (): FormFieldFile => ({
+  id: generateId(ID_LENGTH),
   type: 'file',
   props: {
     label: 'File',
     required: false,
   },
-};
+});
 
-const divider: Omit<FormFieldDivider, 'id'> = {
+const divider = (): FormFieldDivider => ({
+  id: generateId(ID_LENGTH),
   type: 'divider',
-};
+});
 
-const header: Omit<FormFieldHeader, 'id'> = {
+const header = (): FormFieldHeader => ({
+  id: generateId(ID_LENGTH),
   type: 'header',
   props: {
     value: 'Header',
   },
-};
+});
 
-const paragraph: Omit<FormFieldParagraph, 'id'> = {
+const paragraph = (): FormFieldParagraph => ({
+  id: generateId(ID_LENGTH),
   type: 'paragraph',
   props: {
     value: 'Paragraph',
   },
-};
+});
 
-const image: Omit<FormFieldImage, 'id'> = {
+const image = (): FormFieldImage => ({
+  id: generateId(ID_LENGTH),
   type: 'image',
   props: {
     src: '',
   },
-};
+});
 
-const video: Omit<FormFieldVideo, 'id'> = {
+const video = (): FormFieldVideo => ({
+  id: generateId(ID_LENGTH),
   type: 'video',
   props: {
     src: '',
   },
-};
+});
 
-const row: Omit<FormFieldBlock, 'id'> = {
-  type: 'block',
-  children: [],
-};
+const row = (): FormFieldRow => ({
+  id: generateId(ID_LENGTH),
+  type: 'row',
+  children: [
+    {
+      id: generateId(ID_LENGTH),
+      type: 'column',
+      props: {
+        width: 50,
+      },
+      children: [],
+    },
+    {
+      id: generateId(ID_LENGTH),
+      type: 'column',
+      props: {
+        width: 50,
+      },
+      children: [],
+    },
+  ],
+});
 
-const column: Omit<FormFieldColumn, 'id'> = {
+const column = (): FormFieldColumn => ({
+  id: generateId(ID_LENGTH),
   type: 'column',
   props: {
     width: 100,
   },
   children: [],
-};
+});
 
-const block: Omit<FormFieldBlock, 'id'> = {
+const block = (): FormFieldBlock => ({
+  id: generateId(ID_LENGTH),
   type: 'block',
   children: [],
-};
+});
 
 const defaultFieldProps = {
   shortText,
@@ -166,6 +204,6 @@ const defaultFieldProps = {
   singleChoice,
   time,
   video,
-} satisfies Record<FormFieldType, Omit<FormField, 'id'>>;
+} satisfies Record<FormFieldType, () => FormField>;
 
 export default defaultFieldProps;

@@ -19,7 +19,7 @@ function FormBuilder() {
           <FormContent />
         </div>
       </div>
-      <div className="min-w-[20rem] bg-neutral-50 overflow-hidden">
+      <div className="w-[20rem] bg-neutral-50 overflow-hidden">
         <div className="h-full overflow-scroll">
           <RightBar />
         </div>

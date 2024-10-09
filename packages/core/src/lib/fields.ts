@@ -115,8 +115,8 @@ export const fieldGroup: FieldGroup[] = [
     label: 'Layout',
     children: [
       {
-        type: 'column',
-        label: 'Columns',
+        type: 'row',
+        label: 'Row',
         Icon: HiOutlineViewColumns,
       },
       {
