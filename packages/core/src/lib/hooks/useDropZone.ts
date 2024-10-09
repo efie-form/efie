@@ -7,9 +7,16 @@ import { useFormContext } from 'react-hook-form';
 import type { FormSchema } from '../../types/formSchema.ts';
 import getDropPosition from '../getDropPosition.ts';
 import useDragDirection from './useDragDirection.ts';
+import moveField from '../moveFiels.ts';
 
 export default function useDropZone() {
-  const { dragType, draggingNewFieldType } = useDragStore();
+  const {
+    dragType,
+    draggingNewFieldType,
+    movingFieldId,
+    setDragType,
+    setMovingFieldId,
+  } = useDragStore();
   const { getValues, setValue } = useFormContext<FormSchema>();
   const { registerDragEvent, direction } = useDragDirection();
 
@@ -17,7 +24,7 @@ export default function useDropZone() {
     if (!isValidDropTarget()) return;
     if (!isHTMLElement(e.target)) return;
     registerDragEvent(e);
-    const result = getDropPosition(e.target, direction);
+    const result = getDropPosition(e.target, direction, movingFieldId);
     console.log(result);
   }, 150);
 
@@ -29,30 +36,32 @@ export default function useDropZone() {
   const onDrop = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     if (!isValidDropTarget()) return;
-    if (dragType === 'new' && draggingNewFieldType) {
-      const result = getDropPosition(e.target, direction);
-      if (!result) return;
+    const result = getDropPosition(e.target, direction, movingFieldId);
+    if (!result) return;
 
-      if (result === 'root') {
-        const newFields = insertField(
-          getValues('form.fields'),
-          draggingNewFieldType,
-          DROP_ZONE_TYPE.root,
-          'root',
-          getValues('form.fields').length
-        );
-        setValue('form.fields', newFields);
-      } else {
-        const newFields = insertField(
-          getValues('form.fields'),
-          draggingNewFieldType,
-          result.dropZoneType,
-          result.parentId,
-          result.index
-        );
-        setValue('form.fields', newFields);
-      }
+    if (dragType === 'new' && draggingNewFieldType) {
+      const newFields = insertField(
+        getValues('form.fields'),
+        draggingNewFieldType,
+        result.dropZoneType,
+        result.parentId,
+        result.index
+      );
+      setValue('form.fields', newFields);
     }
+
+    if (dragType === 'move' && movingFieldId) {
+      const newFields = moveField(
+        getValues('form.fields'),
+        movingFieldId,
+        result.parentId,
+        result.index
+      );
+      setValue('form.fields', newFields);
+    }
+
+    setDragType(null);
+    setMovingFieldId(null);
   };
 
   return {

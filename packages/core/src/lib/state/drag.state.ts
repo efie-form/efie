@@ -6,6 +6,8 @@ interface DragState {
   draggingNewFieldType: FormFieldType | null;
   setDragType: (dragType: DragState['dragType']) => void;
   setDraggingNewFieldType: (type: DragState['draggingNewFieldType']) => void;
+  movingFieldId: string | null;
+  setMovingFieldId: (id: DragState['movingFieldId']) => void;
 }
 
 export const useDragStore = create<DragState>((set) => ({
@@ -16,5 +18,9 @@ export const useDragStore = create<DragState>((set) => ({
   },
   setDraggingNewFieldType: (type) => {
     set({ draggingNewFieldType: type });
+  },
+  movingFieldId: null,
+  setMovingFieldId: (id) => {
+    set({ movingFieldId: id });
   },
 }));

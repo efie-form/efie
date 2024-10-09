@@ -10,9 +10,10 @@ import RowField from './fieldContents/RowField.tsx';
 
 interface RenderFieldProps {
   field: FormField;
+  disableDrag?: boolean;
 }
 
-function RenderField({ field }: RenderFieldProps) {
+function RenderField({ field, disableDrag }: RenderFieldProps) {
   const { registerProps } = useMoveField();
 
   return (
@@ -24,7 +25,9 @@ function RenderField({ field }: RenderFieldProps) {
           [DATASET_FORM_FIELD]: field.id,
           [DATASET_DROP_ZONE]: DROP_ZONE_TYPE.field,
         }}
-        {...registerProps(field.id)}
+        {...(!disableDrag && {
+          ...registerProps(field.id),
+        })}
       >
         <FieldItem field={field} />
       </div>

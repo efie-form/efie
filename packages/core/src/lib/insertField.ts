@@ -14,9 +14,6 @@ export default function insertField(
     return fields;
   }
 
-  if (dropZoneType === DROP_ZONE_TYPE.emptyColumn) {
-  }
-
   return findAndInsert(fields, type, parentId, index);
 }
 
