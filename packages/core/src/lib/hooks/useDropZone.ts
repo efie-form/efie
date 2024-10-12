@@ -1,5 +1,6 @@
 import useThrottle from './useThrottle.ts';
 import type { DragEvent } from 'react';
+import { useEffect, useState } from 'react';
 import { useDragStore } from '../state/drag.state.ts';
 import { DATASET_DROP_ZONE, DROP_ZONE_TYPE } from '../constant.ts';
 import insertField from '../insertField.ts';
@@ -8,6 +9,7 @@ import type { FormSchema } from '../../types/formSchema.ts';
 import getDropPosition from '../getDropPosition.ts';
 import useDragDirection from './useDragDirection.ts';
 import moveField from '../moveFiels.ts';
+import { displayPlaceholder } from '../displayPlaceholder.ts';
 
 export default function useDropZone() {
   const {
@@ -19,14 +21,34 @@ export default function useDropZone() {
   } = useDragStore();
   const { getValues, setValue } = useFormContext<FormSchema>();
   const { registerDragEvent, direction } = useDragDirection();
+  const [dragPosition, setDragPosition] =
+    useState<ReturnType<typeof getDropPosition>>(null);
 
   const dragOverHandler = useThrottle((e: DragEvent<HTMLDivElement>) => {
     if (!isValidDropTarget()) return;
     if (!isHTMLElement(e.target)) return;
     registerDragEvent(e);
     const result = getDropPosition(e.target, direction, movingFieldId);
-    console.log(result);
+    if (!result) return;
+
+    if (
+      dragPosition?.parentId !== result.parentId ||
+      dragPosition?.index !== result.index
+    ) {
+      setDragPosition(result);
+    }
   }, 150);
+
+  useEffect(() => {
+    if (!dragPosition) return;
+
+    displayPlaceholder(
+      getValues('form.fields'),
+      dragPosition.parentId,
+      dragPosition.index,
+      movingFieldId
+    );
+  }, [dragPosition]);
 
   const onDragOver = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();

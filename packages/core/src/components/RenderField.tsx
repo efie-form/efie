@@ -19,6 +19,7 @@ function RenderField({ field, disableDrag }: RenderFieldProps) {
   return (
     <>
       <div
+        id={field.id}
         key={field.id}
         className="border border-white hover:border-neutral-100 rounded-lg cursor-grab transform bg-white"
         {...{

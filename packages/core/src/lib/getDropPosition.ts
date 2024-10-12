@@ -29,7 +29,7 @@ export default function getDropPosition(
     return {
       dropZoneType: DROP_ZONE_TYPE.root,
       parentId: null,
-      index: getRootNodeCount() - 1,
+      index: getRootNodeCount(),
     };
   }
 
@@ -67,8 +67,8 @@ export default function getDropPosition(
   const insertIndex = position === 1 ? overFieldIndex + 1 : overFieldIndex;
 
   return {
-    parentId: parentFieldId,
     dropZoneType: parentDropZoneType,
+    parentId: parentFieldId,
     index: insertIndex,
   };
 }

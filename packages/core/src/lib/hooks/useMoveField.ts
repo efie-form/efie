@@ -1,4 +1,5 @@
 import { useDragStore } from '../state/drag.state.ts';
+import { removePlaceholder } from '../displayPlaceholder.ts';
 
 function useMoveField() {
   const { setDragType, setMovingFieldId } = useDragStore();
@@ -6,6 +7,7 @@ function useMoveField() {
   const onDragEnd = () => {
     setDragType(null);
     setMovingFieldId(null);
+    removePlaceholder();
   };
 
   const registerProps = (id: string) => {
