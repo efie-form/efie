@@ -1,24 +1,4 @@
-// type FieldType =
-//   | 'short-text'
-//   | 'long-text'
-//   | 'number'
-//   | 'single-choice'
-//   | 'multiple-choice'
-//   | 'date'
-//   | 'time'
-//   | 'datetime'
-//   | 'uploader'
-//   | 'button'
-//   | 'divider'
-//   | 'header'
-//   | 'paragraph'
-//   | 'image'
-//   | 'video'
-//   | 'columns'
-//   | 'block'
-//   | 'page';
-
-import {ElementType} from 'react';
+import type { ElementType } from 'react';
 import {
   LuCalendar,
   LuCalendarClock,
@@ -26,15 +6,16 @@ import {
   LuFormInput,
   LuHash,
 } from 'react-icons/lu';
-import {BsTextareaResize} from 'react-icons/bs';
-import {RiPageSeparator, RiText} from 'react-icons/ri';
-import {MdCheckBox, MdRadioButtonChecked, MdUpload} from 'react-icons/md';
-import {RxDividerHorizontal, RxTextAlignCenter} from 'react-icons/rx';
-import {FaImage, FaVideo} from 'react-icons/fa6';
-import {HiOutlineViewColumns} from 'react-icons/hi2';
+import { BsTextareaResize } from 'react-icons/bs';
+import { RiPageSeparator, RiText } from 'react-icons/ri';
+import { MdCheckBox, MdRadioButtonChecked, MdUpload } from 'react-icons/md';
+import { RxDividerHorizontal, RxTextAlignCenter } from 'react-icons/rx';
+import { FaImage, FaVideo } from 'react-icons/fa6';
+import { HiOutlineViewColumns } from 'react-icons/hi2';
+import type { FormFieldType } from '../types/formSchema.ts';
 
 interface Field {
-  type: string;
+  type: FormFieldType;
   Icon: ElementType;
   label: string;
   disabled?: boolean;
@@ -48,16 +29,16 @@ interface FieldGroup {
 
 export const fieldGroup: FieldGroup[] = [
   {
-    id: 'fields',
-    label: 'Fields',
+    id: 'input',
+    label: 'Inputs',
     children: [
       {
-        type: 'short-text',
+        type: 'shortText',
         label: 'Short Text',
         Icon: LuFormInput,
       },
       {
-        type: 'long-text',
+        type: 'longText',
         label: 'Long Text',
         Icon: BsTextareaResize,
       },
@@ -67,12 +48,12 @@ export const fieldGroup: FieldGroup[] = [
         Icon: LuHash,
       },
       {
-        type: 'single-choice',
+        type: 'singleChoice',
         label: 'Single Choice',
         Icon: MdRadioButtonChecked,
       },
       {
-        type: 'multiple-choice',
+        type: 'multipleChoice',
         label: 'Multiple Choice',
         Icon: MdCheckBox,
       },
@@ -87,13 +68,13 @@ export const fieldGroup: FieldGroup[] = [
         Icon: LuClock,
       },
       {
-        type: 'datetime',
+        type: 'dateTime',
         label: 'Date & Time',
         Icon: LuCalendarClock,
       },
       {
-        type: 'uploader',
-        label: 'Uploader',
+        type: 'file',
+        label: 'File Upload',
         Icon: MdUpload,
       },
     ],
@@ -134,8 +115,8 @@ export const fieldGroup: FieldGroup[] = [
     label: 'Layout',
     children: [
       {
-        type: 'columns',
-        label: 'Columns',
+        type: 'row',
+        label: 'Row',
         Icon: HiOutlineViewColumns,
       },
       {

@@ -1,4 +1,4 @@
-import {FaRedo, FaUndo} from 'react-icons/fa';
+import { FaRedo, FaUndo } from 'react-icons/fa';
 import ToolbarButton from './ToolbarButton.tsx';
 
 function LeftToolbar() {

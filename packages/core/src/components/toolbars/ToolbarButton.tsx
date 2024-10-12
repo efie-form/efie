@@ -1,5 +1,5 @@
-import {ElementType} from 'react';
-import cn from '../../lib/cn.ts';
+import type { ElementType } from 'react';
+import { cn } from '../../lib/utils.ts';
 
 interface ToolbarButtonProps {
   /**
@@ -17,7 +17,7 @@ interface ToolbarButtonProps {
   disabled?: boolean;
 }
 
-function ToolbarButton({Icon, disabled}: ToolbarButtonProps) {
+function ToolbarButton({ Icon, disabled }: ToolbarButtonProps) {
   return (
     <button
       className={cn('p-2.5 transition-all', {
