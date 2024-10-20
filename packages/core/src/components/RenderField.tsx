@@ -7,14 +7,24 @@ import {
 } from '../lib/constant.ts';
 import ColumnsField from './fieldContents/ColumnsField.tsx';
 import RowField from './fieldContents/RowField.tsx';
+import { useSettingsStore } from '../lib/state/settings.state.ts';
+import type { MouseEvent } from 'react';
+import HeaderField from './fieldContents/HeaderField.tsx';
+import ParagraphField from './fieldContents/ParagraphField.tsx';
+import ShortTextField from './fieldContents/ShortTextField.tsx';
+import LongTextField from './fieldContents/LongTextField.tsx';
+import NumberField from './fieldContents/NumberField.tsx';
+import DividerField from './fieldContents/DividerField.tsx';
+import ImageField from './fieldContents/ImageField.tsx';
 
 interface RenderFieldProps {
   field: FormField;
-  disableDrag?: boolean;
+  noSelect?: boolean;
 }
 
-function RenderField({ field, disableDrag }: RenderFieldProps) {
+function RenderField({ field, noSelect }: RenderFieldProps) {
   const { registerProps } = useMoveField();
+  const { setSelectedFieldId } = useSettingsStore();
 
   return (
     <>
@@ -26,8 +36,12 @@ function RenderField({ field, disableDrag }: RenderFieldProps) {
           [DATASET_FORM_FIELD]: field.id,
           [DATASET_DROP_ZONE]: DROP_ZONE_TYPE.field,
         }}
-        {...(!disableDrag && {
+        {...(!noSelect && {
           ...registerProps(field.id),
+          onClick: (e: MouseEvent) => {
+            e.stopPropagation();
+            setSelectedFieldId(field.id);
+          },
         })}
       >
         <FieldItem field={field} />
@@ -42,6 +56,20 @@ function FieldItem({ field }: RenderFieldProps) {
       return <RowField field={field} />;
     case 'column':
       return <ColumnsField field={field} />;
+    case 'header':
+      return <HeaderField field={field} />;
+    case 'paragraph':
+      return <ParagraphField field={field} />;
+    case 'shortText':
+      return <ShortTextField field={field} />;
+    case 'longText':
+      return <LongTextField field={field} />;
+    case 'number':
+      return <NumberField field={field} />;
+    case 'divider':
+      return <DividerField field={field} />;
+    case 'image':
+      return <ImageField field={field} />;
     default:
       return (
         <div className="px-4 py-2">

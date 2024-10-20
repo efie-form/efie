@@ -1,7 +1,12 @@
-/** @type {import('tailwindcss').Config} */
+import type { Config } from 'tailwindcss';
+import { fontFamily } from 'tailwindcss/defaultTheme';
+
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
+    fontFamily: {
+      sans: ['Inter', ...fontFamily.sans],
+    },
     extend: {},
     colors: {
       white: '#FFFFFF',
@@ -32,7 +37,7 @@ export default {
     },
   },
   plugins: [],
-};
+} satisfies Config;
 
 function hexWithOpacity(hex) {
   return `rgb(from var(${hex}) r g b / <alpha-value>)`;

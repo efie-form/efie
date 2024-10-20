@@ -17,7 +17,7 @@ function RowField({ field }: RowFieldProps) {
               width: `${child.props.width}%`,
             }}
           >
-            <RenderField field={child} disableDrag />
+            <RenderField field={child} noSelect />
           </div>
         ))}
     </div>

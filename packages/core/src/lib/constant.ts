@@ -1,3 +1,5 @@
+import type { FormFieldType } from '../types/formSchema.ts';
+
 export const DATASET_FORM_FIELD = 'data-efie-field-id';
 
 export const DATASET_FIELD_TYPE = 'data-efie-field-type';
@@ -8,4 +10,30 @@ export const DROP_ZONE_TYPE = {
   root: 'root',
   emptyColumn: 'empty-column',
   field: 'field',
+} as const;
+
+export const FIELDS_NAME = {
+  shortText: 'Short Text',
+  video: 'Video',
+  time: 'Time',
+  singleChoice: 'Single Choice',
+  paragraph: 'Paragraph',
+  number: 'Number',
+  row: 'Row',
+  multipleChoices: 'Multiple Choices',
+  image: 'Image',
+  header: 'Header',
+  file: 'File Upload',
+  divider: 'Divider',
+  block: 'Block',
+  column: 'Column',
+  longText: 'Long Text',
+  date: 'Date',
+  dateTime: 'Date & Time',
+} satisfies Record<FormFieldType, string>;
+
+export const textAlignMap = {
+  left: 'start',
+  center: 'center',
+  right: 'end',
 } as const;

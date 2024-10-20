@@ -9,7 +9,7 @@ import type {
   FormFieldHeader,
   FormFieldImage,
   FormFieldLongText,
-  FormFieldMultipleChoice,
+  FormFieldMultipleChoices,
   FormFieldNumber,
   FormFieldParagraph,
   FormFieldRow,
@@ -65,9 +65,9 @@ const singleChoice = (): FormFieldSingleChoice => ({
   },
 });
 
-const multipleChoice = (): FormFieldMultipleChoice => ({
+const multipleChoices = (): FormFieldMultipleChoices => ({
   id: generateId(ID_LENGTH),
-  type: 'multipleChoice',
+  type: 'multipleChoices',
   props: {
     label: 'Multiple Choice',
     options: [],
@@ -114,13 +114,25 @@ const file = (): FormFieldFile => ({
 const divider = (): FormFieldDivider => ({
   id: generateId(ID_LENGTH),
   type: 'divider',
+  props: {
+    color: '#000000',
+    style: 'solid',
+    width: 100,
+  },
 });
 
 const header = (): FormFieldHeader => ({
   id: generateId(ID_LENGTH),
   type: 'header',
   props: {
-    value: 'Header',
+    text: 'Header',
+    font: {
+      size: 24,
+      unit: 'px',
+      weight: 400,
+    },
+    tag: 'h1',
+    textAlign: 'center',
   },
 });
 
@@ -128,7 +140,13 @@ const paragraph = (): FormFieldParagraph => ({
   id: generateId(ID_LENGTH),
   type: 'paragraph',
   props: {
-    value: 'Paragraph',
+    text: 'Paragraph',
+    font: {
+      size: 16,
+      unit: 'px',
+      weight: 400,
+    },
+    textAlign: 'center',
   },
 });
 
@@ -136,7 +154,14 @@ const image = (): FormFieldImage => ({
   id: generateId(ID_LENGTH),
   type: 'image',
   props: {
-    src: '',
+    url: '',
+    alt: 'Placeholder',
+    objectFit: 'contain',
+    textAlign: 'center',
+    width: {
+      value: 50,
+      autoWidth: true,
+    },
   },
 });
 
@@ -190,7 +215,7 @@ const defaultFieldProps = {
   shortText,
   longText,
   block,
-  multipleChoice,
+  multipleChoices,
   row,
   column,
   date,

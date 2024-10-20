@@ -34,3 +34,43 @@
     scrollbar-color: var(--color-neutral-200) transparent;
     scrollbar-width: thin;
 }
+
+.typography-body1 {
+    font-size: 1.125rem;
+    line-height: 140%;
+}
+
+.typography-body2 {
+    font-size: 1rem;
+    line-height: 140%;
+}
+
+.typography-body3 {
+    font-size: 0.875rem;
+    line-height: 140%;
+}
+
+.typography-body4 {
+    font-size: 0.75rem;
+    line-height: 160%;
+}
+
+.typography-button1 {
+    font-size: 1.125rem;
+    line-height: 110%;
+}
+
+.typography-button2 {
+    font-size: 1rem;
+    line-height: 110%;
+}
+
+.typography-button3 {
+    font-size: 0.875rem;
+    line-height: 110%;
+}
+
+.typography-link {
+    font-size: 1.125rem;
+    line-height: 140%;
+}

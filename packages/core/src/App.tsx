@@ -13,9 +13,11 @@ function App() {
   });
 
   return (
-    <FormProvider {...methods}>
-      <FormBuilder />
-    </FormProvider>
+    <>
+      <FormProvider {...methods}>
+        <FormBuilder />
+      </FormProvider>
+    </>
   );
 }
 
