@@ -6,7 +6,7 @@ interface ImageFieldProps {
 }
 
 const DEFAULT_IMAGE_URL =
-  'https://via.assets.so/img.jpg?w=720&h=120&tc=#555555&bg=#aaaaaa';
+  'https://via.assets.so/img.jpg?w=720&h=120&t=Image+Placeholder&tc=#555555&bg=#aaaaaa';
 
 function ImageField({ field }: ImageFieldProps) {
   return (
