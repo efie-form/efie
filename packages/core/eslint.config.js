@@ -6,7 +6,7 @@ import tseslint from 'typescript-eslint';
 import stylisticTs from '@stylistic/eslint-plugin-ts';
 
 export default tseslint.config(
-  {ignores: ['dist']},
+  { ignores: ['dist'] },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ['**/*.{ts,tsx}'],
@@ -23,10 +23,11 @@ export default tseslint.config(
       ...reactHooks.configs.recommended.rules,
       'react-refresh/only-export-components': [
         'warn',
-        {allowConstantExport: true},
+        { allowConstantExport: true },
       ],
       '@typescript-eslint/consistent-type-imports': 'error',
       '@stylistic/ts/object-curly-spacing': ['error', 'always'],
+      '@typescript-eslint/ban-ts-comment': 'off',
     },
   }
 );

@@ -13,6 +13,7 @@ import { RxDividerHorizontal, RxTextAlignCenter } from 'react-icons/rx';
 import { FaImage, FaVideo } from 'react-icons/fa6';
 import { HiOutlineViewColumns } from 'react-icons/hi2';
 import type { FormFieldType } from '../types/formSchema.ts';
+import { FIELDS_NAME } from './constant.ts';
 
 interface Field {
   type: FormFieldType;
@@ -34,47 +35,47 @@ export const fieldGroup: FieldGroup[] = [
     children: [
       {
         type: 'shortText',
-        label: 'Short Text',
+        label: FIELDS_NAME.shortText,
         Icon: LuFormInput,
       },
       {
         type: 'longText',
-        label: 'Long Text',
+        label: FIELDS_NAME.longText,
         Icon: BsTextareaResize,
       },
       {
         type: 'number',
-        label: 'Number',
+        label: FIELDS_NAME.number,
         Icon: LuHash,
       },
       {
         type: 'singleChoice',
-        label: 'Single Choice',
+        label: FIELDS_NAME.singleChoice,
         Icon: MdRadioButtonChecked,
       },
       {
-        type: 'multipleChoice',
-        label: 'Multiple Choice',
+        type: 'multipleChoices',
+        label: FIELDS_NAME.multipleChoices,
         Icon: MdCheckBox,
       },
       {
         type: 'date',
-        label: 'Date',
+        label: FIELDS_NAME.date,
         Icon: LuCalendar,
       },
       {
         type: 'time',
-        label: 'Time',
+        label: FIELDS_NAME.time,
         Icon: LuClock,
       },
       {
         type: 'dateTime',
-        label: 'Date & Time',
+        label: FIELDS_NAME.dateTime,
         Icon: LuCalendarClock,
       },
       {
         type: 'file',
-        label: 'File Upload',
+        label: FIELDS_NAME.file,
         Icon: MdUpload,
       },
     ],
@@ -85,27 +86,27 @@ export const fieldGroup: FieldGroup[] = [
     children: [
       {
         type: 'divider',
-        label: 'Divider',
+        label: FIELDS_NAME.divider,
         Icon: RxDividerHorizontal,
       },
       {
         type: 'header',
-        label: 'Header',
+        label: FIELDS_NAME.header,
         Icon: RiText,
       },
       {
         type: 'paragraph',
-        label: 'Paragraph',
+        label: FIELDS_NAME.paragraph,
         Icon: RxTextAlignCenter,
       },
       {
         type: 'image',
-        label: 'Image',
+        label: FIELDS_NAME.image,
         Icon: FaImage,
       },
       {
         type: 'video',
-        label: 'Video',
+        label: FIELDS_NAME.video,
         Icon: FaVideo,
       },
     ],
@@ -116,12 +117,12 @@ export const fieldGroup: FieldGroup[] = [
     children: [
       {
         type: 'row',
-        label: 'Row',
+        label: FIELDS_NAME.row,
         Icon: HiOutlineViewColumns,
       },
       {
         type: 'block',
-        label: 'Block',
+        label: FIELDS_NAME.block,
         Icon: RiPageSeparator,
       },
     ],

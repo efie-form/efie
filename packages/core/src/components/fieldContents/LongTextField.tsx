@@ -1,17 +1,16 @@
-import type { FormFieldShortText } from '../../types/formSchema.ts';
+import type { FormFieldLongText } from '../../types/formSchema.ts';
 
-interface ShortTextFieldProps {
-  field: FormFieldShortText;
+interface LongTextFieldProps {
+  field: FormFieldLongText;
 }
 
-function ShortTextField({ field }: ShortTextFieldProps) {
+function LongTextField({ field }: LongTextFieldProps) {
   return (
     <div className="p-2">
       <p className="mb-2 typography-body2 text-neutral-800">
         {field.props.label}
       </p>
-      <input
-        type="text"
+      <textarea
         placeholder={field.props.placeholder}
         className="border border-neutral-300 px-4 py-2 rounded-md typography-body3 w-full outline-primary"
       />
@@ -19,4 +18,4 @@ function ShortTextField({ field }: ShortTextFieldProps) {
   );
 }
 
-export default ShortTextField;
+export default LongTextField;

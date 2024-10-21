@@ -7,7 +7,7 @@ import RightBar from './rightBar/RightBar.tsx';
 function FormBuilder() {
   return (
     <div className="flex h-screen w-screen">
-      <div className="min-w-[20rem] bg-neutral-50 overflow-hidden">
+      <div className="w-80 bg-neutral-50 overflow-hidden">
         <LeftBar />
       </div>
       <div className="min-w-[40rem] flex-1 bg-primary-50 overflow-hidden">
@@ -19,10 +19,8 @@ function FormBuilder() {
           <FormContent />
         </div>
       </div>
-      <div className="w-[20rem] bg-neutral-50 overflow-hidden">
-        <div className="h-full overflow-scroll">
-          <RightBar />
-        </div>
+      <div className="w-96 bg-neutral-50 overflow-hidden">
+        <RightBar />
       </div>
     </div>
   );

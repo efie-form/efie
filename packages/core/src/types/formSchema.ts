@@ -42,17 +42,23 @@ export interface FormFieldSingleChoice {
   type: 'singleChoice';
   props: {
     label: string;
-    options: string[];
+    options: {
+      label: string;
+      value: string;
+    }[];
     required: boolean;
   };
 }
 
-export interface FormFieldMultipleChoice {
+export interface FormFieldMultipleChoices {
   id: string;
-  type: 'multipleChoice';
+  type: 'multipleChoices';
   props: {
     label: string;
-    options: string[];
+    options: {
+      label: string;
+      value: string;
+    }[];
     required: boolean;
   };
 }
@@ -96,13 +102,25 @@ export interface FormFieldFile {
 export interface FormFieldDivider {
   id: string;
   type: 'divider';
+  props: {
+    color: string;
+    width: number;
+    style: 'solid' | 'dashed' | 'dotted';
+  };
 }
 
 export interface FormFieldHeader {
   id: string;
   type: 'header';
   props: {
-    value: string;
+    text: string;
+    tag: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+    textAlign: 'left' | 'center' | 'right';
+    font: {
+      size: number;
+      unit: 'px' | 'em' | 'rem';
+      weight: number;
+    };
   };
 }
 
@@ -110,7 +128,13 @@ export interface FormFieldParagraph {
   id: string;
   type: 'paragraph';
   props: {
-    value: string;
+    text: string;
+    textAlign: 'left' | 'center' | 'right';
+    font: {
+      size: number;
+      unit: 'px' | 'em' | 'rem';
+      weight: number;
+    };
   };
 }
 
@@ -118,7 +142,14 @@ export interface FormFieldImage {
   id: string;
   type: 'image';
   props: {
-    src: string;
+    url: string;
+    alt: string;
+    textAlign: 'left' | 'center' | 'right';
+    objectFit: 'fill' | 'contain' | 'cover' | 'none' | 'scale-down';
+    width: {
+      value: number;
+      autoWidth: boolean;
+    };
   };
 }
 
@@ -156,7 +187,7 @@ export type FormField =
   | FormFieldLongText
   | FormFieldNumber
   | FormFieldSingleChoice
-  | FormFieldMultipleChoice
+  | FormFieldMultipleChoices
   | FormFieldDate
   | FormFieldTime
   | FormFieldDateTime
