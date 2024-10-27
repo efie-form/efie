@@ -2,6 +2,7 @@ import type { FormFieldFile } from '../../../types/formSchema.ts';
 
 interface FileSettingsProps {
   field: FormFieldFile;
+  fieldKey: string;
 }
 
 function FileSettings({ field }: FileSettingsProps) {

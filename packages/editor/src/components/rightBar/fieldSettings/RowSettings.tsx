@@ -2,6 +2,7 @@ import type { FormFieldRow } from '../../../types/formSchema.ts';
 
 interface RowSettingsProps {
   field: FormFieldRow;
+  fieldKey: string;
 }
 
 function RowSettings({ field }: RowSettingsProps) {

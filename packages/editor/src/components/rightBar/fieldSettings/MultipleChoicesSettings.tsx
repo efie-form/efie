@@ -2,6 +2,7 @@ import type { FormFieldMultipleChoices } from '../../../types/formSchema.ts';
 
 interface MultipleChoicesSettingsProps {
   field: FormFieldMultipleChoices;
+  fieldKey: string;
 }
 
 function MultipleChoicesSettings({ field }: MultipleChoicesSettingsProps) {

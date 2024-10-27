@@ -2,6 +2,7 @@ import type { FormFieldBlock } from '../../../types/formSchema.ts';
 
 interface BlockSettingsProps {
   field: FormFieldBlock;
+  fieldKey: string;
 }
 
 function BlockSettings({ field }: BlockSettingsProps) {
