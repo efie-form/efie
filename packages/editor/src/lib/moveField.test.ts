@@ -6,12 +6,24 @@ const defaultFields: FormField[] = [
     id: '0000000001',
     type: 'header',
     props: {
-      value: '',
+      text: '',
+      tag: 'h1',
+      textAlign: 'left',
+      font: {
+        size: 0,
+        unit: 'px',
+        weight: 0,
+      },
     },
   },
   {
     id: '0000000002',
     type: 'divider',
+    props: {
+      color: '',
+      width: 0,
+      style: 'solid',
+    },
   },
   {
     id: '0000000003',
@@ -60,6 +72,11 @@ test('move first field to children of column', () => {
     {
       id: '0000000002',
       type: 'divider',
+      props: {
+        color: '',
+        width: 0,
+        style: 'solid',
+      },
     },
     {
       id: '0000000003',
@@ -73,7 +90,14 @@ test('move first field to children of column', () => {
               id: '0000000001',
               type: 'header',
               props: {
-                value: '',
+                text: '',
+                tag: 'h1',
+                textAlign: 'left',
+                font: {
+                  size: 0,
+                  unit: 'px',
+                  weight: 0,
+                },
               },
             },
           ],
@@ -108,6 +132,11 @@ test('move field to root but out of bounds', () => {
     {
       id: '0000000002',
       type: 'divider',
+      props: {
+        color: '',
+        width: 0,
+        style: 'solid',
+      },
     },
     {
       id: '0000000003',
@@ -135,7 +164,14 @@ test('move field to root but out of bounds', () => {
       id: '0000000001',
       type: 'header',
       props: {
-        value: '',
+        text: '',
+        tag: 'h1',
+        textAlign: 'left',
+        font: {
+          size: 0,
+          unit: 'px',
+          weight: 0,
+        },
       },
     },
   ]);

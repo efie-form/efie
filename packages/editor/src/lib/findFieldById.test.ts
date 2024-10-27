@@ -7,6 +7,13 @@ const sampleFields: FormField[] = [
     type: 'header',
     props: {
       text: '',
+      tag: 'h1',
+      textAlign: 'left',
+      font: {
+        size: 0,
+        unit: 'px',
+        weight: 0,
+      },
     },
   },
   {
@@ -25,6 +32,12 @@ const sampleFields: FormField[] = [
             type: 'paragraph',
             props: {
               text: 'Hello, World! 0006',
+              textAlign: 'left',
+              font: {
+                size: 0,
+                unit: 'px',
+                weight: 0,
+              },
             },
           },
           {
@@ -43,6 +56,12 @@ const sampleFields: FormField[] = [
                     type: 'paragraph',
                     props: {
                       text: 'Hello, World! 0007',
+                      textAlign: 'left',
+                      font: {
+                        size: 0,
+                        unit: 'px',
+                        weight: 0,
+                      },
                     },
                   },
                 ],
@@ -59,6 +78,12 @@ const sampleFields: FormField[] = [
                     type: 'paragraph',
                     props: {
                       text: 'Hello, World! 0008',
+                      textAlign: 'left',
+                      font: {
+                        size: 0,
+                        unit: 'px',
+                        weight: 0,
+                      },
                     },
                   },
                 ],
@@ -79,6 +104,12 @@ const sampleFields: FormField[] = [
             type: 'paragraph',
             props: {
               text: 'Hello, World! 0006',
+              textAlign: 'left',
+              font: {
+                size: 0,
+                unit: 'px',
+                weight: 0,
+              },
             },
           },
         ],

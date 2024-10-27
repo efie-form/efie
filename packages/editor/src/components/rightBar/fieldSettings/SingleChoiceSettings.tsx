@@ -2,6 +2,7 @@ import type { FormFieldSingleChoice } from '../../../types/formSchema.ts';
 
 interface SingleChoiceSettingsProps {
   field: FormFieldSingleChoice;
+  fieldKey: string;
 }
 
 function SingleChoiceSettings({ field }: SingleChoiceSettingsProps) {

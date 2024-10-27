@@ -2,6 +2,7 @@ import type { FormFieldColumn } from '../../../types/formSchema.ts';
 
 interface ColumnSettingsProps {
   field: FormFieldColumn;
+  fieldKey: string;
 }
 
 function ColumnSettings({ field }: ColumnSettingsProps) {

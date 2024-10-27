@@ -2,6 +2,7 @@ import type { FormFieldTime } from '../../../types/formSchema.ts';
 
 interface TimeSettingsProps {
   field: FormFieldTime;
+  fieldKey: string;
 }
 
 function TimeSettings({ field }: TimeSettingsProps) {

@@ -7,12 +7,24 @@ const defaultFields: () => FormField[] = () => [
     id: '0000000001',
     type: 'header',
     props: {
-      value: '',
+      text: '',
+      tag: 'h1',
+      textAlign: 'left',
+      font: {
+        size: 0,
+        unit: 'px',
+        weight: 0,
+      },
     },
   },
   {
     id: '0000000002',
     type: 'divider',
+    props: {
+      color: '',
+      width: 0,
+      style: 'solid',
+    },
   },
   {
     id: '0000000003',
@@ -42,7 +54,13 @@ const newField: FormField = {
   id: '0000000006',
   type: 'paragraph',
   props: {
-    value: 'Paragraph',
+    text: 'Hello, World! 0006',
+    textAlign: 'left',
+    font: {
+      size: 0,
+      unit: 'px',
+      weight: 0,
+    },
   },
 };
 
@@ -52,7 +70,7 @@ test('insert field to first index of root', () => {
     newField,
     DROP_ZONE_TYPE.root,
     null,
-    0
+    0,
   );
 
   expect(newFields).toEqual([
@@ -61,12 +79,24 @@ test('insert field to first index of root', () => {
       id: '0000000001',
       type: 'header',
       props: {
-        value: '',
+        text: '',
+        tag: 'h1',
+        textAlign: 'left',
+        font: {
+          size: 0,
+          unit: 'px',
+          weight: 0,
+        },
       },
     },
     {
       id: '0000000002',
       type: 'divider',
+      props: {
+        color: '',
+        width: 0,
+        style: 'solid',
+      },
     },
     {
       id: '0000000003',
@@ -99,7 +129,7 @@ test('insert field to first index of column', () => {
     newField,
     DROP_ZONE_TYPE.field,
     '0000000004',
-    0
+    0,
   );
 
   expect(newFields).toEqual([
@@ -107,12 +137,24 @@ test('insert field to first index of column', () => {
       id: '0000000001',
       type: 'header',
       props: {
-        value: '',
+        text: '',
+        tag: 'h1',
+        textAlign: 'left',
+        font: {
+          size: 0,
+          unit: 'px',
+          weight: 0,
+        },
       },
     },
     {
       id: '0000000002',
       type: 'divider',
+      props: {
+        color: '',
+        width: 0,
+        style: 'solid',
+      },
     },
     {
       id: '0000000003',
@@ -145,7 +187,7 @@ test('insert field to last index of root', () => {
     newField,
     DROP_ZONE_TYPE.root,
     null,
-    100
+    100,
   );
 
   expect(newFields).toEqual([
@@ -153,12 +195,24 @@ test('insert field to last index of root', () => {
       id: '0000000001',
       type: 'header',
       props: {
-        value: '',
+        text: '',
+        tag: 'h1',
+        textAlign: 'left',
+        font: {
+          size: 0,
+          unit: 'px',
+          weight: 0,
+        },
       },
     },
     {
       id: '0000000002',
       type: 'divider',
+      props: {
+        color: '',
+        width: 0,
+        style: 'solid',
+      },
     },
     {
       id: '0000000003',
