@@ -5,11 +5,12 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "lint": "eslint .",
+    "lint": "nx lint",
     "preview": "vite preview",
     "test": "jest",
     "publish": "npm run build && npm publish"
   },
+  "main": "dist/index.html",
   "license": "MIT",
   "files": [
     "LICENSE",
