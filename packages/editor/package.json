@@ -1,6 +1,6 @@
 {
   "name": "@efie-form/editor",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -9,11 +9,18 @@
     "preview": "vite preview",
     "test": "jest"
   },
+  "license": "MIT",
+  "files": [
+    "LICENSE",
+    "dist/",
+    "README.md"
+  ],
   "devDependencies": {
     "@eslint/js": "^9.9.0",
     "@radix-ui/react-slider": "^1.2.1",
     "@radix-ui/react-switch": "^1.1.1",
     "@radix-ui/react-use-controllable-state": "^1.1.0",
+    "@rollup/plugin-url": "^8.0.2",
     "@stylistic/eslint-plugin-ts": "^2.9.0",
     "@types/jest": "^29.5.13",
     "@types/react": "^18.3.3",
