@@ -1,4 +1,4 @@
-import type { FormField } from '../types/formSchema.ts';
+import type { FormField } from '@efie-form/core';
 import { DROP_ZONE_TYPE } from './constant.ts';
 
 export default function insertField(

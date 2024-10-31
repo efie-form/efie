@@ -2,7 +2,7 @@ import RenderSettings from '../RenderSettings.tsx';
 import { useMemo } from 'react';
 import findFieldById from '../../../lib/findFieldById.ts';
 import { useFormContext } from 'react-hook-form';
-import type { FormSchema } from '../../../types/formSchema.ts';
+import type { FormSchema } from '@efie-form/core';
 import { useSettingsStore } from '../../../lib/state/settings.state.ts';
 
 function FieldPropertiesTab() {

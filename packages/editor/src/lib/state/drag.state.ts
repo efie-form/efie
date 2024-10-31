@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { FormFieldType } from '../../types/formSchema.ts';
+import type { FormFieldType } from '@efie-form/core';
 
 interface DragState {
   dragType: 'new' | 'move' | null;

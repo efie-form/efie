@@ -1,4 +1,4 @@
-import type { FormFieldHeader } from '../../types/formSchema.ts';
+import type { FormFieldHeader } from '@efie-form/core';
 import { textAlignMap } from '../../lib/constant.ts';
 
 interface HeaderFieldProps {

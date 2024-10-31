@@ -1,5 +1,5 @@
 import { useDragStore } from '../state/drag.state.ts';
-import type { FormFieldType } from '../../types/formSchema.ts';
+import type { FormFieldType } from '@efie-form/core';
 import { removePlaceholder } from '../displayPlaceholder.ts';
 
 export default function useNewField() {

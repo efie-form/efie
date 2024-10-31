@@ -18,7 +18,7 @@ import type {
   FormFieldTime,
   FormFieldType,
   FormFieldVideo,
-} from '../types/formSchema.ts';
+} from '@efie-form/core';
 import { generateId } from './utils.ts';
 
 const ID_LENGTH = 10;

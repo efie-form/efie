@@ -1,4 +1,4 @@
-import type { FormField } from '../types/formSchema.ts';
+import type { FormField } from '@efie-form/core';
 
 interface FindFieldByIdResult {
   field: FormField;

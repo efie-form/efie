@@ -1,4 +1,4 @@
-import type { FormFieldShortText } from '../../../types/formSchema.ts';
+import type { FormFieldShortText } from '@efie-form/core';
 import { FIELDS_NAME } from '../../../lib/constant.ts';
 import SettingsFieldBasic from '../../layouts/SettingsFieldBasic.tsx';
 import Input from '../../form/Input.tsx';

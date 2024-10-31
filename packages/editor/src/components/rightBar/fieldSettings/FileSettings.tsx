@@ -1,4 +1,4 @@
-import type { FormFieldFile } from '../../../types/formSchema.ts';
+import type { FormFieldFile } from '@efie-form/core';
 
 interface FileSettingsProps {
   field: FormFieldFile;

@@ -1,4 +1,4 @@
-import type { FormFieldVideo } from '../../../types/formSchema.ts';
+import type { FormFieldVideo } from '@efie-form/core';
 
 interface VideoSettingsProps {
   field: FormFieldVideo;

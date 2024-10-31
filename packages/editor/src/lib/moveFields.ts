@@ -1,4 +1,4 @@
-import type { FormField } from '../types/formSchema.ts';
+import type { FormField } from '@efie-form/core';
 
 export default function moveField(
   fields: FormField[],

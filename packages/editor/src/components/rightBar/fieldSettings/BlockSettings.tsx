@@ -1,4 +1,4 @@
-import type { FormFieldBlock } from '../../../types/formSchema.ts';
+import type { FormFieldBlock } from '@efie-form/core';
 
 interface BlockSettingsProps {
   field: FormFieldBlock;

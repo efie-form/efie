@@ -1,4 +1,4 @@
-import type { FormFieldType } from '../types/formSchema.ts';
+import type { FormFieldType } from '@efie-form/core';
 
 export const DATASET_FORM_FIELD = 'data-efie-field-id';
 

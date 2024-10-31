@@ -1,4 +1,4 @@
-import type { FormField } from '../types/formSchema.ts';
+import type { FormField } from '@efie-form/core';
 import findFieldById from './findFieldById.ts';
 
 const sampleFields: FormField[] = [

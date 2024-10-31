@@ -1,4 +1,4 @@
-import type { FormFieldLongText } from '../../types/formSchema.ts';
+import type { FormFieldLongText } from '@efie-form/core';
 
 interface LongTextFieldProps {
   field: FormFieldLongText;

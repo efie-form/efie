@@ -1,6 +1,6 @@
 import useDropZone from '../lib/hooks/useDropZone.ts';
 import { useFormContext } from 'react-hook-form';
-import type { FormSchema } from '../types/formSchema.ts';
+import type { FormSchema } from '@efie-form/core';
 import RenderField from './RenderField.tsx';
 
 function FormContent() {

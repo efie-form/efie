@@ -1,4 +1,4 @@
-import type { FormFieldNumber } from '../../types/formSchema.ts';
+import type { FormFieldNumber } from '@efie-form/core';
 
 interface NumberFieldProps {
   field: FormFieldNumber;

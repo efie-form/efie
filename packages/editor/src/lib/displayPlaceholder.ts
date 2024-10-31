@@ -1,4 +1,4 @@
-import type { FormField } from '../types/formSchema.ts';
+import type { FormField } from '@efie-form/core';
 
 const elem = document.createElement('div');
 elem.className = 'w-full h-1 w-full bg-primary absolute';
