@@ -1,4 +1,4 @@
-import type { FormFieldDivider } from '../../../types/formSchema.ts';
+import type { FormFieldDivider } from '@efie-form/core';
 import { FIELDS_NAME } from '../../../lib/constant.ts';
 import SettingsFieldBasic from '../../layouts/SettingsFieldBasic.tsx';
 import Input from '../../form/Input.tsx';

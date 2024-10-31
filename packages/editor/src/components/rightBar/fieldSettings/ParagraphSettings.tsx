@@ -1,4 +1,4 @@
-import type { FormFieldParagraph } from '../../../types/formSchema.ts';
+import type { FormFieldParagraph } from '@efie-form/core';
 import { FIELDS_NAME } from '../../../lib/constant.ts';
 import SettingsFieldBasic from '../../layouts/SettingsFieldBasic.tsx';
 import { Controller } from 'react-hook-form';

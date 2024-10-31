@@ -1,4 +1,4 @@
-import type { FormFieldSingleChoice } from '../../../types/formSchema.ts';
+import type { FormFieldSingleChoice } from '@efie-form/core';
 
 interface SingleChoiceSettingsProps {
   field: FormFieldSingleChoice;

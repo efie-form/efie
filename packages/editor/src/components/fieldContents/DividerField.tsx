@@ -1,4 +1,4 @@
-import type { FormFieldDivider } from '../../types/formSchema.ts';
+import type { FormFieldDivider } from '@efie-form/core';
 
 interface DividerFieldProps {
   field: FormFieldDivider;

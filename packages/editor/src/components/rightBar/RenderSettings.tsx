@@ -1,4 +1,4 @@
-import type { FormField } from '../../types/formSchema.ts';
+import type { FormField } from '@efie-form/core';
 import DateTimeSettings from './fieldSettings/DateTimeSettings.tsx';
 import DateSettings from './fieldSettings/DateSettings.tsx';
 import LongTextSettings from './fieldSettings/LongTextSettings.tsx';

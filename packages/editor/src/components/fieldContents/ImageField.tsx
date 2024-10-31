@@ -1,4 +1,4 @@
-import type { FormFieldImage } from '../../types/formSchema.ts';
+import type { FormFieldImage } from '@efie-form/core';
 import { textAlignMap } from '../../lib/constant.ts';
 
 interface ImageFieldProps {

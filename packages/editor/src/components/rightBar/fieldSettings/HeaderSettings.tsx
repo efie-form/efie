@@ -1,4 +1,4 @@
-import type { FormFieldHeader } from '../../../types/formSchema.ts';
+import type { FormFieldHeader } from '@efie-form/core';
 import { FIELDS_NAME } from '../../../lib/constant.ts';
 import Input from '../../form/Input.tsx';
 import SettingsFieldBasic from '../../layouts/SettingsFieldBasic.tsx';

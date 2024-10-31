@@ -5,7 +5,7 @@ import { useDragStore } from '../state/drag.state.ts';
 import { DATASET_DROP_ZONE, DROP_ZONE_TYPE } from '../constant.ts';
 import insertField from '../insertField.ts';
 import { useFormContext } from 'react-hook-form';
-import type { FormSchema } from '../../types/formSchema.ts';
+import type { FormSchema } from '@efie-form/core';
 import getDropPosition from '../getDropPosition.ts';
 import useDragDirection from './useDragDirection.ts';
 import moveField from '../moveFields.ts';

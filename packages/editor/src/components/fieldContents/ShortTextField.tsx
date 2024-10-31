@@ -1,4 +1,4 @@
-import type { FormFieldShortText } from '../../types/formSchema.ts';
+import type { FormFieldShortText } from '@efie-form/core';
 
 interface ShortTextFieldProps {
   field: FormFieldShortText;

@@ -1,4 +1,4 @@
-import type { FormFieldDate } from '../../../types/formSchema.ts';
+import type { FormFieldDate } from '@efie-form/core';
 
 interface DateSettingsProps {
   field: FormFieldDate;

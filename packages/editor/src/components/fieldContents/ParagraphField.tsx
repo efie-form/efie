@@ -1,4 +1,4 @@
-import type { FormFieldParagraph } from '../../types/formSchema.ts';
+import type { FormFieldParagraph } from '@efie-form/core';
 import { textAlignMap } from '../../lib/constant.ts';
 
 interface ParagraphFieldProps {

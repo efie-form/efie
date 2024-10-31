@@ -1,7 +1,7 @@
 {
   "name": "react-builder-demo",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "react-builder-demo/node_modules/.bin/vite",
@@ -10,7 +10,7 @@
     "preview": "react-builder-demo/node_modules/.bin/vite preview"
   },
   "dependencies": {
-    "@efie-form/react": "file:../../../packages/react",
+    "@efie-form/react": "workspace:*",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },

@@ -1,4 +1,4 @@
-import type { FormField } from '../types/formSchema.ts';
+import type { FormField } from '@efie-form/core';
 import insertField from './insertField.ts';
 import { DROP_ZONE_TYPE } from './constant.ts';
 
@@ -70,7 +70,7 @@ test('insert field to first index of root', () => {
     newField,
     DROP_ZONE_TYPE.root,
     null,
-    0,
+    0
   );
 
   expect(newFields).toEqual([
@@ -129,7 +129,7 @@ test('insert field to first index of column', () => {
     newField,
     DROP_ZONE_TYPE.field,
     '0000000004',
-    0,
+    0
   );
 
   expect(newFields).toEqual([
@@ -187,7 +187,7 @@ test('insert field to last index of root', () => {
     newField,
     DROP_ZONE_TYPE.root,
     null,
-    100,
+    100
   );
 
   expect(newFields).toEqual([

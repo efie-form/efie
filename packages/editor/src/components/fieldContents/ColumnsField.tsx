@@ -1,4 +1,4 @@
-import type { FormFieldColumn } from '../../types/formSchema.ts';
+import type { FormFieldColumn } from '@efie-form/core';
 import RenderField from '../RenderField.tsx';
 import {
   DATASET_DROP_ZONE,

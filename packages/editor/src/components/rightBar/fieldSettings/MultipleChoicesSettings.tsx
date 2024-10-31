@@ -1,4 +1,4 @@
-import type { FormFieldMultipleChoices } from '../../../types/formSchema.ts';
+import type { FormFieldMultipleChoices } from '@efie-form/core';
 
 interface MultipleChoicesSettingsProps {
   field: FormFieldMultipleChoices;

@@ -12,7 +12,7 @@ import { MdCheckBox, MdRadioButtonChecked, MdUpload } from 'react-icons/md';
 import { RxDividerHorizontal, RxTextAlignCenter } from 'react-icons/rx';
 import { FaImage, FaVideo } from 'react-icons/fa6';
 import { HiOutlineViewColumns } from 'react-icons/hi2';
-import type { FormFieldType } from '../types/formSchema.ts';
+import type { FormFieldType } from '@efie-form/core';
 import { FIELDS_NAME } from './constant.ts';
 
 interface Field {

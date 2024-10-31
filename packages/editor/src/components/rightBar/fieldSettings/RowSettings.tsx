@@ -1,4 +1,4 @@
-import type { FormFieldRow } from '../../../types/formSchema.ts';
+import type { FormFieldRow } from '@efie-form/core';
 
 interface RowSettingsProps {
   field: FormFieldRow;
