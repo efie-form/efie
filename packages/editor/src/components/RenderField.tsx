@@ -16,6 +16,8 @@ import LongTextField from './fieldContents/LongTextField.tsx';
 import NumberField from './fieldContents/NumberField.tsx';
 import DividerField from './fieldContents/DividerField.tsx';
 import ImageField from './fieldContents/ImageField.tsx';
+import SingleChoiceField from './fieldContents/SingleChoiceField.tsx';
+import MultipleChoicesField from './fieldContents/MultipleChoicesField.tsx';
 
 interface RenderFieldProps {
   field: FormField;
@@ -31,7 +33,7 @@ function RenderField({ field, noSelect }: RenderFieldProps) {
       <div
         id={field.id}
         key={field.id}
-        className="border border-white hover:border-neutral-100 rounded-lg cursor-grab transform bg-white"
+        className="border border-white hover:border-neutral-100 rounded-lg transform bg-white"
         {...{
           [DATASET_FORM_FIELD]: field.id,
           [DATASET_DROP_ZONE]: DROP_ZONE_TYPE.field,
@@ -70,6 +72,10 @@ function FieldItem({ field }: RenderFieldProps) {
       return <DividerField field={field} />;
     case 'image':
       return <ImageField field={field} />;
+    case 'singleChoice':
+      return <SingleChoiceField field={field} />;
+    case 'multipleChoices':
+      return <MultipleChoicesField field={field} />;
     default:
       return (
         <div className="px-4 py-2">

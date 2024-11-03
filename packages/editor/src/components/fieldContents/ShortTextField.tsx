@@ -9,6 +9,7 @@ function ShortTextField({ field }: ShortTextFieldProps) {
     <div className="p-2">
       <p className="mb-2 typography-body2 text-neutral-800">
         {field.props.label}
+        {field.props.required && <span className="text-danger ms-1.5">*</span>}
       </p>
       <input
         type="text"

@@ -1,8 +1,9 @@
 import type { FormFieldTime } from '@efie-form/core';
+import type { FieldKeyPrefix } from '../../../lib/genFieldKey.ts';
 
 interface TimeSettingsProps {
   field: FormFieldTime;
-  fieldKey: string;
+  fieldKey: FieldKeyPrefix;
 }
 
 function TimeSettings({ field }: TimeSettingsProps) {

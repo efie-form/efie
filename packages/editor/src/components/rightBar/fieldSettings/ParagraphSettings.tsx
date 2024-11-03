@@ -1,13 +1,14 @@
 import type { FormFieldParagraph } from '@efie-form/core';
 import { FIELDS_NAME } from '../../../lib/constant.ts';
-import SettingsFieldBasic from '../../layouts/SettingsFieldBasic.tsx';
+import SettingsFieldVertical from '../../layouts/SettingsFieldVertical.tsx';
 import { Controller } from 'react-hook-form';
 import Input from '../../form/Input.tsx';
 import Select from '../../form/Select.tsx';
+import type { FieldKeyPrefix } from '../../../lib/genFieldKey.ts';
 
 interface ParagraphSettingsProps {
   field: FormFieldParagraph;
-  fieldKey: string;
+  fieldKey: FieldKeyPrefix;
 }
 
 function ParagraphSettings({ field, fieldKey }: ParagraphSettingsProps) {
@@ -20,7 +21,7 @@ function ParagraphSettings({ field, fieldKey }: ParagraphSettingsProps) {
         <div className="px-4 py-2 bg-neutral-100 text-neutral-800 typography-body2">
           Text
         </div>
-        <SettingsFieldBasic label="Font Size" divider>
+        <SettingsFieldVertical label="Font Size" divider>
           <Controller
             key={`${fieldKey}.props.font.size`}
             render={({ field: { value, onChange } }) => (
@@ -37,8 +38,8 @@ function ParagraphSettings({ field, fieldKey }: ParagraphSettingsProps) {
             )}
             name={`${fieldKey}.props.font.size`}
           />
-        </SettingsFieldBasic>
-        <SettingsFieldBasic label="Text align" divider>
+        </SettingsFieldVertical>
+        <SettingsFieldVertical label="Text align" divider>
           <Controller
             key={`${fieldKey}.props.textAlign`}
             render={({ field: { value, onChange } }) => (
@@ -55,7 +56,7 @@ function ParagraphSettings({ field, fieldKey }: ParagraphSettingsProps) {
             )}
             name={`${fieldKey}.props.textAlign`}
           />
-        </SettingsFieldBasic>
+        </SettingsFieldVertical>
       </div>
     </div>
   );

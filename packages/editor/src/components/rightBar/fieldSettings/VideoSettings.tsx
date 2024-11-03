@@ -1,8 +1,9 @@
 import type { FormFieldVideo } from '@efie-form/core';
+import type { FieldKeyPrefix } from '../../../lib/genFieldKey.ts';
 
 interface VideoSettingsProps {
   field: FormFieldVideo;
-  fieldKey: string;
+  fieldKey: FieldKeyPrefix;
 }
 
 function VideoSettings({ field }: VideoSettingsProps) {

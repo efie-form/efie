@@ -24,7 +24,7 @@ function SettingsFieldWidth({
             <p className="typography-body3 text-neutral-800">{label}</p>
           </div>
           <div className="flex gap-2 items-center">
-            <p className="typography-body4 text-neutral-800">Auto Width?</p>
+            <p className="typography-body4 text-neutral-800">Auto Width</p>
             <Controller
               render={({ field: { value, onChange } }) => (
                 <Switch checked={value} onChange={onChange} />

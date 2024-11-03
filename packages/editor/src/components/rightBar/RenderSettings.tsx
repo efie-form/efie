@@ -16,10 +16,11 @@ import ShortTextSettings from './fieldSettings/ShortTextSettings.tsx';
 import SingleChoiceSettings from './fieldSettings/SingleChoiceSettings.tsx';
 import TimeSettings from './fieldSettings/TimeSettings.tsx';
 import VideoSettings from './fieldSettings/VideoSettings.tsx';
+import type { FieldKeyPrefix } from '../../lib/genFieldKey.ts';
 
 interface RenderSettingsProps {
   field?: FormField;
-  fieldKey?: string;
+  fieldKey?: FieldKeyPrefix;
 }
 
 function RenderSettings({ field, fieldKey }: RenderSettingsProps) {

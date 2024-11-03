@@ -1,8 +1,9 @@
 import type { FormFieldFile } from '@efie-form/core';
+import type { FieldKeyPrefix } from '../../../lib/genFieldKey.ts';
 
 interface FileSettingsProps {
   field: FormFieldFile;
-  fieldKey: string;
+  fieldKey: FieldKeyPrefix;
 }
 
 function FileSettings({ field }: FileSettingsProps) {

@@ -14,7 +14,7 @@ function FieldPropertiesTab() {
   );
 
   return (
-    <div className="">
+    <div>
       {!field?.field && <div>Select a field to see its properties</div>}
       <RenderSettings field={field?.field} fieldKey={field?.key} />
     </div>

@@ -1,20 +1,20 @@
 import type { ReactNode } from 'react';
 
-interface SettingsFieldBasicProps {
+interface SettingsFieldHorizontalProps {
   label: string;
   children?: ReactNode;
   divider?: boolean;
 }
 
-function SettingsFieldBasic({
+function SettingsFieldHorizontal({
   children,
   label,
   divider,
-}: SettingsFieldBasicProps) {
+}: SettingsFieldHorizontalProps) {
   return (
     <>
-      <div className="flex justify-between px-4 py-3.5 items-center">
-        <div>
+      <div className="flex justify-between items-center px-4 py-3.5">
+        <div className="mb-2">
           <p className="typography-body3 text-neutral-800">{label}</p>
         </div>
         <div>{children}</div>
@@ -28,4 +28,4 @@ function SettingsFieldBasic({
   );
 }
 
-export default SettingsFieldBasic;
+export default SettingsFieldHorizontal;

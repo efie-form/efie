@@ -1,8 +1,9 @@
 import type { FormFieldDate } from '@efie-form/core';
+import type { FieldKeyPrefix } from '../../../lib/genFieldKey.ts';
 
 interface DateSettingsProps {
   field: FormFieldDate;
-  fieldKey: string;
+  fieldKey: FieldKeyPrefix;
 }
 
 function DateSettings({ field }: DateSettingsProps) {

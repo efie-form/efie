@@ -16,9 +16,9 @@ function Switch({ checked, onChange }: SwitchProps) {
     <SwitchPrimitive.Root
       checked={inputChecked}
       onCheckedChange={setInputChecked}
-      className="relative h-[24px] w-[42px] cursor-pointer bg-white border border-neutral-200 rounded-full outline-none data-[state=checked]:bg-primary transition-all duration-300 data-[state=checked]:border-primary"
+      className="relative h-5 w-9 cursor-pointer bg-neutral-200 border border-neutral-200 rounded-full outline-none data-[state=checked]:bg-primary transition-all duration-300 data-[state=checked]:border-primary"
     >
-      <SwitchPrimitive.Thumb className="block size-[18px] translate-x-0.5 rounded-full bg-neutral-400 data-[state=checked]:bg-white transition-all duration-300 will-change-transform data-[state=checked]:translate-x-[20px]" />
+      <SwitchPrimitive.Thumb className="block size-3.5 translate-x-0.5 rounded-full bg-white transition-all duration-300 will-change-transform data-[state=checked]:translate-x-[15px]" />
     </SwitchPrimitive.Root>
   );
 }
