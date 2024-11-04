@@ -176,19 +176,6 @@ const image = (): FormFieldImage => ({
   },
 });
 
-const video = (): FormFieldVideo => ({
-  id: generateId(ID_LENGTH),
-  type: 'video',
-  props: {
-    src: '',
-    width: {
-      autoWidth: true,
-      value: 50,
-    },
-    textAlign: 'center',
-  },
-});
-
 const row = (): FormFieldRow => ({
   id: generateId(ID_LENGTH),
   type: 'row',
@@ -244,7 +231,6 @@ const defaultFieldProps = {
   paragraph,
   singleChoice,
   time,
-  video,
 } satisfies Record<FormFieldType, () => FormField>;
 
 export default defaultFieldProps;

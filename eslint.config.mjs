@@ -5,14 +5,17 @@ import reactRefresh from 'eslint-plugin-react-refresh';
 import reactHooks from 'eslint-plugin-react-hooks';
 
 export default [
-  { files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'] },
+  {
+    files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
+    ignores: ['**/node_modules/**', '**/dist/**'],
+  },
   { languageOptions: { globals: globals.browser } },
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
   {
     rules: {
       '@typescript-eslint/consistent-type-imports': 'error',
-    }
+    },
   },
   {
     files: [
@@ -20,6 +23,7 @@ export default [
       'packages/editor/**/*.{js,mjs,cjs,ts,jsx,tsx}',
       'demo/react/**/*.{js,mjs,cjs,ts,jsx,tsx}',
     ],
+
     plugins: {
       'react-refresh': reactRefresh,
       'react-hooks': reactHooks,
