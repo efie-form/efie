@@ -19,8 +19,8 @@ function ImageSettings({ field, fieldKey }: ImageSettingsProps) {
         <p className="typography-body1">{FIELDS_NAME[field.type]}</p>
       </div>
       <div>
-        <div className="px-4 py-2 bg-neutral-100 text-neutral-800 typography-body2">
-          Image
+        <div className="px-4 py-2 bg-neutral-100 text-neutral-800 typography-body3 uppercase">
+          Common
         </div>
 
         <SettingsFieldVertical label="Image Link" divider>

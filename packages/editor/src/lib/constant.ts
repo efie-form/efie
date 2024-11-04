@@ -14,7 +14,6 @@ export const DROP_ZONE_TYPE = {
 
 export const FIELDS_NAME = {
   shortText: 'Short Text',
-  video: 'Video',
   time: 'Time',
   singleChoice: 'Single Choice',
   paragraph: 'Paragraph',

@@ -14,9 +14,7 @@ function SettingsFieldHorizontal({
   return (
     <>
       <div className="flex justify-between items-center px-4 py-3.5">
-        <div className="mb-2">
-          <p className="typography-body3 text-neutral-800">{label}</p>
-        </div>
+        <p className="typography-body3 text-neutral-800">{label}</p>
         <div>{children}</div>
       </div>
       {divider && (

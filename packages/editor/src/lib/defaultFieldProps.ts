@@ -17,7 +17,6 @@ import type {
   FormFieldSingleChoice,
   FormFieldTime,
   FormFieldType,
-  FormFieldVideo,
 } from '@efie-form/core';
 import { generateId } from './utils.ts';
 
@@ -118,6 +117,8 @@ const file = (): FormFieldFile => ({
   props: {
     label: 'File',
     required: false,
+    accept: '',
+    multiple: false,
   },
 });
 
@@ -180,6 +181,11 @@ const video = (): FormFieldVideo => ({
   type: 'video',
   props: {
     src: '',
+    width: {
+      autoWidth: true,
+      value: 50,
+    },
+    textAlign: 'center',
   },
 });
 

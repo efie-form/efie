@@ -104,11 +104,6 @@ export const fieldGroup: FieldGroup[] = [
         label: FIELDS_NAME.image,
         Icon: FaImage,
       },
-      {
-        type: 'video',
-        label: FIELDS_NAME.video,
-        Icon: FaVideo,
-      },
     ],
   },
   {
@@ -120,11 +115,11 @@ export const fieldGroup: FieldGroup[] = [
         label: FIELDS_NAME.row,
         Icon: HiOutlineViewColumns,
       },
-      {
-        type: 'block',
-        label: FIELDS_NAME.block,
-        Icon: RiPageSeparator,
-      },
+      // {
+      //   type: 'block',
+      //   label: FIELDS_NAME.block,
+      //   Icon: RiPageSeparator,
+      // },
     ],
   },
 ];

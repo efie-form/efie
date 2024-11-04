@@ -18,6 +18,12 @@ import DividerField from './fieldContents/DividerField.tsx';
 import ImageField from './fieldContents/ImageField.tsx';
 import SingleChoiceField from './fieldContents/SingleChoiceField.tsx';
 import MultipleChoicesField from './fieldContents/MultipleChoicesField.tsx';
+import DateField from './fieldContents/DateField.tsx';
+import TimeField from './fieldContents/TimeField.tsx';
+import DateTimeField from './fieldContents/DateTimeField.tsx';
+import FileField from './fieldContents/FileField.tsx';
+import { cn } from '../lib/utils.ts';
+import useFieldInfo from '../lib/hooks/useFieldInfo.ts';
 
 interface RenderFieldProps {
   field: FormField;
@@ -26,14 +32,19 @@ interface RenderFieldProps {
 
 function RenderField({ field, noSelect }: RenderFieldProps) {
   const { registerProps } = useMoveField();
-  const { setSelectedFieldId } = useSettingsStore();
+  const { setSelectedFieldId, selectedFieldId } = useSettingsStore();
 
   return (
     <>
       <div
         id={field.id}
         key={field.id}
-        className="border border-white hover:border-neutral-100 rounded-lg transform bg-white"
+        className={cn(
+          'border-2 border-white hover:border-neutral-100 rounded-lg transform bg-white',
+          {
+            '!border-primary': selectedFieldId === field.id,
+          }
+        )}
         {...{
           [DATASET_FORM_FIELD]: field.id,
           [DATASET_DROP_ZONE]: DROP_ZONE_TYPE.field,
@@ -53,6 +64,12 @@ function RenderField({ field, noSelect }: RenderFieldProps) {
 }
 
 function FieldItem({ field }: RenderFieldProps) {
+  const fieldInfo = useFieldInfo({
+    fieldId: field.id,
+  });
+
+  if (!fieldInfo) return null;
+
   switch (field.type) {
     case 'row':
       return <RowField field={field} />;
@@ -63,11 +80,11 @@ function FieldItem({ field }: RenderFieldProps) {
     case 'paragraph':
       return <ParagraphField field={field} />;
     case 'shortText':
-      return <ShortTextField field={field} />;
+      return <ShortTextField field={field} fieldKey={fieldInfo.key} />;
     case 'longText':
-      return <LongTextField field={field} />;
+      return <LongTextField field={field} fieldKey={fieldInfo.key} />;
     case 'number':
-      return <NumberField field={field} />;
+      return <NumberField field={field} fieldKey={fieldInfo.key} />;
     case 'divider':
       return <DividerField field={field} />;
     case 'image':
@@ -76,6 +93,14 @@ function FieldItem({ field }: RenderFieldProps) {
       return <SingleChoiceField field={field} />;
     case 'multipleChoices':
       return <MultipleChoicesField field={field} />;
+    case 'date':
+      return <DateField field={field} />;
+    case 'time':
+      return <TimeField field={field} />;
+    case 'dateTime':
+      return <DateTimeField field={field} />;
+    case 'file':
+      return <FileField field={field} />;
     default:
       return (
         <div className="px-4 py-2">

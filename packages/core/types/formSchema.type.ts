@@ -97,6 +97,8 @@ export interface FormFieldFile {
   props: {
     label: string;
     required: boolean;
+    accept: string;
+    multiple: boolean;
   };
 }
 
@@ -154,14 +156,6 @@ export interface FormFieldImage {
   };
 }
 
-export interface FormFieldVideo {
-  id: string;
-  type: 'video';
-  props: {
-    src: string;
-  };
-}
-
 export interface FormFieldRow {
   id: string;
   type: 'row';
@@ -197,7 +191,6 @@ export type FormField =
   | FormFieldHeader
   | FormFieldParagraph
   | FormFieldImage
-  | FormFieldVideo
   | FormFieldRow
   | FormFieldColumn
   | FormFieldBlock;

@@ -4,6 +4,11 @@
   "version": "0.1.0",
   "type": "module",
   "main": "index.ts",
+  "keywords": [
+    "react",
+    "form",
+    "form-builder"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

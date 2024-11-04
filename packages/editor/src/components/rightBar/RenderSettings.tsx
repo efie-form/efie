@@ -15,7 +15,6 @@ import ParagraphSettings from './fieldSettings/ParagraphSettings.tsx';
 import ShortTextSettings from './fieldSettings/ShortTextSettings.tsx';
 import SingleChoiceSettings from './fieldSettings/SingleChoiceSettings.tsx';
 import TimeSettings from './fieldSettings/TimeSettings.tsx';
-import VideoSettings from './fieldSettings/VideoSettings.tsx';
 import type { FieldKeyPrefix } from '../../lib/genFieldKey.ts';
 
 interface RenderSettingsProps {
@@ -63,8 +62,6 @@ function FieldItem({ field, fieldKey }: RenderSettingsProps) {
       return <SingleChoiceSettings field={field} fieldKey={fieldKey} />;
     case 'time':
       return <TimeSettings field={field} fieldKey={fieldKey} />;
-    case 'video':
-      return <VideoSettings field={field} fieldKey={fieldKey} />;
     default:
       return;
   }
