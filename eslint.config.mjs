@@ -6,8 +6,10 @@ import reactHooks from 'eslint-plugin-react-hooks';
 
 export default [
   {
+    ignores: ['**/dist/**', '**/node_modules/**'],
+  },
+  {
     files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
-    ignores: ['**/node_modules/**', '**/dist/**'],
   },
   { languageOptions: { globals: globals.browser } },
   pluginJs.configs.recommended,
