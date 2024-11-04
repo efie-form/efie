@@ -125,14 +125,16 @@ test('find and return key of a field from given fields: item at root', () => {
 });
 
 test('find and return key of a field from given fields: item at second level', () => {
-  // @ts-ignore
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
   const field = sampleFields[1].children[0];
   const key = 'form.fields.1.children.0';
   expect(findFieldById(sampleFields, field.id)).toEqual({ field, key });
 });
 
 test('find and return key of a field from given fields: item at third level', () => {
-  // @ts-ignore
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
   const field = sampleFields[1].children[0].children[1].children[1];
   const key = 'form.fields.1.children.0.children.1.children.1';
   expect(findFieldById(sampleFields, field.id)).toEqual({ field, key });

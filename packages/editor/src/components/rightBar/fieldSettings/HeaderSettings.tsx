@@ -1,13 +1,14 @@
 import type { FormFieldHeader } from '@efie-form/core';
 import { FIELDS_NAME } from '../../../lib/constant.ts';
 import Input from '../../form/Input.tsx';
-import SettingsFieldBasic from '../../layouts/SettingsFieldBasic.tsx';
+import SettingsFieldVertical from '../../layouts/SettingsFieldVertical.tsx';
 import Select from '../../form/Select.tsx';
 import { Controller } from 'react-hook-form';
+import type { FieldKeyPrefix } from '../../../lib/genFieldKey.ts';
 
 interface HeaderSettingsProps {
   field: FormFieldHeader;
-  fieldKey: string;
+  fieldKey: FieldKeyPrefix;
 }
 
 function HeaderSettings({ field, fieldKey }: HeaderSettingsProps) {
@@ -20,7 +21,7 @@ function HeaderSettings({ field, fieldKey }: HeaderSettingsProps) {
         <div className="px-4 py-2 bg-neutral-100 text-neutral-800 typography-body2">
           Text
         </div>
-        <SettingsFieldBasic label="Font Size" divider>
+        <SettingsFieldVertical label="Font Size" divider>
           <Controller
             render={({ field: { value, onChange } }) => (
               <Input
@@ -36,8 +37,8 @@ function HeaderSettings({ field, fieldKey }: HeaderSettingsProps) {
             )}
             name={`${fieldKey}.props.font.size`}
           />
-        </SettingsFieldBasic>
-        <SettingsFieldBasic label="Tag" divider>
+        </SettingsFieldVertical>
+        <SettingsFieldVertical label="Tag" divider>
           <Controller
             render={({ field: { value, onChange } }) => (
               <Select
@@ -56,8 +57,8 @@ function HeaderSettings({ field, fieldKey }: HeaderSettingsProps) {
             )}
             name={`${fieldKey}.props.tag`}
           />
-        </SettingsFieldBasic>
-        <SettingsFieldBasic label="Text align" divider>
+        </SettingsFieldVertical>
+        <SettingsFieldVertical label="Text align" divider>
           <Controller
             render={({ field: { value, onChange } }) => (
               <Select
@@ -73,10 +74,10 @@ function HeaderSettings({ field, fieldKey }: HeaderSettingsProps) {
             )}
             name={`${fieldKey}.props.textAlign`}
           />
-        </SettingsFieldBasic>
-        <SettingsFieldBasic label="Color" divider>
+        </SettingsFieldVertical>
+        <SettingsFieldVertical label="Color" divider>
           abc
-        </SettingsFieldBasic>
+        </SettingsFieldVertical>
       </div>
     </div>
   );

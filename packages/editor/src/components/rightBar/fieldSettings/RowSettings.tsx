@@ -1,8 +1,9 @@
 import type { FormFieldRow } from '@efie-form/core';
+import type { FieldKeyPrefix } from '../../../lib/genFieldKey.ts';
 
 interface RowSettingsProps {
   field: FormFieldRow;
-  fieldKey: string;
+  fieldKey: FieldKeyPrefix;
 }
 
 function RowSettings({ field }: RowSettingsProps) {

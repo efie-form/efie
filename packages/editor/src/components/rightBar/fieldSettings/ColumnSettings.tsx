@@ -1,8 +1,9 @@
 import type { FormFieldColumn } from '@efie-form/core';
+import type { FieldKeyPrefix } from '../../../lib/genFieldKey.ts';
 
 interface ColumnSettingsProps {
   field: FormFieldColumn;
-  fieldKey: string;
+  fieldKey: FieldKeyPrefix;
 }
 
 function ColumnSettings({ field }: ColumnSettingsProps) {

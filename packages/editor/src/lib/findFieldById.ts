@@ -1,8 +1,9 @@
 import type { FormField } from '@efie-form/core';
+import type { FieldKeyPrefix } from './genFieldKey.ts';
 
 interface FindFieldByIdResult {
   field: FormField;
-  key: string;
+  key: FieldKeyPrefix;
 }
 
 export default function findFieldById(
@@ -15,7 +16,7 @@ export default function findFieldById(
     if (field.id === id) {
       return {
         field,
-        key: `${key}.${index}`,
+        key: `${key}.${index}` as FieldKeyPrefix,
       };
     }
     if ('children' in field) {

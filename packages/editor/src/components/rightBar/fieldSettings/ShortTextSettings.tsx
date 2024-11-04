@@ -1,12 +1,16 @@
 import type { FormFieldShortText } from '@efie-form/core';
 import { FIELDS_NAME } from '../../../lib/constant.ts';
-import SettingsFieldBasic from '../../layouts/SettingsFieldBasic.tsx';
+import SettingsFieldVertical from '../../layouts/SettingsFieldVertical.tsx';
 import Input from '../../form/Input.tsx';
 import { Controller } from 'react-hook-form';
+import SettingsFieldHorizontal from '../../layouts/SettingsFieldHorizontal.tsx';
+import Switch from '../../form/Switch.tsx';
+import FieldKeyProperty from '../common/FieldKeyProperty.tsx';
+import type { FieldKeyPrefix } from '../../../lib/genFieldKey.ts';
 
 interface ShortTextSettingsProps {
   field: FormFieldShortText;
-  fieldKey: string;
+  fieldKey: FieldKeyPrefix;
 }
 
 function ShortTextSettings({ field, fieldKey }: ShortTextSettingsProps) {
@@ -16,27 +20,37 @@ function ShortTextSettings({ field, fieldKey }: ShortTextSettingsProps) {
         <p className="typography-body1">{FIELDS_NAME[field.type]}</p>
       </div>
       <div>
-        <div className="px-4 py-2 bg-neutral-100 text-neutral-800 typography-body2">
+        <div className="px-4 py-2 bg-neutral-100 text-neutral-800 typography-body3 uppercase">
           General
         </div>
-        <SettingsFieldBasic label="Label" divider>
+        <FieldKeyProperty fieldKey={fieldKey} />
+        <SettingsFieldVertical label="Label" divider>
           <Controller
             key={`${fieldKey}.props.label`}
             render={({ field: { onChange, value } }) => (
-              <Input className="w-36" onChange={onChange} value={value} />
+              <Input onChange={onChange} value={value} />
             )}
             name={`${fieldKey}.props.label`}
           />
-        </SettingsFieldBasic>
-        <SettingsFieldBasic label="Placeholder" divider>
+        </SettingsFieldVertical>
+        <SettingsFieldVertical label="Placeholder" divider>
           <Controller
             key={`${fieldKey}.props.placeholder`}
             render={({ field: { onChange, value } }) => (
-              <Input className="w-36" onChange={onChange} value={value} />
+              <Input onChange={onChange} value={value} />
             )}
             name={`${fieldKey}.props.placeholder`}
           />
-        </SettingsFieldBasic>
+        </SettingsFieldVertical>
+        <SettingsFieldHorizontal label="Required">
+          <Controller
+            key={`${fieldKey}.props.required`}
+            render={({ field: { onChange, value } }) => (
+              <Switch onChange={onChange} checked={value} />
+            )}
+            name={`${fieldKey}.props.required`}
+          />
+        </SettingsFieldHorizontal>
       </div>
     </div>
   );

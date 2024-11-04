@@ -1,15 +1,26 @@
 import type { FormFieldShortText } from '@efie-form/core';
+import type { FieldKeyPrefix } from '../../lib/genFieldKey.ts';
+import { Controller } from 'react-hook-form';
 
 interface ShortTextFieldProps {
   field: FormFieldShortText;
+  fieldKey: FieldKeyPrefix;
 }
 
-function ShortTextField({ field }: ShortTextFieldProps) {
+function ShortTextField({ field, fieldKey }: ShortTextFieldProps) {
   return (
     <div className="p-2">
-      <p className="mb-2 typography-body2 text-neutral-800">
-        {field.props.label}
-      </p>
+      <Controller
+        render={({ field: { value, onChange } }) => (
+          <input
+            className="mb-2 typography-body2 text-neutral-800 focus:outline-none cursor-text w-full"
+            type="text"
+            value={value}
+            onChange={onChange}
+          />
+        )}
+        name={`${fieldKey}.props.label`}
+      />
       <input
         type="text"
         placeholder={field.props.placeholder}

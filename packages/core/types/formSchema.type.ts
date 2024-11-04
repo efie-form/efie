@@ -37,16 +37,19 @@ export interface FormFieldNumber {
   };
 }
 
+export interface OptionType {
+  label: string;
+  value: string;
+}
+
 export interface FormFieldSingleChoice {
   id: string;
   type: 'singleChoice';
   props: {
     label: string;
-    options: {
-      label: string;
-      value: string;
-    }[];
+    options: OptionType[];
     required: boolean;
+    isValueDifferent: boolean;
   };
 }
 
@@ -55,11 +58,9 @@ export interface FormFieldMultipleChoices {
   type: 'multipleChoices';
   props: {
     label: string;
-    options: {
-      label: string;
-      value: string;
-    }[];
+    options: OptionType[];
     required: boolean;
+    isValueDifferent: boolean;
   };
 }
 
@@ -96,6 +97,8 @@ export interface FormFieldFile {
   props: {
     label: string;
     required: boolean;
+    accept: string;
+    multiple: boolean;
   };
 }
 
@@ -153,14 +156,6 @@ export interface FormFieldImage {
   };
 }
 
-export interface FormFieldVideo {
-  id: string;
-  type: 'video';
-  props: {
-    src: string;
-  };
-}
-
 export interface FormFieldRow {
   id: string;
   type: 'row';
@@ -196,7 +191,6 @@ export type FormField =
   | FormFieldHeader
   | FormFieldParagraph
   | FormFieldImage
-  | FormFieldVideo
   | FormFieldRow
   | FormFieldColumn
   | FormFieldBlock;
