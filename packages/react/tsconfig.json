@@ -24,9 +24,5 @@
     "lib"
   ],
   "exclude": [
-    "lib/**/*.spec.tsx",
-    "lib/setupTests.tsx",
-    "lib/stories",
-    "lib/*.ts"
   ]
 }

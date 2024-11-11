@@ -8,9 +8,10 @@ import { useSettingsStore } from '../../../lib/state/settings.state.ts';
 function FieldPropertiesTab() {
   const { getValues } = useFormContext<FormSchema>();
   const { selectedFieldId } = useSettingsStore();
+
   const field = useMemo(
     () => findFieldById(getValues('form.fields'), selectedFieldId),
-    [selectedFieldId]
+    [selectedFieldId, getValues]
   );
 
   return (

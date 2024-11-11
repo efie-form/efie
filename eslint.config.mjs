@@ -23,6 +23,8 @@ export default [
     files: [
       // include all react projects here
       'packages/editor/**/*.{js,mjs,cjs,ts,jsx,tsx}',
+      'packages/form/**/*.{js,mjs,cjs,ts,jsx,tsx}',
+      'packages/react/**/*.{js,mjs,cjs,ts,jsx,tsx}',
       'demo/react/**/*.{js,mjs,cjs,ts,jsx,tsx}',
     ],
 

@@ -22,19 +22,18 @@ function App() {
   useEffect(() => {
     if (editor) return;
     setEditor(new Editor());
-  }, []);
+  }, [editor]);
 
   useEffect(() => {
     if (!editor || editor.isLoaded) return;
     editor.init();
     editor.setOnDataReset(reset);
-  }, [editor]);
+  }, [editor, reset]);
 
   useEffect(() => {
-    console.log(getValues());
     if (!editor) return;
     editor.setValue(getValues());
-  }, [watchAllFields]);
+  }, [watchAllFields, editor, getValues]);
 
   return (
     <>

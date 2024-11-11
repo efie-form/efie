@@ -145,7 +145,7 @@ export interface FormFieldImage {
   id: string;
   type: 'image';
   props: {
-    url: string;
+    src: string;
     alt: string;
     textAlign: 'left' | 'center' | 'right';
     objectFit: 'fill' | 'contain' | 'cover' | 'none' | 'scale-down';

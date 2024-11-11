@@ -6,8 +6,7 @@
   "scripts": {
     "dev:editor": "nx serve @efie-form/editor",
     "dev:react-builder-demo": "nx serve react-builder-demo",
-    "clean:node_modules": "find . -name \"node_modules\" -type d -prune -exec rm -rf '{}' +",
-    "lint": "eslint"
+    "lint": "eslint --fix"
   },
   "repository": {
     "type": "git",

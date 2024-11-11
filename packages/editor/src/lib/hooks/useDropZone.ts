@@ -49,7 +49,7 @@ export default function useDropZone() {
       dragPosition.index,
       movingFieldId
     );
-  }, [dragPosition]);
+  }, [dragPosition, getValues, movingFieldId]);
 
   const onDragOver = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
