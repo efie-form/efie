@@ -12,6 +12,7 @@ function LongTextProvider({ field, Component }: LongTextProviderProps) {
   if (!Component) return null;
 
   return createElement(Component, {
+    id: field.id,
     errors: {
       message: '',
     },

@@ -1,7 +1,7 @@
 import type { RowFieldProps } from '@efie-form/react/types/FieldProps.ts';
 
-function RowField({}: RowFieldProps) {
-  return <div></div>;
+function RowField({ children }: RowFieldProps) {
+  return <div className="efie-row">{children}</div>;
 }
 
 export default RowField;

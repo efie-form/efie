@@ -12,6 +12,7 @@ function ShortTextProvider({ field, Component }: ShortTextProviderProps) {
   if (!Component) return null;
 
   return createElement(Component, {
+    id: field.id,
     errors: {
       message: '',
     },

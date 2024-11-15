@@ -1,15 +1,18 @@
-import type { ComponentType } from 'react';
+import type { ElementType } from 'react';
 import { createElement } from 'react';
 import type { SingleChoiceFieldProps } from '../../types/FieldProps';
 import type { FormFieldSingleChoice } from '@efie-form/core';
 
 interface SingleChoiceProviderProps {
   field: FormFieldSingleChoice;
-  Component: ComponentType<SingleChoiceFieldProps>;
+  Component?: ElementType<SingleChoiceFieldProps>;
 }
 
 function SingleChoiceProvider({ field, Component }: SingleChoiceProviderProps) {
+  if (!Component) return null;
+
   return createElement(Component, {
+    id: field.id,
     errors: {
       message: '',
     },

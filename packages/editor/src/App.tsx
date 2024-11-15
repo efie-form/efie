@@ -33,6 +33,7 @@ function App() {
   useEffect(() => {
     if (!editor) return;
     editor.setValue(getValues());
+    console.log(getValues());
   }, [watchAllFields, editor, getValues]);
 
   return (

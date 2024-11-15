@@ -1,6 +1,7 @@
 import type { ElementType, ReactNode } from 'react';
 
 export interface ShortTextFieldProps {
+  id: string;
   value: string;
   onChange: (value: string) => void;
   label: string;
@@ -14,6 +15,7 @@ export interface ShortTextFieldProps {
 }
 
 export interface LongTextFieldProps {
+  id: string;
   value: string;
   onChange: (value: string) => void;
   label: string;
@@ -27,6 +29,7 @@ export interface LongTextFieldProps {
 }
 
 export interface NumberFieldProps {
+  id: string;
   value: string;
   onChange: (value: string) => void;
   label: string;
@@ -42,6 +45,7 @@ export interface NumberFieldProps {
 }
 
 export interface SingleChoiceFieldProps {
+  id: string;
   value: string;
   onChange: (value: string) => void;
   label: string;
@@ -58,6 +62,7 @@ export interface SingleChoiceFieldProps {
 }
 
 export interface MultipleChoicesFieldProps {
+  id: string;
   value: string[];
   onChange: (value: string[]) => void;
   label: string;
@@ -74,6 +79,7 @@ export interface MultipleChoicesFieldProps {
 }
 
 export interface DateFieldProps {
+  id: string;
   value: Date;
   onChange: (value: Date) => void;
   label: string;
@@ -86,6 +92,7 @@ export interface DateFieldProps {
 }
 
 export interface TimeFieldProps {
+  id: string;
   value: Date;
   onChange: (value: Date) => void;
   label: string;
@@ -98,6 +105,7 @@ export interface TimeFieldProps {
 }
 
 export interface DateTimeFieldProps {
+  id: string;
   value: Date;
   onChange: (value: Date) => void;
   label: string;
@@ -110,6 +118,7 @@ export interface DateTimeFieldProps {
 }
 
 export interface FileFieldProps {
+  id: string;
   value: File;
   onChange: (value: File) => void;
   label: string;
@@ -124,6 +133,7 @@ export interface FileFieldProps {
 }
 
 export interface DividerFieldProps {
+  id: string;
   // visible: boolean;
   color: string;
   width: number;
@@ -131,8 +141,9 @@ export interface DividerFieldProps {
 }
 
 export interface HeaderFieldProps {
+  id: string;
   // visible: boolean;
-  value: string;
+  text: string;
   tag: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
   textAlign: 'left' | 'center' | 'right';
   font: {
@@ -143,8 +154,9 @@ export interface HeaderFieldProps {
 }
 
 export interface ParagraphFieldProps {
+  id: string;
   // visible: boolean;
-  value: string;
+  text: string;
   textAlign: 'left' | 'center' | 'right';
   font: {
     size: number;
@@ -154,6 +166,7 @@ export interface ParagraphFieldProps {
 }
 
 export interface ImageFieldProps {
+  id: string;
   // visible: boolean;
   src: string;
   alt: string;
@@ -164,17 +177,20 @@ export interface ImageFieldProps {
 }
 
 export interface RowFieldProps {
+  id: string;
   // visible: boolean;
   children: ReactNode;
 }
 
 export interface ColumnFieldProps {
+  id: string;
   // visible: boolean;
   children: ReactNode;
   width: string;
 }
 
 export interface BlockFieldProps {
+  id: string;
   // visible: boolean;
   children: ReactNode;
 }

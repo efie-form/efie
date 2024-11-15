@@ -7,7 +7,107 @@ const data: FormSchema = {
   form: {
     fields: [
       {
-        id: 'fjEfLuXvsx',
+        id: 'xSFhkWrYuF',
+        type: 'header',
+        props: {
+          text: 'Header',
+          font: {
+            size: 24,
+            unit: 'px',
+            weight: 400,
+          },
+          tag: 'h1',
+          textAlign: 'center',
+        },
+      },
+      {
+        id: 'EXaTnbdLKr',
+        type: 'paragraph',
+        props: {
+          text: 'Paragraph',
+          font: {
+            size: 16,
+            unit: 'px',
+            weight: 400,
+          },
+          textAlign: 'center',
+        },
+      },
+      {
+        id: 'qQwleBPnba',
+        type: 'image',
+        props: {
+          src: 'https://img.freepik.com/free-vector/minimalist-mountain-hiking-facebook-profile-cover_23-2149188693.jpg',
+          alt: 'Placeholder',
+          objectFit: 'contain',
+          textAlign: 'center',
+          width: {
+            value: 50,
+            autoWidth: true,
+          },
+        },
+      },
+      {
+        id: 'ixeopPxMcI',
+        type: 'divider',
+        props: {
+          color: '#000000',
+          style: 'solid',
+          width: 100,
+        },
+      },
+      {
+        id: 'QXeHilTqNE',
+        type: 'row',
+        children: [
+          {
+            id: 'nrlJvRQvDM',
+            type: 'column',
+            props: {
+              width: 30,
+            },
+            children: [
+              {
+                id: 'dutrKWFYxO',
+                type: 'paragraph',
+                props: {
+                  text: 'Paragraph',
+                  font: {
+                    size: 16,
+                    unit: 'px',
+                    weight: 400,
+                  },
+                  textAlign: 'center',
+                },
+              },
+            ],
+          },
+          {
+            id: 'TvMfdMUJuu',
+            type: 'column',
+            props: {
+              width: 70,
+            },
+            children: [
+              {
+                id: 'ZueIaKFIcW',
+                type: 'paragraph',
+                props: {
+                  text: 'Paragraph',
+                  font: {
+                    size: 16,
+                    unit: 'px',
+                    weight: 400,
+                  },
+                  textAlign: 'center',
+                },
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: 'LmSMSHvDmH',
         type: 'shortText',
         props: {
           label: 'Short Text',
@@ -16,7 +116,7 @@ const data: FormSchema = {
         },
       },
       {
-        id: 'NpcvHKGrsq',
+        id: 'jPYqMGFhDh',
         type: 'longText',
         props: {
           label: 'Long Text',
@@ -25,7 +125,7 @@ const data: FormSchema = {
         },
       },
       {
-        id: 'qnAecBIYge',
+        id: 'vnSNHtKXFK',
         type: 'number',
         props: {
           label: 'Number',
@@ -36,7 +136,30 @@ const data: FormSchema = {
         },
       },
       {
-        id: 'XBXzzLCcKX',
+        id: 'VZFSiopjvM',
+        type: 'singleChoice',
+        props: {
+          label: 'Single Choice',
+          options: [
+            {
+              label: 'Option 1',
+              value: 'Option 1',
+            },
+            {
+              label: 'Option 2',
+              value: 'Option 2',
+            },
+            {
+              label: 'Option 3',
+              value: 'Option 3',
+            },
+          ],
+          isValueDifferent: false,
+          required: false,
+        },
+      },
+      {
+        id: 'ozbNWwoTEg',
         type: 'multipleChoices',
         props: {
           label: 'Multiple Choice',
@@ -59,7 +182,7 @@ const data: FormSchema = {
         },
       },
       {
-        id: 'iejdsKHENe',
+        id: 'KQvfeOMdTA',
         type: 'date',
         props: {
           label: 'Date',
@@ -67,7 +190,7 @@ const data: FormSchema = {
         },
       },
       {
-        id: 'LXkwdXweTp',
+        id: 'dWRVNvpyiu',
         type: 'time',
         props: {
           label: 'Time',
@@ -75,7 +198,7 @@ const data: FormSchema = {
         },
       },
       {
-        id: 'nRaUycDRzt',
+        id: 'xDPXFVRycp',
         type: 'dateTime',
         props: {
           label: 'Date & Time',
@@ -83,7 +206,7 @@ const data: FormSchema = {
         },
       },
       {
-        id: 'QWjevtnazO',
+        id: 'rJOrzffkap',
         type: 'file',
         props: {
           label: 'File',
@@ -93,153 +216,12 @@ const data: FormSchema = {
         },
       },
       {
-        id: 'KCQJziidYX',
+        id: 'nnyTMCJtVc',
         type: 'divider',
         props: {
           color: '#000000',
           style: 'solid',
           width: 100,
-        },
-      },
-      {
-        id: 'KwdMkhnmaF',
-        type: 'header',
-        props: {
-          text: 'Header',
-          font: {
-            size: 24,
-            unit: 'px',
-            weight: 400,
-          },
-          tag: 'h1',
-          textAlign: 'center',
-        },
-      },
-      {
-        id: 'FQpnlIPcOp',
-        type: 'paragraph',
-        props: {
-          text: 'Paragraph',
-          font: {
-            size: 16,
-            unit: 'px',
-            weight: 400,
-          },
-          textAlign: 'center',
-        },
-      },
-      {
-        id: 'PnmALPuNnz',
-        type: 'image',
-        props: {
-          url: '',
-          alt: 'Placeholder',
-          objectFit: 'contain',
-          textAlign: 'center',
-          width: {
-            value: 50,
-            autoWidth: true,
-          },
-        },
-      },
-      {
-        id: 'rnQnPHwAnc',
-        type: 'row',
-        children: [
-          {
-            id: 'LZbfuFDfDc',
-            type: 'column',
-            props: {
-              width: 50,
-            },
-            children: [
-              {
-                id: 'UdEGuHwpHs',
-                type: 'header',
-                props: {
-                  text: 'Header',
-                  font: {
-                    size: 24,
-                    unit: 'px',
-                    weight: 400,
-                  },
-                  tag: 'h1',
-                  textAlign: 'center',
-                },
-              },
-              {
-                id: 'KKohvraQVO',
-                type: 'paragraph',
-                props: {
-                  text: 'Paragraph',
-                  font: {
-                    size: 16,
-                    unit: 'px',
-                    weight: 400,
-                  },
-                  textAlign: 'center',
-                },
-              },
-            ],
-          },
-          {
-            id: 'AyllNTNCnE',
-            type: 'column',
-            props: {
-              width: 50,
-            },
-            children: [
-              {
-                id: 'uWAwPtwdkC',
-                type: 'header',
-                props: {
-                  text: 'Header',
-                  font: {
-                    size: 24,
-                    unit: 'px',
-                    weight: 400,
-                  },
-                  tag: 'h1',
-                  textAlign: 'center',
-                },
-              },
-              {
-                id: 'YzCxOjUpkP',
-                type: 'paragraph',
-                props: {
-                  text: 'Paragraph',
-                  font: {
-                    size: 16,
-                    unit: 'px',
-                    weight: 400,
-                  },
-                  textAlign: 'center',
-                },
-              },
-            ],
-          },
-        ],
-      },
-      {
-        id: 'rjRsraxVDb',
-        type: 'divider',
-        props: {
-          color: '#000000',
-          style: 'solid',
-          width: 100,
-        },
-      },
-      {
-        id: 'WyLblKiOzR',
-        type: 'paragraph',
-        props: {
-          text: 'Paragraph',
-          font: {
-            size: 16,
-            unit: 'px',
-            weight: 400,
-          },
-          textAlign: 'center',
         },
       },
     ],

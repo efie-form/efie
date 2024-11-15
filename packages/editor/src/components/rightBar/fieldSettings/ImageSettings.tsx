@@ -25,11 +25,11 @@ function ImageSettings({ field, fieldKey }: ImageSettingsProps) {
 
         <SettingsFieldVertical label="Image Link" divider>
           <Controller
-            key={`${fieldKey}.props.url`}
+            key={`${fieldKey}.props.src`}
             render={({ field: { onChange, value } }) => (
               <Input onChange={onChange} value={value} />
             )}
-            name={`${fieldKey}.props.url`}
+            name={`${fieldKey}.props.src`}
           />
         </SettingsFieldVertical>
         <SettingsFieldVertical label="Alternate Name" divider>

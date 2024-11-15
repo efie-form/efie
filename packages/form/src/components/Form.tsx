@@ -22,10 +22,12 @@ interface FormProps {
 }
 
 function Form({ schema }: FormProps) {
-  console.log(schema);
-
   return (
-    <div>
+    <div
+      style={{
+        '--color-primary': '#007bff',
+      }}
+    >
       <ReactForm
         schema={schema}
         shortText={ShortTextField}

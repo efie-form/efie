@@ -1,15 +1,18 @@
-import type { ComponentType } from 'react';
+import type { ElementType } from 'react';
 import { createElement } from 'react';
 import type { NumberFieldProps } from '../../types/FieldProps';
 import type { FormFieldNumber } from '@efie-form/core';
 
 interface NumberProviderProps {
   field: FormFieldNumber;
-  Component: ComponentType<NumberFieldProps>;
+  Component?: ElementType<NumberFieldProps>;
 }
 
 function NumberProvider({ field, Component }: NumberProviderProps) {
+  if (!Component) return null;
+
   return createElement(Component, {
+    id: field.id,
     errors: {
       message: '',
     },
