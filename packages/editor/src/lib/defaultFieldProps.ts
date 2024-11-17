@@ -143,6 +143,7 @@ const header = (): FormFieldHeader => ({
       weight: 400,
     },
     tag: 'h1',
+    color: '#000000',
     textAlign: 'center',
   },
 });
@@ -152,6 +153,7 @@ const paragraph = (): FormFieldParagraph => ({
   type: 'paragraph',
   props: {
     text: 'Paragraph',
+    color: '#000000',
     font: {
       size: 16,
       unit: 'px',

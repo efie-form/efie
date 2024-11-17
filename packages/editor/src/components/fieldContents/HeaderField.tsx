@@ -13,6 +13,7 @@ function HeaderField({ field }: HeaderFieldProps) {
       style={{
         fontSize: `${field.props.font.size}px`,
         textAlign: textAlignMap[field.props.textAlign],
+        color: field.props.color,
       }}
     >
       {field.props.text}

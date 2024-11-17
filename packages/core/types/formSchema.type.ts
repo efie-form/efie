@@ -119,6 +119,7 @@ export interface FormFieldHeader {
     text: string;
     tag: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
     textAlign: 'left' | 'center' | 'right';
+    color: string;
     font: {
       size: number;
       unit: 'px' | 'em' | 'rem';
@@ -133,6 +134,7 @@ export interface FormFieldParagraph {
   props: {
     text: string;
     textAlign: 'left' | 'center' | 'right';
+    color: string;
     font: {
       size: number;
       unit: 'px' | 'em' | 'rem';

@@ -5,6 +5,8 @@ import SettingsFieldVertical from '../../layouts/SettingsFieldVertical.tsx';
 import Select from '../../form/Select.tsx';
 import { Controller } from 'react-hook-form';
 import type { FieldKeyPrefix } from '../../../lib/genFieldKey.ts';
+import SettingsFieldHorizontal from '../../layouts/SettingsFieldHorizontal.tsx';
+import ColorPicker from '../../form/ColorPicker.tsx';
 
 interface HeaderSettingsProps {
   field: FormFieldHeader;
@@ -75,9 +77,14 @@ function HeaderSettings({ field, fieldKey }: HeaderSettingsProps) {
             name={`${fieldKey}.props.textAlign`}
           />
         </SettingsFieldVertical>
-        <SettingsFieldVertical label="Color" divider>
-          abc
-        </SettingsFieldVertical>
+        <SettingsFieldHorizontal label="Color" divider>
+          <Controller
+            render={({ field: { value, onChange } }) => (
+              <ColorPicker value={value} onChange={onChange} />
+            )}
+            name={`${fieldKey}.props.color`}
+          />
+        </SettingsFieldHorizontal>
       </div>
     </div>
   );
