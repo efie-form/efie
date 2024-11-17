@@ -3,11 +3,16 @@ import { useFormContext } from 'react-hook-form';
 import type { FormSchema } from '@efie-form/core';
 import RenderField from './RenderField.tsx';
 import { useSettingsStore } from '../lib/state/settings.state.ts';
+import {
+  RIGHT_BAR_TABS,
+  useRightBarState,
+} from '../lib/state/right-bar.state.ts';
 
 function FormContent() {
   const dropZoneProps = useDropZone();
   const { watch } = useFormContext<FormSchema>();
   const { setSelectedFieldId } = useSettingsStore();
+  const setActiveTab = useRightBarState((state) => state.setActiveTab);
 
   return (
     <div
@@ -15,6 +20,7 @@ function FormContent() {
       {...dropZoneProps}
       onClick={() => {
         setSelectedFieldId(null);
+        setActiveTab(RIGHT_BAR_TABS.LAYOUT);
       }}
     >
       <div className="p-4">

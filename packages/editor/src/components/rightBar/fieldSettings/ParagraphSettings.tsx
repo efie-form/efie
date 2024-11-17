@@ -5,6 +5,8 @@ import { Controller } from 'react-hook-form';
 import Input from '../../form/Input.tsx';
 import Select from '../../form/Select.tsx';
 import type { FieldKeyPrefix } from '../../../lib/genFieldKey.ts';
+import SettingsFieldHorizontal from '../../layouts/SettingsFieldHorizontal.tsx';
+import ColorPicker from '../../form/ColorPicker.tsx';
 
 interface ParagraphSettingsProps {
   field: FormFieldParagraph;
@@ -57,6 +59,14 @@ function ParagraphSettings({ field, fieldKey }: ParagraphSettingsProps) {
             name={`${fieldKey}.props.textAlign`}
           />
         </SettingsFieldVertical>
+        <SettingsFieldHorizontal label="Color" divider>
+          <Controller
+            render={({ field: { value, onChange } }) => (
+              <ColorPicker value={value} onChange={onChange} />
+            )}
+            name={`${fieldKey}.props.color`}
+          />
+        </SettingsFieldHorizontal>
       </div>
     </div>
   );

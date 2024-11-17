@@ -17,7 +17,7 @@ function ImageField({ field }: ImageFieldProps) {
       }}
     >
       <img
-        src={field.props.url || DEFAULT_IMAGE_URL}
+        src={field.props.src || DEFAULT_IMAGE_URL}
         alt={field.props.alt}
         className="text-neutral-800 inline-block"
         style={{

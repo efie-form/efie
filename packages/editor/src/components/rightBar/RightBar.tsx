@@ -1,19 +1,31 @@
-import { useState } from 'react';
 import { HiMiniInformationCircle } from 'react-icons/hi2';
 import FieldPropertiesTab from './tabs/FieldPropertiesTab.tsx';
 import { cn } from '../../lib/utils.ts';
 import LayoutPropertiesTab from './tabs/LayoutPropertiesTab.tsx';
 import { AiFillLayout } from 'react-icons/ai';
+import type { RightBarTab } from '../../lib/state/right-bar.state.ts';
+import {
+  RIGHT_BAR_TABS,
+  useRightBarState,
+} from '../../lib/state/right-bar.state.ts';
+import type { ElementType } from 'react';
 
-const tabs = [
+interface Tab {
+  id: RightBarTab;
+  label: string;
+  Icon: ElementType;
+  tab: ElementType;
+}
+
+const tabs: Tab[] = [
   {
-    id: 'layout',
+    id: RIGHT_BAR_TABS.LAYOUT,
     label: 'Layout',
     Icon: AiFillLayout,
     tab: LayoutPropertiesTab,
   },
   {
-    id: 'properties',
+    id: RIGHT_BAR_TABS.FIELD_SETTINGS,
     label: 'Properties',
     Icon: HiMiniInformationCircle,
     tab: FieldPropertiesTab,
@@ -21,7 +33,7 @@ const tabs = [
 ];
 
 function RightBar() {
-  const [activeTab, setActiveTab] = useState(tabs[1].id);
+  const { activeTab, setActiveTab } = useRightBarState();
   const TabContent = tabs.find((tab) => tab.id === activeTab)?.tab;
 
   return (

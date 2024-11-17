@@ -5,6 +5,8 @@ import Input from '../../form/Input.tsx';
 import { Controller } from 'react-hook-form';
 import Select from '../../form/Select.tsx';
 import type { FieldKeyPrefix } from '../../../lib/genFieldKey.ts';
+import ColorPicker from '../../form/ColorPicker.tsx';
+import SettingsFieldHorizontal from '../../layouts/SettingsFieldHorizontal.tsx';
 
 interface DividerSettingsProps {
   field: FormFieldDivider;
@@ -60,13 +62,15 @@ function DividerSettings({ field, fieldKey }: DividerSettingsProps) {
           />
         </SettingsFieldVertical>
 
-        <SettingsFieldVertical label="Color" divider>
+        <SettingsFieldHorizontal label="Color" divider>
           <Controller
             key={`${fieldKey}.props.color`}
-            render={({ field: { value } }) => <>{value}</>}
+            render={({ field: { value, onChange } }) => (
+              <ColorPicker value={value} onChange={onChange} />
+            )}
             name={`${fieldKey}.props.color`}
           />
-        </SettingsFieldVertical>
+        </SettingsFieldHorizontal>
       </div>
     </div>
   );

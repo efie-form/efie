@@ -24,6 +24,10 @@ import DateTimeField from './fieldContents/DateTimeField.tsx';
 import FileField from './fieldContents/FileField.tsx';
 import { cn } from '../lib/utils.ts';
 import useFieldInfo from '../lib/hooks/useFieldInfo.ts';
+import {
+  RIGHT_BAR_TABS,
+  useRightBarState,
+} from '../lib/state/right-bar.state.ts';
 
 interface RenderFieldProps {
   field: FormField;
@@ -33,6 +37,7 @@ interface RenderFieldProps {
 function RenderField({ field, noSelect }: RenderFieldProps) {
   const { registerProps } = useMoveField();
   const { setSelectedFieldId, selectedFieldId } = useSettingsStore();
+  const setActiveTab = useRightBarState((state) => state.setActiveTab);
 
   return (
     <>
@@ -54,6 +59,7 @@ function RenderField({ field, noSelect }: RenderFieldProps) {
           onClick: (e: MouseEvent) => {
             e.stopPropagation();
             setSelectedFieldId(field.id);
+            setActiveTab(RIGHT_BAR_TABS.FIELD_SETTINGS);
           },
         })}
       >

@@ -11,6 +11,7 @@ function ParagraphField({ field }: ParagraphFieldProps) {
       style={{
         textAlign: textAlignMap[field.props.textAlign],
         fontSize: `${field.props.font.size}px`,
+        color: field.props.color,
       }}
     >
       {field.props.text}
