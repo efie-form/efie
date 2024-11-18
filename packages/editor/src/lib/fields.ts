@@ -9,7 +9,11 @@ import {
 import { BsTextareaResize } from 'react-icons/bs';
 import { RiText } from 'react-icons/ri';
 import { MdCheckBox, MdRadioButtonChecked, MdUpload } from 'react-icons/md';
-import { RxDividerHorizontal, RxTextAlignCenter } from 'react-icons/rx';
+import {
+  RxButton,
+  RxDividerHorizontal,
+  RxTextAlignCenter,
+} from 'react-icons/rx';
 import { FaImage } from 'react-icons/fa6';
 import { HiOutlineViewColumns } from 'react-icons/hi2';
 import type { FormFieldType } from '@efie-form/core';
@@ -84,6 +88,11 @@ export const fieldGroup: FieldGroup[] = [
     id: 'static',
     label: 'Static',
     children: [
+      {
+        type: 'button',
+        label: FIELDS_NAME.button,
+        Icon: RxButton,
+      },
       {
         type: 'divider',
         label: FIELDS_NAME.divider,

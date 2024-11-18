@@ -7,6 +7,7 @@ import Select from '../../form/Select.tsx';
 import type { FieldKeyPrefix } from '../../../lib/genFieldKey.ts';
 import ColorPicker from '../../form/ColorPicker.tsx';
 import SettingsFieldHorizontal from '../../layouts/SettingsFieldHorizontal.tsx';
+import Slider from '../../form/Slider.tsx';
 
 interface DividerSettingsProps {
   field: FormFieldDivider;
@@ -27,23 +28,40 @@ function DividerSettings({ field, fieldKey }: DividerSettingsProps) {
           <Controller
             key={`${fieldKey}.props.width`}
             render={({ field: { value, onChange } }) => (
-              <Input
-                className="w-24"
-                suffix="%"
-                suffixType="text"
-                onChange={onChange}
-                value={value}
-                inputProps={{
-                  type: 'number',
-                  max: 100,
-                  min: 0,
-                }}
-              />
+              <div className="flex gap-4">
+                <Slider
+                  value={value}
+                  onChange={onChange}
+                  min={0}
+                  max={100}
+                  step={1}
+                />
+                <p className="typography-body3 text-neutral-700">{value}%</p>
+              </div>
             )}
             name={`${fieldKey}.props.width`}
           />
         </SettingsFieldVertical>
 
+        <SettingsFieldVertical label="Height" divider>
+          <Controller
+            key={`${fieldKey}.props.height`}
+            render={({ field: { value, onChange } }) => (
+              <Input
+                value={value}
+                onChange={onChange}
+                className="w-28"
+                suffix="px"
+                suffixType="text"
+                inputProps={{
+                  type: 'number',
+                  min: 0,
+                }}
+              />
+            )}
+            name={`${fieldKey}.props.height`}
+          />
+        </SettingsFieldVertical>
         <SettingsFieldVertical label="Style" divider>
           <Controller
             key={`${fieldKey}.props.style`}

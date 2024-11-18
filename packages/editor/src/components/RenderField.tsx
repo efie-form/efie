@@ -28,6 +28,7 @@ import {
   RIGHT_BAR_TABS,
   useRightBarState,
 } from '../lib/state/right-bar.state.ts';
+import ButtonField from './fieldContents/ButtonField.tsx';
 
 interface RenderFieldProps {
   field: FormField;
@@ -107,6 +108,8 @@ function FieldItem({ field }: RenderFieldProps) {
       return <DateTimeField field={field} />;
     case 'file':
       return <FileField field={field} />;
+    case 'button':
+      return <ButtonField field={field} />;
     default:
       return (
         <div className="px-4 py-2">

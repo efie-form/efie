@@ -8,10 +8,15 @@ import {
   useRightBarState,
 } from '../lib/state/right-bar.state.ts';
 
+const SCREEN_SIZES = {
+  mobile: 375,
+  desktop: 768,
+};
+
 function FormContent() {
   const dropZoneProps = useDropZone();
   const { watch } = useFormContext<FormSchema>();
-  const { setSelectedFieldId } = useSettingsStore();
+  const { setSelectedFieldId, mode } = useSettingsStore();
   const setActiveTab = useRightBarState((state) => state.setActiveTab);
 
   return (
@@ -24,7 +29,12 @@ function FormContent() {
       }}
     >
       <div className="p-4">
-        <div className="bg-white min-h-20 rounded-lg p-4">
+        <div
+          className="bg-white min-h-20 rounded-lg p-4 w-full mx-auto transition-all"
+          style={{
+            maxWidth: SCREEN_SIZES[mode],
+          }}
+        >
           {watch('form.fields').map((field) => (
             <RenderField field={field} key={field.id} />
           ))}
