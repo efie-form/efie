@@ -13,6 +13,7 @@ function DividerField({ field }: DividerFieldProps) {
           width: `${field.props.width}%`,
           borderStyle: field.props.style,
           borderColor: field.props.color,
+          borderTopWidth: `${field.props.height}px`,
         }}
       />
     </div>

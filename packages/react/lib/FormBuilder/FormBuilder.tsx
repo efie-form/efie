@@ -31,12 +31,12 @@ const FormBuilder = forwardRef<Wrapper, FormBuilderProps>(
           id: DIV_ID,
         })
       );
-    }, []);
+    }, [editor]);
 
     useEffect(() => {
       if (!editor || !json) return;
       editor.resetValue(json);
-    }, [json]);
+    }, [editor, json]);
 
     useEffect(() => {
       if (!editor || isLoaded) return;
@@ -44,7 +44,7 @@ const FormBuilder = forwardRef<Wrapper, FormBuilderProps>(
       setIsLoaded(true);
       editor.init();
       editor?.setOnValueChange(setJson);
-    }, [editor]);
+    }, [editor, isLoaded, setJson]);
 
     return <div id={DIV_ID} />;
   }

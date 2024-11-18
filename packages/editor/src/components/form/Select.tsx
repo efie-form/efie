@@ -28,7 +28,7 @@ function Select({
       value={inputValue}
       onChange={(e) => setInputValue(e.target.value)}
       className={cn(
-        'w-full border border-neutral-200 rounded-md bg-white outline-none typography-body3 py-1 px-1',
+        'w-full border border-neutral-200 text-neutral-800 rounded-md bg-white outline-none typography-body3 py-1 px-1',
         className
       )}
     >

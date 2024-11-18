@@ -1,6 +1,7 @@
 import type {
   FormField,
   FormFieldBlock,
+  FormFieldButton,
   FormFieldColumn,
   FormFieldDate,
   FormFieldDateTime,
@@ -129,6 +130,7 @@ const divider = (): FormFieldDivider => ({
     color: '#000000',
     style: 'solid',
     width: 100,
+    height: 1,
   },
 });
 
@@ -167,7 +169,7 @@ const image = (): FormFieldImage => ({
   id: generateId(ID_LENGTH),
   type: 'image',
   props: {
-    url: '',
+    src: '',
     alt: 'Placeholder',
     objectFit: 'contain',
     textAlign: 'center',
@@ -216,6 +218,40 @@ const block = (): FormFieldBlock => ({
   children: [],
 });
 
+const button = (): FormFieldButton => ({
+  id: generateId(ID_LENGTH),
+  type: 'button',
+  props: {
+    label: 'Submit',
+    color: '#FFFFFF',
+    bgColor: '#5083a7',
+    font: {
+      size: 16,
+      unit: 'px',
+      weight: 400,
+    },
+    fullWidth: false,
+    btnType: 'submit',
+    border: {
+      color: '#000000',
+      width: 0,
+      radius: {
+        topLeft: 6,
+        topRight: 6,
+        bottomRight: 6,
+        bottomLeft: 6,
+      },
+    },
+    padding: {
+      top: 6,
+      right: 12,
+      bottom: 6,
+      left: 12,
+    },
+    align: 'center',
+  },
+});
+
 const defaultFieldProps = {
   shortText,
   longText,
@@ -233,6 +269,7 @@ const defaultFieldProps = {
   paragraph,
   singleChoice,
   time,
+  button,
 } satisfies Record<FormFieldType, () => FormField>;
 
 export default defaultFieldProps;

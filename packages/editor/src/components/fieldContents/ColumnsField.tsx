@@ -12,7 +12,7 @@ interface ColumnsFieldProps {
 
 function ColumnsField({ field }: ColumnsFieldProps) {
   return (
-    <div>
+    <div className="p-2">
       {field.children.map((child) => (
         <RenderField key={`${field.id}-${child.id}`} field={child} />
       ))}

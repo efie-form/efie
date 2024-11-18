@@ -16,6 +16,7 @@ import ShortTextSettings from './fieldSettings/ShortTextSettings.tsx';
 import SingleChoiceSettings from './fieldSettings/SingleChoiceSettings.tsx';
 import TimeSettings from './fieldSettings/TimeSettings.tsx';
 import type { FieldKeyPrefix } from '../../lib/genFieldKey.ts';
+import ButtonSettings from './fieldSettings/ButtonSettings.tsx';
 
 interface RenderSettingsProps {
   field?: FormField;
@@ -62,6 +63,8 @@ function FieldItem({ field, fieldKey }: RenderSettingsProps) {
       return <SingleChoiceSettings field={field} fieldKey={fieldKey} />;
     case 'time':
       return <TimeSettings field={field} fieldKey={fieldKey} />;
+    case 'button':
+      return <ButtonSettings field={field} fieldKey={fieldKey} />;
     default:
       return;
   }

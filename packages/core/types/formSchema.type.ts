@@ -108,6 +108,7 @@ export interface FormFieldDivider {
   props: {
     color: string;
     width: number;
+    height: number;
     style: 'solid' | 'dashed' | 'dotted';
   };
 }
@@ -179,6 +180,40 @@ export interface FormFieldBlock {
   children: FormField[];
 }
 
+export interface FormFieldButton {
+  id: string;
+  type: 'button';
+  props: {
+    label: string;
+    color: string;
+    bgColor: string;
+    btnType: 'submit' | 'button';
+    fullWidth: boolean;
+    font: {
+      size: number;
+      unit: 'px' | 'em' | 'rem';
+      weight: number;
+    };
+    border: {
+      width: number;
+      color: string;
+      radius: {
+        topLeft: number;
+        topRight: number;
+        bottomRight: number;
+        bottomLeft: number;
+      };
+    };
+    padding: {
+      top: number;
+      right: number;
+      bottom: number;
+      left: number;
+    };
+    align: 'left' | 'center' | 'right';
+  };
+}
+
 export type FormField =
   | FormFieldShortText
   | FormFieldLongText
@@ -195,6 +230,7 @@ export type FormField =
   | FormFieldImage
   | FormFieldRow
   | FormFieldColumn
-  | FormFieldBlock;
+  | FormFieldBlock
+  | FormFieldButton;
 
 export type FormFieldType = FormField['type'];

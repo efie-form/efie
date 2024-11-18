@@ -29,6 +29,7 @@ export const FIELDS_NAME = {
   longText: 'Long Text',
   date: 'Date',
   dateTime: 'Date & Time',
+  button: 'Button',
 } satisfies Record<FormFieldType, string>;
 
 export const textAlignMap = {
