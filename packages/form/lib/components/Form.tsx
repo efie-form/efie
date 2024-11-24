@@ -1,3 +1,4 @@
+import 'react';
 import type { FormSchema } from '@efie-form/core';
 import { ReactForm } from '@efie-form/react';
 import ShortTextField from './fields/shortTextField.tsx';
@@ -16,6 +17,8 @@ import MultipleChoicesField from './fields/MultipleChoicesField.tsx';
 import SingleChoiceField from './fields/SingleChoiceField.tsx';
 import NumberField from './fields/NumberField.tsx';
 import ParagraphField from './fields/ParagraphField.tsx';
+import '../styles/index.css';
+import ContainerField from './fields/ContainerField.tsx';
 
 interface FormProps {
   schema: FormSchema;
@@ -23,31 +26,26 @@ interface FormProps {
 
 function Form({ schema }: FormProps) {
   return (
-    <div
-      style={{
-        '--color-primary': '#007bff',
-      }}
-    >
-      <ReactForm
-        schema={schema}
-        shortText={ShortTextField}
-        longText={LongTextField}
-        block={BlockField}
-        column={ColumnField}
-        row={RowField}
-        date={DateField}
-        time={TimeField}
-        dateTime={DateTimeField}
-        divider={DividerField}
-        file={FileField}
-        header={HeaderField}
-        image={ImageField}
-        multipleChoices={MultipleChoicesField}
-        singleChoice={SingleChoiceField}
-        number={NumberField}
-        paragraph={ParagraphField}
-      />
-    </div>
+    <ReactForm
+      schema={schema}
+      container={ContainerField}
+      shortText={ShortTextField}
+      longText={LongTextField}
+      block={BlockField}
+      column={ColumnField}
+      row={RowField}
+      date={DateField}
+      time={TimeField}
+      dateTime={DateTimeField}
+      divider={DividerField}
+      file={FileField}
+      header={HeaderField}
+      image={ImageField}
+      multipleChoices={MultipleChoicesField}
+      singleChoice={SingleChoiceField}
+      number={NumberField}
+      paragraph={ParagraphField}
+    />
   );
 }
 

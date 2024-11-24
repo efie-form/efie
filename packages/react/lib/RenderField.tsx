@@ -64,8 +64,9 @@ function RenderField({ field, ...props }: RenderFieldProps) {
     case 'row':
       return <RowProvider field={field} Component={props.row} {...props} />;
     case 'number':
-    default:
       return <NumberProvider field={field} Component={props.number} />;
+    default:
+      return null;
   }
 }
 

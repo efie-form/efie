@@ -195,6 +195,10 @@ export interface BlockFieldProps {
   children: ReactNode;
 }
 
+export interface ContainerFieldProps {
+  children: ReactNode;
+}
+
 export interface FieldPropsMap {
   shortText: ElementType<ShortTextFieldProps>;
   longText: ElementType<LongTextFieldProps>;
@@ -212,4 +216,5 @@ export interface FieldPropsMap {
   row: ElementType<RowFieldProps>;
   column: ElementType<ColumnFieldProps>;
   block: ElementType<BlockFieldProps>;
+  container: ElementType<ContainerFieldProps>;
 }
