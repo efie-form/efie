@@ -1,3 +1,23 @@
+interface BorderRadius {
+  topLeft: number;
+  topRight: number;
+  bottomRight: number;
+  bottomLeft: number;
+}
+
+interface Padding {
+  top: number;
+  right: number;
+  bottom: number;
+  left: number;
+}
+
+interface Font {
+  size: number;
+  unit: 'px' | 'em' | 'rem';
+  weight: number;
+}
+
 export interface FormSchema {
   version: string;
   form: {
@@ -121,11 +141,7 @@ export interface FormFieldHeader {
     tag: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
     textAlign: 'left' | 'center' | 'right';
     color: string;
-    font: {
-      size: number;
-      unit: 'px' | 'em' | 'rem';
-      weight: number;
-    };
+    font: Font;
   };
 }
 
@@ -136,11 +152,7 @@ export interface FormFieldParagraph {
     text: string;
     textAlign: 'left' | 'center' | 'right';
     color: string;
-    font: {
-      size: number;
-      unit: 'px' | 'em' | 'rem';
-      weight: number;
-    };
+    font: Font;
   };
 }
 
@@ -178,6 +190,12 @@ export interface FormFieldBlock {
   id: string;
   type: 'block';
   children: FormField[];
+  props: {
+    padding: Padding;
+    border: {
+      radius: BorderRadius;
+    };
+  };
 }
 
 export interface FormFieldButton {
@@ -189,27 +207,13 @@ export interface FormFieldButton {
     bgColor: string;
     btnType: 'submit' | 'button';
     fullWidth: boolean;
-    font: {
-      size: number;
-      unit: 'px' | 'em' | 'rem';
-      weight: number;
-    };
+    font: Font;
     border: {
       width: number;
       color: string;
-      radius: {
-        topLeft: number;
-        topRight: number;
-        bottomRight: number;
-        bottomLeft: number;
-      };
+      radius: BorderRadius;
     };
-    padding: {
-      top: number;
-      right: number;
-      bottom: number;
-      left: number;
-    };
+    padding: Padding;
     align: 'left' | 'center' | 'right';
   };
 }

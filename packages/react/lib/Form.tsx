@@ -7,14 +7,18 @@ interface ReactFormProps extends Partial<FieldPropsMap> {
   schema: FormSchema;
 }
 
-function ReactForm({ schema, ...props }: ReactFormProps) {
+function ReactForm({ schema, container, ...props }: ReactFormProps) {
+  const Container = container || Fragment;
+
   return (
     <div>
-      {schema.form.fields.map((field) => (
-        <Fragment key={field.id}>
-          <RenderField field={field} {...props} />
-        </Fragment>
-      ))}
+      <Container>
+        {schema.form.fields.map((field) => (
+          <Fragment key={field.id}>
+            <RenderField field={field} {...props} />
+          </Fragment>
+        ))}
+      </Container>
     </div>
   );
 }
