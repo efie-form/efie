@@ -11,6 +11,7 @@ export default {
     colors: {
       white: '#FFFFFF',
       danger: '#D14747',
+      success: '#34D399',
       primary: {
         50: hexWithOpacity('--color-primary-50'),
         100: hexWithOpacity('--color-primary-100'),

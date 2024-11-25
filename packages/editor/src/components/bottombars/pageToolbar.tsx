@@ -1,13 +1,17 @@
-import { useFormContext, useWatch } from 'react-hook-form';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 import type { FormSchema } from '@efie-form/core';
 import { useEffect } from 'react';
 import { useSettingsStore } from '../../lib/state/settings.state.ts';
 import { cn } from '../../lib/utils.ts';
+import defaultFieldProps from '../../lib/defaultFieldProps.ts';
+import ToolbarButton from '../toolbars/ToolbarButton.tsx';
+import { FaBars, FaPlus } from 'react-icons/fa';
 
 function PageToolbar() {
-  const { watch, control, getValues } = useFormContext<FormSchema>();
-  const watchAllFields = useWatch({
-    control,
+  const { watch, getValues } = useFormContext<FormSchema>();
+  const { insert, fields } = useFieldArray({
+    keyName: '_id',
+    name: 'form.fields',
   });
   const { page, setPage } = useSettingsStore();
   const pages = watch('form.fields').filter((field) => field.type === 'page');
@@ -19,24 +23,37 @@ function PageToolbar() {
       return setPage(null);
     }
     setPage(pages[0].id);
-  }, [watchAllFields]);
+  }, []);
+
+  const handleAddNewPage = () => {
+    const newPage = defaultFieldProps.page();
+    insert(fields.length, newPage);
+  };
 
   return (
-    <div className="flex bg-primary-50 border-t border-t-primary-200 text-neutral-800 items-center">
-      {pages.map((p) => (
-        <div>
-          <div
-            key={p.id}
-            className={cn(
-              `px-4 py-2 cursor-pointer`,
-              page === p.id ? 'bg-neutral-200/50' : 'hover:bg-neutral-200/25'
-            )}
-            onClick={() => setPage(p.id)}
-          >
-            <p>{p.props.name}</p>
-          </div>
+    <div className="flex px-6 py-2 gap-2 items-center">
+      <div>
+        <div className="flex bg-neutral-100/50 rounded-md overflow-hidden">
+          <ToolbarButton onClick={handleAddNewPage} Icon={FaPlus} />
+          <ToolbarButton Icon={FaBars} />
         </div>
-      ))}
+      </div>
+      <div className="flex">
+        {pages.map((p) => (
+          <div>
+            <div
+              key={p.id}
+              className={cn(
+                `cursor-pointer`,
+                page === p.id ? 'bg-neutral-200/50' : 'hover:bg-neutral-200/25'
+              )}
+              onClick={() => setPage(p.id)}
+            >
+              <p className="whitespace-nowrap">{p.props.name}</p>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

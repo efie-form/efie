@@ -4,6 +4,7 @@ import type { FormSchema } from '@efie-form/core';
 import { Editor } from '@efie-form/core';
 import { useEffect, useState } from 'react';
 import { generateId } from './lib/utils.ts';
+import { useSettingsStore } from './lib/state/settings.state.ts';
 
 const defaultValues: FormSchema = {
   version: 'v1',
@@ -52,6 +53,7 @@ function App() {
   const watchAllFields = useWatch({
     control,
   });
+  const { setPage } = useSettingsStore();
 
   useEffect(() => {
     if (editor) return;
@@ -69,6 +71,15 @@ function App() {
     editor.setValue(getValues());
     console.log(getValues());
   }, [watchAllFields, editor, getValues]);
+
+  useEffect(() => {
+    const fields = getValues('form.fields');
+    const pages = fields.filter((field) => field.type === 'page');
+    if (pages.length === 0) {
+      return setPage(null);
+    }
+    setPage(pages[0].id);
+  }, []);
 
   return (
     <>

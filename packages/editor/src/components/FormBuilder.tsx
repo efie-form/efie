@@ -4,7 +4,6 @@ import LayoutSwitcher from './toolbars/LayoutSwitcher.tsx';
 import FormContent from './FormContent.tsx';
 import RightBar from './rightBar/RightBar.tsx';
 import Preview from './toolbars/Preview.tsx';
-import PageToolbar from './bottombars/pageToolbar.tsx';
 import DndContext from './Dnd/DndContext.tsx';
 
 function FormBuilder() {
@@ -24,9 +23,6 @@ function FormBuilder() {
           </div>
           <div className="h-full overflow-y-scroll">
             <FormContent />
-          </div>
-          <div>
-            <PageToolbar />
           </div>
         </div>
         <div className="w-96 bg-neutral-50 overflow-hidden">

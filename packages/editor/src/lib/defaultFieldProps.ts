@@ -1,5 +1,4 @@
 import type {
-  FormField,
   FormFieldBlock,
   FormFieldButton,
   FormFieldColumn,
@@ -18,7 +17,6 @@ import type {
   FormFieldShortText,
   FormFieldSingleChoice,
   FormFieldTime,
-  FormFieldType,
 } from '@efie-form/core';
 import { generateId } from './utils.ts';
 
@@ -269,12 +267,16 @@ const button = (): FormFieldButton => ({
   },
 });
 
-const page = (): FormFieldPage => ({
+interface PageProps {
+  name: string;
+}
+
+const page = ({ name }: PageProps): FormFieldPage => ({
   id: generateId(ID_LENGTH),
   type: 'page',
   children: [],
   props: {
-    name: 'Page 1',
+    name,
   },
 });
 
@@ -297,6 +299,6 @@ const defaultFieldProps = {
   time,
   button,
   page,
-} satisfies Record<FormFieldType, () => FormField>;
+};
 
 export default defaultFieldProps;
