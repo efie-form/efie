@@ -4,6 +4,8 @@ import { LuListTree } from 'react-icons/lu';
 import { useState } from 'react';
 import FieldsTab from './tabs/FieldsTab.tsx';
 import { cn } from '../../lib/utils.ts';
+import PagesTab from './tabs/PagesTab.tsx';
+import { FaRegCopy } from 'react-icons/fa';
 
 const tabs = [
   {
@@ -13,9 +15,15 @@ const tabs = [
     tab: FieldsTab,
   },
   {
-    id: 'conditions',
+    id: 'pages',
+    Icon: FaRegCopy,
+    label: 'Pages',
+    tab: PagesTab,
+  },
+  {
+    id: 'rules-conditions',
     Icon: LuListTree,
-    label: 'Conditions',
+    label: 'Rules & Conditions',
   },
   {
     id: 'page-flow',
@@ -26,7 +34,7 @@ const tabs = [
 
 function LeftBar() {
   const [activeTab, setActiveTab] = useState(tabs[0].id);
-  const TabContent = tabs.find((tab) => tab.id === activeTab)?.tab;
+  const currentTab = tabs.find((tab) => tab.id === activeTab);
 
   return (
     <div className="h-full flex">
@@ -46,8 +54,15 @@ function LeftBar() {
           </div>
         ))}
       </div>
-      <div className="flex-1 overflow-y-auto">
-        {TabContent && <TabContent />}
+      <div className="flex-1 overflow-hidden flex flex-col">
+        <div className="px-4 py-2 border-b border-neutral-100">
+          <p className="typography-body1 font-semibold text-neutral-600">
+            {currentTab?.label}
+          </p>
+        </div>
+        <div className="flex-1 overflow-y-auto">
+          {currentTab?.tab && <currentTab.tab />}
+        </div>
       </div>
     </div>
   );

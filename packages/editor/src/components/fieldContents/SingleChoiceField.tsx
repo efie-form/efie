@@ -2,9 +2,11 @@ import type { FormFieldSingleChoice, OptionType } from '@efie-form/core';
 import { Controller, useFieldArray } from 'react-hook-form';
 import useFieldInfo from '../../lib/hooks/useFieldInfo.ts';
 import { MdOutlineClose, MdOutlineDragIndicator } from 'react-icons/md';
+import type { FieldKeyPrefix } from '../../lib/genFieldKey.ts';
 
 interface SingleChoiceProps {
   field: FormFieldSingleChoice;
+  fieldKey: FieldKeyPrefix;
 }
 
 function SingleChoiceField({ field }: SingleChoiceProps) {

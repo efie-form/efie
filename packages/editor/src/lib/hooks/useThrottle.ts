@@ -4,7 +4,7 @@ function useThrottle<T extends (...props: Parameters<T>) => void>(
   fn: T,
   delay: number
 ): (...props: Parameters<T>) => void {
-  const timeoutRef = useRef<number | null>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   return (...props) => {
     if (timeoutRef.current) return;
     fn(...props);

@@ -3,9 +3,11 @@ import useFieldInfo from '../../lib/hooks/useFieldInfo.ts';
 import { Controller } from 'react-hook-form';
 import { MdOutlineCloudUpload } from 'react-icons/md';
 import { useRef } from 'react';
+import type { FieldKeyPrefix } from '../../lib/genFieldKey.ts';
 
 interface FileFieldProps {
   field: FormFieldFile;
+  fieldKey: FieldKeyPrefix;
 }
 
 function FileField({ field }: FileFieldProps) {

@@ -7,7 +7,7 @@ import {
   LuHash,
 } from 'react-icons/lu';
 import { BsTextareaResize } from 'react-icons/bs';
-import { RiText } from 'react-icons/ri';
+import { RiPageSeparator, RiText } from 'react-icons/ri';
 import { MdCheckBox, MdRadioButtonChecked, MdUpload } from 'react-icons/md';
 import {
   RxButton,
@@ -124,11 +124,11 @@ export const fieldGroup: FieldGroup[] = [
         label: FIELDS_NAME.row,
         Icon: HiOutlineViewColumns,
       },
-      // {
-      //   type: 'block',
-      //   label: FIELDS_NAME.block,
-      //   Icon: RiPageSeparator,
-      // },
+      {
+        type: 'block',
+        label: FIELDS_NAME.block,
+        Icon: RiPageSeparator,
+      },
     ],
   },
 ];

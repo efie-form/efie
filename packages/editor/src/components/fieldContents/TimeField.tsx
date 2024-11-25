@@ -1,9 +1,11 @@
 import type { FormFieldTime } from '@efie-form/core';
 import useFieldInfo from '../../lib/hooks/useFieldInfo.ts';
 import { Controller } from 'react-hook-form';
+import type { FieldKeyPrefix } from '../../lib/genFieldKey.ts';
 
 interface TimeFieldProps {
   field: FormFieldTime;
+  fieldKey: FieldKeyPrefix;
 }
 
 function TimeField({ field }: TimeFieldProps) {

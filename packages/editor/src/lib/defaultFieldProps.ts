@@ -1,5 +1,4 @@
 import type {
-  FormField,
   FormFieldBlock,
   FormFieldButton,
   FormFieldColumn,
@@ -12,12 +11,12 @@ import type {
   FormFieldLongText,
   FormFieldMultipleChoices,
   FormFieldNumber,
+  FormFieldPage,
   FormFieldParagraph,
   FormFieldRow,
   FormFieldShortText,
   FormFieldSingleChoice,
   FormFieldTime,
-  FormFieldType,
 } from '@efie-form/core';
 import { generateId } from './utils.ts';
 
@@ -216,6 +215,22 @@ const block = (): FormFieldBlock => ({
   id: generateId(ID_LENGTH),
   type: 'block',
   children: [],
+  props: {
+    padding: {
+      top: 0,
+      right: 0,
+      bottom: 0,
+      left: 0,
+    },
+    border: {
+      radius: {
+        topLeft: 0,
+        topRight: 0,
+        bottomRight: 0,
+        bottomLeft: 0,
+      },
+    },
+  },
 });
 
 const button = (): FormFieldButton => ({
@@ -252,6 +267,19 @@ const button = (): FormFieldButton => ({
   },
 });
 
+interface PageProps {
+  name: string;
+}
+
+const page = ({ name }: PageProps): FormFieldPage => ({
+  id: generateId(ID_LENGTH),
+  type: 'page',
+  children: [],
+  props: {
+    name,
+  },
+});
+
 const defaultFieldProps = {
   shortText,
   longText,
@@ -270,6 +298,7 @@ const defaultFieldProps = {
   singleChoice,
   time,
   button,
-} satisfies Record<FormFieldType, () => FormField>;
+  page,
+};
 
 export default defaultFieldProps;

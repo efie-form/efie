@@ -17,13 +17,14 @@ interface ToolbarButtonProps {
   disabled?: boolean;
 }
 
-function ToolbarButton({ Icon, disabled }: ToolbarButtonProps) {
+function ToolbarButton({ Icon, disabled, onClick }: ToolbarButtonProps) {
   return (
     <button
       className={cn('p-2.5 transition-all', {
         'cursor-pointer hover:bg-neutral-100': !disabled,
         'cursor-default': disabled,
       })}
+      onClick={onClick}
     >
       <Icon
         className={cn({
