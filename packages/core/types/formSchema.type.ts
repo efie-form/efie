@@ -218,6 +218,15 @@ export interface FormFieldButton {
   };
 }
 
+export interface FormFieldPage {
+  id: string;
+  type: 'page';
+  children: FormField[];
+  props: {
+    name: string;
+  };
+}
+
 export type FormField =
   | FormFieldShortText
   | FormFieldLongText
@@ -235,6 +244,7 @@ export type FormField =
   | FormFieldRow
   | FormFieldColumn
   | FormFieldBlock
-  | FormFieldButton;
+  | FormFieldButton
+  | FormFieldPage;
 
 export type FormFieldType = FormField['type'];

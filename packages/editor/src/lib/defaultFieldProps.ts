@@ -12,6 +12,7 @@ import type {
   FormFieldLongText,
   FormFieldMultipleChoices,
   FormFieldNumber,
+  FormFieldPage,
   FormFieldParagraph,
   FormFieldRow,
   FormFieldShortText,
@@ -216,6 +217,22 @@ const block = (): FormFieldBlock => ({
   id: generateId(ID_LENGTH),
   type: 'block',
   children: [],
+  props: {
+    padding: {
+      top: 0,
+      right: 0,
+      bottom: 0,
+      left: 0,
+    },
+    border: {
+      radius: {
+        topLeft: 0,
+        topRight: 0,
+        bottomRight: 0,
+        bottomLeft: 0,
+      },
+    },
+  },
 });
 
 const button = (): FormFieldButton => ({
@@ -252,6 +269,15 @@ const button = (): FormFieldButton => ({
   },
 });
 
+const page = (): FormFieldPage => ({
+  id: generateId(ID_LENGTH),
+  type: 'page',
+  children: [],
+  props: {
+    name: 'Page 1',
+  },
+});
+
 const defaultFieldProps = {
   shortText,
   longText,
@@ -270,6 +296,7 @@ const defaultFieldProps = {
   singleChoice,
   time,
   button,
+  page,
 } satisfies Record<FormFieldType, () => FormField>;
 
 export default defaultFieldProps;

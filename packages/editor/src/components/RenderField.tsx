@@ -1,10 +1,4 @@
 import type { FormField } from '@efie-form/core';
-import useMoveField from '../lib/hooks/useMoveField.ts';
-import {
-  DATASET_DROP_ZONE,
-  DATASET_FORM_FIELD,
-  DROP_ZONE_TYPE,
-} from '../lib/constant.ts';
 import ColumnsField from './fieldContents/ColumnsField.tsx';
 import RowField from './fieldContents/RowField.tsx';
 import { useSettingsStore } from '../lib/state/settings.state.ts';
@@ -29,14 +23,16 @@ import {
   useRightBarState,
 } from '../lib/state/right-bar.state.ts';
 import ButtonField from './fieldContents/ButtonField.tsx';
+import BlockField from './fieldContents/BlockField.tsx';
+import type { FieldKeyPrefix } from '../lib/genFieldKey.ts';
 
 interface RenderFieldProps {
   field: FormField;
   noSelect?: boolean;
+  fieldKey: FieldKeyPrefix;
 }
 
-function RenderField({ field, noSelect }: RenderFieldProps) {
-  const { registerProps } = useMoveField();
+function RenderField({ field, noSelect, fieldKey }: RenderFieldProps) {
   const { setSelectedFieldId, selectedFieldId } = useSettingsStore();
   const setActiveTab = useRightBarState((state) => state.setActiveTab);
 
@@ -46,17 +42,12 @@ function RenderField({ field, noSelect }: RenderFieldProps) {
         id={field.id}
         key={field.id}
         className={cn(
-          'border-2 border-white hover:border-neutral-100 rounded-lg transform bg-white',
+          'border-2 border-white border-opacity-0 hover:border-neutral-100 rounded-lg transform',
           {
             '!border-primary': selectedFieldId === field.id,
           }
         )}
-        {...{
-          [DATASET_FORM_FIELD]: field.id,
-          [DATASET_DROP_ZONE]: DROP_ZONE_TYPE.field,
-        }}
         {...(!noSelect && {
-          ...registerProps(field.id),
           onClick: (e: MouseEvent) => {
             e.stopPropagation();
             setSelectedFieldId(field.id);
@@ -64,13 +55,13 @@ function RenderField({ field, noSelect }: RenderFieldProps) {
           },
         })}
       >
-        <FieldItem field={field} />
+        <FieldItem field={field} fieldKey={fieldKey} />
       </div>
     </>
   );
 }
 
-function FieldItem({ field }: RenderFieldProps) {
+function FieldItem({ field, fieldKey }: RenderFieldProps) {
   const fieldInfo = useFieldInfo({
     fieldId: field.id,
   });
@@ -79,37 +70,39 @@ function FieldItem({ field }: RenderFieldProps) {
 
   switch (field.type) {
     case 'row':
-      return <RowField field={field} />;
+      return <RowField field={field} fieldKey={fieldKey} />;
     case 'column':
-      return <ColumnsField field={field} />;
+      return <ColumnsField field={field} fieldKey={fieldKey} />;
     case 'header':
       return <HeaderField field={field} />;
     case 'paragraph':
       return <ParagraphField field={field} />;
     case 'shortText':
-      return <ShortTextField field={field} fieldKey={fieldInfo.key} />;
+      return <ShortTextField field={field} fieldKey={fieldKey} />;
     case 'longText':
-      return <LongTextField field={field} fieldKey={fieldInfo.key} />;
+      return <LongTextField field={field} fieldKey={fieldKey} />;
     case 'number':
-      return <NumberField field={field} fieldKey={fieldInfo.key} />;
+      return <NumberField field={field} fieldKey={fieldKey} />;
     case 'divider':
       return <DividerField field={field} />;
     case 'image':
       return <ImageField field={field} />;
     case 'singleChoice':
-      return <SingleChoiceField field={field} />;
+      return <SingleChoiceField field={field} fieldKey={fieldKey} />;
     case 'multipleChoices':
-      return <MultipleChoicesField field={field} />;
+      return <MultipleChoicesField field={field} fieldKey={fieldKey} />;
     case 'date':
-      return <DateField field={field} />;
+      return <DateField field={field} fieldKey={fieldKey} />;
     case 'time':
-      return <TimeField field={field} />;
+      return <TimeField field={field} fieldKey={fieldKey} />;
     case 'dateTime':
-      return <DateTimeField field={field} />;
+      return <DateTimeField field={field} fieldKey={fieldKey} />;
     case 'file':
-      return <FileField field={field} />;
+      return <FileField field={field} fieldKey={fieldKey} />;
     case 'button':
       return <ButtonField field={field} />;
+    case 'block':
+      return <BlockField field={field} fieldKey={fieldKey} />;
     default:
       return (
         <div className="px-4 py-2">
