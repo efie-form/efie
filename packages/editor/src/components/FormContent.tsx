@@ -26,7 +26,7 @@ function FormContent() {
   );
   const { insert } = useFieldArray({
     keyName: '_id',
-    name: `form.fields.${pageIndex}.children`,
+    name: `form.fields.${Math.max(pageIndex, 0)}.children`,
   });
 
   if (!selectedPage) return null;

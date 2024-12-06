@@ -113,7 +113,6 @@ function PageItem({ page, onDelete }: PageItemProps) {
 
   const style: CSSProperties = {
     transform: transform ? `translateY(${transform.y}px` : undefined,
-    position: isDragging ? 'relative' : 'static',
     transition,
   };
 
@@ -125,7 +124,7 @@ function PageItem({ page, onDelete }: PageItemProps) {
         ref={setNodeRef}
         {...attributes}
         className={cn(
-          'px-1 py-2 flex items-center justify-between group hover:bg-neutral-100/50',
+          'relative px-1 py-2 flex items-center justify-between group hover:bg-neutral-100',
           isDragging ? 'cursor-grabbing relative z-50' : 'cursor-pointer',
           {
             'bg-neutral-200': isDragging,

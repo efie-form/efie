@@ -3,7 +3,7 @@ import { useControllableState } from '@radix-ui/react-use-controllable-state';
 import { cn } from '../../lib/utils.ts';
 import type { InputPropsWithoutRef } from 'react-html-props';
 
-interface InputProps {
+export interface InputProps {
   value?: string;
   onChange?: (value: string) => void;
   placeholder?: string;
@@ -37,7 +37,7 @@ function Input({
   return (
     <div
       className={cn(
-        'relative flex border border-neutral-200 rounded-md bg-white w-full h-8 items-center overflow-hidden focus-within:outline focus-within:outline-primary',
+        'relative flex border border-neutral-200 rounded-md bg-white w-full h-8 items-center overflow-hidden focus-within:outline focus-within:outline-primary focus-within:outline-2',
         className,
         {
           'bg-neutral-100': disabled,

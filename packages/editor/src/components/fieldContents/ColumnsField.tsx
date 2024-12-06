@@ -47,7 +47,7 @@ function ColumnsField({ field, fieldKey }: ColumnsFieldProps) {
         insert(index, newField);
       }}
     >
-      <div className="p-2">
+      <div>
         {field.children.map((child, index) => (
           <RenderField
             key={`${field.id}-${child.id}`}

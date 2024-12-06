@@ -95,15 +95,15 @@ function ColorPicker({
 
   return (
     <PopoverPrimitive.Root>
-      <PopoverPrimitive.Trigger>
-        <div className="relative inline-block border p-[2px] border-neutral-200 rounded-sm cursor-pointer">
+      <PopoverPrimitive.Trigger asChild>
+        <button className="relative focus:outline-primary inline-block border p-[2px] border-neutral-200 rounded-sm cursor-pointer">
           <div
             className="size-6 rounded-sm"
             style={{
               backgroundColor: colorObject.hex,
             }}
           />
-        </div>
+        </button>
       </PopoverPrimitive.Trigger>
       <PopoverPrimitive.Portal>
         <PopoverPrimitive.Content side="bottom" align="start" sideOffset={5}>

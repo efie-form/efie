@@ -21,23 +21,23 @@ function DndDropzone({
   className,
 }: DndDroppableProps) {
   const onDragOverHandler = useThrottle((e: DragEvent<HTMLDivElement>) => {
-    console.log(`dropzone ${id}`);
+    console.log(`dropzone ${id},`, e);
   }, 150);
   const { draggedType } = useDndStore();
-  const isAccepting = !accepts || (accepts && accepts.includes(draggedType!));
+  const isAccepted = !accepts || (accepts && accepts.includes(draggedType!));
 
   return (
     <div
       dnd-id={id}
       onDragOver={(e) => {
         e.stopPropagation();
-        if (!isAccepting) return;
+        if (!isAccepted) return;
         e.preventDefault();
         onDragOverHandler(e);
       }}
       onDrop={(e) => {
         e.stopPropagation();
-        if (!isAccepting) return;
+        if (!isAccepted) return;
         if (draggedType && onNewFieldDrop)
           onNewFieldDrop?.(draggedType, items.length);
       }}
