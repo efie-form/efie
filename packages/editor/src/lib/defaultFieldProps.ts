@@ -217,18 +217,44 @@ const block = (): FormFieldBlock => ({
   children: [],
   props: {
     padding: {
-      top: 0,
-      right: 0,
-      bottom: 0,
-      left: 0,
+      top: 16,
+      right: 16,
+      bottom: 16,
+      left: 16,
     },
+    boxShadow: [
+      {
+        x: 0,
+        y: 4,
+        blur: 6,
+        spread: -1,
+        color: '#00000019',
+        inset: false,
+      },
+      {
+        x: 0,
+        y: 2,
+        blur: 4,
+        spread: -2,
+        color: '#00000019',
+        inset: false,
+      },
+    ],
+    bgColor: '#FFFFFF',
     border: {
       radius: {
-        topLeft: 0,
-        topRight: 0,
-        bottomRight: 0,
-        bottomLeft: 0,
+        topLeft: 8,
+        topRight: 8,
+        bottomRight: 8,
+        bottomLeft: 8,
       },
+    },
+    color: '#494949',
+    margin: {
+      bottom: 0,
+      left: 0,
+      right: 0,
+      top: 0,
     },
   },
 });

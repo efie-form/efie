@@ -24,7 +24,7 @@ interface RenderSettingsProps {
 }
 
 function RenderSettings({ field, fieldKey }: RenderSettingsProps) {
-  return <FieldItem field={field} fieldKey={fieldKey} />;
+  return <FieldItem key={fieldKey} field={field} fieldKey={fieldKey} />;
 }
 
 function FieldItem({ field, fieldKey }: RenderSettingsProps) {

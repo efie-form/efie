@@ -12,6 +12,22 @@ interface Padding {
   left: number;
 }
 
+interface Margin {
+  top: number;
+  right: number;
+  bottom: number;
+  left: number;
+}
+
+export interface BoxShadow {
+  x: number;
+  y: number;
+  blur: number;
+  spread: number;
+  color: string;
+  inset: boolean;
+}
+
 interface Font {
   size: number;
   unit: 'px' | 'em' | 'rem';
@@ -192,9 +208,13 @@ export interface FormFieldBlock {
   children: FormField[];
   props: {
     padding: Padding;
+    margin: Margin;
+    boxShadow: BoxShadow[];
     border: {
       radius: BorderRadius;
     };
+    bgColor: string;
+    color: string;
   };
 }
 

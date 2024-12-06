@@ -13,7 +13,7 @@ function LongTextField({ field, fieldKey }: LongTextFieldProps) {
       <Controller
         render={({ field: { value, onChange } }) => (
           <input
-            className="mb-2 typography-body2 text-neutral-800 focus:outline-none cursor-text w-full"
+            className="mb-2 typography-body2 bg-white bg-opacity-0 focus:outline-none cursor-text w-full"
             type="text"
             value={value}
             onChange={onChange}

@@ -41,12 +41,11 @@ function RenderField({ field, noSelect, fieldKey }: RenderFieldProps) {
       <div
         id={field.id}
         key={field.id}
-        className={cn(
-          'border-2 border-white border-opacity-0 hover:border-neutral-100 rounded-lg transform',
-          {
-            '!border-primary': selectedFieldId === field.id,
-          }
-        )}
+        className={cn('rounded-lg transform', {
+          '!border-primary': selectedFieldId === field.id,
+          'border-2 border-white border-opacity-0 hover:border-neutral-100':
+            field.type !== 'column',
+        })}
         {...(!noSelect && {
           onClick: (e: MouseEvent) => {
             e.stopPropagation();

@@ -74,3 +74,33 @@
     font-size: 1.125rem;
     line-height: 140%;
 }
+
+/* styles.css */
+.accordion-content {
+    overflow: hidden;
+}
+.accordion-content[data-state="open"] {
+    animation: slideDown 200ms ease-out;
+}
+.accordion-content[data-state="closed"] {
+    animation: slideUp 200ms ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        height: 0;
+    }
+    to {
+        height: var(--radix-accordion-content-height);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        height: var(--radix-accordion-content-height);
+    }
+    to {
+        height: 0;
+    }
+}
+
