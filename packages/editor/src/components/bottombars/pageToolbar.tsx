@@ -3,9 +3,9 @@ import type { FormSchema } from '@efie-form/core';
 import { useEffect } from 'react';
 import { useSettingsStore } from '../../lib/state/settings.state.ts';
 import { cn } from '../../lib/utils.ts';
-import defaultFieldProps from '../../lib/defaultFieldProps.ts';
 import ToolbarButton from '../toolbars/ToolbarButton.tsx';
 import { FaBars, FaPlus } from 'react-icons/fa';
+import { getDefaultField } from '../../lib/getDefaultField.ts';
 
 function PageToolbar() {
   const { watch, getValues } = useFormContext<FormSchema>();
@@ -26,7 +26,12 @@ function PageToolbar() {
   }, []);
 
   const handleAddNewPage = () => {
-    const newPage = defaultFieldProps.page();
+    const newPage = getDefaultField({
+      type: 'page',
+      page: {
+        name: `Page ${pages.length + 1}`,
+      },
+    });
     insert(fields.length, newPage);
   };
 

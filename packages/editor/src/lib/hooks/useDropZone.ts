@@ -10,7 +10,7 @@ import getDropPosition from '../getDropPosition.ts';
 import useDragDirection from './useDragDirection.ts';
 import moveField from '../moveFields.ts';
 import { displayPlaceholder } from '../displayPlaceholder.ts';
-import defaultFieldProps from '../defaultFieldProps.ts';
+import { getDefaultField } from '../getDefaultField.ts';
 
 export default function useDropZone() {
   const {
@@ -65,7 +65,9 @@ export default function useDropZone() {
     if (dragType === 'new' && draggingNewFieldType) {
       const newFields = insertField(
         getValues('form.fields'),
-        defaultFieldProps[draggingNewFieldType](),
+        getDefaultField({
+          type: draggingNewFieldType,
+        }),
         result.dropZoneType,
         result.parentId,
         result.index

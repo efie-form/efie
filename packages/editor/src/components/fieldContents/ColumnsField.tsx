@@ -8,7 +8,7 @@ import {
 import DndDropzone from '../Dnd/DndDropzone.tsx';
 import type { FieldKeyPrefix } from '../../lib/genFieldKey.ts';
 import { useFieldArray } from 'react-hook-form';
-import defaultFieldProps from '../../lib/defaultFieldProps.ts';
+import { getDefaultField } from '../../lib/getDefaultField.ts';
 
 interface ColumnsFieldProps {
   field: FormFieldColumn;
@@ -43,7 +43,9 @@ function ColumnsField({ field, fieldKey }: ColumnsFieldProps) {
         'row',
       ]}
       onNewFieldDrop={(fieldType, index) => {
-        const newField = defaultFieldProps[fieldType]();
+        const newField = getDefaultField({
+          type: fieldType,
+        });
         insert(index, newField);
       }}
     >
