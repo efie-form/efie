@@ -37,6 +37,7 @@ function FormContent() {
       id={selectedPage.id}
       items={selectedPage.children.map((child) => child.id)}
       onNewFieldDrop={(fieldType, index) => {
+        console.log(fieldType, index);
         const fieldToAdd = getDefaultField({
           type: fieldType,
         });

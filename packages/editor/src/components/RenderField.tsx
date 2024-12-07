@@ -25,6 +25,7 @@ import {
 import ButtonField from './fieldContents/ButtonField.tsx';
 import BlockField from './fieldContents/BlockField.tsx';
 import type { FieldKeyPrefix } from '../lib/genFieldKey.ts';
+import useDndItem from './Dnd/useDndItem.tsx';
 
 interface RenderFieldProps {
   field: FormField;
@@ -35,12 +36,17 @@ interface RenderFieldProps {
 function RenderField({ field, noSelect, fieldKey }: RenderFieldProps) {
   const { setSelectedFieldId, selectedFieldId } = useSettingsStore();
   const setActiveTab = useRightBarState((state) => state.setActiveTab);
+  const { attributes } = useDndItem({
+    id: field.id,
+    type: field.type,
+  });
 
   return (
     <>
       <div
         id={field.id}
         key={field.id}
+        {...attributes}
         className={cn('rounded-lg transform', {
           '!border-primary': selectedFieldId === field.id,
           'border-2 border-white border-opacity-0 hover:border-neutral-100':
