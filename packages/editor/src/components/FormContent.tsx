@@ -7,7 +7,7 @@ import {
   useRightBarState,
 } from '../lib/state/right-bar.state.ts';
 import DndDropzone from './Dnd/DndDropzone.tsx';
-import defaultFieldProps from '../lib/defaultFieldProps.ts';
+import { getDefaultField } from '../lib/getDefaultField.ts';
 
 const SCREEN_SIZES = {
   mobile: 375,
@@ -37,7 +37,9 @@ function FormContent() {
       id={selectedPage.id}
       items={selectedPage.children.map((child) => child.id)}
       onNewFieldDrop={(fieldType, index) => {
-        const fieldToAdd = defaultFieldProps[fieldType]();
+        const fieldToAdd = getDefaultField({
+          type: fieldType,
+        });
         insert(index, fieldToAdd);
       }}
       accepts={['block']}

@@ -1,6 +1,5 @@
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import type { FormFieldPage, FormSchema } from '@efie-form/core';
-import defaultFieldProps from '../../../lib/defaultFieldProps.ts';
 import { MdOutlineDragIndicator } from 'react-icons/md';
 import { useSettingsStore } from '../../../lib/state/settings.state.ts';
 import { cn } from '../../../lib/utils.ts';
@@ -22,6 +21,7 @@ import Button from '../../elements/Button.tsx';
 import type { CSSProperties } from 'react';
 import { useState } from 'react';
 import { FaCheck, FaTrash, FaXmark } from 'react-icons/fa6';
+import { getDefaultField } from '../../../lib/getDefaultField.ts';
 
 function PagesTab() {
   const { watch } = useFormContext<FormSchema>();
@@ -40,8 +40,11 @@ function PagesTab() {
   const pages = watch('form.fields').filter((field) => field.type === 'page');
 
   const handleAddNewPage = () => {
-    const newPage = defaultFieldProps.page({
-      name: `Page ${pages.length + 1}`,
+    const newPage = getDefaultField({
+      type: 'page',
+      page: {
+        name: `Page ${pages.length + 1}`,
+      },
     });
     insert(fields.length, newPage);
   };
@@ -144,7 +147,7 @@ function PageItem({ page, onDelete }: PageItemProps) {
             <MdOutlineDragIndicator />
           </span>
           <span className="typography-body3 text-neutral-900">
-            {page.props.name} {page.id}
+            {page.props.name}
           </span>
         </div>
         <span className="pe-2 invisible group-hover:visible flex gap-2">

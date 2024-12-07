@@ -2,8 +2,8 @@ import type { FormFieldBlock, FormFieldType } from '@efie-form/core';
 import RenderField from '../RenderField.tsx';
 import DndDropzone from '../Dnd/DndDropzone.tsx';
 import { useFieldArray } from 'react-hook-form';
-import defaultFieldProps from '../../lib/defaultFieldProps.ts';
 import type { FieldKeyPrefix } from '../../lib/genFieldKey.ts';
+import { getDefaultField } from '../../lib/getDefaultField.ts';
 
 interface BlockFieldProps {
   field: FormFieldBlock;
@@ -17,7 +17,9 @@ function BlockField({ field, fieldKey }: BlockFieldProps) {
   });
 
   const handleAddNewField = (fieldType: FormFieldType, index: number) => {
-    const fieldToAdd = defaultFieldProps[fieldType]();
+    const fieldToAdd = getDefaultField({
+      type: fieldType,
+    });
     insert(index, fieldToAdd);
   };
 
