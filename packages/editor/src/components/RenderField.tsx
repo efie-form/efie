@@ -42,27 +42,26 @@ function RenderField({ field, noSelect, fieldKey }: RenderFieldProps) {
   });
 
   return (
-    <>
-      <div
-        id={field.id}
-        key={field.id}
-        {...attributes}
-        className={cn('rounded-lg transform', {
-          '!border-primary': selectedFieldId === field.id,
-          'border-2 border-white border-opacity-0 hover:border-neutral-100':
-            field.type !== 'column',
-        })}
-        {...(!noSelect && {
-          onClick: (e: MouseEvent) => {
-            e.stopPropagation();
-            setSelectedFieldId(field.id);
-            setActiveTab(RIGHT_BAR_TABS.FIELD_SETTINGS);
-          },
-        })}
-      >
-        <FieldItem field={field} fieldKey={fieldKey} />
-      </div>
-    </>
+    <div
+      id={field.id}
+      key={field.id}
+      data-field="true"
+      {...attributes}
+      className={cn('rounded-lg transform relative h-full', {
+        '!border-primary': selectedFieldId === field.id,
+        'border-2 border-white border-opacity-0 [&:not(:has(div[data-field=true]:hover))]:hover:border-neutral-100':
+          field.type !== 'column',
+      })}
+      {...(!noSelect && {
+        onClick: (e: MouseEvent) => {
+          e.stopPropagation();
+          setSelectedFieldId(field.id);
+          setActiveTab(RIGHT_BAR_TABS.FIELD_SETTINGS);
+        },
+      })}
+    >
+      <FieldItem field={field} fieldKey={fieldKey} />
+    </div>
   );
 }
 
@@ -79,9 +78,9 @@ function FieldItem({ field, fieldKey }: RenderFieldProps) {
     case 'column':
       return <ColumnsField field={field} fieldKey={fieldKey} />;
     case 'header':
-      return <HeaderField field={field} />;
+      return <HeaderField field={field} fieldKey={fieldKey} />;
     case 'paragraph':
-      return <ParagraphField field={field} />;
+      return <ParagraphField field={field} fieldKey={fieldKey} />;
     case 'shortText':
       return <ShortTextField field={field} fieldKey={fieldKey} />;
     case 'longText':

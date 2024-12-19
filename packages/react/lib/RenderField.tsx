@@ -1,22 +1,26 @@
 import React from 'react';
 import type { FormField } from '@efie-form/core';
-import ShortTextProvider from './FieldProvider/ShortTextProvider';
 import type { FieldPropsMap } from '../types/FieldProps';
-import LongTextProvider from './FieldProvider/LongTextProvider';
-import DividerProvider from './FieldProvider/DividerProvider';
-import BlockProvider from './FieldProvider/BlockProvider';
-import ImageProvider from './FieldProvider/ImageProvider';
-import FileProvider from './FieldProvider/FileProvider';
-import SingleChoiceProvider from './FieldProvider/SingleChoiceProvider';
-import MultipleChoicesProvider from './FieldProvider/MultipleChoicesProvider';
-import HeaderProvider from './FieldProvider/HeaderProvider';
-import ParagraphProvider from './FieldProvider/ParagraphProvider';
-import DateProvider from './FieldProvider/DateProvider';
-import DateTimeProvider from './FieldProvider/DateTimeProvider';
-import TimeProvider from './FieldProvider/TimeProvider';
-import ColumnProvider from './FieldProvider/ColumnProvider';
-import RowProvider from './FieldProvider/RowProvider';
-import NumberProvider from './FieldProvider/NumberProvider';
+import {
+  BlockProvider,
+  ButtonProvider,
+  ColumnProvider,
+  DateProvider,
+  DateTimeProvider,
+  DividerProvider,
+  FileProvider,
+  HeaderProvider,
+  ImageProvider,
+  LongTextProvider,
+  MultipleChoicesProvider,
+  NumberProvider,
+  PageProvider,
+  ParagraphProvider,
+  RowProvider,
+  ShortTextProvider,
+  SingleChoiceProvider,
+  TimeProvider,
+} from './FieldProvider';
 
 interface RenderFieldProps extends Partial<FieldPropsMap> {
   field: FormField;
@@ -31,7 +35,7 @@ function RenderField({ field, ...props }: RenderFieldProps) {
     case 'divider':
       return <DividerProvider field={field} Component={props.divider} />;
     case 'block':
-      return <BlockProvider field={field} Component={props.block} />;
+      return <BlockProvider field={field} Component={props.block} {...props} />;
     case 'image':
       return <ImageProvider field={field} Component={props.image} />;
     case 'file':
@@ -65,6 +69,10 @@ function RenderField({ field, ...props }: RenderFieldProps) {
       return <RowProvider field={field} Component={props.row} {...props} />;
     case 'number':
       return <NumberProvider field={field} Component={props.number} />;
+    case 'button':
+      return <ButtonProvider field={field} Component={props.button} />;
+    case 'page':
+      return <PageProvider field={field} Component={props.page} {...props} />;
     default:
       return null;
   }

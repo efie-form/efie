@@ -1,6 +1,8 @@
 import type { FormFieldRow } from '@efie-form/core';
 import RenderField from '../RenderField.tsx';
 import type { FieldKeyPrefix } from '../../lib/genFieldKey.ts';
+import { useSettingsStore } from '../../lib/state/settings.state.ts';
+import { cn } from '../../lib/utils.ts';
 
 interface RowFieldProps {
   field: FormFieldRow;
@@ -8,16 +10,24 @@ interface RowFieldProps {
 }
 
 function RowField({ field, fieldKey }: RowFieldProps) {
+  const { mode } = useSettingsStore();
+  const isMobile = mode === 'mobile';
+
   return (
-    <div className="flex">
+    <div
+      className={cn('flex relative items-start content-start', {
+        'flex-col': isMobile,
+      })}
+    >
       {field.children
         .filter((child) => child.type === 'column')
         .map((child, index) => (
           <div
             key={`${field.id}-${child.id}`}
             style={{
-              width: `${child.props.width}%`,
+              width: isMobile ? '100%' : `${child.props.width}%`,
             }}
+            className="self-stretch"
           >
             <RenderField
               field={child}

@@ -35,6 +35,10 @@
     scrollbar-width: thin;
 }
 
+*:focus {
+    outline-color: var(--color-primary);
+}
+
 .typography-body1 {
     font-size: 1.125rem;
     line-height: 140%;
@@ -79,9 +83,11 @@
 .accordion-content {
     overflow: hidden;
 }
+
 .accordion-content[data-state="open"] {
     animation: slideDown 200ms ease-out;
 }
+
 .accordion-content[data-state="closed"] {
     animation: slideUp 200ms ease-out;
 }

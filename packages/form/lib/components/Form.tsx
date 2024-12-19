@@ -18,17 +18,17 @@ import SingleChoiceField from './fields/SingleChoiceField.tsx';
 import NumberField from './fields/NumberField.tsx';
 import ParagraphField from './fields/ParagraphField.tsx';
 import '../styles/index.css';
-import ContainerField from './fields/ContainerField.tsx';
+import PageField from './fields/PageField.tsx';
 
 interface FormProps {
   schema: FormSchema;
+  onSubmit?: (data: Record<string, unknown>) => void;
 }
 
 function Form({ schema }: FormProps) {
   return (
     <ReactForm
       schema={schema}
-      container={ContainerField}
       shortText={ShortTextField}
       longText={LongTextField}
       block={BlockField}
@@ -45,6 +45,7 @@ function Form({ schema }: FormProps) {
       singleChoice={SingleChoiceField}
       number={NumberField}
       paragraph={ParagraphField}
+      page={PageField}
     />
   );
 }

@@ -1,5 +1,4 @@
 import type { FormFieldShortText } from '@efie-form/core';
-import { FIELDS_NAME } from '../../../lib/constant.ts';
 import SettingsFieldVertical from '../../layouts/SettingsFieldVertical.tsx';
 import Input from '../../form/Input.tsx';
 import { Controller } from 'react-hook-form';
@@ -13,12 +12,9 @@ interface ShortTextSettingsProps {
   fieldKey: FieldKeyPrefix;
 }
 
-function ShortTextSettings({ field, fieldKey }: ShortTextSettingsProps) {
+function ShortTextSettings({ fieldKey }: ShortTextSettingsProps) {
   return (
     <div>
-      <div className="px-4 py-2">
-        <p className="typography-body1">{FIELDS_NAME[field.type]}</p>
-      </div>
       <div>
         <div className="px-4 py-2 bg-neutral-100 text-neutral-800 typography-body3 uppercase">
           General

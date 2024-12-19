@@ -1,7 +1,6 @@
 import type { FormFieldBlock } from '@efie-form/core';
 import type { FieldKeyPrefix } from '../../../lib/genFieldKey.ts';
 import genFieldKey from '../../../lib/genFieldKey.ts';
-import { FIELDS_NAME } from '../../../lib/constant.ts';
 import SettingsField4Sides from '../../layouts/SettingsField4Sides.tsx';
 import SettingsFieldHorizontal from '../../layouts/SettingsFieldHorizontal.tsx';
 import ColorPicker from '../../form/ColorPicker.tsx';
@@ -13,12 +12,9 @@ interface BlockSettingsProps {
   fieldKey: FieldKeyPrefix;
 }
 
-function BlockSettings({ field, fieldKey }: BlockSettingsProps) {
+function BlockSettings({ fieldKey }: BlockSettingsProps) {
   return (
     <div>
-      <div className="px-4 py-2">
-        <p className="typography-body1">{FIELDS_NAME[field.type]}</p>
-      </div>
       <div className="px-4 py-2 bg-neutral-100 text-neutral-800 typography-body3 uppercase">
         Spacing
       </div>
