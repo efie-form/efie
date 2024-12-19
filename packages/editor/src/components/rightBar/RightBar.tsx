@@ -9,51 +9,58 @@ import {
   useRightBarState,
 } from '../../lib/state/right-bar.state.ts';
 import type { ElementType } from 'react';
+import { useSettingsStore } from '../../lib/state/settings.state.ts';
 
 interface Tab {
   id: RightBarTab;
   label: string;
   Icon: ElementType;
   tab: ElementType;
+  hidden?: boolean;
 }
-
-const tabs: Tab[] = [
-  {
-    id: RIGHT_BAR_TABS.LAYOUT,
-    label: 'Layout',
-    Icon: AiFillLayout,
-    tab: LayoutPropertiesTab,
-  },
-  {
-    id: RIGHT_BAR_TABS.FIELD_SETTINGS,
-    label: 'Properties',
-    Icon: HiMiniInformationCircle,
-    tab: FieldPropertiesTab,
-  },
-];
 
 function RightBar() {
   const { activeTab, setActiveTab } = useRightBarState();
+  const { selectedFieldId } = useSettingsStore();
+
+  const tabs: Tab[] = [
+    {
+      id: RIGHT_BAR_TABS.LAYOUT,
+      label: 'Layout',
+      Icon: AiFillLayout,
+      tab: LayoutPropertiesTab,
+    },
+    {
+      id: RIGHT_BAR_TABS.FIELD_SETTINGS,
+      label: 'Properties',
+      Icon: HiMiniInformationCircle,
+      tab: FieldPropertiesTab,
+      hidden: !selectedFieldId,
+    },
+  ];
+
   const TabContent = tabs.find((tab) => tab.id === activeTab)?.tab;
 
   return (
     <div className="h-full flex">
       <div className="flex-1">{TabContent && <TabContent />}</div>
       <div className="bg-neutral-100/40 h-full">
-        {tabs.map((tab) => (
-          <div
-            key={tab.id}
-            className={cn(
-              'p-3.5 hover:bg-neutral-200/30 cursor-pointer transition-all duration-100',
-              {
-                '!bg-neutral-200/80': tab.id === activeTab,
-              }
-            )}
-            onClick={() => setActiveTab(tab.id)}
-          >
-            <tab.Icon size={16} className="text-neutral-800" />
-          </div>
-        ))}
+        {tabs
+          .filter((tab) => !tab.hidden)
+          .map((tab) => (
+            <div
+              key={tab.id}
+              className={cn(
+                'p-3.5 hover:bg-neutral-200/30 cursor-pointer transition-all duration-100',
+                {
+                  '!bg-neutral-200/80': tab.id === activeTab,
+                }
+              )}
+              onClick={() => setActiveTab(tab.id)}
+            >
+              <tab.Icon size={16} className="text-neutral-800" />
+            </div>
+          ))}
       </div>
     </div>
   );

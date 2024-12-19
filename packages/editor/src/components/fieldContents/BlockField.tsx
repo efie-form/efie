@@ -4,6 +4,7 @@ import DndDropzone from '../Dnd/DndDropzone.tsx';
 import { useFieldArray } from 'react-hook-form';
 import type { FieldKeyPrefix } from '../../lib/genFieldKey.ts';
 import { getDefaultField } from '../../lib/getDefaultField.ts';
+import { useSettingsStore } from '../../lib/state/settings.state.ts';
 
 interface BlockFieldProps {
   field: FormFieldBlock;
@@ -15,12 +16,14 @@ function BlockField({ field, fieldKey }: BlockFieldProps) {
     keyName: '_id',
     name: `${fieldKey}.children`,
   });
+  const { setSelectedFieldId } = useSettingsStore();
 
   const handleAddNewField = (fieldType: FormFieldType, index: number) => {
     const fieldToAdd = getDefaultField({
       type: fieldType,
     });
     insert(index, fieldToAdd);
+    setSelectedFieldId(fieldToAdd.id);
   };
 
   return (

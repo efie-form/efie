@@ -1,23 +1,36 @@
 import type { FormFieldHeader } from '@efie-form/core';
 import { textAlignMap } from '../../lib/constant.ts';
+import { RichTextEditor } from '../RichTextEditor';
+import type { FieldKeyPrefix } from '../../lib/genFieldKey.ts';
+import { Controller } from 'react-hook-form';
+import { useSettingsStore } from '../../lib/state/settings.state.ts';
 
 interface HeaderFieldProps {
   field: FormFieldHeader;
+  fieldKey: FieldKeyPrefix;
 }
 
-function HeaderField({ field }: HeaderFieldProps) {
-  const Tag = field.props.tag || 'h1';
-
+function HeaderField({ field, fieldKey }: HeaderFieldProps) {
+  const { selectedFieldId } = useSettingsStore();
   return (
-    <Tag
+    <div
       style={{
         fontSize: `${field.props.font.size}px`,
         textAlign: textAlignMap[field.props.textAlign],
         color: field.props.color,
       }}
     >
-      {field.props.text}
-    </Tag>
+      <Controller
+        render={({ field: { value, onChange } }) => (
+          <RichTextEditor
+            value={value}
+            onChange={onChange}
+            active={selectedFieldId === field.id}
+          />
+        )}
+        name={`${fieldKey}.props.content`}
+      />
+    </div>
   );
 }
 

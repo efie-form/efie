@@ -17,6 +17,7 @@ function ImageField({
       style={{
         objectFit,
         textAlign,
+        display: 'block',
       }}
     />
   );

@@ -17,14 +17,42 @@ import SingleChoiceSettings from './fieldSettings/SingleChoiceSettings.tsx';
 import TimeSettings from './fieldSettings/TimeSettings.tsx';
 import type { FieldKeyPrefix } from '../../lib/genFieldKey.ts';
 import ButtonSettings from './fieldSettings/ButtonSettings.tsx';
+import { FIELDS_NAME } from '../../lib/constant.ts';
+import { HiX } from 'react-icons/hi';
+import { useSettingsStore } from '../../lib/state/settings.state.ts';
+import {
+  RIGHT_BAR_TABS,
+  useRightBarState,
+} from '../../lib/state/right-bar.state.ts';
 
 interface RenderSettingsProps {
-  field?: FormField;
+  field: FormField;
   fieldKey?: FieldKeyPrefix;
 }
 
 function RenderSettings({ field, fieldKey }: RenderSettingsProps) {
-  return <FieldItem key={fieldKey} field={field} fieldKey={fieldKey} />;
+  const { setSelectedFieldId } = useSettingsStore();
+  const { setActiveTab } = useRightBarState();
+
+  return (
+    <>
+      <div className="flex items-center justify-between border-b border-neutral-100">
+        <div className="px-4 py-2">
+          <p className="typography-body1">{FIELDS_NAME[field.type]}</p>
+        </div>
+        <button
+          className="border-s px-3 py-3 border-neutral-100 hover:bg-neutral-100 transition-all"
+          onClick={() => {
+            setSelectedFieldId(null);
+            setActiveTab(RIGHT_BAR_TABS.LAYOUT);
+          }}
+        >
+          <HiX />
+        </button>
+      </div>
+      <FieldItem key={fieldKey} field={field} fieldKey={fieldKey} />
+    </>
+  );
 }
 
 function FieldItem({ field, fieldKey }: RenderSettingsProps) {

@@ -30,6 +30,7 @@ export const FIELDS_NAME = {
   date: 'Date',
   dateTime: 'Date & Time',
   button: 'Button',
+  page: 'Page',
 } satisfies Record<FormFieldType, string>;
 
 export const textAlignMap = {

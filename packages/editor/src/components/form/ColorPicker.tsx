@@ -1,4 +1,3 @@
-import { useControllableState } from '@radix-ui/react-use-controllable-state';
 import * as PopoverPrimitive from '@radix-ui/react-popover';
 import type { IColor } from 'react-color-palette';
 import {
@@ -11,12 +10,14 @@ import {
 import 'react-color-palette/css';
 import { cn } from '../../lib/utils.ts';
 import { Controller, useForm } from 'react-hook-form';
-import type { ChangeEvent } from 'react';
+import { useEffect, useState } from 'react';
+import useDebounce from '../../lib/hooks/useDebounce.ts';
 
 interface ColorPickerProps {
   value: string;
   onChange: (value: string) => void;
   defaultColor?: string;
+  onClose?: () => void;
 }
 
 const inputStyle =
@@ -39,14 +40,10 @@ function ColorPicker({
   value,
   onChange,
   defaultColor = '#FFFFFF',
+  onClose,
 }: ColorPickerProps) {
-  const [color, setColor] = useControllableState({
-    prop: value,
-    onChange,
-    defaultProp: defaultColor,
-  });
-  const [colorObject] = useColor(color!);
-  const { control, watch, setValue } = useForm<FormSchema>({
+  const [colorObject, setColorObject] = useColor(value || defaultColor);
+  const { control, watch, getValues, setValue } = useForm<FormSchema>({
     defaultValues: {
       hex: colorObject.hex,
       rgb: {
@@ -58,43 +55,65 @@ function ColorPicker({
     },
   });
 
-  const handleHexChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const hex =
-      '#' + e.target.value.toUpperCase().replace(/#/g, '').slice(0, 8);
-    if (HEX_ALLOWED_CHARS.test(e.target.value)) {
-      setValue('hex', hex);
-    }
+  const [edited, setEdited] = useState(false);
 
-    if (HEX_REGEX.test(hex)) {
-      setColor(hex);
-    }
+  useDebounce(
+    () => {
+      const hex = getValues('hex');
+
+      if (!HEX_REGEX.test(hex)) return;
+
+      setColorObject(ColorService.convert('hex', hex));
+    },
+    250,
+    [watch('hex')]
+  );
+
+  useDebounce(
+    () => {
+      const rgb = getValues('rgb');
+
+      setColorObject(ColorService.convert('rgb', rgb));
+    },
+    250,
+    [watch('rgb.r'), watch('rgb.g'), watch('rgb.b'), watch('rgb.a')]
+  );
+
+  const handleColorChange = (color: IColor) => {
+    setEdited(true);
+    setColorObject(color);
+
+    setValue('hex', color.hex.toUpperCase());
+    setValue('rgb.r', Math.round(color.rgb.r));
+    setValue('rgb.g', Math.round(color.rgb.g));
+    setValue('rgb.b', Math.round(color.rgb.b));
+    setValue('rgb.a', color.rgb.a);
   };
 
   const handleRgbChange = (type: 'r' | 'g' | 'b', newValue: string) => {
     const value = Number(newValue.replace(/\D/g, ''));
     if (value > 255) return;
     setValue(`rgb.${type}`, value);
-
-    const hex = ColorService.rgb2hex({
-      r: type === 'r' ? value : colorObject.rgb.r,
-      g: type === 'g' ? value : colorObject.rgb.g,
-      b: type === 'b' ? value : colorObject.rgb.b,
-      a: colorObject.rgb.a,
-    });
-
-    setColor(hex);
   };
 
-  const handlePickerChange = (obj: IColor) => {
-    setValue('hex', obj.hex.toUpperCase());
-    setValue('rgb.r', Math.round(obj.rgb.r));
-    setValue('rgb.g', Math.round(obj.rgb.g));
-    setValue('rgb.b', Math.round(obj.rgb.b));
-    setColor(obj.hex);
-  };
+  useEffect(() => {
+    if (!edited) return;
+    onChange?.(colorObject.hex);
+  }, [colorObject, edited]);
+
+  const [open, setOpen] = useState(false);
 
   return (
-    <PopoverPrimitive.Root>
+    <PopoverPrimitive.Root
+      open={open}
+      onOpenChange={(o) => {
+        setOpen(o);
+        if (!o) {
+          setEdited(false);
+        }
+        if (!o && onClose) onClose();
+      }}
+    >
       <PopoverPrimitive.Trigger asChild>
         <button className="relative focus:outline-primary inline-block border p-[2px] border-neutral-200 rounded-sm cursor-pointer">
           <div
@@ -111,22 +130,40 @@ function ColorPicker({
             <Saturation
               height={128}
               color={colorObject}
-              onChange={handlePickerChange}
+              onChange={handleColorChange}
             />
             <div className="mt-5 [&_.rcp-hue]:h-1.5 [&_.rcp-hue-cursor]:h-4 [&_.rcp-hue-cursor]:w-4 [&_.rcp-hue-cursor]:-translate-x-2 [&_.rcp-hue-cursor]:-translate-y-1">
-              <Hue color={colorObject} onChange={handlePickerChange} />
+              <Hue color={colorObject} onChange={handleColorChange} />
             </div>
             <div className="mt-5 [&_.rcp-alpha]:h-1.5 [&_.rcp-alpha-cursor]:h-4 [&_.rcp-alpha-cursor]:w-4 [&_.rcp-alpha-cursor]:-translate-x-2 [&_.rcp-alpha-cursor]:-translate-y-1">
-              <Alpha color={colorObject} onChange={handlePickerChange} />
+              <Alpha color={colorObject} onChange={handleColorChange} />
             </div>
             <div className="flex gap-2 mt-5">
               <div className="flex gap-2">
                 <div>
-                  <input
-                    type="text"
-                    className={cn(inputStyle, 'w-full text-center')}
-                    value={watch('hex')}
-                    onChange={handleHexChange}
+                  <Controller
+                    render={({ field: { value, onChange } }) => (
+                      <input
+                        type="text"
+                        className={cn(inputStyle, 'w-full text-center')}
+                        value={value}
+                        onChange={(e) => {
+                          if (!HEX_ALLOWED_CHARS.test(e.target.value)) return;
+                          setEdited(true);
+
+                          const hex =
+                            '#' +
+                            e.target.value
+                              .toUpperCase()
+                              .replace(/#/g, '')
+                              .slice(0, 8);
+
+                          onChange(hex);
+                        }}
+                      />
+                    )}
+                    name={'hex'}
+                    control={control}
                   />
                   <p className="typography-body4 text-center">hex</p>
                 </div>
@@ -138,6 +175,8 @@ function ColorPicker({
                         className={cn(inputStyle, 'w-10 text-center')}
                         value={value}
                         onChange={(e) => {
+                          setEdited(true);
+
                           handleRgbChange('r', e.target.value);
                         }}
                       />
@@ -155,6 +194,8 @@ function ColorPicker({
                         className={cn(inputStyle, 'w-10 text-center')}
                         value={value}
                         onChange={(e) => {
+                          setEdited(true);
+
                           handleRgbChange('g', e.target.value);
                         }}
                       />
@@ -172,6 +213,8 @@ function ColorPicker({
                         className={cn(inputStyle, 'w-10 text-center')}
                         value={value}
                         onChange={(e) => {
+                          setEdited(true);
+
                           handleRgbChange('b', e.target.value);
                         }}
                       />

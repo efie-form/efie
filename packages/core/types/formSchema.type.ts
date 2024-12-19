@@ -1,18 +1,20 @@
-interface BorderRadius {
+import type { JSONContent } from '@tiptap/core';
+
+export interface BorderRadius {
   topLeft: number;
   topRight: number;
   bottomRight: number;
   bottomLeft: number;
 }
 
-interface Padding {
+export interface Padding {
   top: number;
   right: number;
   bottom: number;
   left: number;
 }
 
-interface Margin {
+export interface Margin {
   top: number;
   right: number;
   bottom: number;
@@ -153,7 +155,7 @@ export interface FormFieldHeader {
   id: string;
   type: 'header';
   props: {
-    text: string;
+    content: JSONContent;
     tag: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
     textAlign: 'left' | 'center' | 'right';
     color: string;
@@ -165,7 +167,7 @@ export interface FormFieldParagraph {
   id: string;
   type: 'paragraph';
   props: {
-    text: string;
+    content: JSONContent;
     textAlign: 'left' | 'center' | 'right';
     color: string;
     font: Font;

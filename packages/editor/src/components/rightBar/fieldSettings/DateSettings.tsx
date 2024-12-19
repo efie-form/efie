@@ -1,6 +1,5 @@
 import type { FormFieldDate } from '@efie-form/core';
 import type { FieldKeyPrefix } from '../../../lib/genFieldKey.ts';
-import { FIELDS_NAME } from '../../../lib/constant.ts';
 import FieldKeyProperty from '../common/FieldKeyProperty.tsx';
 import SettingsFieldVertical from '../../layouts/SettingsFieldVertical.tsx';
 import { Controller } from 'react-hook-form';
@@ -13,12 +12,9 @@ interface DateSettingsProps {
   fieldKey: FieldKeyPrefix;
 }
 
-function DateSettings({ field, fieldKey }: DateSettingsProps) {
+function DateSettings({ fieldKey }: DateSettingsProps) {
   return (
     <div>
-      <div className="px-4 py-2">
-        <p className="typography-body1">{FIELDS_NAME[field.type]}</p>
-      </div>
       <div className="px-4 py-2 bg-neutral-100 text-neutral-800 typography-body3 uppercase">
         General
       </div>

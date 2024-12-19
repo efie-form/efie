@@ -24,7 +24,7 @@ function DndDropzone({
   const [dropIndex, setDropIndex] = useState<number | null>(null);
   const [prevMouseY, setPrevMouseY] = useState(0);
 
-  const { draggedType } = useDndStore();
+  const { draggedType, clearDraggedType } = useDndStore();
   const isAccepted = !accepts || (accepts && accepts.includes(draggedType!));
 
   const onDragOverHandler = useThrottle((e: DragEvent<HTMLDivElement>) => {
@@ -63,6 +63,7 @@ function DndDropzone({
       onDrop={(e) => {
         if (!isAccepted) return;
         e.stopPropagation();
+        clearDraggedType();
         if (draggedType && onNewFieldDrop)
           onNewFieldDrop?.(draggedType, dropIndex ?? items.length);
       }}

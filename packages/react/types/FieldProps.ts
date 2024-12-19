@@ -193,10 +193,24 @@ export interface BlockFieldProps {
   id: string;
   // visible: boolean;
   children: ReactNode;
+  borderRadius?: string;
+  boxShadow?: string;
+  backgroundColor?: string;
+  color?: string;
+  padding?: string;
+  margin?: string;
 }
 
-export interface ContainerFieldProps {
+export interface PageFieldProps {
+  id: string;
+  // visible: boolean;
   children: ReactNode;
+}
+
+export interface ButtonFieldProps {
+  id: string;
+  // visible: boolean;
+  label: string;
 }
 
 export interface FieldPropsMap {
@@ -216,5 +230,6 @@ export interface FieldPropsMap {
   row: ElementType<RowFieldProps>;
   column: ElementType<ColumnFieldProps>;
   block: ElementType<BlockFieldProps>;
-  container: ElementType<ContainerFieldProps>;
+  page: ElementType<PageFieldProps>;
+  button: ElementType<ButtonFieldProps>;
 }

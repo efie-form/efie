@@ -31,7 +31,7 @@ function FileField({ field }: FileFieldProps) {
         )}
         name={`${fieldInfo.key}.props.label`}
       />
-      <div className="flex justify-center flex-col items-center gap-2 border-2 border-neutral-300 border-dashed rounded-md py-12">
+      <div className="flex justify-center flex-col items-center px-4 gap-2 border-2 border-neutral-300 border-dashed rounded-md py-12">
         <input type="file" className="hidden" ref={fileInputRef} />
         <MdOutlineCloudUpload size={48} className="text-neutral-300" />
         <p className="text-neutral-500 typography-body2">

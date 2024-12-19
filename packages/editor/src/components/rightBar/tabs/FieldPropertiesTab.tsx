@@ -14,10 +14,11 @@ function FieldPropertiesTab() {
     [selectedFieldId, getValues]
   );
 
+  if (!field) return null;
+
   return (
     <div>
-      {!field?.field && <div>Select a field to see its properties</div>}
-      <RenderSettings field={field?.field} fieldKey={field?.key} />
+      <RenderSettings field={field.field} fieldKey={field?.key} />
     </div>
   );
 }

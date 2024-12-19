@@ -1,5 +1,4 @@
 import type { FormFieldMultipleChoices } from '@efie-form/core';
-import { FIELDS_NAME } from '../../../lib/constant.ts';
 import FieldKeyProperty from '../common/FieldKeyProperty.tsx';
 import SettingsFieldVertical from '../../layouts/SettingsFieldVertical.tsx';
 import { Controller } from 'react-hook-form';
@@ -14,15 +13,9 @@ interface MultipleChoicesSettingsProps {
   fieldKey: FieldKeyPrefix;
 }
 
-function MultipleChoicesSettings({
-  field,
-  fieldKey,
-}: MultipleChoicesSettingsProps) {
+function MultipleChoicesSettings({ fieldKey }: MultipleChoicesSettingsProps) {
   return (
     <div>
-      <div className="px-4 py-2">
-        <p className="typography-body1">{FIELDS_NAME[field.type]}</p>
-      </div>
       <div className="px-4 py-2 bg-neutral-100 text-neutral-800 typography-body3 uppercase">
         General
       </div>

@@ -148,7 +148,7 @@ export const getDefaultField = ({
         type: 'header',
         id: generateId(ID_LENGTH),
         props: {
-          text: 'Header',
+          content: generateJsonContent('Header'),
           font: {
             size: 24,
             unit: 'px',
@@ -164,7 +164,7 @@ export const getDefaultField = ({
         type: 'paragraph',
         id: generateId(ID_LENGTH),
         props: {
-          text: 'Paragraph',
+          content: generateJsonContent('Paragraph'),
           font: {
             size: 16,
             unit: 'px',
@@ -305,3 +305,20 @@ export const getDefaultField = ({
       };
   }
 };
+
+function generateJsonContent(label: string) {
+  return {
+    type: 'doc',
+    content: [
+      {
+        type: 'paragraph',
+        content: [
+          {
+            type: 'text',
+            text: label,
+          },
+        ],
+      },
+    ],
+  };
+}
