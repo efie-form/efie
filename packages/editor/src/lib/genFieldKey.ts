@@ -8,7 +8,9 @@ export type FieldPropsKey =
       : never
     : never;
 
-export type FieldKeyPrefix = `form.fields.${number}`;
+export type FieldKeyPrefix =
+  | `form.fields.${number}`
+  | `form.fields.${number}.children.${number}`;
 
 export type FieldPropsValueType = FieldPathValue<
   FormSchema,
@@ -19,6 +21,8 @@ function genFieldKey<T extends FieldPropsKey>(
   fieldKey: FieldKeyPrefix,
   fieldProperty: T
 ): `form.fields.${number}.${T}` {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
   return `${fieldKey}.${fieldProperty}`;
 }
 

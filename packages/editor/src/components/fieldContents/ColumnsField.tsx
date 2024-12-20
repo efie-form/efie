@@ -7,6 +7,7 @@ import {
 } from '../../lib/constant.ts';
 import DndDropzone from '../Dnd/DndDropzone.tsx';
 import type { FieldKeyPrefix } from '../../lib/genFieldKey.ts';
+import genFieldKey from '../../lib/genFieldKey.ts';
 import { useFieldArray } from 'react-hook-form';
 import { getDefaultField } from '../../lib/getDefaultField.ts';
 import { useSettingsStore } from '../../lib/state/settings.state.ts';
@@ -62,7 +63,7 @@ function ColumnsField({ field, fieldKey }: ColumnsFieldProps) {
             <RenderField
               key={`${field.id}-${child.id}`}
               field={child}
-              fieldKey={`${fieldKey}.children.${index}`}
+              fieldKey={genFieldKey(fieldKey, `children.${index}`)}
             />
           ))}
         </div>
@@ -85,7 +86,7 @@ function EmptyColumnsField({ field }: ColumnsFieldProps) {
         [DATASET_FORM_FIELD]: field.id,
         [DATASET_DROP_ZONE]: DROP_ZONE_TYPE.emptyColumn,
       }}
-      className="h-full flex justify-center items-center min-h-32"
+      className="h-full flex justify-center items-center min-h-32 bg-neutral-50 rounded-md"
     >
       Drag and drop fields here
     </div>

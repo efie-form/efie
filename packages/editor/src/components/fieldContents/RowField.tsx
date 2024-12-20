@@ -1,6 +1,7 @@
 import type { FormFieldRow } from '@efie-form/core';
 import RenderField from '../RenderField.tsx';
 import type { FieldKeyPrefix } from '../../lib/genFieldKey.ts';
+import genFieldKey from '../../lib/genFieldKey.ts';
 import { useSettingsStore } from '../../lib/state/settings.state.ts';
 import { cn } from '../../lib/utils.ts';
 
@@ -32,7 +33,7 @@ function RowField({ field, fieldKey }: RowFieldProps) {
             <RenderField
               field={child}
               noSelect
-              fieldKey={`${fieldKey}.children.${index}`}
+              fieldKey={genFieldKey(fieldKey, `children.${index}`)}
             />
           </div>
         ))}

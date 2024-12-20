@@ -3,6 +3,7 @@ import RenderField from '../RenderField.tsx';
 import DndDropzone from '../Dnd/DndDropzone.tsx';
 import { useFieldArray } from 'react-hook-form';
 import type { FieldKeyPrefix } from '../../lib/genFieldKey.ts';
+import genFieldKey from '../../lib/genFieldKey.ts';
 import { getDefaultField } from '../../lib/getDefaultField.ts';
 import { useSettingsStore } from '../../lib/state/settings.state.ts';
 
@@ -78,7 +79,7 @@ function BlockField({ field, fieldKey }: BlockFieldProps) {
           <RenderField
             field={child}
             key={child.id}
-            fieldKey={`${fieldKey}.children.${index}`}
+            fieldKey={genFieldKey(fieldKey, `children.${index}`)}
           />
         ))}
       </div>

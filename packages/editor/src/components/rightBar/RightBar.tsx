@@ -3,12 +3,9 @@ import FieldPropertiesTab from './tabs/FieldPropertiesTab.tsx';
 import { cn } from '../../lib/utils.ts';
 import LayoutPropertiesTab from './tabs/LayoutPropertiesTab.tsx';
 import { AiFillLayout } from 'react-icons/ai';
-import type { RightBarTab } from '../../lib/state/right-bar.state.ts';
-import {
-  RIGHT_BAR_TABS,
-  useRightBarState,
-} from '../../lib/state/right-bar.state.ts';
 import type { ElementType } from 'react';
+import type { RightBarTab } from '../../lib/state/settings.state.ts';
+import { RIGHT_BAR_TABS } from '../../lib/state/settings.state.ts';
 import { useSettingsStore } from '../../lib/state/settings.state.ts';
 
 interface Tab {
@@ -20,8 +17,7 @@ interface Tab {
 }
 
 function RightBar() {
-  const { activeTab, setActiveTab } = useRightBarState();
-  const { selectedFieldId } = useSettingsStore();
+  const { selectedFieldId, activeTab, setActiveTab } = useSettingsStore();
 
   const tabs: Tab[] = [
     {
