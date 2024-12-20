@@ -1,18 +1,18 @@
 import type { FormField } from '@efie-form/core';
 
-interface MoveField2Props {
+interface MoveFieldProps {
   fields: FormField[];
   fieldId: string;
   dropFieldId: string;
   direction: 'up' | 'down';
 }
 
-export default function moveField2({
+export default function moveField({
   fields,
   dropFieldId,
   fieldId,
   direction,
-}: MoveField2Props) {
+}: MoveFieldProps) {
   if (fieldId === dropFieldId) return null;
   const fieldParentId = findParentId(fields, fieldId);
   const dropFieldParentId = findParentId(fields, dropFieldId);
@@ -21,11 +21,60 @@ export default function moveField2({
   const isMoveBetweenSiblings = fieldParentId === dropFieldParentId;
 
   if (isMoveBetweenSiblings) {
-    return swapFields(fields, fieldParentId, fieldId, dropFieldId, direction);
+    return swapBetweenSiblings(
+      fields,
+      fieldParentId,
+      fieldId,
+      dropFieldId,
+      direction
+    );
   }
+
+  return swapAcrossDifferentParents(
+    fields,
+    fieldId,
+    fieldParentId,
+    dropFieldId,
+    dropFieldParentId,
+    direction
+  );
 }
 
-const swapFields = (
+const swapAcrossDifferentParents = (
+  fields: FormField[],
+  fieldId: string,
+  fieldParentId: string,
+  dropFieldId: string,
+  dropFieldParentId: string,
+  direction: 'up' | 'down'
+) => {
+  const fieldParent = findField(fields, fieldParentId);
+  const dropFieldParent = findField(fields, dropFieldParentId);
+
+  if (!fieldParent || !dropFieldParent) return fields;
+
+  if (!('children' in fieldParent) || !('children' in dropFieldParent))
+    return fields;
+
+  const fieldIndex = fieldParent.children.findIndex(
+    (field) => field.id === fieldId
+  );
+  const temp = fieldParent.children.splice(fieldIndex, 1);
+
+  const dropFieldIndex = dropFieldParent.children.findIndex(
+    (field) => field.id === dropFieldId
+  );
+
+  if (direction === 'up') {
+    dropFieldParent.children.splice(dropFieldIndex, 0, ...temp);
+  } else {
+    dropFieldParent.children.splice(dropFieldIndex + 1, 0, ...temp);
+  }
+
+  return fields;
+};
+
+const swapBetweenSiblings = (
   fields: FormField[],
   parentFieldId: string,
   fieldId: string,

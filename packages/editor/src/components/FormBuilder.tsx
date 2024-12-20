@@ -8,7 +8,7 @@ import { useDndStore } from '../lib/state/dnd.state.ts';
 import { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import type { FormSchema } from '@efie-form/core';
-import moveField2 from '../lib/moveField2.ts';
+import moveField from '../lib/moveField.ts';
 import { DndContext } from '../lib/dndKit.tsx';
 import { customCollisionDetectionAlgorithm } from '../lib/customCollisionDetectionAlgorithm.ts';
 
@@ -37,7 +37,7 @@ function FormBuilder() {
             onDragEnd={(e) => {
               if (!direction || !e.active.data.current || !e.over?.data.current)
                 return;
-              const newFields = moveField2({
+              const newFields = moveField({
                 fields: getValues('form.fields'),
                 direction,
                 fieldId: e.active.data.current.id,
