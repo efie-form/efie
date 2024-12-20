@@ -3,6 +3,7 @@ import { useState } from 'react';
 import useThrottle from '../../lib/hooks/useThrottle.ts';
 import { useDndStore } from '../../lib/state/dnd.state.ts';
 import type { FormFieldType } from '@efie-form/core';
+import getHoverFieldId from '../../lib/getHoverFieldId.ts';
 
 interface DndDroppableProps {
   children: ReactNode;
@@ -30,7 +31,7 @@ function DndDropzone({
   const onDragOverHandler = useThrottle((e: DragEvent<HTMLDivElement>) => {
     setPrevMouseY(e.clientY);
     const mouseDirection = e.clientY > prevMouseY ? 1 : 0;
-    const id = getDropItemId(e.target as HTMLElement);
+    const id = getHoverFieldId(e.target as HTMLElement, accepts);
     if (!id) {
       setDropIndex(items.length);
       return;
@@ -40,16 +41,6 @@ function DndDropzone({
       setDropIndex(index + mouseDirection);
     }
   }, 150);
-
-  const getDropItemId = (target: HTMLElement) => {
-    const id = target.getAttribute('data-dnd-id');
-    const type = target.getAttribute('data-dnd-type') as FormFieldType;
-    if (!accepts?.includes(type) && target.parentElement)
-      return getDropItemId(target.parentElement);
-    if (id) return id;
-    if (target.parentElement) return getDropItemId(target.parentElement);
-    return null;
-  };
 
   return (
     <div

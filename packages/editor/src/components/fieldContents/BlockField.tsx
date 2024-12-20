@@ -80,6 +80,8 @@ function BlockField({ field, fieldKey }: BlockFieldProps) {
             field={child}
             key={child.id}
             fieldKey={genFieldKey(fieldKey, `children.${index}`)}
+            index={index}
+            parentId={field.id}
           />
         ))}
       </div>

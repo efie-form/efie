@@ -24,76 +24,102 @@ import useFieldInfo from '../lib/hooks/useFieldInfo.ts';
 import ButtonField from './fieldContents/ButtonField.tsx';
 import BlockField from './fieldContents/BlockField.tsx';
 import type { FieldKeyPrefix } from '../lib/genFieldKey.ts';
-import useDndItem from './Dnd/useDndItem.tsx';
 import { AiOutlineDrag } from 'react-icons/ai';
 import { HiTrash } from 'react-icons/hi2';
 import { useFieldArray } from 'react-hook-form';
+import useDndItem from './Dnd/useDndItem.tsx';
+import { useDroppable } from '../lib/dndKit.tsx';
 
 interface RenderFieldProps {
   field: FormField;
   noSelect?: boolean;
   fieldKey: FieldKeyPrefix;
+  index: number;
+  parentId: string;
 }
 
-function RenderField({ field, noSelect, fieldKey }: RenderFieldProps) {
+function RenderField({
+  field,
+  noSelect,
+  fieldKey,
+  index,
+  parentId,
+}: RenderFieldProps) {
   const {
     setSelectedFieldId,
     selectedFieldId,
     clearSelectedFieldId,
     setActiveTab,
   } = useSettingsStore();
+  const isSelected = selectedFieldId === field.id;
+  const parentFieldKey = fieldKey.split('.').slice(0, -1).join('.');
+
+  const { setNodeRef } = useDroppable({
+    id: field.id,
+    data: {
+      id: field.id,
+      type: field.type,
+      index,
+      parentId,
+    },
+  });
   const { attributes, dragHandlerProps } = useDndItem({
     id: field.id,
     type: field.type,
+    index,
+    parentId,
   });
-
-  const isSelected = selectedFieldId === field.id;
-  const parentFieldKey = fieldKey.split('.').slice(0, -1).join('.');
-  const fieldIndex = fieldKey.split('.').pop();
 
   const { remove } = useFieldArray({
     name: parentFieldKey,
   });
 
   return (
-    <div
-      id={field.id}
-      key={field.id}
-      data-field="true"
-      {...attributes}
-      className={cn('rounded-lg transform relative h-full', {
-        '!border-primary': isSelected,
-        'border-2 border-white border-opacity-0 [&:not(:has(div[data-field=true]:hover))]:hover:border-neutral-100':
-          field.type !== 'column',
-      })}
-      {...(!noSelect && {
-        onClick: (e: MouseEvent) => {
-          e.stopPropagation();
-          setSelectedFieldId(field.id);
-          setActiveTab(RIGHT_BAR_TABS.FIELD_SETTINGS);
-        },
-      })}
-    >
-      {isSelected && (
-        <div className="absolute top-0 left-0 -translate-x-full">
-          <div
-            {...dragHandlerProps}
-            className="bg-primary p-1 text-white cursor-grab"
-          >
-            <AiOutlineDrag />
+    <div ref={setNodeRef} className="h-full">
+      <div
+        id={field.id}
+        key={field.id}
+        data-field="true"
+        {...attributes}
+        className={cn('rounded-lg transform relative h-full', {
+          '!border-primary': isSelected,
+          'border-2 border-white border-opacity-0 [&:not(:has(div[data-field=true]:hover))]:hover:border-neutral-100':
+            field.type !== 'column',
+        })}
+        {...(!noSelect && {
+          onClick: (e: MouseEvent) => {
+            e.stopPropagation();
+            setSelectedFieldId(field.id);
+            setActiveTab(RIGHT_BAR_TABS.FIELD_SETTINGS);
+          },
+        })}
+      >
+        {isSelected && (
+          <div className="absolute top-0 left-0 -translate-x-full">
+            <div
+              {...dragHandlerProps}
+              className="bg-primary p-1 text-white cursor-grab"
+            >
+              <AiOutlineDrag />
+            </div>
+            <button
+              className="bg-danger p-1 text-white"
+              onClick={() => {
+                remove(index);
+                clearSelectedFieldId();
+              }}
+            >
+              <HiTrash />
+            </button>
           </div>
-          <button
-            className="bg-danger p-1 text-white"
-            onClick={() => {
-              remove(Number(fieldIndex));
-              clearSelectedFieldId();
-            }}
-          >
-            <HiTrash />
-          </button>
-        </div>
-      )}
-      <FieldItem field={field} fieldKey={fieldKey} />
+        )}
+        <FieldItem
+          field={field}
+          fieldKey={fieldKey}
+          index={index}
+          parentId={parentId}
+        />
+      </div>
     </div>
   );
 }

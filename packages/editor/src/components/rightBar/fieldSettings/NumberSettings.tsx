@@ -16,6 +16,15 @@ function NumberSettings({ fieldKey }: NumberSettingsProps) {
         <div className="px-4 py-2 bg-neutral-100 text-neutral-800 typography-body2">
           General
         </div>
+        <SettingsFieldVertical label="Field Key" divider>
+          <Controller
+            key={`${fieldKey}.id`}
+            render={({ field: { onChange, value } }) => (
+              <Input onChange={onChange} value={value} />
+            )}
+            name={`${fieldKey}.id`}
+          />
+        </SettingsFieldVertical>
         <SettingsFieldVertical label="Label" divider>
           <Controller
             key={`${fieldKey}.props.label`}

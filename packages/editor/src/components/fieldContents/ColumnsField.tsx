@@ -64,6 +64,8 @@ function ColumnsField({ field, fieldKey }: ColumnsFieldProps) {
               key={`${field.id}-${child.id}`}
               field={child}
               fieldKey={genFieldKey(fieldKey, `children.${index}`)}
+              index={index}
+              parentId={field.id}
             />
           ))}
         </div>

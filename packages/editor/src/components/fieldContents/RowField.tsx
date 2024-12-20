@@ -34,6 +34,8 @@ function RowField({ field, fieldKey }: RowFieldProps) {
               field={child}
               noSelect
               fieldKey={genFieldKey(fieldKey, `children.${index}`)}
+              index={index}
+              parentId={field.id}
             />
           </div>
         ))}

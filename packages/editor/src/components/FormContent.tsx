@@ -55,6 +55,8 @@ function FormContent() {
                 field={field}
                 key={field.id}
                 fieldKey={`form.fields.${pageIndex}.children.${index}`}
+                index={index}
+                parentId={selectedPage.id}
               />
             ))}
           </div>
