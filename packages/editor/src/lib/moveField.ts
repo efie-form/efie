@@ -5,6 +5,9 @@ interface MoveFieldProps {
   fieldId: string;
   dropFieldId: string;
   direction: 'up' | 'down';
+  dropOnEmptyColumn?: boolean;
+  columnId?: string;
+  isDropOnColumn: boolean;
 }
 
 export default function moveField({
@@ -12,11 +15,23 @@ export default function moveField({
   dropFieldId,
   fieldId,
   direction,
+  dropOnEmptyColumn,
+  columnId,
+  isDropOnColumn,
 }: MoveFieldProps) {
   if (fieldId === dropFieldId) return null;
   const fieldParentId = findParentId(fields, fieldId);
   const dropFieldParentId = findParentId(fields, dropFieldId);
+
+  if (dropOnEmptyColumn && columnId) {
+    return moveFieldToEmptyColumn(fields, fieldId, columnId);
+  }
+
   if (!fieldParentId || !dropFieldParentId) return null;
+
+  if (isDropOnColumn) {
+    return moveFieldToColumnEnd(fields, fieldId, fieldParentId, dropFieldId);
+  }
 
   const isMoveBetweenSiblings = fieldParentId === dropFieldParentId;
 
@@ -39,6 +54,56 @@ export default function moveField({
     direction
   );
 }
+
+const moveFieldToColumnEnd = (
+  fields: FormField[],
+  fieldId: string,
+  fieldParentId: string,
+  columnId: string
+) => {
+  const fieldParent = findField(fields, fieldParentId);
+  const dropFieldParent = findField(fields, columnId);
+
+  if (!fieldParent || !dropFieldParent) return fields;
+  if (!('children' in fieldParent) || !('children' in dropFieldParent))
+    return fields;
+
+  const fieldIndex = fieldParent.children.findIndex(
+    (field) => field.id === fieldId
+  );
+  const temp = fieldParent.children.splice(fieldIndex, 1);
+
+  dropFieldParent.children.push(...temp);
+
+  return fields;
+};
+
+const moveFieldToEmptyColumn = (
+  fields: FormField[],
+  fieldId: string,
+  dropParentId: string
+) => {
+  const fieldParentId = findParentId(fields, fieldId);
+  const dropFieldParentId = findField(fields, dropParentId);
+
+  if (!fieldParentId || !dropFieldParentId) return fields;
+
+  const fieldParent = findField(fields, fieldParentId);
+
+  if (!fieldParent || !('children' in fieldParent)) return fields;
+
+  const fieldIndex = fieldParent.children.findIndex(
+    (field) => field.id === fieldId
+  );
+
+  const temp = fieldParent.children.splice(fieldIndex, 1);
+
+  if (!('children' in dropFieldParentId)) return fields;
+
+  dropFieldParentId.children.push(...temp);
+
+  return fields;
+};
 
 const swapAcrossDifferentParents = (
   fields: FormField[],

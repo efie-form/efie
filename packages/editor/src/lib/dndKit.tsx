@@ -18,6 +18,7 @@ interface DroppableData {
   type: string;
   index: number;
   parentId: string;
+  isEmptyColumn?: boolean;
 }
 
 interface UseDroppableTypesafeArguments

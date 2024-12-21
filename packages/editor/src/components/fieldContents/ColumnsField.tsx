@@ -11,6 +11,7 @@ import genFieldKey from '../../lib/genFieldKey.ts';
 import { useFieldArray } from 'react-hook-form';
 import { getDefaultField } from '../../lib/getDefaultField.ts';
 import { useSettingsStore } from '../../lib/state/settings.state.ts';
+import { useDroppable } from '../../lib/dndKit.tsx';
 
 interface ColumnsFieldProps {
   field: FormFieldColumn;
@@ -82,8 +83,20 @@ function ColumnsField({ field, fieldKey }: ColumnsFieldProps) {
 }
 
 function EmptyColumnsField({ field }: ColumnsFieldProps) {
+  const { setNodeRef } = useDroppable({
+    id: `${field.id}-empty`,
+    data: {
+      id: `${field.id}-empty`,
+      index: 0,
+      isEmptyColumn: true,
+      parentId: field.id,
+      type: 'emptyColumn',
+    },
+  });
+
   return (
     <div
+      ref={setNodeRef}
       {...{
         [DATASET_FORM_FIELD]: field.id,
         [DATASET_DROP_ZONE]: DROP_ZONE_TYPE.emptyColumn,

@@ -42,6 +42,9 @@ function FormBuilder() {
                 direction,
                 fieldId: e.active.data.current.id,
                 dropFieldId: e.over.data.current.id,
+                dropOnEmptyColumn: e.over.data.current.isEmptyColumn,
+                columnId: e.over.data.current.parentId,
+                isDropOnColumn: e.over.data.current.type === 'column',
               });
               if (!newFields) return;
               setValue('form.fields', newFields);
