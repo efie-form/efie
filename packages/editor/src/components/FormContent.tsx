@@ -1,9 +1,8 @@
-import { useFieldArray, useFormContext } from 'react-hook-form';
-import type { FormFieldType, FormSchema } from '@efie-form/core';
+import { useFormContext } from 'react-hook-form';
+import type { FormSchema } from '@efie-form/core';
 import RenderField from './RenderField.tsx';
 import { useSettingsStore } from '../lib/state/settings.state.ts';
-import DndDropzone from './Dnd/DndDropzone.tsx';
-import { getDefaultField } from '../lib/getDefaultField.ts';
+import Droppable from './Dnd/Droppable.tsx';
 
 const SCREEN_SIZES = {
   mobile: 375,
@@ -12,36 +11,17 @@ const SCREEN_SIZES = {
 
 function FormContent() {
   const { watch } = useFormContext<FormSchema>();
-  const { mode, page, setSelectedFieldId } = useSettingsStore();
+  const { mode, page } = useSettingsStore();
   const selectedPage = watch('form.fields')
     .filter((field) => field.type === 'page')
     .find((field) => field.id === page);
   const pageIndex = watch('form.fields').findIndex(
     (field) => field.id === page
   );
-  const { insert } = useFieldArray({
-    keyName: '_id',
-    name: `form.fields.${Math.max(pageIndex, 0)}.children`,
-  });
-
-  const handleAddNewField = (fieldType: FormFieldType, index: number) => {
-    const fieldToAdd = getDefaultField({
-      type: fieldType,
-    });
-    insert(index, fieldToAdd);
-    setSelectedFieldId(fieldToAdd.id);
-  };
-
   if (!selectedPage) return null;
 
   return (
-    <DndDropzone
-      className="h-full"
-      id={selectedPage.id}
-      items={selectedPage.children.map((child) => child.id)}
-      onNewFieldDrop={handleAddNewField}
-      accepts={['block']}
-    >
+    <Droppable id={selectedPage.id} type="page" className="h-full">
       <div className="min-h-full pb-64">
         <div className="p-4">
           <div
@@ -62,7 +42,7 @@ function FormContent() {
           </div>
         </div>
       </div>
-    </DndDropzone>
+    </Droppable>
   );
 }
 

@@ -57,8 +57,6 @@ function RenderField({
   const { attributes, dragHandlerProps } = useDndItem({
     id: field.id,
     type: field.type,
-    index,
-    parentId,
   });
 
   const { remove } = useFieldArray({

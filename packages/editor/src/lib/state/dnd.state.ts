@@ -6,9 +6,9 @@ interface DndState {
   setAction: (action: DndState['action']) => void;
   draggedType: FormFieldType | null;
   setDraggedType: (type: FormFieldType) => void;
-  clearDraggedType: () => void;
   direction: 'up' | 'down' | null;
   setDirection: (direction: DndState['direction']) => void;
+  clearDraggingState: () => void;
 }
 
 export const useDndStore = create<DndState>((set) => ({
@@ -16,7 +16,7 @@ export const useDndStore = create<DndState>((set) => ({
   setAction: (action) => set({ action }),
   draggedType: null,
   setDraggedType: (type) => set({ draggedType: type }),
-  clearDraggedType: () => set({ draggedType: null }),
   direction: null,
   setDirection: (direction) => set({ direction }),
+  clearDraggingState: () => set({ draggedType: null, action: null }),
 }));

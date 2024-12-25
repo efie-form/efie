@@ -28,13 +28,18 @@ export function useDroppable(props: UseDroppableTypesafeArguments) {
   return useOriginalDroppable(props);
 }
 
-interface DraggableData {
+interface DraggableMoveData {
   id: string;
-  action: 'move' | 'new';
+  action: 'move';
   type: FormFieldType;
-  index: number;
-  parentId: string;
 }
+
+interface DraggableNewData {
+  action: 'new';
+  type: FormFieldType;
+}
+
+type DraggableData = DraggableMoveData | DraggableNewData;
 
 interface UseDraggableTypesafeArguments
   extends Omit<UseDraggableArguments, 'data'> {

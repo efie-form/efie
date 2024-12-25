@@ -1,39 +1,38 @@
 import type { FormField, FormFieldType } from '@efie-form/core';
+import { findFieldParentId } from './findFieldParentId.ts';
 
 interface MoveFieldProps {
   fields: FormField[];
   fieldId: string;
+  fieldType: FormFieldType;
   dropFieldType: FormFieldType;
   dropFieldId: string;
   direction: 'up' | 'down';
 }
+
+const isDropOnChildren = (moveType: FormFieldType, dropType: FormFieldType) => {
+  if (moveType !== 'block' && dropType === 'block') return true;
+  if (dropType === 'column' || dropType === 'page') return true;
+  //
+  return false;
+};
 
 export default function moveField({
   fields,
   dropFieldId,
   fieldId,
   direction,
+  fieldType,
   dropFieldType,
 }: MoveFieldProps) {
   if (fieldId === dropFieldId) return null;
-  const fieldParentId = findParentId(fields, fieldId);
-  const dropFieldParentId = findParentId(fields, dropFieldId);
+  const fieldParentId = findFieldParentId(fields, fieldId);
+  const dropFieldParentId = findFieldParentId(fields, dropFieldId);
 
   if (!fieldParentId) return null;
 
-  const isDropOnColumn = dropFieldType === 'column';
-  if (isDropOnColumn) {
-    const columnField = findField(fields, dropFieldId);
-
-    const isColumnField = columnField?.type === 'column';
-    if (!isColumnField) return fields;
-    const isDropOnEmptyColumn = columnField.children.length === 0;
-
-    if (isDropOnEmptyColumn) {
-      return moveFieldToEmptyColumn(fields, fieldId, dropFieldId);
-    }
-
-    return moveFieldToColumnEnd(fields, fieldId, fieldParentId, dropFieldId);
+  if (isDropOnChildren(fieldType, dropFieldType)) {
+    return moveFieldToChildrenEnd(fields, fieldId, fieldParentId, dropFieldId);
   }
 
   if (!dropFieldParentId) return null;
@@ -60,7 +59,7 @@ export default function moveField({
   );
 }
 
-const moveFieldToColumnEnd = (
+const moveFieldToChildrenEnd = (
   fields: FormField[],
   fieldId: string,
   fieldParentId: string,
@@ -79,33 +78,6 @@ const moveFieldToColumnEnd = (
   const temp = fieldParent.children.splice(fieldIndex, 1);
 
   dropFieldParent.children.push(...temp);
-
-  return fields;
-};
-
-const moveFieldToEmptyColumn = (
-  fields: FormField[],
-  fieldId: string,
-  dropParentId: string
-) => {
-  const fieldParentId = findParentId(fields, fieldId);
-  const dropFieldParentId = findField(fields, dropParentId);
-
-  if (!fieldParentId || !dropFieldParentId) return fields;
-
-  const fieldParent = findField(fields, fieldParentId);
-
-  if (!fieldParent || !('children' in fieldParent)) return fields;
-
-  const fieldIndex = fieldParent.children.findIndex(
-    (field) => field.id === fieldId
-  );
-
-  const temp = fieldParent.children.splice(fieldIndex, 1);
-
-  if (!('children' in dropFieldParentId)) return fields;
-
-  dropFieldParentId.children.push(...temp);
 
   return fields;
 };
@@ -185,23 +157,4 @@ const findField = (fields: FormField[], fieldId: string): FormField | null => {
     }
   });
   return result;
-};
-
-const findParentId = (fields: FormField[], fieldId: string): string | null => {
-  let parentId: string | null = null;
-
-  for (let i = 0; i < fields.length; i++) {
-    const field = fields[i];
-
-    if ('children' in field) {
-      if (field.children.some((child) => child.id === fieldId)) {
-        parentId = field.id;
-        break;
-      }
-      parentId = findParentId(field.children, fieldId);
-    }
-
-    if (parentId) break;
-  }
-  return parentId;
 };

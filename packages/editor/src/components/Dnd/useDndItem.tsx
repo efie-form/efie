@@ -4,8 +4,6 @@ import { useDraggable } from '../../lib/dndKit.tsx';
 interface UseDndItemProps {
   id: string;
   type: FormFieldType;
-  index: number;
-  parentId: string;
 }
 
 const acceptTypes = {
@@ -29,15 +27,13 @@ const acceptTypes = {
   block: ['block'],
 };
 
-function useDndItem({ id, type, index, parentId }: UseDndItemProps) {
+function useDndItem({ id, type }: UseDndItemProps) {
   const { listeners, attributes, setNodeRef, transform } = useDraggable({
     id,
     data: {
-      type,
-      index,
-      parentId,
       id,
       action: 'move',
+      type,
     },
   });
 

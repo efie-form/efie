@@ -1,34 +1,90 @@
-import type { FormField } from '@efie-form/core';
-import { DROP_ZONE_TYPE } from './constant.ts';
+import type { FormField, FormFieldType } from '@efie-form/core';
+import { getDefaultField } from './getDefaultField.ts';
+import { findFieldParentId } from './findFieldParentId.ts';
 
-export default function insertField(
+interface InsertFieldProps {
+  fields: FormField[];
+  newFieldType: FormFieldType;
+  dropFieldType: FormFieldType;
+  dropFieldId: string;
+  direction: 'up' | 'down';
+}
+
+const isDropOnChildren = (newType: FormFieldType, dropType: FormFieldType) => {
+  if (newType !== 'block' && dropType === 'block') return true;
+  if (dropType === 'column' || dropType === 'page') return true;
+  //
+  return false;
+};
+
+export default function insertField({
+  fields,
+  newFieldType,
+  dropFieldId,
+  direction,
+  dropFieldType,
+}: InsertFieldProps) {
+  const newField = getDefaultField({
+    type: newFieldType,
+  });
+
+  const field = findField(fields, dropFieldId);
+  if (!field) return fields;
+
+  if (isDropOnChildren(newFieldType, dropFieldType)) {
+    return appendFieldToChildren(fields, newField, dropFieldId);
+  }
+  return addFieldtoSiblings(fields, newField, dropFieldId, direction);
+}
+
+const findField = (fields: FormField[], fieldId: string): FormField | null => {
+  let result: FormField | null = null;
+  fields.forEach((field) => {
+    if (field.id === fieldId) {
+      result = field;
+    }
+    if (!result && 'children' in field) {
+      result = findField(field.children, fieldId);
+    }
+  });
+  return result;
+};
+
+const appendFieldToChildren = (
   fields: FormField[],
   newField: FormField,
-  dropZoneType: string,
-  parentId: string | null,
-  index: number
-) {
-  if (dropZoneType === DROP_ZONE_TYPE.root) {
-    fields.splice(index, 0, newField);
-    return fields;
+  dropFieldId: string
+) => {
+  const field = findField(fields, dropFieldId);
+  if (!field || !('children' in field)) return fields;
+
+  field.children.push(newField);
+
+  return fields;
+};
+
+const addFieldtoSiblings = (
+  fields: FormField[],
+  newField: FormField,
+  dropFieldId: string,
+  direction: 'up' | 'down'
+) => {
+  const dropFieldParentId = findFieldParentId(fields, dropFieldId);
+  if (!dropFieldParentId) return fields;
+
+  const dropFieldParent = findField(fields, dropFieldParentId);
+  if (!dropFieldParent || !('children' in dropFieldParent)) return fields;
+
+  const dropFieldIndex = dropFieldParent.children.findIndex(
+    (field) => field.id === dropFieldId
+  );
+  if (dropFieldIndex === -1) return fields;
+
+  if (direction === 'up') {
+    dropFieldParent.children.splice(dropFieldIndex, 0, newField);
+  } else {
+    dropFieldParent.children.splice(dropFieldIndex + 1, 0, newField);
   }
 
-  return findAndInsert(fields, newField, parentId, index);
-}
-
-function findAndInsert(
-  fields: FormField[],
-  newField: FormField,
-  parentId: string | null,
-  index: number
-) {
-  return fields.map((field) => {
-    if (field.id === parentId && 'children' in field) {
-      field.children.splice(index, 0, newField);
-    }
-    if (field.id !== parentId && 'children' in field) {
-      field.children = findAndInsert(field.children, newField, parentId, index);
-    }
-    return field;
-  });
-}
+  return fields;
+};

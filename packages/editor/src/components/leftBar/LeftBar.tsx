@@ -54,7 +54,7 @@ function LeftBar() {
           </div>
         ))}
       </div>
-      <div className="flex-1 overflow-hidden flex flex-col">
+      <div className="flex-1 flex flex-col">
         <div className="px-4 py-2 border-b border-neutral-100">
           <p className="typography-body1 font-semibold text-neutral-600">
             {currentTab?.label}
