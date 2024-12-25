@@ -1,6 +1,6 @@
 import type { FormFieldType } from '@efie-form/core';
 import type { ReactNode } from 'react';
-import { useDroppable } from '../../lib/dndKit.tsx';
+import { useDroppable } from './dnd-kit.type.tsx';
 import type { DivProps } from 'react-html-props';
 import { useDndStore } from '../../lib/state/dnd.state.ts';
 import { cn } from '../../lib/utils.ts';
@@ -69,7 +69,6 @@ function Droppable({
     },
     disabled: !!draggedType && !droppable[draggedType].includes(type),
   });
-  console.log(draggedType);
 
   return (
     <div {...props} ref={setNodeRef} className={cn({}, className)}>

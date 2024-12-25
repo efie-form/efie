@@ -27,8 +27,8 @@ import type { FieldKeyPrefix } from '../lib/genFieldKey.ts';
 import { AiOutlineDrag } from 'react-icons/ai';
 import { HiTrash } from 'react-icons/hi2';
 import { useFieldArray } from 'react-hook-form';
-import useDndItem from './Dnd/useDndItem.tsx';
-import Droppable from './Dnd/Droppable.tsx';
+import useDndItem from './dnd-kit/useDndItem.tsx';
+import Droppable from './dnd-kit/Droppable.tsx';
 
 interface RenderFieldProps {
   field: FormField;

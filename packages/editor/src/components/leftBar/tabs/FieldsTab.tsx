@@ -2,7 +2,7 @@ import { fieldGroup, fieldIcons } from '../../../lib/fields.ts';
 import { cn } from '../../../lib/utils.ts';
 import type { ElementType } from 'react';
 import type { FormFieldType } from '@efie-form/core';
-import { useDraggable } from '../../../lib/dndKit.tsx';
+import { useDraggable } from '../../dnd-kit/dnd-kit.type.tsx';
 import { DragOverlay } from '@dnd-kit/core';
 import { useDndStore } from '../../../lib/state/dnd.state.ts';
 import { FIELDS_NAME } from '../../../lib/constant.ts';

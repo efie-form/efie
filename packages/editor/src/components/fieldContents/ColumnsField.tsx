@@ -3,7 +3,7 @@ import RenderField from '../RenderField.tsx';
 
 import type { FieldKeyPrefix } from '../../lib/genFieldKey.ts';
 import genFieldKey from '../../lib/genFieldKey.ts';
-import Droppable from '../Dnd/Droppable.tsx';
+import Droppable from '../dnd-kit/Droppable.tsx';
 
 interface ColumnsFieldProps {
   field: FormFieldColumn;

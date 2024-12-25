@@ -9,14 +9,10 @@ import { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import type { FormSchema } from '@efie-form/core';
 import moveField from '../lib/moveField.ts';
-import type {
-  DragEndEvent,
-  DragMoveEvent,
-  DragStartEvent,
-} from '../lib/dndKit.tsx';
-import { DndContext } from '../lib/dndKit.tsx';
+import type { DragEndEvent, DragMoveEvent, DragStartEvent } from './dnd-kit';
 import { customCollisionDetectionAlgorithm } from '../lib/customCollisionDetectionAlgorithm.ts';
 import insertField from '../lib/insertField.ts';
+import { DndContext } from './dnd-kit';
 
 function FormBuilder() {
   const {

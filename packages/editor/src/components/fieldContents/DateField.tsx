@@ -30,9 +30,6 @@ function DateField({ field }: DateFieldProps) {
       <input
         type="date"
         className="border border-neutral-300 px-4 py-2 rounded-md typography-body3 outline-primary w-full max-w-40"
-        onChange={(e) => {
-          console.log('clicked', e.target.value);
-        }}
       />
     </div>
   );

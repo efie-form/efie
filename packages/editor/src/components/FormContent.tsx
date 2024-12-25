@@ -2,7 +2,7 @@ import { useFormContext } from 'react-hook-form';
 import type { FormSchema } from '@efie-form/core';
 import RenderField from './RenderField.tsx';
 import { useSettingsStore } from '../lib/state/settings.state.ts';
-import Droppable from './Dnd/Droppable.tsx';
+import Droppable from './dnd-kit/Droppable.tsx';
 
 const SCREEN_SIZES = {
   mobile: 375,
