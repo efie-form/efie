@@ -28,7 +28,7 @@ import { AiOutlineDrag } from 'react-icons/ai';
 import { HiTrash } from 'react-icons/hi2';
 import { useFieldArray } from 'react-hook-form';
 import useDndItem from './Dnd/useDndItem.tsx';
-import { useDroppable } from '../lib/dndKit.tsx';
+import Droppable from './Dnd/Droppable.tsx';
 
 interface RenderFieldProps {
   field: FormField;
@@ -54,15 +54,6 @@ function RenderField({
   const isSelected = selectedFieldId === field.id;
   const parentFieldKey = fieldKey.split('.').slice(0, -1).join('.');
 
-  const { setNodeRef } = useDroppable({
-    id: field.id,
-    data: {
-      id: field.id,
-      type: field.type,
-      index,
-      parentId,
-    },
-  });
   const { attributes, dragHandlerProps } = useDndItem({
     id: field.id,
     type: field.type,
@@ -75,7 +66,7 @@ function RenderField({
   });
 
   return (
-    <div ref={setNodeRef} className="h-full">
+    <Droppable id={field.id} type={field.type} className="h-full">
       <div
         id={field.id}
         key={field.id}
@@ -120,7 +111,7 @@ function RenderField({
           parentId={parentId}
         />
       </div>
-    </div>
+    </Droppable>
   );
 }
 

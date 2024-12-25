@@ -34,69 +34,67 @@ function ColumnsField({ field, fieldKey }: ColumnsFieldProps) {
     setSelectedFieldId(newField.id);
   };
 
-  return (
-    <DndDropzone
-      className="h-full"
-      items={field.children.map((child) => child.id)}
-      id={field.id}
-      accepts={[
-        'shortText',
-        'longText',
-        'number',
-        'singleChoice',
-        'multipleChoices',
-        'date',
-        'time',
-        'dateTime',
-        'file',
-        'button',
-        'divider',
-        'header',
-        'paragraph',
-        'image',
-        'row',
-      ]}
-      onNewFieldDrop={handleAddNewField}
-    >
-      {hasChildren && (
-        <div>
-          {field.children.map((child, index) => (
-            <RenderField
-              key={`${field.id}-${child.id}`}
-              field={child}
-              fieldKey={genFieldKey(fieldKey, `children.${index}`)}
-              index={index}
-              parentId={field.id}
-            />
-          ))}
-        </div>
-      )}
-      {!hasChildren && (
-        <div className="h-full">
-          {field.children.length === 0 && (
-            <EmptyColumnsField fieldKey={fieldKey} field={field} />
-          )}
-        </div>
-      )}
-    </DndDropzone>
-  );
-}
-
-function EmptyColumnsField({ field }: ColumnsFieldProps) {
   const { setNodeRef } = useDroppable({
-    id: `${field.id}-empty`,
+    id: field.id,
     data: {
-      id: `${field.id}-empty`,
-      index: 0,
-      isEmptyColumn: true,
-      parentId: field.id,
-      type: 'emptyColumn',
+      id: field.id,
+      type: 'column',
     },
   });
 
   return (
+    <div ref={setNodeRef} className="h-full">
+      <DndDropzone
+        className="h-full"
+        items={field.children.map((child) => child.id)}
+        id={field.id}
+        accepts={[
+          'shortText',
+          'longText',
+          'number',
+          'singleChoice',
+          'multipleChoices',
+          'date',
+          'time',
+          'dateTime',
+          'file',
+          'button',
+          'divider',
+          'header',
+          'paragraph',
+          'image',
+          'row',
+        ]}
+        onNewFieldDrop={handleAddNewField}
+      >
+        {hasChildren && (
+          <div>
+            {field.children.map((child, index) => (
+              <RenderField
+                key={`${field.id}-${child.id}`}
+                field={child}
+                fieldKey={genFieldKey(fieldKey, `children.${index}`)}
+                index={index}
+                parentId={field.id}
+              />
+            ))}
+          </div>
+        )}
+        {!hasChildren && (
+          <div className="h-full">
+            {field.children.length === 0 && (
+              <EmptyColumnsField fieldKey={fieldKey} field={field} />
+            )}
+          </div>
+        )}
+      </DndDropzone>
+    </div>
+  );
+}
+
+function EmptyColumnsField({ field }: ColumnsFieldProps) {
+  return (
     <div
-      ref={setNodeRef}
       {...{
         [DATASET_FORM_FIELD]: field.id,
         [DATASET_DROP_ZONE]: DROP_ZONE_TYPE.emptyColumn,

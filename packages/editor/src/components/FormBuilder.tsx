@@ -13,7 +13,7 @@ import { DndContext } from '../lib/dndKit.tsx';
 import { customCollisionDetectionAlgorithm } from '../lib/customCollisionDetectionAlgorithm.ts';
 
 function FormBuilder() {
-  const { setDirection, direction } = useDndStore();
+  const { setDirection, direction, setAction, setDraggedType } = useDndStore();
   const { getValues, setValue } = useFormContext<FormSchema>();
 
   const [prevMouseY, setPrevMouseY] = useState(0);
@@ -42,12 +42,16 @@ function FormBuilder() {
                 direction,
                 fieldId: e.active.data.current.id,
                 dropFieldId: e.over.data.current.id,
-                dropOnEmptyColumn: e.over.data.current.isEmptyColumn,
-                columnId: e.over.data.current.parentId,
-                isDropOnColumn: e.over.data.current.type === 'column',
+                dropFieldType: e.over.data.current.type,
               });
               if (!newFields) return;
               setValue('form.fields', newFields);
+            }}
+            onDragStart={(e) => {
+              if (e.active.data.current?.action) {
+                setAction(e.active.data.current.action);
+                setDraggedType(e.active.data.current.type);
+              }
             }}
             onDragMove={(e) => {
               const newDirection = e.delta.y > prevMouseY ? 'down' : 'up';

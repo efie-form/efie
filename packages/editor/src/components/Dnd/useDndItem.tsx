@@ -37,6 +37,7 @@ function useDndItem({ id, type, index, parentId }: UseDndItemProps) {
       index,
       parentId,
       id,
+      action: 'move',
     },
   });
 

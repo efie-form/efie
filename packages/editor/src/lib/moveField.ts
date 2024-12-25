@@ -1,13 +1,11 @@
-import type { FormField } from '@efie-form/core';
+import type { FormField, FormFieldType } from '@efie-form/core';
 
 interface MoveFieldProps {
   fields: FormField[];
   fieldId: string;
+  dropFieldType: FormFieldType;
   dropFieldId: string;
   direction: 'up' | 'down';
-  dropOnEmptyColumn?: boolean;
-  columnId?: string;
-  isDropOnColumn: boolean;
 }
 
 export default function moveField({
@@ -15,23 +13,30 @@ export default function moveField({
   dropFieldId,
   fieldId,
   direction,
-  dropOnEmptyColumn,
-  columnId,
-  isDropOnColumn,
+  dropFieldType,
 }: MoveFieldProps) {
   if (fieldId === dropFieldId) return null;
   const fieldParentId = findParentId(fields, fieldId);
   const dropFieldParentId = findParentId(fields, dropFieldId);
 
-  if (dropOnEmptyColumn && columnId) {
-    return moveFieldToEmptyColumn(fields, fieldId, columnId);
-  }
+  if (!fieldParentId) return null;
 
-  if (!fieldParentId || !dropFieldParentId) return null;
-
+  const isDropOnColumn = dropFieldType === 'column';
   if (isDropOnColumn) {
+    const columnField = findField(fields, dropFieldId);
+
+    const isColumnField = columnField?.type === 'column';
+    if (!isColumnField) return fields;
+    const isDropOnEmptyColumn = columnField.children.length === 0;
+
+    if (isDropOnEmptyColumn) {
+      return moveFieldToEmptyColumn(fields, fieldId, dropFieldId);
+    }
+
     return moveFieldToColumnEnd(fields, fieldId, fieldParentId, dropFieldId);
   }
+
+  if (!dropFieldParentId) return null;
 
   const isMoveBetweenSiblings = fieldParentId === dropFieldParentId;
 
