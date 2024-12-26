@@ -58,7 +58,6 @@ function RenderField({
   return (
     <Droppable id={field.id} type={field.type} className="h-full">
       <div
-        id={field.id}
         key={field.id}
         data-field="true"
         {...attributes}

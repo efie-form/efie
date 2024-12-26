@@ -71,7 +71,7 @@ function Droppable({
   });
 
   return (
-    <div {...props} ref={setNodeRef} className={cn({}, className)}>
+    <div {...props} id={id} ref={setNodeRef} className={cn({}, className)}>
       {children}
     </div>
   );

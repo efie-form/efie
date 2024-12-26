@@ -12,6 +12,7 @@ import {
   useDroppable as useOriginalDroppable,
 } from '@dnd-kit/core';
 import type { FormFieldType } from '@efie-form/core';
+import { DndContext as OriginalDndContext } from '@dnd-kit/core';
 
 interface DroppableData {
   id: string;
@@ -89,4 +90,10 @@ export interface DndContextTypesafeProps
   onDragEnd?(event: DragEndEvent): void;
 
   onDragCancel?(event: DragCancelEvent): void;
+}
+
+export function DndContext(props: DndContextTypesafeProps) {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
+  return <OriginalDndContext {...props} />;
 }
