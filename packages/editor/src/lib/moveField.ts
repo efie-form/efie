@@ -77,7 +77,14 @@ const moveFieldToChildrenEnd = (
   );
   const temp = fieldParent.children.splice(fieldIndex, 1);
 
-  dropFieldParent.children.push(...temp);
+  if (dropFieldParent.type === 'row') {
+    const columnFieldsOnly = dropFieldParent.children.filter(
+      (field) => field.type === 'column'
+    );
+    dropFieldParent.children.push(...columnFieldsOnly);
+  } else {
+    dropFieldParent.children.push(...temp);
+  }
 
   return fields;
 };

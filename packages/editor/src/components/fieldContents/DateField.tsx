@@ -1,31 +1,28 @@
-import type { FormFieldDate } from '@efie-form/core';
+import type { FormFieldDate, FormSchema } from '@efie-form/core';
 import useFieldInfo from '../../lib/hooks/useFieldInfo.ts';
-import { Controller } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 import type { FieldKeyPrefix } from '../../lib/genFieldKey.ts';
+import genFieldKey from '../../lib/genFieldKey.ts';
 
 interface DateFieldProps {
   field: FormFieldDate;
   fieldKey: FieldKeyPrefix;
 }
 
-function DateField({ field }: DateFieldProps) {
+function DateField({ field, fieldKey }: DateFieldProps) {
   const fieldInfo = useFieldInfo({
     fieldId: field.id,
   });
+  const { register } = useFormContext<FormSchema>();
+
   if (!fieldInfo) return null;
 
   return (
     <div className="p-2">
-      <Controller
-        render={({ field: { value, onChange } }) => (
-          <input
-            className="mb-2 typography-body2 bg-white bg-opacity-0 focus:outline-none cursor-text w-full"
-            type="text"
-            value={value}
-            onChange={onChange}
-          />
-        )}
-        name={`${fieldInfo.key}.props.label`}
+      <input
+        {...register(genFieldKey(fieldKey, 'props.label'))}
+        className="mb-2 typography-body2 bg-white bg-opacity-0 focus:outline-none cursor-text w-full"
+        type="text"
       />
       <input
         type="date"

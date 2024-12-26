@@ -26,7 +26,6 @@ import BlockField from './fieldContents/BlockField.tsx';
 import type { FieldKeyPrefix } from '../lib/genFieldKey.ts';
 import { AiOutlineDrag } from 'react-icons/ai';
 import { HiTrash } from 'react-icons/hi2';
-import { useFieldArray } from 'react-hook-form';
 import useDndItem from './dnd-kit/useDndItem.tsx';
 import Droppable from './dnd-kit/Droppable.tsx';
 
@@ -34,16 +33,14 @@ interface RenderFieldProps {
   field: FormField;
   noSelect?: boolean;
   fieldKey: FieldKeyPrefix;
-  index: number;
-  parentId: string;
+  onRemove?: () => void;
 }
 
 function RenderField({
   field,
   noSelect,
   fieldKey,
-  index,
-  parentId,
+  onRemove,
 }: RenderFieldProps) {
   const {
     setSelectedFieldId,
@@ -52,15 +49,10 @@ function RenderField({
     setActiveTab,
   } = useSettingsStore();
   const isSelected = selectedFieldId === field.id;
-  const parentFieldKey = fieldKey.split('.').slice(0, -1).join('.');
 
   const { attributes, dragHandlerProps } = useDndItem({
     id: field.id,
     type: field.type,
-  });
-
-  const { remove } = useFieldArray({
-    name: parentFieldKey,
   });
 
   return (
@@ -94,7 +86,7 @@ function RenderField({
             <button
               className="bg-danger p-1 text-white"
               onClick={() => {
-                remove(index);
+                onRemove?.();
                 clearSelectedFieldId();
               }}
             >
@@ -102,12 +94,7 @@ function RenderField({
             </button>
           </div>
         )}
-        <FieldItem
-          field={field}
-          fieldKey={fieldKey}
-          index={index}
-          parentId={parentId}
-        />
+        <FieldItem field={field} fieldKey={fieldKey} />
       </div>
     </Droppable>
   );

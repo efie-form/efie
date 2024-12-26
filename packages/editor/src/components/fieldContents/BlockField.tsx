@@ -2,6 +2,7 @@ import type { FormFieldBlock } from '@efie-form/core';
 import RenderField from '../RenderField.tsx';
 import type { FieldKeyPrefix } from '../../lib/genFieldKey.ts';
 import genFieldKey from '../../lib/genFieldKey.ts';
+import { useFieldArray } from 'react-hook-form';
 
 interface BlockFieldProps {
   field: FormFieldBlock;
@@ -9,6 +10,9 @@ interface BlockFieldProps {
 }
 
 function BlockField({ field, fieldKey }: BlockFieldProps) {
+  const { remove } = useFieldArray({
+    name: `${fieldKey}.children`,
+  });
   return (
     <div
       className="min-h-20 w-full transition-all"
@@ -40,8 +44,9 @@ function BlockField({ field, fieldKey }: BlockFieldProps) {
           field={child}
           key={child.id}
           fieldKey={genFieldKey(fieldKey, `children.${index}`)}
-          index={index}
-          parentId={field.id}
+          onRemove={() => {
+            remove(index);
+          }}
         />
       ))}
     </div>

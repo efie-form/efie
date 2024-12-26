@@ -4,6 +4,7 @@ import type { FieldKeyPrefix } from '../../lib/genFieldKey.ts';
 import genFieldKey from '../../lib/genFieldKey.ts';
 import { useSettingsStore } from '../../lib/state/settings.state.ts';
 import { cn } from '../../lib/utils.ts';
+import { useFieldArray } from 'react-hook-form';
 
 interface RowFieldProps {
   field: FormFieldRow;
@@ -13,6 +14,9 @@ interface RowFieldProps {
 function RowField({ field, fieldKey }: RowFieldProps) {
   const { mode } = useSettingsStore();
   const isMobile = mode === 'mobile';
+  const { remove } = useFieldArray({
+    name: `${fieldKey}.children`,
+  });
 
   return (
     <div
@@ -34,8 +38,9 @@ function RowField({ field, fieldKey }: RowFieldProps) {
               field={child}
               noSelect
               fieldKey={genFieldKey(fieldKey, `children.${index}`)}
-              index={index}
-              parentId={field.id}
+              onRemove={() => {
+                remove(index);
+              }}
             />
           </div>
         ))}

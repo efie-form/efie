@@ -1,25 +1,25 @@
-import type { FormFieldMultipleChoices, OptionType } from '@efie-form/core';
-import { Controller, useFieldArray } from 'react-hook-form';
-import useFieldInfo from '../../lib/hooks/useFieldInfo.ts';
+import type {
+  FormFieldMultipleChoices,
+  FormSchema,
+  OptionType,
+} from '@efie-form/core';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 import { MdOutlineClose, MdOutlineDragIndicator } from 'react-icons/md';
 import type { FieldKeyPrefix } from '../../lib/genFieldKey.ts';
+import genFieldKey from '../../lib/genFieldKey.ts';
 
 interface MultipleChoicesProps {
   field: FormFieldMultipleChoices;
   fieldKey: FieldKeyPrefix;
 }
 
-function MultipleChoicesField({ field }: MultipleChoicesProps) {
-  const fieldInfo = useFieldInfo({
-    fieldId: field.id,
-  });
+function MultipleChoicesField({ field, fieldKey }: MultipleChoicesProps) {
+  const { register } = useFormContext<FormSchema>();
   const fieldArray = useFieldArray({
-    name: `${fieldInfo?.key || ''}.props.options`,
+    name: `${fieldKey}.props.options`,
   });
   const { append, update, remove } = fieldArray;
   const options = fieldArray.fields as (OptionType & { id: string })[];
-
-  if (!fieldInfo) return null;
 
   const handleNewOption = () => {
     append({
@@ -38,16 +38,10 @@ function MultipleChoicesField({ field }: MultipleChoicesProps) {
 
   return (
     <div className="p-2">
-      <Controller
-        render={({ field: { value, onChange } }) => (
-          <input
-            className="mb-2 typography-body2 bg-white bg-opacity-0 focus:outline-none cursor-text w-full"
-            type="text"
-            value={value}
-            onChange={onChange}
-          />
-        )}
-        name={`${fieldInfo.key}.props.label`}
+      <input
+        {...register(genFieldKey(fieldKey, 'props.label'))}
+        className="mb-2 typography-body2 bg-white bg-opacity-0 focus:outline-none cursor-text w-full"
+        type="text"
       />
       <div
         id={`${field.id}-options-container`}

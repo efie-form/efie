@@ -1,4 +1,4 @@
-import { useFormContext } from 'react-hook-form';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 import type { FormSchema } from '@efie-form/core';
 import RenderField from './RenderField.tsx';
 import { useSettingsStore } from '../lib/state/settings.state.ts';
@@ -18,6 +18,10 @@ function FormContent() {
   const pageIndex = watch('form.fields').findIndex(
     (field) => field.id === page
   );
+  const { remove } = useFieldArray({
+    name: `form.fields.${pageIndex}.children`,
+  });
+
   if (!selectedPage) return null;
 
   return (
@@ -35,8 +39,9 @@ function FormContent() {
                 field={field}
                 key={field.id}
                 fieldKey={`form.fields.${pageIndex}.children.${index}`}
-                index={index}
-                parentId={selectedPage.id}
+                onRemove={() => {
+                  remove(index);
+                }}
               />
             ))}
           </div>

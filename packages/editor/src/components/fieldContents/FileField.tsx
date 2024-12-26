@@ -1,35 +1,26 @@
-import type { FormFieldFile } from '@efie-form/core';
-import useFieldInfo from '../../lib/hooks/useFieldInfo.ts';
-import { Controller } from 'react-hook-form';
+import type { FormFieldFile, FormSchema } from '@efie-form/core';
+import { useFormContext } from 'react-hook-form';
 import { MdOutlineCloudUpload } from 'react-icons/md';
 import { useRef } from 'react';
 import type { FieldKeyPrefix } from '../../lib/genFieldKey.ts';
+import genFieldKey from '../../lib/genFieldKey.ts';
 
 interface FileFieldProps {
   field: FormFieldFile;
   fieldKey: FieldKeyPrefix;
 }
 
-function FileField({ field }: FileFieldProps) {
-  const fieldInfo = useFieldInfo({
-    fieldId: field.id,
-  });
-  const fileInputRef = useRef<HTMLInputElement>(null);
+function FileField({ fieldKey, field }: FileFieldProps) {
+  const { register } = useFormContext<FormSchema>();
 
-  if (!fieldInfo) return null;
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   return (
     <div className="p-2">
-      <Controller
-        render={({ field: { value, onChange } }) => (
-          <input
-            className="mb-2 typography-body2 bg-white bg-opacity-0 focus:outline-none cursor-text w-full"
-            type="text"
-            value={value}
-            onChange={onChange}
-          />
-        )}
-        name={`${fieldInfo.key}.props.label`}
+      <input
+        {...register(genFieldKey(fieldKey, 'props.label'))}
+        className="mb-2 typography-body2 bg-white bg-opacity-0 focus:outline-none cursor-text w-full"
+        type="text"
       />
       <div className="flex justify-center flex-col items-center px-4 gap-2 border-2 border-neutral-300 border-dashed rounded-md py-12">
         <input type="file" className="hidden" ref={fileInputRef} />

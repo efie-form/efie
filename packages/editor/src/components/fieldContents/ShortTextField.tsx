@@ -1,6 +1,7 @@
-import type { FormFieldShortText } from '@efie-form/core';
+import type { FormFieldShortText, FormSchema } from '@efie-form/core';
 import type { FieldKeyPrefix } from '../../lib/genFieldKey.ts';
-import { Controller } from 'react-hook-form';
+import genFieldKey from '../../lib/genFieldKey.ts';
+import { useFormContext } from 'react-hook-form';
 
 interface ShortTextFieldProps {
   field: FormFieldShortText;
@@ -8,18 +9,14 @@ interface ShortTextFieldProps {
 }
 
 function ShortTextField({ field, fieldKey }: ShortTextFieldProps) {
+  const { register } = useFormContext<FormSchema>();
+
   return (
     <div className="p-2">
-      <Controller
-        render={({ field: { value, onChange } }) => (
-          <input
-            className="mb-2 typography-body2 bg-white bg-opacity-0 focus:outline-none cursor-text w-full"
-            type="text"
-            value={value}
-            onChange={onChange}
-          />
-        )}
-        name={`${fieldKey}.props.label`}
+      <input
+        {...register(genFieldKey(fieldKey, 'props.label'))}
+        className="mb-2 typography-body2 bg-white bg-opacity-0 focus:outline-none cursor-text w-full"
+        type="text"
       />
       <input
         type="text"

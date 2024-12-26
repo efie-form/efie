@@ -1,6 +1,7 @@
-import type { FormFieldNumber } from '@efie-form/core';
-import { Controller } from 'react-hook-form';
+import type { FormFieldNumber, FormSchema } from '@efie-form/core';
+import { useFormContext } from 'react-hook-form';
 import type { FieldKeyPrefix } from '../../lib/genFieldKey.ts';
+import genFieldKey from '../../lib/genFieldKey.ts';
 
 interface NumberFieldProps {
   field: FormFieldNumber;
@@ -8,18 +9,14 @@ interface NumberFieldProps {
 }
 
 function NumberField({ field, fieldKey }: NumberFieldProps) {
+  const { register } = useFormContext<FormSchema>();
+
   return (
     <div className="p-2">
-      <Controller
-        render={({ field: { value, onChange } }) => (
-          <input
-            className="mb-2 typography-body2 bg-white bg-opacity-0 focus:outline-none cursor-text w-full"
-            type="text"
-            value={value}
-            onChange={onChange}
-          />
-        )}
-        name={`${fieldKey}.props.label`}
+      <input
+        {...register(genFieldKey(fieldKey, 'props.label'))}
+        className="mb-2 typography-body2 bg-white bg-opacity-0 focus:outline-none cursor-text w-full"
+        type="text"
       />
       <input
         placeholder={field.props.placeholder}

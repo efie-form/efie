@@ -34,7 +34,7 @@ export default function insertField({
   if (isDropOnChildren(newFieldType, dropFieldType)) {
     return appendFieldToChildren(fields, newField, dropFieldId);
   }
-  return addFieldtoSiblings(fields, newField, dropFieldId, direction);
+  return addFieldToSiblings(fields, newField, dropFieldId, direction);
 }
 
 const findField = (fields: FormField[], fieldId: string): FormField | null => {
@@ -58,12 +58,18 @@ const appendFieldToChildren = (
   const field = findField(fields, dropFieldId);
   if (!field || !('children' in field)) return fields;
 
-  field.children.push(newField);
+  if (field.type === 'row') {
+    if (newField.type === 'column') {
+      field.children.push(newField);
+    }
+  } else {
+    field.children.push(newField);
+  }
 
   return fields;
 };
 
-const addFieldtoSiblings = (
+const addFieldToSiblings = (
   fields: FormField[],
   newField: FormField,
   dropFieldId: string,

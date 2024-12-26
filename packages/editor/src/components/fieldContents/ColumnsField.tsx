@@ -4,6 +4,7 @@ import RenderField from '../RenderField.tsx';
 import type { FieldKeyPrefix } from '../../lib/genFieldKey.ts';
 import genFieldKey from '../../lib/genFieldKey.ts';
 import Droppable from '../dnd-kit/Droppable.tsx';
+import { useFieldArray } from 'react-hook-form';
 
 interface ColumnsFieldProps {
   field: FormFieldColumn;
@@ -12,6 +13,9 @@ interface ColumnsFieldProps {
 
 function ColumnsField({ field, fieldKey }: ColumnsFieldProps) {
   const hasChildren = field.children.length > 0;
+  const { remove } = useFieldArray({
+    name: `${fieldKey}.children`,
+  });
 
   return (
     <Droppable id={field.id} type={field.type} className="h-full">
@@ -22,8 +26,9 @@ function ColumnsField({ field, fieldKey }: ColumnsFieldProps) {
               key={`${field.id}-${child.id}`}
               field={child}
               fieldKey={genFieldKey(fieldKey, `children.${index}`)}
-              index={index}
-              parentId={field.id}
+              onRemove={() => {
+                remove(index);
+              }}
             />
           ))}
         </div>
