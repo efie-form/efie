@@ -9,6 +9,14 @@ interface DndState {
   direction: 'up' | 'down' | null;
   setDirection: (direction: DndState['direction']) => void;
   clearDraggingState: () => void;
+  originalRect: Record<
+    string,
+    { x: number; y: number; width: number; height: number }
+  >;
+  setOriginalRect: (
+    key: string,
+    rect: { x: number; y: number; width: number; height: number }
+  ) => void;
 }
 
 export const useDndStore = create<DndState>((set) => ({
@@ -19,4 +27,7 @@ export const useDndStore = create<DndState>((set) => ({
   direction: null,
   setDirection: (direction) => set({ direction }),
   clearDraggingState: () => set({ draggedType: null, action: null }),
+  originalRect: {},
+  setOriginalRect: (key, rect) =>
+    set((state) => ({ originalRect: { ...state.originalRect, [key]: rect } })),
 }));
