@@ -1,7 +1,10 @@
 import type { FormField } from '@efie-form/core';
 import ColumnsField from './fieldContents/ColumnsField.tsx';
 import RowField from './fieldContents/RowField.tsx';
-import { useSettingsStore } from '../lib/state/settings.state.ts';
+import {
+  RIGHT_BAR_TABS,
+  useSettingsStore,
+} from '../lib/state/settings.state.ts';
 import type { MouseEvent } from 'react';
 import HeaderField from './fieldContents/HeaderField.tsx';
 import ParagraphField from './fieldContents/ParagraphField.tsx';
@@ -18,50 +21,81 @@ import DateTimeField from './fieldContents/DateTimeField.tsx';
 import FileField from './fieldContents/FileField.tsx';
 import { cn } from '../lib/utils.ts';
 import useFieldInfo from '../lib/hooks/useFieldInfo.ts';
-import {
-  RIGHT_BAR_TABS,
-  useRightBarState,
-} from '../lib/state/right-bar.state.ts';
 import ButtonField from './fieldContents/ButtonField.tsx';
 import BlockField from './fieldContents/BlockField.tsx';
 import type { FieldKeyPrefix } from '../lib/genFieldKey.ts';
-import useDndItem from './Dnd/useDndItem.tsx';
+import { AiOutlineDrag } from 'react-icons/ai';
+import { HiTrash } from 'react-icons/hi2';
+import useDndItem from './dnd-kit/useDndItem.tsx';
+import Droppable from './dnd-kit/Droppable.tsx';
 
 interface RenderFieldProps {
   field: FormField;
   noSelect?: boolean;
   fieldKey: FieldKeyPrefix;
+  onRemove?: () => void;
 }
 
-function RenderField({ field, noSelect, fieldKey }: RenderFieldProps) {
-  const { setSelectedFieldId, selectedFieldId } = useSettingsStore();
-  const setActiveTab = useRightBarState((state) => state.setActiveTab);
-  const { attributes } = useDndItem({
+function RenderField({
+  field,
+  noSelect,
+  fieldKey,
+  onRemove,
+}: RenderFieldProps) {
+  const {
+    setSelectedFieldId,
+    selectedFieldId,
+    clearSelectedFieldId,
+    setActiveTab,
+  } = useSettingsStore();
+  const isSelected = selectedFieldId === field.id;
+
+  const { attributes, dragHandlerProps } = useDndItem({
     id: field.id,
     type: field.type,
   });
 
   return (
-    <div
-      id={field.id}
-      key={field.id}
-      data-field="true"
-      {...attributes}
-      className={cn('rounded-lg transform relative h-full', {
-        '!border-primary': selectedFieldId === field.id,
-        'border-2 border-white border-opacity-0 [&:not(:has(div[data-field=true]:hover))]:hover:border-neutral-100':
-          field.type !== 'column',
-      })}
-      {...(!noSelect && {
-        onClick: (e: MouseEvent) => {
-          e.stopPropagation();
-          setSelectedFieldId(field.id);
-          setActiveTab(RIGHT_BAR_TABS.FIELD_SETTINGS);
-        },
-      })}
-    >
-      <FieldItem field={field} fieldKey={fieldKey} />
-    </div>
+    <Droppable id={field.id} type={field.type} className="h-full">
+      <div
+        key={field.id}
+        data-field="true"
+        {...attributes}
+        className={cn('rounded-lg transform relative h-full', {
+          '!border-primary': isSelected,
+          'border-2 border-white border-opacity-0 [&:not(:has(div[data-field=true]:hover))]:hover:border-neutral-100':
+            field.type !== 'column',
+        })}
+        {...(!noSelect && {
+          onClick: (e: MouseEvent) => {
+            e.stopPropagation();
+            setSelectedFieldId(field.id);
+            setActiveTab(RIGHT_BAR_TABS.FIELD_SETTINGS);
+          },
+        })}
+      >
+        {isSelected && (
+          <div className="absolute top-0 left-0 -translate-x-full">
+            <div
+              {...dragHandlerProps}
+              className="bg-primary p-1 text-white cursor-grab"
+            >
+              <AiOutlineDrag />
+            </div>
+            <button
+              className="bg-danger p-1 text-white"
+              onClick={() => {
+                onRemove?.();
+                clearSelectedFieldId();
+              }}
+            >
+              <HiTrash />
+            </button>
+          </div>
+        )}
+        <FieldItem field={field} fieldKey={fieldKey} />
+      </div>
+    </Droppable>
   );
 }
 

@@ -1,8 +1,10 @@
 import type { FormFieldRow } from '@efie-form/core';
 import RenderField from '../RenderField.tsx';
 import type { FieldKeyPrefix } from '../../lib/genFieldKey.ts';
+import genFieldKey from '../../lib/genFieldKey.ts';
 import { useSettingsStore } from '../../lib/state/settings.state.ts';
 import { cn } from '../../lib/utils.ts';
+import { useFieldArray } from 'react-hook-form';
 
 interface RowFieldProps {
   field: FormFieldRow;
@@ -12,6 +14,9 @@ interface RowFieldProps {
 function RowField({ field, fieldKey }: RowFieldProps) {
   const { mode } = useSettingsStore();
   const isMobile = mode === 'mobile';
+  const { remove } = useFieldArray({
+    name: `${fieldKey}.children`,
+  });
 
   return (
     <div
@@ -32,7 +37,10 @@ function RowField({ field, fieldKey }: RowFieldProps) {
             <RenderField
               field={child}
               noSelect
-              fieldKey={`${fieldKey}.children.${index}`}
+              fieldKey={genFieldKey(fieldKey, `children.${index}`)}
+              onRemove={() => {
+                remove(index);
+              }}
             />
           </div>
         ))}

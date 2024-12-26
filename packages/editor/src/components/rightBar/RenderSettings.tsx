@@ -19,11 +19,10 @@ import type { FieldKeyPrefix } from '../../lib/genFieldKey.ts';
 import ButtonSettings from './fieldSettings/ButtonSettings.tsx';
 import { FIELDS_NAME } from '../../lib/constant.ts';
 import { HiX } from 'react-icons/hi';
-import { useSettingsStore } from '../../lib/state/settings.state.ts';
 import {
   RIGHT_BAR_TABS,
-  useRightBarState,
-} from '../../lib/state/right-bar.state.ts';
+  useSettingsStore,
+} from '../../lib/state/settings.state.ts';
 
 interface RenderSettingsProps {
   field: FormField;
@@ -31,8 +30,7 @@ interface RenderSettingsProps {
 }
 
 function RenderSettings({ field, fieldKey }: RenderSettingsProps) {
-  const { setSelectedFieldId } = useSettingsStore();
-  const { setActiveTab } = useRightBarState();
+  const { setSelectedFieldId, setActiveTab } = useSettingsStore();
 
   return (
     <>

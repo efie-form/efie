@@ -1,15 +1,10 @@
-import type { FormFieldColumn, FormFieldType } from '@efie-form/core';
+import type { FormFieldColumn } from '@efie-form/core';
 import RenderField from '../RenderField.tsx';
-import {
-  DATASET_DROP_ZONE,
-  DATASET_FORM_FIELD,
-  DROP_ZONE_TYPE,
-} from '../../lib/constant.ts';
-import DndDropzone from '../Dnd/DndDropzone.tsx';
+
 import type { FieldKeyPrefix } from '../../lib/genFieldKey.ts';
+import genFieldKey from '../../lib/genFieldKey.ts';
+import Droppable from '../dnd-kit/Droppable.tsx';
 import { useFieldArray } from 'react-hook-form';
-import { getDefaultField } from '../../lib/getDefaultField.ts';
-import { useSettingsStore } from '../../lib/state/settings.state.ts';
 
 interface ColumnsFieldProps {
   field: FormFieldColumn;
@@ -17,52 +12,23 @@ interface ColumnsFieldProps {
 }
 
 function ColumnsField({ field, fieldKey }: ColumnsFieldProps) {
-  const { insert } = useFieldArray({
-    keyName: '_id',
+  const hasChildren = field.children.length > 0;
+  const { remove } = useFieldArray({
     name: `${fieldKey}.children`,
   });
-  const { setSelectedFieldId } = useSettingsStore();
-  const hasChildren = field.children.length > 0;
-
-  const handleAddNewField = (fieldType: FormFieldType, index: number) => {
-    const newField = getDefaultField({
-      type: fieldType,
-    });
-    insert(index, newField);
-    setSelectedFieldId(newField.id);
-  };
 
   return (
-    <DndDropzone
-      className="h-full"
-      items={field.children.map((child) => child.id)}
-      id={field.id}
-      accepts={[
-        'shortText',
-        'longText',
-        'number',
-        'singleChoice',
-        'multipleChoices',
-        'date',
-        'time',
-        'dateTime',
-        'file',
-        'button',
-        'divider',
-        'header',
-        'paragraph',
-        'image',
-        'row',
-      ]}
-      onNewFieldDrop={handleAddNewField}
-    >
+    <Droppable id={field.id} type={field.type} className="h-full">
       {hasChildren && (
         <div>
           {field.children.map((child, index) => (
             <RenderField
               key={`${field.id}-${child.id}`}
               field={child}
-              fieldKey={`${fieldKey}.children.${index}`}
+              fieldKey={genFieldKey(fieldKey, `children.${index}`)}
+              onRemove={() => {
+                remove(index);
+              }}
             />
           ))}
         </div>
@@ -70,25 +36,13 @@ function ColumnsField({ field, fieldKey }: ColumnsFieldProps) {
       {!hasChildren && (
         <div className="h-full">
           {field.children.length === 0 && (
-            <EmptyColumnsField fieldKey={fieldKey} field={field} />
+            <div className="h-full flex justify-center items-center min-h-32 bg-neutral-50 rounded-md">
+              Drag and drop fields here
+            </div>
           )}
         </div>
       )}
-    </DndDropzone>
-  );
-}
-
-function EmptyColumnsField({ field }: ColumnsFieldProps) {
-  return (
-    <div
-      {...{
-        [DATASET_FORM_FIELD]: field.id,
-        [DATASET_DROP_ZONE]: DROP_ZONE_TYPE.emptyColumn,
-      }}
-      className="h-full flex justify-center items-center min-h-32"
-    >
-      Drag and drop fields here
-    </div>
+    </Droppable>
   );
 }
 

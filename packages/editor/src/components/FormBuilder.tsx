@@ -4,13 +4,13 @@ import LayoutSwitcher from './toolbars/LayoutSwitcher.tsx';
 import FormContent from './FormContent.tsx';
 import RightBar from './rightBar/RightBar.tsx';
 import Preview from './toolbars/Preview.tsx';
-import DndContext from './Dnd/DndContext.tsx';
+import { DndProvider } from './dnd-kit';
 
 function FormBuilder() {
   return (
-    <DndContext>
+    <DndProvider>
       <div className="flex h-screen w-screen">
-        <div className="w-80 bg-neutral-50 overflow-hidden">
+        <div className="w-80 bg-neutral-50">
           <LeftBar />
         </div>
         <div className="min-w-[40rem] flex-1 bg-primary-50 flex flex-col h-full">
@@ -29,7 +29,7 @@ function FormBuilder() {
           <RightBar />
         </div>
       </div>
-    </DndContext>
+    </DndProvider>
   );
 }
 
