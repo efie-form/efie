@@ -1,36 +1,36 @@
-import LeftBar from './leftBar/LeftBar.tsx';
-import LeftToolbar from './toolbars/LeftToolbar.tsx';
-import LayoutSwitcher from './toolbars/LayoutSwitcher.tsx';
-import FormContent from './FormContent.tsx';
-import RightBar from './rightBar/RightBar.tsx';
-import Preview from './toolbars/Preview.tsx';
 import { DndProvider } from './dnd-kit';
+import FormContent from './FormContent';
+import LeftBar from './leftBar/LeftBar';
+import RightBar from './rightBar/RightBar';
+import LayoutSwitcher from './toolbars/LayoutSwitcher';
+import LeftToolbar from './toolbars/LeftToolbar';
+import Preview from './toolbars/Preview';
 
-function FormBuilder() {
+const FormBuilder = () => {
   return (
     <DndProvider>
       <div className="flex h-screen w-screen">
-        <div className="w-80 bg-neutral-50">
+        <aside className="w-80 bg-neutral-50 overflow-y-auto">
           <LeftBar />
-        </div>
-        <div className="min-w-[40rem] flex-1 bg-primary-50 flex flex-col h-full">
-          <div className="h-14 flex justify-between px-4 items-center">
+        </aside>
+        <main className="min-w-[40rem] flex-1 bg-primary-50 flex flex-col">
+          <header className="h-14 flex justify-between px-4 items-center">
             <LeftToolbar />
-            <div className="flex gap-4 items-center">
+            <div className="flex items-center gap-4">
               <Preview />
               <LayoutSwitcher />
             </div>
-          </div>
-          <div className="h-full overflow-y-scroll">
+          </header>
+          <div className="flex-1 overflow-y-auto">
             <FormContent />
           </div>
-        </div>
-        <div className="w-96 bg-neutral-50 overflow-hidden">
+        </main>
+        <aside className="w-96 bg-neutral-50 overflow-y-auto">
           <RightBar />
-        </div>
+        </aside>
       </div>
     </DndProvider>
   );
-}
+};
 
 export default FormBuilder;
