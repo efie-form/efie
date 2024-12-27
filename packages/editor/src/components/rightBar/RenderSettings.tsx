@@ -64,7 +64,7 @@ function FieldItem({ field, fieldKey }: RenderSettingsProps) {
     case 'longText':
       return <LongTextSettings field={field} fieldKey={fieldKey} />;
     case 'column':
-      return <ColumnSettings field={field} fieldKey={fieldKey} />;
+      return null;
     case 'block':
       return <BlockSettings field={field} fieldKey={fieldKey} />;
     case 'divider':

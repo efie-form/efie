@@ -38,8 +38,8 @@ function RightBar() {
   const TabContent = tabs.find((tab) => tab.id === activeTab)?.tab;
 
   return (
-    <div className="h-full flex">
-      <div className="flex-1">{TabContent && <TabContent />}</div>
+    <div className="h-full flex w-full">
+      <div className="flex-1 overflow-hidden">{TabContent && <TabContent />}</div>
       <div className="bg-neutral-100/40 h-full">
         {tabs
           .filter((tab) => !tab.hidden)
