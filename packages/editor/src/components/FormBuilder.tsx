@@ -25,7 +25,7 @@ const FormBuilder = () => {
             <FormContent />
           </div>
         </main>
-        <aside className="w-[28rem] bg-neutral-50 overflow-y-auto">
+        <aside className="w-[30rem] bg-neutral-50 overflow-y-auto">
           <RightBar />
         </aside>
       </div>
