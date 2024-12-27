@@ -19,7 +19,7 @@ function FormContent() {
     (field) => field.id === page
   );
   const { remove } = useFieldArray({
-    name: `form.fields.${pageIndex}.children`,
+    name: `form.fields.${Math.max(0, pageIndex)}.children`,
   });
 
   if (!selectedPage) return null;

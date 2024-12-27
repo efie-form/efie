@@ -30,7 +30,7 @@ interface RenderSettingsProps {
 }
 
 function RenderSettings({ field, fieldKey }: RenderSettingsProps) {
-  const { setSelectedFieldId, setActiveTab } = useSettingsStore();
+  const { setActiveTab, clearSelectedFieldId } = useSettingsStore();
 
   return (
     <>
@@ -41,7 +41,7 @@ function RenderSettings({ field, fieldKey }: RenderSettingsProps) {
         <button
           className="border-s px-3 py-3 border-neutral-100 hover:bg-neutral-100 transition-all"
           onClick={() => {
-            setSelectedFieldId(null);
+            clearSelectedFieldId();
             setActiveTab(RIGHT_BAR_TABS.LAYOUT);
           }}
         >

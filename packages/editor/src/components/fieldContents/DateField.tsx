@@ -1,5 +1,4 @@
 import type { FormFieldDate, FormSchema } from '@efie-form/core';
-import useFieldInfo from '../../lib/hooks/useFieldInfo.ts';
 import { useFormContext } from 'react-hook-form';
 import type { FieldKeyPrefix } from '../../lib/genFieldKey.ts';
 import genFieldKey from '../../lib/genFieldKey.ts';
@@ -9,13 +8,8 @@ interface DateFieldProps {
   fieldKey: FieldKeyPrefix;
 }
 
-function DateField({ field, fieldKey }: DateFieldProps) {
-  const fieldInfo = useFieldInfo({
-    fieldId: field.id,
-  });
+function DateField({ fieldKey }: DateFieldProps) {
   const { register } = useFormContext<FormSchema>();
-
-  if (!fieldInfo) return null;
 
   return (
     <div className="p-2">

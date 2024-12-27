@@ -20,7 +20,6 @@ import TimeField from './fieldContents/TimeField.tsx';
 import DateTimeField from './fieldContents/DateTimeField.tsx';
 import FileField from './fieldContents/FileField.tsx';
 import { cn } from '../lib/utils.ts';
-import useFieldInfo from '../lib/hooks/useFieldInfo.ts';
 import ButtonField from './fieldContents/ButtonField.tsx';
 import BlockField from './fieldContents/BlockField.tsx';
 import type { FieldKeyPrefix } from '../lib/genFieldKey.ts';
@@ -100,12 +99,6 @@ function RenderField({
 }
 
 function FieldItem({ field, fieldKey }: RenderFieldProps) {
-  const fieldInfo = useFieldInfo({
-    fieldId: field.id,
-  });
-
-  if (!fieldInfo) return null;
-
   switch (field.type) {
     case 'row':
       return <RowField field={field} fieldKey={fieldKey} />;
