@@ -20,7 +20,7 @@ import {
 import Button from '../../elements/Button.tsx';
 import type { CSSProperties } from 'react';
 import { useState } from 'react';
-import { FaCheck, FaTrash, FaXmark } from 'react-icons/fa6';
+import { FaCheck, FaPlus, FaTrash, FaXmark } from 'react-icons/fa6';
 import { getDefaultField } from '../../../lib/getDefaultField.ts';
 
 function PagesTab() {
@@ -64,7 +64,11 @@ function PagesTab() {
   return (
     <div>
       <div className="flex justify-end px-4 py-2">
-        <Button onClick={handleAddNewPage} className="w-full">
+        <Button
+          onClick={handleAddNewPage}
+          className="w-full"
+          StartIcon={FaPlus}
+        >
           Add new page
         </Button>
       </div>

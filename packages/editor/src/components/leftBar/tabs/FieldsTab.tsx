@@ -14,7 +14,7 @@ function FieldsTab() {
     <div className="px-4 py-2">
       {fieldGroup.map((group) => (
         <div key={group.id} className="mb-4">
-          <p className="text-neutral-700 text-lg">{group.label}</p>
+          <p className="text-neutral-700 typography-body2">{group.label}</p>
           <div className="flex flex-col gap-1.5 mt-3">
             {group.children.map((field) => (
               <FieldItem
@@ -66,7 +66,7 @@ function FieldItem({ Icon, type, label }: FieldItemProps) {
       )}
     >
       <Icon />
-      <span className="text-sm">{label}</span>
+      <span className="typography-body3">{label}</span>
     </div>
   );
 }

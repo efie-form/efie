@@ -7,6 +7,7 @@ import { useState } from 'react';
 import ColumnSettings from './ColumnSettings.tsx';
 import genFieldKey from '../../../lib/genFieldKey.ts';
 import Button from '../../elements/Button.tsx';
+import { FaPlus } from 'react-icons/fa6';
 
 const LAYOUT_PRESETS = [
   [100],
@@ -22,7 +23,7 @@ interface RowSettingsProps {
 
 function RowSettings({ field, fieldKey }: RowSettingsProps) {
   const [currentTab, setCurrentTab] = useState(field.children[0]?.id);
-  const { append, remove, replace } = useFieldArray({
+  const { remove, replace } = useFieldArray({
     name: `${fieldKey}.children`,
   });
 
@@ -85,10 +86,7 @@ function RowSettings({ field, fieldKey }: RowSettingsProps) {
       <div className="p-4 border-b border-neutral-100">
         <div className="grid grid-cols-2 gap-2">
           {LAYOUT_PRESETS.map((preset, index) => (
-            <button
-              key={index}
-              onClick={() => applyLayout(preset)}
-            >
+            <button key={index} onClick={() => applyLayout(preset)}>
               <div className="flex h-10 group">
                 {preset.map((width, i) => (
                   <div
@@ -97,7 +95,7 @@ function RowSettings({ field, fieldKey }: RowSettingsProps) {
                     style={{ flex: width }}
                   >
                     <p className="typography-body4 text-neutral-700 invisible group-hover:visible">
-                    {width}%
+                      {width}%
                     </p>
                   </div>
                 ))}
@@ -106,7 +104,9 @@ function RowSettings({ field, fieldKey }: RowSettingsProps) {
           ))}
         </div>
         <div className="flex justify-center mt-4">
-          <Button onClick={addColumn}>Add Column</Button>
+          <Button onClick={addColumn} StartIcon={FaPlus}>
+            Add Column
+          </Button>
         </div>
       </div>
 
