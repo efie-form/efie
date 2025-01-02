@@ -20,7 +20,7 @@ import {
   ShortTextProvider,
   SingleChoiceProvider,
   TimeProvider,
-} from './FieldProvider';
+} from './field-provider';
 
 interface RenderFieldProps extends Partial<FieldPropsMap> {
   field: FormField;

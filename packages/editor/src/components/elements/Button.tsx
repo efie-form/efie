@@ -18,7 +18,7 @@ function Button({
   return (
     <button
       className={cn(
-        'bg-primary flex justify-center text-white hover:text-primary-50 typography-button2 px-4 py-1.5 rounded-md text-center hover:bg-primary-600 active:translate-x-[0.5px] active:translate-y-[0.5px] inline-flex items-center gap-2',
+        'bg-primary flex justify-center text-white hover:text-primary-50 typography-button2 px-4 py-1.5 rounded-md text-center hover:bg-primary-600 active:translate-x-[0.5px] active:translate-y-[0.5px] items-center gap-2',
         className
       )}
       {...props}
