@@ -1,4 +1,4 @@
-import FormBuilder from './components/FormBuilder.tsx';
+import FormBuilder from './layouts/FormBuilder.tsx';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import type { FormSchema } from '@efie-form/core';
 import { Editor } from '@efie-form/core';
