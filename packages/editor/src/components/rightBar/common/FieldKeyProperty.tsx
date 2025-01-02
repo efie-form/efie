@@ -1,4 +1,4 @@
-import SettingsFieldVertical from '../../layouts/SettingsFieldVertical.tsx';
+import SettingsFieldVertical from '../property-layouts/SettingsFieldVertical.tsx';
 import { Controller } from 'react-hook-form';
 import Input from '../../form/Input.tsx';
 

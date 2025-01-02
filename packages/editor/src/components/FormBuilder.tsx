@@ -1,10 +1,7 @@
 import { DndProvider } from './dnd-kit';
-import FormContent from './FormContent';
 import LeftBar from './leftBar/LeftBar';
+import MainSection from './main-section/MainSection';
 import RightBar from './rightBar/RightBar';
-import LayoutSwitcher from './toolbars/LayoutSwitcher';
-import LeftToolbar from './toolbars/LeftToolbar';
-import Preview from './toolbars/Preview';
 
 const FormBuilder = () => {
   return (
@@ -14,16 +11,7 @@ const FormBuilder = () => {
           <LeftBar />
         </aside>
         <main className="w-[40rem] flex-1 bg-primary-50 flex flex-col">
-          <header className="h-14 flex justify-between px-4 items-center">
-            <LeftToolbar />
-            <div className="flex items-center gap-4">
-              <Preview />
-              <LayoutSwitcher />
-            </div>
-          </header>
-          <div className="flex-1 overflow-y-auto">
-            <FormContent />
-          </div>
+          <MainSection />
         </main>
         <aside className="w-[24rem] bg-neutral-50 overflow-y-auto">
           <RightBar />
