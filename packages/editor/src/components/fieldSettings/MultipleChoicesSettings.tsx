@@ -1,18 +1,19 @@
-import type { FormFieldDateTime } from '@efie-form/core';
-import type { FieldKeyPrefix } from '../../../lib/genFieldKey.ts';
-import FieldKeyProperty from '../common/FieldKeyProperty.tsx';
-import SettingsFieldVertical from '../../layouts/SettingsFieldVertical.tsx';
+import type { FormFieldMultipleChoices } from '@efie-form/core';
+import FieldKeyProperty from '../rightBar/common/FieldKeyProperty.tsx';
+import SettingsFieldVertical from '../layouts/SettingsFieldVertical.tsx';
 import { Controller } from 'react-hook-form';
-import Input from '../../form/Input.tsx';
-import SettingsFieldHorizontal from '../../layouts/SettingsFieldHorizontal.tsx';
-import Switch from '../../form/Switch.tsx';
+import Input from '../form/Input.tsx';
+import SettingsFieldHorizontal from '../layouts/SettingsFieldHorizontal.tsx';
+import Switch from '../form/Switch.tsx';
+import SettingsFieldOptionsValue from '../layouts/SettingsFieldOptionsValue.tsx';
+import type { FieldKeyPrefix } from '../../lib/genFieldKey.ts';
 
-interface DateTimeSettingsProps {
-  field: FormFieldDateTime;
+interface MultipleChoicesSettingsProps {
+  field: FormFieldMultipleChoices;
   fieldKey: FieldKeyPrefix;
 }
 
-function DateTimeSettings({ fieldKey }: DateTimeSettingsProps) {
+function MultipleChoicesSettings({ fieldKey }: MultipleChoicesSettingsProps) {
   return (
     <div>
       <div className="px-4 py-2 bg-neutral-100 text-neutral-800 typography-body3 uppercase">
@@ -38,8 +39,13 @@ function DateTimeSettings({ fieldKey }: DateTimeSettingsProps) {
           name={`${fieldKey}.props.required`}
         />
       </SettingsFieldHorizontal>
+      <SettingsFieldOptionsValue
+        label="Option with different value"
+        fieldKey={fieldKey}
+        divider
+      />
     </div>
   );
 }
 
-export default DateTimeSettings;
+export default MultipleChoicesSettings;

@@ -1,18 +1,18 @@
-import type { FormFieldTime } from '@efie-form/core';
-import type { FieldKeyPrefix } from '../../../lib/genFieldKey.ts';
-import FieldKeyProperty from '../common/FieldKeyProperty.tsx';
-import SettingsFieldVertical from '../../layouts/SettingsFieldVertical.tsx';
+import type { FormFieldDate } from '@efie-form/core';
+import type { FieldKeyPrefix } from '../../lib/genFieldKey.ts';
+import FieldKeyProperty from '../rightBar/common/FieldKeyProperty.tsx';
+import SettingsFieldVertical from '../layouts/SettingsFieldVertical.tsx';
 import { Controller } from 'react-hook-form';
-import Input from '../../form/Input.tsx';
-import SettingsFieldHorizontal from '../../layouts/SettingsFieldHorizontal.tsx';
-import Switch from '../../form/Switch.tsx';
+import Input from '../form/Input.tsx';
+import SettingsFieldHorizontal from '../layouts/SettingsFieldHorizontal.tsx';
+import Switch from '../form/Switch.tsx';
 
-interface TimeSettingsProps {
-  field: FormFieldTime;
+interface DateSettingsProps {
+  field: FormFieldDate;
   fieldKey: FieldKeyPrefix;
 }
 
-function TimeSettings({ fieldKey }: TimeSettingsProps) {
+function DateSettings({ fieldKey }: DateSettingsProps) {
   return (
     <div>
       <div className="px-4 py-2 bg-neutral-100 text-neutral-800 typography-body3 uppercase">
@@ -42,4 +42,4 @@ function TimeSettings({ fieldKey }: TimeSettingsProps) {
   );
 }
 
-export default TimeSettings;
+export default DateSettings;

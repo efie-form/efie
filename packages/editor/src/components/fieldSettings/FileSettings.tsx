@@ -1,12 +1,12 @@
 import type { FormFieldFile } from '@efie-form/core';
-import type { FieldKeyPrefix } from '../../../lib/genFieldKey.ts';
-import genFieldKey from '../../../lib/genFieldKey.ts';
-import FieldKeyProperty from '../common/FieldKeyProperty.tsx';
-import SettingsFieldVertical from '../../layouts/SettingsFieldVertical.tsx';
+import type { FieldKeyPrefix } from '../../lib/genFieldKey.ts';
+import genFieldKey from '../../lib/genFieldKey.ts';
+import FieldKeyProperty from '../rightBar/common/FieldKeyProperty.tsx';
+import SettingsFieldVertical from '../layouts/SettingsFieldVertical.tsx';
 import { Controller } from 'react-hook-form';
-import Input from '../../form/Input.tsx';
-import SettingsFieldHorizontal from '../../layouts/SettingsFieldHorizontal.tsx';
-import Switch from '../../form/Switch.tsx';
+import Input from '../form/Input.tsx';
+import SettingsFieldHorizontal from '../layouts/SettingsFieldHorizontal.tsx';
+import Switch from '../form/Switch.tsx';
 
 interface FileSettingsProps {
   field: FormFieldFile;

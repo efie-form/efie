@@ -1,14 +1,14 @@
-import type { FieldKeyPrefix } from '../../../lib/genFieldKey.ts';
-import genFieldKey from '../../../lib/genFieldKey.ts';
+import type { FieldKeyPrefix } from '../../lib/genFieldKey.ts';
+import genFieldKey from '../../lib/genFieldKey.ts';
 import type { FormFieldButton } from '@efie-form/core';
-import SettingsFieldVertical from '../../layouts/SettingsFieldVertical.tsx';
+import SettingsFieldVertical from '../layouts/SettingsFieldVertical.tsx';
 import { Controller } from 'react-hook-form';
-import Input from '../../form/Input.tsx';
-import SettingsFieldHorizontal from '../../layouts/SettingsFieldHorizontal.tsx';
-import ColorPicker from '../../form/ColorPicker.tsx';
-import SettingsField4Sides from '../../layouts/SettingsField4Sides.tsx';
-import Switch from '../../form/Switch.tsx';
-import Select from '../../form/Select.tsx';
+import Input from '../form/Input.tsx';
+import SettingsFieldHorizontal from '../layouts/SettingsFieldHorizontal.tsx';
+import ColorPicker from '../form/ColorPicker.tsx';
+import SettingsField4Sides from '../layouts/SettingsField4Sides.tsx';
+import Switch from '../form/Switch.tsx';
+import Select from '../form/Select.tsx';
 
 interface ButtonSettingsProps {
   field: FormFieldButton;

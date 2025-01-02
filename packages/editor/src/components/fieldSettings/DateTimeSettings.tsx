@@ -1,19 +1,18 @@
-import type { FormFieldSingleChoice } from '@efie-form/core';
-import FieldKeyProperty from '../common/FieldKeyProperty.tsx';
-import SettingsFieldVertical from '../../layouts/SettingsFieldVertical.tsx';
+import type { FormFieldDateTime } from '@efie-form/core';
+import type { FieldKeyPrefix } from '../../lib/genFieldKey.ts';
+import FieldKeyProperty from '../rightBar/common/FieldKeyProperty.tsx';
+import SettingsFieldVertical from '../layouts/SettingsFieldVertical.tsx';
 import { Controller } from 'react-hook-form';
-import Input from '../../form/Input.tsx';
-import SettingsFieldHorizontal from '../../layouts/SettingsFieldHorizontal.tsx';
-import Switch from '../../form/Switch.tsx';
-import SettingsFieldOptionsValue from '../../layouts/SettingsFieldOptionsValue.tsx';
-import type { FieldKeyPrefix } from '../../../lib/genFieldKey.ts';
+import Input from '../form/Input.tsx';
+import SettingsFieldHorizontal from '../layouts/SettingsFieldHorizontal.tsx';
+import Switch from '../form/Switch.tsx';
 
-interface SingleChoiceSettingsProps {
-  field: FormFieldSingleChoice;
+interface DateTimeSettingsProps {
+  field: FormFieldDateTime;
   fieldKey: FieldKeyPrefix;
 }
 
-function SingleChoiceSettings({ fieldKey }: SingleChoiceSettingsProps) {
+function DateTimeSettings({ fieldKey }: DateTimeSettingsProps) {
   return (
     <div>
       <div className="px-4 py-2 bg-neutral-100 text-neutral-800 typography-body3 uppercase">
@@ -39,13 +38,8 @@ function SingleChoiceSettings({ fieldKey }: SingleChoiceSettingsProps) {
           name={`${fieldKey}.props.required`}
         />
       </SettingsFieldHorizontal>
-      <SettingsFieldOptionsValue
-        label="Option with different value"
-        fieldKey={fieldKey}
-        divider
-      />
     </div>
   );
 }
 
-export default SingleChoiceSettings;
+export default DateTimeSettings;

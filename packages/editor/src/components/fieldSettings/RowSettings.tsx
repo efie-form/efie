@@ -1,12 +1,12 @@
 import type { FormFieldRow, FormSchema } from '@efie-form/core';
-import type { FieldKeyPrefix } from '../../../lib/genFieldKey.ts';
-import { getDefaultField } from '../../../lib/getDefaultField.ts';
+import type { FieldKeyPrefix } from '../../lib/genFieldKey.ts';
+import { getDefaultField } from '../../lib/getDefaultField.ts';
 import { useFieldArray } from 'react-hook-form';
 import * as Tabs from '@radix-ui/react-tabs';
 import { useState } from 'react';
 import ColumnSettings from './ColumnSettings.tsx';
-import genFieldKey from '../../../lib/genFieldKey.ts';
-import Button from '../../elements/Button.tsx';
+import genFieldKey from '../../lib/genFieldKey.ts';
+import Button from '../elements/Button.tsx';
 import { FaPlus } from 'react-icons/fa6';
 
 const LAYOUT_PRESETS = [

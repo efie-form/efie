@@ -1,18 +1,18 @@
-import type { FormFieldParagraph } from '@efie-form/core';
-import SettingsFieldVertical from '../../layouts/SettingsFieldVertical.tsx';
+import type { FormFieldHeader } from '@efie-form/core';
+import Input from '../form/Input.tsx';
+import SettingsFieldVertical from '../layouts/SettingsFieldVertical.tsx';
+import Select from '../form/Select.tsx';
 import { Controller } from 'react-hook-form';
-import Input from '../../form/Input.tsx';
-import Select from '../../form/Select.tsx';
-import type { FieldKeyPrefix } from '../../../lib/genFieldKey.ts';
-import SettingsFieldHorizontal from '../../layouts/SettingsFieldHorizontal.tsx';
-import ColorPicker from '../../form/ColorPicker.tsx';
+import type { FieldKeyPrefix } from '../../lib/genFieldKey.ts';
+import SettingsFieldHorizontal from '../layouts/SettingsFieldHorizontal.tsx';
+import ColorPicker from '../form/ColorPicker.tsx';
 
-interface ParagraphSettingsProps {
-  field: FormFieldParagraph;
+interface HeaderSettingsProps {
+  field: FormFieldHeader;
   fieldKey: FieldKeyPrefix;
 }
 
-function ParagraphSettings({ fieldKey }: ParagraphSettingsProps) {
+function HeaderSettings({ fieldKey }: HeaderSettingsProps) {
   return (
     <div>
       <div>
@@ -21,7 +21,6 @@ function ParagraphSettings({ fieldKey }: ParagraphSettingsProps) {
         </div>
         <SettingsFieldVertical label="Font Size" divider>
           <Controller
-            key={`${fieldKey}.props.font.size`}
             render={({ field: { value, onChange } }) => (
               <Input
                 value={value}
@@ -37,9 +36,28 @@ function ParagraphSettings({ fieldKey }: ParagraphSettingsProps) {
             name={`${fieldKey}.props.font.size`}
           />
         </SettingsFieldVertical>
+        <SettingsFieldVertical label="Tag" divider>
+          <Controller
+            render={({ field: { value, onChange } }) => (
+              <Select
+                value={value}
+                onChange={onChange}
+                className="w-28"
+                options={[
+                  { label: 'H1', value: 'h1' },
+                  { label: 'H2', value: 'h2' },
+                  { label: 'H3', value: 'h3' },
+                  { label: 'H4', value: 'h4' },
+                  { label: 'H5', value: 'h5' },
+                  { label: 'H6', value: 'h6' },
+                ]}
+              />
+            )}
+            name={`${fieldKey}.props.tag`}
+          />
+        </SettingsFieldVertical>
         <SettingsFieldVertical label="Text align" divider>
           <Controller
-            key={`${fieldKey}.props.textAlign`}
             render={({ field: { value, onChange } }) => (
               <Select
                 value={value}
@@ -68,4 +86,4 @@ function ParagraphSettings({ fieldKey }: ParagraphSettingsProps) {
   );
 }
 
-export default ParagraphSettings;
+export default HeaderSettings;

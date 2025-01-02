@@ -1,12 +1,12 @@
 import type { FormFieldDivider } from '@efie-form/core';
-import SettingsFieldVertical from '../../layouts/SettingsFieldVertical.tsx';
-import Input from '../../form/Input.tsx';
+import SettingsFieldVertical from '../layouts/SettingsFieldVertical.tsx';
+import Input from '../form/Input.tsx';
 import { Controller } from 'react-hook-form';
-import Select from '../../form/Select.tsx';
-import type { FieldKeyPrefix } from '../../../lib/genFieldKey.ts';
-import ColorPicker from '../../form/ColorPicker.tsx';
-import SettingsFieldHorizontal from '../../layouts/SettingsFieldHorizontal.tsx';
-import Slider from '../../form/Slider.tsx';
+import Select from '../form/Select.tsx';
+import type { FieldKeyPrefix } from '../../lib/genFieldKey.ts';
+import ColorPicker from '../form/ColorPicker.tsx';
+import SettingsFieldHorizontal from '../layouts/SettingsFieldHorizontal.tsx';
+import Slider from '../form/Slider.tsx';
 
 interface DividerSettingsProps {
   field: FormFieldDivider;

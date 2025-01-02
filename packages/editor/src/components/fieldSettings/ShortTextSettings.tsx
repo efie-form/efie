@@ -1,11 +1,11 @@
 import type { FormFieldShortText } from '@efie-form/core';
-import SettingsFieldVertical from '../../layouts/SettingsFieldVertical.tsx';
-import Input from '../../form/Input.tsx';
+import SettingsFieldVertical from '../layouts/SettingsFieldVertical.tsx';
+import Input from '../form/Input.tsx';
 import { Controller } from 'react-hook-form';
-import SettingsFieldHorizontal from '../../layouts/SettingsFieldHorizontal.tsx';
-import Switch from '../../form/Switch.tsx';
-import FieldKeyProperty from '../common/FieldKeyProperty.tsx';
-import type { FieldKeyPrefix } from '../../../lib/genFieldKey.ts';
+import SettingsFieldHorizontal from '../layouts/SettingsFieldHorizontal.tsx';
+import Switch from '../form/Switch.tsx';
+import FieldKeyProperty from '../rightBar/common/FieldKeyProperty.tsx';
+import type { FieldKeyPrefix } from '../../lib/genFieldKey.ts';
 
 interface ShortTextSettingsProps {
   field: FormFieldShortText;

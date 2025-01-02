@@ -1,10 +1,10 @@
 import type { FormFieldImage } from '@efie-form/core';
-import SettingsFieldVertical from '../../layouts/SettingsFieldVertical.tsx';
+import SettingsFieldVertical from '../layouts/SettingsFieldVertical.tsx';
 import { Controller } from 'react-hook-form';
-import Input from '../../form/Input.tsx';
-import Select from '../../form/Select.tsx';
-import SettingsFieldWidth from '../../layouts/SettingsFieldWidth.tsx';
-import type { FieldKeyPrefix } from '../../../lib/genFieldKey.ts';
+import Input from '../form/Input.tsx';
+import Select from '../form/Select.tsx';
+import SettingsFieldWidth from '../layouts/SettingsFieldWidth.tsx';
+import type { FieldKeyPrefix } from '../../lib/genFieldKey.ts';
 
 interface ImageSettingsProps {
   field: FormFieldImage;

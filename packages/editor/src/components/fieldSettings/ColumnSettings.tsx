@@ -1,9 +1,9 @@
 import { FormSchema, type FormFieldColumn } from '@efie-form/core';
-import type { FieldKeyPrefix } from '../../../lib/genFieldKey.ts';
-import Input from '../../form/Input.tsx';
+import type { FieldKeyPrefix } from '../../lib/genFieldKey.ts';
+import Input from '../form/Input.tsx';
 import { useFormContext } from 'react-hook-form';
-import genFieldKey from '../../../lib/genFieldKey.ts';
-import SettingsFieldHorizontal from '../../layouts/SettingsFieldHorizontal.tsx';
+import genFieldKey from '../../lib/genFieldKey.ts';
+import SettingsFieldHorizontal from '../layouts/SettingsFieldHorizontal.tsx';
 
 interface ColumnSettingsProps {
   field: FormFieldColumn;
