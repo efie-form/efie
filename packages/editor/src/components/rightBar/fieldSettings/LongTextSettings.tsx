@@ -17,7 +17,7 @@ function LongTextSettings({ fieldKey }: LongTextSettingsProps) {
         <div className="px-4 py-2 bg-neutral-100 text-neutral-800 typography-body2">
           General
         </div>
-        <FieldKeyProperty fieldKey={fieldKey} />
+        <FieldKeyProperty fieldKey={fieldKey} divider />
         <SettingsFieldVertical label="Label" divider>
           <Controller
             key={`${fieldKey}.props.label`}

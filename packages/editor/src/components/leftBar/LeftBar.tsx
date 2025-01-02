@@ -38,12 +38,12 @@ function LeftBar() {
 
   return (
     <div className="h-full flex">
-      <div className="w-12 bg-neutral-100/40 h-full">
+      <div className="bg-neutral-100/40 h-full">
         {tabs.map((tab) => (
           <div
             key={tab.id}
             className={cn(
-              'p-3.5 hover:bg-neutral-200/30 cursor-pointer transition-all duration-100',
+              'p-3 hover:bg-neutral-200/30 cursor-pointer transition-all duration-100',
               {
                 '!bg-neutral-200/80': tab.id === activeTab,
               }

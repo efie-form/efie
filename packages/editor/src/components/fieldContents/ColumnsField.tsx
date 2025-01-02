@@ -36,7 +36,7 @@ function ColumnsField({ field, fieldKey }: ColumnsFieldProps) {
       {!hasChildren && (
         <div className="h-full p-2">
           {field.children.length === 0 && (
-            <div className="h-full flex justify-center items-center min-h-32 bg-neutral-50 rounded-md text-center">
+            <div className="h-full px-4 flex justify-center typography-body3 items-center min-h-32 bg-neutral-50 rounded-md text-center">
               Drag and drop fields here
             </div>
           )}

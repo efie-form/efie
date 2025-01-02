@@ -77,7 +77,7 @@ function ChoiceFieldBase({
       />
       <div
         id={`${fieldId}-options-container`}
-        className="flex flex-col gap-2 px-2"
+        className="flex flex-col gap-0.5 px-2"
       >
         <DndContext
           sensors={sensors}
@@ -98,7 +98,9 @@ function ChoiceFieldBase({
                 isValueDifferent={isValueDifferent}
                 onUpdate={update}
                 onRemove={remove}
-                inputRef={index === options.length - 1 ? lastInputRef : undefined}
+                inputRef={
+                  index === options.length - 1 ? lastInputRef : undefined
+                }
               />
             ))}
           </SortableContext>

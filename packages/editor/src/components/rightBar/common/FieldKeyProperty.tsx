@@ -4,11 +4,12 @@ import Input from '../../form/Input.tsx';
 
 interface FieldKeyPropertyProps {
   fieldKey: string;
+  divider?: boolean;
 }
 
-function FieldKeyProperty({ fieldKey }: FieldKeyPropertyProps) {
+function FieldKeyProperty({ fieldKey, divider }: FieldKeyPropertyProps) {
   return (
-    <SettingsFieldVertical label="Field Key">
+    <SettingsFieldVertical label="Field Key" divider={divider}>
       <Controller
         render={({ field: { value, onChange } }) => (
           <Input value={value} onChange={onChange} />

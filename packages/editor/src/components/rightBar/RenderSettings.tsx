@@ -35,11 +35,11 @@ function RenderSettings({ field, fieldKey }: RenderSettingsProps) {
   return (
     <>
       <div className="flex items-center justify-between border-b border-neutral-100">
-        <div className="px-4 py-2">
-          <p className="typography-body1">{FIELDS_NAME[field.type]}</p>
-        </div>
+        <p className="typography-body1 font-medium text-neutral-700 ps-3">
+          {FIELDS_NAME[field.type]}
+        </p>
         <button
-          className="border-s px-3 py-3 border-neutral-100 hover:bg-neutral-100 transition-all"
+          className="border-s border-neutral-100 px-2 py-2 hover:bg-neutral-100 transition-all"
           onClick={() => {
             clearSelectedFieldId();
             setActiveTab(RIGHT_BAR_TABS.LAYOUT);

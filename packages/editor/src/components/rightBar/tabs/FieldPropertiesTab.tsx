@@ -17,9 +17,9 @@ function FieldPropertiesTab() {
   if (!field) return null;
 
   return (
-    <div>
+    <>
       <RenderSettings field={field.field} fieldKey={field?.key} />
-    </div>
+    </>
   );
 }
 

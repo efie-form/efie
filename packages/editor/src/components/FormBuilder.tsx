@@ -10,10 +10,10 @@ const FormBuilder = () => {
   return (
     <DndProvider>
       <div className="flex h-screen w-screen">
-        <aside className="w-80 bg-neutral-50 overflow-y-auto">
+        <aside className="w-64 bg-neutral-50 overflow-y-auto">
           <LeftBar />
         </aside>
-        <main className="min-w-[40rem] flex-1 bg-primary-50 flex flex-col">
+        <main className="w-[40rem] flex-1 bg-primary-50 flex flex-col">
           <header className="h-14 flex justify-between px-4 items-center">
             <LeftToolbar />
             <div className="flex items-center gap-4">

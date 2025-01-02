@@ -18,7 +18,7 @@ function TimeSettings({ fieldKey }: TimeSettingsProps) {
       <div className="px-4 py-2 bg-neutral-100 text-neutral-800 typography-body3 uppercase">
         General
       </div>
-      <FieldKeyProperty fieldKey={fieldKey} />
+      <FieldKeyProperty fieldKey={fieldKey} divider />
 
       <SettingsFieldVertical label="Label" divider>
         <Controller
