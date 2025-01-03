@@ -1,6 +1,4 @@
 import { HiMiniSquaresPlus } from 'react-icons/hi2';
-import { TiFlowMerge } from 'react-icons/ti';
-import { LuListTree } from 'react-icons/lu';
 import { useState } from 'react';
 import FieldsTab from './tabs/FieldsTab.tsx';
 import { cn } from '../../lib/utils.ts';
@@ -20,16 +18,16 @@ const tabs = [
     label: 'Pages',
     tab: PagesTab,
   },
-  {
-    id: 'rules-conditions',
-    Icon: LuListTree,
-    label: 'Rules & Conditions',
-  },
-  {
-    id: 'page-flow',
-    Icon: TiFlowMerge,
-    label: 'Page Flow',
-  },
+  // {
+  //   id: 'rules-conditions',
+  //   Icon: LuListTree,
+  //   label: 'Rules & Conditions',
+  // },
+  // {
+  //   id: 'page-flow',
+  //   Icon: TiFlowMerge,
+  //   label: 'Page Flow',
+  // },
 ];
 
 function LeftBar() {

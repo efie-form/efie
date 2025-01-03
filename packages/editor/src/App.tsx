@@ -1,7 +1,7 @@
 import FormBuilder from './layouts/FormBuilder.tsx';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import type { FormSchema } from '@efie-form/core';
-import { Editor } from '@efie-form/core';
+import { BuilderInternal } from '@efie-form/core';
 import { useEffect, useState } from 'react';
 import { useSettingsStore } from './lib/state/settings.state.ts';
 import defaultSchema from './lib/defaultSchema.ts';
@@ -11,7 +11,7 @@ function App() {
     defaultValues: defaultSchema,
   });
   const { reset, control, getValues } = methods;
-  const [editor, setEditor] = useState<Editor | null>(null);
+  const [editor, setEditor] = useState<BuilderInternal | null>(null);
   const watchAllFields = useWatch({
     control,
   });
@@ -19,34 +19,40 @@ function App() {
 
   useEffect(() => {
     if (editor) return;
-    setEditor(new Editor());
+    setEditor(new BuilderInternal());
   }, [editor]);
 
   useEffect(() => {
     if (!editor || editor.isLoaded) return;
     editor.init();
-    editor.setOnDataReset(reset);
+    editor.setOnDataReset((data) => {
+      reset(data);
+      resetPage(data);
+    });
   }, [editor, reset]);
 
   useEffect(() => {
     if (!editor) return;
     editor.setValue(getValues());
-    console.log(getValues());
-  }, [watchAllFields, editor, getValues]);
+  }, [watchAllFields]);
 
   useEffect(() => {
-    const fields = getValues('form.fields');
-    const pages = fields.filter((field) => field.type === 'page');
+    const fields = getValues();
+    resetPage(fields);
+  }, []);
+
+  const resetPage = (data: FormSchema) => {
+    const pages = data.form.fields.filter((field) => field.type === 'page');
     if (pages.length === 0) {
       return setPage(null);
     }
     setPage(pages[0].id);
-  }, []);
+  };
 
   return (
     <>
       <FormProvider {...methods}>
-        <FormBuilder />
+        <FormBuilder height={editor?.height || undefined} />
       </FormProvider>
     </>
   );

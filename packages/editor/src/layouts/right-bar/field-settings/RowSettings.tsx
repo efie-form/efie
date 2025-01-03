@@ -39,7 +39,12 @@ function RowSettings({ field, fieldKey }: RowSettingsProps) {
     const newColumns = columns
       .map((width, index) => {
         const existingColumn = fields[index];
-        if (existingColumn.type !== 'column') return null;
+        if (!existingColumn || existingColumn.type !== 'column')
+          return getDefaultField({
+            type: 'column',
+            column: { width },
+          });
+
         return {
           ...getDefaultField({
             type: 'column',

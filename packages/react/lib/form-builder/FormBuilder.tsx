@@ -1,52 +1,59 @@
-import React, { forwardRef, useEffect, useState } from 'react';
-import { useControllableState } from '@radix-ui/react-use-controllable-state';
-import { type FormSchema, Wrapper } from '@efie-form/core';
+import React, {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useState,
+} from 'react';
+import { type FormSchema, BuilderExternal } from '@efie-form/core';
 
 const DIV_ID = 'efie-form-builder';
 
 interface FormBuilderProps {
   value?: FormSchema;
   onChange?: (value: FormSchema) => void;
+  height?: number;
 }
 
-const FormBuilder = forwardRef<Wrapper, FormBuilderProps>(
-  ({ onChange, value }) => {
-    const [json, setJson] = useControllableState({
-      prop: value,
-      onChange,
-      defaultProp: {
-        version: 'v1',
-        form: {
-          fields: [],
-        },
-      },
-    });
-    const [editor, setEditor] = useState<Wrapper | null>(null);
+const FormBuilder = forwardRef<BuilderExternal, FormBuilderProps>(
+  ({ onChange, value, height }, ref) => {
+    const [editor, setEditor] = useState<BuilderExternal>();
     const [isLoaded, setIsLoaded] = useState(false);
+    const [isDataLoaded, setIsDataLoaded] = useState(false);
 
     useEffect(() => {
       if (editor) return;
       setEditor(
-        new Wrapper({
+        new BuilderExternal({
           id: DIV_ID,
         })
       );
     }, [editor]);
 
     useEffect(() => {
-      if (!editor || !json) return;
-      editor.resetValue(json);
-    }, [editor, json]);
+      if (!editor || !value || isDataLoaded) return;
+      editor.resetValue(value);
+      setIsDataLoaded(true);
+    }, [editor, value]);
+
+    useEffect(() => {
+      if (!editor || !height) return;
+      editor.setHeight(height);
+    }, [editor, height]);
 
     useEffect(() => {
       if (!editor || isLoaded) return;
 
       setIsLoaded(true);
       editor.init();
-      editor?.setOnValueChange(setJson);
-    }, [editor, isLoaded, setJson]);
+      if (onChange) editor?.setOnValueChange(onChange);
+    }, [editor, isLoaded, onChange]);
 
-    return <div id={DIV_ID} />;
+    useImperativeHandle(ref, () => {
+      if (!editor) throw new Error('Editor is not initialized');
+      return editor;
+    });
+
+    return <div id={DIV_ID} style={{ display: 'flex' }} />;
   }
 );
 
