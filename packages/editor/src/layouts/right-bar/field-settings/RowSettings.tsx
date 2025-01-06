@@ -1,13 +1,12 @@
-import type { FormFieldRow, FormSchema } from '@efie-form/core';
+import type { FormFieldRow } from '@efie-form/core';
 import type { FieldKeyPrefix } from '../../../lib/genFieldKey.ts';
 import { getDefaultField } from '../../../lib/getDefaultField.ts';
-import { useFieldArray } from 'react-hook-form';
 import * as Tabs from '@radix-ui/react-tabs';
 import { useState } from 'react';
 import ColumnSettings from './ColumnSettings.tsx';
-import genFieldKey from '../../../lib/genFieldKey.ts';
 import Button from '../../../components/elements/Button.tsx';
 import { FaPlus } from 'react-icons/fa6';
+import { useSchemaStore } from '../../../lib/state/schema.state.ts';
 
 const LAYOUT_PRESETS = [
   [100],
@@ -23,22 +22,14 @@ interface RowSettingsProps {
   fieldKey: FieldKeyPrefix;
 }
 
-function RowSettings({ field, fieldKey }: RowSettingsProps) {
+function RowSettings({ field }: RowSettingsProps) {
+  const { updateFieldProps } = useSchemaStore();
   const [currentTab, setCurrentTab] = useState(field.children[0]?.id);
-  // @ts-expect-error
-  const { remove, replace, fields, append, update } = useFieldArray<
-    FormSchema,
-    `form.fields.${number}.children`,
-    '_id'
-  >({
-    name: genFieldKey(fieldKey, 'children'),
-    keyName: '_id',
-  });
 
   const applyLayout = (columns: number[]) => {
     const newColumns = columns
       .map((width, index) => {
-        const existingColumn = fields[index];
+        const existingColumn = field.children[index];
         if (!existingColumn || existingColumn.type !== 'column')
           return getDefaultField({
             type: 'column',
@@ -55,7 +46,7 @@ function RowSettings({ field, fieldKey }: RowSettingsProps) {
       })
       .filter((c) => c !== null);
 
-    replace(newColumns);
+    updateFieldProps(field.id, 'children', newColumns);
     setCurrentTab(newColumns[0].id);
   };
 
@@ -67,17 +58,18 @@ function RowSettings({ field, fieldKey }: RowSettingsProps) {
       column: { width: avgWidth },
     });
 
-    append(newColumn);
-    Array.from(fields).forEach((_, index) => {
-      if (fields[index].type !== 'column') return;
-      update(index, {
-        ...fields[index],
+    const newChildren = [
+      ...field.children.map((col) => ({
+        ...col,
         props: {
-          ...fields[index].props,
+          ...col.props,
           width: avgWidth,
         },
-      });
-    });
+      })),
+      newColumn,
+    ];
+
+    updateFieldProps(field.id, 'children', newChildren);
 
     // Set focus to the new column
     setCurrentTab(newColumn.id);
@@ -85,10 +77,18 @@ function RowSettings({ field, fieldKey }: RowSettingsProps) {
 
   const removeColumn = (index: number) => {
     const prevField = field.children[index - 1];
-    if (index !== -1) {
-      remove(index);
-      setCurrentTab(prevField?.id || field.children[0]?.id);
-    }
+    if (index === -1) return;
+    const newChildren = field.children
+      .filter((_, i) => i !== index)
+      .map((col, _, arr) => ({
+        ...col,
+        props: {
+          ...col.props,
+          width: 100 / arr.length,
+        },
+      }));
+    updateFieldProps(field.id, 'children', newChildren);
+    setCurrentTab(prevField?.id || newChildren[0]?.id);
   };
 
   return (
@@ -123,7 +123,7 @@ function RowSettings({ field, fieldKey }: RowSettingsProps) {
       <Tabs.Root value={currentTab} onValueChange={setCurrentTab}>
         <div className="w-full flex border-b border-neutral-100">
           <Tabs.List className="flex-1 flex overflow-x-auto">
-            {fields.map((column, index) => (
+            {field.children.map((column, index) => (
               <Tabs.Trigger
                 key={index}
                 value={column.id}
@@ -135,13 +135,12 @@ function RowSettings({ field, fieldKey }: RowSettingsProps) {
           </Tabs.List>
         </div>
 
-        {fields
+        {field.children
           .filter((column) => column.type === 'column')
           .map((column, index) => (
             <Tabs.Content key={index} value={column.id}>
               <ColumnSettings
                 field={column}
-                fieldKey={genFieldKey(fieldKey, `children.${index}`)}
                 onRemove={() => removeColumn(index)}
               />
             </Tabs.Content>

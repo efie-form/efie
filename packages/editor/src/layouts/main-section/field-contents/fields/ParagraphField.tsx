@@ -1,16 +1,16 @@
 import type { FormFieldParagraph } from '@efie-form/core';
 import { textAlignMap } from '../../../../lib/constant.ts';
 import { RichTextEditor } from '../../../../components/rich-text-editor';
-import type { FieldKeyPrefix } from '../../../../lib/genFieldKey.ts';
-import { Controller } from 'react-hook-form';
 import { useSettingsStore } from '../../../../lib/state/settings.state.ts';
+import { useSchemaStore } from '../../../../lib/state/schema.state.ts';
 
 interface ParagraphFieldProps {
   field: FormFieldParagraph;
-  fieldKey: FieldKeyPrefix;
 }
 
-function ParagraphField({ field, fieldKey }: ParagraphFieldProps) {
+function ParagraphField({ field }: ParagraphFieldProps) {
+  const { updateFieldProps } = useSchemaStore();
+
   const { selectedFieldId } = useSettingsStore();
 
   return (
@@ -21,15 +21,10 @@ function ParagraphField({ field, fieldKey }: ParagraphFieldProps) {
         color: field.props.color,
       }}
     >
-      <Controller
-        render={({ field: { value, onChange } }) => (
-          <RichTextEditor
-            value={value}
-            onChange={onChange}
-            active={selectedFieldId === field.id}
-          />
-        )}
-        name={`${fieldKey}.props.content`}
+      <RichTextEditor
+        value={field.props.content}
+        onChange={(value) => updateFieldProps(field.id, 'props.content', value)}
+        active={selectedFieldId === field.id}
       />
     </div>
   );

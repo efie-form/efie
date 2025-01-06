@@ -192,6 +192,7 @@ export interface FormFieldImage {
 export interface FormFieldRow {
   id: string;
   type: 'row';
+  props: {};
   children: FormField[];
 }
 

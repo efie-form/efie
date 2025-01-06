@@ -1,41 +1,34 @@
 import type { FormFieldDate } from '@efie-form/core';
-import type { FieldKeyPrefix } from '../../../lib/genFieldKey.ts';
-import FieldKeyProperty from '../common/FieldKeyProperty.tsx';
 import SettingsFieldVertical from '../property-layouts/SettingsFieldVertical.tsx';
-import { Controller } from 'react-hook-form';
 import Input from '../../../components/form/Input.tsx';
 import SettingsFieldHorizontal from '../property-layouts/SettingsFieldHorizontal.tsx';
 import Switch from '../../../components/form/Switch.tsx';
+import { useSchemaStore } from '../../../lib/state/schema.state.ts';
 
 interface DateSettingsProps {
   field: FormFieldDate;
-  fieldKey: FieldKeyPrefix;
 }
 
-function DateSettings({ fieldKey }: DateSettingsProps) {
+function DateSettings({ field }: DateSettingsProps) {
+  const { updateFieldProps } = useSchemaStore();
+
   return (
     <div>
       <div className="px-4 py-2 bg-neutral-100 text-neutral-800 typography-body3 uppercase">
         General
       </div>
-      <FieldKeyProperty fieldKey={fieldKey} divider />
-
       <SettingsFieldVertical label="Label" divider>
-        <Controller
-          key={`${fieldKey}.props.label`}
-          render={({ field: { onChange, value } }) => (
-            <Input onChange={onChange} value={value} />
-          )}
-          name={`${fieldKey}.props.label`}
+        <Input
+          onChange={(value) => updateFieldProps(field.id, 'props.label', value)}
+          value={field.props.label}
         />
       </SettingsFieldVertical>
       <SettingsFieldHorizontal label="Required" divider>
-        <Controller
-          key={`${fieldKey}.props.required`}
-          render={({ field: { onChange, value } }) => (
-            <Switch onChange={onChange} checked={value} />
-          )}
-          name={`${fieldKey}.props.required`}
+        <Switch
+          onChange={(value) =>
+            updateFieldProps(field.id, 'props.required', value)
+          }
+          checked={field.props.required}
         />
       </SettingsFieldHorizontal>
     </div>

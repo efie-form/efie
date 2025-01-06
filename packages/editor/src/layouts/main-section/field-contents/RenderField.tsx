@@ -22,25 +22,18 @@ import FileField from './fields/FileField.tsx';
 import { cn } from '../../../lib/utils.ts';
 import ButtonField from './fields/ButtonField.tsx';
 import BlockField from './fields/BlockField.tsx';
-import type { FieldKeyPrefix } from '../../../lib/genFieldKey.ts';
 import { AiOutlineDrag } from 'react-icons/ai';
 import { HiTrash } from 'react-icons/hi2';
 import useDndItem from '../../../components/dnd-kit/useDndItem.tsx';
 import Droppable from '../../../components/dnd-kit/Droppable.tsx';
+import { useSchemaStore } from '../../../lib/state/schema.state.ts';
 
 interface RenderFieldProps {
   field: FormField;
   noSelect?: boolean;
-  fieldKey: FieldKeyPrefix;
-  onRemove?: () => void;
 }
 
-function RenderField({
-  field,
-  noSelect,
-  fieldKey,
-  onRemove,
-}: RenderFieldProps) {
+function RenderField({ field, noSelect }: RenderFieldProps) {
   const {
     setSelectedFieldId,
     selectedFieldId,
@@ -48,6 +41,7 @@ function RenderField({
     setActiveTab,
   } = useSettingsStore();
   const isSelected = selectedFieldId === field.id;
+  const { deleteField } = useSchemaStore();
 
   const { attributes, dragHandlerProps } = useDndItem({
     id: field.id,
@@ -84,7 +78,7 @@ function RenderField({
             <button
               className="bg-danger p-1 text-white"
               onClick={() => {
-                onRemove?.();
+                deleteField(field.id);
                 clearSelectedFieldId();
               }}
             >
@@ -92,48 +86,48 @@ function RenderField({
             </button>
           </div>
         )}
-        <FieldItem field={field} fieldKey={fieldKey} />
+        <FieldItem field={field} />
       </div>
     </Droppable>
   );
 }
 
-function FieldItem({ field, fieldKey }: RenderFieldProps) {
+function FieldItem({ field }: RenderFieldProps) {
   switch (field.type) {
     case 'row':
-      return <RowField field={field} fieldKey={fieldKey} />;
+      return <RowField field={field} />;
     case 'column':
-      return <ColumnsField field={field} fieldKey={fieldKey} />;
+      return <ColumnsField field={field} />;
     case 'header':
-      return <HeaderField field={field} fieldKey={fieldKey} />;
+      return <HeaderField field={field} />;
     case 'paragraph':
-      return <ParagraphField field={field} fieldKey={fieldKey} />;
+      return <ParagraphField field={field} />;
     case 'shortText':
-      return <ShortTextField field={field} fieldKey={fieldKey} />;
+      return <ShortTextField field={field} />;
     case 'longText':
-      return <LongTextField field={field} fieldKey={fieldKey} />;
+      return <LongTextField field={field} />;
     case 'number':
-      return <NumberField field={field} fieldKey={fieldKey} />;
+      return <NumberField field={field} />;
     case 'divider':
       return <DividerField field={field} />;
     case 'image':
       return <ImageField field={field} />;
     case 'singleChoice':
-      return <SingleChoiceField field={field} fieldKey={fieldKey} />;
+      return <SingleChoiceField field={field} />;
     case 'multipleChoices':
-      return <MultipleChoicesField field={field} fieldKey={fieldKey} />;
+      return <MultipleChoicesField field={field} />;
     case 'date':
-      return <DateField field={field} fieldKey={fieldKey} />;
+      return <DateField field={field} />;
     case 'time':
-      return <TimeField field={field} fieldKey={fieldKey} />;
+      return <TimeField field={field} />;
     case 'dateTime':
-      return <DateTimeField field={field} fieldKey={fieldKey} />;
+      return <DateTimeField field={field} />;
     case 'file':
-      return <FileField field={field} fieldKey={fieldKey} />;
+      return <FileField field={field} />;
     case 'button':
       return <ButtonField field={field} />;
     case 'block':
-      return <BlockField field={field} fieldKey={fieldKey} />;
+      return <BlockField field={field} />;
     default:
       return (
         <div className="px-4 py-2">

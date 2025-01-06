@@ -8,10 +8,10 @@ import { customCollisionDetectionAlgorithm } from './customCollisionDetectionAlg
 import moveField from '../../lib/moveField.ts';
 import insertField from '../../lib/insertField.ts';
 import { useDndStore } from '../../lib/state/dnd.state.ts';
-import { useFormContext } from 'react-hook-form';
-import type { FormField, FormSchema } from '@efie-form/core';
+import type { FormField } from '@efie-form/core';
 import type { ReactNode } from 'react';
 import { useState } from 'react';
+import { useSchemaStore } from '../../lib/state/schema.state.ts';
 
 interface DndContextProps {
   children: ReactNode;
@@ -26,7 +26,7 @@ export default function DndProvider({ children }: DndContextProps) {
     clearDraggingState,
     setOriginalRect,
   } = useDndStore();
-  const { getValues, setValue } = useFormContext<FormSchema>();
+  const { schema, setFields } = useSchemaStore();
 
   const [prevMouseY, setPrevMouseY] = useState(0);
 
@@ -39,7 +39,7 @@ export default function DndProvider({ children }: DndContextProps) {
 
     if (e.active.data.current.action === 'move') {
       newFields = moveField({
-        fields: getValues('form.fields'),
+        fields: schema.form.fields,
         fieldType,
         direction,
         fieldId: e.active.data.current.id,
@@ -49,7 +49,7 @@ export default function DndProvider({ children }: DndContextProps) {
     }
     if (e.active.data.current.action === 'new') {
       newFields = insertField({
-        fields: getValues('form.fields'),
+        fields: schema.form.fields,
         direction,
         dropFieldId: e.over.data.current.id,
         dropFieldType,
@@ -57,7 +57,7 @@ export default function DndProvider({ children }: DndContextProps) {
       });
     }
     if (!newFields) return;
-    setValue('form.fields', newFields);
+    setFields(newFields);
   };
 
   const handleDragStart = (e: DragStartEvent) => {
@@ -78,8 +78,7 @@ export default function DndProvider({ children }: DndContextProps) {
   };
 
   const updateAllFieldRect = () => {
-    const fields = getValues('form.fields');
-    fields.forEach(findFieldElemAndUpdateRect);
+    schema.form.fields.forEach(findFieldElemAndUpdateRect);
   };
 
   const findFieldElemAndUpdateRect = (field: FormField) => {

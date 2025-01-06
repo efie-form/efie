@@ -1,14 +1,12 @@
 import type {
-  FieldKeyPrefix,
   FieldPropsKey,
   FieldPropsValueType,
 } from '../../../lib/genFieldKey.ts';
-import genFieldKey from '../../../lib/genFieldKey.ts';
 import { useRef, useState } from 'react';
 import Switch from '../../../components/form/Switch.tsx';
-import { Controller, useFormContext } from 'react-hook-form';
 import Input from '../../../components/form/Input.tsx';
-import type { FormSchema } from '@efie-form/core';
+import type { FormField } from '@efie-form/core';
+import { useSchemaStore } from '../../../lib/state/schema.state.ts';
 
 interface SplitSides {
   key: FieldPropsKey;
@@ -20,7 +18,7 @@ interface SettingsField4SidesProps {
   divider?: boolean;
   allSideLabel: string;
   splitSides: SplitSides[];
-  fieldKey: FieldKeyPrefix;
+  field: FormField;
 }
 
 function SettingsField4Sides({
@@ -28,24 +26,27 @@ function SettingsField4Sides({
   divider,
   splitSides,
   allSideLabel,
-  fieldKey,
+  field,
 }: SettingsField4SidesProps) {
-  const { setValue, getValues } = useFormContext<FormSchema>();
+  const { getFieldKeyById, updateFieldProps, getFieldProps } = useSchemaStore();
+  const fieldKey = getFieldKeyById(field.id);
+  if (!fieldKey) return null;
+
   const isAllEqual = splitSides.every((item) => {
     return (
-      getValues(genFieldKey(fieldKey, item.key)) ===
-      getValues(genFieldKey(fieldKey, splitSides[0].key))
+      getFieldProps(field.id, item.key) ===
+      getFieldProps(field.id, splitSides[0].key)
     );
   });
   const [isSplitSides, setIsSplitSides] = useState(!isAllEqual);
   const prev4SidesRef = useRef<FieldPropsValueType[]>([]);
   const prevAllSideRef = useRef<FieldPropsValueType>(
-    getValues(genFieldKey(fieldKey, splitSides[0].key))
+    getFieldProps(field.id, splitSides[0].key)
   );
 
   const handleSetAllPadding = (size: FieldPropsValueType) => {
     splitSides.forEach((item) => {
-      setValue(genFieldKey(fieldKey, item.key), size);
+      updateFieldProps(field.id, item.key, size);
     });
   };
 
@@ -54,21 +55,19 @@ function SettingsField4Sides({
 
     if (isSplitSides && !isAllEqual) {
       splitSides.forEach((item) => {
-        const value = getValues(genFieldKey(fieldKey, item.key));
+        const value = getFieldProps(field.id, item.key);
         return prev4SidesRef.current.push(value);
       });
       handleSetAllPadding(prevAllSideRef.current);
     }
 
     if (!isSplitSides) {
-      prevAllSideRef.current = getValues(
-        genFieldKey(fieldKey, splitSides[0].key)
-      );
+      prevAllSideRef.current = getFieldProps(field.id, splitSides[0].key);
     }
 
     if (!isSplitSides && prev4SidesRef.current.length > 0) {
       splitSides.forEach((item, index) => {
-        setValue(genFieldKey(fieldKey, item.key), prev4SidesRef.current[index]);
+        updateFieldProps(field.id, item.key, prev4SidesRef.current[index]);
       });
       prev4SidesRef.current = [];
     }
@@ -97,23 +96,18 @@ function SettingsField4Sides({
                   <p className="typography-body3 text-neutral-700 mb-2">
                     {item.label}
                   </p>
-                  <Controller
-                    key={genFieldKey(fieldKey, item.key)}
-                    render={({ field: { value, onChange } }) => (
-                      <Input
-                        value={value}
-                        onChange={(newValue) => {
-                          onChange(parseInt(newValue, 10));
-                        }}
-                        suffix="px"
-                        suffixType="text"
-                        inputProps={{
-                          type: 'number',
-                          min: 0,
-                        }}
-                      />
-                    )}
-                    name={genFieldKey(fieldKey, item.key)}
+                  <Input
+                    value={getFieldProps(field.id, item.key) as string}
+                    onChange={(newValue) => {
+                      updateFieldProps(field.id, item.key, Number(newValue));
+                    }}
+                    className="w-24"
+                    suffix="px"
+                    suffixType="text"
+                    inputProps={{
+                      type: 'number',
+                      min: 0,
+                    }}
                   />
                 </div>
               ))}
@@ -124,24 +118,18 @@ function SettingsField4Sides({
               <p className="typography-body3 text-neutral-700 mb-2">
                 {allSideLabel}
               </p>
-              <Controller
-                key={genFieldKey(fieldKey, splitSides[0].key)}
-                render={({ field: { value } }) => (
-                  <Input
-                    value={value}
-                    onChange={(newValue) => {
-                      handleSetAllPadding(parseInt(newValue, 10));
-                    }}
-                    className="w-24"
-                    suffix="px"
-                    suffixType="text"
-                    inputProps={{
-                      type: 'number',
-                      min: 0,
-                    }}
-                  />
-                )}
-                name={genFieldKey(fieldKey, splitSides[0].key)}
+              <Input
+                value={getFieldProps(field.id, splitSides[0].key) as string}
+                onChange={(newValue) => {
+                  handleSetAllPadding(Number(newValue));
+                }}
+                className="w-24"
+                suffix="px"
+                suffixType="text"
+                inputProps={{
+                  type: 'number',
+                  min: 0,
+                }}
               />
             </div>
           )}

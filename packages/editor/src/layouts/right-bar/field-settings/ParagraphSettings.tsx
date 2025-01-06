@@ -1,18 +1,18 @@
 import type { FormFieldParagraph } from '@efie-form/core';
 import SettingsFieldVertical from '../property-layouts/SettingsFieldVertical.tsx';
-import { Controller } from 'react-hook-form';
-import Input from '../../../components/form/Input.tsx';
 import Select from '../../../components/form/Select.tsx';
-import type { FieldKeyPrefix } from '../../../lib/genFieldKey.ts';
 import SettingsFieldHorizontal from '../property-layouts/SettingsFieldHorizontal.tsx';
 import ColorPicker from '../../../components/form/ColorPicker.tsx';
+import { useSchemaStore } from '../../../lib/state/schema.state.ts';
+import Number from '../../../components/form/Number.tsx';
 
 interface ParagraphSettingsProps {
   field: FormFieldParagraph;
-  fieldKey: FieldKeyPrefix;
 }
 
-function ParagraphSettings({ fieldKey }: ParagraphSettingsProps) {
+function ParagraphSettings({ field }: ParagraphSettingsProps) {
+  const { updateFieldProps } = useSchemaStore();
+
   return (
     <div>
       <div>
@@ -20,47 +20,36 @@ function ParagraphSettings({ fieldKey }: ParagraphSettingsProps) {
           Text
         </div>
         <SettingsFieldVertical label="Font Size" divider>
-          <Controller
-            key={`${fieldKey}.props.font.size`}
-            render={({ field: { value, onChange } }) => (
-              <Input
-                value={value}
-                onChange={onChange}
-                className="w-28"
-                suffix="px"
-                suffixType="text"
-                inputProps={{
-                  type: 'number',
-                }}
-              />
-            )}
-            name={`${fieldKey}.props.font.size`}
+          <Number
+            value={field.props.font.size}
+            onChange={(value) =>
+              updateFieldProps(field.id, 'props.font.size', value)
+            }
+            className="w-28"
+            suffix="px"
+            suffixType="text"
           />
         </SettingsFieldVertical>
         <SettingsFieldVertical label="Text align" divider>
-          <Controller
-            key={`${fieldKey}.props.textAlign`}
-            render={({ field: { value, onChange } }) => (
-              <Select
-                value={value}
-                onChange={onChange}
-                className="w-28"
-                options={[
-                  { label: 'Left', value: 'left' },
-                  { label: 'Center', value: 'center' },
-                  { label: 'Right', value: 'right' },
-                ]}
-              />
-            )}
-            name={`${fieldKey}.props.textAlign`}
+          <Select
+            value={field.props.textAlign}
+            onChange={(value) =>
+              updateFieldProps(field.id, 'props.textAlign', value)
+            }
+            className="w-28"
+            options={[
+              { label: 'Left', value: 'left' },
+              { label: 'Center', value: 'center' },
+              { label: 'Right', value: 'right' },
+            ]}
           />
         </SettingsFieldVertical>
         <SettingsFieldHorizontal label="Color" divider>
-          <Controller
-            render={({ field: { value, onChange } }) => (
-              <ColorPicker value={value} onChange={onChange} />
-            )}
-            name={`${fieldKey}.props.color`}
+          <ColorPicker
+            value={field.props.color}
+            onChange={(value) =>
+              updateFieldProps(field.id, 'props.color', value)
+            }
           />
         </SettingsFieldHorizontal>
       </div>

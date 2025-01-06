@@ -3,13 +3,13 @@ import type { OptionType } from '@efie-form/core';
 import { MdOutlineClose, MdOutlineDragIndicator } from 'react-icons/md';
 
 interface ChoiceFieldOptionProps {
-  option: OptionType & { id: string };
+  option: OptionType;
   index: number;
   inputType: 'radio' | 'checkbox';
   fieldId: string;
   isValueDifferent?: boolean;
-  onUpdate: (index: number, value: OptionType) => void;
-  onRemove: (index: number) => void;
+  onUpdate: (value: OptionType) => void;
+  onRemove: () => void;
   inputRef?: React.RefObject<HTMLInputElement>;
 }
 
@@ -30,11 +30,11 @@ function ChoiceFieldOption({
     transform,
     transition,
     isDragging,
-  } = useSortable({ id: option.id });
+  } = useSortable({ id: index.toString() });
 
   const style = {
     transform: transform ? `translateY(${transform.y}px)` : undefined,
-    transition,
+    transition: transform ? transition : undefined,
     opacity: isDragging ? 0.5 : undefined,
   };
 
@@ -71,16 +71,16 @@ function ChoiceFieldOption({
               newValue.value = e.target.value;
             }
 
-            onUpdate(index, newValue);
+            onUpdate(newValue);
           }}
         />
         <div className="border-t border-neutral-200 invisible group-hover:visible group-focus-within:visible group-focus-within:border-neutral-500" />
       </div>
-      <button onClick={() => onRemove(index)}>
+      <button onClick={onRemove}>
         <MdOutlineClose className="text-neutral-500 cursor-pointer hover:text-neutral-700" />
       </button>
     </div>
   );
 }
 
-export default ChoiceFieldOption; 
+export default ChoiceFieldOption;

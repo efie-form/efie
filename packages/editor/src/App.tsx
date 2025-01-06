@@ -1,21 +1,14 @@
 import FormBuilder from './layouts/FormBuilder.tsx';
-import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import type { FormSchema } from '@efie-form/core';
 import { BuilderInternal } from '@efie-form/core';
 import { useEffect, useState } from 'react';
 import { useSettingsStore } from './lib/state/settings.state.ts';
-import defaultSchema from './lib/defaultSchema.ts';
+import { useSchemaStore } from './lib/state/schema.state.ts';
 
 function App() {
-  const methods = useForm<FormSchema>({
-    defaultValues: defaultSchema,
-  });
-  const { reset, control, getValues } = methods;
   const [editor, setEditor] = useState<BuilderInternal | null>(null);
-  const watchAllFields = useWatch({
-    control,
-  });
   const { setPage } = useSettingsStore();
+  const { setSchema, schema } = useSchemaStore();
 
   useEffect(() => {
     if (editor) return;
@@ -26,19 +19,20 @@ function App() {
     if (!editor || editor.isLoaded) return;
     editor.init();
     editor.setOnDataReset((data) => {
-      reset(data);
+      setSchema(data);
       resetPage(data);
     });
-  }, [editor, reset]);
+  }, [editor]);
 
   useEffect(() => {
-    if (!editor) return;
-    editor.setValue(getValues());
-  }, [watchAllFields]);
+    if (!editor || !schema) return;
+    editor.setValue(schema);
+    console.log(schema);
+  }, [schema]);
 
   useEffect(() => {
-    const fields = getValues();
-    resetPage(fields);
+    if (!schema) return;
+    resetPage(schema);
   }, []);
 
   const resetPage = (data: FormSchema) => {
@@ -51,9 +45,7 @@ function App() {
 
   return (
     <>
-      <FormProvider {...methods}>
-        <FormBuilder height={editor?.height || undefined} />
-      </FormProvider>
+      <FormBuilder height={editor?.height || undefined} />
     </>
   );
 }

@@ -1,17 +1,17 @@
 import type { FormFieldImage } from '@efie-form/core';
 import SettingsFieldVertical from '../property-layouts/SettingsFieldVertical.tsx';
-import { Controller } from 'react-hook-form';
 import Input from '../../../components/form/Input.tsx';
 import Select from '../../../components/form/Select.tsx';
 import SettingsFieldWidth from '../property-layouts/SettingsFieldWidth.tsx';
-import type { FieldKeyPrefix } from '../../../lib/genFieldKey.ts';
+import { useSchemaStore } from '../../../lib/state/schema.state.ts';
 
 interface ImageSettingsProps {
   field: FormFieldImage;
-  fieldKey: FieldKeyPrefix;
 }
 
-function ImageSettings({ fieldKey }: ImageSettingsProps) {
+function ImageSettings({ field }: ImageSettingsProps) {
+  const { updateFieldProps } = useSchemaStore();
+
   return (
     <div>
       <div>
@@ -20,60 +20,46 @@ function ImageSettings({ fieldKey }: ImageSettingsProps) {
         </div>
 
         <SettingsFieldVertical label="Image Link" divider>
-          <Controller
-            key={`${fieldKey}.props.src`}
-            render={({ field: { onChange, value } }) => (
-              <Input onChange={onChange} value={value} />
-            )}
-            name={`${fieldKey}.props.src`}
+          <Input
+            onChange={(value) => updateFieldProps(field.id, 'props.src', value)}
+            value={field.props.src}
           />
         </SettingsFieldVertical>
         <SettingsFieldVertical label="Alternate Name" divider>
-          <Controller
-            key={`${fieldKey}.props.alt`}
-            render={({ field: { onChange, value } }) => (
-              <Input onChange={onChange} value={value} />
-            )}
-            name={`${fieldKey}.props.alt`}
+          <Input
+            onChange={(value) => updateFieldProps(field.id, 'props.alt', value)}
+            value={field.props.alt}
           />
         </SettingsFieldVertical>
         <SettingsFieldVertical label="Align" divider>
-          <Controller
-            key={`${fieldKey}.props.textAlign`}
-            render={({ field: { onChange, value } }) => (
-              <Select
-                options={[
-                  { label: 'Left', value: 'left' },
-                  { label: 'Center', value: 'center' },
-                  { label: 'Right', value: 'right' },
-                ]}
-                onChange={onChange}
-                value={value}
-              />
-            )}
-            name={`${fieldKey}.props.textAlign`}
+          <Select
+            options={[
+              { label: 'Left', value: 'left' },
+              { label: 'Center', value: 'center' },
+              { label: 'Right', value: 'right' },
+            ]}
+            onChange={(value) =>
+              updateFieldProps(field.id, 'props.textAlign', value)
+            }
+            value={field.props.textAlign}
           />
         </SettingsFieldVertical>
         <SettingsFieldVertical label="Object Fit" divider>
-          <Controller
-            key={`${fieldKey}.props.objectFit`}
-            render={({ field: { onChange, value } }) => (
-              <Select
-                options={[
-                  { label: 'Fill', value: 'fill' },
-                  { label: 'Contain', value: 'contain' },
-                  { label: 'Cover', value: 'cover' },
-                  { label: 'None', value: 'none' },
-                  { label: 'Scale Down', value: 'scale-down' },
-                ]}
-                onChange={onChange}
-                value={value}
-              />
-            )}
-            name={`${fieldKey}.props.objectFit`}
+          <Select
+            options={[
+              { label: 'Fill', value: 'fill' },
+              { label: 'Contain', value: 'contain' },
+              { label: 'Cover', value: 'cover' },
+              { label: 'None', value: 'none' },
+              { label: 'Scale Down', value: 'scale-down' },
+            ]}
+            onChange={(value) =>
+              updateFieldProps(field.id, 'props.objectFit', value)
+            }
+            value={field.props.objectFit}
           />
         </SettingsFieldVertical>
-        <SettingsFieldWidth fieldKey={fieldKey} label="Width" divider />
+        <SettingsFieldWidth field={field} label="Width" divider />
       </div>
     </div>
   );

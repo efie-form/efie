@@ -6,13 +6,18 @@ import { Controller } from 'react-hook-form';
 import type { FieldKeyPrefix } from '../../../lib/genFieldKey.ts';
 import SettingsFieldHorizontal from '../property-layouts/SettingsFieldHorizontal.tsx';
 import ColorPicker from '../../../components/form/ColorPicker.tsx';
+import { useSchemaStore } from '../../../lib/state/schema.state.ts';
 
 interface HeaderSettingsProps {
   field: FormFieldHeader;
   fieldKey: FieldKeyPrefix;
 }
 
-function HeaderSettings({ fieldKey }: HeaderSettingsProps) {
+function HeaderSettings({ field }: HeaderSettingsProps) {
+  const { getFieldKeyById } = useSchemaStore();
+  const fieldKey = getFieldKeyById(field.id);
+  if (!fieldKey) return null;
+
   return (
     <div>
       <div>

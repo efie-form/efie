@@ -1,22 +1,15 @@
 import type { FormFieldRow } from '@efie-form/core';
 import RenderField from '../RenderField.tsx';
-import type { FieldKeyPrefix } from '../../../../lib/genFieldKey.ts';
-import genFieldKey from '../../../../lib/genFieldKey.ts';
 import { useSettingsStore } from '../../../../lib/state/settings.state.ts';
 import { cn } from '../../../../lib/utils.ts';
-import { useFieldArray } from 'react-hook-form';
 
 interface RowFieldProps {
   field: FormFieldRow;
-  fieldKey: FieldKeyPrefix;
 }
 
-function RowField({ field, fieldKey }: RowFieldProps) {
+function RowField({ field }: RowFieldProps) {
   const { mode } = useSettingsStore();
   const isMobile = mode === 'mobile';
-  const { remove } = useFieldArray({
-    name: `${fieldKey}.children`,
-  });
 
   return (
     <div
@@ -26,7 +19,7 @@ function RowField({ field, fieldKey }: RowFieldProps) {
     >
       {field.children
         .filter((child) => child.type === 'column')
-        .map((child, index) => (
+        .map((child) => (
           <div
             key={`${field.id}-${child.id}`}
             style={{
@@ -34,14 +27,7 @@ function RowField({ field, fieldKey }: RowFieldProps) {
             }}
             className="self-stretch"
           >
-            <RenderField
-              field={child}
-              noSelect
-              fieldKey={genFieldKey(fieldKey, `children.${index}`)}
-              onRemove={() => {
-                remove(index);
-              }}
-            />
+            <RenderField field={child} noSelect />
           </div>
         ))}
     </div>
