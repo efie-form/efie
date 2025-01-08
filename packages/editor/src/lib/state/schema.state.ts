@@ -14,10 +14,12 @@ interface SchemaState {
     value: unknown
   ) => void;
   getPage: (pageId: string | null) => FormFieldPage | undefined;
+  updatePages: (pages: FormFieldPage[]) => void;
   fieldMap: Map<string, FormField>;
   fieldKeyMap: Map<string, string>;
   getFieldById: (fieldId: string | null) => FormField | undefined;
   getFieldKeyById: (fieldId: string | null) => string | undefined;
+  getFieldParentId: (fieldId: string | null) => string | undefined;
   getFieldProps: <T extends FieldPropsKey>(
     fieldId: string,
     key: T
@@ -60,6 +62,24 @@ export const useSchemaStore = create<SchemaState>((set, getState) => ({
       .filter((field) => field.type === 'page')
       .find((field) => field.id === pageId);
   },
+  updatePages: (pages) => {
+    const { fieldMap, fieldKeyMap } = getState();
+    pages.forEach((page, index) => {
+      fieldMap.set(page.id, page);
+      fieldKeyMap.set(page.id, `form.fields.${index}`);
+    });
+    set({
+      fieldMap,
+      fieldKeyMap,
+      schema: {
+        ...getState().schema,
+        form: {
+          ...getState().schema.form,
+          fields: pages,
+        },
+      },
+    });
+  },
   getFieldById: (fieldId) => {
     if (!fieldId) return;
     return getState().fieldMap.get(fieldId);
@@ -68,13 +88,29 @@ export const useSchemaStore = create<SchemaState>((set, getState) => ({
     if (!fieldId) return;
     return getState().fieldKeyMap.get(fieldId);
   },
+  getFieldParentId: (fieldId) => {
+    if (!fieldId) return;
+    return getState().fieldParentMap.get(fieldId);
+  },
   updateFieldProps: (fieldId, key, value) => {
-    const { fieldMap } = getState();
+    const { fieldMap, fieldParentMap, fieldKeyMap } = getState();
     const field = fieldMap.get(fieldId);
     if (!field) return;
     iterateSetValue(field, key.split('.'), value);
     fieldMap.set(fieldId, field);
-    set({ fieldMap });
+
+    if (key === 'children' && 'children' in field) {
+      field.children.forEach((child, index) => {
+        fieldMap.set(child.id, child);
+        fieldParentMap.set(child.id, fieldId);
+        fieldKeyMap.set(
+          child.id,
+          fieldKeyMap.get(fieldId) + `.children.${index}`
+        );
+      });
+    }
+
+    set({ fieldMap, fieldParentMap, fieldKeyMap });
   },
   getFieldProps: (fieldId, key) => {
     const { fieldMap } = getState();

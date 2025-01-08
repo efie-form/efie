@@ -76,7 +76,7 @@ function ChoiceFieldOption({
         />
         <div className="border-t border-neutral-200 invisible group-hover:visible group-focus-within:visible group-focus-within:border-neutral-500" />
       </div>
-      <button onClick={onRemove}>
+      <button onClick={onRemove} className="invisible group-hover:visible">
         <MdOutlineClose className="text-neutral-500 cursor-pointer hover:text-neutral-700" />
       </button>
     </div>

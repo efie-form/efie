@@ -5,7 +5,7 @@ import {
   RIGHT_BAR_TABS,
   useSettingsStore,
 } from '../../../lib/state/settings.state.ts';
-import type { MouseEvent } from 'react';
+import { useState, type MouseEvent } from 'react';
 import HeaderField from './fields/HeaderField.tsx';
 import ParagraphField from './fields/ParagraphField.tsx';
 import ShortTextField from './fields/ShortTextField.tsx';
@@ -27,6 +27,8 @@ import { HiTrash } from 'react-icons/hi2';
 import useDndItem from '../../../components/dnd-kit/useDndItem.tsx';
 import Droppable from '../../../components/dnd-kit/Droppable.tsx';
 import { useSchemaStore } from '../../../lib/state/schema.state.ts';
+import { usePopper } from 'react-popper';
+import { createPortal } from 'react-dom';
 
 interface RenderFieldProps {
   field: FormField;
@@ -42,6 +44,18 @@ function RenderField({ field, noSelect }: RenderFieldProps) {
   } = useSettingsStore();
   const isSelected = selectedFieldId === field.id;
   const { deleteField } = useSchemaStore();
+  const [referenceElement, setReferenceElement] =
+    useState<HTMLDivElement | null>(null);
+  const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(
+    null
+  );
+  const { styles, attributes: popperAttributes } = usePopper(
+    referenceElement,
+    popperElement,
+    {
+      placement: 'left-start',
+    }
+  );
 
   const { attributes, dragHandlerProps } = useDndItem({
     id: field.id,
@@ -53,12 +67,20 @@ function RenderField({ field, noSelect }: RenderFieldProps) {
       <div
         key={field.id}
         data-field="true"
+        id={`field-container-${field.id}`}
         {...attributes}
-        className={cn('rounded-lg transform relative h-full', {
-          '!border-primary': isSelected,
-          'border-2 border-white border-opacity-0 [&:not(:has(div[data-field=true]:hover))]:hover:border-neutral-100':
-            field.type !== 'column',
-        })}
+        ref={(ref) => {
+          setReferenceElement(ref);
+          attributes.ref(ref);
+        }}
+        className={cn(
+          'transform rounded-md relative h-full outline outline-2 outline-[#00000000] -outline-offset-2',
+          {
+            '!outline-primary relative z-50': isSelected,
+            '[&:not(:has(div[data-field=true]:hover))]:hover:outline-neutral-100':
+              field.type !== 'column',
+          }
+        )}
         {...(!noSelect && {
           onClick: (e: MouseEvent) => {
             e.stopPropagation();
@@ -67,25 +89,31 @@ function RenderField({ field, noSelect }: RenderFieldProps) {
           },
         })}
       >
-        {isSelected && (
-          <div className="absolute top-0 left-0 -translate-x-full">
+        {isSelected &&
+          createPortal(
             <div
-              {...dragHandlerProps}
-              className="bg-primary p-1 text-white cursor-grab"
+              ref={setPopperElement}
+              style={styles.popper}
+              {...popperAttributes.popper}
             >
-              <AiOutlineDrag />
-            </div>
-            <button
-              className="bg-danger p-1 text-white"
-              onClick={() => {
-                deleteField(field.id);
-                clearSelectedFieldId();
-              }}
-            >
-              <HiTrash />
-            </button>
-          </div>
-        )}
+              <div
+                {...dragHandlerProps}
+                className="bg-primary p-1 text-white cursor-grab"
+              >
+                <AiOutlineDrag />
+              </div>
+              <button
+                className="bg-danger p-1 text-white"
+                onClick={() => {
+                  deleteField(field.id);
+                  clearSelectedFieldId();
+                }}
+              >
+                <HiTrash />
+              </button>
+            </div>,
+            document.querySelector('#form-zone')!
+          )}
         <FieldItem field={field} />
       </div>
     </Droppable>

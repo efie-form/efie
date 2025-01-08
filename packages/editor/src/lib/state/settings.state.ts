@@ -1,7 +1,8 @@
 import { create } from 'zustand';
 
 export const RIGHT_BAR_TABS = {
-  LAYOUT: 'layout',
+  PAGE: 'page',
+  FORM: 'form',
   FIELD_SETTINGS: 'field-settings',
 } as const;
 

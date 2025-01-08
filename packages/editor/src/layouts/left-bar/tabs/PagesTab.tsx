@@ -1,5 +1,4 @@
-import { useFieldArray, useFormContext } from 'react-hook-form';
-import type { FormFieldPage, FormSchema } from '@efie-form/core';
+import type { FormFieldPage } from '@efie-form/core';
 import { MdOutlineDragIndicator } from 'react-icons/md';
 import { useSettingsStore } from '../../../lib/state/settings.state.ts';
 import { cn } from '../../../lib/utils.ts';
@@ -22,13 +21,10 @@ import type { CSSProperties } from 'react';
 import { useState } from 'react';
 import { FaCheck, FaPlus, FaTrash, FaXmark } from 'react-icons/fa6';
 import { getDefaultField } from '../../../lib/getDefaultField.ts';
+import { useSchemaStore } from '../../../lib/state/schema.state.ts';
 
 function PagesTab() {
-  const { watch } = useFormContext<FormSchema>();
-  const { insert, fields, move, remove } = useFieldArray({
-    keyName: '_id',
-    name: 'form.fields',
-  });
+  const { updatePages, schema } = useSchemaStore();
   const { setPage, page } = useSettingsStore();
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -37,7 +33,7 @@ function PagesTab() {
     })
   );
 
-  const pages = watch('form.fields').filter((field) => field.type === 'page');
+  const pages = schema.form.fields.filter((field) => field.type === 'page');
 
   const handleAddNewPage = () => {
     const newPage = getDefaultField({
@@ -46,7 +42,30 @@ function PagesTab() {
         name: `Page ${pages.length + 1}`,
       },
     });
-    insert(fields.length, newPage);
+
+    const newPages = [...pages, newPage].filter((p) => p.type === 'page');
+
+    updatePages(newPages);
+  };
+
+  const handleMovePage = (from: number, to: number) => {
+    const newPages = [...pages];
+    const [page] = newPages.splice(from, 1);
+    newPages.splice(to, 0, page);
+    updatePages(newPages);
+  };
+
+  const handleDeletePage = (deletedPage: FormFieldPage) => {
+    const currentPageIndex = pages.findIndex((p) => p.id === deletedPage.id);
+    const newPages = pages.filter((p) => p.id !== deletedPage.id);
+
+    updatePages(newPages);
+
+    if (deletedPage.id === page) {
+      setPage(
+        newPages[currentPageIndex + 1]?.id ?? newPages[currentPageIndex - 1]?.id
+      );
+    }
   };
 
   const handleDragEnd = (props: DragEndEvent) => {
@@ -58,7 +77,7 @@ function PagesTab() {
 
     if (activeIndex === -1 || overIndex === -1) return;
 
-    move(activeIndex, overIndex);
+    handleMovePage(activeIndex, overIndex);
   };
 
   return (
@@ -79,15 +98,11 @@ function PagesTab() {
       >
         <SortableContext items={pages.map((p) => p.id)}>
           <ul>
-            {pages.map((p, index) => (
+            {pages.map((p) => (
               <PageItem
                 key={p.id}
                 page={p}
-                onDelete={() => {
-                  remove(index);
-                  if (p.id === page)
-                    setPage(pages[index + 1]?.id ?? pages[index - 1]?.id);
-                }}
+                onDelete={() => handleDeletePage(p)}
               />
             ))}
           </ul>
@@ -105,6 +120,7 @@ interface PageItemProps {
 }
 
 function PageItem({ page, onDelete }: PageItemProps) {
+  const { schema } = useSchemaStore();
   const { page: currentPage, setPage } = useSettingsStore();
   const {
     attributes,
@@ -183,8 +199,15 @@ function PageItem({ page, onDelete }: PageItemProps) {
                 e.stopPropagation();
                 setDeleteConfirm(true);
               }}
+              disabled={schema.form.fields.length === 1}
             >
-              <FaTrash className="text-danger" size={12} />
+              <FaTrash
+                className={cn('text-danger', {
+                  'opacity-50 cursor-not-allowed':
+                    schema.form.fields.length === 1,
+                })}
+                size={12}
+              />
             </button>
           )}
         </span>

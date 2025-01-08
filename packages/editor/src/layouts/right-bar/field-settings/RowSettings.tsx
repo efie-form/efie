@@ -1,5 +1,4 @@
 import type { FormFieldRow } from '@efie-form/core';
-import type { FieldKeyPrefix } from '../../../lib/genFieldKey.ts';
 import { getDefaultField } from '../../../lib/getDefaultField.ts';
 import * as Tabs from '@radix-ui/react-tabs';
 import { useState } from 'react';
@@ -19,32 +18,22 @@ const LAYOUT_PRESETS = [
 
 interface RowSettingsProps {
   field: FormFieldRow;
-  fieldKey: FieldKeyPrefix;
 }
 
 function RowSettings({ field }: RowSettingsProps) {
-  const { updateFieldProps } = useSchemaStore();
+  const { updateFieldProps, getFieldById } = useSchemaStore();
   const [currentTab, setCurrentTab] = useState(field.children[0]?.id);
 
   const applyLayout = (columns: number[]) => {
-    const newColumns = columns
-      .map((width, index) => {
-        const existingColumn = field.children[index];
-        if (!existingColumn || existingColumn.type !== 'column')
-          return getDefaultField({
-            type: 'column',
-            column: { width },
-          });
+    const newColumns = columns.map((width, index) => {
+      const existingColumn = field.children[index];
+      const columnField = getFieldById(existingColumn.id);
 
-        return {
-          ...getDefaultField({
-            type: 'column',
-            column: { width },
-          }),
-          children: existingColumn?.children || [],
-        };
-      })
-      .filter((c) => c !== null);
+      if (!columnField || columnField.type !== 'column') return existingColumn;
+
+      columnField.props.width = width;
+      return columnField;
+    });
 
     updateFieldProps(field.id, 'children', newColumns);
     setCurrentTab(newColumns[0].id);
@@ -59,13 +48,12 @@ function RowSettings({ field }: RowSettingsProps) {
     });
 
     const newChildren = [
-      ...field.children.map((col) => ({
-        ...col,
-        props: {
-          ...col.props,
-          width: avgWidth,
-        },
-      })),
+      ...field.children.map((col) => {
+        const field = getFieldById(col.id);
+        if (!field || field.type !== 'column') return col;
+        field.props.width = avgWidth;
+        return field;
+      }),
       newColumn,
     ];
 
@@ -80,13 +68,13 @@ function RowSettings({ field }: RowSettingsProps) {
     if (index === -1) return;
     const newChildren = field.children
       .filter((_, i) => i !== index)
-      .map((col, _, arr) => ({
-        ...col,
-        props: {
-          ...col.props,
-          width: 100 / arr.length,
-        },
-      }));
+      .map((col, _, arr) => {
+        const field = getFieldById(col.id);
+        if (!field || field.type !== 'column') return col;
+
+        field.props.width = Math.floor(100 / arr.length);
+        return field;
+      });
     updateFieldProps(field.id, 'children', newChildren);
     setCurrentTab(prevField?.id || newChildren[0]?.id);
   };

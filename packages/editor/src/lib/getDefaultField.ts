@@ -89,7 +89,11 @@ export const getDefaultField = ({
       return {
         type: 'page',
         id: generateId(ID_LENGTH),
-        children: [],
+        children: [
+          getDefaultField({
+            type: 'block',
+          }),
+        ],
         props: {
           name: page?.name || 'Page',
         },
@@ -193,6 +197,7 @@ export const getDefaultField = ({
       return {
         type: 'row',
         id: generateId(ID_LENGTH),
+        props: {},
         children: [
           {
             id: generateId(ID_LENGTH),
@@ -262,7 +267,7 @@ export const getDefaultField = ({
           },
           color: '#494949',
           margin: {
-            bottom: 0,
+            bottom: 8,
             left: 0,
             right: 0,
             top: 0,

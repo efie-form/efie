@@ -8,11 +8,13 @@ import { Document } from '@tiptap/extension-document';
 import { Paragraph } from '@tiptap/extension-paragraph';
 import { Text } from '@tiptap/extension-text';
 import { FaBold, FaItalic, FaUnderline } from 'react-icons/fa6';
-import type { ElementType } from 'react';
+import { useState, type ElementType } from 'react';
 import { cn } from '../../lib/utils.ts';
 import ColorPicker from '../form/ColorPicker.tsx';
 import { TextStyle } from '@tiptap/extension-text-style';
 import { Color } from '@tiptap/extension-color';
+import { createPortal } from 'react-dom';
+import { usePopper } from 'react-popper';
 
 interface RichTextEditorProps {
   value: JSONContent;
@@ -39,39 +41,59 @@ function RichTextEditor({ value, onChange, active }: RichTextEditorProps) {
       onChange(editor.getJSON());
     },
   });
+  const [referenceElement, setReferenceElement] =
+    useState<HTMLDivElement | null>(null);
+  const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(
+    null
+  );
+  const { styles, attributes: popperAttributes } = usePopper(
+    referenceElement,
+    popperElement,
+    {
+      placement: 'top-start',
+    }
+  );
 
   if (!editor) return null;
 
   return (
-    <div className="relative">
+    <div className="relative " ref={setReferenceElement}>
       <EditorContent editor={editor} />
-      {active && (
-        <div className="absolute -top-1 left-0 -translate-y-full bg-neutral-50 border border-neutral-200 rounded-md flex typography-body3 shadow-md">
-          <Button
-            Icon={FaBold}
-            active={editor.isActive('bold')}
-            onClick={() => editor.chain().focus().toggleBold().run()}
-          />
-          <Button
-            Icon={FaItalic}
-            active={editor.isActive('italic')}
-            onClick={() => editor.chain().focus().toggleItalic().run()}
-          />
-          <Button
-            Icon={FaUnderline}
-            active={editor.isActive('underline')}
-            onClick={() => editor.chain().focus().toggleUnderline().run()}
-          />
-          <ColorPicker
-            value={editor.getAttributes('textStyle').color}
-            onChange={(color) => {
-              editor.commands.setColor(color);
-            }}
-            defaultColor="#000000"
-            onClose={() => editor.commands.focus()}
-          />
-        </div>
-      )}
+      {active &&
+        createPortal(
+          <div
+            ref={setPopperElement}
+            style={styles.popper}
+            {...popperAttributes.popper}
+          >
+            <div className="bg-neutral-50 border border-neutral-200 rounded-md flex typography-body3 shadow-md">
+              <Button
+                Icon={FaBold}
+                active={editor.isActive('bold')}
+                onClick={() => editor.chain().focus().toggleBold().run()}
+              />
+              <Button
+                Icon={FaItalic}
+                active={editor.isActive('italic')}
+                onClick={() => editor.chain().focus().toggleItalic().run()}
+              />
+              <Button
+                Icon={FaUnderline}
+                active={editor.isActive('underline')}
+                onClick={() => editor.chain().focus().toggleUnderline().run()}
+              />
+              <ColorPicker
+                value={editor.getAttributes('textStyle').color}
+                onChange={(color) => {
+                  editor.commands.setColor(color);
+                }}
+                defaultColor="#000000"
+                onClose={() => editor.commands.focus()}
+              />
+            </div>
+          </div>,
+          document.querySelector('#form-zone')!
+        )}
     </div>
   );
 }

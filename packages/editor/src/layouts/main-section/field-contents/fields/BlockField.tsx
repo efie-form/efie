@@ -8,7 +8,7 @@ interface BlockFieldProps {
 function BlockField({ field }: BlockFieldProps) {
   return (
     <div
-      className="min-h-20 w-full transition-all"
+      className="min-h-20 w-full transition-all overflow-hidden"
       style={{
         paddingTop: field.props.padding.top,
         paddingRight: field.props.padding.right,

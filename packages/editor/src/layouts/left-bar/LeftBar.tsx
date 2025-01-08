@@ -4,6 +4,7 @@ import FieldsTab from './tabs/FieldsTab.tsx';
 import { cn } from '../../lib/utils.ts';
 import PagesTab from './tabs/PagesTab.tsx';
 import { FaRegCopy } from 'react-icons/fa';
+import Tooltip from '../../components/elements/Tooltip.tsx';
 
 const tabs = [
   {
@@ -38,18 +39,25 @@ function LeftBar() {
     <div className="h-full flex">
       <div className="bg-neutral-100/40 h-full">
         {tabs.map((tab) => (
-          <div
+          <Tooltip
             key={tab.id}
-            className={cn(
-              'p-3 hover:bg-neutral-200/30 cursor-pointer transition-all duration-100',
-              {
-                '!bg-neutral-200/80': tab.id === activeTab,
-              }
-            )}
-            onClick={() => setActiveTab(tab.id)}
+            content={tab.label}
+            side="right"
+            align="center"
+            sideOffset={4}
           >
-            <tab.Icon size={16} className="text-neutral-800" />
-          </div>
+            <div
+              className={cn(
+                'p-3 hover:bg-neutral-200/30 cursor-pointer transition-all duration-100',
+                {
+                  '!bg-neutral-200/80': tab.id === activeTab,
+                }
+              )}
+              onClick={() => setActiveTab(tab.id)}
+            >
+              <tab.Icon size={16} className="text-neutral-800" />
+            </div>
+          </Tooltip>
         ))}
       </div>
       <div className="flex-1 flex flex-col">

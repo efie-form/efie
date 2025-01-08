@@ -11,7 +11,6 @@ const DEFAULT_IMAGE_URL =
 function ImageField({ field }: ImageFieldProps) {
   return (
     <div
-      className="p-2"
       style={{
         textAlign: textAlignMap[field.props.textAlign],
       }}
