@@ -36,7 +36,7 @@ export const useSettingsStore = create<SettingsState>((set) => ({
   setPage: (page) => {
     set({ page });
   },
-  activeTab: 'layout',
+  activeTab: 'form',
   setActiveTab: (tab) => {
     set({ activeTab: tab });
   },

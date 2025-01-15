@@ -1,8 +1,8 @@
-import type { FileFieldProps } from '@efie-form/react/types/FieldProps.ts';
+import { FileFieldProps } from '@efie-form/react';
 
 function FileField({ id, label }: FileFieldProps) {
   return (
-    <div className="efie-file efie-form-field col">
+    <div>
       <label htmlFor={id} className="efie-field-label">
         {label}
       </label>

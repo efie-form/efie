@@ -1,7 +1,6 @@
 import type { FormFieldNumber } from '@efie-form/core';
 import SettingsFieldVertical from '../property-layouts/SettingsFieldVertical.tsx';
 import Input from '../../../components/form/Input.tsx';
-import type { FieldKeyPrefix } from '../../../lib/genFieldKey.ts';
 import { useSchemaStore } from '../../../lib/state/schema.state.ts';
 
 interface NumberSettingsProps {

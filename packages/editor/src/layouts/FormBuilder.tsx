@@ -13,7 +13,7 @@ const FormBuilder = ({ height }: FormBuilderProps) => {
     <DndProvider>
       <div
         className={cn('flex w-full', {
-          'h-screen': !height,
+          'h-full': !height,
         })}
         style={{
           height: `${height}px`,

@@ -1,4 +1,4 @@
-import type { ParagraphFieldProps } from '@efie-form/react/types/FieldProps.ts';
+import { ParagraphFieldProps } from '@efie-form/react';
 
 function ParagraphField({ text }: ParagraphFieldProps) {
   return <p>{text}</p>;

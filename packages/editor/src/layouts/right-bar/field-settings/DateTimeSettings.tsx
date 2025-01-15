@@ -1,5 +1,4 @@
 import type { FormFieldDateTime } from '@efie-form/core';
-import type { FieldKeyPrefix } from '../../../lib/genFieldKey.ts';
 import SettingsFieldVertical from '../property-layouts/SettingsFieldVertical.tsx';
 import Input from '../../../components/form/Input.tsx';
 import SettingsFieldHorizontal from '../property-layouts/SettingsFieldHorizontal.tsx';

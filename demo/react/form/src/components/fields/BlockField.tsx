@@ -1,4 +1,4 @@
-import type { BlockFieldProps } from '@efie-form/react/types/FieldProps.ts';
+import { BlockFieldProps } from '@efie-form/react';
 
 function BlockField({
   children,
@@ -9,9 +9,17 @@ function BlockField({
   boxShadow,
   borderRadius,
 }: BlockFieldProps) {
+  console.log({
+    margin,
+    padding,
+    backgroundColor,
+    color,
+    boxShadow,
+    borderRadius,
+  });
+
   return (
     <div
-      className="efie-form-block"
       style={{
         margin,
         padding,
@@ -19,6 +27,7 @@ function BlockField({
         color,
         boxShadow,
         borderRadius,
+        overflow: 'hidden',
       }}
     >
       {children}

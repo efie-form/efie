@@ -4,4 +4,5 @@ export const ACTION_TYPE = {
   GET_DATA: 'get-data',
   RESET_DATA: 'reset-data',
   SET_HEIGHT: 'set-height',
+  LOADED: 'loaded',
 } as const;

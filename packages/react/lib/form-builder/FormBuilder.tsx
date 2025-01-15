@@ -1,7 +1,9 @@
 import React, {
   forwardRef,
+  RefObject,
   useEffect,
   useImperativeHandle,
+  useMemo,
   useState,
 } from 'react';
 import { type FormSchema, BuilderExternal } from '@efie-form/core';
@@ -9,51 +11,50 @@ import { type FormSchema, BuilderExternal } from '@efie-form/core';
 const DIV_ID = 'efie-form-builder';
 
 interface FormBuilderProps {
-  value?: FormSchema;
-  onChange?: (value: FormSchema) => void;
-  height?: number;
+  ref: RefObject<FormBuilderRef>;
+  options?: FormBuilderOptions;
+  onReady?: () => void;
 }
 
-const FormBuilder = forwardRef<BuilderExternal, FormBuilderProps>(
-  ({ onChange, value, height }, ref) => {
-    const [editor, setEditor] = useState<BuilderExternal>();
+interface FormBuilderOptions {
+  inputFields?: string[];
+  hiddenFields?: string[];
+}
+export interface FormBuilderRef {
+  loadSchema: (schema: FormSchema) => void;
+  getSchema: () => FormSchema;
+}
+
+const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
+  ({ onReady, options }, ref) => {
+    const [editor] = useState<BuilderExternal>(
+      new BuilderExternal({
+        id: DIV_ID,
+      })
+    );
+
     const [isLoaded, setIsLoaded] = useState(false);
-    const [isDataLoaded, setIsDataLoaded] = useState(false);
-
-    useEffect(() => {
-      if (editor) return;
-      setEditor(
-        new BuilderExternal({
-          id: DIV_ID,
-        })
-      );
-    }, [editor]);
-
-    useEffect(() => {
-      if (!editor || !value || isDataLoaded) return;
-      editor.resetValue(value);
-      setIsDataLoaded(true);
-    }, [editor, value]);
-
-    useEffect(() => {
-      if (!editor || !height) return;
-      editor.setHeight(height);
-    }, [editor, height]);
 
     useEffect(() => {
       if (!editor || isLoaded) return;
 
       setIsLoaded(true);
-      editor.init();
-      if (onChange) editor?.setOnValueChange(onChange);
-    }, [editor, isLoaded, onChange]);
+      onReady?.();
+    }, [editor, isLoaded]);
 
     useImperativeHandle(ref, () => {
-      if (!editor) throw new Error('Editor is not initialized');
-      return editor;
+      return {
+        loadSchema: (schema) => {
+          console.log('loaded schema', schema);
+          editor.loadSchema(schema);
+        },
+        getSchema: () => {
+          return editor.getValue();
+        },
+      };
     });
 
-    return <div id={DIV_ID} style={{ display: 'flex' }} />;
+    return <div id={DIV_ID} style={{ height: '100%' }} />;
   }
 );
 

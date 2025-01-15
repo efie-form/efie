@@ -1,9 +1,8 @@
-import type { DividerFieldProps } from '@efie-form/react/types/FieldProps.ts';
+import { DividerFieldProps } from '@efie-form/react';
 
 function DividerField({ style }: DividerFieldProps) {
   return (
     <div
-      className="efie-divider"
       style={{
         borderStyle: style,
       }}

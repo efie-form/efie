@@ -6,14 +6,9 @@ import { useSettingsStore } from './lib/state/settings.state.ts';
 import { useSchemaStore } from './lib/state/schema.state.ts';
 
 function App() {
-  const [editor, setEditor] = useState<BuilderInternal | null>(null);
+  const [editor] = useState<BuilderInternal | null>(new BuilderInternal());
   const { setPage } = useSettingsStore();
   const { setSchema, schema } = useSchemaStore();
-
-  useEffect(() => {
-    if (editor) return;
-    setEditor(new BuilderInternal());
-  }, [editor]);
 
   useEffect(() => {
     if (!editor || editor.isLoaded) return;
@@ -22,13 +17,8 @@ function App() {
       setSchema(data);
       resetPage(data);
     });
+    editor.setOnDataRequest(() => schema);
   }, [editor]);
-
-  useEffect(() => {
-    if (!editor || !schema) return;
-    editor.setValue(schema);
-    console.log(schema);
-  }, [schema]);
 
   useEffect(() => {
     if (!schema) return;

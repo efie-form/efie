@@ -1,3 +1,4 @@
+import defaultSchema from '../../editor/src/lib/defaultSchema';
 import { ACTION_TYPE } from '../constant';
 import type { FormSchema } from '../types/formSchema.type';
 
@@ -9,35 +10,49 @@ export default class BuilderExternal {
   private parentElem;
   private iframeElem: HTMLIFrameElement | null = null;
   private onValueChange: ((value: FormSchema) => void) | null = null;
-  private json: FormSchema | null = null;
-  private height: number | null = null;
+  private json: FormSchema = defaultSchema;
+  private height: number | null | undefined = document.body.scrollHeight;
 
   constructor({ id }: BuilderExternalProps) {
     this.parentElem = document.getElementById(id);
-  }
-
-  public setHeight(height: number) {
-    this.height = height;
-    if (!this.iframeElem) return;
-    this.iframeElem.style.height = `${height}px`;
-    this.postMessage(ACTION_TYPE.SET_HEIGHT, { height });
+    this.init();
   }
 
   public init() {
+    if (
+      this.parentElem?.childElementCount &&
+      this.parentElem?.childElementCount >= 1
+    )
+      return;
+
     this.renderIframe();
     this.listenMessage();
+
+    this.initResizeListener();
   }
 
   private renderIframe() {
-    if (!this.parentElem) return;
-
     const iframeElem = document.createElement('iframe');
     iframeElem.src = 'http://localhost:3074';
     iframeElem.style.border = 'none';
     iframeElem.style.width = '100%';
     iframeElem.style.height = `${this.height}px`;
     this.iframeElem = iframeElem;
-    this.parentElem.appendChild(iframeElem);
+    this.parentElem?.appendChild(iframeElem);
+  }
+
+  private initResizeListener() {
+    if (!this.parentElem) return;
+
+    const resizeObserver = new ResizeObserver((entries) => {
+      if (!this.iframeElem) return;
+      const height = entries[0].contentRect.height;
+      this.height = height;
+      this.iframeElem.style.height = `${height}px`;
+      this.postMessage(ACTION_TYPE.SET_HEIGHT, { height });
+    });
+
+    resizeObserver.observe(this.parentElem);
   }
 
   private listenMessage() {
@@ -52,7 +67,6 @@ export default class BuilderExternal {
 
   private iframeLoadedHandler(event: MessageEvent) {
     if (event.data.type !== ACTION_TYPE.INIT) return;
-    console.log('iframe loaded', this.json);
     this.postMessage(ACTION_TYPE.RESET_DATA, this.json);
   }
 
@@ -64,7 +78,6 @@ export default class BuilderExternal {
   }
 
   public getValue() {
-    if (!this.iframeElem) return;
     return this.json;
   }
 
@@ -72,7 +85,7 @@ export default class BuilderExternal {
     this.onValueChange = cb;
   }
 
-  public resetValue(data: FormSchema) {
+  public loadSchema(data: FormSchema) {
     this.json = data;
 
     if (!this.iframeElem) return;
