@@ -4,10 +4,10 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "dev": "react-builder-demo/node_modules/.bin/vite",
-    "build": "react-builder-demo/node_modules/.bin/tsc -b && vite build",
-    "lint": "react-builder-demo/node_modules/.bin/eslint .",
-    "preview": "react-builder-demo/node_modules/.bin/vite preview"
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
   },
   "dependencies": {
     "@efie-form/react": "workspace:*",
