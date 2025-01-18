@@ -7,7 +7,6 @@ function App() {
   const [height, setHeight] = useState(window.innerHeight);
 
   useEffect(() => {
-    // Handle window resize with debounce
     let resizeTimeout: NodeJS.Timeout;
     const handleResize = () => {
       clearTimeout(resizeTimeout);
@@ -16,9 +15,7 @@ function App() {
       }, 100);
     };
 
-    // Set initial height
     handleResize();
-
     window.addEventListener('resize', handleResize);
 
     return () => {
@@ -28,8 +25,11 @@ function App() {
   }, []);
 
   const handleReady = () => {
-    console.log('ready');
-    formBuilderRef.current?.loadSchema(schema);
+    console.log('Form builder ready, loading schema');
+    // Ensure we're in the next tick when loading schema
+    setTimeout(() => {
+      formBuilderRef.current?.loadSchema(schema);
+    }, 0);
   };
 
   return (
@@ -43,7 +43,10 @@ function App() {
     >
       <div>
         <button
-          onClick={() => console.log(formBuilderRef.current?.getSchema())}
+          onClick={() => {
+            const currentSchema = formBuilderRef.current?.getSchema();
+            console.log('Current schema:', currentSchema);
+          }}
         >
           get schema
         </button>

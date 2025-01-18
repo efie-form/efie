@@ -13,25 +13,29 @@ function App() {
 
   useEffect(() => {
     if (!editorRef.current) {
-      const editor = new BuilderInternal();
+      const editor = new BuilderInternal({
+        onDataRequest: () => schema,
+        onDataReset: (data) => {
+          console.log('Data reset received:', data);
+          setSchema(data);
+          resetPage(data);
+        },
+        onHeightChange: (height) => {
+          setHeight(height);
+        },
+      });
       editorRef.current = editor;
-
-      editor.setOnDataReset((data) => {
-        setSchema(data);
-        resetPage(data);
-      });
-
-      editor.setOnDataRequest(() => schema);
-
-      editor.setOnHeightChange((height) => {
-        setHeight(height);
-      });
     }
 
     return () => {
       editorRef.current = null;
     };
   }, []);
+
+  useEffect(() => {
+    if (!editorRef.current) return;
+    editorRef.current.loaded();
+  }, [editorRef.current]);
 
   // Handle schema updates
   useEffect(() => {

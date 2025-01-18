@@ -55,38 +55,18 @@ export default class BuilderExternal {
     if (typeof window === 'undefined') return;
 
     window.addEventListener('message', (event) => {
-      this.jsonChangeHandler(event);
-      this.iframeLoadedHandler(event);
-
-      // Handle LOADED event
-      if (event.data.type === ACTION_TYPE.LOADED) {
+      if (event.data.type === ACTION_TYPE.INIT) {
+        this.isIframeReady = true;
+        if (this.pendingSchema) {
+          this.postMessage(ACTION_TYPE.RESET_DATA, this.pendingSchema);
+          this.pendingSchema = null;
+        }
+      } else if (event.data.type === ACTION_TYPE.SET_DATA) {
+        this.json = event.data.data;
+      } else if (event.data.type === ACTION_TYPE.LOADED) {
         this.onReady?.();
       }
     });
-  }
-
-  private iframeLoadedHandler(event: MessageEvent) {
-    if (event.data.type !== ACTION_TYPE.INIT) return;
-
-    this.isIframeReady = true;
-
-    // If there's a pending schema, send it now
-    if (this.pendingSchema) {
-      setTimeout(() => {
-        this.postMessage(ACTION_TYPE.RESET_DATA, this.pendingSchema);
-        this.pendingSchema = null;
-      }, 0);
-    } else {
-      setTimeout(() => {
-        this.postMessage(ACTION_TYPE.RESET_DATA, this.json);
-      }, 0);
-    }
-  }
-
-  private jsonChangeHandler(event: MessageEvent) {
-    if (event.data.type !== ACTION_TYPE.SET_DATA) return;
-
-    this.json = event.data.data;
   }
 
   public getValue() {
@@ -94,19 +74,19 @@ export default class BuilderExternal {
   }
 
   public loadSchema(data: FormSchema) {
+    console.log('loadSchema', data, this.iframeElem);
     this.json = data;
-    console.log('loadSchema', data, this.iframeElem, this.isIframeReady);
 
-    if (!this.iframeElem) return;
+    if (!this.iframeElem) {
+      return;
+    }
 
     if (!this.isIframeReady) {
       this.pendingSchema = data;
       return;
     }
 
-    setTimeout(() => {
-      this.postMessage(ACTION_TYPE.RESET_DATA, data);
-    }, 0);
+    this.postMessage(ACTION_TYPE.RESET_DATA, data);
   }
 
   private postMessage(type: string, data: unknown) {

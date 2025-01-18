@@ -30,15 +30,15 @@ export interface FormBuilderRef {
 const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
   ({ onReady, options, height }, ref) => {
     const builderRef = useRef<BuilderExternal | null>(null);
-    const [isReady, setIsReady] = useState(false);
 
+    // Initialize BuilderExternal once
     useEffect(() => {
-      // Initialize BuilderExternal
       builderRef.current = new BuilderExternal({
         id: DIV_ID,
         onReady: () => {
-          setIsReady(true);
-          onReady?.();
+          setTimeout(() => {
+            onReady?.();
+          }, 0);
         },
       });
 
@@ -52,19 +52,19 @@ const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
       builderRef.current?.setHeight(height);
     }, [height]);
 
-    // Expose methods via ref
-    useImperativeHandle(ref, () => ({
-      loadSchema: (schema: FormSchema) => {
-        if (!isReady) {
-          console.warn('Form builder is not ready yet');
-          return;
-        }
-        builderRef.current?.loadSchema(schema);
-      },
-      getSchema: () => {
-        return builderRef.current?.getValue() as FormSchema;
-      },
-    }));
+    // Expose methods via ref with proper ready state check
+    useImperativeHandle(
+      ref,
+      () => ({
+        loadSchema: (schema: FormSchema) => {
+          builderRef.current?.loadSchema(schema);
+        },
+        getSchema: () => {
+          return builderRef.current?.getValue() as FormSchema;
+        },
+      }),
+      [] // Important: update ref when ready state changes
+    );
 
     return (
       <div
