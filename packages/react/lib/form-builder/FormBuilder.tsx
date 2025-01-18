@@ -30,29 +30,41 @@ export interface FormBuilderRef {
 const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
   ({ onReady, options, height }, ref) => {
     const builderRef = useRef<BuilderExternal | null>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
 
     // Initialize BuilderExternal once
     useEffect(() => {
-      builderRef.current = new BuilderExternal({
-        id: DIV_ID,
-        onReady: () => {
-          setTimeout(() => {
+      // Only create new instance if one doesn't exist
+      if (!builderRef.current && containerRef.current) {
+        builderRef.current = new BuilderExternal({
+          id: DIV_ID,
+          onReady: () => {
             onReady?.();
-          }, 0);
-        },
-      });
+          },
+        });
+      }
 
+      // Cleanup only when component unmounts
       return () => {
-        builderRef.current = null;
+        if (builderRef.current) {
+          // Clean up the iframe
+          const container = document.getElementById(DIV_ID);
+          if (container) {
+            container.innerHTML = '';
+          }
+          builderRef.current = null;
+        }
       };
-    }, []);
+    }, []); // Empty dependency array to run only once
 
     // Update height when prop changes
     useEffect(() => {
-      builderRef.current?.setHeight(height);
+      if (builderRef.current) {
+        builderRef.current.setHeight(height);
+      }
     }, [height]);
 
-    // Expose methods via ref with proper ready state check
+    // Expose methods via ref
     useImperativeHandle(
       ref,
       () => ({
@@ -63,11 +75,12 @@ const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
           return builderRef.current?.getValue() as FormSchema;
         },
       }),
-      [] // Important: update ref when ready state changes
+      []
     );
 
     return (
       <div
+        ref={containerRef}
         id={DIV_ID}
         style={{
           height: `${height}px`,

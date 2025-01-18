@@ -25,32 +25,11 @@ function App() {
   }, []);
 
   const handleReady = () => {
-    console.log('Form builder ready, loading schema');
-    // Ensure we're in the next tick when loading schema
-    setTimeout(() => {
-      formBuilderRef.current?.loadSchema(schema);
-    }, 0);
+    formBuilderRef.current?.loadSchema(schema);
   };
 
   return (
-    <div
-      style={{
-        height: '100vh',
-        overflow: 'hidden',
-        display: 'flex',
-        flexDirection: 'column',
-      }}
-    >
-      <div>
-        <button
-          onClick={() => {
-            const currentSchema = formBuilderRef.current?.getSchema();
-            console.log('Current schema:', currentSchema);
-          }}
-        >
-          get schema
-        </button>
-      </div>
+    <div>
       <FormBuilder ref={formBuilderRef} onReady={handleReady} height={height} />
     </div>
   );
