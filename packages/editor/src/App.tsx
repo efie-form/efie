@@ -8,7 +8,7 @@ import { useSchemaStore } from './lib/state/schema.state.ts';
 function App() {
   const [editor] = useState<BuilderInternal | null>(new BuilderInternal());
   const { setPage } = useSettingsStore();
-  const { setSchema, schema } = useSchemaStore();
+  const { setSchema, schema, currentHistoryIndex } = useSchemaStore();
 
   useEffect(() => {
     if (!editor || editor.isLoaded) return;
@@ -32,6 +32,10 @@ function App() {
     }
     setPage(pages[0].id);
   };
+
+  useEffect(() => {
+    editor?.setValue(schema);
+  }, [currentHistoryIndex]);
 
   return (
     <>

@@ -13,10 +13,10 @@ const FormBuilder = ({ height }: FormBuilderProps) => {
     <DndProvider>
       <div
         className={cn('flex w-full', {
-          'h-full': !height,
+          'h-screen': !height,
         })}
         style={{
-          height: `${height}px`,
+          height: height ? `${height}px` : undefined,
         }}
       >
         <aside className="w-64 bg-neutral-50 overflow-y-auto">

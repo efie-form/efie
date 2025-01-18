@@ -26,6 +26,17 @@ interface SchemaState {
   ) => FieldPathValue<FormSchema, `form.fields.${number}.${T}`>;
   deleteField: (fieldId: string) => void;
   fieldParentMap: Map<string, string>;
+  maxHistories: number;
+  setMaxHistories: (maxHistories: number) => void;
+  histories: string[];
+  addHistory: (schema: FormSchema) => void;
+  undo: () => void;
+  redo: () => void;
+  clearHistories: () => void;
+  totalHistories: number;
+  currentHistoryIndex: number;
+  canUndo: () => boolean;
+  canRedo: () => boolean;
 }
 
 const fieldInfo = getFieldInfoMap(defaultSchema.form.fields);
@@ -36,9 +47,11 @@ export const useSchemaStore = create<SchemaState>((set, getState) => ({
   fieldMap: fieldInfo.fieldMap,
   fieldKeyMap: fieldInfo.fieldKeyMap,
   setSchema: (schema) => {
+    const { addHistory } = getState();
     const { fieldKeyMap, fieldMap, fieldParentMap } = getFieldInfoMap(
       schema.form.fields
     );
+    addHistory(schema);
     set({
       schema,
       fieldKeyMap,
@@ -47,9 +60,13 @@ export const useSchemaStore = create<SchemaState>((set, getState) => ({
     });
   },
   setFields: (fields) => {
+    const { addHistory, schema } = getState();
     const { fieldKeyMap, fieldMap, fieldParentMap } = getFieldInfoMap(fields);
-    set((state) => ({
-      schema: { ...state.schema, form: { fields } },
+    const newSchema = { ...schema, form: { fields } };
+    addHistory(newSchema);
+
+    set(() => ({
+      schema: newSchema,
       fieldKeyMap,
       fieldMap,
       fieldParentMap,
@@ -63,21 +80,17 @@ export const useSchemaStore = create<SchemaState>((set, getState) => ({
       .find((field) => field.id === pageId);
   },
   updatePages: (pages) => {
-    const { fieldMap, fieldKeyMap } = getState();
+    const { fieldMap, fieldKeyMap, schema, addHistory } = getState();
     pages.forEach((page, index) => {
       fieldMap.set(page.id, page);
       fieldKeyMap.set(page.id, `form.fields.${index}`);
     });
+    const newSchema = { ...schema, form: { fields: pages } };
+    addHistory(newSchema);
     set({
       fieldMap,
       fieldKeyMap,
-      schema: {
-        ...getState().schema,
-        form: {
-          ...getState().schema.form,
-          fields: pages,
-        },
-      },
+      schema: newSchema,
     });
   },
   getFieldById: (fieldId) => {
@@ -93,7 +106,8 @@ export const useSchemaStore = create<SchemaState>((set, getState) => ({
     return getState().fieldParentMap.get(fieldId);
   },
   updateFieldProps: (fieldId, key, value) => {
-    const { fieldMap, fieldParentMap, fieldKeyMap } = getState();
+    const { fieldMap, fieldParentMap, fieldKeyMap, schema, addHistory } =
+      getState();
     const field = fieldMap.get(fieldId);
     if (!field) return;
     iterateSetValue(field, key.split('.'), value);
@@ -110,6 +124,8 @@ export const useSchemaStore = create<SchemaState>((set, getState) => ({
       });
     }
 
+    addHistory(schema);
+
     set({ fieldMap, fieldParentMap, fieldKeyMap });
   },
   getFieldProps: (fieldId, key) => {
@@ -119,7 +135,8 @@ export const useSchemaStore = create<SchemaState>((set, getState) => ({
     return iterateGetFieldProps(field, key.split('.'));
   },
   deleteField: (fieldId) => {
-    const { fieldMap, fieldKeyMap, fieldParentMap } = getState();
+    const { fieldMap, fieldKeyMap, fieldParentMap, schema, addHistory } =
+      getState();
     const parentId = fieldParentMap.get(fieldId);
     if (parentId) {
       const parent = fieldMap.get(parentId);
@@ -133,7 +150,83 @@ export const useSchemaStore = create<SchemaState>((set, getState) => ({
     fieldMap.delete(fieldId);
     fieldKeyMap.delete(fieldId);
     fieldParentMap.delete(fieldId);
+    addHistory(schema);
     set({ fieldMap, fieldKeyMap, fieldParentMap });
+  },
+  maxHistories: 50,
+  setMaxHistories: (maxHistories) => {
+    set({ maxHistories });
+  },
+  histories: [JSON.stringify(defaultSchema)],
+  redo: () => {
+    const { histories, currentHistoryIndex } = getState();
+    const nextHistoryIndex = currentHistoryIndex + 1;
+    if (nextHistoryIndex >= histories.length) return;
+    const nextHistory = histories[nextHistoryIndex];
+    const newSchema = JSON.parse(nextHistory);
+
+    const { fieldMap, fieldKeyMap, fieldParentMap } = getFieldInfoMap(
+      newSchema.form.fields
+    );
+
+    set({
+      fieldMap,
+      fieldKeyMap,
+      fieldParentMap,
+      schema: newSchema,
+      currentHistoryIndex: nextHistoryIndex,
+    });
+  },
+  undo: () => {
+    const { histories, currentHistoryIndex } = getState();
+    const previousHistoryIndex = currentHistoryIndex - 1;
+    if (previousHistoryIndex < 0) return;
+    const previousHistory = histories[previousHistoryIndex];
+    const newSchema = JSON.parse(previousHistory);
+
+    const { fieldMap, fieldKeyMap, fieldParentMap } = getFieldInfoMap(
+      newSchema.form.fields
+    );
+
+    set({
+      fieldMap,
+      fieldKeyMap,
+      fieldParentMap,
+      schema: newSchema,
+      currentHistoryIndex: previousHistoryIndex,
+    });
+  },
+  clearHistories: () => {
+    set({ histories: [], totalHistories: 0, currentHistoryIndex: 0 });
+  },
+  totalHistories: 0,
+  currentHistoryIndex: 0,
+  addHistory: (schema) => {
+    const { maxHistories, histories, currentHistoryIndex } = getState();
+    debounce(() => {
+      const stringifiedSchema = JSON.stringify(schema);
+
+      let newHistories = histories.slice(0, currentHistoryIndex + 1);
+      newHistories.push(stringifiedSchema);
+
+      if (newHistories.length > maxHistories) {
+        newHistories = newHistories.slice(newHistories.length - maxHistories);
+      }
+
+      set({
+        histories: newHistories,
+        totalHistories: newHistories.length,
+        currentHistoryIndex: newHistories.length - 1,
+      });
+    }, 250);
+  },
+  canUndo: () => {
+    const { currentHistoryIndex } = getState();
+    return currentHistoryIndex > 0;
+  },
+  canRedo: () => {
+    const { currentHistoryIndex, totalHistories } = getState();
+    return currentHistoryIndex < totalHistories - 1;
   },
 }));
 
@@ -196,4 +289,11 @@ function getFieldInfoMap(
     }
   }
   return { fieldKeyMap, fieldMap, fieldParentMap };
+}
+
+let timeout: NodeJS.Timeout;
+
+function debounce(fn: () => void, delay: number) {
+  clearTimeout(timeout);
+  timeout = setTimeout(fn, delay);
 }
