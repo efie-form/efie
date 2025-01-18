@@ -1,24 +1,44 @@
 import FormBuilder from './layouts/FormBuilder.tsx';
 import type { FormSchema } from '@efie-form/core';
 import { BuilderInternal } from '@efie-form/core';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSettingsStore } from './lib/state/settings.state.ts';
 import { useSchemaStore } from './lib/state/schema.state.ts';
 
 function App() {
-  const [editor] = useState<BuilderInternal | null>(new BuilderInternal());
+  const editorRef = useRef<BuilderInternal | null>(null);
   const { setPage } = useSettingsStore();
   const { setSchema, schema, currentHistoryIndex } = useSchemaStore();
+  const [height, setHeight] = useState(0);
 
   useEffect(() => {
-    if (!editor || editor.isLoaded) return;
-    editor.init();
-    editor.setOnDataReset((data) => {
-      setSchema(data);
-      resetPage(data);
-    });
-    editor.setOnDataRequest(() => schema);
-  }, [editor]);
+    if (!editorRef.current) {
+      const editor = new BuilderInternal();
+      editorRef.current = editor;
+
+      editor.setOnDataReset((data) => {
+        setSchema(data);
+        resetPage(data);
+      });
+
+      editor.setOnDataRequest(() => schema);
+
+      editor.setOnHeightChange((height) => {
+        setHeight(height);
+      });
+    }
+
+    return () => {
+      editorRef.current = null;
+    };
+  }, []);
+
+  // Handle schema updates
+  useEffect(() => {
+    if (editorRef.current && schema) {
+      editorRef.current.setValue(schema);
+    }
+  }, [currentHistoryIndex, schema]);
 
   useEffect(() => {
     if (!schema) return;
@@ -33,13 +53,9 @@ function App() {
     setPage(pages[0].id);
   };
 
-  useEffect(() => {
-    editor?.setValue(schema);
-  }, [currentHistoryIndex]);
-
   return (
     <>
-      <FormBuilder height={editor?.height || undefined} />
+      <FormBuilder height={height} />
     </>
   );
 }

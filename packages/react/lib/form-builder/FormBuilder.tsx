@@ -3,7 +3,7 @@ import React, {
   RefObject,
   useEffect,
   useImperativeHandle,
-  useMemo,
+  useRef,
   useState,
 } from 'react';
 import { type FormSchema, BuilderExternal } from '@efie-form/core';
@@ -14,47 +14,68 @@ interface FormBuilderProps {
   ref: RefObject<FormBuilderRef>;
   options?: FormBuilderOptions;
   onReady?: () => void;
+  height: number;
 }
 
 interface FormBuilderOptions {
   inputFields?: string[];
   hiddenFields?: string[];
 }
+
 export interface FormBuilderRef {
   loadSchema: (schema: FormSchema) => void;
   getSchema: () => FormSchema;
 }
 
 const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
-  ({ onReady, options }, ref) => {
-    const [editor] = useState<BuilderExternal>(
-      new BuilderExternal({
-        id: DIV_ID,
-      })
-    );
-
-    const [isLoaded, setIsLoaded] = useState(false);
+  ({ onReady, options, height }, ref) => {
+    const builderRef = useRef<BuilderExternal | null>(null);
+    const [isReady, setIsReady] = useState(false);
 
     useEffect(() => {
-      if (!editor || isLoaded) return;
-
-      setIsLoaded(true);
-      onReady?.();
-    }, [editor, isLoaded]);
-
-    useImperativeHandle(ref, () => {
-      return {
-        loadSchema: (schema) => {
-          console.log('loaded schema', schema);
-          editor.loadSchema(schema);
+      // Initialize BuilderExternal
+      builderRef.current = new BuilderExternal({
+        id: DIV_ID,
+        onReady: () => {
+          setIsReady(true);
+          onReady?.();
         },
-        getSchema: () => {
-          return editor.getValue();
-        },
+      });
+
+      return () => {
+        builderRef.current = null;
       };
-    });
+    }, []);
 
-    return <div id={DIV_ID} style={{ height: '100%' }} />;
+    // Update height when prop changes
+    useEffect(() => {
+      builderRef.current?.setHeight(height);
+    }, [height]);
+
+    // Expose methods via ref
+    useImperativeHandle(ref, () => ({
+      loadSchema: (schema: FormSchema) => {
+        if (!isReady) {
+          console.warn('Form builder is not ready yet');
+          return;
+        }
+        builderRef.current?.loadSchema(schema);
+      },
+      getSchema: () => {
+        return builderRef.current?.getValue() as FormSchema;
+      },
+    }));
+
+    return (
+      <div
+        id={DIV_ID}
+        style={{
+          height: `${height}px`,
+          width: '100%',
+          overflow: 'hidden',
+        }}
+      />
+    );
   }
 );
 

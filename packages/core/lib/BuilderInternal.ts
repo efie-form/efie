@@ -5,9 +5,11 @@ export default class BuilderInternal {
   isLoaded = false;
   onDataReset: ((data: FormSchema) => void) | null = null;
   onDataRequest: () => FormSchema | null = () => null;
-  height: number | null = null;
+  onHeightChange: ((height: number) => void) | null = null;
 
-  constructor() {}
+  constructor() {
+    this.init();
+  }
 
   /**
    * Replace the schema of the form builder
@@ -16,13 +18,11 @@ export default class BuilderInternal {
    * @returns void
    */
   public setValue(value: FormSchema) {
-    if (typeof window === 'undefined') return;
-
+    if (typeof window === 'undefined' || !this.isLoaded) return;
     this.postMessage(ACTION_TYPE.SET_DATA, value);
   }
 
   /**
-   *
    * Initialize the event listener between the caller and the iframe
    *
    * @returns void
@@ -37,11 +37,27 @@ export default class BuilderInternal {
       this.heightHandler(e);
     });
 
+    // Send INIT first to establish connection
     this.postMessage(ACTION_TYPE.INIT, null);
+
+    // Send LOADED after a short delay to ensure proper sequence
+    setTimeout(() => {
+      this.postMessage(ACTION_TYPE.LOADED, null);
+
+      // Request initial data after sending LOADED
+      const initialData = this.onDataRequest?.();
+      if (initialData) {
+        this.postMessage(ACTION_TYPE.SET_DATA, initialData);
+      }
+    }, 100);
   }
 
   public setOnDataRequest(cb: () => FormSchema) {
     this.onDataRequest = cb;
+  }
+
+  public setOnHeightChange(cb: (height: number) => void) {
+    this.onHeightChange = cb;
   }
 
   /**
@@ -63,7 +79,7 @@ export default class BuilderInternal {
    */
   private heightHandler(event: MessageEvent) {
     if (event.data.type !== ACTION_TYPE.SET_HEIGHT) return;
-    this.height = event.data.data.height;
+    if (this.onHeightChange) this.onHeightChange(event.data.data.height);
   }
 
   /**

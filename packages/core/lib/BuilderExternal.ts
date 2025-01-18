@@ -4,55 +4,50 @@ import type { FormSchema } from '../types/formSchema.type';
 
 interface BuilderExternalProps {
   id: string;
+  height: number;
 }
 
 export default class BuilderExternal {
-  private parentElem;
+  private parentElem: HTMLElement | null = null;
   private iframeElem: HTMLIFrameElement | null = null;
-  private onValueChange: ((value: FormSchema) => void) | null = null;
   private json: FormSchema = defaultSchema;
-  private height: number | null | undefined = document.body.scrollHeight;
+  private isIframeReady = false;
+  private pendingSchema: FormSchema | null = null;
+  private onReady: (() => void) | null = null;
 
-  constructor({ id }: BuilderExternalProps) {
+  constructor({ id, onReady }: { id: string; onReady?: () => void }) {
     this.parentElem = document.getElementById(id);
+    this.onReady = onReady || null;
     this.init();
   }
 
   public init() {
     if (
-      this.parentElem?.childElementCount &&
-      this.parentElem?.childElementCount >= 1
+      !this.parentElem ||
+      (this.parentElem?.childElementCount &&
+        this.parentElem?.childElementCount >= 1)
     )
       return;
 
     this.renderIframe();
     this.listenMessage();
-
-    this.initResizeListener();
   }
 
   private renderIframe() {
-    const iframeElem = document.createElement('iframe');
-    iframeElem.src = 'http://localhost:3074';
-    iframeElem.style.border = 'none';
-    iframeElem.style.width = '100%';
-    iframeElem.style.height = `${this.height}px`;
-    this.iframeElem = iframeElem;
-    this.parentElem?.appendChild(iframeElem);
+    this.iframeElem = document.createElement('iframe');
+    this.iframeElem.src = 'http://localhost:3074';
+    this.iframeElem.style.border = 'none';
+    this.iframeElem.style.width = '100%';
+    this.iframeElem.style.height = '100%';
+    this.parentElem?.appendChild(this.iframeElem);
   }
 
-  private initResizeListener() {
-    if (!this.parentElem) return;
+  public setHeight(height: number) {
+    if (!this.iframeElem || !this.parentElem) return;
 
-    const resizeObserver = new ResizeObserver((entries) => {
-      if (!this.iframeElem) return;
-      const height = entries[0].contentRect.height;
-      this.height = height;
-      this.iframeElem.style.height = `${height}px`;
-      this.postMessage(ACTION_TYPE.SET_HEIGHT, { height });
-    });
+    this.parentElem.style.height = `${height}px`;
 
-    resizeObserver.observe(this.parentElem);
+    this.postMessage(ACTION_TYPE.SET_HEIGHT, { height });
   }
 
   private listenMessage() {
@@ -62,34 +57,56 @@ export default class BuilderExternal {
     window.addEventListener('message', (event) => {
       this.jsonChangeHandler(event);
       this.iframeLoadedHandler(event);
+
+      // Handle LOADED event
+      if (event.data.type === ACTION_TYPE.LOADED) {
+        this.onReady?.();
+      }
     });
   }
 
   private iframeLoadedHandler(event: MessageEvent) {
     if (event.data.type !== ACTION_TYPE.INIT) return;
-    this.postMessage(ACTION_TYPE.RESET_DATA, this.json);
+
+    this.isIframeReady = true;
+
+    // If there's a pending schema, send it now
+    if (this.pendingSchema) {
+      setTimeout(() => {
+        this.postMessage(ACTION_TYPE.RESET_DATA, this.pendingSchema);
+        this.pendingSchema = null;
+      }, 0);
+    } else {
+      setTimeout(() => {
+        this.postMessage(ACTION_TYPE.RESET_DATA, this.json);
+      }, 0);
+    }
   }
 
   private jsonChangeHandler(event: MessageEvent) {
     if (event.data.type !== ACTION_TYPE.SET_DATA) return;
 
     this.json = event.data.data;
-    if (this.onValueChange) this.onValueChange(event.data.data);
   }
 
   public getValue() {
     return this.json;
   }
 
-  public setOnValueChange(cb: (value: FormSchema) => void) {
-    this.onValueChange = cb;
-  }
-
   public loadSchema(data: FormSchema) {
     this.json = data;
+    console.log('loadSchema', data, this.iframeElem, this.isIframeReady);
 
     if (!this.iframeElem) return;
-    this.postMessage(ACTION_TYPE.RESET_DATA, data);
+
+    if (!this.isIframeReady) {
+      this.pendingSchema = data;
+      return;
+    }
+
+    setTimeout(() => {
+      this.postMessage(ACTION_TYPE.RESET_DATA, data);
+    }, 0);
   }
 
   private postMessage(type: string, data: unknown) {
