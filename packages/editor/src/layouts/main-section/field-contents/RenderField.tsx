@@ -5,7 +5,7 @@ import {
   RIGHT_BAR_TABS,
   useSettingsStore,
 } from '../../../lib/state/settings.state.ts';
-import type { MouseEvent } from 'react';
+import { useState, type MouseEvent } from 'react';
 import HeaderField from './fields/HeaderField.tsx';
 import ParagraphField from './fields/ParagraphField.tsx';
 import ShortTextField from './fields/ShortTextField.tsx';
@@ -22,25 +22,20 @@ import FileField from './fields/FileField.tsx';
 import { cn } from '../../../lib/utils.ts';
 import ButtonField from './fields/ButtonField.tsx';
 import BlockField from './fields/BlockField.tsx';
-import type { FieldKeyPrefix } from '../../../lib/genFieldKey.ts';
 import { AiOutlineDrag } from 'react-icons/ai';
 import { HiTrash } from 'react-icons/hi2';
 import useDndItem from '../../../components/dnd-kit/useDndItem.tsx';
 import Droppable from '../../../components/dnd-kit/Droppable.tsx';
+import { useSchemaStore } from '../../../lib/state/schema.state.ts';
+import { usePopper } from 'react-popper';
+import { createPortal } from 'react-dom';
 
 interface RenderFieldProps {
   field: FormField;
   noSelect?: boolean;
-  fieldKey: FieldKeyPrefix;
-  onRemove?: () => void;
 }
 
-function RenderField({
-  field,
-  noSelect,
-  fieldKey,
-  onRemove,
-}: RenderFieldProps) {
+function RenderField({ field, noSelect }: RenderFieldProps) {
   const {
     setSelectedFieldId,
     selectedFieldId,
@@ -48,6 +43,19 @@ function RenderField({
     setActiveTab,
   } = useSettingsStore();
   const isSelected = selectedFieldId === field.id;
+  const { deleteField } = useSchemaStore();
+  const [referenceElement, setReferenceElement] =
+    useState<HTMLDivElement | null>(null);
+  const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(
+    null
+  );
+  const { styles, attributes: popperAttributes } = usePopper(
+    referenceElement,
+    popperElement,
+    {
+      placement: 'left-start',
+    }
+  );
 
   const { attributes, dragHandlerProps } = useDndItem({
     id: field.id,
@@ -59,12 +67,20 @@ function RenderField({
       <div
         key={field.id}
         data-field="true"
+        id={`field-container-${field.id}`}
         {...attributes}
-        className={cn('rounded-lg transform relative h-full', {
-          '!border-primary': isSelected,
-          'border-2 border-white border-opacity-0 [&:not(:has(div[data-field=true]:hover))]:hover:border-neutral-100':
-            field.type !== 'column',
-        })}
+        ref={(ref) => {
+          setReferenceElement(ref);
+          attributes.ref(ref);
+        }}
+        className={cn(
+          'transform rounded-md relative h-full outline outline-2 outline-[#00000000] -outline-offset-2',
+          {
+            '!outline-primary relative z-50': isSelected,
+            '[&:not(:has(div[data-field=true]:hover))]:hover:outline-neutral-100':
+              field.type !== 'column',
+          }
+        )}
         {...(!noSelect && {
           onClick: (e: MouseEvent) => {
             e.stopPropagation();
@@ -73,67 +89,73 @@ function RenderField({
           },
         })}
       >
-        {isSelected && (
-          <div className="absolute top-0 left-0 -translate-x-full">
+        {isSelected &&
+          createPortal(
             <div
-              {...dragHandlerProps}
-              className="bg-primary p-1 text-white cursor-grab"
+              ref={setPopperElement}
+              style={styles.popper}
+              {...popperAttributes.popper}
             >
-              <AiOutlineDrag />
-            </div>
-            <button
-              className="bg-danger p-1 text-white"
-              onClick={() => {
-                onRemove?.();
-                clearSelectedFieldId();
-              }}
-            >
-              <HiTrash />
-            </button>
-          </div>
-        )}
-        <FieldItem field={field} fieldKey={fieldKey} />
+              <div
+                {...dragHandlerProps}
+                className="bg-primary p-1 text-white cursor-grab"
+              >
+                <AiOutlineDrag />
+              </div>
+              <button
+                className="bg-danger p-1 text-white"
+                onClick={() => {
+                  deleteField(field.id);
+                  clearSelectedFieldId();
+                }}
+              >
+                <HiTrash />
+              </button>
+            </div>,
+            document.querySelector('#form-zone')!
+          )}
+        <FieldItem field={field} />
       </div>
     </Droppable>
   );
 }
 
-function FieldItem({ field, fieldKey }: RenderFieldProps) {
+function FieldItem({ field }: RenderFieldProps) {
   switch (field.type) {
     case 'row':
-      return <RowField field={field} fieldKey={fieldKey} />;
+      return <RowField field={field} />;
     case 'column':
-      return <ColumnsField field={field} fieldKey={fieldKey} />;
+      return <ColumnsField field={field} />;
     case 'header':
-      return <HeaderField field={field} fieldKey={fieldKey} />;
+      return <HeaderField field={field} />;
     case 'paragraph':
-      return <ParagraphField field={field} fieldKey={fieldKey} />;
+      return <ParagraphField field={field} />;
     case 'shortText':
-      return <ShortTextField field={field} fieldKey={fieldKey} />;
+      return <ShortTextField field={field} />;
     case 'longText':
-      return <LongTextField field={field} fieldKey={fieldKey} />;
+      return <LongTextField field={field} />;
     case 'number':
-      return <NumberField field={field} fieldKey={fieldKey} />;
+      return <NumberField field={field} />;
     case 'divider':
       return <DividerField field={field} />;
     case 'image':
       return <ImageField field={field} />;
     case 'singleChoice':
-      return <SingleChoiceField field={field} fieldKey={fieldKey} />;
+      return <SingleChoiceField field={field} />;
     case 'multipleChoices':
-      return <MultipleChoicesField field={field} fieldKey={fieldKey} />;
+      return <MultipleChoicesField field={field} />;
     case 'date':
-      return <DateField field={field} fieldKey={fieldKey} />;
+      return <DateField field={field} />;
     case 'time':
-      return <TimeField field={field} fieldKey={fieldKey} />;
+      return <TimeField field={field} />;
     case 'dateTime':
-      return <DateTimeField field={field} fieldKey={fieldKey} />;
+      return <DateTimeField field={field} />;
     case 'file':
-      return <FileField field={field} fieldKey={fieldKey} />;
+      return <FileField field={field} />;
     case 'button':
       return <ButtonField field={field} />;
     case 'block':
-      return <BlockField field={field} fieldKey={fieldKey} />;
+      return <BlockField field={field} />;
     default:
       return (
         <div className="px-4 py-2">

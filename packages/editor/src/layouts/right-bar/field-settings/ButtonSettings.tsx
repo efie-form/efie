@@ -1,21 +1,20 @@
-import type { FieldKeyPrefix } from '../../../lib/genFieldKey.ts';
-import genFieldKey from '../../../lib/genFieldKey.ts';
 import type { FormFieldButton } from '@efie-form/core';
 import SettingsFieldVertical from '../property-layouts/SettingsFieldVertical.tsx';
-import { Controller } from 'react-hook-form';
 import Input from '../../../components/form/Input.tsx';
 import SettingsFieldHorizontal from '../property-layouts/SettingsFieldHorizontal.tsx';
 import ColorPicker from '../../../components/form/ColorPicker.tsx';
 import SettingsField4Sides from '../property-layouts/SettingsField4Sides.tsx';
 import Switch from '../../../components/form/Switch.tsx';
 import Select from '../../../components/form/Select.tsx';
+import { useSchemaStore } from '../../../lib/state/schema.state.ts';
 
 interface ButtonSettingsProps {
   field: FormFieldButton;
-  fieldKey: FieldKeyPrefix;
 }
 
-function ButtonSettings({ fieldKey }: ButtonSettingsProps) {
+function ButtonSettings({ field }: ButtonSettingsProps) {
+  const { updateFieldProps } = useSchemaStore();
+
   return (
     <div>
       <div className="px-4 py-2 bg-neutral-100 text-neutral-800 typography-body3 uppercase">
@@ -23,45 +22,41 @@ function ButtonSettings({ fieldKey }: ButtonSettingsProps) {
       </div>
 
       <SettingsFieldVertical label="Label" divider>
-        <Controller
-          key={`${fieldKey}.props.label`}
-          render={({ field: { onChange, value } }) => (
-            <Input onChange={onChange} value={value} />
-          )}
-          name={`${fieldKey}.props.label`}
+        <Input
+          onChange={(newValue) => {
+            updateFieldProps(field.id, 'props.label', newValue);
+          }}
+          value={field.props.label}
         />
       </SettingsFieldVertical>
       <SettingsFieldHorizontal label="Background Color" divider>
-        <Controller
-          key={genFieldKey(fieldKey, 'props.bgColor')}
-          render={({ field: { value, onChange } }) => (
-            <ColorPicker value={value} onChange={onChange} />
-          )}
-          name={genFieldKey(fieldKey, 'props.bgColor')}
+        <ColorPicker
+          value={field.props.bgColor}
+          onChange={(newValue) => {
+            updateFieldProps(field.id, 'props.bgColor', newValue);
+          }}
         />
       </SettingsFieldHorizontal>
       <SettingsFieldHorizontal label="Text Color" divider>
-        <Controller
-          key={genFieldKey(fieldKey, 'props.color')}
-          render={({ field: { value, onChange } }) => (
-            <ColorPicker value={value} onChange={onChange} />
-          )}
-          name={genFieldKey(fieldKey, 'props.color')}
+        <ColorPicker
+          value={field.props.color}
+          onChange={(newValue) => {
+            updateFieldProps(field.id, 'props.color', newValue);
+          }}
         />
       </SettingsFieldHorizontal>
       <SettingsFieldHorizontal label="Full Width" divider>
-        <Controller
-          key={genFieldKey(fieldKey, 'props.fullWidth')}
-          render={({ field: { value, onChange } }) => (
-            <Switch onChange={onChange} checked={value} />
-          )}
-          name={genFieldKey(fieldKey, 'props.fullWidth')}
+        <Switch
+          checked={field.props.fullWidth}
+          onChange={(newValue) => {
+            updateFieldProps(field.id, 'props.fullWidth', newValue);
+          }}
         />
       </SettingsFieldHorizontal>
       <SettingsField4Sides
         label="Padding"
         allSideLabel="All Sides"
-        fieldKey={fieldKey}
+        field={field}
         splitSides={[
           { key: 'props.padding.top', label: 'Top' },
           { key: 'props.padding.right', label: 'Right' },
@@ -73,7 +68,7 @@ function ButtonSettings({ fieldKey }: ButtonSettingsProps) {
       <SettingsField4Sides
         label="Border Radius"
         allSideLabel="All Sides"
-        fieldKey={fieldKey}
+        field={field}
         splitSides={[
           { key: 'props.border.radius.topLeft', label: 'Top Left' },
           { key: 'props.border.radius.topRight', label: 'Top Right' },
@@ -83,20 +78,16 @@ function ButtonSettings({ fieldKey }: ButtonSettingsProps) {
         divider
       />
       <SettingsFieldVertical label="Position" divider>
-        <Controller
-          key={`${fieldKey}.props.position`}
-          render={({ field: { onChange, value } }) => (
-            <Select
-              value={value}
-              onChange={onChange}
-              options={[
-                { value: 'left', label: 'Left' },
-                { value: 'center', label: 'Center' },
-                { value: 'right', label: 'Right' },
-              ]}
-            />
-          )}
-          name={`${fieldKey}.props.align`}
+        <Select
+          value={field.props.align}
+          onChange={(newValue) => {
+            updateFieldProps(field.id, 'props.align', newValue);
+          }}
+          options={[
+            { value: 'left', label: 'Left' },
+            { value: 'center', label: 'Center' },
+            { value: 'right', label: 'Right' },
+          ]}
         />
       </SettingsFieldVertical>
     </div>

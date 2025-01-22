@@ -1,11 +1,14 @@
 import Switch from '../../../components/form/Switch.tsx';
-import { Controller, useWatch } from 'react-hook-form';
 import type { ReactNode } from 'react';
+import { FormField } from '@efie-form/core';
+import { FieldPropsKey } from '../../../lib/genFieldKey.ts';
+import { useSchemaStore } from '../../../lib/state/schema.state.ts';
 
 interface SettingsFieldSwitchWithDropdownProps {
   label: string;
   divider?: boolean;
-  switchKey: string;
+  field: FormField;
+  switchKey: FieldPropsKey;
   switchLabel?: string;
   children?: ReactNode;
   expandState?: boolean;
@@ -15,13 +18,12 @@ function SettingsFieldSwitchWithDropdown({
   label,
   divider,
   switchKey,
+  field,
   switchLabel,
   children,
   expandState = true,
 }: SettingsFieldSwitchWithDropdownProps) {
-  const isEnabled = useWatch({
-    name: switchKey,
-  });
+  const { getFieldProps, updateFieldProps } = useSchemaStore();
 
   return (
     <>
@@ -34,15 +36,15 @@ function SettingsFieldSwitchWithDropdown({
             {switchLabel && (
               <p className="typography-body4 text-neutral-800">{switchLabel}</p>
             )}
-            <Controller
-              render={({ field: { value, onChange } }) => (
-                <Switch checked={value} onChange={onChange} />
-              )}
-              name={switchKey}
+            <Switch
+              checked={getFieldProps(field.id, switchKey)}
+              onChange={(value) => updateFieldProps(field.id, switchKey, value)}
             />
           </div>
         </div>
-        {isEnabled === expandState && <div className="mt-5">{children}</div>}
+        {getFieldProps(field.id, switchKey) === expandState && (
+          <div className="mt-5">{children}</div>
+        )}
       </div>
 
       {divider && (

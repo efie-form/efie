@@ -1,72 +1,74 @@
 import Switch from '../../../components/form/Switch.tsx';
-import { Controller, useFormContext } from 'react-hook-form';
 import Input from '../../../components/form/Input.tsx';
-import type { FormSchema } from '@efie-form/core';
-import type { FieldKeyPrefix } from '../../../lib/genFieldKey.ts';
-import genFieldKey from '../../../lib/genFieldKey.ts';
+import type {
+  FormFieldMultipleChoices,
+  FormFieldSingleChoice,
+} from '@efie-form/core';
+import { useSchemaStore } from '../../../lib/state/schema.state.ts';
 
 interface SettingsFieldOptionsValueProps {
   label: string;
   divider?: boolean;
-  fieldKey: FieldKeyPrefix;
+  field: FormFieldSingleChoice | FormFieldMultipleChoices;
 }
 
 function SettingsFieldOptionsValue({
   label,
   divider,
-  fieldKey,
+  field,
 }: SettingsFieldOptionsValueProps) {
-  const { watch, control } = useFormContext<FormSchema>();
+  const { updateFieldProps } = useSchemaStore();
 
   return (
     <>
-      <div className="px-4 py-3.5" key={`${fieldKey}-options-value-property`}>
+      <div className="px-4 py-3.5" key={`${field.id}-options-value-property`}>
         <div className="flex justify-between items-center">
           <div>
             <p className="typography-body3 text-neutral-800">{label}</p>
           </div>
           <div className="flex gap-2 items-center">
-            <Controller
-              key={`${fieldKey}.props.isValueDifferent`}
-              render={({ field: { value, onChange } }) => (
-                <Switch checked={value} onChange={onChange} />
-              )}
-              name={`${fieldKey}.props.isValueDifferent`}
+            <Switch
+              checked={field.props.isValueDifferent}
+              onChange={(value) => {
+                updateFieldProps(field.id, 'props.isValueDifferent', value);
+                if (!value) {
+                  updateFieldProps(
+                    field.id,
+                    'props.options',
+                    field.props.options.map((option) => ({
+                      ...option,
+                      value: option.label,
+                    }))
+                  );
+                }
+              }}
             />
           </div>
         </div>
-        {watch(genFieldKey(fieldKey, 'props.isValueDifferent')) && (
+        {field.props.isValueDifferent && (
           <div className="mt-5">
             <div className="flex flex-col gap-3">
-              <Controller
-                render={({ field: { value } }) => (
-                  <>
-                    {value.map((option, index) => (
-                      <div className="flex items-center w-full">
-                        <div className="w-1/3 pe-2">
-                          <p className="typography-body4 whitespace-nowrap truncate">
-                            {option.label}
-                          </p>
-                        </div>
-                        <div className="w-2/3">
-                          <Controller
-                            render={({ field: { value, onChange } }) => (
-                              <Input value={value} onChange={onChange} />
-                            )}
-                            name={genFieldKey(
-                              fieldKey,
-                              `props.options.${index}.value`
-                            )}
-                            control={control}
-                          />
-                        </div>
-                      </div>
-                    ))}
-                  </>
-                )}
-                name={genFieldKey(fieldKey, 'props.options')}
-                control={control}
-              />
+              {field.props.options.map((option, index) => (
+                <div key={index} className="flex items-center w-full">
+                  <div className="w-1/3 pe-2">
+                    <p className="typography-body4 whitespace-nowrap truncate">
+                      {option.label}
+                    </p>
+                  </div>
+                  <div className="w-2/3">
+                    <Input
+                      value={option.value}
+                      onChange={(value) =>
+                        updateFieldProps(
+                          field.id,
+                          `props.options.${index}.value`,
+                          value
+                        )
+                      }
+                    />
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         )}

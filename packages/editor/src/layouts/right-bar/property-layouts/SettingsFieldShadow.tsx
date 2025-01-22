@@ -1,13 +1,5 @@
-import type { FieldKeyPrefix } from '../../../lib/genFieldKey.ts';
-import genFieldKey from '../../../lib/genFieldKey.ts';
 import { FaPlus } from 'react-icons/fa';
-import {
-  Controller,
-  useFieldArray,
-  useFormContext,
-  useWatch,
-} from 'react-hook-form';
-import type { FormSchema } from '@efie-form/core';
+import type { BoxShadow, FormField } from '@efie-form/core';
 import ColorPicker from '../../../components/form/ColorPicker.tsx';
 import Switch from '../../../components/form/Switch.tsx';
 import Number from '../../../components/form/Number.tsx';
@@ -27,31 +19,61 @@ import {
   useSortable,
 } from '@dnd-kit/sortable';
 import { HiTrash } from 'react-icons/hi2';
+import { useSchemaStore } from '../../../lib/state/schema.state.ts';
 
 interface SettingsFieldShadowProps {
   label: string;
-  fieldKey: FieldKeyPrefix;
   divider?: boolean;
+  field: FormField;
 }
 
 function SettingsFieldShadow({
   label,
-  fieldKey,
+  field,
   divider,
 }: SettingsFieldShadowProps) {
-  const { control } = useFormContext<FormSchema>();
+  const { updateFieldProps } = useSchemaStore();
 
-  // @ts-expect-error - ignore infinite
-  const { move, fields, append, remove } = useFieldArray({
-    control,
-    name: genFieldKey(fieldKey, 'props.boxShadow'),
-  });
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
     })
   );
+
+  if (!('boxShadow' in field.props)) return null;
+  const shadows = field.props.boxShadow;
+
+  const handleAddShadow = () => {
+    if (!('boxShadow' in field.props)) return null;
+    const shadows = field.props.boxShadow;
+
+    const newShadow = {
+      x: 0,
+      y: 0,
+      blur: 0,
+      spread: 0,
+      color: '#000000',
+      inset: false,
+    };
+    shadows.push(newShadow);
+    updateFieldProps(field.id, 'props.boxShadow', shadows);
+  };
+
+  const handleRemoveShadow = (index: number) => {
+    if (!('boxShadow' in field.props)) return;
+    const shadows = field.props.boxShadow;
+    shadows.splice(index, 1);
+    updateFieldProps(field.id, 'props.boxShadow', shadows);
+  };
+
+  const handleMoveShadow = (from: number, to: number) => {
+    if (!('boxShadow' in field.props)) return;
+    const shadows = field.props.boxShadow;
+    const [removed] = shadows.splice(from, 1);
+    shadows.splice(to, 0, removed);
+    updateFieldProps(field.id, 'props.boxShadow', shadows);
+  };
 
   return (
     <>
@@ -62,16 +84,7 @@ function SettingsFieldShadow({
           </div>
           <div className="flex gap-2 items-center">
             <button
-              onClick={() => {
-                append({
-                  x: 0,
-                  y: 0,
-                  blur: 0,
-                  spread: 0,
-                  color: '#000000',
-                  inset: false,
-                });
-              }}
+              onClick={handleAddShadow}
               className="hover:bg-neutral-100/80 p-1 rounded-md text-neutral-500 typography-body3"
             >
               <FaPlus />
@@ -86,23 +99,20 @@ function SettingsFieldShadow({
               onDragEnd={(event) => {
                 const { active, over } = event;
                 if (!active || !over) return;
-                const indexOfActive = fields.findIndex(
-                  (field) => field.id === active.id
+                handleMoveShadow(
+                  parseInt(active.id as string, 10),
+                  parseInt(over.id as string, 10)
                 );
-                const indexOfOver = fields.findIndex(
-                  (field) => field.id === over.id
-                );
-                move(indexOfActive, indexOfOver);
               }}
             >
-              <SortableContext items={fields.map((field) => field.id)}>
-                {fields?.map((shadow, index) => (
+              <SortableContext items={shadows.map((_, index) => index)}>
+                {shadows?.map((shadow, index) => (
                   <ShadowItem
-                    key={`${fieldKey}${shadow.id}`}
-                    id={shadow.id}
-                    fieldKey={fieldKey}
+                    key={`${field.id}${index}`}
                     index={index}
-                    onDelete={() => remove(index)}
+                    onDelete={() => handleRemoveShadow(index)}
+                    field={field}
+                    shadow={shadow}
                   />
                 ))}
               </SortableContext>
@@ -121,13 +131,13 @@ function SettingsFieldShadow({
 }
 
 interface ShadowItemProps {
-  id: string;
-  fieldKey: FieldKeyPrefix;
   index: number;
   onDelete: () => void;
+  field: FormField;
+  shadow: BoxShadow;
 }
 
-function ShadowItem({ id, index, fieldKey, onDelete }: ShadowItemProps) {
+function ShadowItem({ index, onDelete, field, shadow }: ShadowItemProps) {
   const {
     attributes,
     listeners,
@@ -136,11 +146,10 @@ function ShadowItem({ id, index, fieldKey, onDelete }: ShadowItemProps) {
     transform,
     isDragging,
   } = useSortable({
-    id,
+    id: index.toString(),
   });
-  const shadow = useWatch({
-    name: genFieldKey(fieldKey, `props.boxShadow.${index}`),
-  });
+  const { updateFieldProps } = useSchemaStore();
+
   const style = {
     transform: transform ? `translate3d(0px, ${transform.y}px, 0)` : undefined,
     zIndex: isDragging ? 50 : undefined,
@@ -150,7 +159,7 @@ function ShadowItem({ id, index, fieldKey, onDelete }: ShadowItemProps) {
   return (
     <div ref={setNodeRef} {...attributes} style={style} className="relative">
       <Accordion.Item
-        value={id}
+        value={index.toString()}
         className="data-[state=open]:bg-neutral-100 rounded-lg transition-colors group"
       >
         <Accordion.Trigger asChild>
@@ -188,17 +197,17 @@ function ShadowItem({ id, index, fieldKey, onDelete }: ShadowItemProps) {
             <div>
               <p className="typography-body3 text-neutral-700 mb-2">X Offset</p>
               <div>
-                <Controller
-                  key={`${fieldKey}.props.boxShadow.${index}.x`}
-                  render={({ field: { value, onChange } }) => (
-                    <Number
-                      value={value}
-                      onChange={onChange}
-                      suffix="px"
-                      suffixType="text"
-                    />
-                  )}
-                  name={genFieldKey(fieldKey, `props.boxShadow.${index}.x`)}
+                <Number
+                  value={shadow.x}
+                  onChange={(newValue) => {
+                    updateFieldProps(
+                      field.id,
+                      `props.boxShadow.${index}.x`,
+                      newValue
+                    );
+                  }}
+                  suffix="px"
+                  suffixType="text"
                 />
               </div>
             </div>
@@ -206,17 +215,17 @@ function ShadowItem({ id, index, fieldKey, onDelete }: ShadowItemProps) {
             <div>
               <p className="typography-body3 text-neutral-700 mb-2">Y Offset</p>
               <div>
-                <Controller
-                  key={`${fieldKey}.props.boxShadow.${index}.y`}
-                  render={({ field: { value, onChange } }) => (
-                    <Number
-                      value={value}
-                      onChange={onChange}
-                      suffix="px"
-                      suffixType="text"
-                    />
-                  )}
-                  name={genFieldKey(fieldKey, `props.boxShadow.${index}.y`)}
+                <Number
+                  value={shadow.y}
+                  onChange={(newValue) => {
+                    updateFieldProps(
+                      field.id,
+                      `props.boxShadow.${index}.y`,
+                      newValue
+                    );
+                  }}
+                  suffix="px"
+                  suffixType="text"
                 />
               </div>
             </div>
@@ -224,12 +233,15 @@ function ShadowItem({ id, index, fieldKey, onDelete }: ShadowItemProps) {
             <div className="flex flex-col items-center">
               <p className="typography-body3 text-neutral-700 mb-2">Color</p>
               <div>
-                <Controller
-                  key={`${fieldKey}.props.boxShadow.${index}.color`}
-                  render={({ field: { value, onChange } }) => (
-                    <ColorPicker value={value} onChange={onChange} />
-                  )}
-                  name={genFieldKey(fieldKey, `props.boxShadow.${index}.color`)}
+                <ColorPicker
+                  value={shadow.color}
+                  onChange={(newValue) => {
+                    updateFieldProps(
+                      field.id,
+                      `props.boxShadow.${index}.color`,
+                      newValue
+                    );
+                  }}
                 />
               </div>
             </div>
@@ -237,17 +249,17 @@ function ShadowItem({ id, index, fieldKey, onDelete }: ShadowItemProps) {
             <div>
               <p className="typography-body3 text-neutral-700 mb-2">Blur</p>
               <div>
-                <Controller
-                  key={`${fieldKey}.props.boxShadow.${index}.blue`}
-                  render={({ field: { value, onChange } }) => (
-                    <Number
-                      value={value}
-                      onChange={onChange}
-                      suffix="px"
-                      suffixType="text"
-                    />
-                  )}
-                  name={genFieldKey(fieldKey, `props.boxShadow.${index}.blur`)}
+                <Number
+                  value={shadow.blur}
+                  onChange={(newValue) => {
+                    updateFieldProps(
+                      field.id,
+                      `props.boxShadow.${index}.blur`,
+                      newValue
+                    );
+                  }}
+                  suffix="px"
+                  suffixType="text"
                 />
               </div>
             </div>
@@ -255,20 +267,17 @@ function ShadowItem({ id, index, fieldKey, onDelete }: ShadowItemProps) {
             <div>
               <p className="typography-body3 text-neutral-700 mb-2">Spread</p>
               <div>
-                <Controller
-                  key={`${fieldKey}.props.boxShadow.${index}.spread`}
-                  render={({ field: { value, onChange } }) => (
-                    <Number
-                      value={value}
-                      onChange={onChange}
-                      suffix="px"
-                      suffixType="text"
-                    />
-                  )}
-                  name={genFieldKey(
-                    fieldKey,
-                    `props.boxShadow.${index}.spread`
-                  )}
+                <Number
+                  value={shadow.spread}
+                  onChange={(newValue) => {
+                    updateFieldProps(
+                      field.id,
+                      `props.boxShadow.${index}.spread`,
+                      newValue
+                    );
+                  }}
+                  suffix="px"
+                  suffixType="text"
                 />
               </div>
             </div>
@@ -276,12 +285,15 @@ function ShadowItem({ id, index, fieldKey, onDelete }: ShadowItemProps) {
             <div className="flex flex-col items-center">
               <p className="typography-body3 text-neutral-700 mb-2">Inset</p>
               <div>
-                <Controller
-                  key={`${fieldKey}.props.boxShadow.${index}.inset`}
-                  render={({ field: { value, onChange } }) => (
-                    <Switch checked={value} onChange={onChange} />
-                  )}
-                  name={genFieldKey(fieldKey, `props.boxShadow.${index}.inset`)}
+                <Switch
+                  checked={shadow.inset}
+                  onChange={(newValue) => {
+                    updateFieldProps(
+                      field.id,
+                      `props.boxShadow.${index}.inset`,
+                      newValue
+                    );
+                  }}
                 />
               </div>
             </div>

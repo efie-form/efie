@@ -1,18 +1,19 @@
 import type { FormFieldBlock } from '@efie-form/core';
-import type { FieldKeyPrefix } from '../../../lib/genFieldKey.ts';
-import genFieldKey from '../../../lib/genFieldKey.ts';
 import SettingsField4Sides from '../property-layouts/SettingsField4Sides.tsx';
 import SettingsFieldHorizontal from '../property-layouts/SettingsFieldHorizontal.tsx';
 import ColorPicker from '../../../components/form/ColorPicker.tsx';
-import { Controller } from 'react-hook-form';
 import SettingsFieldShadow from '../property-layouts/SettingsFieldShadow.tsx';
+import { useSchemaStore } from '../../../lib/state/schema.state.ts';
 
 interface BlockSettingsProps {
   field: FormFieldBlock;
-  fieldKey: FieldKeyPrefix;
 }
 
-function BlockSettings({ fieldKey }: BlockSettingsProps) {
+function BlockSettings({ field }: BlockSettingsProps) {
+  const { getFieldKeyById, getFieldProps, updateFieldProps } = useSchemaStore();
+  const fieldKey = getFieldKeyById(field.id);
+  if (!fieldKey) return null;
+
   return (
     <div>
       <div className="px-4 py-2 bg-neutral-100 text-neutral-800 typography-body3 uppercase">
@@ -26,8 +27,8 @@ function BlockSettings({ fieldKey }: BlockSettingsProps) {
           { key: 'props.padding.bottom', label: 'Bottom' },
           { key: 'props.padding.left', label: 'Left' },
         ]}
-        fieldKey={fieldKey}
         allSideLabel={'All Sides'}
+        field={field}
         divider
       />
       <SettingsField4Sides
@@ -39,7 +40,7 @@ function BlockSettings({ fieldKey }: BlockSettingsProps) {
           { key: 'props.margin.bottom', label: 'Bottom' },
           { key: 'props.margin.left', label: 'Left' },
         ]}
-        fieldKey={fieldKey}
+        field={field}
         divider
       />
       <SettingsField4Sides
@@ -51,26 +52,24 @@ function BlockSettings({ fieldKey }: BlockSettingsProps) {
           { key: 'props.border.radius.bottomRight', label: 'Bottom Right' },
           { key: 'props.border.radius.bottomLeft', label: 'Bottom Left' },
         ]}
-        fieldKey={fieldKey}
+        field={field}
         divider
       />
-      <SettingsFieldShadow label="Shadow" fieldKey={fieldKey} divider />
+      <SettingsFieldShadow label="Shadow" field={field} divider />
       <SettingsFieldHorizontal label="Background Color" divider>
-        <Controller
-          key={`${fieldKey}.props.bgColor`}
-          render={({ field: { value, onChange } }) => (
-            <ColorPicker value={value} onChange={onChange} />
-          )}
-          name={genFieldKey(fieldKey, 'props.bgColor')}
+        <ColorPicker
+          value={getFieldProps(field.id, 'props.bgColor')}
+          onChange={(newValue) => {
+            updateFieldProps(field.id, 'props.bgColor', newValue);
+          }}
         />
       </SettingsFieldHorizontal>
       <SettingsFieldHorizontal label="Text Color" divider>
-        <Controller
-          key={`${fieldKey}.props.color`}
-          render={({ field: { value, onChange } }) => (
-            <ColorPicker value={value} onChange={onChange} />
-          )}
-          name={genFieldKey(fieldKey, 'props.color')}
+        <ColorPicker
+          value={getFieldProps(field.id, 'props.color')}
+          onChange={(newValue) => {
+            updateFieldProps(field.id, 'props.color', newValue);
+          }}
         />
       </SettingsFieldHorizontal>
     </div>

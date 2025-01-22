@@ -1,7 +1,8 @@
 import { create } from 'zustand';
 
 export const RIGHT_BAR_TABS = {
-  LAYOUT: 'layout',
+  PAGE: 'page',
+  FORM: 'form',
   FIELD_SETTINGS: 'field-settings',
 } as const;
 
@@ -35,7 +36,7 @@ export const useSettingsStore = create<SettingsState>((set) => ({
   setPage: (page) => {
     set({ page });
   },
-  activeTab: 'layout',
+  activeTab: 'form',
   setActiveTab: (tab) => {
     set({ activeTab: tab });
   },

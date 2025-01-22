@@ -1,21 +1,27 @@
 import Switch from '../../../components/form/Switch.tsx';
-import { Controller, useWatch } from 'react-hook-form';
 import Slider from '../../../components/form/Slider.tsx';
+import { useSchemaStore } from '../../../lib/state/schema.state.ts';
+import { FormField } from '@efie-form/core';
 
 interface SettingsFieldWidthProps {
-  fieldKey: string;
   label: string;
   divider?: boolean;
+  field: FormField;
 }
 
 function SettingsFieldWidth({
   label,
-  fieldKey,
   divider,
+  field,
 }: SettingsFieldWidthProps) {
-  const isAutoWidth = useWatch({
-    name: `${fieldKey}.props.width.autoWidth`,
-  });
+  const { updateFieldProps } = useSchemaStore();
+
+  if (
+    !('props' in field) ||
+    !('width' in field.props) ||
+    typeof field.props.width !== 'object'
+  )
+    return null;
   return (
     <>
       <div className="px-4 py-3.5">
@@ -25,31 +31,30 @@ function SettingsFieldWidth({
           </div>
           <div className="flex gap-2 items-center">
             <p className="typography-body4 text-neutral-800">Auto Width</p>
-            <Controller
-              render={({ field: { value, onChange } }) => (
-                <Switch checked={value} onChange={onChange} />
-              )}
-              name={`${fieldKey}.props.width.autoWidth`}
+            <Switch
+              checked={field.props.width.autoWidth}
+              onChange={(value) =>
+                updateFieldProps(field.id, 'props.width.autoWidth', value)
+              }
             />
           </div>
         </div>
         <div className="mt-5 flex justify-center">
-          <Controller
-            render={({ field: { value, onChange } }) => (
-              <div className="flex items-center gap-2">
-                <Slider
-                  value={value}
-                  onChange={onChange}
-                  min={0}
-                  max={100}
-                  step={1}
-                  disabled={isAutoWidth}
-                />
-                <p className="typography-body3 text-neutral-800">{value}%</p>
-              </div>
-            )}
-            name={`${fieldKey}.props.width.value`}
-          />
+          <div className="flex items-center gap-2">
+            <Slider
+              value={field.props.width.value}
+              onChange={(value) =>
+                updateFieldProps(field.id, 'props.width.value', value)
+              }
+              min={0}
+              max={100}
+              step={1}
+              disabled={field.props.width.autoWidth}
+            />
+            <p className="typography-body3 text-neutral-800">
+              {field.props.width.value}%
+            </p>
+          </div>
         </div>
       </div>
 

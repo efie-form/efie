@@ -1,5 +1,5 @@
 {
-  "name": "react-form-demo",
+  "name": "demo-react-form",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,15 +10,22 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@efie-form/react": "workspace:*",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/material": "^6.3.1",
+    "@mui/x-date-pickers": "^7.23.3",
+    "dayjs": "^1.11.13",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "@efie-form/form": "workspace:*",
-    "@efie-form/core": "workspace:*"
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@types/react": "^18.3.12",
+    "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react-swc": "^3.5.0",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.13",
     "typescript": "~5.6.2",
     "vite": "^5.4.10"
   }

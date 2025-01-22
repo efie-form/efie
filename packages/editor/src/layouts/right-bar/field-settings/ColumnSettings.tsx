@@ -1,19 +1,15 @@
-import type { FormSchema } from '@efie-form/core';
 import { type FormFieldColumn } from '@efie-form/core';
-import type { FieldKeyPrefix } from '../../../lib/genFieldKey.ts';
 import Input from '../../../components/form/Input.tsx';
-import { useFormContext } from 'react-hook-form';
-import genFieldKey from '../../../lib/genFieldKey.ts';
 import SettingsFieldHorizontal from '../property-layouts/SettingsFieldHorizontal.tsx';
+import { useSchemaStore } from '../../../lib/state/schema.state.ts';
 
 interface ColumnSettingsProps {
   field: FormFieldColumn;
-  fieldKey: FieldKeyPrefix;
   onRemove: () => void;
 }
 
-function ColumnSettings({ field, fieldKey, onRemove }: ColumnSettingsProps) {
-  const { setValue } = useFormContext<FormSchema>();
+function ColumnSettings({ field, onRemove }: ColumnSettingsProps) {
+  const { updateFieldProps } = useSchemaStore();
 
   return (
     <div className="mb-4">
@@ -21,7 +17,7 @@ function ColumnSettings({ field, fieldKey, onRemove }: ColumnSettingsProps) {
         <Input
           value={field.props.width.toString()}
           onChange={(newValue) => {
-            setValue(genFieldKey(fieldKey, 'props.width'), Number(newValue));
+            updateFieldProps(field.id, 'props.width', Number(newValue));
           }}
           inputProps={{
             type: 'number',

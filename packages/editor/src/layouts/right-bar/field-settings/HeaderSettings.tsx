@@ -1,18 +1,20 @@
 import type { FormFieldHeader } from '@efie-form/core';
-import Input from '../../../components/form/Input.tsx';
 import SettingsFieldVertical from '../property-layouts/SettingsFieldVertical.tsx';
 import Select from '../../../components/form/Select.tsx';
-import { Controller } from 'react-hook-form';
-import type { FieldKeyPrefix } from '../../../lib/genFieldKey.ts';
 import SettingsFieldHorizontal from '../property-layouts/SettingsFieldHorizontal.tsx';
 import ColorPicker from '../../../components/form/ColorPicker.tsx';
+import { useSchemaStore } from '../../../lib/state/schema.state.ts';
+import Number from '../../../components/form/Number.tsx';
 
 interface HeaderSettingsProps {
   field: FormFieldHeader;
-  fieldKey: FieldKeyPrefix;
 }
 
-function HeaderSettings({ fieldKey }: HeaderSettingsProps) {
+function HeaderSettings({ field }: HeaderSettingsProps) {
+  const { getFieldKeyById, updateFieldProps } = useSchemaStore();
+  const fieldKey = getFieldKeyById(field.id);
+  if (!fieldKey) return null;
+
   return (
     <div>
       <div>
@@ -20,65 +22,51 @@ function HeaderSettings({ fieldKey }: HeaderSettingsProps) {
           Text
         </div>
         <SettingsFieldVertical label="Font Size" divider>
-          <Controller
-            render={({ field: { value, onChange } }) => (
-              <Input
-                value={value}
-                onChange={onChange}
-                className="w-28"
-                suffix="px"
-                suffixType="text"
-                inputProps={{
-                  type: 'number',
-                }}
-              />
-            )}
-            name={`${fieldKey}.props.font.size`}
+          <Number
+            value={field.props.font.size}
+            onChange={(value) =>
+              updateFieldProps(field.id, 'props.font.size', value)
+            }
+            className="w-28"
+            suffix="px"
+            suffixType="text"
           />
         </SettingsFieldVertical>
         <SettingsFieldVertical label="Tag" divider>
-          <Controller
-            render={({ field: { value, onChange } }) => (
-              <Select
-                value={value}
-                onChange={onChange}
-                className="w-28"
-                options={[
-                  { label: 'H1', value: 'h1' },
-                  { label: 'H2', value: 'h2' },
-                  { label: 'H3', value: 'h3' },
-                  { label: 'H4', value: 'h4' },
-                  { label: 'H5', value: 'h5' },
-                  { label: 'H6', value: 'h6' },
-                ]}
-              />
-            )}
-            name={`${fieldKey}.props.tag`}
+          <Select
+            value={field.props.tag}
+            onChange={(value) => updateFieldProps(field.id, 'props.tag', value)}
+            className="w-28"
+            options={[
+              { label: 'H1', value: 'h1' },
+              { label: 'H2', value: 'h2' },
+              { label: 'H3', value: 'h3' },
+              { label: 'H4', value: 'h4' },
+              { label: 'H5', value: 'h5' },
+              { label: 'H6', value: 'h6' },
+            ]}
           />
         </SettingsFieldVertical>
         <SettingsFieldVertical label="Text align" divider>
-          <Controller
-            render={({ field: { value, onChange } }) => (
-              <Select
-                value={value}
-                onChange={onChange}
-                className="w-28"
-                options={[
-                  { label: 'Left', value: 'left' },
-                  { label: 'Center', value: 'center' },
-                  { label: 'Right', value: 'right' },
-                ]}
-              />
-            )}
-            name={`${fieldKey}.props.textAlign`}
+          <Select
+            value={field.props.textAlign}
+            onChange={(value) =>
+              updateFieldProps(field.id, 'props.textAlign', value)
+            }
+            className="w-28"
+            options={[
+              { label: 'Left', value: 'left' },
+              { label: 'Center', value: 'center' },
+              { label: 'Right', value: 'right' },
+            ]}
           />
         </SettingsFieldVertical>
         <SettingsFieldHorizontal label="Color" divider>
-          <Controller
-            render={({ field: { value, onChange } }) => (
-              <ColorPicker value={value} onChange={onChange} />
-            )}
-            name={`${fieldKey}.props.color`}
+          <ColorPicker
+            value={field.props.color}
+            onChange={(value) =>
+              updateFieldProps(field.id, 'props.color', value)
+            }
           />
         </SettingsFieldHorizontal>
       </div>

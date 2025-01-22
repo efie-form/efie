@@ -1,12 +1,24 @@
 import { DndProvider } from '../components/dnd-kit';
+import { cn } from '../lib/utils';
 import LeftBar from './left-bar/LeftBar';
 import MainSection from './main-section/MainSection';
 import RightBar from './right-bar/RightBar';
 
-const FormBuilder = () => {
+interface FormBuilderProps {
+  height?: number;
+}
+
+const FormBuilder = ({ height }: FormBuilderProps) => {
   return (
     <DndProvider>
-      <div className="flex h-screen w-screen">
+      <div
+        className={cn('flex w-full', {
+          'h-screen': !height,
+        })}
+        style={{
+          height: height ? `${height}px` : undefined,
+        }}
+      >
         <aside className="w-64 bg-neutral-50 overflow-y-auto">
           <LeftBar />
         </aside>

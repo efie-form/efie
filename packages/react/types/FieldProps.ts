@@ -1,5 +1,9 @@
 import type { ElementType, ReactNode } from 'react';
 
+interface Error {
+  message: string;
+}
+
 export interface ShortTextFieldProps {
   id: string;
   value: string;
@@ -9,9 +13,7 @@ export interface ShortTextFieldProps {
   disabled: boolean;
   placeholder?: string;
   // visible: boolean;
-  errors?: {
-    message: string;
-  };
+  errors?: Error;
 }
 
 export interface LongTextFieldProps {
@@ -23,9 +25,7 @@ export interface LongTextFieldProps {
   disabled: boolean;
   placeholder?: string;
   // visible: boolean;
-  errors?: {
-    message: string;
-  };
+  errors?: Error;
 }
 
 export interface NumberFieldProps {
@@ -39,9 +39,7 @@ export interface NumberFieldProps {
   // visible: boolean;
   min?: number;
   max?: number;
-  errors?: {
-    message: string;
-  };
+  errors?: Error;
 }
 
 export interface SingleChoiceFieldProps {
@@ -56,9 +54,7 @@ export interface SingleChoiceFieldProps {
     value: string;
   }[];
   // visible: boolean;
-  errors?: {
-    message: string;
-  };
+  errors?: Error;
 }
 
 export interface MultipleChoicesFieldProps {
@@ -73,9 +69,7 @@ export interface MultipleChoicesFieldProps {
     value: string;
   }[];
   // visible: boolean;
-  errors?: {
-    message: string;
-  };
+  errors?: Error;
 }
 
 export interface DateFieldProps {
@@ -86,9 +80,7 @@ export interface DateFieldProps {
   required: boolean;
   disabled: boolean;
   // visible: boolean;
-  errors?: {
-    message: string;
-  };
+  errors?: Error;
 }
 
 export interface TimeFieldProps {
@@ -99,9 +91,7 @@ export interface TimeFieldProps {
   required: boolean;
   disabled: boolean;
   // visible: boolean;
-  errors?: {
-    message: string;
-  };
+  errors?: Error;
 }
 
 export interface DateTimeFieldProps {
@@ -112,9 +102,7 @@ export interface DateTimeFieldProps {
   required: boolean;
   disabled: boolean;
   // visible: boolean;
-  errors?: {
-    message: string;
-  };
+  errors?: Error;
 }
 
 export interface FileFieldProps {
@@ -127,9 +115,7 @@ export interface FileFieldProps {
   accept: string;
   multiple: boolean;
   // visible: boolean;
-  errors?: {
-    message: string;
-  };
+  errors?: Error;
 }
 
 export interface DividerFieldProps {

@@ -21,7 +21,7 @@ const defaultSchema: FormSchema = {
                 top: 16,
               },
               margin: {
-                bottom: 0,
+                bottom: 8,
                 left: 0,
                 right: 0,
                 top: 0,

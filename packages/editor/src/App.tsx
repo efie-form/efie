@@ -1,53 +1,65 @@
 import FormBuilder from './layouts/FormBuilder.tsx';
-import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import type { FormSchema } from '@efie-form/core';
-import { Editor } from '@efie-form/core';
-import { useEffect, useState } from 'react';
+import { BuilderInternal } from '@efie-form/core';
+import { useEffect, useRef, useState } from 'react';
 import { useSettingsStore } from './lib/state/settings.state.ts';
-import defaultSchema from './lib/defaultSchema.ts';
+import { useSchemaStore } from './lib/state/schema.state.ts';
 
 function App() {
-  const methods = useForm<FormSchema>({
-    defaultValues: defaultSchema,
-  });
-  const { reset, control, getValues } = methods;
-  const [editor, setEditor] = useState<Editor | null>(null);
-  const watchAllFields = useWatch({
-    control,
-  });
+  const editorRef = useRef<BuilderInternal | null>(null);
   const { setPage } = useSettingsStore();
+  const { setSchema, schema, currentHistoryIndex } = useSchemaStore();
+  const [height, setHeight] = useState(0);
 
   useEffect(() => {
-    if (editor) return;
-    setEditor(new Editor());
-  }, [editor]);
+    if (!editorRef.current) {
+      const editor = new BuilderInternal({
+        onDataRequest: () => schema,
+        onDataReset: (data) => {
+          console.log('Data reset received:', data);
+          setSchema(data);
+          resetPage(data);
+        },
+        onHeightChange: (height) => {
+          setHeight(height);
+        },
+      });
+      editorRef.current = editor;
+    }
+
+    return () => {
+      editorRef.current = null;
+    };
+  }, []);
 
   useEffect(() => {
-    if (!editor || editor.isLoaded) return;
-    editor.init();
-    editor.setOnDataReset(reset);
-  }, [editor, reset]);
+    if (!editorRef.current) return;
+    editorRef.current.loaded();
+  }, [editorRef.current]);
+
+  // Handle schema updates
+  useEffect(() => {
+    if (editorRef.current && schema) {
+      editorRef.current.setValue(schema);
+    }
+  }, [currentHistoryIndex, schema]);
 
   useEffect(() => {
-    if (!editor) return;
-    editor.setValue(getValues());
-    console.log(getValues());
-  }, [watchAllFields, editor, getValues]);
+    if (!schema) return;
+    resetPage(schema);
+  }, []);
 
-  useEffect(() => {
-    const fields = getValues('form.fields');
-    const pages = fields.filter((field) => field.type === 'page');
+  const resetPage = (data: FormSchema) => {
+    const pages = data.form.fields.filter((field) => field.type === 'page');
     if (pages.length === 0) {
       return setPage(null);
     }
     setPage(pages[0].id);
-  }, []);
+  };
 
   return (
     <>
-      <FormProvider {...methods}>
-        <FormBuilder />
-      </FormProvider>
+      <FormBuilder height={height} />
     </>
   );
 }

@@ -1,20 +1,20 @@
-import type { FormFieldDateTime, FormSchema } from '@efie-form/core';
-import { useFormContext } from 'react-hook-form';
-import type { FieldKeyPrefix } from '../../../../lib/genFieldKey.ts';
-import genFieldKey from '../../../../lib/genFieldKey.ts';
+import type { FormFieldDateTime } from '@efie-form/core';
+import { useSchemaStore } from '../../../../lib/state/schema.state.ts';
 
 interface DateTimeFieldProps {
   field: FormFieldDateTime;
-  fieldKey: FieldKeyPrefix;
 }
 
-function DateTimeField({ fieldKey }: DateTimeFieldProps) {
-  const { register } = useFormContext<FormSchema>();
+function DateTimeField({ field }: DateTimeFieldProps) {
+  const { updateFieldProps } = useSchemaStore();
 
   return (
     <div className="p-2">
       <input
-        {...register(genFieldKey(fieldKey, 'props.label'))}
+        value={field.props.label}
+        onChange={(e) =>
+          updateFieldProps(field.id, 'props.label', e.target.value)
+        }
         className="mb-2 typography-body2 bg-white bg-opacity-0 focus:outline-none cursor-text w-full"
         type="text"
       />

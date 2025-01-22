@@ -1,20 +1,20 @@
-import type { FormSchema } from '@efie-form/core';
+import type { FormSchema } from '@efie-form/react';
 
 export const sampleSchema: FormSchema = {
   version: 'v1',
   form: {
     fields: [
       {
-        id: 'lgqyGFLLyW',
+        id: 'QPBMlESAAd',
         type: 'page',
         children: [
           {
-            id: 'DZMLfYJYkl',
+            id: 'PKoJpERvox',
             type: 'block',
             children: [
               {
                 type: 'image',
-                id: 'EhpTuhkTng',
+                id: 'hMIiisJZNk',
                 props: {
                   src: 'https://cmsv2-assets.apptegy.net/uploads/4208/file/1627793/76083d0e-1006-4d17-b552-c9c8b50cabf0.jpeg',
                   alt: 'Placeholder',
@@ -71,14 +71,27 @@ export const sampleSchema: FormSchema = {
             },
           },
           {
-            id: 'BGxKfIGtgJ',
+            id: 'qmLzbQiKkv',
             type: 'block',
             children: [
               {
                 type: 'header',
-                id: 'GyZFXxFXca',
+                id: 'czUZjmpdLR',
                 props: {
-                  text: 'Header',
+                  content: {
+                    type: 'doc',
+                    content: [
+                      {
+                        type: 'paragraph',
+                        content: [
+                          {
+                            type: 'text',
+                            text: 'Header',
+                          },
+                        ],
+                      },
+                    ],
+                  },
                   font: {
                     size: 24,
                     unit: 'px',
@@ -91,9 +104,22 @@ export const sampleSchema: FormSchema = {
               },
               {
                 type: 'paragraph',
-                id: 'usXgBhYNpQ',
+                id: 'PuGLxyYSBK',
                 props: {
-                  text: 'Paragraph',
+                  content: {
+                    type: 'doc',
+                    content: [
+                      {
+                        type: 'paragraph',
+                        content: [
+                          {
+                            type: 'text',
+                            text: 'Paragraph',
+                          },
+                        ],
+                      },
+                    ],
+                  },
                   font: {
                     size: 16,
                     unit: 'px',
@@ -104,8 +130,18 @@ export const sampleSchema: FormSchema = {
                 },
               },
               {
+                type: 'divider',
+                id: 'yVVEPHNxOm',
+                props: {
+                  color: '#000000',
+                  style: 'solid',
+                  width: 100,
+                  height: 1,
+                },
+              },
+              {
                 type: 'shortText',
-                id: 'DuXzpuHKyM',
+                id: 'rsfFczKJaY',
                 props: {
                   label: 'Short Text',
                   placeholder: 'Enter the placeholder',
@@ -113,8 +149,17 @@ export const sampleSchema: FormSchema = {
                 },
               },
               {
+                type: 'longText',
+                id: 'KOTBVhEJoj',
+                props: {
+                  label: 'Long Text',
+                  placeholder: 'Enter the placeholder',
+                  required: false,
+                },
+              },
+              {
                 type: 'number',
-                id: 'gDWrKqeIAU',
+                id: 'jlIYBpskIx',
                 props: {
                   label: 'Number',
                   placeholder: 'Enter the placeholder',
@@ -124,17 +169,31 @@ export const sampleSchema: FormSchema = {
                 },
               },
               {
-                type: 'longText',
-                id: 'BCBTxJGbVY',
+                type: 'singleChoice',
+                id: 'WOIqhtUiCG',
                 props: {
-                  label: 'Long Text',
-                  placeholder: 'Enter the placeholder',
+                  label: 'Single Choice',
+                  options: [
+                    {
+                      label: 'Option 1',
+                      value: 'Option 1',
+                    },
+                    {
+                      label: 'Option 2',
+                      value: 'Option 2',
+                    },
+                    {
+                      label: 'Option 3',
+                      value: 'Option 3',
+                    },
+                  ],
+                  isValueDifferent: false,
                   required: false,
                 },
               },
               {
                 type: 'multipleChoices',
-                id: 'pLyvHmcQpK',
+                id: 'smSWYkNOCH',
                 props: {
                   label: 'Multiple Choice',
                   options: [
@@ -157,7 +216,7 @@ export const sampleSchema: FormSchema = {
               },
               {
                 type: 'date',
-                id: 'QpumLGMqRC',
+                id: 'kbcSTswHJA',
                 props: {
                   label: 'Date',
                   required: false,
@@ -165,7 +224,7 @@ export const sampleSchema: FormSchema = {
               },
               {
                 type: 'time',
-                id: 'HEghoFGqnJ',
+                id: 'weayGfVRRa',
                 props: {
                   label: 'Time',
                   required: false,
@@ -173,7 +232,7 @@ export const sampleSchema: FormSchema = {
               },
               {
                 type: 'dateTime',
-                id: 'TVGpAHmOFi',
+                id: 'YYOvibtYuE',
                 props: {
                   label: 'Date & Time',
                   required: false,
@@ -181,7 +240,7 @@ export const sampleSchema: FormSchema = {
               },
               {
                 type: 'file',
-                id: 'qFPhjijHlv',
+                id: 'vVgMzOoJal',
                 props: {
                   label: 'File',
                   required: false,
@@ -190,26 +249,36 @@ export const sampleSchema: FormSchema = {
                 },
               },
               {
-                type: 'singleChoice',
-                id: 'XVBmeqEmqA',
+                id: 'mxFxIKTgOK',
+                type: 'button',
                 props: {
-                  label: 'Single Choice',
-                  options: [
-                    {
-                      label: 'Option 1',
-                      value: 'Option 1',
+                  label: 'Submit',
+                  color: '#FFFFFF',
+                  bgColor: '#5083a7',
+                  font: {
+                    size: 16,
+                    unit: 'px',
+                    weight: 400,
+                  },
+                  fullWidth: false,
+                  btnType: 'submit',
+                  border: {
+                    color: '#000000',
+                    width: 0,
+                    radius: {
+                      topLeft: 6,
+                      topRight: 6,
+                      bottomRight: 6,
+                      bottomLeft: 6,
                     },
-                    {
-                      label: 'Option 2',
-                      value: 'Option 2',
-                    },
-                    {
-                      label: 'Option 3',
-                      value: 'Option 3',
-                    },
-                  ],
-                  isValueDifferent: false,
-                  required: false,
+                  },
+                  padding: {
+                    top: 6,
+                    right: 12,
+                    bottom: 6,
+                    left: 12,
+                  },
+                  align: 'center',
                 },
               },
             ],

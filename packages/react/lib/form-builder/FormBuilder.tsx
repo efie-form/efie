@@ -1,52 +1,94 @@
-import React, { forwardRef, useEffect, useState } from 'react';
-import { useControllableState } from '@radix-ui/react-use-controllable-state';
-import { type FormSchema, Wrapper } from '@efie-form/core';
+import React, {
+  forwardRef,
+  RefObject,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react';
+import { type FormSchema, BuilderExternal } from '@efie-form/core';
 
 const DIV_ID = 'efie-form-builder';
 
 interface FormBuilderProps {
-  value?: FormSchema;
-  onChange?: (value: FormSchema) => void;
+  ref: RefObject<FormBuilderRef>;
+  options?: FormBuilderOptions;
+  onReady?: () => void;
+  height: number;
 }
 
-const FormBuilder = forwardRef<Wrapper, FormBuilderProps>(
-  ({ onChange, value }) => {
-    const [json, setJson] = useControllableState({
-      prop: value,
-      onChange,
-      defaultProp: {
-        version: 'v1',
-        form: {
-          fields: [],
-        },
-      },
-    });
-    const [editor, setEditor] = useState<Wrapper | null>(null);
-    const [isLoaded, setIsLoaded] = useState(false);
+interface FormBuilderOptions {
+  inputFields?: string[];
+  hiddenFields?: string[];
+}
 
+export interface FormBuilderRef {
+  loadSchema: (schema: FormSchema) => void;
+  getSchema: () => FormSchema;
+}
+
+const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
+  ({ onReady, options, height }, ref) => {
+    const builderRef = useRef<BuilderExternal | null>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
+
+    // Initialize BuilderExternal once
     useEffect(() => {
-      if (editor) return;
-      setEditor(
-        new Wrapper({
+      // Only create new instance if one doesn't exist
+      if (!builderRef.current && containerRef.current) {
+        builderRef.current = new BuilderExternal({
           id: DIV_ID,
-        })
-      );
-    }, [editor]);
+          onReady: () => {
+            onReady?.();
+          },
+        });
+      }
 
+      // Cleanup only when component unmounts
+      return () => {
+        if (builderRef.current) {
+          // Clean up the iframe
+          const container = document.getElementById(DIV_ID);
+          if (container) {
+            container.innerHTML = '';
+          }
+          builderRef.current = null;
+        }
+      };
+    }, []); // Empty dependency array to run only once
+
+    // Update height when prop changes
     useEffect(() => {
-      if (!editor || !json) return;
-      editor.resetValue(json);
-    }, [editor, json]);
+      if (builderRef.current) {
+        builderRef.current.setHeight(height);
+      }
+    }, [height]);
 
-    useEffect(() => {
-      if (!editor || isLoaded) return;
+    // Expose methods via ref
+    useImperativeHandle(
+      ref,
+      () => ({
+        loadSchema: (schema: FormSchema) => {
+          builderRef.current?.loadSchema(schema);
+        },
+        getSchema: () => {
+          return builderRef.current?.getValue() as FormSchema;
+        },
+      }),
+      []
+    );
 
-      setIsLoaded(true);
-      editor.init();
-      editor?.setOnValueChange(setJson);
-    }, [editor, isLoaded, setJson]);
-
-    return <div id={DIV_ID} />;
+    return (
+      <div
+        ref={containerRef}
+        id={DIV_ID}
+        style={{
+          height: `${height}px`,
+          width: '100%',
+          overflow: 'hidden',
+        }}
+      />
+    );
   }
 );
 
