@@ -31,6 +31,30 @@ export const getDefaultField = ({
           label: 'Short Text',
           placeholder: 'Enter the placeholder',
           required: false,
+          container: {
+            margin: {
+              top: 0,
+              right: 0,
+              bottom: 0,
+              left: 0,
+            },
+            padding: {
+              top: 0,
+              right: 0,
+              bottom: 0,
+              left: 0,
+            },
+            border: {
+              color: '#000000',
+              width: 0,
+              radius: {
+                topLeft: 0,
+                topRight: 0,
+                bottomRight: 0,
+                bottomLeft: 0,
+              },
+            },
+          },
         },
       };
     case 'longText':

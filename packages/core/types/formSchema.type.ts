@@ -7,6 +7,17 @@ export interface BorderRadius {
   bottomLeft: number;
 }
 
+interface Border {
+  width: number;
+  color: string;
+  radius: BorderRadius;
+}
+
+interface Size {
+  value: number;
+  unit: 'px' | 'em' | 'rem' | '%';
+}
+
 export interface Padding {
   top: number;
   right: number;
@@ -50,6 +61,11 @@ export interface FormFieldShortText {
     label: string;
     placeholder: string;
     required: boolean;
+    container: {
+      margin: Margin;
+      padding: Padding;
+      border: Border;
+    };
   };
 }
 
@@ -60,6 +76,11 @@ export interface FormFieldLongText {
     label: string;
     placeholder: string;
     required: boolean;
+    container: {
+      margin: Margin;
+      padding: Padding;
+      border: Border;
+    };
   };
 }
 
@@ -72,6 +93,11 @@ export interface FormFieldNumber {
     required: boolean;
     min: number | null;
     max: number | null;
+    container: {
+      margin: Margin;
+      padding: Padding;
+      border: Border;
+    };
   };
 }
 
@@ -88,6 +114,11 @@ export interface FormFieldSingleChoice {
     options: OptionType[];
     required: boolean;
     isValueDifferent: boolean;
+    container: {
+      margin: Margin;
+      padding: Padding;
+      border: Border;
+    };
   };
 }
 
@@ -99,6 +130,11 @@ export interface FormFieldMultipleChoices {
     options: OptionType[];
     required: boolean;
     isValueDifferent: boolean;
+    container: {
+      margin: Margin;
+      padding: Padding;
+      border: Border;
+    };
   };
 }
 
@@ -108,6 +144,11 @@ export interface FormFieldDate {
   props: {
     label: string;
     required: boolean;
+    container: {
+      margin: Margin;
+      padding: Padding;
+      border: Border;
+    };
   };
 }
 
@@ -117,6 +158,11 @@ export interface FormFieldTime {
   props: {
     label: string;
     required: boolean;
+    container: {
+      margin: Margin;
+      padding: Padding;
+      border: Border;
+    };
   };
 }
 
@@ -126,6 +172,11 @@ export interface FormFieldDateTime {
   props: {
     label: string;
     required: boolean;
+    container: {
+      margin: Margin;
+      padding: Padding;
+      border: Border;
+    };
   };
 }
 
@@ -137,6 +188,11 @@ export interface FormFieldFile {
     required: boolean;
     accept: string;
     multiple: boolean;
+    container: {
+      margin: Margin;
+      padding: Padding;
+      border: Border;
+    };
   };
 }
 
@@ -192,7 +248,9 @@ export interface FormFieldImage {
 export interface FormFieldRow {
   id: string;
   type: 'row';
-  props: {};
+  props: {
+    gap: number;
+  };
   children: FormField[];
 }
 
@@ -213,9 +271,7 @@ export interface FormFieldBlock {
     padding: Padding;
     margin: Margin;
     boxShadow: BoxShadow[];
-    border: {
-      radius: BorderRadius;
-    };
+    border: Border;
     bgColor: string;
     color: string;
   };
@@ -231,11 +287,7 @@ export interface FormFieldButton {
     btnType: 'submit' | 'button';
     fullWidth: boolean;
     font: Font;
-    border: {
-      width: number;
-      color: string;
-      radius: BorderRadius;
-    };
+    border: Border;
     padding: Padding;
     align: 'left' | 'center' | 'right';
   };

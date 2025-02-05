@@ -30,12 +30,12 @@ function App() {
     return () => {
       editorRef.current = null;
     };
-  }, []);
+  }, [schema, setSchema]);
 
   useEffect(() => {
     if (!editorRef.current) return;
     editorRef.current.loaded();
-  }, [editorRef.current]);
+  }, []);
 
   // Handle schema updates
   useEffect(() => {
@@ -47,9 +47,9 @@ function App() {
   useEffect(() => {
     if (!schema) return;
     resetPage(schema);
-  }, []);
+  }, [schema, setPage]);
 
-  const resetPage = (data: FormSchema) => {
+  function resetPage (data: FormSchema) {
     const pages = data.form.fields.filter((field) => field.type === 'page');
     if (pages.length === 0) {
       return setPage(null);

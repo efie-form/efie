@@ -1,7 +1,7 @@
 import Switch from '../../../components/form/Switch.tsx';
-import type { ReactNode } from 'react';
-import { FormField } from '@efie-form/core';
-import { FieldPropsKey } from '../../../lib/genFieldKey.ts';
+import { useEffect, useState, type ReactNode } from 'react';
+import type { FormField } from '@efie-form/core';
+import type { FieldPropsKey } from '../../../lib/genFieldKey.ts';
 import { useSchemaStore } from '../../../lib/state/schema.state.ts';
 
 interface SettingsFieldSwitchWithDropdownProps {
@@ -12,6 +12,7 @@ interface SettingsFieldSwitchWithDropdownProps {
   switchLabel?: string;
   children?: ReactNode;
   expandState?: boolean;
+  defaultExpanded?: boolean;
 }
 
 function SettingsFieldSwitchWithDropdown({
@@ -22,8 +23,15 @@ function SettingsFieldSwitchWithDropdown({
   switchLabel,
   children,
   expandState = true,
+  defaultExpanded = false,
 }: SettingsFieldSwitchWithDropdownProps) {
   const { getFieldProps, updateFieldProps } = useSchemaStore();
+  const [isExpanded, setIsExpanded] = useState(defaultExpanded);
+
+  useEffect(() => {
+    if (!switchKey) return;
+    updateFieldProps(field.id, switchKey, isExpanded);
+  }, [isExpanded, field.id, switchKey, updateFieldProps]);
 
   return (
     <>
@@ -36,10 +44,7 @@ function SettingsFieldSwitchWithDropdown({
             {switchLabel && (
               <p className="typography-body4 text-neutral-800">{switchLabel}</p>
             )}
-            <Switch
-              checked={getFieldProps(field.id, switchKey)}
-              onChange={(value) => updateFieldProps(field.id, switchKey, value)}
-            />
+            <Switch checked={isExpanded} onChange={setIsExpanded} />
           </div>
         </div>
         {getFieldProps(field.id, switchKey) === expandState && (
