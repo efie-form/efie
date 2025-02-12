@@ -4,7 +4,7 @@ import Input from '../../../components/form/Input.tsx';
 import SettingsFieldHorizontal from '../property-layouts/SettingsFieldHorizontal.tsx';
 import Switch from '../../../components/form/Switch.tsx';
 import { useSchemaStore } from '../../../lib/state/schema.state.ts';
-
+import ContainerSettingsGroup from '../common/ContainerSettingsGroup.tsx';
 interface FileSettingsProps {
   field: FormFieldFile;
 }
@@ -49,6 +49,7 @@ function FileSettings({ field }: FileSettingsProps) {
           checked={field.props.multiple}
         />
       </SettingsFieldHorizontal>
+      <ContainerSettingsGroup field={field} />
     </div>
   );
 }

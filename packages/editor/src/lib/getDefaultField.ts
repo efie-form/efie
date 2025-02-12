@@ -17,6 +17,31 @@ interface GetDefaultFieldProps {
 
 const ID_LENGTH = 10;
 
+const containerDefaultProps = {
+  margin: {
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+  },
+  padding: {
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+  },
+  border: {
+    color: '#000000',
+    width: 0,
+    radius: {
+      topLeft: 0,
+      topRight: 0,
+      bottomRight: 0,
+      bottomLeft: 0,
+    },
+  },
+};
+
 export const getDefaultField = ({
   type,
   page,
@@ -31,30 +56,7 @@ export const getDefaultField = ({
           label: 'Short Text',
           placeholder: 'Enter the placeholder',
           required: false,
-          container: {
-            margin: {
-              top: 0,
-              right: 0,
-              bottom: 0,
-              left: 0,
-            },
-            padding: {
-              top: 0,
-              right: 0,
-              bottom: 0,
-              left: 0,
-            },
-            border: {
-              color: '#000000',
-              width: 0,
-              radius: {
-                topLeft: 0,
-                topRight: 0,
-                bottomRight: 0,
-                bottomLeft: 0,
-              },
-            },
-          },
+          container: containerDefaultProps,
         },
       };
     case 'longText':
@@ -65,6 +67,7 @@ export const getDefaultField = ({
           label: 'Long Text',
           placeholder: 'Enter the placeholder',
           required: false,
+          container: containerDefaultProps,
         },
       };
     case 'number':
@@ -77,6 +80,7 @@ export const getDefaultField = ({
           required: false,
           min: null,
           max: null,
+          container: containerDefaultProps,
         },
       };
     case 'singleChoice':
@@ -92,6 +96,7 @@ export const getDefaultField = ({
           ],
           isValueDifferent: false,
           required: false,
+          container: containerDefaultProps,
         },
       };
     case 'multipleChoices':
@@ -107,6 +112,7 @@ export const getDefaultField = ({
           ],
           isValueDifferent: false,
           required: false,
+          container: containerDefaultProps,
         },
       };
     case 'page':
@@ -129,6 +135,7 @@ export const getDefaultField = ({
         props: {
           label: 'Date',
           required: false,
+          container: containerDefaultProps,
         },
       };
     case 'time':
@@ -138,6 +145,7 @@ export const getDefaultField = ({
         props: {
           label: 'Time',
           required: false,
+          container: containerDefaultProps,
         },
       };
     case 'dateTime':
@@ -147,6 +155,7 @@ export const getDefaultField = ({
         props: {
           label: 'Date & Time',
           required: false,
+          container: containerDefaultProps,
         },
       };
     case 'file':
@@ -158,6 +167,7 @@ export const getDefaultField = ({
           required: false,
           multiple: false,
           accept: '',
+          container: containerDefaultProps,
         },
       };
     case 'divider':
@@ -221,7 +231,9 @@ export const getDefaultField = ({
       return {
         type: 'row',
         id: generateId(ID_LENGTH),
-        props: {},
+        props: {
+          gap: 0,
+        },
         children: [
           {
             id: generateId(ID_LENGTH),
@@ -282,6 +294,8 @@ export const getDefaultField = ({
           ],
           bgColor: '#FFFFFF',
           border: {
+            color: '#000000',
+            width: 0,
             radius: {
               topLeft: 8,
               topRight: 8,

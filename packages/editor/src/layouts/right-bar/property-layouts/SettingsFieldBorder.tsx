@@ -1,76 +1,89 @@
 import { useSchemaStore } from '../../../lib/state/schema.state.ts';
-import SettingsFieldVertical from './SettingsFieldVertical.tsx';
 import ColorPicker from '../../../components/form/ColorPicker.tsx';
 import SettingsField4Sides from './SettingsField4Sides.tsx';
 import SettingsFieldSwitchWithDropdown from './SettingsFieldSwitchWithDropdown.tsx';
-import SettingsFieldHorizontal from './SettingsFieldHorizontal.tsx';
-import SettingsFieldWidth from './SettingsFieldWidth.tsx';
 import type { FormField } from '@efie-form/core';
 import Number from '../../../components/form/Number.tsx';
+import { FieldPropsKey } from '../../../lib/genFieldKey.ts';
+import { useControllableState } from '@radix-ui/react-use-controllable-state';
+
+type ExtractUnionEndingWith<
+  T extends string,
+  Suffix extends string,
+> = T extends `${string}${Suffix}` ? T : never;
 
 interface SettingsFieldBorderProps {
   label: string;
   field: FormField;
   divider?: boolean;
+  colorKey: FieldPropsKey;
+  widthKey: FieldPropsKey;
+  radiusKey: ExtractUnionEndingWith<FieldPropsKey, '.radius'>;
 }
 
 function SettingsFieldBorder({
   label,
   field,
   divider,
+  colorKey,
+  widthKey,
+  radiusKey,
 }: SettingsFieldBorderProps) {
+  const { getFieldProps } = useSchemaStore();
+  const [width, setWidth] = useControllableState({
+    prop: getFieldProps(field.id, widthKey),
+    onChange: (newValue) => {
+      updateFieldProps(field.id, widthKey, newValue);
+    },
+  });
   const { updateFieldProps } = useSchemaStore();
-
-  if (!('props' in field) || !('container' in field.props)) return null;
 
   return (
     <>
       <SettingsFieldSwitchWithDropdown
-        field={field}
-        switchKey="props.border.width"
+        isOpen={width > 0}
+        onOpenChange={(isOpen) => {
+          setWidth(isOpen ? 1 : 0);
+        }}
         label={label}
         divider={divider}
-        defaultExpanded={field.props.container.border.width > 0}
       >
-        <div className="flex flex-col gap-4">
-          <div>
-            <p className="typography-body3 text-neutral-800 mb-2">Color</p>
-            <ColorPicker
-              value={field.props.container.border.color}
-              onChange={(newValue) => {
-                updateFieldProps(
-                  field.id,
-                  'props.container.border.color',
-                  newValue
-                );
-              }}
-            />
+        <div className="">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="">
+              <p className="typography-body3 text-neutral-800 mb-2">Width</p>
+              <Number
+                value={width}
+                onChange={(newValue) => {
+                  updateFieldProps(field.id, widthKey, newValue);
+                }}
+                suffix="px"
+                suffixType="text"
+              />
+            </div>
+            <div>
+              <p className="typography-body3 text-neutral-800 mb-2">Color</p>
+              <ColorPicker
+                value={getFieldProps(field.id, colorKey)}
+                onChange={(newValue) => {
+                  updateFieldProps(field.id, colorKey, newValue);
+                }}
+              />
+            </div>
           </div>
 
-          <p className="typography-body3 text-neutral-800 mb-2">Width</p>
-          <Number
-            value={field.props.container.border.width}
-            onChange={(newValue) => {
-              updateFieldProps(
-                field.id,
-                'props.container.border.width',
-                newValue
-              );
-            }}
-            suffix="px"
-            suffixType="text"
-          />
-
           <SettingsField4Sides
+            className="mt-4"
             label="Radius"
             allSideLabel="All Corners"
             splitSides={[
-              { key: 'props.border.radius.topLeft', label: 'Top Left' },
-              { key: 'props.border.radius.topRight', label: 'Top Right' },
-              { key: 'props.border.radius.bottomRight', label: 'Bottom Right' },
-              { key: 'props.border.radius.bottomLeft', label: 'Bottom Left' },
+              { key: `${radiusKey}.topLeft`, label: 'Top Left' },
+              { key: `${radiusKey}.topRight`, label: 'Top Right' },
+              { key: `${radiusKey}.bottomRight`, label: 'Bottom Right' },
+              { key: `${radiusKey}.bottomLeft`, label: 'Bottom Left' },
             ]}
             field={field}
+            noPadding
           />
         </div>
       </SettingsFieldSwitchWithDropdown>
