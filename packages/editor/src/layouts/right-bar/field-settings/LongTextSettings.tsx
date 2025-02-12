@@ -2,6 +2,7 @@ import type { FormFieldLongText } from '@efie-form/core';
 import SettingsFieldVertical from '../property-layouts/SettingsFieldVertical.tsx';
 import Input from '../../../components/form/Input.tsx';
 import { useSchemaStore } from '../../../lib/state/schema.state.ts';
+import ContainerSettingsGroup from '../common/ContainerSettingsGroup.tsx';
 
 interface LongTextSettingsProps {
   field: FormFieldLongText;
@@ -32,6 +33,7 @@ function LongTextSettings({ field }: LongTextSettingsProps) {
             value={field.props.placeholder}
           />
         </SettingsFieldVertical>
+        <ContainerSettingsGroup field={field} />
       </div>
     </div>
   );

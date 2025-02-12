@@ -5,6 +5,7 @@ import SettingsFieldHorizontal from '../property-layouts/SettingsFieldHorizontal
 import Switch from '../../../components/form/Switch.tsx';
 import SettingsFieldOptionsValue from '../property-layouts/SettingsFieldOptionsValue.tsx';
 import { useSchemaStore } from '../../../lib/state/schema.state.ts';
+import ContainerSettingsGroup from '../common/ContainerSettingsGroup.tsx';
 
 interface MultipleChoicesSettingsProps {
   field: FormFieldMultipleChoices;
@@ -39,6 +40,7 @@ function MultipleChoicesSettings({ field }: MultipleChoicesSettingsProps) {
         field={field}
         divider
       />
+      <ContainerSettingsGroup field={field} />
     </div>
   );
 }

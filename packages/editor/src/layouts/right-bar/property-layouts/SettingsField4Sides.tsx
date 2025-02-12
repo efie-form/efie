@@ -7,6 +7,7 @@ import Switch from '../../../components/form/Switch.tsx';
 import Input from '../../../components/form/Input.tsx';
 import type { FormField } from '@efie-form/core';
 import { useSchemaStore } from '../../../lib/state/schema.state.ts';
+import { cn } from '../../../lib/utils.ts';
 
 interface SplitSides {
   key: FieldPropsKey;
@@ -19,6 +20,8 @@ interface SettingsField4SidesProps {
   allSideLabel: string;
   splitSides: SplitSides[];
   field: FormField;
+  noPadding?: boolean;
+  className?: string;
 }
 
 function SettingsField4Sides({
@@ -27,6 +30,8 @@ function SettingsField4Sides({
   splitSides,
   allSideLabel,
   field,
+  noPadding,
+  className,
 }: SettingsField4SidesProps) {
   const { getFieldKeyById, updateFieldProps, getFieldProps } = useSchemaStore();
   const fieldKey = getFieldKeyById(field.id);
@@ -74,8 +79,12 @@ function SettingsField4Sides({
   };
 
   return (
-    <div>
-      <div className="px-4 py-3.5">
+    <div className={className}>
+      <div
+        className={cn({
+          'px-4 py-3.5': !noPadding,
+        })}
+      >
         <div className="flex justify-between items-center">
           <div>
             <p className="typography-body3 text-neutral-800">{label}</p>

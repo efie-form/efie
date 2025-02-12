@@ -4,7 +4,7 @@ import Input from '../../../components/form/Input.tsx';
 import Select from '../../../components/form/Select.tsx';
 import SettingsFieldWidth from '../property-layouts/SettingsFieldWidth.tsx';
 import { useSchemaStore } from '../../../lib/state/schema.state.ts';
-
+import ContainerSettingsGroup from '../common/ContainerSettingsGroup.tsx';
 interface ImageSettingsProps {
   field: FormFieldImage;
 }
@@ -60,6 +60,7 @@ function ImageSettings({ field }: ImageSettingsProps) {
           />
         </SettingsFieldVertical>
         <SettingsFieldWidth field={field} label="Width" divider />
+        <ContainerSettingsGroup field={field} />
       </div>
     </div>
   );

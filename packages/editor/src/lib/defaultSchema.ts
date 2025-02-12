@@ -27,6 +27,8 @@ const defaultSchema: FormSchema = {
                 top: 0,
               },
               border: {
+                color: '#000000',
+                width: 0,
                 radius: {
                   bottomLeft: 8,
                   bottomRight: 8,

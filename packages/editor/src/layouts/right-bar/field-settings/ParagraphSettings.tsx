@@ -5,6 +5,7 @@ import SettingsFieldHorizontal from '../property-layouts/SettingsFieldHorizontal
 import ColorPicker from '../../../components/form/ColorPicker.tsx';
 import { useSchemaStore } from '../../../lib/state/schema.state.ts';
 import Number from '../../../components/form/Number.tsx';
+import ContainerSettingsGroup from '../common/ContainerSettingsGroup.tsx';
 
 interface ParagraphSettingsProps {
   field: FormFieldParagraph;
@@ -52,6 +53,7 @@ function ParagraphSettings({ field }: ParagraphSettingsProps) {
             }
           />
         </SettingsFieldHorizontal>
+        <ContainerSettingsGroup field={field} />
       </div>
     </div>
   );

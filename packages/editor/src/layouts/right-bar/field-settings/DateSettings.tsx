@@ -4,7 +4,7 @@ import Input from '../../../components/form/Input.tsx';
 import SettingsFieldHorizontal from '../property-layouts/SettingsFieldHorizontal.tsx';
 import Switch from '../../../components/form/Switch.tsx';
 import { useSchemaStore } from '../../../lib/state/schema.state.ts';
-
+import ContainerSettingsGroup from '../common/ContainerSettingsGroup.tsx';
 interface DateSettingsProps {
   field: FormFieldDate;
 }
@@ -31,6 +31,7 @@ function DateSettings({ field }: DateSettingsProps) {
           checked={field.props.required}
         />
       </SettingsFieldHorizontal>
+      <ContainerSettingsGroup field={field} />
     </div>
   );
 }
