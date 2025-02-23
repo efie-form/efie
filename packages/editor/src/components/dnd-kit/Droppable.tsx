@@ -35,7 +35,7 @@ const fieldDroppable: FormFieldType[] = [
 const droppable: Record<FormFieldType, FormFieldType[]> = {
   [FormFieldType.PAGE]: [],
   [FormFieldType.COLUMN]: [],
-  [FormFieldType.BLOCK]: ['page', 'block'],
+  [FormFieldType.BLOCK]: [FormFieldType.PAGE, FormFieldType.BLOCK],
   [FormFieldType.BUTTON]: fieldDroppable,
   [FormFieldType.DATE]: fieldDroppable,
   [FormFieldType.DATE_TIME]: fieldDroppable,
