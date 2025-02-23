@@ -1,4 +1,4 @@
-import type { FormFieldType } from '@efie-form/core';
+import { FormFieldType } from '@efie-form/core';
 import type { ReactNode } from 'react';
 import { useDroppable } from './dnd-kit.type.tsx';
 import type { DivProps } from 'react-html-props';
@@ -12,45 +12,45 @@ interface DroppableProps extends DivProps {
 }
 
 const fieldDroppable: FormFieldType[] = [
-  'shortText',
-  'longText',
-  'number',
-  'singleChoice',
-  'multipleChoices',
-  'date',
-  'time',
-  'dateTime',
-  'file',
-  'button',
-  'divider',
-  'header',
-  'paragraph',
-  'image',
-  'row',
-  'block',
-  'column',
+  FormFieldType.SHORT_TEXT,
+  FormFieldType.LONG_TEXT,
+  FormFieldType.NUMBER,
+  FormFieldType.SINGLE_CHOICE,
+  FormFieldType.MULTIPLE_CHOICES,
+  FormFieldType.DATE,
+  FormFieldType.TIME,
+  FormFieldType.DATE_TIME,
+  FormFieldType.FILE,
+  FormFieldType.BUTTON,
+  FormFieldType.DIVIDER,
+  FormFieldType.HEADER,
+  FormFieldType.PARAGRAPH,
+  FormFieldType.IMAGE,
+  FormFieldType.ROW,
+  FormFieldType.BLOCK,
+  FormFieldType.COLUMN,
 ];
 // Record< A, B >
 // A can be dropped on B
 const droppable: Record<FormFieldType, FormFieldType[]> = {
-  page: [],
-  column: [],
-  block: ['page', 'block'],
-  button: fieldDroppable,
-  date: fieldDroppable,
-  dateTime: fieldDroppable,
-  divider: fieldDroppable,
-  file: fieldDroppable,
-  header: fieldDroppable,
-  image: fieldDroppable,
-  longText: fieldDroppable,
-  multipleChoices: fieldDroppable,
-  row: fieldDroppable,
-  number: fieldDroppable,
-  paragraph: fieldDroppable,
-  shortText: fieldDroppable,
-  time: fieldDroppable,
-  singleChoice: fieldDroppable,
+  [FormFieldType.PAGE]: [],
+  [FormFieldType.COLUMN]: [],
+  [FormFieldType.BLOCK]: ['page', 'block'],
+  [FormFieldType.BUTTON]: fieldDroppable,
+  [FormFieldType.DATE]: fieldDroppable,
+  [FormFieldType.DATE_TIME]: fieldDroppable,
+  [FormFieldType.DIVIDER]: fieldDroppable,
+  [FormFieldType.FILE]: fieldDroppable,
+  [FormFieldType.HEADER]: fieldDroppable,
+  [FormFieldType.IMAGE]: fieldDroppable,
+  [FormFieldType.LONG_TEXT]: fieldDroppable,
+  [FormFieldType.MULTIPLE_CHOICES]: fieldDroppable,
+  [FormFieldType.ROW]: fieldDroppable,
+  [FormFieldType.NUMBER]: fieldDroppable,
+  [FormFieldType.PARAGRAPH]: fieldDroppable,
+  [FormFieldType.SHORT_TEXT]: fieldDroppable,
+  [FormFieldType.TIME]: fieldDroppable,
+  [FormFieldType.SINGLE_CHOICE]: fieldDroppable,
 };
 
 function Droppable({

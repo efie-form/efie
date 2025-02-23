@@ -8,11 +8,7 @@
   },
   "author": "",
   "license": "ISC",
-  "exports": {
-    ".": {
-      "import": "./index.ts"
-    }
-  },
+  "exports": "./index.ts",
   "devDependencies": {
     "@tiptap/core": "^2.10.3"
   }

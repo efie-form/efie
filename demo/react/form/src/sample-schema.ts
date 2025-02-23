@@ -1,4 +1,5 @@
 import type { FormSchema } from '@efie-form/react';
+import { FormFieldType } from '../../../../packages/core/lib/InputType';
 
 export const sampleSchema: FormSchema = {
   version: 'v1',
@@ -6,14 +7,14 @@ export const sampleSchema: FormSchema = {
     fields: [
       {
         id: 'QPBMlESAAd',
-        type: 'page',
+        type: FormFieldType.PAGE,
         children: [
           {
             id: 'PKoJpERvox',
-            type: 'block',
+            type: FormFieldType.BLOCK,
             children: [
               {
-                type: 'image',
+                type: FormFieldType.IMAGE,
                 id: 'hMIiisJZNk',
                 props: {
                   src: 'https://cmsv2-assets.apptegy.net/uploads/4208/file/1627793/76083d0e-1006-4d17-b552-c9c8b50cabf0.jpeg',
@@ -140,7 +141,7 @@ export const sampleSchema: FormSchema = {
                 },
               },
               {
-                type: 'shortText',
+                type: FormFieldType.SHORT_TEXT,
                 id: 'rsfFczKJaY',
                 props: {
                   label: 'Short Text',
@@ -149,7 +150,7 @@ export const sampleSchema: FormSchema = {
                 },
               },
               {
-                type: 'longText',
+                type: FormFieldType.LONG_TEXT,
                 id: 'KOTBVhEJoj',
                 props: {
                   label: 'Long Text',
@@ -158,7 +159,7 @@ export const sampleSchema: FormSchema = {
                 },
               },
               {
-                type: 'number',
+                type: FormFieldType.NUMBER,
                 id: 'jlIYBpskIx',
                 props: {
                   label: 'Number',
@@ -169,7 +170,7 @@ export const sampleSchema: FormSchema = {
                 },
               },
               {
-                type: 'singleChoice',
+                type: FormFieldType.SINGLE_CHOICE,
                 id: 'WOIqhtUiCG',
                 props: {
                   label: 'Single Choice',
@@ -192,7 +193,7 @@ export const sampleSchema: FormSchema = {
                 },
               },
               {
-                type: 'multipleChoices',
+                type: FormFieldType.MULTIPLE_CHOICES,
                 id: 'smSWYkNOCH',
                 props: {
                   label: 'Multiple Choice',
@@ -215,7 +216,7 @@ export const sampleSchema: FormSchema = {
                 },
               },
               {
-                type: 'date',
+                type: FormFieldType.DATE,
                 id: 'kbcSTswHJA',
                 props: {
                   label: 'Date',
@@ -223,7 +224,7 @@ export const sampleSchema: FormSchema = {
                 },
               },
               {
-                type: 'time',
+                type: FormFieldType.TIME,
                 id: 'weayGfVRRa',
                 props: {
                   label: 'Time',
@@ -231,7 +232,7 @@ export const sampleSchema: FormSchema = {
                 },
               },
               {
-                type: 'dateTime',
+                type: FormFieldType.DATE_TIME,
                 id: 'YYOvibtYuE',
                 props: {
                   label: 'Date & Time',
@@ -239,7 +240,7 @@ export const sampleSchema: FormSchema = {
                 },
               },
               {
-                type: 'file',
+                type: FormFieldType.FILE,
                 id: 'vVgMzOoJal',
                 props: {
                   label: 'File',
@@ -250,7 +251,7 @@ export const sampleSchema: FormSchema = {
               },
               {
                 id: 'mxFxIKTgOK',
-                type: 'button',
+                type: FormFieldType.BUTTON,
                 props: {
                   label: 'Submit',
                   color: '#FFFFFF',

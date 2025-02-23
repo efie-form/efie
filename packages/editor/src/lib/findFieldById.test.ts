@@ -1,10 +1,10 @@
-import type { FormField } from '@efie-form/core';
+import { FormFieldType, type FormField } from '@efie-form/core';
 import findFieldById from './findFieldById.ts';
 
 const sampleFields: FormField[] = [
   {
     id: '00001',
-    type: 'header',
+    type: FormFieldType.HEADER,
     props: {
       text: '',
       tag: 'h1',
@@ -18,18 +18,18 @@ const sampleFields: FormField[] = [
   },
   {
     id: '00002',
-    type: 'row',
+    type: FormFieldType.ROW,
     children: [
       {
         id: '00003',
-        type: 'column',
+        type: FormFieldType.COLUMN,
         props: {
           width: 50,
         },
         children: [
           {
             id: '00005',
-            type: 'paragraph',
+            type: FormFieldType.PARAGRAPH,
             props: {
               text: 'Hello, World! 0006',
               textAlign: 'left',
@@ -42,18 +42,18 @@ const sampleFields: FormField[] = [
           },
           {
             id: '00007',
-            type: 'row',
+            type: FormFieldType.ROW,
             children: [
               {
                 id: '00008',
-                type: 'column',
+                type: FormFieldType.COLUMN,
                 props: {
                   width: 50,
                 },
                 children: [
                   {
                     id: '00009',
-                    type: 'paragraph',
+                    type: FormFieldType.PARAGRAPH,
                     props: {
                       text: 'Hello, World! 0007',
                       textAlign: 'left',
@@ -68,14 +68,14 @@ const sampleFields: FormField[] = [
               },
               {
                 id: '00010',
-                type: 'column',
+                type: FormFieldType.COLUMN,
                 props: {
                   width: 50,
                 },
                 children: [
                   {
                     id: '00011',
-                    type: 'paragraph',
+                    type: FormFieldType.PARAGRAPH,
                     props: {
                       text: 'Hello, World! 0008',
                       textAlign: 'left',
@@ -94,14 +94,14 @@ const sampleFields: FormField[] = [
       },
       {
         id: '00004',
-        type: 'column',
+        type: FormFieldType.COLUMN,
         props: {
           width: 50,
         },
         children: [
           {
             id: '00006',
-            type: 'paragraph',
+            type: FormFieldType.PARAGRAPH,
             props: {
               text: 'Hello, World! 0006',
               textAlign: 'left',

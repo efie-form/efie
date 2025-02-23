@@ -1,4 +1,5 @@
 import { FormSchema } from '@efie-form/react';
+import { FormFieldType } from '../../../../packages/core/lib/InputType';
 
 export const schema: FormSchema = {
   version: 'v1',
@@ -13,7 +14,7 @@ export const schema: FormSchema = {
             type: 'block',
             children: [
               {
-                type: 'longText',
+                type: FormFieldType.LONG_TEXT,
                 id: 'TLxvJNtKjf',
                 props: {
                   label: 'Long Text',
@@ -22,7 +23,7 @@ export const schema: FormSchema = {
                 },
               },
               {
-                type: 'multipleChoices',
+                type: FormFieldType.MULTIPLE_CHOICES,
                 id: 'UctxtDDfYO',
                 props: {
                   label: 'Multiple Choice',
@@ -45,13 +46,13 @@ export const schema: FormSchema = {
                 },
               },
               {
-                type: 'row',
+                type: FormFieldType.ROW,
                 id: 'WXHUMjPlGG',
                 props: {},
                 children: [
                   {
                     id: 'qkOhaZGcSO',
-                    type: 'column',
+                    type: FormFieldType.COLUMN,
                     props: {
                       width: 50,
                     },
@@ -59,7 +60,7 @@ export const schema: FormSchema = {
                   },
                   {
                     id: 'kkPtOzRVnD',
-                    type: 'column',
+                    type: FormFieldType.COLUMN,
                     props: {
                       width: 50,
                     },

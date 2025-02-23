@@ -1,4 +1,4 @@
-import type { FormField, FormFieldType } from '@efie-form/core';
+import { FormFieldType, type FormField } from '@efie-form/core';
 import { generateId } from './utils.ts';
 
 interface PageProps {
@@ -10,7 +10,7 @@ interface ColumnProps {
 }
 
 interface GetDefaultFieldProps {
-  type: FormFieldType;
+  type: (typeof FormFieldType)[keyof typeof FormFieldType];
   page?: PageProps;
   column?: ColumnProps;
 }
@@ -48,9 +48,9 @@ export const getDefaultField = ({
   column,
 }: GetDefaultFieldProps): FormField => {
   switch (type) {
-    case 'shortText':
+    case FormFieldType.SHORT_TEXT:
       return {
-        type: 'shortText',
+        type: FormFieldType.SHORT_TEXT,
         id: generateId(ID_LENGTH),
         props: {
           label: 'Short Text',
@@ -59,9 +59,9 @@ export const getDefaultField = ({
           container: containerDefaultProps,
         },
       };
-    case 'longText':
+    case FormFieldType.LONG_TEXT:
       return {
-        type: 'longText',
+        type: FormFieldType.LONG_TEXT,
         id: generateId(ID_LENGTH),
         props: {
           label: 'Long Text',
@@ -70,9 +70,9 @@ export const getDefaultField = ({
           container: containerDefaultProps,
         },
       };
-    case 'number':
+    case FormFieldType.NUMBER:
       return {
-        type: 'number',
+        type: FormFieldType.NUMBER,
         id: generateId(ID_LENGTH),
         props: {
           label: 'Number',
@@ -83,9 +83,9 @@ export const getDefaultField = ({
           container: containerDefaultProps,
         },
       };
-    case 'singleChoice':
+    case FormFieldType.SINGLE_CHOICE:
       return {
-        type: 'singleChoice',
+        type: FormFieldType.SINGLE_CHOICE,
         id: generateId(ID_LENGTH),
         props: {
           label: 'Single Choice',
@@ -99,9 +99,9 @@ export const getDefaultField = ({
           container: containerDefaultProps,
         },
       };
-    case 'multipleChoices':
+    case FormFieldType.MULTIPLE_CHOICES:
       return {
-        type: 'multipleChoices',
+        type: FormFieldType.MULTIPLE_CHOICES,
         id: generateId(ID_LENGTH),
         props: {
           label: 'Multiple Choice',
@@ -115,22 +115,22 @@ export const getDefaultField = ({
           container: containerDefaultProps,
         },
       };
-    case 'page':
+    case FormFieldType.PAGE:
       return {
-        type: 'page',
+        type: FormFieldType.PAGE,
         id: generateId(ID_LENGTH),
         children: [
           getDefaultField({
-            type: 'block',
+            type: FormFieldType.BLOCK,
           }),
         ],
         props: {
           name: page?.name || 'Page',
         },
       };
-    case 'date':
+    case FormFieldType.DATE:
       return {
-        type: 'date',
+        type: FormFieldType.DATE,
         id: generateId(ID_LENGTH),
         props: {
           label: 'Date',
@@ -138,9 +138,9 @@ export const getDefaultField = ({
           container: containerDefaultProps,
         },
       };
-    case 'time':
+    case FormFieldType.TIME:
       return {
-        type: 'time',
+        type: FormFieldType.TIME,
         id: generateId(ID_LENGTH),
         props: {
           label: 'Time',
@@ -148,9 +148,9 @@ export const getDefaultField = ({
           container: containerDefaultProps,
         },
       };
-    case 'dateTime':
+    case FormFieldType.DATE_TIME:
       return {
-        type: 'dateTime',
+        type: FormFieldType.DATE_TIME,
         id: generateId(ID_LENGTH),
         props: {
           label: 'Date & Time',
@@ -158,9 +158,9 @@ export const getDefaultField = ({
           container: containerDefaultProps,
         },
       };
-    case 'file':
+    case FormFieldType.FILE:
       return {
-        type: 'file',
+        type: FormFieldType.FILE,
         id: generateId(ID_LENGTH),
         props: {
           label: 'File',
@@ -170,9 +170,9 @@ export const getDefaultField = ({
           container: containerDefaultProps,
         },
       };
-    case 'divider':
+    case FormFieldType.DIVIDER:
       return {
-        type: 'divider',
+        type: FormFieldType.DIVIDER,
         id: generateId(ID_LENGTH),
         props: {
           color: '#000000',
@@ -181,9 +181,9 @@ export const getDefaultField = ({
           height: 1,
         },
       };
-    case 'header':
+    case FormFieldType.HEADER:
       return {
-        type: 'header',
+        type: FormFieldType.HEADER,
         id: generateId(ID_LENGTH),
         props: {
           content: generateJsonContent('Header'),
@@ -197,9 +197,9 @@ export const getDefaultField = ({
           textAlign: 'center',
         },
       };
-    case 'paragraph':
+    case FormFieldType.PARAGRAPH:
       return {
-        type: 'paragraph',
+        type: FormFieldType.PARAGRAPH,
         id: generateId(ID_LENGTH),
         props: {
           content: generateJsonContent('Paragraph'),
@@ -212,9 +212,9 @@ export const getDefaultField = ({
           textAlign: 'center',
         },
       };
-    case 'image':
+    case FormFieldType.IMAGE:
       return {
-        type: 'image',
+        type: FormFieldType.IMAGE,
         id: generateId(ID_LENGTH),
         props: {
           src: '',
@@ -227,9 +227,9 @@ export const getDefaultField = ({
           },
         },
       };
-    case 'row':
+    case FormFieldType.ROW:
       return {
-        type: 'row',
+        type: FormFieldType.ROW,
         id: generateId(ID_LENGTH),
         props: {
           gap: 0,
@@ -237,7 +237,7 @@ export const getDefaultField = ({
         children: [
           {
             id: generateId(ID_LENGTH),
-            type: 'column',
+            type: FormFieldType.COLUMN,
             props: {
               width: 50,
             },
@@ -245,7 +245,7 @@ export const getDefaultField = ({
           },
           {
             id: generateId(ID_LENGTH),
-            type: 'column',
+            type: FormFieldType.COLUMN,
             props: {
               width: 50,
             },
@@ -253,19 +253,19 @@ export const getDefaultField = ({
           },
         ],
       };
-    case 'column':
+    case FormFieldType.COLUMN:
       return {
-        type: 'column',
+        type: FormFieldType.COLUMN,
         id: generateId(ID_LENGTH),
         props: {
           width: column?.width || 100,
         },
         children: [],
       };
-    case 'block':
+    case FormFieldType.BLOCK:
       return {
         id: generateId(ID_LENGTH),
-        type: 'block',
+        type: FormFieldType.BLOCK,
         children: [],
         props: {
           padding: {
@@ -312,10 +312,10 @@ export const getDefaultField = ({
           },
         },
       };
-    case 'button':
+    case FormFieldType.BUTTON:
       return {
         id: generateId(ID_LENGTH),
-        type: 'button',
+        type: FormFieldType.BUTTON,
         props: {
           label: 'Submit',
           color: '#FFFFFF',

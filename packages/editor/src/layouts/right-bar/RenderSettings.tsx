@@ -1,4 +1,4 @@
-import type { FormField } from '@efie-form/core';
+import { FormFieldType, type FormField } from '@efie-form/core';
 import DateTimeSettings from './field-settings/DateTimeSettings.tsx';
 import DateSettings from './field-settings/DateSettings.tsx';
 import LongTextSettings from './field-settings/LongTextSettings.tsx';
@@ -24,39 +24,39 @@ function RenderSettings({ field }: RenderSettingsProps) {
   if (!field) return null;
 
   switch (field?.type) {
-    case 'dateTime':
+    case FormFieldType.DATE_TIME:
       return <DateTimeSettings field={field} />;
-    case 'date':
+    case FormFieldType.DATE:
       return <DateSettings field={field} />;
-    case 'longText':
+    case FormFieldType.LONG_TEXT:
       return <LongTextSettings field={field} />;
-    case 'column':
+    case FormFieldType.COLUMN:
       return null;
-    case 'block':
+    case FormFieldType.BLOCK:
       return <BlockSettings field={field} />;
-    case 'divider':
+    case FormFieldType.DIVIDER:
       return <DividerSettings field={field} />;
-    case 'file':
+    case FormFieldType.FILE:
       return <FileSettings field={field} />;
-    case 'header':
+    case FormFieldType.HEADER:
       return <HeaderSettings field={field} />;
-    case 'image':
+    case FormFieldType.IMAGE:
       return <ImageSettings field={field} />;
-    case 'multipleChoices':
+    case FormFieldType.MULTIPLE_CHOICES:
       return <MultipleChoicesSettings field={field} />;
-    case 'row':
+    case FormFieldType.ROW:
       return <RowSettings field={field} />;
-    case 'number':
+    case FormFieldType.NUMBER:
       return <NumberSettings field={field} />;
-    case 'paragraph':
+    case FormFieldType.PARAGRAPH:
       return <ParagraphSettings field={field} />;
-    case 'shortText':
+    case FormFieldType.SHORT_TEXT:
       return <ShortTextSettings field={field} />;
-    case 'singleChoice':
+    case FormFieldType.SINGLE_CHOICE:
       return <SingleChoiceSettings field={field} />;
-    case 'time':
+    case FormFieldType.TIME:
       return <TimeSettings field={field} />;
-    case 'button':
+    case FormFieldType.BUTTON:
       return <ButtonSettings field={field} />;
     default:
       return;

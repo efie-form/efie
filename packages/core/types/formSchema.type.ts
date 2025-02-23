@@ -1,4 +1,5 @@
 import type { JSONContent } from '@tiptap/core';
+import { FormFieldType } from '../lib/InputType';
 
 export interface BorderRadius {
   topLeft: number;
@@ -56,7 +57,7 @@ export interface FormSchema {
 
 export interface FormFieldShortText {
   id: string;
-  type: 'shortText';
+  type: typeof FormFieldType.SHORT_TEXT;
   props: {
     label: string;
     placeholder: string;
@@ -71,7 +72,7 @@ export interface FormFieldShortText {
 
 export interface FormFieldLongText {
   id: string;
-  type: 'longText';
+  type: typeof FormFieldType.LONG_TEXT;
   props: {
     label: string;
     placeholder: string;
@@ -86,7 +87,7 @@ export interface FormFieldLongText {
 
 export interface FormFieldNumber {
   id: string;
-  type: 'number';
+  type: typeof FormFieldType.NUMBER;
   props: {
     label: string;
     placeholder: string;
@@ -108,7 +109,7 @@ export interface OptionType {
 
 export interface FormFieldSingleChoice {
   id: string;
-  type: 'singleChoice';
+  type: typeof FormFieldType.SINGLE_CHOICE;
   props: {
     label: string;
     options: OptionType[];
@@ -124,7 +125,7 @@ export interface FormFieldSingleChoice {
 
 export interface FormFieldMultipleChoices {
   id: string;
-  type: 'multipleChoices';
+  type: typeof FormFieldType.MULTIPLE_CHOICES;
   props: {
     label: string;
     options: OptionType[];
@@ -140,7 +141,7 @@ export interface FormFieldMultipleChoices {
 
 export interface FormFieldDate {
   id: string;
-  type: 'date';
+  type: typeof FormFieldType.DATE;
   props: {
     label: string;
     required: boolean;
@@ -154,7 +155,7 @@ export interface FormFieldDate {
 
 export interface FormFieldTime {
   id: string;
-  type: 'time';
+  type: typeof FormFieldType.TIME;
   props: {
     label: string;
     required: boolean;
@@ -168,7 +169,7 @@ export interface FormFieldTime {
 
 export interface FormFieldDateTime {
   id: string;
-  type: 'dateTime';
+  type: typeof FormFieldType.DATE_TIME;
   props: {
     label: string;
     required: boolean;
@@ -182,7 +183,7 @@ export interface FormFieldDateTime {
 
 export interface FormFieldFile {
   id: string;
-  type: 'file';
+  type: typeof FormFieldType.FILE;
   props: {
     label: string;
     required: boolean;
@@ -198,7 +199,7 @@ export interface FormFieldFile {
 
 export interface FormFieldDivider {
   id: string;
-  type: 'divider';
+  type: typeof FormFieldType.DIVIDER;
   props: {
     color: string;
     width: number;
@@ -209,7 +210,7 @@ export interface FormFieldDivider {
 
 export interface FormFieldHeader {
   id: string;
-  type: 'header';
+  type: typeof FormFieldType.HEADER;
   props: {
     content: JSONContent;
     tag: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
@@ -221,7 +222,7 @@ export interface FormFieldHeader {
 
 export interface FormFieldParagraph {
   id: string;
-  type: 'paragraph';
+  type: typeof FormFieldType.PARAGRAPH;
   props: {
     content: JSONContent;
     textAlign: 'left' | 'center' | 'right';
@@ -232,7 +233,7 @@ export interface FormFieldParagraph {
 
 export interface FormFieldImage {
   id: string;
-  type: 'image';
+  type: typeof FormFieldType.IMAGE;
   props: {
     src: string;
     alt: string;
@@ -247,7 +248,7 @@ export interface FormFieldImage {
 
 export interface FormFieldRow {
   id: string;
-  type: 'row';
+  type: typeof FormFieldType.ROW;
   props: {
     gap: number;
   };
@@ -256,7 +257,7 @@ export interface FormFieldRow {
 
 export interface FormFieldColumn {
   id: string;
-  type: 'column';
+  type: typeof FormFieldType.COLUMN;
   props: {
     width: number;
   };
@@ -265,7 +266,7 @@ export interface FormFieldColumn {
 
 export interface FormFieldBlock {
   id: string;
-  type: 'block';
+  type: typeof FormFieldType.BLOCK;
   children: FormField[];
   props: {
     padding: Padding;
@@ -279,7 +280,7 @@ export interface FormFieldBlock {
 
 export interface FormFieldButton {
   id: string;
-  type: 'button';
+  type: typeof FormFieldType.BUTTON;
   props: {
     label: string;
     color: string;
@@ -295,7 +296,7 @@ export interface FormFieldButton {
 
 export interface FormFieldPage {
   id: string;
-  type: 'page';
+  type: typeof FormFieldType.PAGE;
   children: FormField[];
   props: {
     name: string;
@@ -321,5 +322,3 @@ export type FormField =
   | FormFieldBlock
   | FormFieldButton
   | FormFieldPage;
-
-export type FormFieldType = FormField['type'];

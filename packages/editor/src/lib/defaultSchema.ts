@@ -1,5 +1,5 @@
-import type { FormSchema } from '@efie-form/core';
-import { generateId } from './utils.ts';
+import { FormFieldType, type FormSchema } from '@efie-form/core';
+import { generateId } from './utils';
 
 const defaultSchema: FormSchema = {
   version: 'v1',
@@ -7,11 +7,11 @@ const defaultSchema: FormSchema = {
     fields: [
       {
         id: generateId(10),
-        type: 'page',
+        type: FormFieldType.PAGE,
         children: [
           {
             id: generateId(10),
-            type: 'block',
+            type: FormFieldType.BLOCK,
             children: [],
             props: {
               padding: {
