@@ -1,4 +1,5 @@
-import { FormFieldType, type FormSchema } from '@efie-form/core';
+import { FormFieldType } from '@efie-form/core';
+import type { FormSchema } from '@efie-form/core';
 import { generateId } from './utils';
 
 const defaultSchema: FormSchema = {
