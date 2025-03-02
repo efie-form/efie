@@ -16,7 +16,6 @@ function App() {
       const editor = new BuilderInternal({
         onDataRequest: () => schema,
         onDataReset: (data) => {
-          console.log('Data reset received:', data);
           setSchema(data);
           resetPage(data);
         },
@@ -44,24 +43,15 @@ function App() {
     }
   }, [currentHistoryIndex, schema]);
 
-  useEffect(() => {
-    if (!schema) return;
-    resetPage(schema);
-  }, [schema, setPage]);
-
-  function resetPage (data: FormSchema) {
+  function resetPage(data: FormSchema) {
     const pages = data.form.fields.filter((field) => field.type === 'page');
     if (pages.length === 0) {
       return setPage(null);
     }
     setPage(pages[0].id);
-  };
+  }
 
-  return (
-    <>
-      <FormBuilder height={height} />
-    </>
-  );
+  return <FormBuilder height={height} />;
 }
 
 export default App;

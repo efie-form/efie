@@ -1,12 +1,8 @@
 import type {
   FormFieldMultipleChoices,
   FormFieldSingleChoice,
-  FormSchema,
   OptionType,
 } from '@efie-form/core';
-import { useFieldArray, useFormContext } from 'react-hook-form';
-import type { FieldKeyPrefix } from '../../../../lib/genFieldKey.ts';
-import genFieldKey from '../../../../lib/genFieldKey.ts';
 import { useRef } from 'react';
 import {
   DndContext,

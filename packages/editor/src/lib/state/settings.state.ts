@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import defaultSchema from '../defaultSchema';
 
 export const RIGHT_BAR_TABS = {
   PAGE: 'page',
@@ -32,7 +33,7 @@ export const useSettingsStore = create<SettingsState>((set) => ({
   setMode: (mode) => {
     set({ mode });
   },
-  page: null,
+  page: defaultSchema.form.fields[0].id,
   setPage: (page) => {
     set({ page });
   },

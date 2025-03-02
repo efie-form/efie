@@ -28,7 +28,6 @@ export default [
       'packages/react/**/*.{js,mjs,cjs,ts,jsx,tsx}',
       'demo/react/**/*.{js,mjs,cjs,ts,jsx,tsx}',
     ],
-
     plugins: {
       'react-refresh': reactRefresh,
       'react-hooks': reactHooks,
