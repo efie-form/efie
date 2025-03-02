@@ -100,8 +100,8 @@ function SettingsFieldShadow({
                 const { active, over } = event;
                 if (!active || !over) return;
                 handleMoveShadow(
-                  parseInt(active.id as string, 10),
-                  parseInt(over.id as string, 10)
+                  Number.parseInt(active.id as string, 10),
+                  Number.parseInt(over.id as string, 10)
                 );
               }}
             >

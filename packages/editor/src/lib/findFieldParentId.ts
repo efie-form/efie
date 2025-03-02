@@ -6,8 +6,7 @@ export const findFieldParentId = (
 ): string | null => {
   let parentId: string | null = null;
 
-  for (let i = 0; i < fields.length; i++) {
-    const field = fields[i];
+  for (const field of fields) {
 
     if ('children' in field) {
       if (field.children.some((child) => child.id === fieldId)) {

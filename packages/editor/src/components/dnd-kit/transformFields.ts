@@ -44,14 +44,14 @@ const generateLocationMap = (
   parentPath: string,
   cb: (id: string, path: string) => void
 ) => {
-  fields.forEach((field, index) => {
+  for (const [index, field] of fields.entries()) {
     const path = `${parentPath}${index}`;
     cb(field.id, path);
 
     if (hasChildren(field)) {
       generateLocationMap(field.children, path, cb);
     }
-  });
+  }
 };
 
 const checkDirection = (
@@ -61,8 +61,8 @@ const checkDirection = (
 ) => {
   if (activeFieldPath.length === overFieldPath.length) {
     // same children
-    const activeIndex = parseInt(activeFieldPath.slice(-1), 10);
-    const overIndex = parseInt(overFieldPath.slice(-1), 10);
+    const activeIndex = Number.parseInt(activeFieldPath.slice(-1), 10);
+    const overIndex = Number.parseInt(overFieldPath.slice(-1), 10);
 
     const dropIndex = direction === 'up' ? overIndex : overIndex + 1;
 

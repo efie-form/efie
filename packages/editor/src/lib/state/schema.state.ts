@@ -1,8 +1,8 @@
-import { FormField, FormFieldPage, FormSchema } from '@efie-form/core';
+import type { FormField, FormFieldPage, FormSchema } from '@efie-form/core';
 import { create } from 'zustand';
 import defaultSchema from '../defaultSchema';
-import { FieldPropsKey } from '../genFieldKey';
-import { FieldPathValue } from 'react-hook-form';
+import type { FieldPropsKey } from '../genFieldKey';
+import type { FieldPathValue } from 'react-hook-form';
 
 interface SchemaState {
   schema: FormSchema;
@@ -81,10 +81,10 @@ export const useSchemaStore = create<SchemaState>((set, getState) => ({
   },
   updatePages: (pages) => {
     const { fieldMap, fieldKeyMap, schema, addHistory } = getState();
-    pages.forEach((page, index) => {
+    for (const [index, page] of pages.entries()) {
       fieldMap.set(page.id, page);
       fieldKeyMap.set(page.id, `form.fields.${index}`);
-    });
+    }
     const newSchema = { ...schema, form: { fields: pages } };
     addHistory(newSchema);
     set({
@@ -114,14 +114,14 @@ export const useSchemaStore = create<SchemaState>((set, getState) => ({
     fieldMap.set(fieldId, field);
 
     if (key === 'children' && 'children' in field) {
-      field.children.forEach((child, index) => {
+      for (const [index, child] of field.children.entries()) {
         fieldMap.set(child.id, child);
         fieldParentMap.set(child.id, fieldId);
         fieldKeyMap.set(
           child.id,
           fieldKeyMap.get(fieldId) + `.children.${index}`
         );
-      });
+      }
     }
 
     addHistory(schema);
@@ -276,9 +276,9 @@ function getFieldInfoMap(
     fieldKeyMap.set(field.id, `${fieldKey}.${i}`);
     fieldMap.set(field.id, field);
     if ('children' in field) {
-      field.children.forEach((child) => {
+      for (const child of field.children) {
         fieldParentMap.set(child.id, field.id);
-      });
+      }
       getFieldInfoMap(
         field.children,
         fieldKeyMap,

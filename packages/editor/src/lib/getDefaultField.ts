@@ -48,7 +48,7 @@ export const getDefaultField = ({
   column,
 }: GetDefaultFieldProps): FormField => {
   switch (type) {
-    case FormFieldType.SHORT_TEXT:
+    case FormFieldType.SHORT_TEXT: {
       return {
         type: FormFieldType.SHORT_TEXT,
         id: generateId(ID_LENGTH),
@@ -59,7 +59,8 @@ export const getDefaultField = ({
           container: containerDefaultProps,
         },
       };
-    case FormFieldType.LONG_TEXT:
+    }
+    case FormFieldType.LONG_TEXT: {
       return {
         type: FormFieldType.LONG_TEXT,
         id: generateId(ID_LENGTH),
@@ -70,7 +71,8 @@ export const getDefaultField = ({
           container: containerDefaultProps,
         },
       };
-    case FormFieldType.NUMBER:
+    }
+    case FormFieldType.NUMBER: {
       return {
         type: FormFieldType.NUMBER,
         id: generateId(ID_LENGTH),
@@ -83,7 +85,8 @@ export const getDefaultField = ({
           container: containerDefaultProps,
         },
       };
-    case FormFieldType.SINGLE_CHOICE:
+    }
+    case FormFieldType.SINGLE_CHOICE: {
       return {
         type: FormFieldType.SINGLE_CHOICE,
         id: generateId(ID_LENGTH),
@@ -99,7 +102,8 @@ export const getDefaultField = ({
           container: containerDefaultProps,
         },
       };
-    case FormFieldType.MULTIPLE_CHOICES:
+    }
+    case FormFieldType.MULTIPLE_CHOICES: {
       return {
         type: FormFieldType.MULTIPLE_CHOICES,
         id: generateId(ID_LENGTH),
@@ -115,7 +119,8 @@ export const getDefaultField = ({
           container: containerDefaultProps,
         },
       };
-    case FormFieldType.PAGE:
+    }
+    case FormFieldType.PAGE: {
       return {
         type: FormFieldType.PAGE,
         id: generateId(ID_LENGTH),
@@ -128,7 +133,8 @@ export const getDefaultField = ({
           name: page?.name || 'Page',
         },
       };
-    case FormFieldType.DATE:
+    }
+    case FormFieldType.DATE: {
       return {
         type: FormFieldType.DATE,
         id: generateId(ID_LENGTH),
@@ -138,7 +144,8 @@ export const getDefaultField = ({
           container: containerDefaultProps,
         },
       };
-    case FormFieldType.TIME:
+    }
+    case FormFieldType.TIME: {
       return {
         type: FormFieldType.TIME,
         id: generateId(ID_LENGTH),
@@ -148,7 +155,8 @@ export const getDefaultField = ({
           container: containerDefaultProps,
         },
       };
-    case FormFieldType.DATE_TIME:
+    }
+    case FormFieldType.DATE_TIME: {
       return {
         type: FormFieldType.DATE_TIME,
         id: generateId(ID_LENGTH),
@@ -158,7 +166,8 @@ export const getDefaultField = ({
           container: containerDefaultProps,
         },
       };
-    case FormFieldType.FILE:
+    }
+    case FormFieldType.FILE: {
       return {
         type: FormFieldType.FILE,
         id: generateId(ID_LENGTH),
@@ -170,7 +179,8 @@ export const getDefaultField = ({
           container: containerDefaultProps,
         },
       };
-    case FormFieldType.DIVIDER:
+    }
+    case FormFieldType.DIVIDER: {
       return {
         type: FormFieldType.DIVIDER,
         id: generateId(ID_LENGTH),
@@ -181,7 +191,8 @@ export const getDefaultField = ({
           height: 1,
         },
       };
-    case FormFieldType.HEADER:
+    }
+    case FormFieldType.HEADER: {
       return {
         type: FormFieldType.HEADER,
         id: generateId(ID_LENGTH),
@@ -197,7 +208,8 @@ export const getDefaultField = ({
           textAlign: 'center',
         },
       };
-    case FormFieldType.PARAGRAPH:
+    }
+    case FormFieldType.PARAGRAPH: {
       return {
         type: FormFieldType.PARAGRAPH,
         id: generateId(ID_LENGTH),
@@ -212,7 +224,8 @@ export const getDefaultField = ({
           textAlign: 'center',
         },
       };
-    case FormFieldType.IMAGE:
+    }
+    case FormFieldType.IMAGE: {
       return {
         type: FormFieldType.IMAGE,
         id: generateId(ID_LENGTH),
@@ -227,7 +240,8 @@ export const getDefaultField = ({
           },
         },
       };
-    case FormFieldType.ROW:
+    }
+    case FormFieldType.ROW: {
       return {
         type: FormFieldType.ROW,
         id: generateId(ID_LENGTH),
@@ -253,7 +267,8 @@ export const getDefaultField = ({
           },
         ],
       };
-    case FormFieldType.COLUMN:
+    }
+    case FormFieldType.COLUMN: {
       return {
         type: FormFieldType.COLUMN,
         id: generateId(ID_LENGTH),
@@ -262,7 +277,8 @@ export const getDefaultField = ({
         },
         children: [],
       };
-    case FormFieldType.BLOCK:
+    }
+    case FormFieldType.BLOCK: {
       return {
         id: generateId(ID_LENGTH),
         type: FormFieldType.BLOCK,
@@ -312,7 +328,8 @@ export const getDefaultField = ({
           },
         },
       };
-    case FormFieldType.BUTTON:
+    }
+    case FormFieldType.BUTTON: {
       return {
         id: generateId(ID_LENGTH),
         type: FormFieldType.BUTTON,
@@ -346,6 +363,7 @@ export const getDefaultField = ({
           align: 'center',
         },
       };
+    }
   }
 };
 

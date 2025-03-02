@@ -91,7 +91,7 @@ function ColorPicker({
   };
 
   const handleRgbChange = (type: 'r' | 'g' | 'b', newValue: string) => {
-    const value = Number(newValue.replace(/\D/g, ''));
+    const value = Number(newValue.replaceAll(/\D/g, ''));
     if (value > 255) return;
     setValue(`rgb.${type}`, value);
   };
@@ -155,7 +155,7 @@ function ColorPicker({
                             '#' +
                             e.target.value
                               .toUpperCase()
-                              .replace(/#/g, '')
+                              .replaceAll('#', '')
                               .slice(0, 8);
 
                           onChange(hex);

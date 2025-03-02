@@ -6,13 +6,13 @@ interface NumberProps extends Omit<InputProps, 'value' | 'onChange'> {
   onChange: (value: number) => void;
 }
 
-function Number({ inputProps, value, onChange, ...props }: NumberProps) {
+function NumberInput({ inputProps, value, onChange, ...props }: NumberProps) {
   return (
     <Input
       {...props}
       value={value.toString()}
       onChange={(newValue) => {
-        onChange(parseInt(newValue, 10));
+        onChange(Number.parseInt(newValue, 10));
       }}
       inputProps={{
         type: 'number',
@@ -22,4 +22,4 @@ function Number({ inputProps, value, onChange, ...props }: NumberProps) {
   );
 }
 
-export default Number;
+export default NumberInput;

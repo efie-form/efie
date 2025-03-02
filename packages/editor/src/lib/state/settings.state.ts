@@ -17,6 +17,7 @@ interface SettingsState {
   setMode: (mode: SettingsState['mode']) => void;
   page: string | null;
   setPage: (page: SettingsState['page']) => void;
+  clearPage: () => void;
   activeTab: RightBarTab;
   setActiveTab: (tab: RightBarTab) => void;
 }
@@ -36,6 +37,9 @@ export const useSettingsStore = create<SettingsState>((set) => ({
   page: defaultSchema.form.fields[0].id,
   setPage: (page) => {
     set({ page });
+  },
+  clearPage: () => {
+    set({ page: defaultSchema.form.fields[0].id });
   },
   activeTab: 'form',
   setActiveTab: (tab) => {

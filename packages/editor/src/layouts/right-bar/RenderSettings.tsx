@@ -24,42 +24,60 @@ function RenderSettings({ field }: RenderSettingsProps) {
   if (!field) return null;
 
   switch (field?.type) {
-    case FormFieldType.DATE_TIME:
+    case FormFieldType.DATE_TIME: {
       return <DateTimeSettings field={field} />;
-    case FormFieldType.DATE:
+    }
+    case FormFieldType.DATE: {
       return <DateSettings field={field} />;
-    case FormFieldType.LONG_TEXT:
+    }
+    case FormFieldType.LONG_TEXT: {
       return <LongTextSettings field={field} />;
-    case FormFieldType.COLUMN:
+    }
+    case FormFieldType.COLUMN: {
       return null;
-    case FormFieldType.BLOCK:
+    }
+    case FormFieldType.BLOCK: {
       return <BlockSettings field={field} />;
-    case FormFieldType.DIVIDER:
+    }
+    case FormFieldType.DIVIDER: {
       return <DividerSettings field={field} />;
-    case FormFieldType.FILE:
+    }
+    case FormFieldType.FILE: {
       return <FileSettings field={field} />;
-    case FormFieldType.HEADER:
+    }
+    case FormFieldType.HEADER: {
       return <HeaderSettings field={field} />;
-    case FormFieldType.IMAGE:
+    }
+    case FormFieldType.IMAGE: {
       return <ImageSettings field={field} />;
-    case FormFieldType.MULTIPLE_CHOICES:
+    }
+    case FormFieldType.MULTIPLE_CHOICES: {
       return <MultipleChoicesSettings field={field} />;
-    case FormFieldType.ROW:
+    }
+    case FormFieldType.ROW: {
       return <RowSettings field={field} />;
-    case FormFieldType.NUMBER:
+    }
+    case FormFieldType.NUMBER: {
       return <NumberSettings field={field} />;
-    case FormFieldType.PARAGRAPH:
+    }
+    case FormFieldType.PARAGRAPH: {
       return <ParagraphSettings field={field} />;
-    case FormFieldType.SHORT_TEXT:
+    }
+    case FormFieldType.SHORT_TEXT: {
       return <ShortTextSettings field={field} />;
-    case FormFieldType.SINGLE_CHOICE:
+    }
+    case FormFieldType.SINGLE_CHOICE: {
       return <SingleChoiceSettings field={field} />;
-    case FormFieldType.TIME:
+    }
+    case FormFieldType.TIME: {
       return <TimeSettings field={field} />;
-    case FormFieldType.BUTTON:
+    }
+    case FormFieldType.BUTTON: {
       return <ButtonSettings field={field} />;
-    default:
+    }
+    default: {
       return;
+    }
   }
 }
 

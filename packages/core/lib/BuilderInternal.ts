@@ -9,9 +9,9 @@ interface BuilderInternalProps {
 
 export default class BuilderInternal {
   isLoaded = false;
-  onDataReset: ((data: FormSchema) => void) | null = null;
-  onDataRequest: () => FormSchema | null = () => null;
-  onHeightChange: ((height: number) => void) | null = null;
+  onDataReset: ((data: FormSchema) => void) | undefined = undefined;
+  onDataRequest: () => FormSchema | undefined = () => undefined;
+  onHeightChange: ((height: number) => void) | undefined = undefined;
 
   constructor(props: BuilderInternalProps) {
     this.onDataReset = props.onDataReset;
@@ -21,7 +21,7 @@ export default class BuilderInternal {
   }
 
   public init() {
-    if (typeof window === 'undefined') return;
+    if (globalThis.window === undefined) return;
     if (this.isLoaded) return;
 
     window.addEventListener('message', (e) => {
@@ -30,18 +30,18 @@ export default class BuilderInternal {
     });
 
     // Send INIT first to establish connection
-    this.postMessage(ACTION_TYPE.INIT, null);
+    this.postMessage(ACTION_TYPE.INIT);
   }
 
   public loaded() {
     if (this.isLoaded) return;
 
     this.isLoaded = true;
-    this.postMessage(ACTION_TYPE.LOADED, null);
+    this.postMessage(ACTION_TYPE.LOADED);
   }
 
   public setValue(value: FormSchema) {
-    if (typeof window === 'undefined' || !this.isLoaded) return;
+    if (globalThis.window === undefined || !this.isLoaded) return;
     this.postMessage(ACTION_TYPE.SET_DATA, value);
   }
 
@@ -75,8 +75,8 @@ export default class BuilderInternal {
    * @param data - The data of the message
    * @returns void
    */
-  private postMessage(type: string, data: unknown) {
-    if (typeof window === 'undefined') return;
+  private postMessage(type: string, data?: unknown) {
+    if (globalThis.window === undefined) return;
     window.parent.postMessage(
       {
         type,

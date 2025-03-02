@@ -70,16 +70,19 @@ interface RenderPrefixSuffixProps {
 
 function RenderPrefixSuffix({ type, children }: RenderPrefixSuffixProps) {
   switch (type) {
-    case 'icon':
+    case 'icon': {
       return <div className="px-2">{children}</div>;
-    case 'text':
+    }
+    case 'text': {
       return (
         <div className="px-1.5 typography-body4 text-neutral-500">
           {children}
         </div>
       );
-    default:
+    }
+    default: {
       return <>{children}</>;
+    }
   }
 }
 

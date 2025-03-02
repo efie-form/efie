@@ -122,46 +122,64 @@ function RenderField({ field, noSelect }: RenderFieldProps) {
 
 function FieldItem({ field }: RenderFieldProps) {
   switch (field.type) {
-    case FormFieldType.ROW:
+    case FormFieldType.ROW: {
       return <RowField field={field} />;
-    case FormFieldType.COLUMN:
+    }
+    case FormFieldType.COLUMN: {
       return <ColumnsField field={field} />;
-    case FormFieldType.HEADER:
+    }
+    case FormFieldType.HEADER: {
       return <HeaderField field={field} />;
-    case FormFieldType.PARAGRAPH:
+    }
+    case FormFieldType.PARAGRAPH: {
       return <ParagraphField field={field} />;
-    case FormFieldType.SHORT_TEXT:
+    }
+    case FormFieldType.SHORT_TEXT: {
       return <ShortTextField field={field} />;
-    case FormFieldType.LONG_TEXT:
+    }
+    case FormFieldType.LONG_TEXT: {
       return <LongTextField field={field} />;
-    case FormFieldType.NUMBER:
+    }
+    case FormFieldType.NUMBER: {
       return <NumberField field={field} />;
-    case FormFieldType.DIVIDER:
+    }
+    case FormFieldType.DIVIDER: {
       return <DividerField field={field} />;
-    case FormFieldType.IMAGE:
+    }
+    case FormFieldType.IMAGE: {
       return <ImageField field={field} />;
-    case FormFieldType.SINGLE_CHOICE:
+    }
+    case FormFieldType.SINGLE_CHOICE: {
       return <SingleChoiceField field={field} />;
-    case FormFieldType.MULTIPLE_CHOICES:
+    }
+    case FormFieldType.MULTIPLE_CHOICES: {
       return <MultipleChoicesField field={field} />;
-    case FormFieldType.DATE:
+    }
+    case FormFieldType.DATE: {
       return <DateField field={field} />;
-    case FormFieldType.TIME:
+    }
+    case FormFieldType.TIME: {
       return <TimeField field={field} />;
-    case FormFieldType.DATE_TIME:
+    }
+    case FormFieldType.DATE_TIME: {
       return <DateTimeField field={field} />;
-    case FormFieldType.FILE:
+    }
+    case FormFieldType.FILE: {
       return <FileField field={field} />;
-    case FormFieldType.BUTTON:
+    }
+    case FormFieldType.BUTTON: {
       return <ButtonField field={field} />;
-    case FormFieldType.BLOCK:
+    }
+    case FormFieldType.BLOCK: {
       return <BlockField field={field} />;
-    default:
+    }
+    default: {
       return (
         <div className="px-4 py-2">
           {field.id} {field.type}
         </div>
       );
+    }
   }
 }
 
