@@ -1,4 +1,4 @@
-import { PageFieldProps } from '@efie-form/react';
+import type { PageFieldProps } from '@efie-form/react';
 
 function PageField({ children }: PageFieldProps) {
   return (

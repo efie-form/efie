@@ -35,7 +35,6 @@ function SettingsField4Sides({
 }: SettingsField4SidesProps) {
   const { getFieldKeyById, updateFieldProps, getFieldProps } = useSchemaStore();
   const fieldKey = getFieldKeyById(field.id);
-  if (!fieldKey) return null;
 
   const isAllEqual = splitSides.every((item) => {
     return (
@@ -77,6 +76,8 @@ function SettingsField4Sides({
       prev4SidesRef.current = [];
     }
   };
+
+  if (!fieldKey) return null;
 
   return (
     <div className={className}>

@@ -1,4 +1,4 @@
-import { ShortTextFieldProps } from '@efie-form/react';
+import type { ShortTextFieldProps } from '@efie-form/react';
 import { TextField } from '@mui/material';
 
 function ShortTextField({ id, label, placeholder }: ShortTextFieldProps) {

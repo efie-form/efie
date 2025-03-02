@@ -1,4 +1,4 @@
-import { TimeFieldProps } from '@efie-form/react';
+import type { TimeFieldProps } from '@efie-form/react';
 import { TimePicker } from '@mui/x-date-pickers';
 
 function TimeField({ label }: TimeFieldProps) {

@@ -1,4 +1,4 @@
-import { FormSchema } from '../types/formSchema.type';
+import type { FormSchema } from '../types/formSchema.type';
 import { FormFieldType } from './InputType';
 
 const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';

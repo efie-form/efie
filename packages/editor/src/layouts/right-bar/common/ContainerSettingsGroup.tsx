@@ -1,4 +1,4 @@
-import { FormField } from '@efie-form/core';
+import type { FormField } from '@efie-form/core';
 import SettingsField4Sides from '../property-layouts/SettingsField4Sides';
 import SettingsFieldBorder from '../property-layouts/SettingsFieldBorder';
 

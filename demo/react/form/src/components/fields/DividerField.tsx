@@ -1,4 +1,4 @@
-import { DividerFieldProps } from '@efie-form/react';
+import type { DividerFieldProps } from '@efie-form/react';
 
 function DividerField({ style }: DividerFieldProps) {
   return (

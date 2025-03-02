@@ -4,10 +4,11 @@ import tseslint from 'typescript-eslint';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import reactHooks from 'eslint-plugin-react-hooks';
 import unusedImports from 'eslint-plugin-unused-imports';
+import eslintPluginUnicorn from 'eslint-plugin-unicorn';
 
 export default [
   {
-    ignores: ['**/dist/**', '**/node_modules/**'],
+    ignores: ['**/dist/**', '**/node_modules/**', '**/*.d.ts'],
   },
   {
     files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
@@ -18,6 +19,14 @@ export default [
   {
     rules: {
       '@typescript-eslint/consistent-type-imports': 'error',
+    },
+  },
+  {
+    languageOptions: {
+      globals: globals.builtin,
+    },
+    plugins: {
+      unicorn: eslintPluginUnicorn,
     },
   },
   {

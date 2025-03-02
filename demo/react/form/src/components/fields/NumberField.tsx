@@ -1,4 +1,4 @@
-import { NumberFieldProps } from '@efie-form/react';
+import type { NumberFieldProps } from '@efie-form/react';
 import { TextField } from '@mui/material';
 
 function NumberField({ id, label, placeholder }: NumberFieldProps) {

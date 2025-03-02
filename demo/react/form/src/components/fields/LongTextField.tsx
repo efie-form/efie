@@ -1,4 +1,4 @@
-import { LongTextFieldProps } from '@efie-form/react';
+import type { LongTextFieldProps } from '@efie-form/react';
 import { TextField } from '@mui/material';
 
 function LongTextField({ id, label, placeholder }: LongTextFieldProps) {

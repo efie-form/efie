@@ -1,4 +1,4 @@
-import { ImageFieldProps } from '@efie-form/react';
+import type { ImageFieldProps } from '@efie-form/react';
 
 function ImageField({
   src,

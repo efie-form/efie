@@ -2,10 +2,10 @@ import defaultSchema from '../../editor/src/lib/defaultSchema';
 import { ACTION_TYPE } from '../constant';
 import type { FormSchema } from '../types/formSchema.type';
 
-interface BuilderExternalProps {
-  id: string;
-  height: number;
-}
+// interface BuilderExternalProps {
+//   id: string;
+//   height: number;
+// }
 
 export default class BuilderExternal {
   private parentElem: HTMLElement | null = null;

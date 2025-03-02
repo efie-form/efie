@@ -75,7 +75,7 @@ export default class BuilderInternal {
    * @param data - The data of the message
    * @returns void
    */
-  private postMessage(type: string, data: any) {
+  private postMessage(type: string, data: unknown) {
     if (typeof window === 'undefined') return;
     window.parent.postMessage(
       {

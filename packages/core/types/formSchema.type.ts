@@ -1,5 +1,5 @@
 import type { JSONContent } from '@tiptap/core';
-import { FormFieldType } from '../lib/InputType';
+import type { FormFieldType } from '../lib/InputType';
 
 export interface BorderRadius {
   topLeft: number;
@@ -14,10 +14,10 @@ interface Border {
   radius: BorderRadius;
 }
 
-interface Size {
-  value: number;
-  unit: 'px' | 'em' | 'rem' | '%';
-}
+// interface Size {
+//   value: number;
+//   unit: 'px' | 'em' | 'rem' | '%';
+// }
 
 export interface Padding {
   top: number;

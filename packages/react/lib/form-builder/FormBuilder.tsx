@@ -1,10 +1,10 @@
+import type {
+  RefObject} from 'react';
 import React, {
   forwardRef,
-  RefObject,
   useEffect,
   useImperativeHandle,
   useRef,
-  useState,
 } from 'react';
 import { type FormSchema, BuilderExternal } from '@efie-form/core';
 

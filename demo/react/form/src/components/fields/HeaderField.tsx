@@ -1,4 +1,4 @@
-import { HeaderFieldProps } from '@efie-form/react';
+import type { HeaderFieldProps } from '@efie-form/react';
 
 function HeaderField({ text, tag }: HeaderFieldProps) {
   const Tag = tag || 'h1';

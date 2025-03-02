@@ -1,4 +1,4 @@
-import { FormFieldType } from '@efie-form/core';
+import type { FormFieldType } from '@efie-form/core';
 import { useSchemaStore } from './state/schema.state';
 
 export default function getSettingsParentField(fieldId: string) {

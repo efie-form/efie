@@ -1,4 +1,5 @@
-import { FormBuilder, FormBuilderRef } from '@efie-form/react';
+import type { FormBuilderRef } from '@efie-form/react';
+import { FormBuilder } from '@efie-form/react';
 import { schema } from './schema';
 import { useEffect, useRef, useState } from 'react';
 
