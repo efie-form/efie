@@ -1,4 +1,4 @@
-import { BlockFieldProps } from '@efie-form/react';
+import type { BlockFieldProps } from '@efie-form/react';
 
 function BlockField({
   children,

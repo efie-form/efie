@@ -13,10 +13,10 @@ function FormContent() {
   const { mode, page } = useSettingsStore();
   const selectedPage = getPage(page);
 
-  if (!selectedPage) return null;
+  if (!selectedPage) return <></>;
 
   return (
-    <Droppable id={selectedPage.id} type="page" className="h-full">
+    <Droppable id={selectedPage.id || ''} type="page" className="h-full">
       <div className="min-h-full pb-64">
         <div className="p-4">
           <div

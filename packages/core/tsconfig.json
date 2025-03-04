@@ -1,0 +1,23 @@
+{
+  "include": ["src/**/*.ts"],
+  "compilerOptions": {
+    "target": "ES2016",
+    "module": "ESNext",
+    // Emit
+    "declaration": true,
+    "declarationMap": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "esModuleInterop": true,
+
+    // type checking
+    "strict": true,
+    "skipLibCheck": true,
+
+    // Add these new options
+    "composite": true,
+    "incremental": true,
+    "sourceMap": true,
+    "declarationDir": "./dist/types"
+  }
+}

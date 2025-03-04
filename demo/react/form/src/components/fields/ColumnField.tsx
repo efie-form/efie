@@ -1,4 +1,4 @@
-import { ColumnFieldProps } from '@efie-form/react';
+import type { ColumnFieldProps } from '@efie-form/react';
 
 function ColumnField({ children, width }: ColumnFieldProps) {
   return (

@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useRef } from 'react';
 
-export type UseTimeoutFnReturn = [() => boolean | null, () => void, () => void];
+export type UseTimeoutFnReturn = [() => boolean, () => void, () => void];
 
 export default function useTimeoutFn(
   fn: () => void,
   ms: number = 0
 ): UseTimeoutFnReturn {
-  const ready = useRef<boolean | null>(false);
+  const ready = useRef<boolean>(false);
   const timeout = useRef<ReturnType<typeof setTimeout>>();
   const callback = useRef(fn);
 
@@ -23,7 +23,7 @@ export default function useTimeoutFn(
   }, [ms]);
 
   const clear = useCallback(() => {
-    ready.current = null;
+    ready.current = false;
     if (timeout.current) clearTimeout(timeout.current);
   }, []);
 
@@ -37,7 +37,7 @@ export default function useTimeoutFn(
     set();
 
     return clear;
-  }, [ms]);
+  }, [ms, set, clear]);
 
   return [isReady, clear, set];
 }

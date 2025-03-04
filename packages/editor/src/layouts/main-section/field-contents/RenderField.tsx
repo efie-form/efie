@@ -1,4 +1,4 @@
-import type { FormField } from '@efie-form/core';
+import { FormFieldType, type FormField } from '@efie-form/core';
 import ColumnsField from './fields/ColumnsField.tsx';
 import RowField from './fields/RowField.tsx';
 import {
@@ -44,11 +44,12 @@ function RenderField({ field, noSelect }: RenderFieldProps) {
   } = useSettingsStore();
   const isSelected = selectedFieldId === field.id;
   const { deleteField } = useSchemaStore();
-  const [referenceElement, setReferenceElement] =
-    useState<HTMLDivElement | null>(null);
-  const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(
-    null
-  );
+  const [referenceElement, setReferenceElement] = useState<
+    HTMLDivElement | undefined
+  >();
+  const [popperElement, setPopperElement] = useState<
+    HTMLDivElement | undefined
+  >();
   const { styles, attributes: popperAttributes } = usePopper(
     referenceElement,
     popperElement,
@@ -70,6 +71,7 @@ function RenderField({ field, noSelect }: RenderFieldProps) {
         id={`field-container-${field.id}`}
         {...attributes}
         ref={(ref) => {
+          if (!ref) return;
           setReferenceElement(ref);
           attributes.ref(ref);
         }}
@@ -92,7 +94,10 @@ function RenderField({ field, noSelect }: RenderFieldProps) {
         {isSelected &&
           createPortal(
             <div
-              ref={setPopperElement}
+              ref={(el) => {
+                if (!el) return;
+                setPopperElement(el);
+              }}
               style={styles.popper}
               {...popperAttributes.popper}
             >
@@ -122,46 +127,64 @@ function RenderField({ field, noSelect }: RenderFieldProps) {
 
 function FieldItem({ field }: RenderFieldProps) {
   switch (field.type) {
-    case 'row':
+    case FormFieldType.ROW: {
       return <RowField field={field} />;
-    case 'column':
+    }
+    case FormFieldType.COLUMN: {
       return <ColumnsField field={field} />;
-    case 'header':
+    }
+    case FormFieldType.HEADER: {
       return <HeaderField field={field} />;
-    case 'paragraph':
+    }
+    case FormFieldType.PARAGRAPH: {
       return <ParagraphField field={field} />;
-    case 'shortText':
+    }
+    case FormFieldType.SHORT_TEXT: {
       return <ShortTextField field={field} />;
-    case 'longText':
+    }
+    case FormFieldType.LONG_TEXT: {
       return <LongTextField field={field} />;
-    case 'number':
+    }
+    case FormFieldType.NUMBER: {
       return <NumberField field={field} />;
-    case 'divider':
+    }
+    case FormFieldType.DIVIDER: {
       return <DividerField field={field} />;
-    case 'image':
+    }
+    case FormFieldType.IMAGE: {
       return <ImageField field={field} />;
-    case 'singleChoice':
+    }
+    case FormFieldType.SINGLE_CHOICE: {
       return <SingleChoiceField field={field} />;
-    case 'multipleChoices':
+    }
+    case FormFieldType.MULTIPLE_CHOICES: {
       return <MultipleChoicesField field={field} />;
-    case 'date':
+    }
+    case FormFieldType.DATE: {
       return <DateField field={field} />;
-    case 'time':
+    }
+    case FormFieldType.TIME: {
       return <TimeField field={field} />;
-    case 'dateTime':
+    }
+    case FormFieldType.DATE_TIME: {
       return <DateTimeField field={field} />;
-    case 'file':
+    }
+    case FormFieldType.FILE: {
       return <FileField field={field} />;
-    case 'button':
+    }
+    case FormFieldType.BUTTON: {
       return <ButtonField field={field} />;
-    case 'block':
+    }
+    case FormFieldType.BLOCK: {
       return <BlockField field={field} />;
-    default:
+    }
+    default: {
       return (
         <div className="px-4 py-2">
           {field.id} {field.type}
         </div>
       );
+    }
   }
 }
 

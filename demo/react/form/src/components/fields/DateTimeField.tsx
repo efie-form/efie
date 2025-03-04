@@ -1,4 +1,4 @@
-import { DateTimeFieldProps } from '@efie-form/react';
+import type { DateTimeFieldProps } from '@efie-form/react';
 import { DateTimePicker } from '@mui/x-date-pickers';
 
 function DateTimeField({ label }: DateTimeFieldProps) {

@@ -37,16 +37,19 @@ export default function insertField({
   return addFieldToSiblings(fields, newField, dropFieldId, direction);
 }
 
-const findField = (fields: FormField[], fieldId: string): FormField | null => {
-  let result: FormField | null = null;
-  fields.forEach((field) => {
+const findField = (
+  fields: FormField[],
+  fieldId: string
+): FormField | undefined => {
+  let result: FormField | undefined;
+  for (const field of fields) {
     if (field.id === fieldId) {
       result = field;
     }
     if (!result && 'children' in field) {
       result = findField(field.children, fieldId);
     }
-  });
+  }
   return result;
 };
 

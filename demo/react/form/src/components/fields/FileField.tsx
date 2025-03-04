@@ -1,4 +1,4 @@
-import { FileFieldProps } from '@efie-form/react';
+import type { FileFieldProps } from '@efie-form/react';
 
 function FileField({ id, label }: FileFieldProps) {
   return (

@@ -1,5 +1,5 @@
 import type { ElementType } from 'react';
-import { createElement } from 'react';
+import React, { createElement } from 'react';
 import type { TimeFieldProps } from '../../types/FieldProps';
 import type { FormFieldTime } from '@efie-form/core';
 
@@ -9,7 +9,7 @@ interface TimeProviderProps {
 }
 
 function TimeProvider({ field, Component }: TimeProviderProps) {
-  if (!Component) return null;
+  if (!Component) return <></>;
 
   return createElement(Component, {
     id: field.id,

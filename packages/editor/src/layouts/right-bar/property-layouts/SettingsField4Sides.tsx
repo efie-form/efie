@@ -35,7 +35,6 @@ function SettingsField4Sides({
 }: SettingsField4SidesProps) {
   const { getFieldKeyById, updateFieldProps, getFieldProps } = useSchemaStore();
   const fieldKey = getFieldKeyById(field.id);
-  if (!fieldKey) return null;
 
   const isAllEqual = splitSides.every((item) => {
     return (
@@ -50,19 +49,20 @@ function SettingsField4Sides({
   );
 
   const handleSetAllPadding = (size: FieldPropsValueType) => {
-    splitSides.forEach((item) => {
+    for (const item of splitSides) {
       updateFieldProps(field.id, item.key, size);
-    });
+    }
   };
 
   const handleToggleCustomPadding = () => {
     setIsSplitSides((prev) => !prev);
 
     if (isSplitSides && !isAllEqual) {
-      splitSides.forEach((item) => {
+      for (const item of splitSides) {
         const value = getFieldProps(field.id, item.key);
-        return prev4SidesRef.current.push(value);
-      });
+        prev4SidesRef.current.push(value);
+        continue;
+      }
       handleSetAllPadding(prevAllSideRef.current);
     }
 
@@ -71,12 +71,14 @@ function SettingsField4Sides({
     }
 
     if (!isSplitSides && prev4SidesRef.current.length > 0) {
-      splitSides.forEach((item, index) => {
+      for (const [index, item] of splitSides.entries()) {
         updateFieldProps(field.id, item.key, prev4SidesRef.current[index]);
-      });
+      }
       prev4SidesRef.current = [];
     }
   };
+
+  if (!fieldKey) return <></>;
 
   return (
     <div className={className}>

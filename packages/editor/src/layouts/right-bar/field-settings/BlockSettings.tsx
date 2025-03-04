@@ -12,7 +12,7 @@ interface BlockSettingsProps {
 function BlockSettings({ field }: BlockSettingsProps) {
   const { getFieldKeyById, getFieldProps, updateFieldProps } = useSchemaStore();
   const fieldKey = getFieldKeyById(field.id);
-  if (!fieldKey) return null;
+  if (!fieldKey) return <></>;
 
   return (
     <div>

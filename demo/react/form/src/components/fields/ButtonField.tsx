@@ -1,4 +1,4 @@
-import { ButtonFieldProps } from '@efie-form/react';
+import type { ButtonFieldProps } from '@efie-form/react';
 import { Button } from '@mui/material';
 
 export default function ButtonField({ label }: ButtonFieldProps) {

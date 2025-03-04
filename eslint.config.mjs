@@ -4,20 +4,29 @@ import tseslint from 'typescript-eslint';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import reactHooks from 'eslint-plugin-react-hooks';
 import unusedImports from 'eslint-plugin-unused-imports';
+import eslintPluginUnicorn from 'eslint-plugin-unicorn';
 
 export default [
   {
-    ignores: ['**/dist/**', '**/node_modules/**'],
+    ignores: ['**/dist/**', '**/node_modules/**', '**/*.d.ts'],
   },
   {
     files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
   },
-  { languageOptions: { globals: globals.browser } },
+  {
+    languageOptions: {
+      globals: globals.browser,
+    },
+  },
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
+  eslintPluginUnicorn.configs.recommended,
   {
     rules: {
       '@typescript-eslint/consistent-type-imports': 'error',
+      '@typescript-eslint/no-explicit-any': 'warn',
+      'unicorn/prevent-abbreviations': 'off',
+      'unicorn/filename-case': 'off',
     },
   },
   {
@@ -28,7 +37,6 @@ export default [
       'packages/react/**/*.{js,mjs,cjs,ts,jsx,tsx}',
       'demo/react/**/*.{js,mjs,cjs,ts,jsx,tsx}',
     ],
-
     plugins: {
       'react-refresh': reactRefresh,
       'react-hooks': reactHooks,

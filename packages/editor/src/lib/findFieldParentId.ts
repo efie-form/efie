@@ -3,12 +3,10 @@ import type { FormField } from '@efie-form/core';
 export const findFieldParentId = (
   fields: FormField[],
   fieldId: string
-): string | null => {
-  let parentId: string | null = null;
+): string | undefined => {
+  let parentId: string | undefined = undefined;
 
-  for (let i = 0; i < fields.length; i++) {
-    const field = fields[i];
-
+  for (const field of fields) {
     if ('children' in field) {
       if (field.children.some((child) => child.id === fieldId)) {
         parentId = field.id;

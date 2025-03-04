@@ -11,7 +11,10 @@ export default function useDebounce(
 ): UseDebounceReturn {
   const [isReady, cancel, reset] = useTimeoutFn(fn, ms);
 
-  useEffect(reset, deps);
+  useEffect(() => {
+    reset();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, deps);
 
   return [isReady, cancel];
 }

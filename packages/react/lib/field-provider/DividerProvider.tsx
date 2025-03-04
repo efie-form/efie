@@ -1,5 +1,5 @@
 import type { ElementType } from 'react';
-import { createElement } from 'react';
+import React, { createElement } from 'react';
 import type { DividerFieldProps } from '../../types/FieldProps';
 import type { FormFieldDivider } from '@efie-form/core';
 
@@ -9,7 +9,7 @@ interface DividerProviderProps {
 }
 
 function DividerProvider({ field, Component }: DividerProviderProps) {
-  if (!Component) return null;
+  if (!Component) return <></>;
 
   return createElement(Component, {
     id: field.id,

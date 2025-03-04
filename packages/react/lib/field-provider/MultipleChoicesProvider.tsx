@@ -1,5 +1,5 @@
 import type { ElementType } from 'react';
-import { createElement } from 'react';
+import React, { createElement } from 'react';
 import type { MultipleChoicesFieldProps } from '../../types/FieldProps';
 import type { FormFieldMultipleChoices } from '@efie-form/core';
 
@@ -12,7 +12,7 @@ function MultipleChoicesProvider({
   field,
   Component,
 }: MultipleChoicesProviderProps) {
-  if (!Component) return null;
+  if (!Component) return <></>;
 
   return createElement(Component, {
     id: field.id,

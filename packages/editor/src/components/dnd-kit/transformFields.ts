@@ -34,7 +34,7 @@ const checkMoveDirection = (
   });
   const activeFieldPath = fieldPathMap.get(activeFieldId);
   const overFieldPath = fieldPathMap.get(overFieldId);
-  if (!activeFieldPath || !overFieldPath) return null;
+  if (!activeFieldPath || !overFieldPath) return;
 
   return checkDirection(activeFieldPath, overFieldPath, direction);
 };
@@ -44,14 +44,14 @@ const generateLocationMap = (
   parentPath: string,
   cb: (id: string, path: string) => void
 ) => {
-  fields.forEach((field, index) => {
+  for (const [index, field] of fields.entries()) {
     const path = `${parentPath}${index}`;
     cb(field.id, path);
 
     if (hasChildren(field)) {
       generateLocationMap(field.children, path, cb);
     }
-  });
+  }
 };
 
 const checkDirection = (
@@ -61,12 +61,12 @@ const checkDirection = (
 ) => {
   if (activeFieldPath.length === overFieldPath.length) {
     // same children
-    const activeIndex = parseInt(activeFieldPath.slice(-1), 10);
-    const overIndex = parseInt(overFieldPath.slice(-1), 10);
+    const activeIndex = Number.parseInt(activeFieldPath.slice(-1), 10);
+    const overIndex = Number.parseInt(overFieldPath.slice(-1), 10);
 
     const dropIndex = direction === 'up' ? overIndex : overIndex + 1;
 
-    if (activeIndex === dropIndex) return null;
+    if (activeIndex === dropIndex) return;
     return activeIndex > dropIndex ? 'up' : 'down';
   }
   const totalLength = Math.max(activeFieldPath.length, overFieldPath.length);
@@ -77,5 +77,5 @@ const checkDirection = (
     return activeIndex > overIndex ? 'up' : 'down';
   }
 
-  return null;
+  return;
 };

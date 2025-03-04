@@ -1,4 +1,5 @@
-import { FormSchema } from '../types/formSchema.type';
+import type { FormSchema } from '../types/formSchema.type';
+import { FormFieldType } from './InputType';
 
 const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
@@ -15,11 +16,11 @@ const defaultSchema: FormSchema = {
     fields: [
       {
         id: generateId(10),
-        type: 'page',
+        type: FormFieldType.PAGE,
         children: [
           {
             id: generateId(10),
-            type: 'block',
+            type: FormFieldType.BLOCK,
             children: [],
             props: {
               padding: {

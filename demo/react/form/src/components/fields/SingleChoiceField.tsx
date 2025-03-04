@@ -1,4 +1,4 @@
-import { SingleChoiceFieldProps } from '@efie-form/react';
+import type { SingleChoiceFieldProps } from '@efie-form/react';
 import { MenuItem, Select } from '@mui/material';
 
 function SingleChoiceField({ label, id, options }: SingleChoiceFieldProps) {

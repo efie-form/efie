@@ -1,5 +1,5 @@
 import type { ElementType } from 'react';
-import { createElement } from 'react';
+import React, { createElement } from 'react';
 import type { FormFieldShortText } from '@efie-form/core';
 import type { ShortTextFieldProps } from '../../types/FieldProps';
 
@@ -9,7 +9,7 @@ interface ShortTextProviderProps {
 }
 
 function ShortTextProvider({ field, Component }: ShortTextProviderProps) {
-  if (!Component) return null;
+  if (!Component) return <></>;
 
   return createElement(Component, {
     id: field.id,

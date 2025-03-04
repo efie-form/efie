@@ -1,7 +1,7 @@
 import Switch from '../../../components/form/Switch.tsx';
 import Slider from '../../../components/form/Slider.tsx';
 import { useSchemaStore } from '../../../lib/state/schema.state.ts';
-import { FormField } from '@efie-form/core';
+import type { FormField } from '@efie-form/core';
 
 interface SettingsFieldWidthProps {
   label: string;
@@ -21,7 +21,8 @@ function SettingsFieldWidth({
     !('width' in field.props) ||
     typeof field.props.width !== 'object'
   )
-    return null;
+    return <></>;
+
   return (
     <>
       <div className="px-4 py-3.5">

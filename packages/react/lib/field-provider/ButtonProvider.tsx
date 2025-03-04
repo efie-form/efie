@@ -1,5 +1,5 @@
 import type { ElementType } from 'react';
-import { createElement } from 'react';
+import React, { createElement } from 'react';
 import type { ButtonFieldProps } from '../../types/FieldProps';
 import type { FormFieldButton } from '@efie-form/core';
 
@@ -9,7 +9,7 @@ interface ButtonProviderProps {
 }
 
 function ButtonProvider({ field, Component }: ButtonProviderProps) {
-  if (!Component) return null;
+  if (!Component) return <></>;
 
   return createElement(Component, {
     id: field.id,

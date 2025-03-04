@@ -1,8 +1,8 @@
-import { FormField, FormFieldPage, FormSchema } from '@efie-form/core';
+import type { FormField, FormFieldPage, FormSchema } from '@efie-form/core';
 import { create } from 'zustand';
 import defaultSchema from '../defaultSchema';
-import { FieldPropsKey } from '../genFieldKey';
-import { FieldPathValue } from 'react-hook-form';
+import type { FieldPropsKey } from '../genFieldKey';
+import type { FieldPathValue } from 'react-hook-form';
 
 interface SchemaState {
   schema: FormSchema;
@@ -13,13 +13,13 @@ interface SchemaState {
     key: FieldPropsKey,
     value: unknown
   ) => void;
-  getPage: (pageId: string | null) => FormFieldPage | undefined;
+  getPage: (pageId?: string) => FormFieldPage | undefined;
   updatePages: (pages: FormFieldPage[]) => void;
   fieldMap: Map<string, FormField>;
   fieldKeyMap: Map<string, string>;
-  getFieldById: (fieldId: string | null) => FormField | undefined;
-  getFieldKeyById: (fieldId: string | null) => string | undefined;
-  getFieldParentId: (fieldId: string | null) => string | undefined;
+  getFieldById: (fieldId?: string) => FormField | undefined;
+  getFieldKeyById: (fieldId?: string) => string | undefined;
+  getFieldParentId: (fieldId?: string) => string | undefined;
   getFieldProps: <T extends FieldPropsKey>(
     fieldId: string,
     key: T
@@ -81,10 +81,10 @@ export const useSchemaStore = create<SchemaState>((set, getState) => ({
   },
   updatePages: (pages) => {
     const { fieldMap, fieldKeyMap, schema, addHistory } = getState();
-    pages.forEach((page, index) => {
+    for (const [index, page] of pages.entries()) {
       fieldMap.set(page.id, page);
       fieldKeyMap.set(page.id, `form.fields.${index}`);
-    });
+    }
     const newSchema = { ...schema, form: { fields: pages } };
     addHistory(newSchema);
     set({
@@ -114,14 +114,14 @@ export const useSchemaStore = create<SchemaState>((set, getState) => ({
     fieldMap.set(fieldId, field);
 
     if (key === 'children' && 'children' in field) {
-      field.children.forEach((child, index) => {
+      for (const [index, child] of field.children.entries()) {
         fieldMap.set(child.id, child);
         fieldParentMap.set(child.id, fieldId);
         fieldKeyMap.set(
           child.id,
           fieldKeyMap.get(fieldId) + `.children.${index}`
         );
-      });
+      }
     }
 
     addHistory(schema);
@@ -241,7 +241,7 @@ function iterateSetValue(
     field[key] = value;
     return;
   }
-  if (Array.isArray(field[key]) && !isNaN(Number(value))) {
+  if (Array.isArray(field[key]) && !Number.isNaN(Number(value))) {
     iterateSetValue(field[key], keys.slice(1), value);
   } else if (typeof field[key] === 'object') {
     iterateSetValue(field[key], keys.slice(1), value);
@@ -256,7 +256,7 @@ function iterateGetFieldProps(field: Record<string, any>, keys: string[]) {
   if (keys.length === 1) {
     return field[key];
   }
-  if (Array.isArray(field[key]) && !isNaN(Number(key))) {
+  if (Array.isArray(field[key]) && !Number.isNaN(Number(key))) {
     return iterateGetFieldProps(field[key], keys.slice(1));
   } else if (typeof field[key] === 'object') {
     return iterateGetFieldProps(field[key], keys.slice(1));
@@ -276,9 +276,9 @@ function getFieldInfoMap(
     fieldKeyMap.set(field.id, `${fieldKey}.${i}`);
     fieldMap.set(field.id, field);
     if ('children' in field) {
-      field.children.forEach((child) => {
+      for (const child of field.children) {
         fieldParentMap.set(child.id, field.id);
-      });
+      }
       getFieldInfoMap(
         field.children,
         fieldKeyMap,

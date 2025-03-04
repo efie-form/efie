@@ -10,7 +10,7 @@ interface PageProviderProps extends Partial<FieldPropsMap> {
 }
 
 function PageProvider({ field, Component, ...props }: PageProviderProps) {
-  if (!Component) return null;
+  if (!Component) return <></>;
 
   return createElement(Component, {
     id: field.id,

@@ -1,4 +1,4 @@
-import { MultipleChoicesFieldProps } from '@efie-form/react';
+import type { MultipleChoicesFieldProps } from '@efie-form/react';
 import { MenuItem, Select } from '@mui/material';
 
 function MultipleChoicesField({

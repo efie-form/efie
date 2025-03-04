@@ -2,22 +2,26 @@ import defaultSchema from '../../editor/src/lib/defaultSchema';
 import { ACTION_TYPE } from '../constant';
 import type { FormSchema } from '../types/formSchema.type';
 
-interface BuilderExternalProps {
-  id: string;
-  height: number;
-}
+// interface BuilderExternalProps {
+//   id: string;
+//   height: number;
+// }
 
 export default class BuilderExternal {
-  private parentElem: HTMLElement | null = null;
-  private iframeElem: HTMLIFrameElement | null = null;
+  private parentElem: HTMLElement | undefined = undefined;
+  private iframeElem: HTMLIFrameElement | undefined = undefined;
   private json: FormSchema = defaultSchema;
   private isIframeReady = false;
-  private pendingSchema: FormSchema | null = null;
-  private onReady: (() => void) | null = null;
+  private pendingSchema: FormSchema | undefined = undefined;
+  private onReady: (() => void) | undefined = undefined;
 
   constructor({ id, onReady }: { id: string; onReady?: () => void }) {
-    this.parentElem = document.getElementById(id);
-    this.onReady = onReady || null;
+    const elem = document.querySelector(`#${id}`);
+    if (!elem || !(elem instanceof HTMLElement)) {
+      throw new Error(`Element with id ${id} not found`);
+    }
+    this.parentElem = elem;
+    this.onReady = onReady || undefined;
     this.init();
   }
 
@@ -39,7 +43,7 @@ export default class BuilderExternal {
     this.iframeElem.style.border = 'none';
     this.iframeElem.style.width = '100%';
     this.iframeElem.style.height = '100%';
-    this.parentElem?.appendChild(this.iframeElem);
+    this.parentElem?.append(this.iframeElem);
   }
 
   public setHeight(height: number) {
@@ -52,19 +56,30 @@ export default class BuilderExternal {
 
   private listenMessage() {
     if (!this.iframeElem) return;
-    if (typeof window === 'undefined') return;
+    if (globalThis.window === undefined) return;
 
     window.addEventListener('message', (event) => {
-      if (event.data.type === ACTION_TYPE.INIT) {
-        this.isIframeReady = true;
-        if (this.pendingSchema) {
-          this.postMessage(ACTION_TYPE.RESET_DATA, this.pendingSchema);
-          this.pendingSchema = null;
+      switch (event.data.type) {
+        case ACTION_TYPE.INIT: {
+          this.isIframeReady = true;
+          if (this.pendingSchema) {
+            this.postMessage(ACTION_TYPE.RESET_DATA, this.pendingSchema);
+            this.pendingSchema = undefined;
+          }
+
+          break;
         }
-      } else if (event.data.type === ACTION_TYPE.SET_DATA) {
-        this.json = event.data.data;
-      } else if (event.data.type === ACTION_TYPE.LOADED) {
-        this.onReady?.();
+        case ACTION_TYPE.SET_DATA: {
+          this.json = event.data.data;
+
+          break;
+        }
+        case ACTION_TYPE.LOADED: {
+          this.onReady?.();
+
+          break;
+        }
+        // No default
       }
     });
   }

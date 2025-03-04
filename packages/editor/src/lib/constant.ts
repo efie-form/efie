@@ -1,24 +1,24 @@
-import type { FormFieldType } from '@efie-form/core';
+import { FormFieldType } from '@efie-form/core';
 
 export const FIELDS_NAME = {
-  shortText: 'Short Text',
-  time: 'Time',
-  singleChoice: 'Single Choice',
-  paragraph: 'Paragraph',
-  number: 'Number',
-  row: 'Row',
-  multipleChoices: 'Multiple Choices',
-  image: 'Image',
-  header: 'Header',
-  file: 'File Upload',
-  divider: 'Divider',
-  block: 'Block',
-  column: 'Column',
-  longText: 'Long Text',
-  date: 'Date',
-  dateTime: 'Date & Time',
-  button: 'Button',
-  page: 'Page',
+  [FormFieldType.SHORT_TEXT]: 'Short Text',
+  [FormFieldType.TIME]: 'Time',
+  [FormFieldType.SINGLE_CHOICE]: 'Single Choice',
+  [FormFieldType.PARAGRAPH]: 'Paragraph',
+  [FormFieldType.NUMBER]: 'Number',
+  [FormFieldType.ROW]: 'Row',
+  [FormFieldType.MULTIPLE_CHOICES]: 'Multiple Choices',
+  [FormFieldType.IMAGE]: 'Image',
+  [FormFieldType.HEADER]: 'Header',
+  [FormFieldType.FILE]: 'File Upload',
+  [FormFieldType.DIVIDER]: 'Divider',
+  [FormFieldType.BLOCK]: 'Block',
+  [FormFieldType.COLUMN]: 'Column',
+  [FormFieldType.LONG_TEXT]: 'Long Text',
+  [FormFieldType.DATE]: 'Date',
+  [FormFieldType.DATE_TIME]: 'Date & Time',
+  [FormFieldType.BUTTON]: 'Button',
+  [FormFieldType.PAGE]: 'Page',
 } satisfies Record<FormFieldType, string>;
 
 export const textAlignMap = {

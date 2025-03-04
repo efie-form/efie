@@ -1,4 +1,30 @@
-import { FormSchema } from '@efie-form/react';
+import type { FormSchema } from '@efie-form/react';
+import { FormFieldType } from '../../../../packages/core/lib/InputType';
+
+const containerProps = {
+  border: {
+    radius: {
+      bottomLeft: 0,
+      bottomRight: 0,
+      topLeft: 0,
+      topRight: 0,
+    },
+    color: '#000000',
+    width: 1,
+  },
+  margin: {
+    bottom: 0,
+    left: 0,
+    right: 0,
+    top: 0,
+  },
+  padding: {
+    bottom: 0,
+    left: 0,
+    right: 0,
+    top: 0,
+  },
+};
 
 export const schema: FormSchema = {
   version: 'v1',
@@ -13,18 +39,20 @@ export const schema: FormSchema = {
             type: 'block',
             children: [
               {
-                type: 'longText',
+                type: FormFieldType.LONG_TEXT,
                 id: 'TLxvJNtKjf',
                 props: {
                   label: 'Long Text',
                   placeholder: 'Enter the placeholder',
                   required: false,
+                  container: containerProps,
                 },
               },
               {
-                type: 'multipleChoices',
+                type: FormFieldType.MULTIPLE_CHOICES,
                 id: 'UctxtDDfYO',
                 props: {
+                  container: containerProps,
                   label: 'Multiple Choice',
                   options: [
                     {
@@ -45,13 +73,15 @@ export const schema: FormSchema = {
                 },
               },
               {
-                type: 'row',
+                type: FormFieldType.ROW,
                 id: 'WXHUMjPlGG',
-                props: {},
+                props: {
+                  gap: 16,
+                },
                 children: [
                   {
                     id: 'qkOhaZGcSO',
-                    type: 'column',
+                    type: FormFieldType.COLUMN,
                     props: {
                       width: 50,
                     },
@@ -59,7 +89,7 @@ export const schema: FormSchema = {
                   },
                   {
                     id: 'kkPtOzRVnD',
-                    type: 'column',
+                    type: FormFieldType.COLUMN,
                     props: {
                       width: 50,
                     },
@@ -82,6 +112,8 @@ export const schema: FormSchema = {
                 top: 0,
               },
               border: {
+                color: '#000000',
+                width: 1,
                 radius: {
                   bottomLeft: 8,
                   bottomRight: 8,

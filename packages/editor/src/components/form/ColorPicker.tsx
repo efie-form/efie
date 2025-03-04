@@ -12,6 +12,7 @@ import { cn } from '../../lib/utils.ts';
 import { Controller, useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import useDebounce from '../../lib/hooks/useDebounce.ts';
+import { useControllableState } from '@radix-ui/react-use-controllable-state';
 
 interface ColorPickerProps {
   value: string;
@@ -42,7 +43,12 @@ function ColorPicker({
   defaultColor = '#FFFFFF',
   onClose,
 }: ColorPickerProps) {
-  const [colorObject, setColorObject] = useColor(value || defaultColor);
+  const [internalValue, setInternalValue] = useControllableState({
+    defaultProp: value || defaultColor,
+    onChange,
+    prop: value,
+  });
+  const [colorObject, setColorObject] = useColor(internalValue!);
   const { control, watch, getValues, setValue } = useForm<FormSchema>({
     defaultValues: {
       hex: colorObject.hex,
@@ -91,15 +97,15 @@ function ColorPicker({
   };
 
   const handleRgbChange = (type: 'r' | 'g' | 'b', newValue: string) => {
-    const value = Number(newValue.replace(/\D/g, ''));
+    const value = Number(newValue.replaceAll(/\D/g, ''));
     if (value > 255) return;
     setValue(`rgb.${type}`, value);
   };
 
   useEffect(() => {
     if (!edited) return;
-    onChange?.(colorObject.hex);
-  }, [colorObject, edited]);
+    setInternalValue(colorObject.hex);
+  }, [colorObject, edited, setInternalValue]);
 
   const [open, setOpen] = useState(false);
 
@@ -155,7 +161,7 @@ function ColorPicker({
                             '#' +
                             e.target.value
                               .toUpperCase()
-                              .replace(/#/g, '')
+                              .replaceAll('#', '')
                               .slice(0, 8);
 
                           onChange(hex);

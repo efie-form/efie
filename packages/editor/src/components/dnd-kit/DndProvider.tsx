@@ -78,11 +78,13 @@ export default function DndProvider({ children }: DndContextProps) {
   };
 
   const updateAllFieldRect = () => {
-    schema.form.fields.forEach(findFieldElemAndUpdateRect);
+    for (const field of schema.form.fields) {
+      findFieldElemAndUpdateRect(field);
+    }
   };
 
   const findFieldElemAndUpdateRect = (field: FormField) => {
-    const elem = document.getElementById(field.id);
+    const elem = document.querySelector(`#${field.id}`);
     if (elem) {
       const rect = elem.getBoundingClientRect();
       setOriginalRect(field.id, {
@@ -93,7 +95,9 @@ export default function DndProvider({ children }: DndContextProps) {
       });
     }
     if ('children' in field) {
-      field.children.forEach(findFieldElemAndUpdateRect);
+      for (const child of field.children) {
+        findFieldElemAndUpdateRect(child);
+      }
     }
   };
 

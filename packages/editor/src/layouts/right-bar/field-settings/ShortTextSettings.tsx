@@ -13,7 +13,7 @@ interface ShortTextSettingsProps {
 function ShortTextSettings({ field }: ShortTextSettingsProps) {
   const { getFieldKeyById, updateFieldProps } = useSchemaStore();
   const fieldKey = getFieldKeyById(field.id);
-  if (!fieldKey) return null;
+  if (!fieldKey) return <></>;
 
   return (
     <div>

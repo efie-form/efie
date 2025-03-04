@@ -1,4 +1,4 @@
-import { RowFieldProps } from '@efie-form/react';
+import type { RowFieldProps } from '@efie-form/react';
 
 function RowField({ children }: RowFieldProps) {
   return <div>{children}</div>;

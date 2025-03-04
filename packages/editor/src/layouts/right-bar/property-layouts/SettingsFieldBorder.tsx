@@ -4,7 +4,7 @@ import SettingsField4Sides from './SettingsField4Sides.tsx';
 import SettingsFieldSwitchWithDropdown from './SettingsFieldSwitchWithDropdown.tsx';
 import type { FormField } from '@efie-form/core';
 import Number from '../../../components/form/Number.tsx';
-import { FieldPropsKey } from '../../../lib/genFieldKey.ts';
+import type { FieldPropsKey } from '../../../lib/genFieldKey.ts';
 import { useControllableState } from '@radix-ui/react-use-controllable-state';
 
 type ExtractUnionEndingWith<
