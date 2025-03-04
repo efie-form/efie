@@ -9,7 +9,7 @@ export default function getSettingsParentField(fieldId: string) {
   return parentField;
 }
 
-const nonSelectableFields: FormFieldType[] = ['column'];
+const nonSelectableFields: Set<FormFieldType> = new Set(['column']);
 
 function getSelectableParentField(fieldId: string) {
   const { getFieldParentId, getFieldById } = useSchemaStore.getState();
@@ -17,7 +17,7 @@ function getSelectableParentField(fieldId: string) {
   if (!parentId) return;
 
   const parentField = getFieldById(parentId);
-  if (!parentField || nonSelectableFields.includes(parentField.type)) {
+  if (!parentField || nonSelectableFields.has(parentField.type)) {
     return getSelectableParentField(parentId);
   }
 

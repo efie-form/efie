@@ -10,7 +10,7 @@ interface RowProviderProps extends Partial<FieldPropsMap> {
 }
 
 function RowProvider({ field, Component, ...props }: RowProviderProps) {
-  if (!Component) return null;
+  if (!Component) return <></>;
 
   return createElement(Component, {
     id: field.id,

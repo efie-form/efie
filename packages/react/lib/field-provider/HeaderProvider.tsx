@@ -1,5 +1,5 @@
 import type { ElementType } from 'react';
-import { createElement } from 'react';
+import React, { createElement } from 'react';
 import type { HeaderFieldProps } from '../../types/FieldProps';
 import type { FormFieldHeader } from '@efie-form/core';
 
@@ -9,7 +9,7 @@ interface HeaderProviderProps {
 }
 
 function HeaderProvider({ field, Component }: HeaderProviderProps) {
-  if (!Component) return null;
+  if (!Component) return <></>;
 
   return createElement(Component, {
     id: field.id,

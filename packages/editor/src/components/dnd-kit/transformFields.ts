@@ -34,7 +34,7 @@ const checkMoveDirection = (
   });
   const activeFieldPath = fieldPathMap.get(activeFieldId);
   const overFieldPath = fieldPathMap.get(overFieldId);
-  if (!activeFieldPath || !overFieldPath) return null;
+  if (!activeFieldPath || !overFieldPath) return;
 
   return checkDirection(activeFieldPath, overFieldPath, direction);
 };
@@ -66,7 +66,7 @@ const checkDirection = (
 
     const dropIndex = direction === 'up' ? overIndex : overIndex + 1;
 
-    if (activeIndex === dropIndex) return null;
+    if (activeIndex === dropIndex) return;
     return activeIndex > dropIndex ? 'up' : 'down';
   }
   const totalLength = Math.max(activeFieldPath.length, overFieldPath.length);
@@ -77,5 +77,5 @@ const checkDirection = (
     return activeIndex > overIndex ? 'up' : 'down';
   }
 
-  return null;
+  return;
 };

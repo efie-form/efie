@@ -15,7 +15,7 @@ interface BlockProviderProps extends Partial<FieldPropsMap> {
 }
 
 function BlockProvider({ field, Component, ...props }: BlockProviderProps) {
-  if (!Component) return null;
+  if (!Component) return <></>;
 
   return createElement(Component, {
     id: field.id,

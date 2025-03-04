@@ -21,7 +21,7 @@ interface RenderSettingsProps {
 }
 
 function RenderSettings({ field }: RenderSettingsProps) {
-  if (!field) return null;
+  if (!field) return <></>;
 
   switch (field?.type) {
     case FormFieldType.DATE_TIME: {
@@ -34,7 +34,7 @@ function RenderSettings({ field }: RenderSettingsProps) {
       return <LongTextSettings field={field} />;
     }
     case FormFieldType.COLUMN: {
-      return null;
+      return <></>;
     }
     case FormFieldType.BLOCK: {
       return <BlockSettings field={field} />;
@@ -76,7 +76,7 @@ function RenderSettings({ field }: RenderSettingsProps) {
       return <ButtonSettings field={field} />;
     }
     default: {
-      return;
+      return <></>;
     }
   }
 }

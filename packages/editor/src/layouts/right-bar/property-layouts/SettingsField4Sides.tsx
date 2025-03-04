@@ -60,7 +60,8 @@ function SettingsField4Sides({
     if (isSplitSides && !isAllEqual) {
       for (const item of splitSides) {
         const value = getFieldProps(field.id, item.key);
-         prev4SidesRef.current.push(value); continue;
+        prev4SidesRef.current.push(value);
+        continue;
       }
       handleSetAllPadding(prevAllSideRef.current);
     }
@@ -77,7 +78,7 @@ function SettingsField4Sides({
     }
   };
 
-  if (!fieldKey) return null;
+  if (!fieldKey) return <></>;
 
   return (
     <div className={className}>

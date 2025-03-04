@@ -10,7 +10,7 @@ interface ColumnProviderProps extends Partial<FieldPropsMap> {
 }
 
 function ColumnProvider({ field, Component, ...props }: ColumnProviderProps) {
-  if (!Component) return null;
+  if (!Component) return <></>;
 
   return createElement(Component, {
     id: field.id,

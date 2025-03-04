@@ -13,13 +13,13 @@ interface SchemaState {
     key: FieldPropsKey,
     value: unknown
   ) => void;
-  getPage: (pageId: string | null) => FormFieldPage | undefined;
+  getPage: (pageId?: string) => FormFieldPage | undefined;
   updatePages: (pages: FormFieldPage[]) => void;
   fieldMap: Map<string, FormField>;
   fieldKeyMap: Map<string, string>;
-  getFieldById: (fieldId: string | null) => FormField | undefined;
-  getFieldKeyById: (fieldId: string | null) => string | undefined;
-  getFieldParentId: (fieldId: string | null) => string | undefined;
+  getFieldById: (fieldId?: string) => FormField | undefined;
+  getFieldKeyById: (fieldId?: string) => string | undefined;
+  getFieldParentId: (fieldId?: string) => string | undefined;
   getFieldProps: <T extends FieldPropsKey>(
     fieldId: string,
     key: T
@@ -241,7 +241,7 @@ function iterateSetValue(
     field[key] = value;
     return;
   }
-  if (Array.isArray(field[key]) && !isNaN(Number(value))) {
+  if (Array.isArray(field[key]) && !Number.isNaN(Number(value))) {
     iterateSetValue(field[key], keys.slice(1), value);
   } else if (typeof field[key] === 'object') {
     iterateSetValue(field[key], keys.slice(1), value);
@@ -256,7 +256,7 @@ function iterateGetFieldProps(field: Record<string, any>, keys: string[]) {
   if (keys.length === 1) {
     return field[key];
   }
-  if (Array.isArray(field[key]) && !isNaN(Number(key))) {
+  if (Array.isArray(field[key]) && !Number.isNaN(Number(key))) {
     return iterateGetFieldProps(field[key], keys.slice(1));
   } else if (typeof field[key] === 'object') {
     return iterateGetFieldProps(field[key], keys.slice(1));

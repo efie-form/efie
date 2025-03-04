@@ -21,7 +21,8 @@ function SettingsFieldWidth({
     !('width' in field.props) ||
     typeof field.props.width !== 'object'
   )
-    return null;
+    return <></>;
+
   return (
     <>
       <div className="px-4 py-3.5">

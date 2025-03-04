@@ -8,9 +8,11 @@ interface FindFieldByIdResult {
 
 export default function findFieldById(
   fields: FormField[],
-  id: string | null,
+  id?: string,
   key: string = 'form.fields'
-): FindFieldByIdResult | null {
+): FindFieldByIdResult | undefined {
+  if (!id) return;
+
   for (const index in fields) {
     const field = fields[index];
     if (field.id === id) {
@@ -30,5 +32,4 @@ export default function findFieldById(
       }
     }
   }
-  return null;
 }

@@ -1,5 +1,5 @@
 import type { ElementType } from 'react';
-import { createElement } from 'react';
+import React, { createElement } from 'react';
 import type { FileFieldProps } from '../../types/FieldProps';
 import type { FormFieldFile } from '@efie-form/core';
 
@@ -9,7 +9,7 @@ interface FileProviderProps {
 }
 
 function FileProvider({ field, Component }: FileProviderProps) {
-  if (!Component) return null;
+  if (!Component) return <></>;
 
   return createElement(Component, {
     id: field.id,

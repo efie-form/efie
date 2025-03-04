@@ -80,8 +80,6 @@ export const getDefaultField = ({
           label: 'Number',
           placeholder: 'Enter the placeholder',
           required: false,
-          min: null,
-          max: null,
           container: containerDefaultProps,
         },
       };

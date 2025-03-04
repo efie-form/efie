@@ -92,8 +92,8 @@ export interface FormFieldNumber {
     label: string;
     placeholder: string;
     required: boolean;
-    min: number | null;
-    max: number | null;
+    min?: number;
+    max?: number;
     container: {
       margin: Margin;
       padding: Padding;

@@ -2,11 +2,11 @@ import { create } from 'zustand';
 import type { FormFieldType } from '@efie-form/core';
 
 interface DndState {
-  action: 'move' | 'new' | null;
+  action?: 'move' | 'new';
   setAction: (action: DndState['action']) => void;
-  draggedType: FormFieldType | null;
+  draggedType?: FormFieldType;
   setDraggedType: (type: FormFieldType) => void;
-  direction: 'up' | 'down' | null;
+  direction?: 'up' | 'down';
   setDirection: (direction: DndState['direction']) => void;
   clearDraggingState: () => void;
   originalRect: Record<
@@ -20,13 +20,13 @@ interface DndState {
 }
 
 export const useDndStore = create<DndState>((set) => ({
-  action: null,
+  action: undefined,
   setAction: (action) => set({ action }),
-  draggedType: null,
+  draggedType: undefined,
   setDraggedType: (type) => set({ draggedType: type }),
-  direction: null,
+  direction: undefined,
   setDirection: (direction) => set({ direction }),
-  clearDraggingState: () => set({ draggedType: null, action: null }),
+  clearDraggingState: () => set({ draggedType: undefined, action: undefined }),
   originalRect: {},
   setOriginalRect: (key, rect) =>
     set((state) => ({ originalRect: { ...state.originalRect, [key]: rect } })),

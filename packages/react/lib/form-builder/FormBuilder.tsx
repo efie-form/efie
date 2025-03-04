@@ -1,5 +1,4 @@
-import type {
-  RefObject} from 'react';
+import type { RefObject } from 'react';
 import React, {
   forwardRef,
   useEffect,
@@ -28,8 +27,8 @@ export interface FormBuilderRef {
 }
 
 const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
-  ({ onReady, options, height }, ref) => {
-    const builderRef = useRef<BuilderExternal | null>(null);
+  ({ onReady, height }, ref) => {
+    const builderRef = useRef<BuilderExternal | undefined>();
     const containerRef = useRef<HTMLDivElement>(null);
 
     // Initialize BuilderExternal once
@@ -48,14 +47,14 @@ const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
       return () => {
         if (builderRef.current) {
           // Clean up the iframe
-          const container = document.getElementById(DIV_ID);
+          const container = document.querySelector(`#${DIV_ID}`);
           if (container) {
             container.innerHTML = '';
           }
-          builderRef.current = null;
+          builderRef.current = undefined;
         }
       };
-    }, []); // Empty dependency array to run only once
+    }, [onReady]); // Empty dependency array to run only once
 
     // Update height when prop changes
     useEffect(() => {

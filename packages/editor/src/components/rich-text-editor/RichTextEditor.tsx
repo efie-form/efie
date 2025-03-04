@@ -41,11 +41,12 @@ function RichTextEditor({ value, onChange, active }: RichTextEditorProps) {
       onChange(editor.getJSON());
     },
   });
-  const [referenceElement, setReferenceElement] =
-    useState<HTMLDivElement | null>(null);
-  const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(
-    null
-  );
+  const [referenceElement, setReferenceElement] = useState<
+    HTMLDivElement | undefined
+  >();
+  const [popperElement, setPopperElement] = useState<
+    HTMLDivElement | undefined
+  >();
   const { styles, attributes: popperAttributes } = usePopper(
     referenceElement,
     popperElement,
@@ -54,15 +55,22 @@ function RichTextEditor({ value, onChange, active }: RichTextEditorProps) {
     }
   );
 
-  if (!editor) return null;
+  if (!editor) return;
 
   return (
-    <div className="relative " ref={setReferenceElement}>
+    <div
+      className="relative "
+      ref={(el) => {
+        if (el) setReferenceElement(el);
+      }}
+    >
       <EditorContent editor={editor} />
       {active &&
         createPortal(
           <div
-            ref={setPopperElement}
+            ref={(el) => {
+              if (el) setPopperElement(el);
+            }}
             style={styles.popper}
             {...popperAttributes.popper}
           >

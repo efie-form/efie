@@ -167,7 +167,7 @@ function PageItem({ page, onDelete }: PageItemProps) {
             <MdOutlineDragIndicator />
           </span>
           <span className="typography-body3 text-neutral-900">
-            {page.props.name} {page.id}
+            {page.props.name}
           </span>
         </div>
         <span className="pe-2 invisible group-hover:visible flex gap-2">

@@ -10,12 +10,12 @@ export const RIGHT_BAR_TABS = {
 export type RightBarTab = (typeof RIGHT_BAR_TABS)[keyof typeof RIGHT_BAR_TABS];
 
 interface SettingsState {
-  selectedFieldId: string | null;
+  selectedFieldId?: string;
   setSelectedFieldId: (id: string) => void;
   clearSelectedFieldId: () => void;
   mode: 'desktop' | 'mobile';
   setMode: (mode: SettingsState['mode']) => void;
-  page: string | null;
+  page?: string;
   setPage: (page: SettingsState['page']) => void;
   clearPage: () => void;
   activeTab: RightBarTab;
@@ -23,12 +23,12 @@ interface SettingsState {
 }
 
 export const useSettingsStore = create<SettingsState>((set) => ({
-  selectedFieldId: null,
+  selectedFieldId: undefined,
   setSelectedFieldId: (id) => {
     set({ selectedFieldId: id, activeTab: 'field-settings' });
   },
   clearSelectedFieldId: () => {
-    set({ selectedFieldId: null, activeTab: 'field-settings' });
+    set({ selectedFieldId: undefined, activeTab: 'field-settings' });
   },
   mode: 'desktop',
   setMode: (mode) => {

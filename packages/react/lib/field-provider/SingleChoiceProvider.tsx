@@ -1,5 +1,5 @@
 import type { ElementType } from 'react';
-import { createElement } from 'react';
+import React, { createElement } from 'react';
 import type { SingleChoiceFieldProps } from '../../types/FieldProps';
 import type { FormFieldSingleChoice } from '@efie-form/core';
 
@@ -9,7 +9,7 @@ interface SingleChoiceProviderProps {
 }
 
 function SingleChoiceProvider({ field, Component }: SingleChoiceProviderProps) {
-  if (!Component) return null;
+  if (!Component) return <></>;
 
   return createElement(Component, {
     id: field.id,

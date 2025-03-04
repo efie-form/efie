@@ -25,17 +25,17 @@ export default function moveField({
   fieldType,
   dropFieldType,
 }: MoveFieldProps) {
-  if (fieldId === dropFieldId) return null;
+  if (fieldId === dropFieldId) return;
   const fieldParentId = findFieldParentId(fields, fieldId);
   const dropFieldParentId = findFieldParentId(fields, dropFieldId);
 
-  if (!fieldParentId) return null;
+  if (!fieldParentId) return;
 
   if (isDropOnChildren(fieldType, dropFieldType)) {
     return moveFieldToChildrenEnd(fields, fieldId, fieldParentId, dropFieldId);
   }
 
-  if (!dropFieldParentId) return null;
+  if (!dropFieldParentId) return;
 
   const isMoveBetweenSiblings = fieldParentId === dropFieldParentId;
 
@@ -153,8 +153,11 @@ const swapBetweenSiblings = (
   return fields;
 };
 
-const findField = (fields: FormField[], fieldId: string): FormField | null => {
-  let result: FormField | null = null;
+const findField = (
+  fields: FormField[],
+  fieldId: string
+): FormField | undefined => {
+  let result: FormField | undefined;
   for (const field of fields) {
     if (field.id === fieldId) {
       result = field;

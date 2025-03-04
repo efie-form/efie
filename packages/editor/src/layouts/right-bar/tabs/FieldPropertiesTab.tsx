@@ -35,7 +35,7 @@ function FieldPropertiesTab() {
     }
   };
 
-  if (!field) return null;
+  if (!field) return <></>;
 
   return (
     <>

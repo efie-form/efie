@@ -44,11 +44,12 @@ function RenderField({ field, noSelect }: RenderFieldProps) {
   } = useSettingsStore();
   const isSelected = selectedFieldId === field.id;
   const { deleteField } = useSchemaStore();
-  const [referenceElement, setReferenceElement] =
-    useState<HTMLDivElement | null>(null);
-  const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(
-    null
-  );
+  const [referenceElement, setReferenceElement] = useState<
+    HTMLDivElement | undefined
+  >();
+  const [popperElement, setPopperElement] = useState<
+    HTMLDivElement | undefined
+  >();
   const { styles, attributes: popperAttributes } = usePopper(
     referenceElement,
     popperElement,
@@ -70,6 +71,7 @@ function RenderField({ field, noSelect }: RenderFieldProps) {
         id={`field-container-${field.id}`}
         {...attributes}
         ref={(ref) => {
+          if (!ref) return;
           setReferenceElement(ref);
           attributes.ref(ref);
         }}
@@ -92,7 +94,10 @@ function RenderField({ field, noSelect }: RenderFieldProps) {
         {isSelected &&
           createPortal(
             <div
-              ref={setPopperElement}
+              ref={(el) => {
+                if (!el) return;
+                setPopperElement(el);
+              }}
               style={styles.popper}
               {...popperAttributes.popper}
             >

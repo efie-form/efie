@@ -1,5 +1,5 @@
 import type { ElementType } from 'react';
-import { createElement } from 'react';
+import React, { createElement } from 'react';
 import type { ImageFieldProps } from '../../types/FieldProps';
 import type { FormFieldImage } from '@efie-form/core';
 
@@ -9,7 +9,7 @@ interface ImageProviderProps {
 }
 
 function ImageProvider({ field, Component }: ImageProviderProps) {
-  if (!Component) return null;
+  if (!Component) return <></>;
 
   return createElement(Component, {
     id: field.id,

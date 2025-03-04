@@ -165,8 +165,8 @@ export const sampleSchema: FormSchema = {
                   label: 'Number',
                   placeholder: 'Enter the placeholder',
                   required: false,
-                  min: null,
-                  max: null,
+                  min: undefined,
+                  max: undefined,
                 },
               },
               {

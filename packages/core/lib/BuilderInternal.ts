@@ -10,7 +10,7 @@ interface BuilderInternalProps {
 export default class BuilderInternal {
   isLoaded = false;
   onDataReset: ((data: FormSchema) => void) | undefined = undefined;
-  onDataRequest: () => FormSchema | undefined = () => undefined;
+  onDataRequest: () => FormSchema | undefined = () => {};
   onHeightChange: ((height: number) => void) | undefined = undefined;
 
   constructor(props: BuilderInternalProps) {

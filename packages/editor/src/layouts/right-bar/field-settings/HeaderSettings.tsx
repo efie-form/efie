@@ -13,7 +13,7 @@ interface HeaderSettingsProps {
 function HeaderSettings({ field }: HeaderSettingsProps) {
   const { getFieldKeyById, updateFieldProps } = useSchemaStore();
   const fieldKey = getFieldKeyById(field.id);
-  if (!fieldKey) return null;
+  if (!fieldKey) return <></>;
 
   return (
     <div>

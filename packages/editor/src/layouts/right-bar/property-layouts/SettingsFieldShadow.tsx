@@ -41,11 +41,11 @@ function SettingsFieldShadow({
     })
   );
 
-  if (!('boxShadow' in field.props)) return null;
+  if (!('boxShadow' in field.props)) return <></>;
   const shadows = field.props.boxShadow;
 
   const handleAddShadow = () => {
-    if (!('boxShadow' in field.props)) return null;
+    if (!('boxShadow' in field.props)) return;
     const shadows = field.props.boxShadow;
 
     const newShadow = {

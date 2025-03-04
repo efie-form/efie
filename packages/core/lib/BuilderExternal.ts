@@ -16,7 +16,11 @@ export default class BuilderExternal {
   private onReady: (() => void) | undefined = undefined;
 
   constructor({ id, onReady }: { id: string; onReady?: () => void }) {
-    this.parentElem = document.getElementById(id) || undefined;
+    const elem = document.querySelector(`#${id}`);
+    if (!elem || !(elem instanceof HTMLElement)) {
+      throw new Error(`Element with id ${id} not found`);
+    }
+    this.parentElem = elem;
     this.onReady = onReady || undefined;
     this.init();
   }

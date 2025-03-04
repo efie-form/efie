@@ -1,5 +1,5 @@
 import type { ElementType } from 'react';
-import { createElement } from 'react';
+import React, { createElement } from 'react';
 import type { DateFieldProps } from '../../types/FieldProps';
 import type { FormFieldDate } from '@efie-form/core';
 
@@ -9,7 +9,7 @@ interface DateProviderProps {
 }
 
 function DateProvider({ field, Component }: DateProviderProps) {
-  if (!Component) return null;
+  if (!Component) return <></>;
 
   return createElement(Component, {
     id: field.id,
