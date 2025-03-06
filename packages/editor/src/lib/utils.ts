@@ -1,3 +1,4 @@
+import { FormFieldType } from '@efie-form/core';
 import classNames from 'classnames';
 import { twMerge } from 'tailwind-merge';
 
@@ -12,4 +13,8 @@ export function generateId(length: number = 10) {
     { length },
     () => chars[Math.floor(Math.random() * chars.length)]
   ).join('');
+}
+
+export function isValidFieldType(type: string) {
+  return Object.values(FormFieldType).includes(type as FormFieldType);
 }

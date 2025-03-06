@@ -1,5 +1,5 @@
 import type { FormSchema } from '../types/formSchema.type';
-import { ACTION_TYPE } from '../constant';
+import { ACTION_TYPE } from './constant';
 
 interface BuilderInternalProps {
   onDataReset: (data: FormSchema) => void;

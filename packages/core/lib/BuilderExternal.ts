@@ -1,6 +1,6 @@
-import defaultSchema from '../../editor/src/lib/defaultSchema';
-import { ACTION_TYPE } from '../constant';
+import { ACTION_TYPE } from './constant';
 import type { FormSchema } from '../types/formSchema.type';
+import defaultSchema from './defaultSchema';
 
 // interface BuilderExternalProps {
 //   id: string;
