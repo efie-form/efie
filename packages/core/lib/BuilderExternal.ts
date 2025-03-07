@@ -1,40 +1,62 @@
-import defaultSchema from '../../editor/src/lib/defaultSchema';
-import { ACTION_TYPE } from '../constant';
+import { EXTERNAL_ACTION_TYPE, INTERNAL_ACTION_TYPE } from './constant';
 import type { FormSchema } from '../types/formSchema.type';
+import defaultSchema from './defaultSchema';
+import type { BuilderCustomInput } from '../types/builderCustomInput.type';
 
-// interface BuilderExternalProps {
-//   id: string;
-//   height: number;
-// }
+interface BuilderExternalProps {
+  id: string;
+  height: number;
+  formInputs?: BuilderCustomInput[];
+  onReady?: () => void;
+  schema?: FormSchema;
+}
 
 export default class BuilderExternal {
   private parentElem: HTMLElement | undefined = undefined;
   private iframeElem: HTMLIFrameElement | undefined = undefined;
-  private json: FormSchema = defaultSchema;
+  private schema: FormSchema = defaultSchema;
   private isIframeReady = false;
-  private pendingSchema: FormSchema | undefined = undefined;
   private onReady: (() => void) | undefined = undefined;
+  private formInputs: BuilderCustomInput[] | undefined = undefined;
+  private height: number = 0;
 
-  constructor({ id, onReady }: { id: string; onReady?: () => void }) {
+  constructor({
+    id,
+    onReady,
+    formInputs,
+    height,
+    schema,
+  }: BuilderExternalProps) {
     const elem = document.querySelector(`#${id}`);
     if (!elem || !(elem instanceof HTMLElement)) {
       throw new Error(`Element with id ${id} not found`);
     }
     this.parentElem = elem;
-    this.onReady = onReady || undefined;
-    this.init();
-  }
+    if (this.isIframeRendered()) return;
 
-  public init() {
-    if (
-      !this.parentElem ||
-      (this.parentElem?.childElementCount &&
-        this.parentElem?.childElementCount >= 1)
-    )
-      return;
+    if (onReady) this.onReady = onReady;
+    if (formInputs) this.formInputs = formInputs;
+    if (height) this.height = height;
+    if (schema) this.schema = schema;
 
     this.renderIframe();
     this.listenMessage();
+  }
+
+  private isIframeRendered() {
+    return (
+      this.parentElem?.childElementCount &&
+      this.parentElem?.childElementCount >= 1
+    );
+  }
+
+  public init() {
+    if (this.height) {
+      this.setHeight(this.height);
+    }
+    if (this.formInputs) {
+      this.setFormInputs(this.formInputs);
+    }
   }
 
   private renderIframe() {
@@ -51,7 +73,7 @@ export default class BuilderExternal {
 
     this.parentElem.style.height = `${height}px`;
 
-    this.postMessage(ACTION_TYPE.SET_HEIGHT, { height });
+    this.postMessage(EXTERNAL_ACTION_TYPE.SET_HEIGHT, { height });
   }
 
   private listenMessage() {
@@ -59,49 +81,46 @@ export default class BuilderExternal {
     if (globalThis.window === undefined) return;
 
     window.addEventListener('message', (event) => {
+      this.iframeLoadedHandler(event);
       switch (event.data.type) {
-        case ACTION_TYPE.INIT: {
-          this.isIframeReady = true;
-          if (this.pendingSchema) {
-            this.postMessage(ACTION_TYPE.RESET_DATA, this.pendingSchema);
-            this.pendingSchema = undefined;
-          }
-
+        case INTERNAL_ACTION_TYPE.SET_DATA: {
+          this.schema = event.data.data;
           break;
         }
-        case ACTION_TYPE.SET_DATA: {
-          this.json = event.data.data;
-
-          break;
-        }
-        case ACTION_TYPE.LOADED: {
-          this.onReady?.();
-
-          break;
-        }
-        // No default
       }
     });
   }
 
+  private iframeLoadedHandler(event: MessageEvent) {
+    if (event.data.type !== INTERNAL_ACTION_TYPE.LOADED) return;
+    this.postMessage(EXTERNAL_ACTION_TYPE.INIT_DATA, {
+      schema: this.schema,
+      formInputs: this.formInputs,
+      height: this.height,
+    });
+  }
+
   public getValue() {
-    return this.json;
+    return this.schema;
   }
 
   public loadSchema(data: FormSchema) {
-    console.log('loadSchema', data, this.iframeElem);
-    this.json = data;
+    this.schema = data;
 
     if (!this.iframeElem) {
       return;
     }
 
     if (!this.isIframeReady) {
-      this.pendingSchema = data;
       return;
     }
 
-    this.postMessage(ACTION_TYPE.RESET_DATA, data);
+    this.postMessage(EXTERNAL_ACTION_TYPE.RESET_DATA, data);
+  }
+
+  public setFormInputs(formInputs: BuilderCustomInput[]) {
+    this.formInputs = formInputs;
+    this.postMessage(EXTERNAL_ACTION_TYPE.SET_FORM_INPUTS, formInputs);
   }
 
   private postMessage(type: string, data: unknown) {
