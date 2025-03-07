@@ -1,4 +1,4 @@
-import type { BorderRadius } from '@efie-form/core';
+import type { BorderRadius } from '../../../core-old';
 
 export const toBorderRadius = (radius: BorderRadius) => {
   if (!radius) return;

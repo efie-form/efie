@@ -12,7 +12,7 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, onUnmounted, ref, watch } from 'vue';
-import { BuilderExternal, type FormSchema } from '@efie-form/core';
+import { BuilderExternal, type FormSchema } from '../../../core-old';
 
 const DIV_ID = 'efie-form-builder';
 

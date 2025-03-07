@@ -1,6 +1,6 @@
 import type { ElementType } from 'react';
 import React, { createElement } from 'react';
-import type { FormFieldShortText } from '@efie-form/core';
+import type { FormFieldShortText } from '../../../core-old';
 import type { ShortTextFieldProps } from '../../types/FieldProps';
 
 interface ShortTextProviderProps {

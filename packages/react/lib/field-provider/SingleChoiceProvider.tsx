@@ -1,7 +1,7 @@
 import type { ElementType } from 'react';
 import React, { createElement } from 'react';
 import type { SingleChoiceFieldProps } from '../../types/FieldProps';
-import type { FormFieldSingleChoice } from '@efie-form/core';
+import type { FormFieldSingleChoice } from '../../../core-old';
 
 interface SingleChoiceProviderProps {
   field: FormFieldSingleChoice;

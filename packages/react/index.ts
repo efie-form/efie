@@ -1,8 +1,8 @@
 export { default as FormBuilder } from './lib/form-builder/FormBuilder';
-export type { FormSchema } from '@efie-form/core';
+export type { FormSchema } from '../core-old';
 export { default as ReactForm } from './lib/Form';
 export type { FormBuilderRef } from './lib/form-builder/FormBuilder';
-export { FormFieldType } from '@efie-form/core';
+export { FormFieldType } from '../core-old';
 export type {
   ShortTextFieldProps,
   LongTextFieldProps,

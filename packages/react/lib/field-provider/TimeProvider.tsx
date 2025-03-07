@@ -1,7 +1,7 @@
 import type { ElementType } from 'react';
 import React, { createElement } from 'react';
 import type { TimeFieldProps } from '../../types/FieldProps';
-import type { FormFieldTime } from '@efie-form/core';
+import type { FormFieldTime } from '../../../core-old';
 
 interface TimeProviderProps {
   field: FormFieldTime;

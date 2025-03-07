@@ -1,7 +1,7 @@
 import type { ElementType } from 'react';
 import React, { createElement } from 'react';
 import type { NumberFieldProps } from '../../types/FieldProps';
-import type { FormFieldNumber } from '@efie-form/core';
+import type { FormFieldNumber } from '../../../core-old';
 
 interface NumberProviderProps {
   field: FormFieldNumber;

@@ -9,7 +9,7 @@ import {
   type FormSchema,
   type BuilderCustomInput,
   BuilderExternal,
-} from '@efie-form/core';
+} from '../../../core-old';
 
 const DIV_ID = 'efie-form-builder';
 

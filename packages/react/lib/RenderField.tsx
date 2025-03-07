@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormFieldType, type FormField } from '@efie-form/core';
+import { FormFieldType, type FormField } from '../../core-old';
 import type { FieldPropsMap } from '../types/FieldProps';
 import {
   BlockProvider,
