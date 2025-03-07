@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import defaultSchema from '../defaultSchema';
-import { FormFieldType, type BuilderCustomInput } from '@efie-form/core';
+import { type BuilderCustomInput } from '@efie-form/core';
 
 export const RIGHT_BAR_TABS = {
   PAGE: 'page',

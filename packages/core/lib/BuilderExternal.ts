@@ -1,11 +1,14 @@
 import { ACTION_TYPE } from './constant';
 import type { FormSchema } from '../types/formSchema.type';
 import defaultSchema from './defaultSchema';
+import type { BuilderCustomInput } from '../types/builderCustomInput.type';
 
-// interface BuilderExternalProps {
-//   id: string;
-//   height: number;
-// }
+interface BuilderExternalProps {
+  id: string;
+  height: number;
+  formInputs?: BuilderCustomInput[];
+  onReady?: () => void;
+}
 
 export default class BuilderExternal {
   private parentElem: HTMLElement | undefined = undefined;
@@ -14,14 +17,18 @@ export default class BuilderExternal {
   private isIframeReady = false;
   private pendingSchema: FormSchema | undefined = undefined;
   private onReady: (() => void) | undefined = undefined;
+  private formInputs: BuilderCustomInput[] | undefined = undefined;
+  private height: number = 0;
 
-  constructor({ id, onReady }: { id: string; onReady?: () => void }) {
+  constructor({ id, onReady, formInputs, height }: BuilderExternalProps) {
     const elem = document.querySelector(`#${id}`);
     if (!elem || !(elem instanceof HTMLElement)) {
       throw new Error(`Element with id ${id} not found`);
     }
     this.parentElem = elem;
     this.onReady = onReady || undefined;
+    this.formInputs = formInputs || undefined;
+    this.height = height;
     this.init();
   }
 
@@ -35,6 +42,12 @@ export default class BuilderExternal {
 
     this.renderIframe();
     this.listenMessage();
+    if (this.height) {
+      this.setHeight(this.height);
+    }
+    if (this.formInputs) {
+      this.setFormInputs(this.formInputs);
+    }
   }
 
   private renderIframe() {
@@ -66,6 +79,9 @@ export default class BuilderExternal {
             this.postMessage(ACTION_TYPE.RESET_DATA, this.pendingSchema);
             this.pendingSchema = undefined;
           }
+          if (this.formInputs) {
+            this.postMessage(ACTION_TYPE.SET_FORM_INPUTS, this.formInputs);
+          }
 
           break;
         }
@@ -89,7 +105,6 @@ export default class BuilderExternal {
   }
 
   public loadSchema(data: FormSchema) {
-    console.log('loadSchema', data, this.iframeElem);
     this.json = data;
 
     if (!this.iframeElem) {
@@ -102,6 +117,11 @@ export default class BuilderExternal {
     }
 
     this.postMessage(ACTION_TYPE.RESET_DATA, data);
+  }
+
+  public setFormInputs(formInputs: BuilderCustomInput[]) {
+    this.formInputs = formInputs;
+    this.postMessage(ACTION_TYPE.SET_FORM_INPUTS, formInputs);
   }
 
   private postMessage(type: string, data: unknown) {

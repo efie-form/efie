@@ -5,4 +5,5 @@ export const ACTION_TYPE = {
   RESET_DATA: 'reset-data',
   SET_HEIGHT: 'set-height',
   LOADED: 'loaded',
+  SET_FORM_INPUTS: 'set-form-inputs',
 } as const;

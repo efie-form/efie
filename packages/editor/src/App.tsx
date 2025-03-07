@@ -7,7 +7,7 @@ import { useSchemaStore } from './lib/state/schema.state.ts';
 
 function App() {
   const editorRef = useRef<BuilderInternal | undefined>(undefined);
-  const { setPage, clearPage } = useSettingsStore();
+  const { setPage, clearPage, setFormInputs } = useSettingsStore();
   const { setSchema, schema, currentHistoryIndex } = useSchemaStore();
   const [height, setHeight] = useState(0);
 
@@ -30,6 +30,10 @@ function App() {
         onHeightChange: (height) => {
           setHeight(height);
         },
+        onFormInputsChange: (formInputs) => {
+          console.log('onFormInputsChange', formInputs);
+          setFormInputs(formInputs);
+        },
       });
       editorRef.current = editor;
     }
@@ -37,12 +41,7 @@ function App() {
     return () => {
       editorRef.current = undefined;
     };
-  }, [schema, setSchema, setPage, clearPage]);
-
-  useEffect(() => {
-    if (!editorRef.current) return;
-    editorRef.current.loaded();
-  }, []);
+  }, [schema, setSchema, setPage, clearPage, setFormInputs]);
 
   // Handle schema updates
   useEffect(() => {

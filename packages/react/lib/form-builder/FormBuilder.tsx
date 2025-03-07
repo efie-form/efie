@@ -5,7 +5,11 @@ import React, {
   useImperativeHandle,
   useRef,
 } from 'react';
-import { type FormSchema, BuilderExternal } from '@efie-form/core';
+import {
+  type FormSchema,
+  type BuilderCustomInput,
+  BuilderExternal,
+} from '@efie-form/core';
 
 const DIV_ID = 'efie-form-builder';
 
@@ -14,6 +18,7 @@ interface FormBuilderProps {
   options?: FormBuilderOptions;
   onReady?: () => void;
   height: number;
+  formInputs?: BuilderCustomInput[];
 }
 
 interface FormBuilderOptions {
@@ -27,9 +32,12 @@ export interface FormBuilderRef {
 }
 
 const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
-  ({ onReady, height }, ref) => {
+  ({ onReady, height, formInputs }, ref) => {
     const builderRef = useRef<BuilderExternal | undefined>();
     const containerRef = useRef<HTMLDivElement>(null);
+    const formInputDetectsChanges = formInputs?.map(
+      (input) => `${input.id}-${input.type}`
+    );
 
     // Initialize BuilderExternal once
     useEffect(() => {
@@ -40,6 +48,8 @@ const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
           onReady: () => {
             onReady?.();
           },
+          formInputs,
+          height,
         });
       }
 
@@ -54,7 +64,7 @@ const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
           builderRef.current = undefined;
         }
       };
-    }, [onReady]); // Empty dependency array to run only once
+    }, [onReady, formInputs, height, formInputDetectsChanges]); // Empty dependency array to run only once
 
     // Update height when prop changes
     useEffect(() => {
@@ -76,6 +86,11 @@ const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
       }),
       []
     );
+
+    useEffect(() => {
+      if (!builderRef.current || !formInputs) return;
+      builderRef.current.setFormInputs(formInputs);
+    }, [formInputs, formInputDetectsChanges]);
 
     return (
       <div
