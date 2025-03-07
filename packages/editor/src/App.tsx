@@ -9,30 +9,33 @@ function App() {
   const editorRef = useRef<BuilderInternal | undefined>(undefined);
   const { setPage, clearPage, setFormInputs } = useSettingsStore();
   const { setSchema, schema, currentHistoryIndex } = useSchemaStore();
+  const [initialized, setInitialized] = useState(false);
   const [height, setHeight] = useState(0);
 
   useEffect(() => {
-    function resetPage(data: FormSchema) {
-      const pages = data.form.fields.filter((field) => field.type === 'page');
-      if (pages.length === 0) {
-        return clearPage();
+    function resetSchema(data: FormSchema) {
+      setSchema(data);
+      const firstPage = data.form.fields.find((field) => field.type === 'page');
+      if (firstPage) {
+        setPage(firstPage.id);
       }
-      setPage(pages[0].id);
     }
 
     if (!editorRef.current) {
       const editor = new BuilderInternal({
         onDataRequest: () => schema,
-        onDataReset: (data) => {
-          setSchema(data);
-          resetPage(data);
-        },
+        onDataReset: resetSchema,
         onHeightChange: (height) => {
           setHeight(height);
         },
         onFormInputsChange: (formInputs) => {
-          console.log('onFormInputsChange', formInputs);
           setFormInputs(formInputs);
+        },
+        onInitialized: ({ formInputs, height, schema }) => {
+          setInitialized(true);
+          setFormInputs(formInputs);
+          setHeight(height);
+          if (schema) resetSchema(schema);
         },
       });
       editorRef.current = editor;
@@ -41,7 +44,7 @@ function App() {
     return () => {
       editorRef.current = undefined;
     };
-  }, [schema, setSchema, setPage, clearPage, setFormInputs]);
+  }, [setSchema, setPage, clearPage, setFormInputs]);
 
   // Handle schema updates
   useEffect(() => {

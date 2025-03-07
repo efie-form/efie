@@ -19,6 +19,7 @@ interface FormBuilderProps {
   onReady?: () => void;
   height: number;
   formInputs?: BuilderCustomInput[];
+  schema?: FormSchema;
 }
 
 interface FormBuilderOptions {
@@ -27,12 +28,11 @@ interface FormBuilderOptions {
 }
 
 export interface FormBuilderRef {
-  loadSchema: (schema: FormSchema) => void;
   getSchema: () => FormSchema;
 }
 
 const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
-  ({ onReady, height, formInputs }, ref) => {
+  ({ onReady, height, formInputs, schema }, ref) => {
     const builderRef = useRef<BuilderExternal | undefined>();
     const containerRef = useRef<HTMLDivElement>(null);
     const formInputDetectsChanges = formInputs?.map(
@@ -50,6 +50,7 @@ const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
           },
           formInputs,
           height,
+          schema,
         });
       }
 
@@ -64,7 +65,7 @@ const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
           builderRef.current = undefined;
         }
       };
-    }, [onReady, formInputs, height, formInputDetectsChanges]); // Empty dependency array to run only once
+    }, [onReady, formInputs, height, formInputDetectsChanges, schema]); // Empty dependency array to run only once
 
     // Update height when prop changes
     useEffect(() => {
@@ -77,9 +78,6 @@ const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
     useImperativeHandle(
       ref,
       () => ({
-        loadSchema: (schema: FormSchema) => {
-          builderRef.current?.loadSchema(schema);
-        },
         getSchema: () => {
           return builderRef.current?.getValue() as FormSchema;
         },

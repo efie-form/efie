@@ -25,16 +25,12 @@ function App() {
     };
   }, []);
 
-  const handleReady = () => {
-    formBuilderRef.current?.loadSchema(schema);
-  };
-
   return (
     <div>
       <FormBuilder
         ref={formBuilderRef}
-        onReady={handleReady}
         height={height}
+        schema={schema}
         formInputs={[
           {
             id: 'flfCYesTVJ',

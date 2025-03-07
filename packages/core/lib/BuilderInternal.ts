@@ -1,12 +1,19 @@
 import type { BuilderCustomInput } from '../types/builderCustomInput.type';
 import type { FormSchema } from '../types/formSchema.type';
-import { ACTION_TYPE } from './constant';
+import { EXTERNAL_ACTION_TYPE, INTERNAL_ACTION_TYPE } from './constant';
+
+interface InitializedPayload {
+  schema: FormSchema;
+  formInputs: BuilderCustomInput[];
+  height: number;
+}
 
 interface BuilderInternalProps {
   onDataReset: (data: FormSchema) => void;
   onDataRequest: () => FormSchema;
   onHeightChange: (height: number) => void;
   onFormInputsChange: (formInputs: BuilderCustomInput[]) => void;
+  onInitialized: (data: InitializedPayload) => void;
 }
 
 export default class BuilderInternal {
@@ -17,12 +24,15 @@ export default class BuilderInternal {
   onHeightChange: ((height: number) => void) | undefined = undefined;
   onFormInputsChange: ((formInputs: BuilderCustomInput[]) => void) | undefined =
     undefined;
+  onInitialized: ((data: InitializedPayload) => void) | undefined = undefined;
+  isDataInitialized = false;
 
   constructor(props: BuilderInternalProps) {
     this.onDataReset = props.onDataReset;
     this.onDataRequest = props.onDataRequest;
     this.onHeightChange = props.onHeightChange;
     this.onFormInputsChange = props.onFormInputsChange;
+    this.onInitialized = props.onInitialized;
     this.init();
   }
 
@@ -35,22 +45,41 @@ export default class BuilderInternal {
       this.dataResetHandler(e);
       this.heightHandler(e);
       this.formInputsHandler(e);
+      this.initializedHandler(e);
     });
 
     // Send INIT first to establish connection
-    this.postMessage(ACTION_TYPE.INIT);
-  }
-
-  public loaded() {
-    if (this.isLoaded) return;
-
-    this.isLoaded = true;
-    this.postMessage(ACTION_TYPE.LOADED);
+    // wait for the outer window to be ready and send the initialized event
+    this.postMessage(INTERNAL_ACTION_TYPE.LOADED);
   }
 
   public setValue(value: FormSchema) {
     if (globalThis.window === undefined || !this.isLoaded) return;
-    this.postMessage(ACTION_TYPE.SET_DATA, value);
+    this.postMessage(INTERNAL_ACTION_TYPE.SET_DATA, value);
+  }
+
+  private initializedHandler(event: MessageEvent) {
+    if (
+      event.data.type !== EXTERNAL_ACTION_TYPE.INIT_DATA ||
+      this.isDataInitialized
+    )
+      return;
+    this.isDataInitialized = true;
+    const payload = event.data.data as InitializedPayload;
+
+    if (payload.schema && this.onDataRequest) {
+      this.onDataRequest();
+    }
+
+    if (payload.formInputs && this.onFormInputsChange) {
+      this.onFormInputsChange(payload.formInputs);
+    }
+
+    if (payload.height && this.onHeightChange) {
+      this.onHeightChange(payload.height);
+    }
+
+    if (this.onInitialized) this.onInitialized(payload);
   }
 
   /**
@@ -60,7 +89,7 @@ export default class BuilderInternal {
    * @returns void
    */
   private dataResetHandler(event: MessageEvent) {
-    if (event.data.type !== ACTION_TYPE.RESET_DATA) return;
+    if (event.data.type !== EXTERNAL_ACTION_TYPE.RESET_DATA) return;
     if (this.onDataReset) this.onDataReset(event.data.data);
   }
 
@@ -71,7 +100,7 @@ export default class BuilderInternal {
    * @returns void
    */
   private heightHandler(event: MessageEvent) {
-    if (event.data.type !== ACTION_TYPE.SET_HEIGHT) return;
+    if (event.data.type !== EXTERNAL_ACTION_TYPE.SET_HEIGHT) return;
     if (this.onHeightChange) this.onHeightChange(event.data.data.height);
   }
 
@@ -82,7 +111,7 @@ export default class BuilderInternal {
    * @returns void
    */
   private formInputsHandler(event: MessageEvent) {
-    if (event.data.type !== ACTION_TYPE.SET_FORM_INPUTS) return;
+    if (event.data.type !== EXTERNAL_ACTION_TYPE.SET_FORM_INPUTS) return;
     if (this.onFormInputsChange) this.onFormInputsChange(event.data.data);
   }
 
