@@ -1,35 +1,55 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useRef, useState } from 'react';
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const editorRef = useRef<BuilderInternal | undefined>(undefined);
+  const { setPage, clearPage, setFormInputs } = useSettingsStore();
+  const { setSchema, schema, currentHistoryIndex } = useSchemaStore();
+  const [initialized, setInitialized] = useState(false);
+  const [height, setHeight] = useState(0);
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+  useEffect(() => {
+    function resetSchema(data: FormSchema) {
+      setSchema(data);
+      const firstPage = data.form.fields.find((field) => field.type === 'page');
+      if (firstPage) {
+        setPage(firstPage.id);
+      }
+    }
+
+    if (!editorRef.current) {
+      const editor = new BuilderInternal({
+        onDataRequest: () => schema,
+        onDataReset: resetSchema,
+        onHeightChange: (height) => {
+          setHeight(height);
+        },
+        onFormInputsChange: (formInputs) => {
+          setFormInputs(formInputs);
+        },
+        onInitialized: ({ formInputs, height, schema }) => {
+          setInitialized(true);
+          setFormInputs(formInputs);
+          setHeight(height);
+          if (schema) resetSchema(schema);
+        },
+      });
+      editorRef.current = editor;
+    }
+
+    return () => {
+      editorRef.current = undefined;
+    };
+  }, [setSchema, setPage, clearPage, setFormInputs]);
+
+  // Handle schema updates
+  useEffect(() => {
+    if (editorRef.current && schema) {
+      editorRef.current.setValue(schema);
+    }
+  }, [currentHistoryIndex, schema]);
+
+  return <FormBuilder height={height} />;
 }
 
-export default App
+export default App;

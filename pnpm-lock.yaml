@@ -196,7 +196,7 @@ importers:
         version: 3.2.2(react@19.0.0)
       '@efie-form/core':
         specifier: workspace:*
-        version: link:../core-old
+        version: 'link:'
       '@radix-ui/react-accordion':
         specifier: ^1.2.1
         version: 1.2.1(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -261,6 +261,9 @@ importers:
       '@rollup/plugin-url':
         specifier: ^8.0.2
         version: 8.0.2(rollup@4.34.9)
+      '@tiptap/core':
+        specifier: ^2.10.3
+        version: 2.10.3(@tiptap/pm@2.10.3)
       '@types/jest':
         specifier: ^29.5.13
         version: 29.5.14
@@ -338,6 +341,9 @@ importers:
 
   packages/iframe:
     dependencies:
+      '@efie-form/core':
+        specifier: workspace:*
+        version: link:../core
       react:
         specifier: ^19.0.0
         version: 19.0.0
@@ -383,7 +389,7 @@ importers:
     dependencies:
       '@efie-form/core':
         specifier: workspace:*
-        version: link:../core-old
+        version: link:../core
       '@radix-ui/react-use-controllable-state':
         specifier: ^1.1.0
         version: 1.1.0(@types/react@18.3.12)(react@18.3.1)
@@ -414,7 +420,7 @@ importers:
     dependencies:
       '@efie-form/core':
         specifier: workspace:*
-        version: link:../core-old
+        version: link:../core
       vue:
         specifier: ^3.0.0
         version: 3.5.13(typescript@5.6.3)

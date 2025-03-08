@@ -1,5 +1,5 @@
 {
-  "name": "@efie-form/editor",
+  "name": "@efie-form/core",
   "description": "A form builder for any web framework",
   "version": "0.1.2",
   "type": "module",
@@ -16,6 +16,7 @@
     "@radix-ui/react-tabs": "^1.1.2",
     "@radix-ui/react-use-controllable-state": "^1.1.0",
     "@rollup/plugin-url": "^8.0.2",
+    "@tiptap/core": "^2.10.3",
     "@types/jest": "^29.5.13",
     "@types/node": "^22.13.8",
     "@types/react": "^18.3.3",
