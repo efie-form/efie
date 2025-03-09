@@ -3,13 +3,17 @@
   "description": "A form builder for any web framework",
   "version": "0.1.2",
   "type": "module",
-  "main": "dist/index.html",
   "license": "MIT",
   "files": [
     "LICENSE",
     "dist/",
     "README.md"
   ],
+  "exports": {
+    ".": {
+      "default": "./index.ts"
+    }
+  },
   "devDependencies": {
     "@radix-ui/react-slider": "^1.2.1",
     "@radix-ui/react-switch": "^1.1.1",

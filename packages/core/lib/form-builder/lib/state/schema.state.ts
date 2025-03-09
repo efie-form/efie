@@ -2,7 +2,7 @@ import type {
   FormField,
   FormFieldPage,
   FormSchema,
-} from '@lib/types/formSchema.type.ts';
+} from '@lib/types/formSchema.type';
 import { create } from 'zustand';
 import defaultSchema from '@form-builder/lib/defaultSchema';
 import type { FieldPropsKey } from '@form-builder/lib/genFieldKey';

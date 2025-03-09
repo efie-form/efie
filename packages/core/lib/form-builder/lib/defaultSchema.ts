@@ -1,6 +1,6 @@
 import { FormFieldType } from '@lib/InputType';
-import type { FormSchema } from '@lib/types/formSchema.type.ts';
-import { generateId } from '@form-builder/lib/utils.ts';
+import type { FormSchema } from '@lib/types/formSchema.type';
+import { generateId } from '@form-builder/lib/utils';
 
 const defaultSchema: FormSchema = {
   version: 'v1',

@@ -1,4 +1,4 @@
-import { FormFieldType } from '@lib/InputType';
+import type { FormFieldType } from '@lib/InputType';
 import type { JSONContent } from '@tiptap/core';
 
 export interface BorderRadius {

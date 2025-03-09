@@ -1,28 +1,39 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
-    "useDefineForClassFields": true,
-    "lib": ["ESNext", "DOM", "DOM.Iterable"],
-    "module": "ESNext",
-    "skipLibCheck": true,
-    "types": ["node"],
-    /* Bundler mode */
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "isolatedModules": true,
-    "moduleDetection": "force",
-    "noEmit": true,
-    "jsx": "react-jsx",
     "esModuleInterop": true,
-    /* Linting */
+    "skipLibCheck": true,
+    "target": "ES2022",
+    "allowJs": true,
+    "moduleDetection": "force",
+    "verbatimModuleSyntax": true,
+
+    // strictness
     "strict": true,
+    "noUncheckedIndexedAccess": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
+
+    // transpile
+    "module": "ES6",
+    "moduleResolution": "bundler",
+    "declaration": true,
+    "declarationDir": "dist/types",
+    "outDir": "dist",
+    "composite": true,
+    "sourceMap": true,
+    "declarationMap": true,
+    "jsx": "react-jsx",
+
+    // lib
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+
+    "baseUrl": ".",
+    // paths
     "paths": {
       "@form-builder/*": ["./lib/form-builder/*"],
       "@lib/*": ["./lib/*"]
     }
   },
-  "include": ["lib"]
+  "include": ["./lib", "./index.ts"]
 }
