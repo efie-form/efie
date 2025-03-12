@@ -1,39 +1,19 @@
 {
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "target": "ES2022",
+    "composite": true,
+    "declarationMap": true,
     "allowJs": true,
-    "moduleDetection": "force",
     "verbatimModuleSyntax": true,
 
-    // strictness
-    "strict": true,
-    "noUncheckedIndexedAccess": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-
     // transpile
-    "module": "ES6",
-    "moduleResolution": "bundler",
-    "declaration": true,
-    "declarationDir": "dist/types",
-    "outDir": "dist",
-    "composite": true,
-    "sourceMap": true,
-    "declarationMap": true,
     "jsx": "react-jsx",
-
     // lib
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
 
     "baseUrl": ".",
+    "rootDir": "."
     // paths
-    "paths": {
-      "@form-builder/*": ["./lib/form-builder/*"],
-      "@lib/*": ["./lib/*"]
-    }
   },
-  "include": ["./lib", "./index.ts"]
+  "include": ["src"]
 }

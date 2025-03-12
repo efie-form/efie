@@ -3,6 +3,7 @@ import { cn } from '@form-builder/lib/utils';
 import LeftBar from '@form-builder/layouts/left-bar/LeftBar';
 import MainSection from '@form-builder/layouts/main-section/MainSection';
 import RightBar from '@form-builder/layouts/right-bar/RightBar';
+import '@lib/styles/tailwind.css';
 
 interface FormBuilderProps {
   height?: number;

@@ -11,7 +11,6 @@ function App() {
   const editorRef = useRef<BuilderInternal | undefined>(undefined);
   const { setPage, clearPage, setFormInputs } = useSettingsStore();
   const { setSchema, schema, currentHistoryIndex } = useSchemaStore();
-  const [initialized, setInitialized] = useState(false);
   const [height, setHeight] = useState(0);
 
   useEffect(() => {
@@ -34,7 +33,6 @@ function App() {
           setFormInputs(formInputs);
         },
         onInitialized: ({ formInputs, height, schema }) => {
-          setInitialized(true);
           setFormInputs(formInputs);
           setHeight(height);
           if (schema) resetSchema(schema);

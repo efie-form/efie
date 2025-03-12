@@ -41,6 +41,6 @@ export default {
   plugins: [],
 } satisfies Config;
 
-function hexWithOpacity(hex) {
+function hexWithOpacity(hex: string) {
   return `rgb(from var(${hex}) r g b / <alpha-value>)`;
 }
