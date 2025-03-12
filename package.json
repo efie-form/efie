@@ -6,6 +6,7 @@
   "scripts": {
     "dev:editor": "nx serve @efie-form/editor",
     "dev:react-builder-demo": "nx serve react-builder-demo",
+    "tw": "pnpm run tw --filter @efie-form/core",
     "lint": "eslint --fix"
   },
   "repository": {
