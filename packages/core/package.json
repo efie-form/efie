@@ -15,8 +15,8 @@
     }
   },
   "scripts": {
-    "tw": "tailwindcss -i ./src/lib/styles/input.css -o ./src/lib/styles/output.css --watch",
-    "tw:build": "tailwindcss -i ./src/lib/styles/input.css -o ./src/lib/styles/output.css"
+    "tw": "tailwindcss -i lib/styles/input.css -o ./src/lib/styles/output.css --watch",
+    "tw:build": "tailwindcss -i lib/styles/input.css -o ./src/lib/styles/output.css"
   },
   "devDependencies": {
     "@radix-ui/react-slider": "^1.2.1",

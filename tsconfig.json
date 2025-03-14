@@ -16,9 +16,5 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "paths": {
-      "@form-builder/*": ["../../packages/core/src/lib/form-builder/*"],
-      "@lib/*": ["../../packages/core/src/lib/*"]
-    }
   }
 }

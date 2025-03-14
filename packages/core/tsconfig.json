@@ -15,5 +15,5 @@
     "rootDir": "."
     // paths
   },
-  "include": ["src"]
+  "include": ["lib"]
 }
