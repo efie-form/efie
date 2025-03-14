@@ -1,4 +1,4 @@
-import type { Margin } from '../../../core-old';
+import type { Margin } from '@efie-form/core';
 
 export const toMarginStyle = (margin: Margin) => {
   if (!margin) return;

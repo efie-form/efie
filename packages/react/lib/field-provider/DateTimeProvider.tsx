@@ -1,7 +1,7 @@
 import type { ElementType } from 'react';
-import React, { createElement } from 'react';
+import { createElement } from 'react';
 import type { DateTimeFieldProps } from '../../types/FieldProps';
-import type { FormFieldDateTime } from '../../../core-old';
+import type { FormFieldDateTime } from '@efie-form/core';
 
 interface DateTimeProviderProps {
   field: FormFieldDateTime;

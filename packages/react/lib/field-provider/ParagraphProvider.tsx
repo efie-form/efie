@@ -1,7 +1,7 @@
 import type { ElementType } from 'react';
-import React, { createElement } from 'react';
+import { createElement } from 'react';
 import type { ParagraphFieldProps } from '../../types/FieldProps';
-import type { FormFieldParagraph } from '../../../core-old';
+import type { FormFieldParagraph } from '@efie-form/core';
 
 interface ParagraphProviderProps {
   field: FormFieldParagraph;

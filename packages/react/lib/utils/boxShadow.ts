@@ -1,4 +1,4 @@
-import type { BoxShadow } from '../../../core-old';
+import type { BoxShadow } from '@efie-form/core';
 
 export const toBoxShadowStyle = (shadows: BoxShadow[]) => {
   if (!shadows) return;

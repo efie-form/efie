@@ -11,7 +11,7 @@
   ],
   "exports": {
     ".": {
-      "default": "./src/index.ts"
+      "default": "./lib/index.ts"
     }
   },
   "scripts": {

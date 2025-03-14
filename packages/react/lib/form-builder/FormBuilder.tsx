@@ -1,15 +1,10 @@
 import type { RefObject } from 'react';
-import React, {
-  forwardRef,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-} from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 import {
   type FormSchema,
   type BuilderCustomInput,
   BuilderExternal,
-} from '../../../core-old';
+} from '@efie-form/core';
 
 const DIV_ID = 'efie-form-builder';
 

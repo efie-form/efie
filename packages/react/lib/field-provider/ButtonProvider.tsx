@@ -1,7 +1,7 @@
 import type { ElementType } from 'react';
-import React, { createElement } from 'react';
+import { createElement } from 'react';
 import type { ButtonFieldProps } from '../../types/FieldProps';
-import type { FormFieldButton } from '../../../core-old';
+import type { FormFieldButton } from '@efie-form/core';
 
 interface ButtonProviderProps {
   field: FormFieldButton;

@@ -1,7 +1,7 @@
 import type { ElementType } from 'react';
-import React, { createElement } from 'react';
+import { createElement } from 'react';
 import type { FieldPropsMap, PageFieldProps } from '../../types/FieldProps';
-import type { FormFieldPage } from '../../../core-old';
+import type { FormFieldPage } from '@efie-form/core';
 import RenderField from '../RenderField';
 
 interface PageProviderProps extends Partial<FieldPropsMap> {

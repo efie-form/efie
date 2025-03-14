@@ -1,7 +1,7 @@
 import type { ElementType } from 'react';
-import React, { createElement } from 'react';
+import { createElement } from 'react';
 import type { HeaderFieldProps } from '../../types/FieldProps';
-import type { FormFieldHeader } from '../../../core-old';
+import type { FormFieldHeader } from '@efie-form/core';
 
 interface HeaderProviderProps {
   field: FormFieldHeader;

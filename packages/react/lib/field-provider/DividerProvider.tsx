@@ -1,7 +1,7 @@
 import type { ElementType } from 'react';
-import React, { createElement } from 'react';
+import { createElement } from 'react';
 import type { DividerFieldProps } from '../../types/FieldProps';
-import type { FormFieldDivider } from '../../../core-old';
+import type { FormFieldDivider } from '@efie-form/core';
 
 interface DividerProviderProps {
   field: FormFieldDivider;

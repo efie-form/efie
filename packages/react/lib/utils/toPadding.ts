@@ -1,4 +1,4 @@
-import type { Padding } from '../../../core-old';
+import type { Padding } from '@efie-form/core';
 
 export const toPaddingStyle = (padding: Padding) => {
   if (!padding) return;

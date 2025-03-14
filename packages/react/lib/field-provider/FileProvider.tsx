@@ -1,7 +1,7 @@
 import type { ElementType } from 'react';
-import React, { createElement } from 'react';
+import { createElement } from 'react';
 import type { FileFieldProps } from '../../types/FieldProps';
-import type { FormFieldFile } from '../../../core-old';
+import type { FormFieldFile } from '@efie-form/core';
 
 interface FileProviderProps {
   field: FormFieldFile;

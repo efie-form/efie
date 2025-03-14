@@ -1,7 +1,7 @@
 import type { ElementType } from 'react';
-import React, { createElement, Fragment } from 'react';
+import { createElement, Fragment } from 'react';
 import type { FieldPropsMap, RowFieldProps } from '../../types/FieldProps';
-import type { FormFieldRow } from '../../../core-old';
+import type { FormFieldRow } from '@efie-form/core';
 import RenderField from '../RenderField';
 
 interface RowProviderProps extends Partial<FieldPropsMap> {
