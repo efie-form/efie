@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import type { FormSchema } from '@efie-form/core';
+import type { FormSchema } from '../../core-old';
 import RenderField from './RenderField';
 import type { FieldPropsMap } from '../types/FieldProps';
 

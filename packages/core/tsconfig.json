@@ -1,24 +1,19 @@
 {
-  "include": ["lib/*.ts", "types/*.ts"],
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "target": "ES2016",
-    "module": "ESNext",
-    // Emit
-    "declaration": true,
-    "declarationMap": true,
-    "outDir": "./dist",
-    "rootDir": ".",
-    "esModuleInterop": true,
-
-    // type checking
-    "strict": true,
-    "skipLibCheck": true,
-    "moduleResolution": "node",
-
-    // Add these new options
     "composite": true,
-    "incremental": true,
-    "sourceMap": true,
-    "declarationDir": "./dist/types"
-  }
+    "declarationMap": true,
+    "allowJs": true,
+    "verbatimModuleSyntax": true,
+
+    // transpile
+    "jsx": "react-jsx",
+    // lib
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+
+    "baseUrl": ".",
+    "rootDir": "."
+    // paths
+  },
+  "include": ["lib"]
 }

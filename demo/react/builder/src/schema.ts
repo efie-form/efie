@@ -1,5 +1,4 @@
-import type { FormSchema } from '@efie-form/react';
-import { FormFieldType } from '../../../../packages/core/lib/InputType';
+import { FormFieldType, type FormSchema } from '@efie-form/react';
 
 const containerProps = {
   border: {

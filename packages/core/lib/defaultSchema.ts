@@ -1,4 +1,4 @@
-import type { FormSchema } from '../types/formSchema.type';
+import type { FormSchema } from './types/formSchema.type';
 import { FormFieldType } from './InputType';
 
 const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -36,6 +36,8 @@ const defaultSchema: FormSchema = {
                 top: 0,
               },
               border: {
+                width: 1,
+                color: '#00000019',
                 radius: {
                   bottomLeft: 8,
                   bottomRight: 8,

@@ -1,5 +1,5 @@
 import type { FormSchema } from '@efie-form/vue';
-import { FormFieldType } from '../../../../packages/core/lib/InputType';
+import { FormFieldType } from '../../../../packages/core-old/lib/InputType';
 
 export const schema: FormSchema = {
   version: 'v1',

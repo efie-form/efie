@@ -1,4 +1,3 @@
-import React from 'react';
 import { FormFieldType, type FormField } from '@efie-form/core';
 import type { FieldPropsMap } from '../types/FieldProps';
 import {

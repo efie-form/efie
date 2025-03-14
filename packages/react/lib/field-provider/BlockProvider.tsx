@@ -1,5 +1,5 @@
 import type { ElementType } from 'react';
-import React, { createElement } from 'react';
+import { createElement } from 'react';
 import type { BlockFieldProps, FieldPropsMap } from '../../types/FieldProps';
 import type { FormFieldBlock } from '@efie-form/core';
 import RenderField from '../RenderField';

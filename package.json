@@ -2,10 +2,11 @@
   "name": "@efie-form/monorepo",
   "version": "0.1.2",
   "description": "",
-  "main": "index.js",
+  "type": "module",
   "scripts": {
     "dev:editor": "nx serve @efie-form/editor",
     "dev:react-builder-demo": "nx serve react-builder-demo",
+    "tw": "pnpm run tw --filter @efie-form/core",
     "lint": "eslint --fix"
   },
   "repository": {

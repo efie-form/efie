@@ -1,10 +1,5 @@
 import type { RefObject } from 'react';
-import React, {
-  forwardRef,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-} from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 import {
   type FormSchema,
   type BuilderCustomInput,

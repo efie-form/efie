@@ -1,5 +1,5 @@
 import type { ElementType } from 'react';
-import React, { createElement } from 'react';
+import { createElement } from 'react';
 import type { ImageFieldProps } from '../../types/FieldProps';
 import type { FormFieldImage } from '@efie-form/core';
 

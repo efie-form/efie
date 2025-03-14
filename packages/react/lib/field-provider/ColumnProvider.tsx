@@ -1,5 +1,5 @@
 import type { ElementType } from 'react';
-import React, { createElement } from 'react';
+import { createElement } from 'react';
 import type { ColumnFieldProps, FieldPropsMap } from '../../types/FieldProps';
 import type { FormFieldColumn } from '@efie-form/core';
 import RenderField from '../RenderField';
