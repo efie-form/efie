@@ -1,8 +1,7 @@
 import LeftToolbar from './toolbars/LeftToolbar';
-import Preview from './toolbars/Preview';
 import LayoutSwitcher from './toolbars/LayoutSwitcher';
 import FormContent from './FormContent';
-import ViewSchema from './toolbars/ViewSchema';
+import ModeSwitcher from './toolbars/ModeSwitcher';
 
 export default function MainSection() {
   return (
@@ -10,8 +9,7 @@ export default function MainSection() {
       <header className="h-14 flex justify-between px-4 items-center relative z-50 bg-white">
         <LeftToolbar />
         <div className="flex items-center gap-4">
-          <ViewSchema />
-          <Preview />
+          <ModeSwitcher />
           <LayoutSwitcher />
         </div>
       </header>

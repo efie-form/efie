@@ -10,7 +10,7 @@ const SCREEN_SIZES = {
 
 function FormContent() {
   const { getPage } = useSchemaStore();
-  const { mode, page } = useSettingsStore();
+  const { previewDevice, page } = useSettingsStore();
   const selectedPage = getPage(page);
 
   if (!selectedPage) return <></>;
@@ -22,7 +22,7 @@ function FormContent() {
           <div
             className="flex flex-col mx-auto transition-all"
             style={{
-              maxWidth: SCREEN_SIZES[mode],
+              maxWidth: SCREEN_SIZES[previewDevice],
             }}
           >
             {selectedPage.children.map((field) => (

@@ -3,15 +3,15 @@ import { useSettingsStore } from '../../../lib/state/settings.state';
 import { cn } from '../../../lib/utils';
 
 function LayoutSwitcher() {
-  const { mode, setMode } = useSettingsStore();
-  const isMobile = mode === 'mobile';
-  const isDesktop = mode === 'desktop';
+  const { previewDevice, setPreviewDevice } = useSettingsStore();
+  const isMobile = previewDevice === 'mobile';
+  const isDesktop = previewDevice === 'desktop';
 
   return (
     <div className="flex bg-neutral-50 rounded-lg overflow-hidden">
       <button
         className="p-2.5 hover:bg-neutral-100/50 transition-all"
-        onClick={() => setMode('desktop')}
+        onClick={() => setPreviewDevice('desktop')}
       >
         <FaDesktop
           size={16}
@@ -23,7 +23,7 @@ function LayoutSwitcher() {
       </button>
       <button
         className="p-2.5 hover:bg-neutral-100/50"
-        onClick={() => setMode('mobile')}
+        onClick={() => setPreviewDevice('mobile')}
       >
         <FaMobileScreen
           size={16}

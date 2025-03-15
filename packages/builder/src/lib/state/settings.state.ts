@@ -17,8 +17,10 @@ interface SettingsState {
   selectedFieldId?: string;
   setSelectedFieldId: (id: string) => void;
   clearSelectedFieldId: () => void;
-  mode: 'desktop' | 'mobile';
+  mode: 'edit' | 'preview' | 'json';
   setMode: (mode: SettingsState['mode']) => void;
+  previewDevice: 'desktop' | 'mobile';
+  setPreviewDevice: (previewDevice: SettingsState['previewDevice']) => void;
   page?: string;
   setPage: (page: SettingsState['page']) => void;
   clearPage: () => void;
@@ -41,9 +43,13 @@ export const useSettingsStore = create<SettingsState>((set) => ({
   clearSelectedFieldId: () => {
     set({ selectedFieldId: undefined, activeTab: 'field-settings' });
   },
-  mode: 'desktop',
+  mode: 'edit',
   setMode: (mode) => {
     set({ mode });
+  },
+  previewDevice: 'desktop',
+  setPreviewDevice: (previewDevice) => {
+    set({ previewDevice });
   },
   page: defaultSchema.form.fields[0].id,
   setPage: (page) => {
