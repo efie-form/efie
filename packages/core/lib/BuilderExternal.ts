@@ -7,7 +7,6 @@ interface BuilderExternalProps {
   id: string;
   height: number;
   formInputs?: BuilderCustomInput[];
-  onReady?: () => void;
   schema?: FormSchema;
 }
 
@@ -16,17 +15,10 @@ export default class BuilderExternal {
   private iframeElem: HTMLIFrameElement | undefined = undefined;
   private schema: FormSchema = defaultSchema;
   private isIframeReady = false;
-  private onReady: (() => void) | undefined = undefined;
   private formInputs: BuilderCustomInput[] | undefined = undefined;
   private height: number = 0;
 
-  constructor({
-    id,
-    onReady,
-    formInputs,
-    height,
-    schema,
-  }: BuilderExternalProps) {
+  constructor({ id, formInputs, height, schema }: BuilderExternalProps) {
     const elem = document.querySelector(`#${id}`);
     if (!elem || !(elem instanceof HTMLElement)) {
       throw new Error(`Element with id ${id} not found`);
@@ -34,7 +26,6 @@ export default class BuilderExternal {
     this.parentElem = elem;
     if (this.isIframeRendered()) return;
 
-    if (onReady) this.onReady = onReady;
     if (formInputs) this.formInputs = formInputs;
     if (height) this.height = height;
     if (schema) this.schema = schema;

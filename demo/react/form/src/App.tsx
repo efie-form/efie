@@ -1,25 +1,25 @@
 import { ReactForm } from '@efie-form/react';
-import { sampleSchema } from './sample-schema.ts';
-import ShortTextField from './components/fields/shortTextField.tsx';
-import LongTextField from './components/fields/LongTextField.tsx';
-import DividerField from './components/fields/DividerField.tsx';
-import BlockField from './components/fields/BlockField.tsx';
-import ColumnField from './components/fields/ColumnField.tsx';
-import RowField from './components/fields/RowField.tsx';
-import DateField from './components/fields/DateField.tsx';
-import TimeField from './components/fields/TimeField.tsx';
-import DateTimeField from './components/fields/DateTimeField.tsx';
-import FileField from './components/fields/FileField.tsx';
-import HeaderField from './components/fields/HeaderField.tsx';
-import ImageField from './components/fields/ImageField.tsx';
-import MultipleChoicesField from './components/fields/MultipleChoicesField.tsx';
-import SingleChoiceField from './components/fields/SingleChoiceField.tsx';
-import NumberField from './components/fields/NumberField.tsx';
-import ParagraphField from './components/fields/ParagraphField.tsx';
-import PageField from './components/fields/PageField.tsx';
+import { sampleSchema } from './sample-schema';
+import ShortTextField from './components/fields/shortTextField';
+import LongTextField from './components/fields/LongTextField';
+import DividerField from './components/fields/DividerField';
+import BlockField from './components/fields/BlockField';
+import ColumnField from './components/fields/ColumnField';
+import RowField from './components/fields/RowField';
+import DateField from './components/fields/DateField';
+import TimeField from './components/fields/TimeField';
+import DateTimeField from './components/fields/DateTimeField';
+import FileField from './components/fields/FileField';
+import HeaderField from './components/fields/HeaderField';
+import ImageField from './components/fields/ImageField';
+import MultipleChoicesField from './components/fields/MultipleChoicesField';
+import SingleChoiceField from './components/fields/SingleChoiceField';
+import NumberField from './components/fields/NumberField';
+import ParagraphField from './components/fields/ParagraphField';
+import PageField from './components/fields/PageField';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import ButtonField from './components/fields/ButtonField.tsx';
+import ButtonField from './components/fields/ButtonField';
 
 function App() {
   return (

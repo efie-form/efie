@@ -8,5 +8,4 @@
     "moduleResolution": "bundler"
   },
   "include": ["src"],
-  "references": [{ "path": "../core" }]
 }

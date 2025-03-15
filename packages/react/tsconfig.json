@@ -8,7 +8,7 @@
 
     // transpile
     "jsx": "react-jsx",
-    // lib
+    // src
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
 
     "baseUrl": ".",
