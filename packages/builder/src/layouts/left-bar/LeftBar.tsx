@@ -2,7 +2,7 @@ import { HiMiniSquaresPlus } from 'react-icons/hi2';
 import { useState } from 'react';
 import FieldsTab from './tabs/FieldsTab';
 import { cn } from '../../lib/utils';
-import PagesTab from './tabs/PagesTab';
+import { PagesTab } from './tabs/PagesTab';
 import { FaRegCopy } from 'react-icons/fa';
 import Tooltip from '../../components/elements/Tooltip';
 

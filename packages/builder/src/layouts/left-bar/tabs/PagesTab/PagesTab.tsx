@@ -1,5 +1,5 @@
 import type { FormFieldPage } from '@efie-form/core';
-import { useSettingsStore } from '../../../lib/state/settings.state';
+import { useSettingsStore } from '../../../../lib/state/settings.state';
 import type { DragEndEvent } from '@dnd-kit/core';
 import {
   closestCenter,
@@ -13,11 +13,11 @@ import {
   SortableContext,
   sortableKeyboardCoordinates,
 } from '@dnd-kit/sortable';
-import Button from '../../../components/elements/Button';
+import Button from '../../../../components/elements/Button';
 import { FaPlus } from 'react-icons/fa6';
-import { getDefaultField } from '../../../lib/getDefaultField';
-import { useSchemaStore } from '../../../lib/state/schema.state';
-import PageItem from './PagesTab/PageItem';
+import { getDefaultField } from '../../../../lib/getDefaultField';
+import { useSchemaStore } from '../../../../lib/state/schema.state';
+import PageItem from './PageItem';
 
 function PagesTab() {
   const { updatePages, schema, updateFieldProps } = useSchemaStore();
