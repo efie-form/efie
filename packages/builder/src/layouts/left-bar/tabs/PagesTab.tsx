@@ -1,7 +1,5 @@
 import type { FormFieldPage } from '@efie-form/core';
-import { MdOutlineDragIndicator } from 'react-icons/md';
 import { useSettingsStore } from '../../../lib/state/settings.state';
-import { cn } from '../../../lib/utils';
 import type { DragEndEvent } from '@dnd-kit/core';
 import {
   closestCenter,
@@ -14,17 +12,15 @@ import {
 import {
   SortableContext,
   sortableKeyboardCoordinates,
-  useSortable,
 } from '@dnd-kit/sortable';
 import Button from '../../../components/elements/Button';
-import type { CSSProperties } from 'react';
-import { useState } from 'react';
-import { FaCheck, FaPlus, FaTrash, FaXmark } from 'react-icons/fa6';
+import { FaPlus } from 'react-icons/fa6';
 import { getDefaultField } from '../../../lib/getDefaultField';
 import { useSchemaStore } from '../../../lib/state/schema.state';
+import PageItem from './PagesTab/PageItem';
 
 function PagesTab() {
-  const { updatePages, schema } = useSchemaStore();
+  const { updatePages, schema, updateFieldProps } = useSchemaStore();
   const { setPage, page } = useSettingsStore();
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -103,6 +99,12 @@ function PagesTab() {
                 key={p.id}
                 page={p}
                 onDelete={() => handleDeletePage(p)}
+                name={p.props.name}
+                onRename={(newName) => {
+                  updateFieldProps(p.id, 'props.name', newName);
+                }}
+                isCurrentPage={p.id === page}
+                onSelect={() => setPage(p.id)}
               />
             ))}
           </ul>
@@ -113,105 +115,3 @@ function PagesTab() {
 }
 
 export default PagesTab;
-
-interface PageItemProps {
-  page: FormFieldPage;
-  onDelete: () => void;
-}
-
-function PageItem({ page, onDelete }: PageItemProps) {
-  const { schema } = useSchemaStore();
-  const { page: currentPage, setPage } = useSettingsStore();
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transition,
-    transform,
-    isDragging,
-  } = useSortable({
-    id: page.id,
-  });
-  const [deleteConfirm, setDeleteConfirm] = useState(false);
-
-  const style: CSSProperties = {
-    transform: transform ? `translateY(${transform.y}px` : undefined,
-    transition,
-  };
-
-  return (
-    <>
-      <li
-        style={style}
-        key={page.id}
-        ref={setNodeRef}
-        {...attributes}
-        className={cn(
-          'relative px-1 py-2 flex items-center justify-between group hover:bg-neutral-100',
-          isDragging ? 'cursor-grabbing relative z-50' : 'cursor-pointer',
-          {
-            'bg-neutral-200': isDragging,
-            '!bg-neutral-100': currentPage === page.id,
-          }
-        )}
-        onClick={() => setPage(page.id)}
-        onMouseLeave={() => setDeleteConfirm(false)}
-      >
-        <div className="flex items-center">
-          <span
-            className={cn('me-2 invisible group-hover:visible', {
-              'cursor-grab': !isDragging,
-            })}
-            {...listeners}
-          >
-            <MdOutlineDragIndicator />
-          </span>
-          <span className="typography-body3 text-neutral-900">
-            {page.props.name}
-          </span>
-        </div>
-        <span className="pe-2 invisible group-hover:visible flex gap-2">
-          {deleteConfirm ? (
-            <>
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-
-                  onDelete();
-                  setDeleteConfirm(false);
-                }}
-              >
-                <FaCheck className="text-success" size={14} />
-              </button>
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-
-                  setDeleteConfirm(false);
-                }}
-              >
-                <FaXmark className="text-danger" size={14} />
-              </button>
-            </>
-          ) : (
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                setDeleteConfirm(true);
-              }}
-              disabled={schema.form.fields.length === 1}
-            >
-              <FaTrash
-                className={cn('text-danger', {
-                  'opacity-50 cursor-not-allowed':
-                    schema.form.fields.length === 1,
-                })}
-                size={12}
-              />
-            </button>
-          )}
-        </span>
-      </li>
-    </>
-  );
-}
