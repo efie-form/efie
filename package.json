@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pwkang/efie.git"
+    "url": "git+https://github.com/efie-form/efie.git"
   },
   "author": "Wei Kang",
   "license": "MIT",

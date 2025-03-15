@@ -12,7 +12,7 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, onUnmounted, ref, watch } from 'vue';
-import { BuilderExternal, type FormSchema } from '../../../core-old';
+import { BuilderExternal, type FormSchema } from '@efie-form/core';
 
 const DIV_ID = 'efie-form-builder';
 
@@ -40,9 +40,6 @@ export default defineComponent({
       if (containerRef.value && !builderRef.value) {
         builderRef.value = new BuilderExternal({
           id: DIV_ID,
-          onReady: () => {
-            props.onReady?.();
-          },
         });
       }
     });

@@ -1,5 +1,5 @@
 import type { FormSchema } from '@efie-form/react';
-import { FormFieldType } from '../../../../packages/core-old/lib/InputType';
+import { FormFieldType } from '../../../../packages/core-old/src/InputType';
 
 export const sampleSchema: FormSchema = {
   version: 'v1',

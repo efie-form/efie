@@ -1,11 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import {
   FormBuilder,
-  BuilderInternal,
-  FormSchema,
   useSettingsStore,
   useSchemaStore,
-} from '@efie-form/core';
+} from '@efie-form/builder';
+import { BuilderInternal, FormSchema } from '@efie-form/core';
 
 function App() {
   const editorRef = useRef<BuilderInternal | undefined>(undefined);

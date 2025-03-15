@@ -15,17 +15,14 @@
     }
   },
   "scripts": {
-    "tw": "tailwindcss -i lib/styles/input.css -o ./src/lib/styles/output.css --watch",
-    "tw:build": "tailwindcss -i lib/styles/input.css -o ./src/lib/styles/output.css"
+    "tw": "tailwindcss -i lib/styles/input.css -o ./lib/styles/output.css --watch",
+    "tw:build": "tailwindcss -i lib/styles/input.css -o ./lib/styles/output.css --minify"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
   },
   "devDependencies": {
-    "@radix-ui/react-slider": "^1.2.1",
-    "@radix-ui/react-switch": "^1.1.1",
-    "@radix-ui/react-tabs": "^1.1.2",
-    "@radix-ui/react-use-controllable-state": "^1.1.0",
-    "@rollup/plugin-url": "^8.0.2",
-    "@tailwindcss/cli": "^4.0.13",
-    "@tiptap/core": "^2.10.3",
     "@types/jest": "^29.5.13",
     "@types/node": "^22.13.8",
     "@types/react": "^18.3.3",
@@ -34,7 +31,6 @@
     "autoprefixer": "^10.4.20",
     "classnames": "^2.5.1",
     "jest": "^29.7.0",
-    "postcss": "^8.4.47",
     "react": "^19.0.0",
     "react-color-palette": "^7.3.0",
     "react-dom": "^19.0.0",
