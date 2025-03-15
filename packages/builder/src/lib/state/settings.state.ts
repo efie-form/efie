@@ -45,7 +45,12 @@ export const useSettingsStore = create<SettingsState>((set) => ({
   },
   mode: 'edit',
   setMode: (mode) => {
-    set({ mode });
+    set({
+      mode,
+      // switching mode while a field is selected will throw error when switching back to edit mode
+      // TODO: find a solution to prevent this
+      selectedFieldId: undefined,
+    });
   },
   previewDevice: 'desktop',
   setPreviewDevice: (previewDevice) => {

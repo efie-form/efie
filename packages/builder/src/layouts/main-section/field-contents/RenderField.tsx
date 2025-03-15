@@ -1,11 +1,11 @@
-import { type FormField } from '@efie-form/core';
+import { type FormField, FormFieldType } from '@efie-form/core';
 import ColumnsField from './fields/ColumnsField';
 import RowField from './fields/RowField';
 import {
   RIGHT_BAR_TABS,
   useSettingsStore,
 } from '../../../lib/state/settings.state';
-import { useState, type MouseEvent } from 'react';
+import { type MouseEvent, useState } from 'react';
 import HeaderField from './fields/HeaderField';
 import ParagraphField from './fields/ParagraphField';
 import ShortTextField from './fields/ShortTextField';
@@ -29,7 +29,6 @@ import Droppable from '../../../components/dnd-kit/Droppable';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import { usePopper } from 'react-popper';
 import { createPortal } from 'react-dom';
-import { FormFieldType } from '@efie-form/core';
 
 interface RenderFieldProps {
   field: FormField;
