@@ -82,7 +82,7 @@ function PagesTab() {
         <Button
           onClick={handleAddNewPage}
           className="w-full"
-          StartIcon={FaPlus}
+          startIcon={FaPlus}
         >
           Add new page
         </Button>
