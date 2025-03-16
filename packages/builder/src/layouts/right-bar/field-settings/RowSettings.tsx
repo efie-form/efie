@@ -102,7 +102,7 @@ function RowSettings({ field }: RowSettingsProps) {
           ))}
         </div>
         <div className="flex justify-center mt-4">
-          <Button onClick={addColumn} StartIcon={FaPlus}>
+          <Button onClick={addColumn} startIcon={FaPlus}>
             Add Column
           </Button>
         </div>
