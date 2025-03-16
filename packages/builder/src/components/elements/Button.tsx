@@ -4,28 +4,37 @@ import { cn } from '../../lib/utils';
 
 interface ButtonProps extends ButtonPropsWithoutRef {
   children: ReactNode;
-  StartIcon?: ElementType;
-  EndIcon?: ElementType;
+  startIcon?: ElementType;
+  endIcon?: ElementType;
 }
 
 function Button({
   children,
   className,
-  StartIcon,
-  EndIcon,
+  startIcon: StartIcon,
+  endIcon: EndIcon,
+  disabled,
   ...props
 }: ButtonProps) {
   return (
     <button
-      className={cn(
-        'bg-primary flex justify-center text-white hover:text-primary-50 typography-button2 px-4 py-1.5 rounded-md text-center hover:bg-primary-600 active:translate-x-[0.5px] active:translate-y-[0.5px] items-center gap-2',
-        className
-      )}
+      disabled={disabled}
+      className={cn('button typography-button2', className, {
+        disabled,
+      })}
       {...props}
     >
-      {StartIcon && <StartIcon />}
+      {StartIcon && (
+        <span>
+          <StartIcon />
+        </span>
+      )}
       {children}
-      {EndIcon && <EndIcon />}
+      {EndIcon && (
+        <span>
+          <EndIcon />
+        </span>
+      )}
     </button>
   );
 }
