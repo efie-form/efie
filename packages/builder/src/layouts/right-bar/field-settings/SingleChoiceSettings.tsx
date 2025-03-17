@@ -19,6 +19,12 @@ function SingleChoiceSettings({ field }: SingleChoiceSettingsProps) {
       <div className="px-4 py-2 bg-neutral-100 text-neutral-800 typography-body3 uppercase">
         General
       </div>
+      <SettingsFieldVertical label="Form key" divider>
+        <Input
+          onChange={(value) => updateFieldProps(field.id, 'form.key', value)}
+          value={field.form.key}
+        />
+      </SettingsFieldVertical>
       <SettingsFieldVertical label="Label" divider>
         <Input
           onChange={(value) => updateFieldProps(field.id, 'props.label', value)}
@@ -33,11 +39,7 @@ function SingleChoiceSettings({ field }: SingleChoiceSettingsProps) {
           checked={field.props.required}
         />
       </SettingsFieldHorizontal>
-      <SettingsFieldOptionsValue
-        label="Option with different value"
-        field={field}
-        divider
-      />
+      <SettingsFieldOptionsValue label="Custom value" field={field} divider />
       <ContainerSettingsGroup field={field} />
     </div>
   );

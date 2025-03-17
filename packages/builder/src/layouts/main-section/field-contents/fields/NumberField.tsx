@@ -19,10 +19,6 @@ function NumberField({ field }: NumberFieldProps) {
         type="text"
       />
       <input
-        value={field.props.placeholder}
-        onChange={(e) =>
-          updateFieldProps(field.id, 'props.placeholder', e.target.value)
-        }
         className="border border-neutral-300 px-4 py-2 rounded-md typography-body3 w-full outline-primary"
         type="number"
         placeholder={field.props.placeholder}

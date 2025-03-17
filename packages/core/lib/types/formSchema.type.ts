@@ -58,6 +58,9 @@ export interface FormSchema {
 export interface FormFieldShortText {
   id: string;
   type: typeof FormFieldType.SHORT_TEXT;
+  form: {
+    key: string;
+  };
   props: {
     label: string;
     placeholder: string;
@@ -73,6 +76,9 @@ export interface FormFieldShortText {
 export interface FormFieldLongText {
   id: string;
   type: typeof FormFieldType.LONG_TEXT;
+  form: {
+    key: string;
+  };
   props: {
     label: string;
     placeholder: string;
@@ -88,6 +94,9 @@ export interface FormFieldLongText {
 export interface FormFieldNumber {
   id: string;
   type: typeof FormFieldType.NUMBER;
+  form: {
+    key: string;
+  };
   props: {
     label: string;
     placeholder: string;
@@ -110,6 +119,9 @@ export interface OptionType {
 export interface FormFieldSingleChoice {
   id: string;
   type: typeof FormFieldType.SINGLE_CHOICE;
+  form: {
+    key: string;
+  };
   props: {
     label: string;
     options: OptionType[];
@@ -126,6 +138,9 @@ export interface FormFieldSingleChoice {
 export interface FormFieldMultipleChoices {
   id: string;
   type: typeof FormFieldType.MULTIPLE_CHOICES;
+  form: {
+    key: string;
+  };
   props: {
     label: string;
     options: OptionType[];
@@ -142,6 +157,9 @@ export interface FormFieldMultipleChoices {
 export interface FormFieldDate {
   id: string;
   type: typeof FormFieldType.DATE;
+  form: {
+    key: string;
+  };
   props: {
     label: string;
     required: boolean;
@@ -156,6 +174,9 @@ export interface FormFieldDate {
 export interface FormFieldTime {
   id: string;
   type: typeof FormFieldType.TIME;
+  form: {
+    key: string;
+  };
   props: {
     label: string;
     required: boolean;
@@ -170,6 +191,9 @@ export interface FormFieldTime {
 export interface FormFieldDateTime {
   id: string;
   type: typeof FormFieldType.DATE_TIME;
+  form: {
+    key: string;
+  };
   props: {
     label: string;
     required: boolean;
@@ -184,6 +208,9 @@ export interface FormFieldDateTime {
 export interface FormFieldFile {
   id: string;
   type: typeof FormFieldType.FILE;
+  form: {
+    key: string;
+  };
   props: {
     label: string;
     required: boolean;
