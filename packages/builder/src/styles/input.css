@@ -23,11 +23,22 @@
     --color-primary-200: #cedde9;
     --color-primary-300: #a3c1d6;
     --color-primary-400: #729fbe;
-    --color-primary: #5083a7;
+    --color-primary-500: #5083a7;
     --color-primary-600: #3d698c;
     --color-primary-700: #325572;
     --color-primary-800: #2d495f;
     --color-primary-900: #293e51;
+
+    --color-red-50: #EDCCCC;
+    --color-red-100: #E6B3B3;
+    --color-red-200: #E09999;
+    --color-red-400: #DA7F7F;
+    --color-red-500: #D14747;
+    --color-red-600: #B73E3E;
+    --color-red-300: #CF7777;
+    --color-red-700: #9D3535;
+    --color-red-800: #832C2C;
+    --color-red-900: #692424;
 }
 
 html {
@@ -115,7 +126,7 @@ div.tiptap:focus-visible {
 }
 
 .button {
-    background-color: var(--color-primary);
+    background-color: var(--color-primary-500);
     display: flex;
     column-gap: 0.25rem;
     justify-content: center;

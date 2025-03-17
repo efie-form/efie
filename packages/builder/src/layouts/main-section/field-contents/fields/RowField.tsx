@@ -9,8 +9,8 @@ interface RowFieldProps {
 }
 
 function RowField({ field }: RowFieldProps) {
-  const { mode } = useSettingsStore();
-  const isMobile = mode === 'mobile';
+  const { previewDevice } = useSettingsStore();
+  const isMobile = previewDevice === 'mobile';
 
   return (
     <div
