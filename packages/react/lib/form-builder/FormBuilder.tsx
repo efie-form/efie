@@ -3,7 +3,7 @@ import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 import {
   type FormSchema,
   type BuilderCustomInput,
-  BuilderExternal,
+  Iframe,
 } from '@efie-form/core';
 
 const DIV_ID = 'efie-form-builder';
@@ -11,7 +11,6 @@ const DIV_ID = 'efie-form-builder';
 interface FormBuilderProps {
   ref: RefObject<FormBuilderRef>;
   options?: FormBuilderOptions;
-  onReady?: () => void;
   height: number;
   formInputs?: BuilderCustomInput[];
   schema?: FormSchema;
@@ -27,22 +26,19 @@ export interface FormBuilderRef {
 }
 
 const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
-  ({ onReady, height, formInputs, schema }, ref) => {
-    const builderRef = useRef<BuilderExternal | undefined>();
+  ({ height, formInputs, schema }, ref) => {
+    const builderRef = useRef<Iframe | undefined>();
     const containerRef = useRef<HTMLDivElement>(null);
     const formInputDetectsChanges = formInputs?.map(
       (input) => `${input.id}-${input.type}`
     );
 
-    // Initialize BuilderExternal once
+    // Initialize Iframe once
     useEffect(() => {
       // Only create new instance if one doesn't exist
       if (!builderRef.current && containerRef.current) {
-        builderRef.current = new BuilderExternal({
+        builderRef.current = new Iframe({
           id: DIV_ID,
-          onReady: () => {
-            onReady?.();
-          },
           formInputs,
           height,
           schema,
@@ -60,7 +56,7 @@ const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
           builderRef.current = undefined;
         }
       };
-    }, [onReady, formInputs, height, formInputDetectsChanges, schema]); // Empty dependency array to run only once
+    }, [formInputs, height, formInputDetectsChanges, schema]);
 
     // Update height when prop changes
     useEffect(() => {

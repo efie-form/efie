@@ -1,4 +1,3 @@
-export { useSettingsStore } from './lib/state/settings.state';
-export { useSchemaStore } from './lib/state/schema.state';
-
+export { default as useFormBuilder } from './lib/hooks/useFormBuilder';
+export { default as useWatchSchema } from './lib/hooks/useWatchSchema';
 export { default as FormBuilder } from './FormBuilder';
