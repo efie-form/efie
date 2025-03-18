@@ -6,6 +6,8 @@ interface InitializedPayload {
   schema: FormSchema;
   formInputs: BuilderCustomInput[];
   height: number;
+  formKeyNonEditable: boolean;
+  inputNonReusable: boolean;
 }
 
 interface BuilderProps {

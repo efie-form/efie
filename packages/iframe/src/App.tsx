@@ -8,7 +8,14 @@ import { Builder } from '@efie-form/core';
 
 function App() {
   const editorRef = useRef<Builder | undefined>(undefined);
-  const { getSchema, setFormInputs, resetSchema, setHeight } = useFormBuilder();
+  const {
+    getSchema,
+    setFormInputs,
+    resetSchema,
+    setHeight,
+    setFormKeyEditable,
+    setIsInputReusable,
+  } = useFormBuilder();
 
   useWatchSchema((schema) => {
     if (!editorRef.current) return;
@@ -28,7 +35,7 @@ function App() {
   }, []);
 
   function initializeFormBuilder() {
-    const editor = new Builder({
+    editorRef.current = new Builder({
       onDataRequest: getSchema,
       onDataReset: resetSchema,
       onHeightChange: (height) => {
@@ -37,13 +44,20 @@ function App() {
       onFormInputsChange: (formInputs) => {
         setFormInputs(formInputs);
       },
-      onInitialized: ({ formInputs, height, schema }) => {
+      onInitialized: ({
+        formInputs,
+        height,
+        schema,
+        formKeyNonEditable,
+        inputNonReusable,
+      }) => {
         setFormInputs(formInputs);
         setHeight(height);
         if (schema) resetSchema(schema);
+        if (formKeyNonEditable) setFormKeyEditable(false);
+        if (inputNonReusable) setIsInputReusable(false);
       },
     });
-    editorRef.current = editor;
   }
 
   return <FormBuilder />;

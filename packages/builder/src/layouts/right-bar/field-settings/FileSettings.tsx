@@ -5,6 +5,7 @@ import SettingsFieldHorizontal from '../property-layouts/SettingsFieldHorizontal
 import Switch from '../../../components/form/Switch';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import ContainerSettingsGroup from '../common/ContainerSettingsGroup';
+import FormKeySettings from '../common/FormKeySettings';
 interface FileSettingsProps {
   field: FormFieldFile;
 }
@@ -17,6 +18,7 @@ function FileSettings({ field }: FileSettingsProps) {
       <div className="px-4 py-2 bg-neutral-100 text-neutral-800 typography-body3 uppercase">
         General
       </div>
+      <FormKeySettings fieldId={field.id} value={field.form.key} />
 
       <SettingsFieldVertical label="Label" divider>
         <Input

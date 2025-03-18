@@ -51,6 +51,7 @@ export const useSchemaStore = create<SchemaState>((set, getState) => ({
     const { fieldKeyMap, fieldMap, fieldParentMap } = getFieldInfoMap(
       schema.form.fields
     );
+    console.log(fieldMap);
     addHistory(schema);
     set({
       schema,

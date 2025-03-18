@@ -12,6 +12,7 @@ import type { ReactNode } from 'react';
 import { useState } from 'react';
 import { useSchemaStore } from '../../lib/state/schema.state';
 import type { FormField } from '@efie-form/core';
+import { getDefaultField } from 'src/lib/getDefaultField';
 
 interface DndContextProps {
   children: ReactNode;
@@ -48,12 +49,18 @@ export default function DndProvider({ children }: DndContextProps) {
       });
     }
     if (e.active.data.current.action === 'new') {
+      const newField = getDefaultField({
+        type: fieldType,
+        formKey: e.active.data.current.formKey,
+      });
+
       newFields = insertField({
         fields: schema.form.fields,
         direction,
         dropFieldId: e.over.data.current.id,
         dropFieldType,
         newFieldType: fieldType,
+        newField,
       });
     }
     if (!newFields) return;

@@ -3,6 +3,7 @@ import SettingsFieldVertical from '../property-layouts/SettingsFieldVertical';
 import Input from '../../../components/form/Input';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import ContainerSettingsGroup from '../common/ContainerSettingsGroup';
+import FormKeySettings from '../common/FormKeySettings';
 
 interface NumberSettingsProps {
   field: FormFieldNumber;
@@ -17,6 +18,7 @@ function NumberSettings({ field }: NumberSettingsProps) {
         <div className="px-4 py-2 bg-neutral-100 text-neutral-800 typography-body2">
           General
         </div>
+        <FormKeySettings fieldId={field.id} value={field.form.key} />
         <SettingsFieldVertical label="Label" divider>
           <Input
             onChange={(value) =>

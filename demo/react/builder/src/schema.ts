@@ -40,6 +40,9 @@ export const schema: FormSchema = {
               {
                 type: FormFieldType.LONG_TEXT,
                 id: 'TLxvJNtKjf',
+                form: {
+                  key: 'long_text',
+                },
                 props: {
                   label: 'Long Text',
                   placeholder: 'Enter the placeholder',
@@ -50,6 +53,9 @@ export const schema: FormSchema = {
               {
                 type: FormFieldType.MULTIPLE_CHOICES,
                 id: 'UctxtDDfYO',
+                form: {
+                  key: 'multiple_choices',
+                },
                 props: {
                   container: containerProps,
                   label: 'Multiple Choice',

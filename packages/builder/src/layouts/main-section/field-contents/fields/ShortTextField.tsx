@@ -1,15 +1,20 @@
 import type { FormFieldShortText } from '@efie-form/core';
+import { useSchemaStore } from '../../../../lib/state/schema.state';
 
 interface ShortTextFieldProps {
   field: FormFieldShortText;
 }
 
 function ShortTextField({ field }: ShortTextFieldProps) {
+  const { updateFieldProps } = useSchemaStore();
+
   return (
     <div className="p-2">
       <input
         value={field.props.label}
-        onChange={() => {}}
+        onChange={(e) => {
+          updateFieldProps(field.id, 'props.label', e.target.value);
+        }}
         className="mb-2 typography-body2 bg-white bg-opacity-0 focus:outline-none cursor-text w-full"
         type="text"
       />

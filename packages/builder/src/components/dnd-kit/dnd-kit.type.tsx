@@ -37,6 +37,7 @@ interface DraggableMoveData {
 interface DraggableNewData {
   action: 'new';
   type: FormFieldType;
+  formKey?: string;
 }
 
 type DraggableData = DraggableMoveData | DraggableNewData;

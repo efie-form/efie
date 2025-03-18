@@ -14,6 +14,7 @@ interface GetDefaultFieldProps {
   type: (typeof FormFieldType)[keyof typeof FormFieldType];
   page?: PageProps;
   column?: ColumnProps;
+  formKey?: string;
 }
 
 const ID_LENGTH = 10;
@@ -47,12 +48,16 @@ export const getDefaultField = ({
   type,
   page,
   column,
+  formKey,
 }: GetDefaultFieldProps): FormField => {
   switch (type) {
     case FormFieldType.SHORT_TEXT: {
       return {
         type: FormFieldType.SHORT_TEXT,
         id: generateId(ID_LENGTH),
+        form: {
+          key: formKey || '',
+        },
         props: {
           label: 'Short Text',
           placeholder: 'Enter the placeholder',
@@ -65,6 +70,9 @@ export const getDefaultField = ({
       return {
         type: FormFieldType.LONG_TEXT,
         id: generateId(ID_LENGTH),
+        form: {
+          key: formKey || '',
+        },
         props: {
           label: 'Long Text',
           placeholder: 'Enter the placeholder',
@@ -77,6 +85,9 @@ export const getDefaultField = ({
       return {
         type: FormFieldType.NUMBER,
         id: generateId(ID_LENGTH),
+        form: {
+          key: formKey || '',
+        },
         props: {
           label: 'Number',
           placeholder: 'Enter the placeholder',
@@ -89,6 +100,9 @@ export const getDefaultField = ({
       return {
         type: FormFieldType.SINGLE_CHOICE,
         id: generateId(ID_LENGTH),
+        form: {
+          key: formKey || '',
+        },
         props: {
           label: 'Single Choice',
           options: [
@@ -106,6 +120,9 @@ export const getDefaultField = ({
       return {
         type: FormFieldType.MULTIPLE_CHOICES,
         id: generateId(ID_LENGTH),
+        form: {
+          key: formKey || '',
+        },
         props: {
           label: 'Multiple Choice',
           options: [
@@ -137,6 +154,9 @@ export const getDefaultField = ({
       return {
         type: FormFieldType.DATE,
         id: generateId(ID_LENGTH),
+        form: {
+          key: formKey || '',
+        },
         props: {
           label: 'Date',
           required: false,
@@ -148,6 +168,9 @@ export const getDefaultField = ({
       return {
         type: FormFieldType.TIME,
         id: generateId(ID_LENGTH),
+        form: {
+          key: formKey || '',
+        },
         props: {
           label: 'Time',
           required: false,
@@ -159,6 +182,9 @@ export const getDefaultField = ({
       return {
         type: FormFieldType.DATE_TIME,
         id: generateId(ID_LENGTH),
+        form: {
+          key: formKey || '',
+        },
         props: {
           label: 'Date & Time',
           required: false,
@@ -170,6 +196,9 @@ export const getDefaultField = ({
       return {
         type: FormFieldType.FILE,
         id: generateId(ID_LENGTH),
+        form: {
+          key: formKey || '',
+        },
         props: {
           label: 'File',
           required: false,

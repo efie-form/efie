@@ -4,7 +4,13 @@ import { useSettingsStore } from '../state/settings.state';
 import type { FormSchema } from '@efie-form/core';
 
 export default function useFormBuilder() {
-  const { setPage, setFormInputs, setHeight } = useSettingsStore();
+  const {
+    setPage,
+    setFormInputs,
+    setHeight,
+    setFormKeyEditable,
+    setIsInputReusable,
+  } = useSettingsStore();
   const { schema, currentHistoryIndex, setSchema } = useSchemaStore();
 
   const getSchema = useCallback(() => {
@@ -24,5 +30,7 @@ export default function useFormBuilder() {
     setFormInputs,
     resetSchema,
     setHeight,
+    setFormKeyEditable,
+    setIsInputReusable,
   };
 }
