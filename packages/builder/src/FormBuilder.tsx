@@ -3,13 +3,12 @@ import { cn } from './lib/utils';
 import LeftBar from './layouts/left-bar/LeftBar';
 import MainSection from './layouts/main-section/MainSection';
 import RightBar from './layouts/right-bar/RightBar';
+import { useSettingsStore } from './lib/state/settings.state';
 import './styles/output.css';
 
-interface FormBuilderProps {
-  height?: number;
-}
+const FormBuilder = () => {
+  const { height } = useSettingsStore();
 
-const FormBuilder = ({ height }: FormBuilderProps) => {
   return (
     <DndProvider>
       <div

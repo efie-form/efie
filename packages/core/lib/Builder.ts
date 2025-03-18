@@ -8,7 +8,7 @@ interface InitializedPayload {
   height: number;
 }
 
-interface BuilderInternalProps {
+interface BuilderProps {
   onDataReset: (data: FormSchema) => void;
   onDataRequest: () => FormSchema;
   onHeightChange: (height: number) => void;
@@ -16,7 +16,7 @@ interface BuilderInternalProps {
   onInitialized: (data: InitializedPayload) => void;
 }
 
-export default class BuilderInternal {
+export default class Builder {
   isLoaded = false;
   isInitialized = false;
   onDataReset: ((data: FormSchema) => void) | undefined = undefined;
@@ -27,7 +27,7 @@ export default class BuilderInternal {
   onInitialized: ((data: InitializedPayload) => void) | undefined = undefined;
   isDataInitialized = false;
 
-  constructor(props: BuilderInternalProps) {
+  constructor(props: BuilderProps) {
     this.onDataReset = props.onDataReset;
     this.onDataRequest = props.onDataRequest;
     this.onHeightChange = props.onHeightChange;

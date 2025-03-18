@@ -26,6 +26,8 @@ interface SettingsState {
   clearPage: () => void;
   activeTab: RightBarTab;
   setActiveTab: (tab: RightBarTab) => void;
+  height?: number;
+  setHeight: (height: SettingsState['height']) => void;
 }
 
 export const useSettingsStore = create<SettingsState>((set) => ({
@@ -66,5 +68,9 @@ export const useSettingsStore = create<SettingsState>((set) => ({
   activeTab: 'form',
   setActiveTab: (tab) => {
     set({ activeTab: tab });
+  },
+  height: undefined,
+  setHeight: (height) => {
+    set({ height });
   },
 }));

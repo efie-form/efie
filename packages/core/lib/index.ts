@@ -1,5 +1,5 @@
-export { default as BuilderExternal } from './BuilderExternal';
-export { default as BuilderInternal } from './BuilderInternal';
+export { default as Iframe } from './Iframe';
+export { default as Builder } from './Builder';
 export type {
   FormSchema,
   BoxShadow,
