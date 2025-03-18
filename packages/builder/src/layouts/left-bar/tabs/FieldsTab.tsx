@@ -25,6 +25,7 @@ function FieldsTab() {
                 label={field.label}
                 type={field.type}
                 Icon={field.Icon}
+                formKey={field.formKey}
               />
             ))}
           </div>
@@ -47,14 +48,16 @@ interface FieldItemProps {
   Icon: ElementType;
   type: FormFieldType;
   label: string;
+  formKey?: string;
 }
 
-function FieldItem({ Icon, type, label }: FieldItemProps) {
+function FieldItem({ Icon, type, label, formKey }: FieldItemProps) {
   const { setNodeRef, attributes, listeners } = useDraggable({
     id: `new-field-${type}`,
     data: {
       action: 'new',
       type,
+      formKey,
     },
   });
 

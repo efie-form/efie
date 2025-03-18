@@ -27,6 +27,7 @@ const generateFieldItems = ({ formInputs }: GenerateFieldItemsProps) => {
         label: input.label,
         type: input.type,
         Icon: fieldIcons[input.type],
+        formKey: input.id,
       });
     }
   } else {

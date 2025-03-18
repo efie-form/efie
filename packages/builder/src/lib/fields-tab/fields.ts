@@ -24,6 +24,7 @@ interface Field {
   Icon: ElementType;
   label: string;
   disabled?: boolean;
+  formKey?: string;
 }
 
 export interface FieldsTabGroup {

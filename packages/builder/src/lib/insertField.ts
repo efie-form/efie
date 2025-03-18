@@ -1,6 +1,5 @@
 import type { FormField } from '@efie-form/core';
 import type { FormFieldType } from '@efie-form/core';
-import { getDefaultField } from './getDefaultField';
 import { findFieldParentId } from './findFieldParentId';
 
 interface InsertFieldProps {
@@ -9,6 +8,7 @@ interface InsertFieldProps {
   dropFieldType: FormFieldType;
   dropFieldId: string;
   direction: 'up' | 'down';
+  newField: FormField;
 }
 
 const isDropOnChildren = (newType: FormFieldType, dropType: FormFieldType) => {
@@ -24,11 +24,8 @@ export default function insertField({
   dropFieldId,
   direction,
   dropFieldType,
+  newField,
 }: InsertFieldProps) {
-  const newField = getDefaultField({
-    type: newFieldType,
-  });
-
   const field = findField(fields, dropFieldId);
   if (!field) return fields;
 
