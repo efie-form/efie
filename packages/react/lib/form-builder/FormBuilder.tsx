@@ -1,8 +1,8 @@
 import type { RefObject } from 'react';
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 import {
-  type FormSchema,
   type BuilderCustomInput,
+  type FormSchema,
   Iframe,
 } from '@efie-form/core';
 
@@ -14,6 +14,7 @@ interface FormBuilderProps {
   formInputs?: BuilderCustomInput[];
   schema?: FormSchema;
   formKeyNonEditable?: boolean;
+  inputNonReusable?: boolean;
 }
 
 export interface FormBuilderRef {
@@ -21,7 +22,10 @@ export interface FormBuilderRef {
 }
 
 const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
-  ({ height, formInputs, schema, formKeyNonEditable }, ref) => {
+  (
+    { height, formInputs, schema, formKeyNonEditable, inputNonReusable },
+    ref
+  ) => {
     const builderRef = useRef<Iframe | undefined>();
     const containerRef = useRef<HTMLDivElement>(null);
     const formInputDetectsChanges = formInputs?.map(
@@ -38,6 +42,7 @@ const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
           height,
           schema,
           formKeyNonEditable,
+          inputNonReusable,
         });
       }
 

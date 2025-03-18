@@ -32,6 +32,8 @@ interface SettingsState {
   setFormKeyEditable: (
     formKeyEditable: SettingsState['formKeyEditable']
   ) => void;
+  isInputReusable: boolean;
+  setIsInputReusable: (inputReusable: SettingsState['isInputReusable']) => void;
 }
 
 export const useSettingsStore = create<SettingsState>((set) => ({
@@ -80,5 +82,9 @@ export const useSettingsStore = create<SettingsState>((set) => ({
   formKeyEditable: true,
   setFormKeyEditable: (formKeyEditable) => {
     set({ formKeyEditable });
+  },
+  isInputReusable: true,
+  setIsInputReusable: (isInputReusable) => {
+    set({ isInputReusable });
   },
 }));

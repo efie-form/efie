@@ -9,6 +9,7 @@ interface IframeProps {
   formInputs?: BuilderCustomInput[];
   schema?: FormSchema;
   formKeyNonEditable?: boolean;
+  inputNonReusable?: boolean;
 }
 
 export default class Iframe {
@@ -18,6 +19,7 @@ export default class Iframe {
   private isIframeReady = false;
   private formInputs: BuilderCustomInput[] | undefined = undefined;
   private formKeyNonEditable = false;
+  private inputNonReusable = true;
   private height: number = 0;
 
   constructor({
@@ -26,6 +28,7 @@ export default class Iframe {
     height,
     schema,
     formKeyNonEditable,
+    inputNonReusable,
   }: IframeProps) {
     const elem = document.querySelector(`#${id}`);
     if (!elem || !(elem instanceof HTMLElement)) {
@@ -38,6 +41,7 @@ export default class Iframe {
     if (height) this.height = height;
     if (schema) this.schema = schema;
     this.formKeyNonEditable = !!formKeyNonEditable;
+    this.inputNonReusable = !!inputNonReusable;
 
     this.renderIframe();
     this.listenMessage();
@@ -98,6 +102,7 @@ export default class Iframe {
       formInputs: this.formInputs,
       height: this.height,
       formKeyNonEditable: this.formKeyNonEditable,
+      inputNonReusable: this.inputNonReusable,
     });
   }
 

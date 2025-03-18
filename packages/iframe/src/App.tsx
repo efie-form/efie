@@ -14,6 +14,7 @@ function App() {
     resetSchema,
     setHeight,
     setFormKeyEditable,
+    setIsInputReusable,
   } = useFormBuilder();
 
   useWatchSchema((schema) => {
@@ -34,7 +35,7 @@ function App() {
   }, []);
 
   function initializeFormBuilder() {
-    const editor = new Builder({
+    editorRef.current = new Builder({
       onDataRequest: getSchema,
       onDataReset: resetSchema,
       onHeightChange: (height) => {
@@ -43,14 +44,20 @@ function App() {
       onFormInputsChange: (formInputs) => {
         setFormInputs(formInputs);
       },
-      onInitialized: ({ formInputs, height, schema, formKeyNonEditable }) => {
+      onInitialized: ({
+        formInputs,
+        height,
+        schema,
+        formKeyNonEditable,
+        inputNonReusable,
+      }) => {
         setFormInputs(formInputs);
         setHeight(height);
         if (schema) resetSchema(schema);
         if (formKeyNonEditable) setFormKeyEditable(false);
+        if (inputNonReusable) setIsInputReusable(false);
       },
     });
-    editorRef.current = editor;
   }
 
   return <FormBuilder />;
