@@ -31,6 +31,7 @@ function App() {
         ref={formBuilderRef}
         height={height}
         schema={schema}
+        formKeyNonEditable
         formInputs={[
           {
             id: 'flfCYesTVJ',

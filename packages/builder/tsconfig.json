@@ -13,9 +13,6 @@
 
     "baseUrl": ".",
     "rootDir": "."
-    // paths
   },
-  "include": [
-    "src"
-  ]
+  "include": ["src"]
 }

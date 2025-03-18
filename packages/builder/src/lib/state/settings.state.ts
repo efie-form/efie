@@ -28,6 +28,10 @@ interface SettingsState {
   setActiveTab: (tab: RightBarTab) => void;
   height?: number;
   setHeight: (height: SettingsState['height']) => void;
+  formKeyEditable: boolean;
+  setFormKeyEditable: (
+    formKeyEditable: SettingsState['formKeyEditable']
+  ) => void;
 }
 
 export const useSettingsStore = create<SettingsState>((set) => ({
@@ -72,5 +76,9 @@ export const useSettingsStore = create<SettingsState>((set) => ({
   height: undefined,
   setHeight: (height) => {
     set({ height });
+  },
+  formKeyEditable: true,
+  setFormKeyEditable: (formKeyEditable) => {
+    set({ formKeyEditable });
   },
 }));

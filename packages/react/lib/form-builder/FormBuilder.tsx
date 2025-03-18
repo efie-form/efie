@@ -10,15 +10,10 @@ const DIV_ID = 'efie-form-builder';
 
 interface FormBuilderProps {
   ref: RefObject<FormBuilderRef>;
-  options?: FormBuilderOptions;
   height: number;
   formInputs?: BuilderCustomInput[];
   schema?: FormSchema;
-}
-
-interface FormBuilderOptions {
-  inputFields?: string[];
-  hiddenFields?: string[];
+  formKeyNonEditable?: boolean;
 }
 
 export interface FormBuilderRef {
@@ -26,7 +21,7 @@ export interface FormBuilderRef {
 }
 
 const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
-  ({ height, formInputs, schema }, ref) => {
+  ({ height, formInputs, schema, formKeyNonEditable }, ref) => {
     const builderRef = useRef<Iframe | undefined>();
     const containerRef = useRef<HTMLDivElement>(null);
     const formInputDetectsChanges = formInputs?.map(
@@ -42,6 +37,7 @@ const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
           formInputs,
           height,
           schema,
+          formKeyNonEditable,
         });
       }
 

@@ -8,6 +8,7 @@ interface IframeProps {
   height: number;
   formInputs?: BuilderCustomInput[];
   schema?: FormSchema;
+  formKeyNonEditable?: boolean;
 }
 
 export default class Iframe {
@@ -16,9 +17,16 @@ export default class Iframe {
   private schema: FormSchema = defaultSchema;
   private isIframeReady = false;
   private formInputs: BuilderCustomInput[] | undefined = undefined;
+  private formKeyNonEditable = false;
   private height: number = 0;
 
-  constructor({ id, formInputs, height, schema }: IframeProps) {
+  constructor({
+    id,
+    formInputs,
+    height,
+    schema,
+    formKeyNonEditable,
+  }: IframeProps) {
     const elem = document.querySelector(`#${id}`);
     if (!elem || !(elem instanceof HTMLElement)) {
       throw new Error(`Element with id ${id} not found`);
@@ -29,6 +37,7 @@ export default class Iframe {
     if (formInputs) this.formInputs = formInputs;
     if (height) this.height = height;
     if (schema) this.schema = schema;
+    this.formKeyNonEditable = !!formKeyNonEditable;
 
     this.renderIframe();
     this.listenMessage();
@@ -88,6 +97,7 @@ export default class Iframe {
       schema: this.schema,
       formInputs: this.formInputs,
       height: this.height,
+      formKeyNonEditable: this.formKeyNonEditable,
     });
   }
 
