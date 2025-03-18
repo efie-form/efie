@@ -1,58 +1,52 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import {
   FormBuilder,
-  useSettingsStore,
-  useSchemaStore,
+  useFormBuilder,
+  useWatchSchema,
 } from '@efie-form/builder';
-import { BuilderInternal, FormSchema } from '@efie-form/core';
+import { Builder } from '@efie-form/core';
 
 function App() {
-  const editorRef = useRef<BuilderInternal | undefined>(undefined);
-  const { setPage, clearPage, setFormInputs } = useSettingsStore();
-  const { setSchema, schema, currentHistoryIndex } = useSchemaStore();
-  const [height, setHeight] = useState(0);
+  const editorRef = useRef<Builder | undefined>(undefined);
+  const { getSchema, setFormInputs, resetSchema, setHeight } = useFormBuilder();
+
+  useWatchSchema((schema) => {
+    if (!editorRef.current) return;
+
+    editorRef.current.setValue(schema);
+  });
 
   useEffect(() => {
-    function resetSchema(data: FormSchema) {
-      setSchema(data);
-      const firstPage = data.form.fields.find((field) => field.type === 'page');
-      if (firstPage) {
-        setPage(firstPage.id);
-      }
-    }
-
     if (!editorRef.current) {
-      const editor = new BuilderInternal({
-        onDataRequest: () => schema,
-        onDataReset: resetSchema,
-        onHeightChange: (height) => {
-          setHeight(height);
-        },
-        onFormInputsChange: (formInputs) => {
-          setFormInputs(formInputs);
-        },
-        onInitialized: ({ formInputs, height, schema }) => {
-          setFormInputs(formInputs);
-          setHeight(height);
-          if (schema) resetSchema(schema);
-        },
-      });
-      editorRef.current = editor;
+      initializeFormBuilder();
     }
 
     return () => {
       editorRef.current = undefined;
     };
-  }, [setSchema, setPage, clearPage, setFormInputs]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  // Handle schema updates
-  useEffect(() => {
-    if (editorRef.current && schema) {
-      editorRef.current.setValue(schema);
-    }
-  }, [currentHistoryIndex, schema]);
+  function initializeFormBuilder() {
+    const editor = new Builder({
+      onDataRequest: getSchema,
+      onDataReset: resetSchema,
+      onHeightChange: (height) => {
+        setHeight(height);
+      },
+      onFormInputsChange: (formInputs) => {
+        setFormInputs(formInputs);
+      },
+      onInitialized: ({ formInputs, height, schema }) => {
+        setFormInputs(formInputs);
+        setHeight(height);
+        if (schema) resetSchema(schema);
+      },
+    });
+    editorRef.current = editor;
+  }
 
-  return <FormBuilder height={height} />;
+  return <FormBuilder />;
 }
 
 export default App;

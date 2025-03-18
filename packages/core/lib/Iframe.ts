@@ -3,14 +3,14 @@ import defaultSchema from './defaultSchema';
 import type { BuilderCustomInput } from './types/builderCustomInput.type';
 import type { FormSchema } from './types/formSchema.type';
 
-interface BuilderExternalProps {
+interface IframeProps {
   id: string;
   height: number;
   formInputs?: BuilderCustomInput[];
   schema?: FormSchema;
 }
 
-export default class BuilderExternal {
+export default class Iframe {
   private parentElem: HTMLElement | undefined = undefined;
   private iframeElem: HTMLIFrameElement | undefined = undefined;
   private schema: FormSchema = defaultSchema;
@@ -18,7 +18,7 @@ export default class BuilderExternal {
   private formInputs: BuilderCustomInput[] | undefined = undefined;
   private height: number = 0;
 
-  constructor({ id, formInputs, height, schema }: BuilderExternalProps) {
+  constructor({ id, formInputs, height, schema }: IframeProps) {
     const elem = document.querySelector(`#${id}`);
     if (!elem || !(elem instanceof HTMLElement)) {
       throw new Error(`Element with id ${id} not found`);

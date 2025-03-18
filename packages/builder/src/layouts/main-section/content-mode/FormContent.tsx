@@ -16,7 +16,7 @@ function FormContent() {
   if (!selectedPage) return <></>;
 
   return (
-    <div id="form-zone">
+    <div id="form-zone" className="h-full">
       <Droppable id={selectedPage.id || ''} type="page" className="h-full">
         <div className="min-h-full pb-64">
           <div className="p-4">
