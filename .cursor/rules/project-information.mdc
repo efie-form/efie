@@ -1,0 +1,68 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Project Summary
+
+This is a form builder library that is going to be published to npm registry. All web framework (React, Vue, Angular, VanilaJS, php, java, etc) can use this library on their website as this library will be integrated through iframe. Each framework will have its own library to be used in the project, e.g. @project-name/react, @project-name/vue, etc. So anyone can interact with the form builder easily.
+
+Besides, this library will also provide headless form renderer. When building form from the form builder, they will get a schema json of what they have created. With the json schema, they can provide the schema to the component of the library, along with the component of each form field type (short text, date, time, file upload, header, paragraph, image, qrcode...). they can fully customize the form with their own design or component library. This headless form renderer will provide all the styling, rules & conditions, input state, field info, and provide neccessary info for them. e.g. they can easily setup rules & condition from the form builder on what to show/hide or which field is disabled when meet certain criteria.
+
+---
+
+# Project structure
+
+## Packages/core
+[package.json](mdc:packages/core/package.json)
+
+This package will provide the core functionality of the form builder. It will be used by the other packages.
+
+## Packages/builder
+[package.json](mdc:demo/vue/builder/package.json)
+
+This package will provide the form builder UI. It will be used by the other packages.
+
+## Packages/iframe
+[package.json](mdc:packages/iframe/package.json)
+
+- This package will provide the iframe component
+- Written in React, will load the form builder component from Packages/builder and create a react app that can be loaded in iframe by other packages
+
+## Packages/react
+[package.json](mdc:packages/react/package.json)
+This package will provide the react component of the form builder. It will be used by the other packages.
+
+## Packages/vue
+[package.json](mdc:packages/vue/package.json)
+
+This package will provide the vue component of the form builder. It will be used by the other packages.
+
+---
+
+# Current Available fields
+- Short Text
+- Long Text
+- Number
+- Single Choice
+- Mulitple Choices
+- Date
+- Time
+- Date & Time
+- File Upload
+- Header
+- Paragraphy
+- Image
+- Button
+- Divider
+- Row
+- Block
+
+---
+
+#
+
+
+
+
+
