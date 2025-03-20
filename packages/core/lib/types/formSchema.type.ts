@@ -1,52 +1,279 @@
 import type { FormFieldType } from '../InputType';
 import type { JSONContent } from '@tiptap/core';
 
-export interface BorderRadius {
-  topLeft: number;
-  topRight: number;
-  bottomRight: number;
-  bottomLeft: number;
+// Base types for units and measurements
+export type Unit =
+  | 'px'
+  | 'em'
+  | 'rem'
+  | '%'
+  | 'vh'
+  | 'vw'
+  | 'pt'
+  | 'pc'
+  | 'in'
+  | 'cm'
+  | 'mm';
+
+export interface Size {
+  value: number;
+  unit: Unit;
 }
 
-interface Border {
-  width: number;
-  color: string;
-  radius: BorderRadius;
+// Validation types
+export type ValidationOperator =
+  | 'equals'
+  | 'notEquals'
+  | 'contains'
+  | 'notContains'
+  | 'greaterThan'
+  | 'lessThan'
+  | 'greaterThanOrEqual'
+  | 'lessThanOrEqual'
+  | 'regex'
+  | 'custom';
+
+export interface ValidationRule {
+  operator: ValidationOperator;
+  value: any;
+  message: string;
+  customValidator?: (value: any) => boolean;
 }
 
-// interface Size {
-//   value: number;
-//   unit: 'px' | 'em' | 'rem' | '%';
-// }
-
-export interface Padding {
-  top: number;
-  right: number;
-  bottom: number;
-  left: number;
+export interface ValidationGroup {
+  type: 'group';
+  operator: 'and' | 'or';
+  rules: (ValidationRule | ValidationGroup)[];
 }
 
-export interface Margin {
-  top: number;
-  right: number;
-  bottom: number;
-  left: number;
+export interface ValidationCondition {
+  type: 'condition';
+  fieldId: string;
+  operator: ValidationOperator;
+  value: any;
+  then: ValidationRule | ValidationGroup;
+  else?: ValidationRule | ValidationGroup;
 }
 
-export interface BoxShadow {
-  x: number;
-  y: number;
-  blur: number;
-  spread: number;
-  color: string;
-  inset: boolean;
+export interface ValidationCase {
+  type: 'case';
+  fieldId: string;
+  cases: {
+    value: any;
+    rules: ValidationRule | ValidationGroup;
+  }[];
+  default?: ValidationRule | ValidationGroup;
 }
 
-interface Font {
-  size: number;
-  unit: 'px' | 'em' | 'rem';
-  weight: number;
+export type ValidationSchema =
+  | ValidationRule
+  | ValidationGroup
+  | ValidationCondition
+  | ValidationCase;
+
+// Property types
+export interface PropertyDefinition {
+  key: string;
+  type:
+    | 'string'
+    | 'number'
+    | 'boolean'
+    | 'object'
+    | 'array'
+    | 'color'
+    | 'size'
+    | 'select'
+    | 'rich-text';
+  label: string;
+  defaultValue?: any;
+  options?: { label: string; value: any }[];
+  validation?: ValidationSchema[];
+  isRequired?: boolean;
+  isArray?: boolean;
+  arrayItemType?: PropertyDefinition;
 }
+
+// Common container styles
+export interface ContainerStyle {
+  margin: Size;
+  padding: Size;
+  border: {
+    width: Size;
+    color: string;
+    radius: {
+      topLeft: Size;
+      topRight: Size;
+      bottomRight: Size;
+      bottomLeft: Size;
+    };
+  };
+  boxShadow?: {
+    x: Size;
+    y: Size;
+    blur: Size;
+    spread: Size;
+    color: string;
+    inset: boolean;
+  }[];
+  backgroundColor?: string;
+}
+
+// Base form field interface
+export interface BaseFormField {
+  id: string;
+  type: FormFieldType;
+  form?: {
+    key: string;
+    validation?: ValidationSchema[];
+  };
+  props: PropertyDefinition[];
+  container?: ContainerStyle;
+}
+
+// Input field types
+export interface InputFormField extends BaseFormField {
+  type:
+    | typeof FormFieldType.SHORT_TEXT
+    | typeof FormFieldType.LONG_TEXT
+    | typeof FormFieldType.NUMBER;
+  props: (PropertyDefinition & {
+    type: 'string' | 'number';
+    placeholder?: string;
+    min?: number;
+    max?: number;
+  })[];
+}
+
+// Choice field types
+export interface ChoiceFormField extends BaseFormField {
+  type:
+    | typeof FormFieldType.SINGLE_CHOICE
+    | typeof FormFieldType.MULTIPLE_CHOICES;
+  props: (PropertyDefinition & {
+    type: 'select';
+    options: { label: string; value: string }[];
+    isValueDifferent?: boolean;
+  })[];
+}
+
+// Date/Time field types
+export interface DateTimeFormField extends BaseFormField {
+  type:
+    | typeof FormFieldType.DATE
+    | typeof FormFieldType.TIME
+    | typeof FormFieldType.DATE_TIME;
+  props: (PropertyDefinition & {
+    type: 'string';
+    format?: string;
+  })[];
+}
+
+// File field type
+export interface FileFormField extends BaseFormField {
+  type: typeof FormFieldType.FILE;
+  props: (PropertyDefinition & {
+    type: 'array';
+    accept?: string;
+    multiple?: boolean;
+  })[];
+}
+
+// Layout field types
+export interface LayoutFormField extends BaseFormField {
+  type:
+    | typeof FormFieldType.ROW
+    | typeof FormFieldType.COLUMN
+    | typeof FormFieldType.BLOCK;
+  children: FormField[];
+  props: (PropertyDefinition & {
+    type: 'object';
+    gap?: Size;
+    width?: Size;
+  })[];
+}
+
+// Content field types
+export interface ContentFormField extends BaseFormField {
+  type: typeof FormFieldType.HEADER | typeof FormFieldType.PARAGRAPH;
+  props: (PropertyDefinition & {
+    type: 'rich-text';
+    tag?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+    textAlign?: 'left' | 'center' | 'right';
+    color?: string;
+    font?: {
+      size: Size;
+      weight: number;
+    };
+  })[];
+}
+
+// Image field type
+export interface ImageFormField extends BaseFormField {
+  type: typeof FormFieldType.IMAGE;
+  props: (PropertyDefinition & {
+    type: 'object';
+    src?: string;
+    alt?: string;
+    textAlign?: 'left' | 'center' | 'right';
+    objectFit?: 'fill' | 'contain' | 'cover' | 'none' | 'scale-down';
+    width?: {
+      value: Size;
+      autoWidth: boolean;
+    };
+  })[];
+}
+
+// Button field type
+export interface ButtonFormField extends BaseFormField {
+  type: typeof FormFieldType.BUTTON;
+  props: (PropertyDefinition & {
+    type: 'object';
+    label?: string;
+    color?: string;
+    bgColor?: string;
+    btnType?: 'submit' | 'button';
+    fullWidth?: boolean;
+    font?: {
+      size: Size;
+      weight: number;
+    };
+    align?: 'left' | 'center' | 'right';
+  })[];
+}
+
+// Page field type
+export interface PageFormField extends BaseFormField {
+  type: typeof FormFieldType.PAGE;
+  children: FormField[];
+  props: (PropertyDefinition & {
+    type: 'object';
+    name?: string;
+  })[];
+}
+
+// Divider field type
+export interface DividerFormField extends BaseFormField {
+  type: typeof FormFieldType.DIVIDER;
+  props: (PropertyDefinition & {
+    type: 'object';
+    color?: string;
+    width?: Size;
+    height?: Size;
+    style?: 'solid' | 'dashed' | 'dotted';
+  })[];
+}
+
+export type FormField =
+  | InputFormField
+  | ChoiceFormField
+  | DateTimeFormField
+  | FileFormField
+  | LayoutFormField
+  | ContentFormField
+  | ImageFormField
+  | ButtonFormField
+  | PageFormField
+  | DividerFormField;
 
 export interface FormSchema {
   version: string;
@@ -54,298 +281,3 @@ export interface FormSchema {
     fields: FormField[];
   };
 }
-
-export interface FormFieldShortText {
-  id: string;
-  type: typeof FormFieldType.SHORT_TEXT;
-  form: {
-    key: string;
-  };
-  props: {
-    label: string;
-    placeholder: string;
-    required: boolean;
-    container: {
-      margin: Margin;
-      padding: Padding;
-      border: Border;
-    };
-  };
-}
-
-export interface FormFieldLongText {
-  id: string;
-  type: typeof FormFieldType.LONG_TEXT;
-  form: {
-    key: string;
-  };
-  props: {
-    label: string;
-    placeholder: string;
-    required: boolean;
-    container: {
-      margin: Margin;
-      padding: Padding;
-      border: Border;
-    };
-  };
-}
-
-export interface FormFieldNumber {
-  id: string;
-  type: typeof FormFieldType.NUMBER;
-  form: {
-    key: string;
-  };
-  props: {
-    label: string;
-    placeholder: string;
-    required: boolean;
-    min?: number;
-    max?: number;
-    container: {
-      margin: Margin;
-      padding: Padding;
-      border: Border;
-    };
-  };
-}
-
-export interface OptionType {
-  label: string;
-  value: string;
-}
-
-export interface FormFieldSingleChoice {
-  id: string;
-  type: typeof FormFieldType.SINGLE_CHOICE;
-  form: {
-    key: string;
-  };
-  props: {
-    label: string;
-    options: OptionType[];
-    required: boolean;
-    isValueDifferent: boolean;
-    container: {
-      margin: Margin;
-      padding: Padding;
-      border: Border;
-    };
-  };
-}
-
-export interface FormFieldMultipleChoices {
-  id: string;
-  type: typeof FormFieldType.MULTIPLE_CHOICES;
-  form: {
-    key: string;
-  };
-  props: {
-    label: string;
-    options: OptionType[];
-    required: boolean;
-    isValueDifferent: boolean;
-    container: {
-      margin: Margin;
-      padding: Padding;
-      border: Border;
-    };
-  };
-}
-
-export interface FormFieldDate {
-  id: string;
-  type: typeof FormFieldType.DATE;
-  form: {
-    key: string;
-  };
-  props: {
-    label: string;
-    required: boolean;
-    container: {
-      margin: Margin;
-      padding: Padding;
-      border: Border;
-    };
-  };
-}
-
-export interface FormFieldTime {
-  id: string;
-  type: typeof FormFieldType.TIME;
-  form: {
-    key: string;
-  };
-  props: {
-    label: string;
-    required: boolean;
-    container: {
-      margin: Margin;
-      padding: Padding;
-      border: Border;
-    };
-  };
-}
-
-export interface FormFieldDateTime {
-  id: string;
-  type: typeof FormFieldType.DATE_TIME;
-  form: {
-    key: string;
-  };
-  props: {
-    label: string;
-    required: boolean;
-    container: {
-      margin: Margin;
-      padding: Padding;
-      border: Border;
-    };
-  };
-}
-
-export interface FormFieldFile {
-  id: string;
-  type: typeof FormFieldType.FILE;
-  form: {
-    key: string;
-  };
-  props: {
-    label: string;
-    required: boolean;
-    accept: string;
-    multiple: boolean;
-    container: {
-      margin: Margin;
-      padding: Padding;
-      border: Border;
-    };
-  };
-}
-
-export interface FormFieldDivider {
-  id: string;
-  type: typeof FormFieldType.DIVIDER;
-  props: {
-    color: string;
-    width: number;
-    height: number;
-    style: 'solid' | 'dashed' | 'dotted';
-  };
-}
-
-export interface FormFieldHeader {
-  id: string;
-  type: typeof FormFieldType.HEADER;
-  props: {
-    content: JSONContent;
-    tag: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
-    textAlign: 'left' | 'center' | 'right';
-    color: string;
-    font: Font;
-  };
-}
-
-export interface FormFieldParagraph {
-  id: string;
-  type: typeof FormFieldType.PARAGRAPH;
-  props: {
-    content: JSONContent;
-    textAlign: 'left' | 'center' | 'right';
-    color: string;
-    font: Font;
-  };
-}
-
-export interface FormFieldImage {
-  id: string;
-  type: typeof FormFieldType.IMAGE;
-  props: {
-    src: string;
-    alt: string;
-    textAlign: 'left' | 'center' | 'right';
-    objectFit: 'fill' | 'contain' | 'cover' | 'none' | 'scale-down';
-    width: {
-      value: number;
-      autoWidth: boolean;
-    };
-  };
-}
-
-export interface FormFieldRow {
-  id: string;
-  type: typeof FormFieldType.ROW;
-  props: {
-    gap: number;
-  };
-  children: FormField[];
-}
-
-export interface FormFieldColumn {
-  id: string;
-  type: typeof FormFieldType.COLUMN;
-  props: {
-    width: number;
-  };
-  children: FormField[];
-}
-
-export interface FormFieldBlock {
-  id: string;
-  type: typeof FormFieldType.BLOCK;
-  children: FormField[];
-  props: {
-    padding: Padding;
-    margin: Margin;
-    boxShadow: BoxShadow[];
-    border: Border;
-    bgColor: string;
-    color: string;
-  };
-}
-
-export interface FormFieldButton {
-  id: string;
-  type: typeof FormFieldType.BUTTON;
-  props: {
-    label: string;
-    color: string;
-    bgColor: string;
-    btnType: 'submit' | 'button';
-    fullWidth: boolean;
-    font: Font;
-    border: Border;
-    padding: Padding;
-    align: 'left' | 'center' | 'right';
-  };
-}
-
-export interface FormFieldPage {
-  id: string;
-  type: typeof FormFieldType.PAGE;
-  children: FormField[];
-  props: {
-    name: string;
-  };
-}
-
-export type FormField =
-  | FormFieldShortText
-  | FormFieldLongText
-  | FormFieldNumber
-  | FormFieldSingleChoice
-  | FormFieldMultipleChoices
-  | FormFieldDate
-  | FormFieldTime
-  | FormFieldDateTime
-  | FormFieldFile
-  | FormFieldDivider
-  | FormFieldHeader
-  | FormFieldParagraph
-  | FormFieldImage
-  | FormFieldRow
-  | FormFieldColumn
-  | FormFieldBlock
-  | FormFieldButton
-  | FormFieldPage;
