@@ -50,30 +50,6 @@ export interface FieldConditionGroup {
   conditions: (FieldCondition | FieldConditionGroup)[];
 }
 
-// Root level rule types
-export interface RootGroupRule {
-  type: 'group';
-  conditions: FieldCondition | FieldConditionGroup;
-  action: {
-    type: 'show' | 'hide' | 'reorder' | 'style';
-    fields: string[];
-    order?: string[];
-    style?: {
-      display?: 'block' | 'none' | 'flex' | 'grid';
-      gap?: Size;
-      layout?: 'horizontal' | 'vertical' | 'grid';
-      columns?: number;
-      alignItems?: 'start' | 'center' | 'end' | 'stretch';
-      justifyContent?:
-        | 'start'
-        | 'center'
-        | 'end'
-        | 'space-between'
-        | 'space-around';
-    };
-  };
-}
-
 export interface RootPageRule {
   type: 'page';
   conditions: FieldCondition | FieldConditionGroup;
@@ -89,14 +65,9 @@ export interface RootValidationRule {
   type: 'validation';
   conditions: FieldCondition | FieldConditionGroup;
   action: {
-    type: 'crossField' | 'custom';
+    type: 'crossField';
     fields: string[];
-    rules: {
-      operator: ValidationOperator;
-      value?: any;
-      message: string;
-      customValidator?: (values: Record<string, any>) => boolean;
-    }[];
+    rules: ValidationRule[];
     preventSubmission?: boolean;
   };
 }
@@ -126,6 +97,16 @@ export interface RootErrorRule {
       action?: () => void;
       message?: string;
     };
+  };
+}
+
+export interface RootGroupRule {
+  type: 'group';
+  conditions: FieldCondition | FieldConditionGroup;
+  action: {
+    type: 'show' | 'hide' | 'reorder';
+    fields: string[];
+    order?: string[];
   };
 }
 
@@ -262,15 +243,23 @@ export type ValidationOperator =
   | 'lessThan'
   | 'greaterThanOrEqual'
   | 'lessThanOrEqual'
-  | 'regex'
-  | 'custom';
+  | 'regex';
 
-export interface ValidationRule {
+// Base validation rule interface
+export interface BaseValidationRule {
+  type: string;
+  message: string;
+}
+
+// Standard validation rule
+export interface StandardValidationRule extends BaseValidationRule {
+  type: 'standard';
   operator: ValidationOperator;
   value: any;
-  message: string;
-  customValidator?: (value: any) => boolean;
 }
+
+// Future extensibility: Add new validation rule types here
+export type ValidationRule = StandardValidationRule;
 
 export interface ValidationGroup {
   type: 'group';
