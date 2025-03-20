@@ -5,6 +5,7 @@ import SettingsFieldHorizontal from '../property-layouts/SettingsFieldHorizontal
 import Switch from '../../../components/form/Switch';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import FormKeySettings from '../common/FormKeySettings';
+import SettingsFieldRegex from '../property-layouts/SettingsFieldRegex';
 
 interface ShortTextSettingsProps {
   field: FormFieldShortText;
@@ -37,7 +38,7 @@ function ShortTextSettings({ field }: ShortTextSettingsProps) {
           }}
         />
       </SettingsFieldVertical>
-      <SettingsFieldHorizontal label="Required">
+      <SettingsFieldHorizontal label="Required" divider>
         <Switch
           checked={field.props.required}
           onChange={() => {
@@ -45,6 +46,7 @@ function ShortTextSettings({ field }: ShortTextSettingsProps) {
           }}
         />
       </SettingsFieldHorizontal>
+      <SettingsFieldRegex label="Match pattern" field={field} divider />
     </div>
   );
 }

@@ -58,6 +58,9 @@ export const getDefaultField = ({
         form: {
           key: formKey || '',
         },
+        validations: {
+          pattern: '',
+        },
         props: {
           label: 'Short Text',
           placeholder: 'Enter the placeholder',
