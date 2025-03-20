@@ -149,7 +149,7 @@ function SettingsField4Sides({
 
       {divider && (
         <div className="mx-4">
-          <div className="w-full border-t-[0.5px] border-neutral-400 h-[1px]" />
+          <div className="w-full border-t-[0.5px] border-neutral-200 h-[1px]" />
         </div>
       )}
     </div>

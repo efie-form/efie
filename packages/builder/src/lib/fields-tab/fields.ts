@@ -111,16 +111,6 @@ const staticGroup: FieldsTabGroup = {
   label: 'Static',
   children: [
     {
-      type: FormFieldType.BUTTON,
-      label: FIELDS_NAME[FormFieldType.BUTTON],
-      Icon: fieldIcons[FormFieldType.BUTTON],
-    },
-    {
-      type: FormFieldType.DIVIDER,
-      label: FIELDS_NAME[FormFieldType.DIVIDER],
-      Icon: fieldIcons[FormFieldType.DIVIDER],
-    },
-    {
       type: FormFieldType.HEADER,
       label: FIELDS_NAME[FormFieldType.HEADER],
       Icon: fieldIcons[FormFieldType.HEADER],
@@ -134,6 +124,16 @@ const staticGroup: FieldsTabGroup = {
       type: FormFieldType.IMAGE,
       label: FIELDS_NAME[FormFieldType.IMAGE],
       Icon: fieldIcons[FormFieldType.IMAGE],
+    },
+    {
+      type: FormFieldType.BUTTON,
+      label: FIELDS_NAME[FormFieldType.BUTTON],
+      Icon: fieldIcons[FormFieldType.BUTTON],
+    },
+    {
+      type: FormFieldType.DIVIDER,
+      label: FIELDS_NAME[FormFieldType.DIVIDER],
+      Icon: fieldIcons[FormFieldType.DIVIDER],
     },
   ],
 };

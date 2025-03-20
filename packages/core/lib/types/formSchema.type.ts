@@ -61,6 +61,9 @@ export interface FormFieldShortText {
   form: {
     key: string;
   };
+  validations: {
+    pattern: string;
+  };
   props: {
     label: string;
     placeholder: string;
