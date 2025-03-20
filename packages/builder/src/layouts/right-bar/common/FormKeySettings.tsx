@@ -16,7 +16,7 @@ export default function FormKeySettings({
   const { updateFieldProps } = useSchemaStore();
 
   return (
-    <SettingsFieldVertical label="Form key" divider>
+    <SettingsFieldVertical label="Field ID" divider>
       <Input
         onChange={(value) => updateFieldProps(fieldId, 'form.key', value)}
         value={value}
