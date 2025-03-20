@@ -20,6 +20,238 @@ export interface Size {
   unit: Unit;
 }
 
+// Field condition operators
+export type FieldConditionOperator =
+  | 'equals'
+  | 'notEquals'
+  | 'contains'
+  | 'notContains'
+  | 'greaterThan'
+  | 'lessThan'
+  | 'greaterThanOrEqual'
+  | 'lessThanOrEqual'
+  | 'regex'
+  | 'isEmpty'
+  | 'isNotEmpty'
+  | 'isValid'
+  | 'isInvalid'
+  | 'custom';
+
+export interface FieldCondition {
+  fieldId: string;
+  operator: FieldConditionOperator;
+  value?: any;
+  customValidator?: (value: any) => boolean;
+}
+
+export interface FieldConditionGroup {
+  type: 'group';
+  operator: 'and' | 'or';
+  conditions: (FieldCondition | FieldConditionGroup)[];
+}
+
+// Root level rule types
+export interface RootGroupRule {
+  type: 'group';
+  conditions: FieldCondition | FieldConditionGroup;
+  action: {
+    type: 'show' | 'hide' | 'reorder' | 'style';
+    fields: string[];
+    order?: string[];
+    style?: {
+      display?: 'block' | 'none' | 'flex' | 'grid';
+      gap?: Size;
+      layout?: 'horizontal' | 'vertical' | 'grid';
+      columns?: number;
+      alignItems?: 'start' | 'center' | 'end' | 'stretch';
+      justifyContent?:
+        | 'start'
+        | 'center'
+        | 'end'
+        | 'space-between'
+        | 'space-around';
+    };
+  };
+}
+
+export interface RootPageRule {
+  type: 'page';
+  conditions: FieldCondition | FieldConditionGroup;
+  action: {
+    type: 'show' | 'hide' | 'reorder' | 'skip';
+    pages: string[];
+    order?: string[];
+    skipToPage?: string;
+  };
+}
+
+export interface RootValidationRule {
+  type: 'validation';
+  conditions: FieldCondition | FieldConditionGroup;
+  action: {
+    type: 'crossField' | 'custom';
+    fields: string[];
+    rules: {
+      operator: ValidationOperator;
+      value?: any;
+      message: string;
+      customValidator?: (values: Record<string, any>) => boolean;
+    }[];
+    preventSubmission?: boolean;
+  };
+}
+
+export interface RootErrorRule {
+  type: 'error';
+  conditions: FieldCondition | FieldConditionGroup;
+  action: {
+    type: 'display' | 'handle' | 'recover';
+    fields: string[];
+    display?: {
+      position: 'inline' | 'toast' | 'modal' | 'banner';
+      style?: {
+        color?: string;
+        backgroundColor?: string;
+        position?: 'top' | 'bottom' | 'left' | 'right';
+      };
+    };
+    handler?: {
+      type: 'retry' | 'fallback' | 'redirect';
+      maxRetries?: number;
+      fallbackValue?: any;
+      redirectUrl?: string;
+    };
+    recovery?: {
+      type: 'auto' | 'manual';
+      action?: () => void;
+      message?: string;
+    };
+  };
+}
+
+export type RootRule =
+  | RootGroupRule
+  | RootPageRule
+  | RootValidationRule
+  | RootErrorRule;
+
+// Field rule types
+export interface FieldVisibilityRule {
+  type: 'visibility';
+  conditions: FieldCondition | FieldConditionGroup;
+  action: 'show' | 'hide';
+}
+
+export interface FieldRequirementRule {
+  type: 'requirement';
+  conditions: FieldCondition | FieldConditionGroup;
+  action: 'required' | 'optional';
+}
+
+export interface FieldEnableRule {
+  type: 'enable';
+  conditions: FieldCondition | FieldConditionGroup;
+  action: 'enable' | 'disable';
+}
+
+export interface FieldValueRule {
+  type: 'value';
+  conditions: FieldCondition | FieldConditionGroup;
+  action: {
+    type: 'set' | 'clear' | 'copy' | 'calculate';
+    value?: any;
+    sourceFieldId?: string;
+    calculation?: string;
+  };
+}
+
+export interface FieldStyleRule {
+  type: 'style';
+  conditions: FieldCondition | FieldConditionGroup;
+  action: {
+    property: string;
+    value: any;
+  };
+}
+
+export interface FieldValidationRule {
+  type: 'validation';
+  conditions: FieldCondition | FieldConditionGroup;
+  action: {
+    add?: ValidationSchema[];
+    remove?: string[];
+  };
+}
+
+export interface FieldDependencyRule {
+  type: 'dependency';
+  conditions: FieldCondition | FieldConditionGroup;
+  action: {
+    type: 'watch' | 'unwatch';
+    fields: string[];
+  };
+}
+
+export interface FieldBehaviorRule {
+  type: 'behavior';
+  conditions: FieldCondition | FieldConditionGroup;
+  action: {
+    type: 'focus' | 'blur' | 'scrollIntoView' | 'triggerEvent';
+    event?: string;
+    options?: Record<string, any>;
+  };
+}
+
+export interface FieldAccessRule {
+  type: 'access';
+  conditions: FieldCondition | FieldConditionGroup;
+  action: {
+    type: 'readonly' | 'editable' | 'hidden' | 'visible';
+  };
+}
+
+export interface FieldFormatRule {
+  type: 'format';
+  conditions: FieldCondition | FieldConditionGroup;
+  action: {
+    type: 'mask' | 'unmask' | 'transform';
+    format?: string;
+    transform?: (value: any) => any;
+  };
+}
+
+export interface FieldErrorRule {
+  type: 'error';
+  conditions: FieldCondition | FieldConditionGroup;
+  action: {
+    type: 'show' | 'hide' | 'clear';
+    message?: string;
+  };
+}
+
+export interface FieldStateRule {
+  type: 'state';
+  conditions: FieldCondition | FieldConditionGroup;
+  action: {
+    type: 'loading' | 'success' | 'error' | 'warning';
+    message?: string;
+  };
+}
+
+export type FieldRule =
+  | FieldVisibilityRule
+  | FieldRequirementRule
+  | FieldEnableRule
+  | FieldValueRule
+  | FieldStyleRule
+  | FieldValidationRule
+  | FieldDependencyRule
+  | FieldBehaviorRule
+  | FieldAccessRule
+  | FieldFormatRule
+  | FieldErrorRule
+  | FieldStateRule;
+
 // Validation types
 export type ValidationOperator =
   | 'equals'
@@ -128,6 +360,7 @@ export interface BaseFormField {
   };
   props: PropertyDefinition[];
   container?: ContainerStyle;
+  rules?: FieldRule[];
 }
 
 // Input field types
@@ -279,5 +512,6 @@ export interface FormSchema {
   version: string;
   form: {
     fields: FormField[];
+    rules: RootRule[];
   };
 }
