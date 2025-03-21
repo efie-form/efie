@@ -37,11 +37,16 @@ export type FieldConditionOperator =
   | 'isInvalid'
   | 'custom';
 
+// Field value types
+export type FieldValue = string | number | boolean | null | undefined;
+
+// Field condition value types
+export type FieldConditionValue = FieldValue | RegExp;
+
 export interface FieldCondition {
   fieldId: string;
   operator: FieldConditionOperator;
-  value?: any;
-  customValidator?: (value: any) => boolean;
+  value?: FieldConditionValue;
 }
 
 export interface FieldConditionGroup {
@@ -89,7 +94,7 @@ export interface RootErrorRule {
     handler?: {
       type: 'retry' | 'fallback' | 'redirect';
       maxRetries?: number;
-      fallbackValue?: any;
+      fallbackValue?: FieldValue;
       redirectUrl?: string;
     };
     recovery?: {
@@ -140,7 +145,7 @@ export interface FieldValueRule {
   conditions: FieldCondition | FieldConditionGroup;
   action: {
     type: 'set' | 'clear' | 'copy' | 'calculate';
-    value?: any;
+    value?: FieldValue;
     sourceFieldId?: string;
     calculation?: string;
   };
@@ -151,7 +156,7 @@ export interface FieldStyleRule {
   conditions: FieldCondition | FieldConditionGroup;
   action: {
     property: string;
-    value: any;
+    value: string | number | boolean | Size | JSONContent;
   };
 }
 
@@ -179,7 +184,7 @@ export interface FieldBehaviorRule {
   action: {
     type: 'focus' | 'blur' | 'scrollIntoView' | 'triggerEvent';
     event?: string;
-    options?: Record<string, any>;
+    options?: Record<string, string | number | boolean | null | undefined>;
   };
 }
 
@@ -197,7 +202,7 @@ export interface FieldFormatRule {
   action: {
     type: 'mask' | 'unmask' | 'transform';
     format?: string;
-    transform?: (value: any) => any;
+    transform?: (value: FieldValue) => FieldValue;
   };
 }
 
@@ -255,7 +260,7 @@ export interface BaseValidationRule {
 export interface StandardValidationRule extends BaseValidationRule {
   type: 'standard';
   operator: ValidationOperator;
-  value: any;
+  value: FieldConditionValue;
 }
 
 // Future extensibility: Add new validation rule types here
@@ -271,7 +276,7 @@ export interface ValidationCondition {
   type: 'condition';
   fieldId: string;
   operator: ValidationOperator;
-  value: any;
+  value: FieldConditionValue;
   then: ValidationRule | ValidationGroup;
   else?: ValidationRule | ValidationGroup;
 }
@@ -280,7 +285,7 @@ export interface ValidationCase {
   type: 'case';
   fieldId: string;
   cases: {
-    value: any;
+    value: FieldConditionValue;
     rules: ValidationRule | ValidationGroup;
   }[];
   default?: ValidationRule | ValidationGroup;
@@ -291,6 +296,17 @@ export type ValidationSchema =
   | ValidationGroup
   | ValidationCondition
   | ValidationCase;
+
+// Property value types
+export type PropertyValue =
+  | string
+  | number
+  | boolean
+  | JSONContent
+  | Record<string, string | number | boolean | JSONContent>
+  | (string | number | boolean | JSONContent)[]
+  | null
+  | undefined;
 
 // Property types
 export interface PropertyDefinition {
@@ -306,13 +322,13 @@ export interface PropertyDefinition {
     | 'select'
     | 'rich-text';
   label: string;
-  defaultValue?: any;
-  options?: { label: string; value: any }[];
+  defaultValue?: PropertyValue;
+  options?: { label: string; value: string | number }[];
   validation?: ValidationSchema[];
   isRequired?: boolean;
   isArray?: boolean;
   arrayItemType?: PropertyDefinition;
-  content?: JSONContent;
+  content?: JSONContent; // For rich-text type
 }
 
 // Common container styles
