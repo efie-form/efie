@@ -312,6 +312,7 @@ export interface PropertyDefinition {
   isRequired?: boolean;
   isArray?: boolean;
   arrayItemType?: PropertyDefinition;
+  content?: JSONContent;
 }
 
 // Common container styles
