@@ -1,12 +1,38 @@
 import type { JSONContent } from '@tiptap/core';
 import type {
   FormFieldType,
-  PropertyType,
   RuleType,
   ActionType,
   DisplayPosition,
   SizeUnit,
 } from '../Constants';
+import type {
+  PropertyDefinition,
+  TextProperty,
+  NameProperty,
+  EmailProperty,
+  NumberProperty,
+  ChoiceProperty,
+  ChoicesProperty,
+  DateProperty,
+  TimeProperty,
+  DateTimeProperty,
+  FileProperty,
+  ContentProperty,
+  ImageProperty,
+  ButtonProperty,
+  DividerProperty,
+  RowProperty,
+  ColumnProperty,
+  BlockProperty,
+  PageProperty,
+  TaxProperty,
+  AddressProperty,
+  CityProperty,
+  StateProperty,
+  ZipProperty,
+} from './PropertyDefinition.type';
+import type { RootRule } from './RootRule.type';
 
 // Base types for units and measurements
 export interface Size {
@@ -57,72 +83,6 @@ export type FieldConditionOperator =
 
 // Field value types
 export type FieldValue = string | number | boolean | null | undefined;
-
-export interface RootPageRule {
-  type: 'page';
-  conditions: FieldCondition | FieldConditionGroup;
-  action: {
-    type: 'show' | 'hide' | 'reorder' | 'skip';
-    pages: string[];
-    order?: string[];
-    skipToPage?: string;
-  };
-}
-
-export interface RootValidationRule {
-  type: 'validation';
-  conditions: FieldCondition | FieldConditionGroup;
-  action: {
-    type: 'crossField';
-    fields: string[];
-    rules: ValidationRule[];
-    preventSubmission?: boolean;
-  };
-}
-
-export interface RootErrorRule {
-  type: 'error';
-  conditions: FieldCondition | FieldConditionGroup;
-  action: {
-    type: 'display' | 'handle' | 'recover';
-    fields: string[];
-    display?: {
-      position: 'inline' | 'toast' | 'modal' | 'banner';
-      style?: {
-        color?: string;
-        backgroundColor?: string;
-        position?: 'top' | 'bottom' | 'left' | 'right';
-      };
-    };
-    handler?: {
-      type: 'retry' | 'fallback' | 'redirect';
-      maxRetries?: number;
-      fallbackValue?: FieldValue;
-      redirectUrl?: string;
-    };
-    recovery?: {
-      type: 'auto' | 'manual';
-      action?: () => void;
-      message?: string;
-    };
-  };
-}
-
-export interface RootGroupRule {
-  type: 'group';
-  conditions: FieldCondition | FieldConditionGroup;
-  action: {
-    type: 'show' | 'hide' | 'reorder';
-    fields: string[];
-    order?: string[];
-  };
-}
-
-export type RootRule =
-  | RootGroupRule
-  | RootPageRule
-  | RootValidationRule
-  | RootErrorRule;
 
 // Field rule types
 export interface FieldRequirementRule {
@@ -330,19 +290,6 @@ export type PropertyValue =
   | null
   | undefined;
 
-// Property types
-export interface PropertyDefinition {
-  type: PropertyType;
-  label: string;
-  defaultValue?: PropertyValue;
-  options?: { label: string; value: string | number }[];
-  validation?: ValidationSchema[];
-  isRequired?: boolean;
-  isArray?: boolean;
-  arrayItemType?: PropertyDefinition;
-  content?: JSONContent; // For rich-text type
-}
-
 // Common container styles
 export interface ContainerStyle {
   margin: Size;
@@ -387,11 +334,17 @@ export interface InputFormField extends BaseFormField {
     | typeof FormFieldType.SHORT_TEXT
     | typeof FormFieldType.LONG_TEXT
     | typeof FormFieldType.NUMBER;
-  props: (PropertyDefinition & {
-    placeholder?: string;
-    min?: number;
-    max?: number;
-  })[];
+  props: (
+    | TextProperty
+    | NameProperty
+    | EmailProperty
+    | NumberProperty
+    | TaxProperty
+    | AddressProperty
+    | CityProperty
+    | StateProperty
+    | ZipProperty
+  )[];
 }
 
 // Choice field types
@@ -399,10 +352,7 @@ export interface ChoiceFormField extends BaseFormField {
   type:
     | typeof FormFieldType.SINGLE_CHOICE
     | typeof FormFieldType.MULTIPLE_CHOICES;
-  props: (PropertyDefinition & {
-    options: { label: string; value: string }[];
-    isValueDifferent?: boolean;
-  })[];
+  props: (ChoiceProperty | ChoicesProperty)[];
 }
 
 // Date/Time field types
@@ -411,18 +361,13 @@ export interface DateTimeFormField extends BaseFormField {
     | typeof FormFieldType.DATE
     | typeof FormFieldType.TIME
     | typeof FormFieldType.DATE_TIME;
-  props: (PropertyDefinition & {
-    format?: string;
-  })[];
+  props: (DateProperty | TimeProperty | DateTimeProperty)[];
 }
 
 // File field type
 export interface FileFormField extends BaseFormField {
   type: typeof FormFieldType.FILE;
-  props: (PropertyDefinition & {
-    accept?: string;
-    multiple?: boolean;
-  })[];
+  props: FileProperty[];
 }
 
 // Layout field types
@@ -432,76 +377,38 @@ export interface LayoutFormField extends BaseFormField {
     | typeof FormFieldType.COLUMN
     | typeof FormFieldType.BLOCK;
   children: FormField[];
-  props: (PropertyDefinition & {
-    gap?: Size;
-    width?: Size;
-  })[];
+  props: (RowProperty | ColumnProperty | BlockProperty)[];
 }
 
 // Content field types
 export interface ContentFormField extends BaseFormField {
   type: typeof FormFieldType.HEADER | typeof FormFieldType.PARAGRAPH;
-  props: (PropertyDefinition & {
-    tag?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
-    textAlign?: 'left' | 'center' | 'right';
-    color?: string;
-    font?: {
-      size: Size;
-      weight: number;
-    };
-  })[];
+  props: ContentProperty[];
 }
 
 // Image field type
 export interface ImageFormField extends BaseFormField {
   type: typeof FormFieldType.IMAGE;
-  props: (PropertyDefinition & {
-    src?: string;
-    alt?: string;
-    textAlign?: 'left' | 'center' | 'right';
-    objectFit?: 'fill' | 'contain' | 'cover' | 'none' | 'scale-down';
-    width?: {
-      value: Size;
-      autoWidth: boolean;
-    };
-  })[];
+  props: ImageProperty[];
 }
 
 // Button field type
 export interface ButtonFormField extends BaseFormField {
   type: typeof FormFieldType.BUTTON;
-  props: (PropertyDefinition & {
-    label?: string;
-    color?: string;
-    bgColor?: string;
-    btnType?: 'submit' | 'button';
-    fullWidth?: boolean;
-    font?: {
-      size: Size;
-      weight: number;
-    };
-    align?: 'left' | 'center' | 'right';
-  })[];
+  props: ButtonProperty[];
 }
 
 // Page field type
 export interface PageFormField extends BaseFormField {
   type: typeof FormFieldType.PAGE;
   children: FormField[];
-  props: (PropertyDefinition & {
-    name?: string;
-  })[];
+  props: PageProperty[];
 }
 
 // Divider field type
 export interface DividerFormField extends BaseFormField {
   type: typeof FormFieldType.DIVIDER;
-  props: (PropertyDefinition & {
-    color?: string;
-    width?: Size;
-    height?: Size;
-    style?: 'solid' | 'dashed' | 'dotted';
-  })[];
+  props: DividerProperty[];
 }
 
 export type FormField =
