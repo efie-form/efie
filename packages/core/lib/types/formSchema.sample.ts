@@ -1,7 +1,7 @@
 import type { FormSchema } from './formSchema.type';
 import {
   FormFieldType,
-  PropertyKey,
+  PropertyType,
   RuleType,
   ActionType,
   DisplayPosition,
@@ -21,7 +21,7 @@ export const sampleFormSchema: FormSchema = {
         id: 'welcome',
         props: [
           {
-            key: PropertyKey.CONTENT,
+            type: PropertyType.CONTENT,
             label: 'Welcome Header',
             content: {
               type: 'doc',
@@ -57,7 +57,7 @@ export const sampleFormSchema: FormSchema = {
         id: 'fieldTypesDemo',
         props: [
           {
-            key: PropertyKey.CONTENT,
+            type: PropertyType.CONTENT,
             label: 'Field Types Demo',
             content: {
               type: 'doc',
@@ -81,7 +81,7 @@ export const sampleFormSchema: FormSchema = {
         id: 'shortText',
         props: [
           {
-            key: PropertyKey.TEXT,
+            type: PropertyType.TEXT,
             label: 'Short Text Input',
             placeholder: 'Enter short text',
             isRequired: true,
@@ -93,7 +93,7 @@ export const sampleFormSchema: FormSchema = {
         id: 'longText',
         props: [
           {
-            key: PropertyKey.TEXT,
+            type: PropertyType.TEXT,
             label: 'Long Text Input',
             placeholder: 'Enter long text',
             isRequired: true,
@@ -105,7 +105,7 @@ export const sampleFormSchema: FormSchema = {
         id: 'number',
         props: [
           {
-            key: PropertyKey.NUMBER,
+            type: PropertyType.NUMBER,
             label: 'Number Input',
             placeholder: 'Enter a number',
             min: 0,
@@ -121,7 +121,7 @@ export const sampleFormSchema: FormSchema = {
         id: 'singleChoice',
         props: [
           {
-            key: PropertyKey.CHOICE,
+            type: PropertyType.CHOICE,
             label: 'Single Choice',
             options: [
               { label: 'Option 1', value: '1' },
@@ -137,7 +137,7 @@ export const sampleFormSchema: FormSchema = {
         id: 'multipleChoices',
         props: [
           {
-            key: PropertyKey.CHOICES,
+            type: PropertyType.CHOICES,
             label: 'Multiple Choices',
             options: [
               { label: 'Choice 1', value: '1' },
@@ -155,7 +155,7 @@ export const sampleFormSchema: FormSchema = {
         id: 'date',
         props: [
           {
-            key: PropertyKey.DATE,
+            type: PropertyType.DATE,
             label: 'Date',
             format: 'YYYY-MM-DD',
             isRequired: true,
@@ -167,7 +167,7 @@ export const sampleFormSchema: FormSchema = {
         id: 'time',
         props: [
           {
-            key: PropertyKey.TIME,
+            type: PropertyType.TIME,
             label: 'Time',
             format: 'HH:mm',
             isRequired: true,
@@ -179,7 +179,7 @@ export const sampleFormSchema: FormSchema = {
         id: 'dateTime',
         props: [
           {
-            key: PropertyKey.DATE_TIME,
+            type: PropertyType.DATE_TIME,
             label: 'Date and Time',
             format: 'YYYY-MM-DD HH:mm',
             isRequired: true,
@@ -193,7 +193,7 @@ export const sampleFormSchema: FormSchema = {
         id: 'file',
         props: [
           {
-            key: PropertyKey.FILE,
+            type: PropertyType.FILE,
             label: 'File Upload',
             accept: '.pdf,.doc,.docx',
             multiple: true,
@@ -208,7 +208,7 @@ export const sampleFormSchema: FormSchema = {
         id: 'row',
         props: [
           {
-            key: PropertyKey.ROW,
+            type: PropertyType.ROW,
             label: 'Row Layout',
           },
         ],
@@ -218,7 +218,7 @@ export const sampleFormSchema: FormSchema = {
             id: 'rowField1',
             props: [
               {
-                key: PropertyKey.TEXT,
+                type: PropertyType.TEXT,
                 label: 'Row Field 1',
               },
             ],
@@ -228,7 +228,7 @@ export const sampleFormSchema: FormSchema = {
             id: 'rowField2',
             props: [
               {
-                key: PropertyKey.TEXT,
+                type: PropertyType.TEXT,
                 label: 'Row Field 2',
               },
             ],
@@ -240,7 +240,7 @@ export const sampleFormSchema: FormSchema = {
         id: 'column',
         props: [
           {
-            key: PropertyKey.COLUMN,
+            type: PropertyType.COLUMN,
             label: 'Column Layout',
           },
         ],
@@ -250,7 +250,7 @@ export const sampleFormSchema: FormSchema = {
             id: 'columnField1',
             props: [
               {
-                key: PropertyKey.TEXT,
+                type: PropertyType.TEXT,
                 label: 'Column Field 1',
               },
             ],
@@ -260,7 +260,7 @@ export const sampleFormSchema: FormSchema = {
             id: 'columnField2',
             props: [
               {
-                key: PropertyKey.TEXT,
+                type: PropertyType.TEXT,
                 label: 'Column Field 2',
               },
             ],
@@ -272,7 +272,7 @@ export const sampleFormSchema: FormSchema = {
         id: 'block',
         props: [
           {
-            key: PropertyKey.BLOCK,
+            type: PropertyType.BLOCK,
             label: 'Block Layout',
           },
         ],
@@ -282,7 +282,7 @@ export const sampleFormSchema: FormSchema = {
             id: 'blockField1',
             props: [
               {
-                key: PropertyKey.TEXT,
+                type: PropertyType.TEXT,
                 label: 'Block Field 1',
               },
             ],
@@ -292,7 +292,7 @@ export const sampleFormSchema: FormSchema = {
             id: 'blockField2',
             props: [
               {
-                key: PropertyKey.TEXT,
+                type: PropertyType.TEXT,
                 label: 'Block Field 2',
               },
             ],
@@ -306,7 +306,7 @@ export const sampleFormSchema: FormSchema = {
         id: 'paragraph',
         props: [
           {
-            key: PropertyKey.CONTENT,
+            type: PropertyType.CONTENT,
             label: 'Paragraph',
             content: {
               type: 'doc',
@@ -340,7 +340,7 @@ export const sampleFormSchema: FormSchema = {
         id: 'image',
         props: [
           {
-            key: PropertyKey.IMAGE,
+            type: PropertyType.IMAGE,
             label: 'Image',
             src: '/sample-image.jpg',
             alt: 'Sample Image',
@@ -360,7 +360,7 @@ export const sampleFormSchema: FormSchema = {
         id: 'button',
         props: [
           {
-            key: PropertyKey.BUTTON,
+            type: PropertyType.BUTTON,
             label: 'Button',
             btnType: ButtonType.BUTTON,
             fullWidth: true,
@@ -376,7 +376,7 @@ export const sampleFormSchema: FormSchema = {
         id: 'page',
         props: [
           {
-            key: PropertyKey.PAGE,
+            type: PropertyType.PAGE,
             label: 'Page',
             name: 'Sample Page',
           },
@@ -387,7 +387,7 @@ export const sampleFormSchema: FormSchema = {
             id: 'pageField1',
             props: [
               {
-                key: PropertyKey.TEXT,
+                type: PropertyType.TEXT,
                 label: 'Page Field 1',
               },
             ],
@@ -401,7 +401,7 @@ export const sampleFormSchema: FormSchema = {
         id: 'divider',
         props: [
           {
-            key: PropertyKey.DIVIDER,
+            type: PropertyType.DIVIDER,
             label: 'Divider',
             color: '#cccccc',
             width: { value: 100, unit: '%' },
@@ -417,7 +417,7 @@ export const sampleFormSchema: FormSchema = {
         id: 'accountType',
         props: [
           {
-            key: PropertyKey.TYPE,
+            type: PropertyType.TYPE,
             label: 'Account Type',
             isRequired: true,
             options: [
@@ -434,7 +434,7 @@ export const sampleFormSchema: FormSchema = {
         id: 'firstName',
         props: [
           {
-            key: PropertyKey.NAME,
+            type: PropertyType.NAME,
             label: 'First Name',
             isRequired: true,
             validation: [
@@ -453,7 +453,7 @@ export const sampleFormSchema: FormSchema = {
         id: 'lastName',
         props: [
           {
-            key: PropertyKey.NAME,
+            type: PropertyType.NAME,
             label: 'Last Name',
             isRequired: true,
             validation: [
@@ -472,7 +472,7 @@ export const sampleFormSchema: FormSchema = {
         id: 'email',
         props: [
           {
-            key: PropertyKey.EMAIL,
+            type: PropertyType.EMAIL,
             label: 'Email Address',
             isRequired: true,
             validation: [
@@ -493,7 +493,7 @@ export const sampleFormSchema: FormSchema = {
         id: 'businessName',
         props: [
           {
-            key: PropertyKey.NAME,
+            type: PropertyType.NAME,
             label: 'Business Name',
             isRequired: true,
           },
@@ -504,7 +504,7 @@ export const sampleFormSchema: FormSchema = {
         id: 'taxId',
         props: [
           {
-            key: PropertyKey.TAX,
+            type: PropertyType.TAX,
             label: 'Tax ID',
             isRequired: true,
             validation: [
@@ -525,7 +525,7 @@ export const sampleFormSchema: FormSchema = {
         id: 'address',
         props: [
           {
-            key: PropertyKey.ADDRESS,
+            type: PropertyType.ADDRESS,
             label: 'Address',
             isRequired: true,
           },
@@ -536,7 +536,7 @@ export const sampleFormSchema: FormSchema = {
         id: 'city',
         props: [
           {
-            key: PropertyKey.CITY,
+            type: PropertyType.CITY,
             label: 'City',
             isRequired: true,
           },
@@ -547,7 +547,7 @@ export const sampleFormSchema: FormSchema = {
         id: 'state',
         props: [
           {
-            key: PropertyKey.STATE,
+            type: PropertyType.STATE,
             label: 'State',
             isRequired: true,
           },
@@ -558,7 +558,7 @@ export const sampleFormSchema: FormSchema = {
         id: 'zipCode',
         props: [
           {
-            key: PropertyKey.ZIP,
+            type: PropertyType.ZIP,
             label: 'ZIP Code',
             isRequired: true,
             validation: [
@@ -579,7 +579,7 @@ export const sampleFormSchema: FormSchema = {
         id: 'terms',
         props: [
           {
-            key: PropertyKey.CONTENT,
+            type: PropertyType.CONTENT,
             label: 'Terms and Conditions',
             content: {
               type: 'doc',
@@ -616,7 +616,7 @@ export const sampleFormSchema: FormSchema = {
         id: 'submit',
         props: [
           {
-            key: PropertyKey.BUTTON,
+            type: PropertyType.BUTTON,
             label: 'Submit',
             btnType: ButtonType.SUBMIT,
             fullWidth: true,

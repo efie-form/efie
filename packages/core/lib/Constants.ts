@@ -167,8 +167,8 @@ export const HeadingTag = {
   H6: 'h6',
 } as const;
 
-// Property Keys
-export const PropertyKey = {
+// Property Types
+export const PropertyType = {
   // Common
   TEXT: 'text',
   NAME: 'name',
@@ -268,5 +268,5 @@ export type ObjectFit = (typeof ObjectFit)[keyof typeof ObjectFit];
 export type ButtonType = (typeof ButtonType)[keyof typeof ButtonType];
 export type DividerStyle = (typeof DividerStyle)[keyof typeof DividerStyle];
 export type HeadingTag = (typeof HeadingTag)[keyof typeof HeadingTag];
-export type PropertyKey = (typeof PropertyKey)[keyof typeof PropertyKey];
+export type PropertyType = (typeof PropertyType)[keyof typeof PropertyType];
 export type SizeUnit = (typeof SizeUnit)[keyof typeof SizeUnit];

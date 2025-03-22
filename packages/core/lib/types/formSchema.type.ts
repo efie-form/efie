@@ -1,7 +1,7 @@
 import type { JSONContent } from '@tiptap/core';
 import type {
   FormFieldType,
-  PropertyKey,
+  PropertyType,
   RuleType,
   ActionType,
   DisplayPosition,
@@ -332,7 +332,7 @@ export type PropertyValue =
 
 // Property types
 export interface PropertyDefinition {
-  key: PropertyKey;
+  type: PropertyType;
   label: string;
   defaultValue?: PropertyValue;
   options?: { label: string; value: string | number }[];
