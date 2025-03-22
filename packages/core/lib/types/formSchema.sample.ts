@@ -9,7 +9,7 @@ import {
   ObjectFit,
   ButtonType,
   DividerStyle,
-} from '../Constants';
+} from './formSchema.constant';
 
 export const sampleFormSchema: FormSchema = {
   version: '1.0',

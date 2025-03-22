@@ -5,79 +5,80 @@ import type {
   ObjectFit,
   ButtonType,
   DividerStyle,
+  PropertyType,
 } from './formSchema.constant';
 
 // Label property
 export interface LabelProperty {
-  type: 'label';
+  type: typeof PropertyType.LABEL;
   value: string | JSONContent;
 }
 
 // Placeholder property
 export interface PlaceholderProperty {
-  type: 'placeholder';
+  type: typeof PropertyType.PLACEHOLDER;
   value: string;
 }
 
 // Default value properties
 export interface StringDefaultValueProperty {
-  type: 'defaultValue';
+  type: typeof PropertyType.DEFAULT_VALUE;
   stringValue: string;
 }
 
 export interface NumberDefaultValueProperty {
-  type: 'defaultValue';
+  type: typeof PropertyType.DEFAULT_VALUE;
   numberValue: number;
 }
 
 export interface ArrayDefaultValueProperty {
-  type: 'defaultValue';
+  type: typeof PropertyType.DEFAULT_VALUE;
   arrayValue: string[];
 }
 
 // Required property
 export interface RequiredProperty {
-  type: 'required';
+  type: typeof PropertyType.IS_REQUIRED;
   value: boolean;
   errorMessage?: string; // e.g., "This field is required"
 }
 
 // Min/Max properties
 export interface MinProperty {
-  type: 'min';
+  type: typeof PropertyType.MIN;
   value: number;
   errorMessage?: string; // e.g., "Value must be at least {value}"
 }
 
 export interface MaxProperty {
-  type: 'max';
+  type: typeof PropertyType.MAX;
   value: number;
   errorMessage?: string; // e.g., "Value must be at most {value}"
 }
 
 // Format property
 export interface FormatProperty {
-  type: 'format';
+  type: typeof PropertyType.FORMAT;
   value: string;
   errorMessage?: string; // e.g., "Please enter a valid {format} format"
 }
 
 // File properties
 export interface AcceptProperty {
-  type: 'accept';
+  type: typeof PropertyType.ACCEPT;
   value: string;
   errorMessage?: string; // e.g., "File type not allowed. Allowed types: {value}"
 }
 
 export interface MultipleProperty {
-  type: 'multiple';
+  type: typeof PropertyType.MULTIPLE;
   value: boolean;
   errorMessage?: string; // e.g., "Please select at least one option"
 }
 
 // Choice properties
 export interface OptionsProperty {
-  type: 'options';
+  type: typeof PropertyType.OPTIONS;
   value: { label: string; value: string }[];
   errorMessage?: string; // e.g., "Please select a valid option"
   isValueDifferent?: boolean;
@@ -85,93 +86,91 @@ export interface OptionsProperty {
 
 // Layout properties
 export interface GapProperty {
-  type: 'gap';
+  type: typeof PropertyType.GAP;
   value: Size;
 }
 
 export interface WidthProperty {
-  type: 'width';
+  type: typeof PropertyType.WIDTH;
   value: Size;
 }
 
 // Content properties
 export interface TagProperty {
-  type: 'tag';
+  type: typeof PropertyType.TAG;
   value: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 }
 
 export interface TextAlignProperty {
-  type: 'textAlign';
+  type: typeof PropertyType.TEXT_ALIGN;
   value: TextAlign;
 }
 
 export interface ColorProperty {
-  type: 'color';
+  type: typeof PropertyType.COLOR;
   value: string;
 }
 
 export interface FontSizeProperty {
-  type: 'fontSize';
+  type: typeof PropertyType.FONT;
   value: Size;
 }
 
 export interface FontWeightProperty {
-  type: 'fontWeight';
+  type: typeof PropertyType.FONT;
   value: number;
 }
 
 // Image properties
 export interface SrcProperty {
-  type: 'src';
+  type: typeof PropertyType.SRC;
   value: string;
-  errorMessage?: string; // e.g., "Invalid image URL"
 }
 
 export interface AltProperty {
-  type: 'alt';
+  type: typeof PropertyType.ALT;
   value: string;
-  errorMessage?: string; // e.g., "Please provide an alt text for accessibility"
 }
 
 export interface ObjectFitProperty {
-  type: 'objectFit';
+  type: typeof PropertyType.OBJECT_FIT;
   value: ObjectFit;
 }
 
 export interface AutoWidthProperty {
-  type: 'autoWidth';
+  type: typeof PropertyType.AUTO_WIDTH;
   value: boolean;
 }
 
 // Button properties
 export interface ButtonTypeProperty {
-  type: 'btnType';
+  type: typeof PropertyType.BTN_TYPE;
   value: ButtonType;
 }
 
 export interface FullWidthProperty {
-  type: 'fullWidth';
+  type: typeof PropertyType.FULL_WIDTH;
   value: boolean;
 }
 
 export interface BgColorProperty {
-  type: 'bgColor';
+  type: typeof PropertyType.BG_COLOR;
   value: string;
 }
 
 export interface AlignProperty {
-  type: 'align';
+  type: typeof PropertyType.ALIGN;
   value: TextAlign;
 }
 
 // Divider properties
 export interface HeightProperty {
-  type: 'height';
+  type: typeof PropertyType.HEIGHT;
   value: Size;
 }
 
 export interface StyleProperty {
-  type: 'style';
+  type: typeof PropertyType.STYLE;
   value: DividerStyle;
 }
 

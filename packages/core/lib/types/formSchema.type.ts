@@ -5,7 +5,7 @@ import type {
   ActionType,
   DisplayPosition,
   SizeUnit,
-} from '../Constants';
+} from './formSchema.constant';
 import type {
   LabelProperty,
   PlaceholderProperty,
@@ -17,7 +17,6 @@ import type {
   MaxProperty,
   FormatProperty,
   OptionsProperty,
-  IsValueDifferentProperty,
   TagProperty,
   TextAlignProperty,
   ColorProperty,
@@ -340,7 +339,6 @@ export interface BaseFormField {
     | MaxProperty
     | FormatProperty
     | OptionsProperty
-    | IsValueDifferentProperty
     | TagProperty
     | TextAlignProperty
     | ColorProperty
@@ -394,7 +392,6 @@ export interface ChoiceFormField extends BaseFormField {
     | StringDefaultValueProperty
     | ArrayDefaultValueProperty
     | RequiredProperty
-    | IsValueDifferentProperty
   )[];
 }
 
