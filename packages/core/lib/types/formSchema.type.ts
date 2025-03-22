@@ -1,23 +1,41 @@
-import type { FormFieldType } from '../InputType';
 import type { JSONContent } from '@tiptap/core';
+import type {
+  FormFieldType,
+  PropertyKey,
+  RuleType,
+  ActionType,
+  DisplayPosition,
+  SizeUnit,
+} from '../Constants';
 
 // Base types for units and measurements
-export type Unit =
-  | 'px'
-  | 'em'
-  | 'rem'
-  | '%'
-  | 'vh'
-  | 'vw'
-  | 'pt'
-  | 'pc'
-  | 'in'
-  | 'cm'
-  | 'mm';
-
 export interface Size {
   value: number;
-  unit: Unit;
+  unit: SizeUnit;
+}
+
+// Field condition types
+export interface FieldCondition {
+  fieldId: string;
+  operator: string;
+  value: FieldConditionValue;
+}
+
+export interface FieldConditionGroup {
+  operator: 'and' | 'or';
+  conditions: (FieldCondition | FieldConditionGroup)[];
+}
+
+export type FieldConditionValue = FieldValue | RegExp;
+
+// Field rule types
+export interface FieldVisibilityRule {
+  type: typeof RuleType.VISIBILITY;
+  conditions: FieldCondition | FieldConditionGroup;
+  action: {
+    type: typeof ActionType.SHOW | typeof ActionType.HIDE;
+    fields: string[];
+  };
 }
 
 // Field condition operators
@@ -39,21 +57,6 @@ export type FieldConditionOperator =
 
 // Field value types
 export type FieldValue = string | number | boolean | null | undefined;
-
-// Field condition value types
-export type FieldConditionValue = FieldValue | RegExp;
-
-export interface FieldCondition {
-  fieldId: string;
-  operator: FieldConditionOperator;
-  value?: FieldConditionValue;
-}
-
-export interface FieldConditionGroup {
-  type: 'group';
-  operator: 'and' | 'or';
-  conditions: (FieldCondition | FieldConditionGroup)[];
-}
 
 export interface RootPageRule {
   type: 'page';
@@ -122,104 +125,123 @@ export type RootRule =
   | RootErrorRule;
 
 // Field rule types
-export interface FieldVisibilityRule {
-  type: 'visibility';
-  conditions: FieldCondition | FieldConditionGroup;
-  action: 'show' | 'hide';
-}
-
 export interface FieldRequirementRule {
-  type: 'requirement';
+  type: typeof RuleType.REQUIREMENT;
   conditions: FieldCondition | FieldConditionGroup;
-  action: 'required' | 'optional';
+  action: {
+    type: typeof ActionType.READONLY | typeof ActionType.EDITABLE;
+    fields: string[];
+  };
 }
 
 export interface FieldEnableRule {
-  type: 'enable';
+  type: typeof RuleType.ENABLE;
   conditions: FieldCondition | FieldConditionGroup;
-  action: 'enable' | 'disable';
+  action: {
+    type: typeof ActionType.READONLY | typeof ActionType.EDITABLE;
+    fields: string[];
+  };
 }
 
 export interface FieldValueRule {
-  type: 'value';
+  type: typeof RuleType.VALUE;
   conditions: FieldCondition | FieldConditionGroup;
   action: {
-    type: 'set' | 'clear' | 'copy' | 'calculate';
-    value?: FieldValue;
-    sourceFieldId?: string;
-    calculation?: string;
+    type:
+      | typeof ActionType.SET
+      | typeof ActionType.CLEAR
+      | typeof ActionType.COPY
+      | typeof ActionType.CALCULATE;
+    fields: string[];
+    value?: FieldConditionValue;
   };
 }
 
 export interface FieldStyleRule {
-  type: 'style';
+  type: typeof RuleType.STYLE;
   conditions: FieldCondition | FieldConditionGroup;
   action: {
-    property: string;
-    value: string | number | boolean | Size | JSONContent;
+    type: typeof ActionType.TRANSFORM;
+    fields: string[];
+    style: Record<string, string | number>;
   };
 }
 
 export interface FieldValidationRule {
-  type: 'validation';
+  type: typeof RuleType.VALIDATION;
   conditions: FieldCondition | FieldConditionGroup;
   action: {
-    add?: ValidationSchema[];
-    remove?: string[];
+    type: 'crossField';
+    fields: string[];
+    rules: ValidationSchema[];
+    preventSubmission?: boolean;
   };
 }
 
 export interface FieldDependencyRule {
-  type: 'dependency';
+  type: typeof RuleType.DEPENDENCY;
   conditions: FieldCondition | FieldConditionGroup;
   action: {
-    type: 'watch' | 'unwatch';
+    type: typeof ActionType.WATCH | typeof ActionType.UNWATCH;
     fields: string[];
   };
 }
 
 export interface FieldBehaviorRule {
-  type: 'behavior';
+  type: typeof RuleType.BEHAVIOR;
   conditions: FieldCondition | FieldConditionGroup;
   action: {
-    type: 'focus' | 'blur' | 'scrollIntoView' | 'triggerEvent';
+    type:
+      | typeof ActionType.FOCUS
+      | typeof ActionType.BLUR
+      | typeof ActionType.SCROLL_INTO_VIEW
+      | typeof ActionType.TRIGGER_EVENT;
+    fields: string[];
     event?: string;
-    options?: Record<string, string | number | boolean | null | undefined>;
   };
 }
 
 export interface FieldAccessRule {
-  type: 'access';
+  type: typeof RuleType.ACCESS;
   conditions: FieldCondition | FieldConditionGroup;
   action: {
-    type: 'readonly' | 'editable' | 'hidden' | 'visible';
+    type: typeof ActionType.HIDDEN | typeof ActionType.VISIBLE;
+    fields: string[];
   };
 }
 
 export interface FieldFormatRule {
-  type: 'format';
+  type: typeof RuleType.FORMAT;
   conditions: FieldCondition | FieldConditionGroup;
   action: {
-    type: 'mask' | 'unmask' | 'transform';
+    type: typeof ActionType.MASK | typeof ActionType.UNMASK;
+    fields: string[];
     format?: string;
-    transform?: (value: FieldValue) => FieldValue;
   };
 }
 
 export interface FieldErrorRule {
-  type: 'error';
+  type: typeof RuleType.ERROR;
   conditions: FieldCondition | FieldConditionGroup;
   action: {
-    type: 'show' | 'hide' | 'clear';
-    message?: string;
+    type: typeof ActionType.DISPLAY;
+    fields: string[];
+    display: {
+      position: DisplayPosition;
+      style?: Record<string, string | number>;
+    };
   };
 }
 
 export interface FieldStateRule {
-  type: 'state';
+  type: typeof RuleType.STATE;
   conditions: FieldCondition | FieldConditionGroup;
   action: {
-    type: 'loading' | 'success' | 'error' | 'warning';
+    type:
+      | typeof ActionType.LOADING
+      | typeof ActionType.SUCCESS
+      | typeof ActionType.ERROR
+      | typeof ActionType.WARNING;
     message?: string;
   };
 }
@@ -310,17 +332,7 @@ export type PropertyValue =
 
 // Property types
 export interface PropertyDefinition {
-  key: string;
-  type:
-    | 'string'
-    | 'number'
-    | 'boolean'
-    | 'object'
-    | 'array'
-    | 'color'
-    | 'size'
-    | 'select'
-    | 'rich-text';
+  key: PropertyKey;
   label: string;
   defaultValue?: PropertyValue;
   options?: { label: string; value: string | number }[];
@@ -376,7 +388,6 @@ export interface InputFormField extends BaseFormField {
     | typeof FormFieldType.LONG_TEXT
     | typeof FormFieldType.NUMBER;
   props: (PropertyDefinition & {
-    type: 'string' | 'number';
     placeholder?: string;
     min?: number;
     max?: number;
@@ -389,7 +400,6 @@ export interface ChoiceFormField extends BaseFormField {
     | typeof FormFieldType.SINGLE_CHOICE
     | typeof FormFieldType.MULTIPLE_CHOICES;
   props: (PropertyDefinition & {
-    type: 'select';
     options: { label: string; value: string }[];
     isValueDifferent?: boolean;
   })[];
@@ -402,7 +412,6 @@ export interface DateTimeFormField extends BaseFormField {
     | typeof FormFieldType.TIME
     | typeof FormFieldType.DATE_TIME;
   props: (PropertyDefinition & {
-    type: 'string';
     format?: string;
   })[];
 }
@@ -411,7 +420,6 @@ export interface DateTimeFormField extends BaseFormField {
 export interface FileFormField extends BaseFormField {
   type: typeof FormFieldType.FILE;
   props: (PropertyDefinition & {
-    type: 'array';
     accept?: string;
     multiple?: boolean;
   })[];
@@ -425,7 +433,6 @@ export interface LayoutFormField extends BaseFormField {
     | typeof FormFieldType.BLOCK;
   children: FormField[];
   props: (PropertyDefinition & {
-    type: 'object';
     gap?: Size;
     width?: Size;
   })[];
@@ -435,7 +442,6 @@ export interface LayoutFormField extends BaseFormField {
 export interface ContentFormField extends BaseFormField {
   type: typeof FormFieldType.HEADER | typeof FormFieldType.PARAGRAPH;
   props: (PropertyDefinition & {
-    type: 'rich-text';
     tag?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
     textAlign?: 'left' | 'center' | 'right';
     color?: string;
@@ -450,7 +456,6 @@ export interface ContentFormField extends BaseFormField {
 export interface ImageFormField extends BaseFormField {
   type: typeof FormFieldType.IMAGE;
   props: (PropertyDefinition & {
-    type: 'object';
     src?: string;
     alt?: string;
     textAlign?: 'left' | 'center' | 'right';
@@ -466,7 +471,6 @@ export interface ImageFormField extends BaseFormField {
 export interface ButtonFormField extends BaseFormField {
   type: typeof FormFieldType.BUTTON;
   props: (PropertyDefinition & {
-    type: 'object';
     label?: string;
     color?: string;
     bgColor?: string;
@@ -485,7 +489,6 @@ export interface PageFormField extends BaseFormField {
   type: typeof FormFieldType.PAGE;
   children: FormField[];
   props: (PropertyDefinition & {
-    type: 'object';
     name?: string;
   })[];
 }
@@ -494,7 +497,6 @@ export interface PageFormField extends BaseFormField {
 export interface DividerFormField extends BaseFormField {
   type: typeof FormFieldType.DIVIDER;
   props: (PropertyDefinition & {
-    type: 'object';
     color?: string;
     width?: Size;
     height?: Size;
