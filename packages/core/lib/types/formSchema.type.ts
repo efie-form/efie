@@ -7,30 +7,36 @@ import type {
   SizeUnit,
 } from '../Constants';
 import type {
-  PropertyDefinition,
-  TextProperty,
-  NameProperty,
-  EmailProperty,
-  NumberProperty,
-  ChoiceProperty,
-  ChoicesProperty,
-  DateProperty,
-  TimeProperty,
-  DateTimeProperty,
-  FileProperty,
-  ContentProperty,
-  ImageProperty,
-  ButtonProperty,
-  DividerProperty,
-  RowProperty,
-  ColumnProperty,
-  BlockProperty,
-  PageProperty,
-  TaxProperty,
-  AddressProperty,
-  CityProperty,
-  StateProperty,
-  ZipProperty,
+  LabelProperty,
+  PlaceholderProperty,
+  StringDefaultValueProperty,
+  NumberDefaultValueProperty,
+  ArrayDefaultValueProperty,
+  RequiredProperty,
+  MinProperty,
+  MaxProperty,
+  FormatProperty,
+  OptionsProperty,
+  IsValueDifferentProperty,
+  TagProperty,
+  TextAlignProperty,
+  ColorProperty,
+  FontSizeProperty,
+  FontWeightProperty,
+  SrcProperty,
+  AltProperty,
+  ObjectFitProperty,
+  AutoWidthProperty,
+  WidthProperty,
+  HeightProperty,
+  StyleProperty,
+  AcceptProperty,
+  MultipleProperty,
+  ButtonTypeProperty,
+  FullWidthProperty,
+  BgColorProperty,
+  AlignProperty,
+  GapProperty,
 } from './PropertyDefinition.type';
 import type { RootRule } from './RootRule.type';
 
@@ -323,7 +329,38 @@ export interface BaseFormField {
     key: string;
     validation?: ValidationSchema[];
   };
-  props: PropertyDefinition[];
+  props: (
+    | LabelProperty
+    | PlaceholderProperty
+    | StringDefaultValueProperty
+    | NumberDefaultValueProperty
+    | ArrayDefaultValueProperty
+    | RequiredProperty
+    | MinProperty
+    | MaxProperty
+    | FormatProperty
+    | OptionsProperty
+    | IsValueDifferentProperty
+    | TagProperty
+    | TextAlignProperty
+    | ColorProperty
+    | FontSizeProperty
+    | FontWeightProperty
+    | SrcProperty
+    | AltProperty
+    | ObjectFitProperty
+    | AutoWidthProperty
+    | WidthProperty
+    | HeightProperty
+    | StyleProperty
+    | AcceptProperty
+    | MultipleProperty
+    | ButtonTypeProperty
+    | FullWidthProperty
+    | BgColorProperty
+    | AlignProperty
+    | GapProperty
+  )[];
   container?: ContainerStyle;
   rules?: FieldRule[];
 }
@@ -335,15 +372,14 @@ export interface InputFormField extends BaseFormField {
     | typeof FormFieldType.LONG_TEXT
     | typeof FormFieldType.NUMBER;
   props: (
-    | TextProperty
-    | NameProperty
-    | EmailProperty
-    | NumberProperty
-    | TaxProperty
-    | AddressProperty
-    | CityProperty
-    | StateProperty
-    | ZipProperty
+    | LabelProperty
+    | PlaceholderProperty
+    | StringDefaultValueProperty
+    | NumberDefaultValueProperty
+    | RequiredProperty
+    | MinProperty
+    | MaxProperty
+    | FormatProperty
   )[];
 }
 
@@ -352,7 +388,14 @@ export interface ChoiceFormField extends BaseFormField {
   type:
     | typeof FormFieldType.SINGLE_CHOICE
     | typeof FormFieldType.MULTIPLE_CHOICES;
-  props: (ChoiceProperty | ChoicesProperty)[];
+  props: (
+    | LabelProperty
+    | OptionsProperty
+    | StringDefaultValueProperty
+    | ArrayDefaultValueProperty
+    | RequiredProperty
+    | IsValueDifferentProperty
+  )[];
 }
 
 // Date/Time field types
@@ -361,13 +404,23 @@ export interface DateTimeFormField extends BaseFormField {
     | typeof FormFieldType.DATE
     | typeof FormFieldType.TIME
     | typeof FormFieldType.DATE_TIME;
-  props: (DateProperty | TimeProperty | DateTimeProperty)[];
+  props: (
+    | LabelProperty
+    | StringDefaultValueProperty
+    | RequiredProperty
+    | FormatProperty
+  )[];
 }
 
 // File field type
 export interface FileFormField extends BaseFormField {
   type: typeof FormFieldType.FILE;
-  props: FileProperty[];
+  props: (
+    | LabelProperty
+    | AcceptProperty
+    | MultipleProperty
+    | RequiredProperty
+  )[];
 }
 
 // Layout field types
@@ -377,38 +430,67 @@ export interface LayoutFormField extends BaseFormField {
     | typeof FormFieldType.COLUMN
     | typeof FormFieldType.BLOCK;
   children: FormField[];
-  props: (RowProperty | ColumnProperty | BlockProperty)[];
+  props: (LabelProperty | GapProperty | WidthProperty)[];
 }
 
 // Content field types
 export interface ContentFormField extends BaseFormField {
   type: typeof FormFieldType.HEADER | typeof FormFieldType.PARAGRAPH;
-  props: ContentProperty[];
+  props: (
+    | LabelProperty
+    | TagProperty
+    | TextAlignProperty
+    | ColorProperty
+    | FontSizeProperty
+    | FontWeightProperty
+  )[];
 }
 
 // Image field type
 export interface ImageFormField extends BaseFormField {
   type: typeof FormFieldType.IMAGE;
-  props: ImageProperty[];
+  props: (
+    | LabelProperty
+    | SrcProperty
+    | AltProperty
+    | ObjectFitProperty
+    | AutoWidthProperty
+    | WidthProperty
+  )[];
 }
 
 // Button field type
 export interface ButtonFormField extends BaseFormField {
   type: typeof FormFieldType.BUTTON;
-  props: ButtonProperty[];
+  props: (
+    | LabelProperty
+    | ButtonTypeProperty
+    | FullWidthProperty
+    | BgColorProperty
+    | ColorProperty
+    | AlignProperty
+    | FontSizeProperty
+    | FontWeightProperty
+  )[];
 }
 
 // Page field type
 export interface PageFormField extends BaseFormField {
   type: typeof FormFieldType.PAGE;
   children: FormField[];
-  props: PageProperty[];
+  props: (LabelProperty | WidthProperty)[];
 }
 
 // Divider field type
 export interface DividerFormField extends BaseFormField {
   type: typeof FormFieldType.DIVIDER;
-  props: DividerProperty[];
+  props: (
+    | LabelProperty
+    | ColorProperty
+    | WidthProperty
+    | HeightProperty
+    | StyleProperty
+  )[];
 }
 
 export type FormField =

@@ -11,238 +11,205 @@ import type {
 // Base property interface with common fields
 export interface BaseProperty {
   type: string;
-  label: string;
-  isRequired?: boolean;
 }
 
-// Text property
-export interface TextProperty extends BaseProperty {
-  type: 'text';
-  placeholder?: string;
-  defaultValue?: string;
-  validation?: ValidationSchema[];
+// Label property
+export interface LabelProperty extends BaseProperty {
+  type: 'label';
+  value: string | JSONContent;
 }
 
-// Name property
-export interface NameProperty extends BaseProperty {
-  type: 'name';
-  placeholder?: string;
-  defaultValue?: string;
-  validation?: ValidationSchema[];
+// Placeholder property
+export interface PlaceholderProperty extends BaseProperty {
+  type: 'placeholder';
+  value: string;
 }
 
-// Email property
-export interface EmailProperty extends BaseProperty {
-  type: 'email';
-  placeholder?: string;
-  defaultValue?: string;
-  validation?: ValidationSchema[];
+// Default value properties
+export interface StringDefaultValueProperty extends BaseProperty {
+  type: 'defaultValue';
+  stringValue: string;
 }
 
-// Number property
-export interface NumberProperty extends BaseProperty {
-  type: 'number';
-  placeholder?: string;
-  defaultValue?: number;
-  min?: number;
-  max?: number;
-  validation?: ValidationSchema[];
+export interface NumberDefaultValueProperty extends BaseProperty {
+  type: 'defaultValue';
+  numberValue: number;
 }
 
-// Choice property
-export interface ChoiceProperty extends BaseProperty {
-  type: 'choice';
-  options: { label: string; value: string }[];
-  defaultValue?: string;
-  isValueDifferent?: boolean;
-  validation?: ValidationSchema[];
+export interface ArrayDefaultValueProperty extends BaseProperty {
+  type: 'defaultValue';
+  arrayValue: string[];
 }
 
-// Choices property (multiple)
-export interface ChoicesProperty extends BaseProperty {
-  type: 'choices';
-  options: { label: string; value: string }[];
-  defaultValue?: string[];
-  isValueDifferent?: boolean;
-  validation?: ValidationSchema[];
+// Required property
+export interface RequiredProperty extends BaseProperty {
+  type: 'required';
+  value: boolean;
 }
 
-// Date property
-export interface DateProperty extends BaseProperty {
-  type: 'date';
-  format?: string;
-  defaultValue?: string;
-  validation?: ValidationSchema[];
+// Validation property
+export interface ValidationProperty extends BaseProperty {
+  type: 'validation';
+  rules: ValidationSchema[];
 }
 
-// Time property
-export interface TimeProperty extends BaseProperty {
-  type: 'time';
-  format?: string;
-  defaultValue?: string;
-  validation?: ValidationSchema[];
+// Min/Max properties
+export interface MinProperty extends BaseProperty {
+  type: 'min';
+  value: number;
 }
 
-// DateTime property
-export interface DateTimeProperty extends BaseProperty {
-  type: 'date_time';
-  format?: string;
-  defaultValue?: string;
-  validation?: ValidationSchema[];
+export interface MaxProperty extends BaseProperty {
+  type: 'max';
+  value: number;
 }
 
-// File property
-export interface FileProperty extends BaseProperty {
-  type: 'file';
-  accept?: string;
-  multiple?: boolean;
-  defaultValue?: File[];
-  validation?: ValidationSchema[];
+// Format property
+export interface FormatProperty extends BaseProperty {
+  type: 'format';
+  value: string;
 }
 
-// Content property (for rich text)
-export interface ContentProperty extends BaseProperty {
-  type: 'content';
-  content: JSONContent;
-  defaultValue?: JSONContent;
-  validation?: ValidationSchema[];
+// File properties
+export interface AcceptProperty extends BaseProperty {
+  type: 'accept';
+  value: string;
 }
 
-// Image property
-export interface ImageProperty extends BaseProperty {
-  type: 'image';
-  src?: string;
-  alt?: string;
-  textAlign?: TextAlign;
-  objectFit?: ObjectFit;
-  width?: {
-    value: Size;
-    autoWidth: boolean;
-  };
-  defaultValue?: string;
-  validation?: ValidationSchema[];
+export interface MultipleProperty extends BaseProperty {
+  type: 'multiple';
+  value: boolean;
 }
 
-// Button property
-export interface ButtonProperty {
-  type: 'button';
-  label?: string;
-  color?: string;
-  bgColor?: string;
-  btnType?: ButtonType;
-  fullWidth?: boolean;
-  font?: {
-    size: Size;
-    weight: number;
-  };
-  align?: TextAlign;
-  defaultValue?: string;
-  validation?: ValidationSchema[];
-  isRequired?: boolean;
+// Choice properties
+export interface OptionsProperty extends BaseProperty {
+  type: 'options';
+  value: { label: string; value: string }[];
 }
 
-// Divider property
-export interface DividerProperty extends BaseProperty {
-  type: 'divider';
-  color?: string;
-  width?: Size;
-  height?: Size;
-  style?: DividerStyle;
-  defaultValue?: string;
-  validation?: ValidationSchema[];
+export interface IsValueDifferentProperty extends BaseProperty {
+  type: 'isValueDifferent';
+  value: boolean;
 }
 
 // Layout properties
-export interface RowProperty extends BaseProperty {
-  type: 'row';
-  gap?: Size;
-  width?: Size;
-  defaultValue?: string;
-  validation?: ValidationSchema[];
+export interface GapProperty extends BaseProperty {
+  type: 'gap';
+  value: Size;
 }
 
-export interface ColumnProperty extends BaseProperty {
-  type: 'column';
-  gap?: Size;
-  width?: Size;
-  defaultValue?: string;
-  validation?: ValidationSchema[];
+export interface WidthProperty extends BaseProperty {
+  type: 'width';
+  value: Size;
 }
 
-export interface BlockProperty extends BaseProperty {
-  type: 'block';
-  gap?: Size;
-  width?: Size;
-  defaultValue?: string;
-  validation?: ValidationSchema[];
+// Content properties
+export interface TagProperty extends BaseProperty {
+  type: 'tag';
+  value: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 }
 
-// Page property
-export interface PageProperty extends BaseProperty {
-  type: 'page';
-  name?: string;
-  defaultValue?: string;
-  validation?: ValidationSchema[];
+export interface TextAlignProperty extends BaseProperty {
+  type: 'textAlign';
+  value: TextAlign;
 }
 
-// Form field specific properties
-export interface TaxProperty extends BaseProperty {
-  type: 'tax';
-  placeholder?: string;
-  defaultValue?: string;
-  validation?: ValidationSchema[];
+export interface ColorProperty extends BaseProperty {
+  type: 'color';
+  value: string;
 }
 
-export interface AddressProperty extends BaseProperty {
-  type: 'address';
-  placeholder?: string;
-  defaultValue?: string;
-  validation?: ValidationSchema[];
+export interface FontSizeProperty extends BaseProperty {
+  type: 'fontSize';
+  value: Size;
 }
 
-export interface CityProperty extends BaseProperty {
-  type: 'city';
-  placeholder?: string;
-  defaultValue?: string;
-  validation?: ValidationSchema[];
+export interface FontWeightProperty extends BaseProperty {
+  type: 'fontWeight';
+  value: number;
 }
 
-export interface StateProperty extends BaseProperty {
-  type: 'state';
-  placeholder?: string;
-  defaultValue?: string;
-  validation?: ValidationSchema[];
+// Image properties
+export interface SrcProperty extends BaseProperty {
+  type: 'src';
+  value: string;
 }
 
-export interface ZipProperty extends BaseProperty {
-  type: 'zip';
-  placeholder?: string;
-  defaultValue?: string;
-  validation?: ValidationSchema[];
+export interface AltProperty extends BaseProperty {
+  type: 'alt';
+  value: string;
+}
+
+export interface ObjectFitProperty extends BaseProperty {
+  type: 'objectFit';
+  value: ObjectFit;
+}
+
+export interface AutoWidthProperty extends BaseProperty {
+  type: 'autoWidth';
+  value: boolean;
+}
+
+// Button properties
+export interface ButtonTypeProperty extends BaseProperty {
+  type: 'btnType';
+  value: ButtonType;
+}
+
+export interface FullWidthProperty extends BaseProperty {
+  type: 'fullWidth';
+  value: boolean;
+}
+
+export interface BgColorProperty extends BaseProperty {
+  type: 'bgColor';
+  value: string;
+}
+
+export interface AlignProperty extends BaseProperty {
+  type: 'align';
+  value: TextAlign;
+}
+
+// Divider properties
+export interface HeightProperty extends BaseProperty {
+  type: 'height';
+  value: Size;
+}
+
+export interface StyleProperty extends BaseProperty {
+  type: 'style';
+  value: DividerStyle;
 }
 
 // Union type of all property definitions
 export type PropertyDefinition =
-  | TextProperty
-  | NameProperty
-  | EmailProperty
-  | NumberProperty
-  | ChoiceProperty
-  | ChoicesProperty
-  | DateProperty
-  | TimeProperty
-  | DateTimeProperty
-  | FileProperty
-  | ContentProperty
-  | ImageProperty
-  | ButtonProperty
-  | DividerProperty
-  | RowProperty
-  | ColumnProperty
-  | BlockProperty
-  | PageProperty
-  | TaxProperty
-  | AddressProperty
-  | CityProperty
-  | StateProperty
-  | ZipProperty;
+  | LabelProperty
+  | PlaceholderProperty
+  | StringDefaultValueProperty
+  | NumberDefaultValueProperty
+  | ArrayDefaultValueProperty
+  | RequiredProperty
+  | ValidationProperty
+  | MinProperty
+  | MaxProperty
+  | FormatProperty
+  | AcceptProperty
+  | MultipleProperty
+  | OptionsProperty
+  | IsValueDifferentProperty
+  | GapProperty
+  | WidthProperty
+  | TagProperty
+  | TextAlignProperty
+  | ColorProperty
+  | SrcProperty
+  | AltProperty
+  | ObjectFitProperty
+  | AutoWidthProperty
+  | ButtonTypeProperty
+  | FullWidthProperty
+  | BgColorProperty
+  | AlignProperty
+  | HeightProperty
+  | StyleProperty;
