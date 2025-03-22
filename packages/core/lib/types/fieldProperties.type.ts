@@ -1,12 +1,7 @@
 import type { JSONContent } from '@tiptap/core';
 import type { Size } from './formSchema.type';
-import type {
-  TextAlign,
-  ObjectFit,
-  ButtonType,
-  DividerStyle,
-  PropertyType,
-} from './formSchema.constant';
+import type { TextAlign, ObjectFit, ButtonType } from './formSchema.constant';
+import type { PropertyType } from './formSchema.constant';
 
 // Label property
 export interface LabelProperty {
@@ -125,11 +120,13 @@ export interface FontWeightProperty {
 export interface SrcProperty {
   type: typeof PropertyType.SRC;
   value: string;
+  errorMessage?: string; // e.g., "Invalid image URL"
 }
 
 export interface AltProperty {
   type: typeof PropertyType.ALT;
   value: string;
+  errorMessage?: string; // e.g., "Please provide an alt text for accessibility"
 }
 
 export interface ObjectFitProperty {
@@ -171,7 +168,55 @@ export interface HeightProperty {
 
 export interface StyleProperty {
   type: typeof PropertyType.STYLE;
-  value: DividerStyle;
+  value: {
+    display?: 'block' | 'inline-block' | 'flex' | 'grid';
+    flexDirection?: 'row' | 'column';
+    alignItems?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
+    justifyContent?:
+      | 'flex-start'
+      | 'flex-end'
+      | 'center'
+      | 'space-between'
+      | 'space-around'
+      | 'space-evenly';
+  };
+}
+
+// Container properties
+export interface MarginProperty {
+  type: typeof PropertyType.MARGIN;
+  value: Size;
+}
+
+export interface PaddingProperty {
+  type: typeof PropertyType.PADDING;
+  value: Size;
+}
+
+export interface DisplayProperty {
+  type: typeof PropertyType.DISPLAY;
+  value: 'block' | 'inline-block' | 'flex' | 'grid';
+}
+
+export interface FlexDirectionProperty {
+  type: typeof PropertyType.FLEX_DIRECTION;
+  value: 'row' | 'column';
+}
+
+export interface AlignItemsProperty {
+  type: typeof PropertyType.ALIGN_ITEMS;
+  value: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
+}
+
+export interface JustifyContentProperty {
+  type: typeof PropertyType.JUSTIFY_CONTENT;
+  value:
+    | 'flex-start'
+    | 'flex-end'
+    | 'center'
+    | 'space-between'
+    | 'space-around'
+    | 'space-evenly';
 }
 
 // Union type of all property definitions
@@ -204,4 +249,10 @@ export type PropertyDefinition =
   | BgColorProperty
   | AlignProperty
   | HeightProperty
-  | StyleProperty;
+  | StyleProperty
+  | MarginProperty
+  | PaddingProperty
+  | DisplayProperty
+  | FlexDirectionProperty
+  | AlignItemsProperty
+  | JustifyContentProperty;
