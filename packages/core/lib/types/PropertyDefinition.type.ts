@@ -1,11 +1,6 @@
 import type { JSONContent } from '@tiptap/core';
 import type { Size } from './formSchema.type';
-import type {
-  TextAlign,
-  ObjectFit,
-  ButtonType,
-  DividerStyle,
-} from './formSchema.constant';
+import type { TextAlign, ObjectFit, ButtonType } from './formSchema.constant';
 
 // Label property
 export interface LabelProperty {
@@ -172,7 +167,18 @@ export interface HeightProperty {
 
 export interface StyleProperty {
   type: 'style';
-  value: DividerStyle;
+  value: {
+    display?: 'block' | 'inline-block' | 'flex' | 'grid';
+    flexDirection?: 'row' | 'column';
+    alignItems?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline';
+    justifyContent?:
+      | 'flex-start'
+      | 'flex-end'
+      | 'center'
+      | 'space-between'
+      | 'space-around'
+      | 'space-evenly';
+  };
 }
 
 // Union type of all property definitions

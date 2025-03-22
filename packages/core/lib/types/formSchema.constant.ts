@@ -222,6 +222,13 @@ export const PropertyType = {
   DIVIDER: 'divider',
   HEIGHT: 'height',
   STYLE: 'style',
+  // Container specific
+  MARGIN: 'margin',
+  PADDING: 'padding',
+  DISPLAY: 'display',
+  FLEX_DIRECTION: 'flexDirection',
+  ALIGN_ITEMS: 'alignItems',
+  JUSTIFY_CONTENT: 'justifyContent',
   // Rich text specific
   RICH_TEXT: 'rich-text',
   // Form field specific

@@ -359,7 +359,20 @@ export interface BaseFormField {
     | AlignProperty
     | GapProperty
   )[];
-  container?: ContainerStyle;
+  container?: {
+    props: (
+      | WidthProperty
+      | HeightProperty
+      | ColorProperty
+      | BgColorProperty
+      | TextAlignProperty
+      | AlignProperty
+      | GapProperty
+      | FontSizeProperty
+      | FontWeightProperty
+      | StyleProperty
+    )[];
+  };
   rules?: FieldRule[];
 }
 

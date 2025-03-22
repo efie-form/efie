@@ -15,7 +15,7 @@ export const sampleFormSchema: FormSchema = {
   version: '1.0',
   form: {
     fields: [
-      // Header with rich text
+      // Header with rich text and container styling
       {
         type: FormFieldType.HEADER,
         id: 'welcome',
@@ -48,6 +48,26 @@ export const sampleFormSchema: FormSchema = {
             },
           },
         ],
+        container: {
+          props: [
+            {
+              type: PropertyType.BG_COLOR,
+              value: '#f8f9fa',
+            },
+            {
+              type: PropertyType.PADDING,
+              value: { value: 24, unit: 'px' },
+            },
+            {
+              type: PropertyType.MARGIN,
+              value: { value: 16, unit: 'px' },
+            },
+            {
+              type: PropertyType.TEXT_ALIGN,
+              value: TextAlign.CENTER,
+            },
+          ],
+        },
       },
 
       // All Field Types Demo Section
@@ -73,7 +93,7 @@ export const sampleFormSchema: FormSchema = {
         ],
       },
 
-      // Text Input Fields
+      // Text Input with container styling
       {
         type: FormFieldType.SHORT_TEXT,
         id: 'shortText',
@@ -92,6 +112,22 @@ export const sampleFormSchema: FormSchema = {
             errorMessage: 'This field is required',
           },
         ],
+        container: {
+          props: [
+            {
+              type: PropertyType.WIDTH,
+              value: { value: 100, unit: '%' },
+            },
+            {
+              type: PropertyType.MARGIN,
+              value: { value: 8, unit: 'px' },
+            },
+            {
+              type: PropertyType.BG_COLOR,
+              value: '#ffffff',
+            },
+          ],
+        },
       },
       {
         type: FormFieldType.LONG_TEXT,
@@ -195,6 +231,26 @@ export const sampleFormSchema: FormSchema = {
             errorMessage: 'This field is required',
           },
         ],
+        container: {
+          props: [
+            {
+              type: PropertyType.WIDTH,
+              value: { value: 100, unit: '%' },
+            },
+            {
+              type: PropertyType.MARGIN,
+              value: { value: 8, unit: 'px' },
+            },
+            {
+              type: PropertyType.BG_COLOR,
+              value: '#ffffff',
+            },
+            {
+              type: PropertyType.GAP,
+              value: { value: 8, unit: 'px' },
+            },
+          ],
+        },
       },
 
       // Date/Time Fields
@@ -301,6 +357,34 @@ export const sampleFormSchema: FormSchema = {
             value: { value: 16, unit: 'px' },
           },
         ],
+        container: {
+          props: [
+            {
+              type: PropertyType.WIDTH,
+              value: { value: 100, unit: '%' },
+            },
+            {
+              type: PropertyType.MARGIN,
+              value: { value: 16, unit: 'px' },
+            },
+            {
+              type: PropertyType.BG_COLOR,
+              value: '#f8f9fa',
+            },
+            {
+              type: PropertyType.PADDING,
+              value: { value: 16, unit: 'px' },
+            },
+            {
+              type: PropertyType.STYLE,
+              value: {
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+              },
+            },
+          ],
+        },
         children: [
           {
             type: FormFieldType.SHORT_TEXT,
@@ -468,36 +552,40 @@ export const sampleFormSchema: FormSchema = {
         ],
       },
 
-      // Button Field
+      // Button with container styling
       {
         type: FormFieldType.BUTTON,
-        id: 'button',
+        id: 'submit',
         props: [
           {
             type: PropertyType.LABEL,
-            value: 'Button',
+            value: 'Submit',
           },
           {
             type: PropertyType.BTN_TYPE,
-            value: ButtonType.BUTTON,
+            value: ButtonType.SUBMIT,
           },
           {
             type: PropertyType.FULL_WIDTH,
             value: true,
           },
-          {
-            type: PropertyType.COLOR,
-            value: '#007bff',
-          },
-          {
-            type: PropertyType.BG_COLOR,
-            value: '#ffffff',
-          },
-          {
-            type: PropertyType.ALIGN,
-            value: TextAlign.CENTER,
-          },
         ],
+        container: {
+          props: [
+            {
+              type: PropertyType.WIDTH,
+              value: { value: 100, unit: '%' },
+            },
+            {
+              type: PropertyType.MARGIN,
+              value: { value: 24, unit: 'px' },
+            },
+            {
+              type: PropertyType.TEXT_ALIGN,
+              value: TextAlign.CENTER,
+            },
+          ],
+        },
       },
 
       // Page Field
@@ -809,26 +897,6 @@ export const sampleFormSchema: FormSchema = {
                 },
               ],
             },
-          },
-        ],
-      },
-
-      // Submit Button
-      {
-        type: FormFieldType.BUTTON,
-        id: 'submit',
-        props: [
-          {
-            type: PropertyType.LABEL,
-            value: 'Submit',
-          },
-          {
-            type: PropertyType.BTN_TYPE,
-            value: ButtonType.SUBMIT,
-          },
-          {
-            type: PropertyType.FULL_WIDTH,
-            value: true,
           },
         ],
       },
