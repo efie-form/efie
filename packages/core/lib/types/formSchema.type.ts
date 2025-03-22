@@ -392,6 +392,7 @@ export interface ChoiceFormField extends BaseFormField {
     | StringDefaultValueProperty
     | ArrayDefaultValueProperty
     | RequiredProperty
+    | MultipleProperty
   )[];
 }
 
@@ -453,6 +454,7 @@ export interface ImageFormField extends BaseFormField {
     | ObjectFitProperty
     | AutoWidthProperty
     | WidthProperty
+    | TextAlignProperty
   )[];
 }
 

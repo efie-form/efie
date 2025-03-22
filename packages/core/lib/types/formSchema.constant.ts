@@ -178,7 +178,7 @@ export const PropertyType = {
   VALUE: 'value',
   KEY: 'key',
   PLACEHOLDER: 'placeholder',
-  IS_REQUIRED: 'isRequired',
+  REQUIRED: 'required',
   IS_ARRAY: 'isArray',
   ARRAY_ITEM_TYPE: 'arrayItemType',
   DEFAULT_VALUE: 'defaultValue',

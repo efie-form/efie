@@ -38,7 +38,7 @@ export interface ArrayDefaultValueProperty {
 
 // Required property
 export interface RequiredProperty {
-  type: typeof PropertyType.IS_REQUIRED;
+  type: typeof PropertyType.REQUIRED;
   value: boolean;
   errorMessage?: string; // e.g., "This field is required"
 }

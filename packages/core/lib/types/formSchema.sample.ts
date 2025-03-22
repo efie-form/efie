@@ -21,9 +21,8 @@ export const sampleFormSchema: FormSchema = {
         id: 'welcome',
         props: [
           {
-            type: PropertyType.CONTENT,
-            label: 'Welcome Header',
-            content: {
+            type: PropertyType.LABEL,
+            value: {
               type: 'doc',
               content: [
                 {
@@ -57,9 +56,8 @@ export const sampleFormSchema: FormSchema = {
         id: 'fieldTypesDemo',
         props: [
           {
-            type: PropertyType.CONTENT,
-            label: 'Field Types Demo',
-            content: {
+            type: PropertyType.LABEL,
+            value: {
               type: 'doc',
               content: [
                 {
@@ -81,10 +79,17 @@ export const sampleFormSchema: FormSchema = {
         id: 'shortText',
         props: [
           {
-            type: PropertyType.TEXT,
-            label: 'Short Text Input',
-            placeholder: 'Enter short text',
-            isRequired: true,
+            type: PropertyType.LABEL,
+            value: 'Short Text Input',
+          },
+          {
+            type: PropertyType.PLACEHOLDER,
+            value: 'Enter short text',
+          },
+          {
+            type: PropertyType.REQUIRED,
+            value: true,
+            errorMessage: 'This field is required',
           },
         ],
       },
@@ -93,10 +98,17 @@ export const sampleFormSchema: FormSchema = {
         id: 'longText',
         props: [
           {
-            type: PropertyType.TEXT,
-            label: 'Long Text Input',
-            placeholder: 'Enter long text',
-            isRequired: true,
+            type: PropertyType.LABEL,
+            value: 'Long Text Input',
+          },
+          {
+            type: PropertyType.PLACEHOLDER,
+            value: 'Enter long text',
+          },
+          {
+            type: PropertyType.REQUIRED,
+            value: true,
+            errorMessage: 'This field is required',
           },
         ],
       },
@@ -105,12 +117,27 @@ export const sampleFormSchema: FormSchema = {
         id: 'number',
         props: [
           {
-            type: PropertyType.NUMBER,
-            label: 'Number Input',
-            placeholder: 'Enter a number',
-            min: 0,
-            max: 100,
-            isRequired: true,
+            type: PropertyType.LABEL,
+            value: 'Number Input',
+          },
+          {
+            type: PropertyType.PLACEHOLDER,
+            value: 'Enter a number',
+          },
+          {
+            type: PropertyType.MIN,
+            value: 0,
+            errorMessage: 'Value must be at least 0',
+          },
+          {
+            type: PropertyType.MAX,
+            value: 100,
+            errorMessage: 'Value must be at most 100',
+          },
+          {
+            type: PropertyType.REQUIRED,
+            value: true,
+            errorMessage: 'This field is required',
           },
         ],
       },
@@ -121,14 +148,22 @@ export const sampleFormSchema: FormSchema = {
         id: 'singleChoice',
         props: [
           {
-            type: PropertyType.CHOICE,
-            label: 'Single Choice',
-            options: [
+            type: PropertyType.LABEL,
+            value: 'Single Choice',
+          },
+          {
+            type: PropertyType.OPTIONS,
+            value: [
               { label: 'Option 1', value: '1' },
               { label: 'Option 2', value: '2' },
               { label: 'Option 3', value: '3' },
             ],
-            isRequired: true,
+            errorMessage: 'Please select a valid option',
+          },
+          {
+            type: PropertyType.REQUIRED,
+            value: true,
+            errorMessage: 'This field is required',
           },
         ],
       },
@@ -137,14 +172,27 @@ export const sampleFormSchema: FormSchema = {
         id: 'multipleChoices',
         props: [
           {
-            type: PropertyType.CHOICES,
-            label: 'Multiple Choices',
-            options: [
+            type: PropertyType.LABEL,
+            value: 'Multiple Choices',
+          },
+          {
+            type: PropertyType.OPTIONS,
+            value: [
               { label: 'Choice 1', value: '1' },
               { label: 'Choice 2', value: '2' },
               { label: 'Choice 3', value: '3' },
             ],
-            isRequired: true,
+            errorMessage: 'Please select at least one option',
+          },
+          {
+            type: PropertyType.MULTIPLE,
+            value: true,
+            errorMessage: 'Please select at least one option',
+          },
+          {
+            type: PropertyType.REQUIRED,
+            value: true,
+            errorMessage: 'This field is required',
           },
         ],
       },
@@ -155,10 +203,18 @@ export const sampleFormSchema: FormSchema = {
         id: 'date',
         props: [
           {
-            type: PropertyType.DATE,
-            label: 'Date',
-            format: 'YYYY-MM-DD',
-            isRequired: true,
+            type: PropertyType.LABEL,
+            value: 'Date',
+          },
+          {
+            type: PropertyType.FORMAT,
+            value: 'YYYY-MM-DD',
+            errorMessage: 'Please enter a valid date in YYYY-MM-DD format',
+          },
+          {
+            type: PropertyType.REQUIRED,
+            value: true,
+            errorMessage: 'This field is required',
           },
         ],
       },
@@ -167,10 +223,18 @@ export const sampleFormSchema: FormSchema = {
         id: 'time',
         props: [
           {
-            type: PropertyType.TIME,
-            label: 'Time',
-            format: 'HH:mm',
-            isRequired: true,
+            type: PropertyType.LABEL,
+            value: 'Time',
+          },
+          {
+            type: PropertyType.FORMAT,
+            value: 'HH:mm',
+            errorMessage: 'Please enter a valid time in HH:mm format',
+          },
+          {
+            type: PropertyType.REQUIRED,
+            value: true,
+            errorMessage: 'This field is required',
           },
         ],
       },
@@ -179,10 +243,19 @@ export const sampleFormSchema: FormSchema = {
         id: 'dateTime',
         props: [
           {
-            type: PropertyType.DATE_TIME,
-            label: 'Date and Time',
-            format: 'YYYY-MM-DD HH:mm',
-            isRequired: true,
+            type: PropertyType.LABEL,
+            value: 'Date and Time',
+          },
+          {
+            type: PropertyType.FORMAT,
+            value: 'YYYY-MM-DD HH:mm',
+            errorMessage:
+              'Please enter a valid date and time in YYYY-MM-DD HH:mm format',
+          },
+          {
+            type: PropertyType.REQUIRED,
+            value: true,
+            errorMessage: 'This field is required',
           },
         ],
       },
@@ -193,11 +266,23 @@ export const sampleFormSchema: FormSchema = {
         id: 'file',
         props: [
           {
-            type: PropertyType.FILE,
-            label: 'File Upload',
-            accept: '.pdf,.doc,.docx',
-            multiple: true,
-            isRequired: true,
+            type: PropertyType.LABEL,
+            value: 'File Upload',
+          },
+          {
+            type: PropertyType.ACCEPT,
+            value: '.pdf,.doc,.docx',
+            errorMessage: 'Only PDF and Word documents are allowed',
+          },
+          {
+            type: PropertyType.MULTIPLE,
+            value: true,
+            errorMessage: 'Please select at least one file',
+          },
+          {
+            type: PropertyType.REQUIRED,
+            value: true,
+            errorMessage: 'This field is required',
           },
         ],
       },
@@ -208,8 +293,12 @@ export const sampleFormSchema: FormSchema = {
         id: 'row',
         props: [
           {
-            type: PropertyType.ROW,
-            label: 'Row Layout',
+            type: PropertyType.LABEL,
+            value: 'Row Layout',
+          },
+          {
+            type: PropertyType.GAP,
+            value: { value: 16, unit: 'px' },
           },
         ],
         children: [
@@ -218,8 +307,8 @@ export const sampleFormSchema: FormSchema = {
             id: 'rowField1',
             props: [
               {
-                type: PropertyType.TEXT,
-                label: 'Row Field 1',
+                type: PropertyType.LABEL,
+                value: 'Row Field 1',
               },
             ],
           },
@@ -228,8 +317,8 @@ export const sampleFormSchema: FormSchema = {
             id: 'rowField2',
             props: [
               {
-                type: PropertyType.TEXT,
-                label: 'Row Field 2',
+                type: PropertyType.LABEL,
+                value: 'Row Field 2',
               },
             ],
           },
@@ -240,8 +329,12 @@ export const sampleFormSchema: FormSchema = {
         id: 'column',
         props: [
           {
-            type: PropertyType.COLUMN,
-            label: 'Column Layout',
+            type: PropertyType.LABEL,
+            value: 'Column Layout',
+          },
+          {
+            type: PropertyType.GAP,
+            value: { value: 16, unit: 'px' },
           },
         ],
         children: [
@@ -250,8 +343,8 @@ export const sampleFormSchema: FormSchema = {
             id: 'columnField1',
             props: [
               {
-                type: PropertyType.TEXT,
-                label: 'Column Field 1',
+                type: PropertyType.LABEL,
+                value: 'Column Field 1',
               },
             ],
           },
@@ -260,8 +353,8 @@ export const sampleFormSchema: FormSchema = {
             id: 'columnField2',
             props: [
               {
-                type: PropertyType.TEXT,
-                label: 'Column Field 2',
+                type: PropertyType.LABEL,
+                value: 'Column Field 2',
               },
             ],
           },
@@ -272,8 +365,12 @@ export const sampleFormSchema: FormSchema = {
         id: 'block',
         props: [
           {
-            type: PropertyType.BLOCK,
-            label: 'Block Layout',
+            type: PropertyType.LABEL,
+            value: 'Block Layout',
+          },
+          {
+            type: PropertyType.GAP,
+            value: { value: 16, unit: 'px' },
           },
         ],
         children: [
@@ -282,8 +379,8 @@ export const sampleFormSchema: FormSchema = {
             id: 'blockField1',
             props: [
               {
-                type: PropertyType.TEXT,
-                label: 'Block Field 1',
+                type: PropertyType.LABEL,
+                value: 'Block Field 1',
               },
             ],
           },
@@ -292,8 +389,8 @@ export const sampleFormSchema: FormSchema = {
             id: 'blockField2',
             props: [
               {
-                type: PropertyType.TEXT,
-                label: 'Block Field 2',
+                type: PropertyType.LABEL,
+                value: 'Block Field 2',
               },
             ],
           },
@@ -306,9 +403,8 @@ export const sampleFormSchema: FormSchema = {
         id: 'paragraph',
         props: [
           {
-            type: PropertyType.CONTENT,
-            label: 'Paragraph',
-            content: {
+            type: PropertyType.LABEL,
+            value: {
               type: 'doc',
               content: [
                 {
@@ -331,6 +427,10 @@ export const sampleFormSchema: FormSchema = {
               ],
             },
           },
+          {
+            type: PropertyType.TEXT_ALIGN,
+            value: TextAlign.LEFT,
+          },
         ],
       },
 
@@ -340,16 +440,30 @@ export const sampleFormSchema: FormSchema = {
         id: 'image',
         props: [
           {
-            type: PropertyType.IMAGE,
-            label: 'Image',
-            src: '/sample-image.jpg',
-            alt: 'Sample Image',
-            textAlign: TextAlign.CENTER,
-            objectFit: ObjectFit.CONTAIN,
-            width: {
-              value: { value: 300, unit: 'px' },
-              autoWidth: false,
-            },
+            type: PropertyType.LABEL,
+            value: 'Image',
+          },
+          {
+            type: PropertyType.SRC,
+            value: '/sample-image.jpg',
+            errorMessage: 'Invalid image URL',
+          },
+          {
+            type: PropertyType.ALT,
+            value: 'Sample Image',
+            errorMessage: 'Please provide an alt text for accessibility',
+          },
+          {
+            type: PropertyType.TEXT_ALIGN,
+            value: TextAlign.CENTER,
+          },
+          {
+            type: PropertyType.OBJECT_FIT,
+            value: ObjectFit.CONTAIN,
+          },
+          {
+            type: PropertyType.WIDTH,
+            value: { value: 300, unit: 'px' },
           },
         ],
       },
@@ -360,12 +474,28 @@ export const sampleFormSchema: FormSchema = {
         id: 'button',
         props: [
           {
-            type: PropertyType.BUTTON,
-            label: 'Button',
-            btnType: ButtonType.BUTTON,
-            fullWidth: true,
-            color: '#007bff',
-            bgColor: '#ffffff',
+            type: PropertyType.LABEL,
+            value: 'Button',
+          },
+          {
+            type: PropertyType.BTN_TYPE,
+            value: ButtonType.BUTTON,
+          },
+          {
+            type: PropertyType.FULL_WIDTH,
+            value: true,
+          },
+          {
+            type: PropertyType.COLOR,
+            value: '#007bff',
+          },
+          {
+            type: PropertyType.BG_COLOR,
+            value: '#ffffff',
+          },
+          {
+            type: PropertyType.ALIGN,
+            value: TextAlign.CENTER,
           },
         ],
       },
@@ -376,9 +506,12 @@ export const sampleFormSchema: FormSchema = {
         id: 'page',
         props: [
           {
-            type: PropertyType.PAGE,
-            label: 'Page',
-            name: 'Sample Page',
+            type: PropertyType.LABEL,
+            value: 'Page',
+          },
+          {
+            type: PropertyType.WIDTH,
+            value: { value: 100, unit: '%' },
           },
         ],
         children: [
@@ -387,8 +520,8 @@ export const sampleFormSchema: FormSchema = {
             id: 'pageField1',
             props: [
               {
-                type: PropertyType.TEXT,
-                label: 'Page Field 1',
+                type: PropertyType.LABEL,
+                value: 'Page Field 1',
               },
             ],
           },
@@ -401,12 +534,24 @@ export const sampleFormSchema: FormSchema = {
         id: 'divider',
         props: [
           {
-            type: PropertyType.DIVIDER,
-            label: 'Divider',
-            color: '#cccccc',
-            width: { value: 100, unit: '%' },
-            height: { value: 1, unit: 'px' },
-            style: DividerStyle.SOLID,
+            type: PropertyType.LABEL,
+            value: 'Divider',
+          },
+          {
+            type: PropertyType.COLOR,
+            value: '#cccccc',
+          },
+          {
+            type: PropertyType.WIDTH,
+            value: { value: 100, unit: '%' },
+          },
+          {
+            type: PropertyType.HEIGHT,
+            value: { value: 1, unit: 'px' },
+          },
+          {
+            type: PropertyType.STYLE,
+            value: DividerStyle.SOLID,
           },
         ],
       },
@@ -417,13 +562,21 @@ export const sampleFormSchema: FormSchema = {
         id: 'accountType',
         props: [
           {
-            type: PropertyType.TYPE,
-            label: 'Account Type',
-            isRequired: true,
-            options: [
+            type: PropertyType.LABEL,
+            value: 'Account Type',
+          },
+          {
+            type: PropertyType.OPTIONS,
+            value: [
               { label: 'Personal', value: 'personal' },
               { label: 'Business', value: 'business' },
             ],
+            errorMessage: 'Please select an account type',
+          },
+          {
+            type: PropertyType.REQUIRED,
+            value: true,
+            errorMessage: 'This field is required',
           },
         ],
       },
@@ -434,57 +587,78 @@ export const sampleFormSchema: FormSchema = {
         id: 'firstName',
         props: [
           {
-            type: PropertyType.NAME,
-            label: 'First Name',
-            isRequired: true,
-            validation: [
-              {
-                type: 'standard',
-                operator: 'regex',
-                value: /^[A-Za-z\s-]+$/,
-                message: 'Only letters, spaces, and hyphens allowed',
-              },
-            ],
+            type: PropertyType.LABEL,
+            value: 'First Name',
+          },
+          {
+            type: PropertyType.REQUIRED,
+            value: true,
+            errorMessage: 'First name is required',
           },
         ],
+        form: {
+          key: 'firstName',
+          validation: [
+            {
+              type: 'standard',
+              operator: 'regex',
+              value: /^[A-Za-z\s-]+$/,
+              message: 'Only letters, spaces, and hyphens allowed',
+            },
+          ],
+        },
       },
       {
         type: FormFieldType.SHORT_TEXT,
         id: 'lastName',
         props: [
           {
-            type: PropertyType.NAME,
-            label: 'Last Name',
-            isRequired: true,
-            validation: [
-              {
-                type: 'standard',
-                operator: 'regex',
-                value: /^[A-Za-z\s-]+$/,
-                message: 'Only letters, spaces, and hyphens allowed',
-              },
-            ],
+            type: PropertyType.LABEL,
+            value: 'Last Name',
+          },
+          {
+            type: PropertyType.REQUIRED,
+            value: true,
+            errorMessage: 'Last name is required',
           },
         ],
+        form: {
+          key: 'lastName',
+          validation: [
+            {
+              type: 'standard',
+              operator: 'regex',
+              value: /^[A-Za-z\s-]+$/,
+              message: 'Only letters, spaces, and hyphens allowed',
+            },
+          ],
+        },
       },
       {
         type: FormFieldType.SHORT_TEXT,
         id: 'email',
         props: [
           {
-            type: PropertyType.EMAIL,
-            label: 'Email Address',
-            isRequired: true,
-            validation: [
-              {
-                type: 'standard',
-                operator: 'regex',
-                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                message: 'Please enter a valid email address',
-              },
-            ],
+            type: PropertyType.LABEL,
+            value: 'Email Address',
+          },
+          {
+            type: PropertyType.REQUIRED,
+            value: true,
+            errorMessage: 'Email is required',
           },
         ],
+        form: {
+          key: 'email',
+          validation: [
+            {
+              type: 'standard',
+              operator: 'regex',
+              value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+              message: 'Please enter a valid email address',
+            },
+          ],
+        },
       },
 
       // Business Information Section (conditionally shown)
@@ -493,9 +667,13 @@ export const sampleFormSchema: FormSchema = {
         id: 'businessName',
         props: [
           {
-            type: PropertyType.NAME,
-            label: 'Business Name',
-            isRequired: true,
+            type: PropertyType.LABEL,
+            value: 'Business Name',
+          },
+          {
+            type: PropertyType.REQUIRED,
+            value: true,
+            errorMessage: 'Business name is required',
           },
         ],
       },
@@ -504,19 +682,26 @@ export const sampleFormSchema: FormSchema = {
         id: 'taxId',
         props: [
           {
-            type: PropertyType.TAX,
-            label: 'Tax ID',
-            isRequired: true,
-            validation: [
-              {
-                type: 'standard',
-                operator: 'regex',
-                value: /^[0-9]{9}$/,
-                message: 'Please enter a valid 9-digit tax ID',
-              },
-            ],
+            type: PropertyType.LABEL,
+            value: 'Tax ID',
+          },
+          {
+            type: PropertyType.REQUIRED,
+            value: true,
+            errorMessage: 'Tax ID is required',
           },
         ],
+        form: {
+          key: 'taxId',
+          validation: [
+            {
+              type: 'standard',
+              operator: 'regex',
+              value: /^[0-9]{9}$/,
+              message: 'Please enter a valid 9-digit tax ID',
+            },
+          ],
+        },
       },
 
       // Address Section
@@ -525,9 +710,13 @@ export const sampleFormSchema: FormSchema = {
         id: 'address',
         props: [
           {
-            type: PropertyType.ADDRESS,
-            label: 'Address',
-            isRequired: true,
+            type: PropertyType.LABEL,
+            value: 'Address',
+          },
+          {
+            type: PropertyType.REQUIRED,
+            value: true,
+            errorMessage: 'Address is required',
           },
         ],
       },
@@ -536,9 +725,13 @@ export const sampleFormSchema: FormSchema = {
         id: 'city',
         props: [
           {
-            type: PropertyType.CITY,
-            label: 'City',
-            isRequired: true,
+            type: PropertyType.LABEL,
+            value: 'City',
+          },
+          {
+            type: PropertyType.REQUIRED,
+            value: true,
+            errorMessage: 'City is required',
           },
         ],
       },
@@ -547,9 +740,13 @@ export const sampleFormSchema: FormSchema = {
         id: 'state',
         props: [
           {
-            type: PropertyType.STATE,
-            label: 'State',
-            isRequired: true,
+            type: PropertyType.LABEL,
+            value: 'State',
+          },
+          {
+            type: PropertyType.REQUIRED,
+            value: true,
+            errorMessage: 'State is required',
           },
         ],
       },
@@ -558,19 +755,26 @@ export const sampleFormSchema: FormSchema = {
         id: 'zipCode',
         props: [
           {
-            type: PropertyType.ZIP,
-            label: 'ZIP Code',
-            isRequired: true,
-            validation: [
-              {
-                type: 'standard',
-                operator: 'regex',
-                value: /^[0-9]{5}(-[0-9]{4})?$/,
-                message: 'Please enter a valid ZIP code',
-              },
-            ],
+            type: PropertyType.LABEL,
+            value: 'ZIP Code',
+          },
+          {
+            type: PropertyType.REQUIRED,
+            value: true,
+            errorMessage: 'ZIP code is required',
           },
         ],
+        form: {
+          key: 'zipCode',
+          validation: [
+            {
+              type: 'standard',
+              operator: 'regex',
+              value: /^[0-9]{5}(-[0-9]{4})?$/,
+              message: 'Please enter a valid ZIP code',
+            },
+          ],
+        },
       },
 
       // Terms and Conditions
@@ -579,9 +783,8 @@ export const sampleFormSchema: FormSchema = {
         id: 'terms',
         props: [
           {
-            type: PropertyType.CONTENT,
-            label: 'Terms and Conditions',
-            content: {
+            type: PropertyType.LABEL,
+            value: {
               type: 'doc',
               content: [
                 {
@@ -616,10 +819,16 @@ export const sampleFormSchema: FormSchema = {
         id: 'submit',
         props: [
           {
-            type: PropertyType.BUTTON,
-            label: 'Submit',
-            btnType: ButtonType.SUBMIT,
-            fullWidth: true,
+            type: PropertyType.LABEL,
+            value: 'Submit',
+          },
+          {
+            type: PropertyType.BTN_TYPE,
+            value: ButtonType.SUBMIT,
+          },
+          {
+            type: PropertyType.FULL_WIDTH,
+            value: true,
           },
         ],
       },
