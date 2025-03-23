@@ -192,15 +192,29 @@ export interface StyleProperty {
   };
 }
 
+export interface Margin {
+  top: Size;
+  right: Size;
+  bottom: Size;
+  left: Size;
+}
+
+export interface Padding {
+  top: Size;
+  right: Size;
+  bottom: Size;
+  left: Size;
+}
+
 // Container properties
 export interface MarginProperty {
   type: typeof PropertyType.MARGIN;
-  value: Size;
+  value: Margin;
 }
 
 export interface PaddingProperty {
   type: typeof PropertyType.PADDING;
-  value: Size;
+  value: Padding;
 }
 
 export interface DisplayProperty {
@@ -227,6 +241,44 @@ export interface JustifyContentProperty {
     | 'space-between'
     | 'space-around'
     | 'space-evenly';
+}
+
+export interface BoxShadow {
+  x: Size;
+  y: Size;
+  blur: Size;
+  spread: Size;
+  color: string;
+  inset: boolean;
+}
+export interface BoxShadowProperty {
+  type: typeof PropertyType.BOX_SHADOW;
+  value: BoxShadow[];
+}
+
+export interface BorderRadiusProperty {
+  type: typeof PropertyType.BORDER_RADIUS;
+  value: {
+    topLeft: Size;
+    topRight: Size;
+    bottomLeft: Size;
+    bottomRight: Size;
+  };
+}
+
+export interface BorderWidthProperty {
+  type: typeof PropertyType.BORDER_WIDTH;
+  value: Size;
+}
+
+export interface BorderColorProperty {
+  type: typeof PropertyType.BORDER_COLOR;
+  value: string;
+}
+
+export interface BorderStyleProperty {
+  type: typeof PropertyType.BORDER_STYLE;
+  value: string;
 }
 
 // Union type of all property definitions
@@ -266,4 +318,9 @@ export type PropertyDefinition =
   | FlexDirectionProperty
   | AlignItemsProperty
   | JustifyContentProperty
-  | ContentProperty;
+  | ContentProperty
+  | BoxShadowProperty
+  | BorderRadiusProperty
+  | BorderWidthProperty
+  | BorderColorProperty
+  | BorderStyleProperty;

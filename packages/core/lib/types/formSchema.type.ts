@@ -36,6 +36,13 @@ import type {
   BgColorProperty,
   AlignProperty,
   GapProperty,
+  MarginProperty,
+  PaddingProperty,
+  BorderColorProperty,
+  BorderWidthProperty,
+  BorderRadiusProperty,
+  BoxShadowProperty,
+  BorderStyleProperty,
 } from './fieldProperties.type';
 import type { RootRule } from './RootRule.type';
 import type { ContentProperty } from './fieldProperties.type';
@@ -359,6 +366,14 @@ export interface BaseFormField {
     | BgColorProperty
     | AlignProperty
     | GapProperty
+    | MarginProperty
+    | PaddingProperty
+    | ContentProperty
+    | BoxShadowProperty
+    | BorderRadiusProperty
+    | BorderWidthProperty
+    | BorderColorProperty
+    | BorderStyleProperty
   )[];
   container?: {
     props: (
@@ -442,7 +457,20 @@ export interface LayoutFormField extends BaseFormField {
     | typeof FormFieldType.COLUMN
     | typeof FormFieldType.BLOCK;
   children: FormField[];
-  props: (GapProperty | WidthProperty)[];
+  props: (
+    | GapProperty
+    | WidthProperty
+    | HeightProperty
+    | MarginProperty
+    | PaddingProperty
+    | BgColorProperty
+    | ColorProperty
+    | BoxShadowProperty
+    | BorderRadiusProperty
+    | BorderWidthProperty
+    | BorderColorProperty
+    | BorderStyleProperty
+  )[];
 }
 
 // Content field types
@@ -525,35 +553,3 @@ export interface FormSchema {
     rules: RootRule[];
   };
 }
-
-export type {
-  FormSchema,
-  FormField,
-  Size,
-  FieldCondition,
-  FieldConditionGroup,
-  FieldConditionValue,
-  FieldConditionOperator,
-  FieldValue,
-  FieldRule,
-  ValidationOperator,
-  ValidationRule,
-  ValidationGroup,
-  ValidationCondition,
-  ValidationCase,
-  ValidationSchema,
-  PropertyValue,
-  ContainerStyle,
-  BaseFormField,
-  InputFormField,
-  ChoiceFormField,
-  DateTimeFormField,
-  FileFormField,
-  LayoutFormField,
-  ContentFormField,
-  ImageFormField,
-  ButtonFormField,
-  PageFormField,
-  DividerFormField,
-  RootRule,
-};

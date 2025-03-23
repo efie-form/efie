@@ -31,8 +31,58 @@ export type {
   DividerFormField,
 } from './types/formSchema.type';
 export type { RootRule } from './types/RootRule.type';
-export type { PropertyDefinition } from './types/fieldProperties.type';
 export type { BuilderCustomInput } from './types/builderCustomInput.type';
+export type { PropertyDefinition } from './types/fieldProperties.type';
 
 export { FormFieldType } from './InputType';
 export { PropertyType } from './types/formSchema.constant';
+
+export {
+  marginToStyle,
+  paddingToStyle,
+  borderRadiusToStyle,
+} from './props-parse';
+
+export {
+  type BgColorProperty,
+  type ColorProperty,
+  type FontSizeProperty,
+  type FontWeightProperty,
+  type SrcProperty,
+  type AltProperty,
+  type ObjectFitProperty,
+  type AutoWidthProperty,
+  type ButtonTypeProperty,
+  type FullWidthProperty,
+  type AlignProperty,
+  type HeightProperty,
+  type StyleProperty,
+  type MarginProperty,
+  type PaddingProperty,
+  type DisplayProperty,
+  type FlexDirectionProperty,
+  type AlignItemsProperty,
+  type JustifyContentProperty,
+  type BoxShadowProperty,
+  type BorderRadiusProperty,
+  type BorderWidthProperty,
+  type BorderColorProperty,
+  type BorderStyleProperty,
+  type LabelProperty,
+  type PlaceholderProperty,
+  type StringDefaultValueProperty,
+  type NumberDefaultValueProperty,
+  type ArrayDefaultValueProperty,
+  type RequiredProperty,
+  type MinProperty,
+  type MaxProperty,
+  type FormatProperty,
+  type AcceptProperty,
+  type MultipleProperty,
+  type OptionsProperty,
+  type GapProperty,
+  type WidthProperty,
+  type TagProperty,
+  type TextAlignProperty,
+  type ContentProperty,
+} from './types/fieldProperties.type';

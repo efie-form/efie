@@ -247,6 +247,12 @@ export const PropertyType = {
   TIME: 'time',
   DATE_TIME: 'date_time',
   FILE: 'file',
+  // Border field specific
+  BORDER_RADIUS: 'borderRadius',
+  BOX_SHADOW: 'boxShadow',
+  BORDER_WIDTH: 'borderWidth',
+  BORDER_COLOR: 'borderColor',
+  BORDER_STYLE: 'borderStyle',
 } as const;
 
 // Size unit

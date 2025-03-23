@@ -9,10 +9,7 @@
     // transpile
     "jsx": "react-jsx",
     // src
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
-
-    "baseUrl": ".",
-    "rootDir": "."
+    "lib": ["DOM", "DOM.Iterable", "ESNext"]
   },
   "include": ["src"]
 }

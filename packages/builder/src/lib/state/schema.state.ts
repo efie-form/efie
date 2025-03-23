@@ -1,5 +1,8 @@
-import type { FormField, FormSchema } from '@efie-form/core';
-import type { PropertyDefinition } from '@efie-form/core';
+import type {
+  FormField,
+  FormSchema,
+  PropertyDefinition,
+} from '@efie-form/core';
 import { create } from 'zustand';
 import defaultSchema from '../defaultSchema';
 
@@ -117,8 +120,7 @@ export const useSchemaStore = create<SchemaState>((set, getState) => ({
     return getState().fieldParentMap.get(fieldId);
   },
   updateFieldProps: (fieldId, type, props) => {
-    const { fieldMap, fieldParentMap, fieldKeyMap, schema, addHistory } =
-      getState();
+    const { fieldMap, schema, addHistory } = getState();
     const field = fieldMap.get(fieldId);
     if (!field) return;
 
@@ -142,7 +144,6 @@ export const useSchemaStore = create<SchemaState>((set, getState) => ({
 
     fieldMap.set(fieldId, field);
     addHistory(schema);
-    set({ fieldMap, fieldParentMap, fieldKeyMap });
   },
   getFieldProps: <T extends PropertyDefinition['type']>(
     fieldId: string,

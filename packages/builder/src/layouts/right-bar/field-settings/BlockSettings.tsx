@@ -1,12 +1,14 @@
-import type { FormFieldBlock } from '@efie-form/core';
+import type { LayoutFormField } from '@efie-form/core';
 import SettingsField4Sides from '../property-layouts/SettingsField4Sides';
 import SettingsFieldHorizontal from '../property-layouts/SettingsFieldHorizontal';
 import ColorPicker from '../../../components/form/ColorPicker';
 import SettingsFieldShadow from '../property-layouts/SettingsFieldShadow';
 import { useSchemaStore } from '../../../lib/state/schema.state';
+import PropSettingsBgColor from '../property-settings/PropSettingsBgColor';
+import PropSettingsColor from '../property-settings/PropSettingsColor';
 
 interface BlockSettingsProps {
-  field: FormFieldBlock;
+  field: LayoutFormField;
 }
 
 function BlockSettings({ field }: BlockSettingsProps) {
@@ -56,22 +58,8 @@ function BlockSettings({ field }: BlockSettingsProps) {
         divider
       />
       <SettingsFieldShadow label="Shadow" field={field} divider />
-      <SettingsFieldHorizontal label="Background Color" divider>
-        <ColorPicker
-          value={getFieldProps(field.id, 'props.bgColor')}
-          onChange={(newValue) => {
-            updateFieldProps(field.id, 'props.bgColor', newValue);
-          }}
-        />
-      </SettingsFieldHorizontal>
-      <SettingsFieldHorizontal label="Text Color" divider>
-        <ColorPicker
-          value={getFieldProps(field.id, 'props.color')}
-          onChange={(newValue) => {
-            updateFieldProps(field.id, 'props.color', newValue);
-          }}
-        />
-      </SettingsFieldHorizontal>
+      <PropSettingsBgColor field={field} />
+      <PropSettingsColor field={field} />
     </div>
   );
 }
