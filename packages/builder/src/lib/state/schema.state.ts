@@ -1,8 +1,7 @@
-import type { FormField, FormFieldPage, FormSchema } from '@efie-form/core';
+import type { FormField, FormSchema } from '@efie-form/core';
+import type { PropertyDefinition } from '@efie-form/core';
 import { create } from 'zustand';
 import defaultSchema from '../defaultSchema';
-import type { FieldPropsKey } from '../genFieldKey';
-import type { FieldPathValue } from 'react-hook-form';
 
 interface SchemaState {
   schema: FormSchema;
@@ -10,20 +9,20 @@ interface SchemaState {
   setFields: (fields: FormField[]) => void;
   updateFieldProps: (
     fieldId: string,
-    key: FieldPropsKey,
-    value: unknown
+    type: PropertyDefinition['type'],
+    props: Omit<PropertyDefinition, 'type'>
   ) => void;
-  getPage: (pageId?: string) => FormFieldPage | undefined;
-  updatePages: (pages: FormFieldPage[]) => void;
+  getPage: (pageId?: string) => FormField | undefined;
+  updatePages: (pages: FormField[]) => void;
   fieldMap: Map<string, FormField>;
   fieldKeyMap: Map<string, string>;
   getFieldById: (fieldId?: string) => FormField | undefined;
   getFieldKeyById: (fieldId?: string) => string | undefined;
   getFieldParentId: (fieldId?: string) => string | undefined;
-  getFieldProps: <T extends FieldPropsKey>(
+  getFieldProps: <T extends PropertyDefinition['type']>(
     fieldId: string,
-    key: T
-  ) => FieldPathValue<FormSchema, `form.fields.${number}.${T}`>;
+    type: T
+  ) => Extract<PropertyDefinition, { type: T }> | undefined;
   deleteField: (fieldId: string) => void;
   fieldParentMap: Map<string, string>;
   maxHistories: number;
@@ -51,7 +50,6 @@ export const useSchemaStore = create<SchemaState>((set, getState) => ({
     const { fieldKeyMap, fieldMap, fieldParentMap } = getFieldInfoMap(
       schema.form.fields
     );
-    console.log(fieldMap);
     addHistory(schema);
     set({
       schema,
@@ -63,7 +61,13 @@ export const useSchemaStore = create<SchemaState>((set, getState) => ({
   setFields: (fields) => {
     const { addHistory, schema } = getState();
     const { fieldKeyMap, fieldMap, fieldParentMap } = getFieldInfoMap(fields);
-    const newSchema = { ...schema, form: { fields } };
+    const newSchema = {
+      ...schema,
+      form: {
+        fields,
+        rules: schema.form.rules,
+      },
+    };
     addHistory(newSchema);
 
     set(() => ({
@@ -86,7 +90,13 @@ export const useSchemaStore = create<SchemaState>((set, getState) => ({
       fieldMap.set(page.id, page);
       fieldKeyMap.set(page.id, `form.fields.${index}`);
     }
-    const newSchema = { ...schema, form: { fields: pages } };
+    const newSchema = {
+      ...schema,
+      form: {
+        fields: pages,
+        rules: schema.form.rules,
+      },
+    };
     addHistory(newSchema);
     set({
       fieldMap,
@@ -106,34 +116,48 @@ export const useSchemaStore = create<SchemaState>((set, getState) => ({
     if (!fieldId) return;
     return getState().fieldParentMap.get(fieldId);
   },
-  updateFieldProps: (fieldId, key, value) => {
+  updateFieldProps: (fieldId, type, props) => {
     const { fieldMap, fieldParentMap, fieldKeyMap, schema, addHistory } =
       getState();
     const field = fieldMap.get(fieldId);
     if (!field) return;
-    iterateSetValue(field, key.split('.'), value);
-    fieldMap.set(fieldId, field);
 
-    if (key === 'children' && 'children' in field) {
-      for (const [index, child] of field.children.entries()) {
-        fieldMap.set(child.id, child);
-        fieldParentMap.set(child.id, fieldId);
-        fieldKeyMap.set(
-          child.id,
-          fieldKeyMap.get(fieldId) + `.children.${index}`
-        );
-      }
+    // Find the property with the matching type
+    const propIndex = field.props.findIndex((prop) => prop.type === type);
+
+    // Create a new property with the correct type
+    const newProp = {
+      type,
+      ...props,
+    } as (typeof field.props)[number];
+
+    if (propIndex === -1) {
+      // Add new property if it doesn't exist
+      // @ts-expect-error - This is a valid operation
+      field.props.push(newProp);
+    } else {
+      // Update existing property
+      field.props[propIndex] = newProp;
     }
 
+    fieldMap.set(fieldId, field);
     addHistory(schema);
-
     set({ fieldMap, fieldParentMap, fieldKeyMap });
   },
-  getFieldProps: (fieldId, key) => {
+  getFieldProps: <T extends PropertyDefinition['type']>(
+    fieldId: string,
+    type: T
+  ): Extract<PropertyDefinition, { type: T }> | undefined => {
     const { fieldMap } = getState();
     const field = fieldMap.get(fieldId);
     if (!field) return;
-    return iterateGetFieldProps(field, key.split('.'));
+
+    // Find the property with the matching type
+    const prop = field.props.find((prop) => prop.type === type);
+    if (!prop) return;
+
+    // Type guard to ensure we're returning the correct property type
+    return prop as Extract<PropertyDefinition, { type: T }>;
   },
   deleteField: (fieldId) => {
     const { fieldMap, fieldKeyMap, fieldParentMap, schema, addHistory } =
@@ -230,40 +254,6 @@ export const useSchemaStore = create<SchemaState>((set, getState) => ({
     return currentHistoryIndex < totalHistories - 1;
   },
 }));
-
-function iterateSetValue(
-  field: Record<string, any>,
-  keys: string[],
-  value: any
-) {
-  if (keys.length === 0) return;
-  const key = keys[0];
-  if (keys.length === 1) {
-    field[key] = value;
-    return;
-  }
-  if (Array.isArray(field[key]) && !Number.isNaN(Number(value))) {
-    iterateSetValue(field[key], keys.slice(1), value);
-  } else if (typeof field[key] === 'object') {
-    iterateSetValue(field[key], keys.slice(1), value);
-  } else {
-    field[key] = value;
-  }
-}
-
-function iterateGetFieldProps(field: Record<string, any>, keys: string[]) {
-  if (keys.length === 0) return;
-  const key = keys[0];
-  if (keys.length === 1) {
-    return field[key];
-  }
-  if (Array.isArray(field[key]) && !Number.isNaN(Number(key))) {
-    return iterateGetFieldProps(field[key], keys.slice(1));
-  } else if (typeof field[key] === 'object') {
-    return iterateGetFieldProps(field[key], keys.slice(1));
-  }
-  return field[key];
-}
 
 function getFieldInfoMap(
   fields: FormField[],

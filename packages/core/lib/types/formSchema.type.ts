@@ -36,7 +36,7 @@ import type {
   BgColorProperty,
   AlignProperty,
   GapProperty,
-} from './PropertyDefinition.type';
+} from './fieldProperties.type';
 import type { RootRule } from './RootRule.type';
 import type { ContentProperty } from './fieldProperties.type';
 
@@ -525,3 +525,35 @@ export interface FormSchema {
     rules: RootRule[];
   };
 }
+
+export type {
+  FormSchema,
+  FormField,
+  Size,
+  FieldCondition,
+  FieldConditionGroup,
+  FieldConditionValue,
+  FieldConditionOperator,
+  FieldValue,
+  FieldRule,
+  ValidationOperator,
+  ValidationRule,
+  ValidationGroup,
+  ValidationCondition,
+  ValidationCase,
+  ValidationSchema,
+  PropertyValue,
+  ContainerStyle,
+  BaseFormField,
+  InputFormField,
+  ChoiceFormField,
+  DateTimeFormField,
+  FileFormField,
+  LayoutFormField,
+  ContentFormField,
+  ImageFormField,
+  ButtonFormField,
+  PageFormField,
+  DividerFormField,
+  RootRule,
+};
