@@ -1,4 +1,4 @@
-import { FormFieldType } from '@efie-form/core';
+import { FormFieldType, PropertyType } from '@efie-form/core';
 import type { FormSchema } from '@efie-form/core';
 import { generateId } from './utils';
 
@@ -14,57 +14,35 @@ const defaultSchema: FormSchema = {
             id: generateId(10),
             type: FormFieldType.BLOCK,
             children: [],
-            props: {
-              padding: {
-                bottom: 16,
-                left: 16,
-                right: 16,
-                top: 16,
+            props: [
+              {
+                type: PropertyType.PADDING,
+                value: { value: 16, unit: 'px' },
               },
-              margin: {
-                bottom: 8,
-                left: 0,
-                right: 0,
-                top: 0,
+              {
+                type: PropertyType.MARGIN,
+                value: { value: 8, unit: 'px' },
               },
-              border: {
-                color: '#000000',
-                width: 0,
-                radius: {
-                  bottomLeft: 8,
-                  bottomRight: 8,
-                  topLeft: 8,
-                  topRight: 8,
-                },
+              {
+                type: PropertyType.BG_COLOR,
+                value: '#FFFFFF',
               },
-              boxShadow: [
-                {
-                  x: 0,
-                  y: 4,
-                  blur: 6,
-                  spread: -1,
-                  color: '#00000019',
-                  inset: false,
-                },
-                {
-                  x: 0,
-                  y: 2,
-                  blur: 4,
-                  spread: -2,
-                  color: '#00000019',
-                  inset: false,
-                },
-              ],
-              bgColor: '#FFFFFF',
-              color: '#494949',
-            },
+              {
+                type: PropertyType.COLOR,
+                value: '#494949',
+              },
+            ],
           },
         ],
-        props: {
-          name: 'Page 1',
-        },
+        props: [
+          {
+            type: PropertyType.NAME,
+            value: 'Page 1',
+          },
+        ],
       },
     ],
+    rules: [],
   },
 };
 
