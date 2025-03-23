@@ -38,6 +38,7 @@ import type {
   GapProperty,
 } from './PropertyDefinition.type';
 import type { RootRule } from './RootRule.type';
+import type { ContentProperty } from './fieldProperties.type';
 
 // Base types for units and measurements
 export interface Size {
@@ -441,14 +442,14 @@ export interface LayoutFormField extends BaseFormField {
     | typeof FormFieldType.COLUMN
     | typeof FormFieldType.BLOCK;
   children: FormField[];
-  props: (LabelProperty | GapProperty | WidthProperty)[];
+  props: (GapProperty | WidthProperty)[];
 }
 
 // Content field types
 export interface ContentFormField extends BaseFormField {
   type: typeof FormFieldType.HEADER | typeof FormFieldType.PARAGRAPH;
   props: (
-    | LabelProperty
+    | ContentProperty
     | TagProperty
     | TextAlignProperty
     | ColorProperty
@@ -490,7 +491,7 @@ export interface ButtonFormField extends BaseFormField {
 export interface PageFormField extends BaseFormField {
   type: typeof FormFieldType.PAGE;
   children: FormField[];
-  props: (LabelProperty | WidthProperty)[];
+  props: WidthProperty[];
 }
 
 // Divider field type

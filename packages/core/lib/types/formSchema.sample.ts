@@ -76,7 +76,7 @@ export const sampleFormSchema: FormSchema = {
         id: 'fieldTypesDemo',
         props: [
           {
-            type: PropertyType.LABEL,
+            type: PropertyType.CONTENT,
             value: {
               type: 'doc',
               content: [

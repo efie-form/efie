@@ -1,6 +1,11 @@
 import type { JSONContent } from '@tiptap/core';
 import type { Size } from './formSchema.type';
-import type { TextAlign, ObjectFit, ButtonType } from './formSchema.constant';
+import type {
+  TextAlign,
+  ObjectFit,
+  ButtonType,
+  HeadingTag,
+} from './formSchema.constant';
 import type { PropertyType } from './formSchema.constant';
 
 // Label property
@@ -93,7 +98,7 @@ export interface WidthProperty {
 // Content properties
 export interface TagProperty {
   type: typeof PropertyType.TAG;
-  value: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+  value: HeadingTag;
 }
 
 export interface TextAlignProperty {
@@ -137,6 +142,11 @@ export interface ObjectFitProperty {
 export interface AutoWidthProperty {
   type: typeof PropertyType.AUTO_WIDTH;
   value: boolean;
+}
+
+export interface ContentProperty {
+  type: typeof PropertyType.CONTENT;
+  value: JSONContent;
 }
 
 // Button properties
@@ -255,4 +265,5 @@ export type PropertyDefinition =
   | DisplayProperty
   | FlexDirectionProperty
   | AlignItemsProperty
-  | JustifyContentProperty;
+  | JustifyContentProperty
+  | ContentProperty;
