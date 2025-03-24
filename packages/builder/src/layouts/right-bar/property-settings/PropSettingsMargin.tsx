@@ -30,7 +30,7 @@ export default function PropSettingsMargin({ field }: PropSettingsMarginProps) {
     onChange: (value) => {
       updateFieldProps(field.id, PropertyType.MARGIN, value);
     },
-    value: marginProp || defaultMargin,
+    defaultValue: marginProp || defaultMargin,
   });
 
   return (

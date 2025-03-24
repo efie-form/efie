@@ -32,7 +32,7 @@ export default function PropSettingsBorderRadius({
     onChange: (value) => {
       updateFieldProps(field.id, PropertyType.BORDER_RADIUS, value);
     },
-    value: borderRadiusProp || defaultBorderRadius,
+    defaultValue: borderRadiusProp || defaultBorderRadius,
   });
 
   return (

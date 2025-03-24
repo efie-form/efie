@@ -33,7 +33,7 @@ export default function PropSettingsPadding({
     onChange: (value) => {
       updateFieldProps(field.id, PropertyType.PADDING, value);
     },
-    value: paddingProp || defaultPadding,
+    defaultValue: paddingProp || defaultPadding,
   });
 
   return (

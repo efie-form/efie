@@ -26,6 +26,7 @@ interface SchemaState {
     fieldId: string,
     type: T
   ) => Extract<PropertyDefinition, { type: T }> | undefined;
+  updateFieldForm: (fieldId: string, form: FormField['form']) => void;
   deleteField: (fieldId: string) => void;
   fieldParentMap: Map<string, string>;
   maxHistories: number;
@@ -159,6 +160,14 @@ export const useSchemaStore = create<SchemaState>((set, getState) => ({
 
     // Type guard to ensure we're returning the correct property type
     return prop as Extract<PropertyDefinition, { type: T }>;
+  },
+  updateFieldForm: (fieldId, form) => {
+    const { fieldMap, schema, addHistory } = getState();
+    const field = fieldMap.get(fieldId);
+    if (!field) return;
+    field.form = form;
+    fieldMap.set(fieldId, field);
+    addHistory(schema);
   },
   deleteField: (fieldId) => {
     const { fieldMap, fieldKeyMap, fieldParentMap, schema, addHistory } =

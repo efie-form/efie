@@ -11,7 +11,7 @@ import type { PropertyType } from './formSchema.constant';
 // Label property
 export interface LabelProperty {
   type: typeof PropertyType.LABEL;
-  value: string | JSONContent;
+  value: string; // JSONContent;
 }
 
 // Placeholder property

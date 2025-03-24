@@ -28,7 +28,7 @@ export default function PropSettingsBgColor({
     onChange: (value) => {
       updateFieldProps(field.id, PropertyType.BG_COLOR, value);
     },
-    value: bgColorProp || defaultBgColor,
+    defaultValue: bgColorProp || defaultBgColor,
   });
 
   return (

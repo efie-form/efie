@@ -34,7 +34,7 @@ export default function PropSettingsShadow({ field }: PropSettingsShadowProps) {
     onChange: (value) => {
       updateFieldProps(field.id, PropertyType.BOX_SHADOW, value);
     },
-    value: shadowProp || defaultShadow,
+    defaultValue: shadowProp || defaultShadow,
   });
 
   return <SettingsFieldShadow label="Shadow" field={field} divider />;

@@ -26,7 +26,7 @@ export default function PropSettingsColor({ field }: PropSettingsColorProps) {
     onChange: (value) => {
       updateFieldProps(field.id, PropertyType.COLOR, value);
     },
-    value: colorProp || defaultColor,
+    defaultValue: colorProp || defaultColor,
   });
 
   return (
