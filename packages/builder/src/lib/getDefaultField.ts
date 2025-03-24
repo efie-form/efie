@@ -413,7 +413,21 @@ export const getDefaultField = ({
         props: [
           {
             type: PropertyType.PADDING,
-            value: { value: 16, unit: 'px' },
+            value: {
+              top: { value: 16, unit: 'px' },
+              right: { value: 16, unit: 'px' },
+              bottom: { value: 16, unit: 'px' },
+              left: { value: 16, unit: 'px' },
+            },
+          },
+          {
+            type: PropertyType.MARGIN,
+            value: {
+              top: { value: 0, unit: 'px' },
+              right: { value: 0, unit: 'px' },
+              bottom: { value: 8, unit: 'px' },
+              left: { value: 0, unit: 'px' },
+            },
           },
           {
             type: PropertyType.BG_COLOR,
@@ -424,8 +438,42 @@ export const getDefaultField = ({
             value: '#494949',
           },
           {
-            type: PropertyType.MARGIN,
-            value: { value: 8, unit: 'px' },
+            type: PropertyType.BORDER_WIDTH,
+            value: { value: 1, unit: 'px' },
+          },
+          {
+            type: PropertyType.BORDER_COLOR,
+            value: '#00000019',
+          },
+          {
+            type: PropertyType.BORDER_RADIUS,
+            value: {
+              topLeft: { value: 8, unit: 'px' },
+              topRight: { value: 8, unit: 'px' },
+              bottomLeft: { value: 8, unit: 'px' },
+              bottomRight: { value: 8, unit: 'px' },
+            },
+          },
+          {
+            type: PropertyType.BOX_SHADOW,
+            value: [
+              {
+                x: { value: 0, unit: 'px' },
+                y: { value: 4, unit: 'px' },
+                blur: { value: 6, unit: 'px' },
+                spread: { value: 0, unit: 'px' },
+                color: '#00000019',
+                inset: false,
+              },
+              {
+                x: { value: 0, unit: 'px' },
+                y: { value: 2, unit: 'px' },
+                blur: { value: 4, unit: 'px' },
+                spread: { value: -2, unit: 'px' },
+                color: '#00000019',
+                inset: false,
+              },
+            ],
           },
         ],
       };

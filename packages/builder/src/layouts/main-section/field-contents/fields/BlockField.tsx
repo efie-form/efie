@@ -3,10 +3,10 @@ import {
   marginToStyle,
   paddingToStyle,
   PropertyType,
+  boxShadowToStyle,
   type LayoutFormField,
 } from '@efie-form/core';
 import RenderField from '../RenderField';
-import { boxShadowToStyle } from 'node_modules/@efie-form/core/lib/props-parse';
 
 interface BlockFieldProps {
   field: LayoutFormField;
@@ -38,12 +38,6 @@ function BlockField({ field }: BlockFieldProps) {
         boxShadow: boxShadowToStyle(boxShadow),
         backgroundColor: bgColor?.value,
         color: color?.value,
-        // boxShadow: field.props.boxShadow
-        //   .map(
-        //     (shadow) =>
-        //       `${shadow.x}px ${shadow.y}px ${shadow.blur}px ${shadow.spread}px ${shadow.color}${shadow.inset ? ' inset' : ''}`
-        //   )
-        //   .join(','),
       }}
     >
       {field.children.map((child) => (

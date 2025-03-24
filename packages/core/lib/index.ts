@@ -35,12 +35,13 @@ export type { BuilderCustomInput } from './types/builderCustomInput.type';
 export type { PropertyDefinition } from './types/fieldProperties.type';
 
 export { FormFieldType } from './InputType';
-export { PropertyType } from './types/formSchema.constant';
+export { PropertyType, SizeUnit } from './types/formSchema.constant';
 
 export {
   marginToStyle,
   paddingToStyle,
   borderRadiusToStyle,
+  boxShadowToStyle,
 } from './props-parse';
 
 export {
