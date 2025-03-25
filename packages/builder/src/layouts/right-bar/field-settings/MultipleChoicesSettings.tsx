@@ -3,7 +3,7 @@ import PropSettingsRequired from '../property-settings/PropSettingsRequired';
 import PropSettingsPlaceholder from '../property-settings/PropSettingsPlaceholder';
 import PropSettingsLabel from '../property-settings/PropSettingsLabel';
 import PropSettingsFormKey from '../property-settings/PropSettingsFormKey';
-import SettingsFieldOptionsValue from '../property-layouts/SettingsFieldOptionsValue';
+import PropSettingsOption from '../property-settings/PropSettingsOption';
 
 interface MultipleChoicesSettingsProps {
   field: ChoiceFormField;
@@ -19,7 +19,7 @@ function MultipleChoicesSettings({ field }: MultipleChoicesSettingsProps) {
       <PropSettingsLabel field={field} />
       <PropSettingsPlaceholder field={field} />
       <PropSettingsRequired field={field} />
-      <SettingsFieldOptionsValue label="Custom value" field={field} divider />
+      <PropSettingsOption field={field} />
     </div>
   );
 }

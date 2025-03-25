@@ -1,8 +1,5 @@
-import type {
-  FormFieldMultipleChoices,
-  FormFieldSingleChoice,
-  OptionType,
-} from '@efie-form/core';
+import type { FormField, PropertyDefinition } from '@efie-form/core';
+import { PropertyType } from '@efie-form/core';
 import { useRef } from 'react';
 import {
   DndContext,
@@ -21,9 +18,14 @@ import type { DragEndEvent } from '@dnd-kit/core';
 import ChoiceFieldOption from './ChoiceFieldOption';
 import { useSchemaStore } from '../../../../lib/state/schema.state';
 
+interface OptionType {
+  value: string;
+  label: string;
+}
+
 interface ChoiceFieldBaseProps {
   fieldId: string;
-  field: FormFieldSingleChoice | FormFieldMultipleChoices;
+  field: FormField;
   inputType: 'radio' | 'checkbox';
   isValueDifferent?: boolean;
 }
@@ -35,7 +37,6 @@ function ChoiceFieldBase({
   isValueDifferent,
 }: ChoiceFieldBaseProps) {
   const { updateFieldProps } = useSchemaStore();
-
   const lastInputRef = useRef<HTMLInputElement>(null);
 
   const sensors = useSensors(
@@ -45,16 +46,22 @@ function ChoiceFieldBase({
     })
   );
 
+  const optionsProp = field.props.find(
+    (prop: PropertyDefinition) => prop.type === PropertyType.OPTIONS
+  );
+
+  const options = optionsProp?.value || [];
+
   const handleNewOption = () => {
-    const name = `Option ${field.props.options.length + 1}`;
+    const name = `Option ${options.length + 1}`;
     const newOptions = [
-      ...field.props.options,
+      ...options,
       {
         value: name,
         label: name,
       },
     ];
-    updateFieldProps(field.id, 'props.options', newOptions);
+    updateFieldProps(field.id, PropertyType.OPTIONS, { value: newOptions });
     requestAnimationFrame(() => {
       lastInputRef.current?.focus();
     });
@@ -67,30 +74,36 @@ function ChoiceFieldBase({
     const oldIndex = Number(active.id);
     const newIndex = Number(over.id);
 
-    const newOptions = [...field.props.options];
+    const newOptions = [...options];
     const [removed] = newOptions.splice(oldIndex, 1);
     newOptions.splice(newIndex, 0, removed);
-    updateFieldProps(field.id, 'props.options', newOptions);
+    updateFieldProps(field.id, PropertyType.OPTIONS, { value: newOptions });
   };
 
   const handleRemove = (index: number) => {
-    const newOptions = [...field.props.options];
+    const newOptions = [...options];
     newOptions.splice(index, 1);
-    updateFieldProps(field.id, 'props.options', newOptions);
+    updateFieldProps(field.id, PropertyType.OPTIONS, { value: newOptions });
   };
 
   const handleUpdate = (index: number, value: OptionType) => {
-    const newOptions = [...field.props.options];
+    const newOptions = [...options];
     newOptions[index] = value;
-    updateFieldProps(field.id, 'props.options', newOptions);
+    updateFieldProps(field.id, PropertyType.OPTIONS, { value: newOptions });
   };
+
+  const labelProp = field.props.find(
+    (prop: PropertyDefinition) => prop.type === PropertyType.LABEL
+  );
 
   return (
     <div className="p-2">
       <input
-        value={field.props.label}
+        value={labelProp?.value || ''}
         onChange={(e) => {
-          updateFieldProps(field.id, 'props.label', e.target.value);
+          updateFieldProps(field.id, PropertyType.LABEL, {
+            value: e.target.value,
+          });
         }}
         className="mb-2 typography-body2 bg-white bg-opacity-0 focus:outline-none cursor-text w-full"
         type="text"
@@ -105,10 +118,10 @@ function ChoiceFieldBase({
           onDragEnd={handleDragEnd}
         >
           <SortableContext
-            items={field.props.options.map((_, index) => index.toString())}
+            items={options.map((_: unknown, index: number) => index.toString())}
             strategy={verticalListSortingStrategy}
           >
-            {field.props.options.map((option, index) => (
+            {options.map((option: OptionType, index: number) => (
               <ChoiceFieldOption
                 key={index}
                 option={option}
@@ -119,9 +132,7 @@ function ChoiceFieldBase({
                 onUpdate={(value) => handleUpdate(index, value)}
                 onRemove={() => handleRemove(index)}
                 inputRef={
-                  index === field.props.options.length - 1
-                    ? lastInputRef
-                    : undefined
+                  index === options.length - 1 ? lastInputRef : undefined
                 }
               />
             ))}

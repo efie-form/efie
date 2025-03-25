@@ -90,7 +90,6 @@ export interface OptionsProperty {
   type: typeof PropertyType.OPTIONS;
   value: { label: string; value: string }[];
   errorMessage?: string; // e.g., "Please select a valid option"
-  isValueDifferent?: boolean;
 }
 
 // Layout properties
