@@ -1,11 +1,11 @@
 import type { FileFormField } from '@efie-form/core';
-import ContainerSettingsGroup from '../common/ContainerSettingsGroup';
 import PropSettingsRequired from '../property-settings/PropSettingsRequired';
 import PropSettingsPlaceholder from '../property-settings/PropSettingsPlaceholder';
 import PropSettingsLabel from '../property-settings/PropSettingsLabel';
 import PropSettingsFormKey from '../property-settings/PropSettingsFormKey';
 import PropSettingsAccept from '../property-settings/PropSettingsAccept';
-import PropSettingsMultiple from '../property-settings/PropSettingsMultiple';
+import PropSettingsMaxFiles from '../property-settings/PropSettingsMaxFiles';
+
 interface FileSettingsProps {
   field: FileFormField;
 }
@@ -21,8 +21,7 @@ function FileSettings({ field }: FileSettingsProps) {
       <PropSettingsPlaceholder field={field} />
       <PropSettingsRequired field={field} />
       <PropSettingsAccept field={field} />
-      <PropSettingsMultiple field={field} />
-      <ContainerSettingsGroup field={field} />
+      <PropSettingsMaxFiles field={field} />
     </div>
   );
 }

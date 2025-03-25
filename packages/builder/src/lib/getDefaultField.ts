@@ -240,12 +240,13 @@ export const getDefaultField = ({
             value: false,
           },
           {
-            type: PropertyType.MULTIPLE,
-            value: false,
+            type: PropertyType.MAX_FILES,
+            value: 1,
           },
           {
             type: PropertyType.ACCEPT,
-            value: [],
+            allowAll: false,
+            formats: [],
           },
         ],
       };

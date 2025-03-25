@@ -43,6 +43,7 @@ import type {
   BorderRadiusProperty,
   BoxShadowProperty,
   BorderStyleProperty,
+  MaxFilesProperty,
 } from './fieldProperties.type';
 import type { RootRule } from './RootRule.type';
 import type { ContentProperty } from './fieldProperties.type';
@@ -374,6 +375,7 @@ export interface BaseFormField {
     | BorderWidthProperty
     | BorderColorProperty
     | BorderStyleProperty
+    | MaxFilesProperty
   )[];
   container?: {
     props: (
@@ -445,7 +447,7 @@ export interface FileFormField extends BaseFormField {
   props: (
     | LabelProperty
     | AcceptProperty
-    | MultipleProperty
+    | MaxFilesProperty
     | RequiredProperty
   )[];
 }

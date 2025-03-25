@@ -63,6 +63,7 @@ export {
   type DisplayProperty,
   type FlexDirectionProperty,
   type AlignItemsProperty,
+  type MaxFilesProperty,
   type JustifyContentProperty,
   type BoxShadowProperty,
   type BorderRadiusProperty,

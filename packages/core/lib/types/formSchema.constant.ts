@@ -190,6 +190,7 @@ export const PropertyType = {
   FORMAT: 'format',
   ACCEPT: 'accept',
   MULTIPLE: 'multiple',
+  MAX_FILES: 'maxFiles',
   // Choice field specific
   CHOICE: 'choice',
   CHOICES: 'choices',

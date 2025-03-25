@@ -66,7 +66,8 @@ export interface FormatProperty {
 // File properties
 export interface AcceptProperty {
   type: typeof PropertyType.ACCEPT;
-  value: string[];
+  allowAll: boolean;
+  formats?: string[];
   errorMessage?: string; // e.g., "File type not allowed. Allowed types: {value}"
 }
 
@@ -75,6 +76,12 @@ export interface MultipleProperty {
   value: boolean;
   min?: number;
   max?: number;
+  errorMessage?: string;
+}
+
+export interface MaxFilesProperty {
+  type: typeof PropertyType.MAX_FILES;
+  value: number;
   errorMessage?: string;
 }
 
@@ -306,6 +313,7 @@ export type PropertyDefinition =
   | FontWeightProperty
   | SrcProperty
   | AltProperty
+  | MaxFilesProperty
   | ObjectFitProperty
   | AutoWidthProperty
   | ButtonTypeProperty

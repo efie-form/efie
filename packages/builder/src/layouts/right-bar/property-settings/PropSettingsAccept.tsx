@@ -7,6 +7,7 @@ import {
 } from '@efie-form/core';
 import { useControllableState } from '../../../lib/hooks/useControllableState';
 import Switch from '../../../components/form/Switch';
+import SettingsFieldSwitchWithDropdown from '../property-layouts/SettingsFieldSwitchWithDropdown';
 
 interface PropSettingsAcceptProps {
   field: FormField;
@@ -14,7 +15,8 @@ interface PropSettingsAcceptProps {
 
 const defaultAccept: AcceptProperty = {
   type: PropertyType.ACCEPT,
-  value: [],
+  allowAll: false,
+  formats: [],
 };
 
 const FILE_EXTENSIONS = [
@@ -41,19 +43,31 @@ export default function PropSettingsAccept({ field }: PropSettingsAcceptProps) {
   });
 
   const handleExtensionChange = (extensions: string[], checked: boolean) => {
-    const currentExtensions = accept.value.filter(Boolean);
+    const currentExtensions = accept.formats?.filter(Boolean) || [];
     const newExtensions = checked
       ? [...currentExtensions, ...extensions]
       : currentExtensions.filter((ext) => !extensions.includes(ext));
 
     setAccept((prev) => ({
       ...prev,
-      value: newExtensions,
+      formats: newExtensions,
+    }));
+  };
+
+  const handleAllowAllChange = (checked: boolean) => {
+    setAccept((prev) => ({
+      ...prev,
+      allowAll: checked,
     }));
   };
 
   return (
-    <SettingsFieldVertical label="Accept" divider>
+    <SettingsFieldSwitchWithDropdown
+      isOpen={accept.allowAll}
+      onOpenChange={handleAllowAllChange}
+      label="Only allow specific file types"
+      divider
+    >
       <div className="grid grid-cols-2">
         {FILE_EXTENSIONS.map((extension) => (
           <div
@@ -63,7 +77,7 @@ export default function PropSettingsAccept({ field }: PropSettingsAcceptProps) {
             <div>
               <Switch
                 checked={extension.value.some((ext) =>
-                  accept.value.includes(ext)
+                  accept.formats?.includes(ext)
                 )}
                 onChange={(checked: boolean) =>
                   handleExtensionChange(extension.value, checked)
@@ -76,6 +90,6 @@ export default function PropSettingsAccept({ field }: PropSettingsAcceptProps) {
           </div>
         ))}
       </div>
-    </SettingsFieldVertical>
+    </SettingsFieldSwitchWithDropdown>
   );
 }
