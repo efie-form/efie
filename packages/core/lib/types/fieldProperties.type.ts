@@ -66,14 +66,16 @@ export interface FormatProperty {
 // File properties
 export interface AcceptProperty {
   type: typeof PropertyType.ACCEPT;
-  value: string;
+  value: string[];
   errorMessage?: string; // e.g., "File type not allowed. Allowed types: {value}"
 }
 
 export interface MultipleProperty {
   type: typeof PropertyType.MULTIPLE;
   value: boolean;
-  errorMessage?: string; // e.g., "Please select at least one option"
+  min?: number;
+  max?: number;
+  errorMessage?: string;
 }
 
 // Choice properties

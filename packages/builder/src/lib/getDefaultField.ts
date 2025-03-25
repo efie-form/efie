@@ -245,7 +245,7 @@ export const getDefaultField = ({
           },
           {
             type: PropertyType.ACCEPT,
-            value: '',
+            value: [],
           },
         ],
       };
