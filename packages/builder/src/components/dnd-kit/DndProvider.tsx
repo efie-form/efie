@@ -12,7 +12,7 @@ import type { ReactNode } from 'react';
 import { useState } from 'react';
 import { useSchemaStore } from '../../lib/state/schema.state';
 import type { FormField } from '@efie-form/core';
-import { getDefaultField } from 'src/lib/getDefaultField';
+import { getDefaultField } from '../../lib/getDefaultField';
 
 interface DndContextProps {
   children: ReactNode;
