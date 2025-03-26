@@ -2,49 +2,47 @@ import { useControllableState } from '../../../lib/hooks/useControllableState';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import {
   PropertyType,
-  type FontSizeProperty,
+  type HeightProperty,
   type FormField,
 } from '@efie-form/core';
 import SettingsFieldHorizontal from '../property-layouts/SettingsFieldHorizontal';
 import { Input } from '../../../components/form';
 import { Select } from '../../../components/form';
 
-interface PropSettingsFontSizeProps {
+interface PropSettingsHeightProps {
   field: FormField;
 }
 
-const defaultFontSize: FontSizeProperty = {
-  type: PropertyType.FONT_SIZE,
+const defaultHeight: HeightProperty = {
+  type: PropertyType.HEIGHT,
   value: {
-    value: 16,
+    value: 40,
     unit: 'px',
   },
 };
 
-export default function PropSettingsFontSize({
-  field,
-}: PropSettingsFontSizeProps) {
+export default function PropSettingsHeight({ field }: PropSettingsHeightProps) {
   const { updateFieldProps } = useSchemaStore();
-  const fontSizeProp = field.props.find(
-    (field) => field.type === PropertyType.FONT_SIZE
+  const heightProp = field.props.find(
+    (field) => field.type === PropertyType.HEIGHT
   );
-  const [fontSize, setFontSize] = useControllableState({
+  const [height, setHeight] = useControllableState({
     onChange: (value) => {
-      updateFieldProps(field.id, PropertyType.FONT_SIZE, value);
+      updateFieldProps(field.id, PropertyType.HEIGHT, value);
     },
-    defaultValue: fontSizeProp || defaultFontSize,
+    defaultValue: heightProp || defaultHeight,
   });
 
   return (
-    <SettingsFieldHorizontal label="Font Size" divider>
+    <SettingsFieldHorizontal label="Height" divider>
       <div className="flex gap-2 items-center">
         <Input
           inputProps={{
             type: 'number',
           }}
-          value={fontSize.value.value.toString()}
+          value={height.value.value.toString()}
           onChange={(newValue) => {
-            setFontSize((prev) => ({
+            setHeight((prev) => ({
               ...prev,
               value: {
                 ...prev.value,
@@ -54,9 +52,9 @@ export default function PropSettingsFontSize({
           }}
         />
         <Select
-          value={fontSize.value.unit}
+          value={height.value.unit}
           onChange={(newUnit) => {
-            setFontSize((prev) => ({
+            setHeight((prev) => ({
               ...prev,
               value: {
                 ...prev.value,

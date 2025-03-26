@@ -43,6 +43,10 @@ export {
   borderRadiusToStyle,
   boxShadowToStyle,
   widthToStyle,
+  textAlignToStyle,
+  colorToStyle,
+  fontSizeToStyle,
+  fontWeightToStyle,
 } from './props-parse';
 
 export {

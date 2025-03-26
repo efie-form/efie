@@ -1,10 +1,15 @@
 import type {
   BorderRadiusProperty,
   BoxShadowProperty,
+  ColorProperty,
+  FontSizeProperty,
+  FontWeightProperty,
   MarginProperty,
   PaddingProperty,
+  TextAlignProperty,
   WidthProperty,
 } from './types/fieldProperties.type';
+import { TextAlign } from './types/formSchema.constant';
 import type { Size } from './types/formSchema.type';
 
 export const toSize = (size?: Size) => {
@@ -95,4 +100,34 @@ export const widthToStyle = (width?: WidthProperty) => {
   if (!width) return;
 
   return width.autoWidth ? 'auto' : `${width.value.value}${width.value.unit}`;
+};
+
+const textAlignMap = {
+  [TextAlign.LEFT]: 'start',
+  [TextAlign.CENTER]: 'center',
+  [TextAlign.RIGHT]: 'end',
+} as const;
+
+export const textAlignToStyle = (textAlign?: TextAlignProperty) => {
+  if (!textAlign) return;
+
+  return textAlignMap[textAlign.value];
+};
+
+export const colorToStyle = (color?: ColorProperty) => {
+  if (!color) return;
+
+  return color.value;
+};
+
+export const fontSizeToStyle = (fontSize?: FontSizeProperty) => {
+  if (!fontSize) return;
+
+  return `${fontSize.value.value}${fontSize.value.unit}`;
+};
+
+export const fontWeightToStyle = (fontWeight?: FontWeightProperty) => {
+  if (!fontWeight) return;
+
+  return fontWeight.value;
 };

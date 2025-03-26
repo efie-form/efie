@@ -269,6 +269,7 @@ export const getDefaultField = ({
           {
             type: PropertyType.WIDTH,
             value: { value: 100, unit: '%' },
+            autoWidth: true,
           },
           {
             type: PropertyType.HEIGHT,
@@ -287,8 +288,8 @@ export const getDefaultField = ({
             value: generateJsonContent('Header'),
           },
           {
-            type: PropertyType.FONT,
-            value: { value: 24, unit: 'px' },
+            type: PropertyType.FONT_SIZE,
+            value: { value: 32, unit: 'px' },
           },
           {
             type: PropertyType.TAG,
@@ -312,10 +313,10 @@ export const getDefaultField = ({
         props: [
           {
             type: PropertyType.CONTENT,
-            value: generateJsonContent('Paragraph'),
+            value: generateJsonContent('Lorem ipsum dolor sit amet'),
           },
           {
-            type: PropertyType.FONT,
+            type: PropertyType.FONT_SIZE,
             value: { value: 16, unit: 'px' },
           },
           {
@@ -353,6 +354,7 @@ export const getDefaultField = ({
           {
             type: PropertyType.WIDTH,
             value: { value: 100, unit: '%' },
+            autoWidth: true,
           },
         ],
       };

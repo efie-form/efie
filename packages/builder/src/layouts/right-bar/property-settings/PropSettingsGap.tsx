@@ -2,49 +2,45 @@ import { useControllableState } from '../../../lib/hooks/useControllableState';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import {
   PropertyType,
-  type FontSizeProperty,
+  type GapProperty,
   type FormField,
 } from '@efie-form/core';
 import SettingsFieldHorizontal from '../property-layouts/SettingsFieldHorizontal';
 import { Input } from '../../../components/form';
 import { Select } from '../../../components/form';
 
-interface PropSettingsFontSizeProps {
+interface PropSettingsGapProps {
   field: FormField;
 }
 
-const defaultFontSize: FontSizeProperty = {
-  type: PropertyType.FONT_SIZE,
+const defaultGap: GapProperty = {
+  type: PropertyType.GAP,
   value: {
-    value: 16,
+    value: 8,
     unit: 'px',
   },
 };
 
-export default function PropSettingsFontSize({
-  field,
-}: PropSettingsFontSizeProps) {
+export default function PropSettingsGap({ field }: PropSettingsGapProps) {
   const { updateFieldProps } = useSchemaStore();
-  const fontSizeProp = field.props.find(
-    (field) => field.type === PropertyType.FONT_SIZE
-  );
-  const [fontSize, setFontSize] = useControllableState({
+  const gapProp = field.props.find((field) => field.type === PropertyType.GAP);
+  const [gap, setGap] = useControllableState({
     onChange: (value) => {
-      updateFieldProps(field.id, PropertyType.FONT_SIZE, value);
+      updateFieldProps(field.id, PropertyType.GAP, value);
     },
-    defaultValue: fontSizeProp || defaultFontSize,
+    defaultValue: gapProp || defaultGap,
   });
 
   return (
-    <SettingsFieldHorizontal label="Font Size" divider>
+    <SettingsFieldHorizontal label="Gap" divider>
       <div className="flex gap-2 items-center">
         <Input
           inputProps={{
             type: 'number',
           }}
-          value={fontSize.value.value.toString()}
+          value={gap.value.value.toString()}
           onChange={(newValue) => {
-            setFontSize((prev) => ({
+            setGap((prev) => ({
               ...prev,
               value: {
                 ...prev.value,
@@ -54,9 +50,9 @@ export default function PropSettingsFontSize({
           }}
         />
         <Select
-          value={fontSize.value.unit}
+          value={gap.value.unit}
           onChange={(newUnit) => {
-            setFontSize((prev) => ({
+            setGap((prev) => ({
               ...prev,
               value: {
                 ...prev.value,

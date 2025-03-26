@@ -2,49 +2,49 @@ import { useControllableState } from '../../../lib/hooks/useControllableState';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import {
   PropertyType,
-  type FontSizeProperty,
+  type BorderWidthProperty,
   type FormField,
 } from '@efie-form/core';
 import SettingsFieldHorizontal from '../property-layouts/SettingsFieldHorizontal';
 import { Input } from '../../../components/form';
 import { Select } from '../../../components/form';
 
-interface PropSettingsFontSizeProps {
+interface PropSettingsBorderWidthProps {
   field: FormField;
 }
 
-const defaultFontSize: FontSizeProperty = {
-  type: PropertyType.FONT_SIZE,
+const defaultBorderWidth: BorderWidthProperty = {
+  type: PropertyType.BORDER_WIDTH,
   value: {
-    value: 16,
+    value: 1,
     unit: 'px',
   },
 };
 
-export default function PropSettingsFontSize({
+export default function PropSettingsBorderWidth({
   field,
-}: PropSettingsFontSizeProps) {
+}: PropSettingsBorderWidthProps) {
   const { updateFieldProps } = useSchemaStore();
-  const fontSizeProp = field.props.find(
-    (field) => field.type === PropertyType.FONT_SIZE
+  const borderWidthProp = field.props.find(
+    (field) => field.type === PropertyType.BORDER_WIDTH
   );
-  const [fontSize, setFontSize] = useControllableState({
+  const [borderWidth, setBorderWidth] = useControllableState({
     onChange: (value) => {
-      updateFieldProps(field.id, PropertyType.FONT_SIZE, value);
+      updateFieldProps(field.id, PropertyType.BORDER_WIDTH, value);
     },
-    defaultValue: fontSizeProp || defaultFontSize,
+    defaultValue: borderWidthProp || defaultBorderWidth,
   });
 
   return (
-    <SettingsFieldHorizontal label="Font Size" divider>
+    <SettingsFieldHorizontal label="Border Width" divider>
       <div className="flex gap-2 items-center">
         <Input
           inputProps={{
             type: 'number',
           }}
-          value={fontSize.value.value.toString()}
+          value={borderWidth.value.value.toString()}
           onChange={(newValue) => {
-            setFontSize((prev) => ({
+            setBorderWidth((prev) => ({
               ...prev,
               value: {
                 ...prev.value,
@@ -54,9 +54,9 @@ export default function PropSettingsFontSize({
           }}
         />
         <Select
-          value={fontSize.value.unit}
+          value={borderWidth.value.unit}
           onChange={(newUnit) => {
-            setFontSize((prev) => ({
+            setBorderWidth((prev) => ({
               ...prev,
               value: {
                 ...prev.value,
@@ -68,7 +68,6 @@ export default function PropSettingsFontSize({
             { value: 'px', label: 'px' },
             { value: 'em', label: 'em' },
             { value: 'rem', label: 'rem' },
-            { value: '%', label: '%' },
           ]}
         />
       </div>
