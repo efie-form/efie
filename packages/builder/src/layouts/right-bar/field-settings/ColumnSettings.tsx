@@ -1,4 +1,4 @@
-import type { FormFieldColumn } from '@efie-form/core';
+import { PropertyType, type FormFieldColumn } from '@efie-form/core';
 import Input from '../../../components/form/Input';
 import SettingsFieldHorizontal from '../property-layouts/SettingsFieldHorizontal';
 import { useSchemaStore } from '../../../lib/state/schema.state';
@@ -9,15 +9,16 @@ interface ColumnSettingsProps {
 }
 
 function ColumnSettings({ field, onRemove }: ColumnSettingsProps) {
-  const { updateFieldProps } = useSchemaStore();
+  const { updateFieldProps, getFieldProps } = useSchemaStore();
+  const width = getFieldProps(field.id, PropertyType.WIDTH);
 
   return (
     <div className="mb-4">
       <SettingsFieldHorizontal label="Column Width">
         <Input
-          value={field.props.width.toString()}
+          value={width?.value.toString()}
           onChange={(newValue) => {
-            updateFieldProps(field.id, 'props.width', Number(newValue));
+            // updateFieldProps(field.id, 'props.width', Number(newValue));
           }}
           inputProps={{
             type: 'number',

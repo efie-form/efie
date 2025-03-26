@@ -377,6 +377,7 @@ export const getDefaultField = ({
               {
                 type: PropertyType.WIDTH,
                 value: { value: 50, unit: '%' },
+                autoWidth: false,
               },
             ],
             children: [],
@@ -388,6 +389,7 @@ export const getDefaultField = ({
               {
                 type: PropertyType.WIDTH,
                 value: { value: 50, unit: '%' },
+                autoWidth: false,
               },
             ],
             children: [],
@@ -403,6 +405,7 @@ export const getDefaultField = ({
           {
             type: PropertyType.WIDTH,
             value: { value: column?.width || 100, unit: '%' },
+            autoWidth: false,
           },
         ],
         children: [],

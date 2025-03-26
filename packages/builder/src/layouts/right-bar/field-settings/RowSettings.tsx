@@ -1,4 +1,5 @@
-import type { FormFieldRow } from '@efie-form/core';
+import type { LayoutFormField } from '@efie-form/core';
+import { PropertyType } from '@efie-form/core';
 import { getDefaultField } from '../../../lib/getDefaultField';
 import * as Tabs from '@radix-ui/react-tabs';
 import { useState } from 'react';
@@ -17,26 +18,56 @@ const LAYOUT_PRESETS = [
 ];
 
 interface RowSettingsProps {
-  field: FormFieldRow;
+  field: LayoutFormField;
 }
 
 function RowSettings({ field }: RowSettingsProps) {
   const { updateFieldProps, getFieldById } = useSchemaStore();
-  const [currentTab, setCurrentTab] = useState(field.children[0]?.id);
+  const [currentTab, setCurrentTab] = useState(field.children?.[0]?.id || '');
 
   const applyLayout = (columns: number[]) => {
     const newColumns = columns.map((width, index) => {
       const existingColumn = field.children[index];
-      const columnField = getFieldById(existingColumn.id);
+      const columnField = existingColumn
+        ? getFieldById(existingColumn.id)
+        : undefined;
 
       if (!columnField || columnField.type !== 'column') return existingColumn;
 
-      columnField.props.width = width;
+      // Update width property in the column's props
+      const widthPropIndex = columnField.props.findIndex(
+        (prop) => 'type' in prop && prop.type === PropertyType.WIDTH
+      );
+      if (widthPropIndex !== -1) {
+        columnField.props[widthPropIndex] = {
+          type: PropertyType.WIDTH,
+          value: { value: width, unit: '%' },
+          autoWidth: false,
+        };
+      } else {
+        columnField.props.push({
+          type: PropertyType.WIDTH,
+          value: { value: width, unit: '%' },
+          autoWidth: false,
+        });
+      }
+
       return columnField;
     });
 
-    updateFieldProps(field.id, 'children', newColumns);
-    setCurrentTab(newColumns[0].id);
+    // Update field directly
+    if (field && field.children) {
+      field.children = newColumns;
+      // Trigger a minimal update to record the change
+      const gapProp = field.props.find(
+        (prop) => 'type' in prop && prop.type === PropertyType.GAP
+      );
+      if (gapProp && 'value' in gapProp) {
+        updateFieldProps(field.id, PropertyType.GAP, { value: gapProp.value });
+      }
+    }
+
+    setCurrentTab(newColumns[0]?.id || '');
   };
 
   const addColumn = () => {
@@ -49,34 +80,95 @@ function RowSettings({ field }: RowSettingsProps) {
 
     const newChildren = [
       ...field.children.map((col) => {
-        const field = getFieldById(col.id);
-        if (!field || field.type !== 'column') return col;
-        field.props.width = avgWidth;
-        return field;
+        const colField = getFieldById(col.id);
+        if (!colField || colField.type !== 'column') return col;
+
+        // Update width property in the column's props
+        const widthPropIndex = colField.props.findIndex(
+          (prop) => 'type' in prop && prop.type === PropertyType.WIDTH
+        );
+        if (widthPropIndex !== -1) {
+          colField.props[widthPropIndex] = {
+            type: PropertyType.WIDTH,
+            value: { value: avgWidth, unit: '%' },
+            autoWidth: false,
+          };
+        } else {
+          colField.props.push({
+            type: PropertyType.WIDTH,
+            value: { value: avgWidth, unit: '%' },
+            autoWidth: false,
+          });
+        }
+
+        return colField;
       }),
       newColumn,
     ];
 
-    updateFieldProps(field.id, 'children', newChildren);
+    // Update field directly
+    if (field && field.children) {
+      field.children = newChildren;
+      // Trigger a minimal update to record the change
+      const gapProp = field.props.find(
+        (prop) => 'type' in prop && prop.type === PropertyType.GAP
+      );
+      if (gapProp && 'value' in gapProp) {
+        updateFieldProps(field.id, PropertyType.GAP, { value: gapProp.value });
+      }
+    }
 
     // Set focus to the new column
     setCurrentTab(newColumn.id);
   };
 
   const removeColumn = (index: number) => {
-    const prevField = field.children[index - 1];
-    if (index === -1) return;
-    const newChildren = field.children
-      .filter((_, i) => i !== index)
-      .map((col, _, arr) => {
-        const field = getFieldById(col.id);
-        if (!field || field.type !== 'column') return col;
+    if (index === -1 || field.children.length <= 1) return;
 
-        field.props.width = Math.floor(100 / arr.length);
-        return field;
+    const prevField = field.children[index - 1];
+
+    const newChildren = field.children
+      .filter((_, i: number) => i !== index)
+      .map((col) => {
+        const colField = getFieldById(col.id);
+        if (!colField || colField.type !== 'column') return col;
+
+        const newWidth = Math.floor(100 / (field.children.length - 1));
+
+        // Update width property in the column's props
+        const widthPropIndex = colField.props.findIndex(
+          (prop) => 'type' in prop && prop.type === PropertyType.WIDTH
+        );
+        if (widthPropIndex !== -1) {
+          colField.props[widthPropIndex] = {
+            type: PropertyType.WIDTH,
+            value: { value: newWidth, unit: '%' },
+            autoWidth: false,
+          };
+        } else {
+          colField.props.push({
+            type: PropertyType.WIDTH,
+            value: { value: newWidth, unit: '%' },
+            autoWidth: false,
+          });
+        }
+
+        return colField;
       });
-    updateFieldProps(field.id, 'children', newChildren);
-    setCurrentTab(prevField?.id || newChildren[0]?.id);
+
+    // Update field directly
+    if (field && field.children) {
+      field.children = newChildren;
+      // Trigger a minimal update to record the change
+      const gapProp = field.props.find(
+        (prop) => 'type' in prop && prop.type === PropertyType.GAP
+      );
+      if (gapProp && 'value' in gapProp) {
+        updateFieldProps(field.id, PropertyType.GAP, { value: gapProp.value });
+      }
+    }
+
+    setCurrentTab(prevField?.id || newChildren[0]?.id || '');
   };
 
   return (
@@ -113,7 +205,7 @@ function RowSettings({ field }: RowSettingsProps) {
           <Tabs.List className="flex-1 flex overflow-x-auto">
             {field.children.map((column, index) => (
               <Tabs.Trigger
-                key={index}
+                key={column.id}
                 value={column.id}
                 className="px-4 py-2 whitespace-nowrap border-b-2 border-primary border-opacity-0 transition-colors data-[state=active]:border-opacity-100 typography-body3 text-neutral-700 data-[state=active]:text-primary"
               >
@@ -126,7 +218,7 @@ function RowSettings({ field }: RowSettingsProps) {
         {field.children
           .filter((column) => column.type === 'column')
           .map((column, index) => (
-            <Tabs.Content key={index} value={column.id}>
+            <Tabs.Content key={column.id} value={column.id}>
               <ColumnSettings
                 field={column}
                 onRemove={() => removeColumn(index)}

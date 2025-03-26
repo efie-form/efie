@@ -1,11 +1,11 @@
-import type { FormFieldRow } from '@efie-form/core';
+import type { LayoutFormField } from '@efie-form/core';
 import RenderField from '../RenderField';
 import { useSettingsStore } from '../../../../lib/state/settings.state';
 import { cn } from '../../../../lib/utils';
 import { FormFieldType } from '@efie-form/core';
 
 interface RowFieldProps {
-  field: FormFieldRow;
+  field: LayoutFormField;
 }
 
 function RowField({ field }: RowFieldProps) {
@@ -23,9 +23,11 @@ function RowField({ field }: RowFieldProps) {
         .map((child) => (
           <div
             key={`${field.id}-${child.id}`}
-            style={{
-              width: isMobile ? '100%' : `${child.props.width}%`,
-            }}
+            style={
+              {
+                // width: isMobile ? '100%' : `${child.props.width}%`,
+              }
+            }
             className="self-stretch"
           >
             <RenderField field={child} noSelect />
