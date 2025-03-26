@@ -13,7 +13,7 @@ interface Size<T extends string> {
 
 interface SettingsField4SizesProps<T extends string> {
   label: string;
-  allSizeLabel: string;
+  allSizeLabel?: string;
   sizes: Size<T>[];
   onChange: (value: Record<T, { value: number; unit: SizeUnit }>) => void;
 }
@@ -156,9 +156,11 @@ export default function SettingsField4Sizes<T extends string>({
           )}
           {!isSplitSides && (
             <div>
-              <p className="typography-body3 text-neutral-700 mb-2">
-                {allSizeLabel}
-              </p>
+              {allSizeLabel && (
+                <p className="typography-body3 text-neutral-700 mb-2">
+                  {allSizeLabel}
+                </p>
+              )}
               <Input
                 value={value[sizes[0].key].value.toString()}
                 onChange={(newValue) => {

@@ -101,6 +101,7 @@ export interface GapProperty {
 export interface WidthProperty {
   type: typeof PropertyType.WIDTH;
   value: Size;
+  autoWidth: boolean;
 }
 
 // Content properties
@@ -120,12 +121,12 @@ export interface ColorProperty {
 }
 
 export interface FontSizeProperty {
-  type: typeof PropertyType.FONT;
+  type: typeof PropertyType.FONT_SIZE;
   value: Size;
 }
 
 export interface FontWeightProperty {
-  type: typeof PropertyType.FONT;
+  type: typeof PropertyType.FONT_WEIGHT;
   value: number;
 }
 

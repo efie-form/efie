@@ -207,6 +207,8 @@ export const PropertyType = {
   TEXT_ALIGN: 'textAlign',
   COLOR: 'color',
   FONT: 'font',
+  FONT_SIZE: 'fontSize',
+  FONT_WEIGHT: 'fontWeight',
   // Image field specific
   IMAGE: 'image',
   SRC: 'src',

@@ -32,7 +32,6 @@ import type {
   AcceptProperty,
   MultipleProperty,
   ButtonTypeProperty,
-  FullWidthProperty,
   BgColorProperty,
   AlignProperty,
   GapProperty,
@@ -363,7 +362,6 @@ export interface BaseFormField {
     | AcceptProperty
     | MultipleProperty
     | ButtonTypeProperty
-    | FullWidthProperty
     | BgColorProperty
     | AlignProperty
     | GapProperty
@@ -508,12 +506,18 @@ export interface ButtonFormField extends BaseFormField {
   props: (
     | LabelProperty
     | ButtonTypeProperty
-    | FullWidthProperty
+    | WidthProperty
     | BgColorProperty
     | ColorProperty
-    | AlignProperty
+    | TextAlignProperty
     | FontSizeProperty
     | FontWeightProperty
+    | BorderRadiusProperty
+    | BorderWidthProperty
+    | BorderColorProperty
+    | BorderStyleProperty
+    | PaddingProperty
+    | BorderRadiusProperty
   )[];
 }
 

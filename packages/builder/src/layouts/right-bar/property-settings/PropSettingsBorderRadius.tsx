@@ -38,7 +38,6 @@ export default function PropSettingsBorderRadius({
   return (
     <SettingsField4Sizes
       label="Border Radius"
-      allSizeLabel="Border Radius"
       onChange={(value) => {
         setBorderRadius(() => ({
           type: PropertyType.BORDER_RADIUS,

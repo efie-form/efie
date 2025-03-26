@@ -1,8 +1,14 @@
-import type { FormFieldButton } from '@efie-form/core';
 import { cn } from '../../../../lib/utils';
-
+import { useSchemaStore } from '../../../../lib/state/schema.state';
+import {
+  type ButtonFormField,
+  borderRadiusToStyle,
+  paddingToStyle,
+  PropertyType,
+  widthToStyle,
+} from '@efie-form/core';
 interface ButtonFieldProps {
-  field: FormFieldButton;
+  field: ButtonFormField;
 }
 
 const alignMap = {
@@ -12,24 +18,27 @@ const alignMap = {
 };
 
 function ButtonField({ field }: ButtonFieldProps) {
+  const { getFieldProps } = useSchemaStore();
+  const bgColor = getFieldProps(field.id, PropertyType.BG_COLOR);
+  const color = getFieldProps(field.id, PropertyType.COLOR);
+  const padding = getFieldProps(field.id, PropertyType.PADDING);
+  const borderRadius = getFieldProps(field.id, PropertyType.BORDER_RADIUS);
+  const align = getFieldProps(field.id, PropertyType.TEXT_ALIGN);
+  const width = getFieldProps(field.id, PropertyType.WIDTH);
+  const label = getFieldProps(field.id, PropertyType.LABEL);
+
   return (
-    <div className={cn('p-2', alignMap[field.props.align])}>
+    <div className={cn('p-2', align ? alignMap[align.value] : '')}>
       <button
         style={{
-          backgroundColor: field.props.bgColor,
-          color: field.props.color,
-          paddingTop: field.props.padding.top,
-          paddingRight: field.props.padding.right,
-          paddingBottom: field.props.padding.bottom,
-          paddingLeft: field.props.padding.left,
-          width: field.props.fullWidth ? '100%' : 'auto',
-          borderTopLeftRadius: field.props.border.radius.topLeft,
-          borderTopRightRadius: field.props.border.radius.topRight,
-          borderBottomRightRadius: field.props.border.radius.bottomRight,
-          borderBottomLeftRadius: field.props.border.radius.bottomLeft,
+          padding: paddingToStyle(padding),
+          backgroundColor: bgColor?.value,
+          borderRadius: borderRadiusToStyle(borderRadius),
+          color: color?.value,
+          width: widthToStyle(width),
         }}
       >
-        {field.props.label}
+        {label?.value}
       </button>
     </div>
   );

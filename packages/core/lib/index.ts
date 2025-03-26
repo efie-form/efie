@@ -42,6 +42,7 @@ export {
   paddingToStyle,
   borderRadiusToStyle,
   boxShadowToStyle,
+  widthToStyle,
 } from './props-parse';
 
 export {

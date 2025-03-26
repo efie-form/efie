@@ -497,20 +497,43 @@ export const getDefaultField = ({
             value: '#5083a7',
           },
           {
-            type: PropertyType.FONT,
+            type: PropertyType.FONT_SIZE,
             value: { value: 16, unit: 'px' },
           },
           {
-            type: PropertyType.FULL_WIDTH,
-            value: false,
+            type: PropertyType.WIDTH,
+            value: { value: 100, unit: '%' },
+            autoWidth: true,
           },
           {
             type: PropertyType.BTN_TYPE,
             value: 'submit',
           },
           {
-            type: PropertyType.ALIGN,
+            type: PropertyType.TEXT_ALIGN,
             value: 'center',
+          },
+          {
+            type: PropertyType.FONT_WEIGHT,
+            value: 600,
+          },
+          {
+            type: PropertyType.BORDER_RADIUS,
+            value: {
+              topLeft: { value: 6, unit: 'px' },
+              topRight: { value: 6, unit: 'px' },
+              bottomLeft: { value: 6, unit: 'px' },
+              bottomRight: { value: 6, unit: 'px' },
+            },
+          },
+          {
+            type: PropertyType.PADDING,
+            value: {
+              top: { value: 6, unit: 'px' },
+              right: { value: 12, unit: 'px' },
+              bottom: { value: 6, unit: 'px' },
+              left: { value: 12, unit: 'px' },
+            },
           },
         ],
       };

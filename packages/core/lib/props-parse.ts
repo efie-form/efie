@@ -3,6 +3,7 @@ import type {
   BoxShadowProperty,
   MarginProperty,
   PaddingProperty,
+  WidthProperty,
 } from './types/fieldProperties.type';
 import type { Size } from './types/formSchema.type';
 
@@ -88,4 +89,10 @@ export const boxShadowToStyle = (boxShadow?: BoxShadowProperty) => {
       return `${x} ${y} ${blur} ${spread} ${color} ${inset}`;
     })
     .join(',');
+};
+
+export const widthToStyle = (width?: WidthProperty) => {
+  if (!width) return;
+
+  return width.autoWidth ? 'auto' : `${width.value.value}${width.value.unit}`;
 };
