@@ -5,6 +5,8 @@ import SettingsFieldHorizontal from '../property-layouts/SettingsFieldHorizontal
 import ColorPicker from '../../../components/form/ColorPicker';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import Number from '../../../components/form/Number';
+import PropSettingsTextAlign from '../property-settings/PropSettingsTextAlign';
+import PropSettingsColor from '../property-settings/PropSettingsColor';
 
 interface HeaderSettingsProps {
   field: FormFieldHeader;
@@ -47,28 +49,8 @@ function HeaderSettings({ field }: HeaderSettingsProps) {
             ]}
           />
         </SettingsFieldVertical>
-        <SettingsFieldVertical label="Text align" divider>
-          <Select
-            value={field.props.textAlign}
-            onChange={(value) =>
-              updateFieldProps(field.id, 'props.textAlign', value)
-            }
-            className="w-28"
-            options={[
-              { label: 'Left', value: 'left' },
-              { label: 'Center', value: 'center' },
-              { label: 'Right', value: 'right' },
-            ]}
-          />
-        </SettingsFieldVertical>
-        <SettingsFieldHorizontal label="Color" divider>
-          <ColorPicker
-            value={field.props.color}
-            onChange={(value) =>
-              updateFieldProps(field.id, 'props.color', value)
-            }
-          />
-        </SettingsFieldHorizontal>
+        <PropSettingsTextAlign field={field} />
+        <PropSettingsColor field={field} />
       </div>
     </div>
   );

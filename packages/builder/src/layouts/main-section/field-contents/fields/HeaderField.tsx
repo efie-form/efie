@@ -10,6 +10,8 @@ interface HeaderFieldProps {
 function HeaderField({ field }: HeaderFieldProps) {
   const { selectedFieldId } = useSettingsStore();
 
+  return <>Header</>;
+
   return (
     <div
       style={{
