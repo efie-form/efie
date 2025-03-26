@@ -1,5 +1,4 @@
 import { useSchemaStore } from '../../../lib/state/schema.state';
-import SettingsFieldVertical from '../property-layouts/SettingsFieldVertical';
 import {
   PropertyType,
   type AcceptProperty,

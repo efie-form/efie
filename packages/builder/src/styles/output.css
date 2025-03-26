@@ -798,6 +798,10 @@ video {
   width: 100%;
 }
 
+.w-4 {
+  width: 1rem;
+}
+
 .max-w-40 {
   max-width: 10rem;
 }
@@ -908,6 +912,10 @@ video {
   justify-content: space-between;
 }
 
+.justify-around {
+  justify-content: space-around;
+}
+
 .gap-0\.5 {
   gap: 0.125rem;
 }
@@ -939,12 +947,6 @@ video {
 
 .gap-y-4 {
   row-gap: 1rem;
-}
-
-.space-y-3 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-y-reverse: 0;
-  margin-top: calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));
-  margin-bottom: calc(0.75rem * var(--tw-space-y-reverse));
 }
 
 .self-stretch {
@@ -1087,6 +1089,10 @@ video {
   background-color: rgb(from var(--color-neutral-100) r g b / var(--tw-bg-opacity));
 }
 
+.bg-neutral-100\/20 {
+  background-color: rgb(from var(--color-neutral-100) r g b / 0.2);
+}
+
 .bg-neutral-100\/30 {
   background-color: rgb(from var(--color-neutral-100) r g b / 0.3);
 }
@@ -1127,10 +1133,6 @@ video {
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
-}
-
-.bg-neutral-100\/20 {
-  background-color: rgb(from var(--color-neutral-100) r g b / 0.2);
 }
 
 .bg-opacity-0 {
@@ -1260,6 +1262,10 @@ video {
   font-weight: 600;
 }
 
+.font-bold {
+  font-weight: 700;
+}
+
 .uppercase {
   text-transform: uppercase;
 }
@@ -1313,6 +1319,11 @@ video {
   color: rgb(from var(--color-neutral-900) r g b / var(--tw-text-opacity));
 }
 
+.text-primary {
+  --tw-text-opacity: 1;
+  color: rgb(from var(--color-primary-500) r g b / var(--tw-text-opacity));
+}
+
 .text-success {
   --tw-text-opacity: 1;
   color: rgb(52 211 153 / var(--tw-text-opacity));
@@ -1321,11 +1332,6 @@ video {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-
-.text-primary {
-  --tw-text-opacity: 1;
-  color: rgb(from var(--color-primary-500) r g b / var(--tw-text-opacity));
 }
 
 .underline {
@@ -1438,6 +1444,59 @@ video {
   will-change: transform;
 }
 
+.primary {
+  --btn-bg-color: var(--color-primary-500);
+  --btn-bg-color-hover: var(--color-primary-600);
+  --btn-text-color: var(--color-neutral-50);
+  --btn-text-color-hover: var(--color-primary-50);
+  --btn-border-color: var(--color-primary-500);
+  --btn-border-color-hover: var(--color-primary-600);
+  --btn-bg-color-disabled: var(--color-neutral-200);
+  --btn-text-color-disabled: var(--color-neutral-500);
+}
+
+.secondary {
+  --btn-bg-color: var(--color-neutral-100);
+  --btn-bg-color-hover: var(--color-neutral-200);
+  --btn-text-color: var(--color-neutral-700);
+  --btn-text-color-hover: var(--color-neutral-800);
+  --btn-border-color: var(--color-neutral-200);
+  --btn-border-color-hover: var(--color-neutral-300);
+  --btn-bg-color-disabled: var(--color-neutral-200);
+  --btn-text-color-disabled: var(--color-neutral-600);
+}
+
+.button {
+  background-color: var(--btn-bg-color);
+  display: flex;
+  -moz-column-gap: 0.25rem;
+       column-gap: 0.25rem;
+  justify-content: center;
+  align-items: center;
+  color: var(--btn-text-color);
+  padding: 0.375rem 1rem;
+  border-radius: 0.375rem;
+  text-align: center;
+}
+
+.button:active {
+  transform: translate(0.03125rem, 0.03125rem);
+}
+
+.button:hover {
+  background-color: var(--btn-bg-color-hover);
+  color: var(--btn-text-color-hover);
+}
+
+.button.disabled,
+.button.disabled:hover,
+.button.disabled:active {
+  background-color: var(--btn-bg-color-disabled);
+  color: var(--btn-text-color-disabled);
+  cursor: not-allowed;
+  transform: none;
+}
+
 :root {
   --color-background: #f8fafc;
   --color-white: #ffffff;
@@ -1461,15 +1520,15 @@ video {
   --color-primary-700: #325572;
   --color-primary-800: #2d495f;
   --color-primary-900: #293e51;
-  --color-red-50: #EDCCCC;
-  --color-red-100: #E6B3B3;
-  --color-red-200: #E09999;
-  --color-red-400: #DA7F7F;
-  --color-red-500: #D14747;
-  --color-red-600: #B73E3E;
-  --color-red-300: #CF7777;
-  --color-red-700: #9D3535;
-  --color-red-800: #832C2C;
+  --color-red-50: #edcccc;
+  --color-red-100: #e6b3b3;
+  --color-red-200: #e09999;
+  --color-red-400: #da7f7f;
+  --color-red-500: #d14747;
+  --color-red-600: #b73e3e;
+  --color-red-300: #cf7777;
+  --color-red-700: #9d3535;
+  --color-red-800: #832c2c;
   --color-red-900: #692424;
 }
 
@@ -1560,41 +1619,16 @@ div.tiptap:focus-visible {
   }
 }
 
-.button {
-  background-color: var(--color-primary-500);
-  display: flex;
-  -moz-column-gap: 0.25rem;
-       column-gap: 0.25rem;
-  justify-content: center;
-  align-items: center;
-  color: var(--color-neutral-50);
-  padding: 0.375rem 1rem;
-  border-radius: 0.375rem;
-  text-align: center;
-}
-
-.button:active {
-  transform: translate(0.03125rem, 0.03125rem);
-}
-
-.button:hover {
-  background-color: var(--color-primary-600);
-  color: var(--color-primary-50);
-}
-
-.button.disabled, .button.disabled:hover, .button.disabled:active {
-  background-color: var(--color-neutral-200);
-  color: var(--color-neutral-500);
-  cursor: not-allowed;
-  transform: none;
-}
-
 .focus-within\:outline:focus-within {
   outline-style: solid;
 }
 
 .focus-within\:outline-2:focus-within {
   outline-width: 2px;
+}
+
+.focus-within\:outline-1:focus-within {
+  outline-width: 1px;
 }
 
 .focus-within\:outline-primary:focus-within {
@@ -1625,6 +1659,11 @@ div.tiptap:focus-visible {
 
 .hover\:bg-neutral-200\/30:hover {
   background-color: rgb(from var(--color-neutral-200) r g b / 0.3);
+}
+
+.hover\:bg-neutral-50:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(from var(--color-neutral-50) r g b / var(--tw-bg-opacity));
 }
 
 .hover\:bg-primary-100:hover {

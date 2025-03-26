@@ -17,6 +17,7 @@ import {
 import type { DragEndEvent } from '@dnd-kit/core';
 import ChoiceFieldOption from './ChoiceFieldOption';
 import { useSchemaStore } from '../../../../lib/state/schema.state';
+import { useControllableState } from '../../../../lib/hooks/useControllableState';
 
 interface OptionType {
   value: string;
@@ -27,15 +28,9 @@ interface ChoiceFieldBaseProps {
   fieldId: string;
   field: FormField;
   inputType: 'radio' | 'checkbox';
-  isValueDifferent?: boolean;
 }
 
-function ChoiceFieldBase({
-  fieldId,
-  field,
-  inputType,
-  isValueDifferent,
-}: ChoiceFieldBaseProps) {
+function ChoiceFieldBase({ fieldId, field, inputType }: ChoiceFieldBaseProps) {
   const { updateFieldProps } = useSchemaStore();
   const lastInputRef = useRef<HTMLInputElement>(null);
 
@@ -49,8 +44,19 @@ function ChoiceFieldBase({
   const optionsProp = field.props.find(
     (prop: PropertyDefinition) => prop.type === PropertyType.OPTIONS
   );
+  const isValueDifferent = optionsProp?.value.some(
+    (option) => option.value !== option.label
+  );
 
-  const options = optionsProp?.value || [];
+  const [options, setOptions] = useControllableState({
+    defaultValue: optionsProp?.value || [],
+    onChange: (value) => {
+      updateFieldProps(field.id, PropertyType.OPTIONS, {
+        ...optionsProp,
+        value,
+      });
+    },
+  });
 
   const handleNewOption = () => {
     const name = `Option ${options.length + 1}`;
@@ -61,7 +67,7 @@ function ChoiceFieldBase({
         label: name,
       },
     ];
-    updateFieldProps(field.id, PropertyType.OPTIONS, { value: newOptions });
+    setOptions(newOptions);
     requestAnimationFrame(() => {
       lastInputRef.current?.focus();
     });
@@ -77,33 +83,38 @@ function ChoiceFieldBase({
     const newOptions = [...options];
     const [removed] = newOptions.splice(oldIndex, 1);
     newOptions.splice(newIndex, 0, removed);
-    updateFieldProps(field.id, PropertyType.OPTIONS, { value: newOptions });
+    setOptions(newOptions);
   };
 
   const handleRemove = (index: number) => {
     const newOptions = [...options];
     newOptions.splice(index, 1);
-    updateFieldProps(field.id, PropertyType.OPTIONS, { value: newOptions });
+    setOptions(newOptions);
   };
 
   const handleUpdate = (index: number, value: OptionType) => {
     const newOptions = [...options];
     newOptions[index] = value;
-    updateFieldProps(field.id, PropertyType.OPTIONS, { value: newOptions });
+    setOptions(newOptions);
   };
 
   const labelProp = field.props.find(
     (prop: PropertyDefinition) => prop.type === PropertyType.LABEL
   );
 
+  const handleLabelChange = (value: string) => {
+    updateFieldProps(field.id, PropertyType.LABEL, {
+      ...labelProp,
+      value,
+    });
+  };
+
   return (
     <div className="p-2">
       <input
         value={labelProp?.value || ''}
         onChange={(e) => {
-          updateFieldProps(field.id, PropertyType.LABEL, {
-            value: e.target.value,
-          });
+          handleLabelChange(e.target.value);
         }}
         className="mb-2 typography-body2 bg-white bg-opacity-0 focus:outline-none cursor-text w-full"
         type="text"
@@ -118,10 +129,10 @@ function ChoiceFieldBase({
           onDragEnd={handleDragEnd}
         >
           <SortableContext
-            items={options.map((_: unknown, index: number) => index.toString())}
+            items={options.map((_, index) => index.toString())}
             strategy={verticalListSortingStrategy}
           >
-            {options.map((option: OptionType, index: number) => (
+            {options.map((option, index) => (
               <ChoiceFieldOption
                 key={index}
                 option={option}
