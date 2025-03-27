@@ -7,6 +7,7 @@ import {
 import { useControllableState } from '../../../lib/hooks/useControllableState';
 import Switch from '../../../components/form/Switch';
 import SettingsFieldSwitchWithDropdown from '../property-layouts/SettingsFieldSwitchWithDropdown';
+import { getFieldProp } from '../../../lib/utils';
 
 interface PropSettingsAcceptProps {
   field: FormField;
@@ -32,8 +33,8 @@ const FILE_EXTENSIONS = [
 ];
 
 export default function PropSettingsAccept({ field }: PropSettingsAcceptProps) {
-  const { updateFieldProps, getFieldProps } = useSchemaStore();
-  const acceptProp = getFieldProps(field.id, PropertyType.ACCEPT);
+  const { updateFieldProps } = useSchemaStore();
+  const acceptProp = getFieldProp(field, PropertyType.ACCEPT);
   const [accept, setAccept] = useControllableState({
     onChange: (value) => {
       updateFieldProps(field.id, PropertyType.ACCEPT, value);

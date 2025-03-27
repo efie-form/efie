@@ -5,10 +5,10 @@ import {
   type WidthProperty,
 } from '@efie-form/core';
 import { useSchemaStore } from '../../../lib/state/schema.state';
-import SettingsFieldSwitchWithDropdown from '../property-layouts/SettingsFieldSwitchWithDropdown';
 import Slider from '../../../components/form/Slider';
 import { useControllableState } from '../../../lib/hooks/useControllableState';
 import { Switch } from '../../../components/form';
+import { getFieldProp } from '../../../lib/utils';
 
 const defaultWidth: WidthProperty = {
   type: PropertyType.WIDTH,
@@ -24,8 +24,8 @@ interface PropSettingsWidthProps {
 }
 
 export default function PropSettingsWidth({ field }: PropSettingsWidthProps) {
-  const { updateFieldProps, getFieldProps } = useSchemaStore();
-  const widthProp = getFieldProps(field.id, PropertyType.WIDTH);
+  const { updateFieldProps } = useSchemaStore();
+  const widthProp = getFieldProp(field, PropertyType.WIDTH);
   const [width, setWidth] = useControllableState({
     defaultValue: widthProp || defaultWidth,
     onChange: (value) => {

@@ -1,5 +1,4 @@
-import { cn } from '../../../../lib/utils';
-import { useSchemaStore } from '../../../../lib/state/schema.state';
+import { cn, getFieldProp } from '../../../../lib/utils';
 import {
   type ButtonFormField,
   borderRadiusToStyle,
@@ -18,14 +17,13 @@ const alignMap = {
 };
 
 function ButtonField({ field }: ButtonFieldProps) {
-  const { getFieldProps } = useSchemaStore();
-  const bgColor = getFieldProps(field.id, PropertyType.BG_COLOR);
-  const color = getFieldProps(field.id, PropertyType.COLOR);
-  const padding = getFieldProps(field.id, PropertyType.PADDING);
-  const borderRadius = getFieldProps(field.id, PropertyType.BORDER_RADIUS);
-  const align = getFieldProps(field.id, PropertyType.TEXT_ALIGN);
-  const width = getFieldProps(field.id, PropertyType.WIDTH);
-  const label = getFieldProps(field.id, PropertyType.LABEL);
+  const bgColor = getFieldProp(field, PropertyType.BG_COLOR);
+  const color = getFieldProp(field, PropertyType.COLOR);
+  const padding = getFieldProp(field, PropertyType.PADDING);
+  const borderRadius = getFieldProp(field, PropertyType.BORDER_RADIUS);
+  const align = getFieldProp(field, PropertyType.TEXT_ALIGN);
+  const width = getFieldProp(field, PropertyType.WIDTH);
+  const label = getFieldProp(field, PropertyType.LABEL);
 
   return (
     <div className={cn('p-2', align ? alignMap[align.value] : '')}>

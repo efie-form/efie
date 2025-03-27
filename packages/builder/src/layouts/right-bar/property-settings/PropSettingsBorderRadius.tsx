@@ -5,7 +5,7 @@ import {
   type BorderRadiusProperty,
   type FormField,
 } from '@efie-form/core';
-import SettingsField4Sizes from '../property-layouts/SettingsField4SidesNew';
+import SettingsField4Sizes from '../property-layouts/SettingsField4Sizes';
 
 interface PropSettingsBorderRadiusProps {
   field: FormField;

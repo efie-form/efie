@@ -17,7 +17,7 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { SortableContext } from '@dnd-kit/sortable';
-import { cn } from '../../../lib/utils';
+import { cn, getFieldProp } from '../../../lib/utils';
 import {
   closestCenter,
   KeyboardSensor,
@@ -51,8 +51,8 @@ const defaultOption: OptionsProperty = {
 };
 
 export default function PropSettingsOption({ field }: PropSettingsOptionProps) {
-  const { updateFieldProps, getFieldProps } = useSchemaStore();
-  const optionsProp = getFieldProps(field.id, PropertyType.OPTIONS);
+  const { updateFieldProps } = useSchemaStore();
+  const optionsProp = getFieldProp(field, PropertyType.OPTIONS);
   const [isValueDifferent, setIsValueDifferent] = useState(
     optionsProp?.value?.some((option) => option.value !== option.label) || false
   );

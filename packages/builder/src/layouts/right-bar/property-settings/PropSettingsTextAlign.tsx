@@ -7,6 +7,7 @@ import Select from '../../../components/form/Select';
 import SettingsFieldHorizontal from '../property-layouts/SettingsFieldHorizontal';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import { useControllableState } from '../../../lib/hooks/useControllableState';
+import { getFieldProp } from '../../../lib/utils';
 
 const defaultTextAlign: TextAlignProperty = {
   type: PropertyType.TEXT_ALIGN,
@@ -20,8 +21,8 @@ interface PropSettingsTextAlignProps {
 export default function PropSettingsTextAlign({
   field,
 }: PropSettingsTextAlignProps) {
-  const { updateFieldProps, getFieldProps } = useSchemaStore();
-  const textAlign = getFieldProps(field.id, PropertyType.TEXT_ALIGN);
+  const { updateFieldProps } = useSchemaStore();
+  const textAlign = getFieldProp(field, PropertyType.TEXT_ALIGN);
   const [textAlignValue, setTextAlignValue] = useControllableState({
     onChange: (value) => {
       updateFieldProps(field.id, PropertyType.TEXT_ALIGN, value);

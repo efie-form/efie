@@ -7,20 +7,19 @@ import {
   type LayoutFormField,
 } from '@efie-form/core';
 import RenderField from '../RenderField';
-import { useSchemaStore } from '../../../../lib/state/schema.state';
+import { getFieldProp } from '../../../../lib/utils';
 
 interface BlockFieldProps {
   field: LayoutFormField;
 }
 
 function BlockField({ field }: BlockFieldProps) {
-  const { getFieldProps } = useSchemaStore();
-  const margin = getFieldProps(field.id, PropertyType.MARGIN);
-  const bgColor = getFieldProps(field.id, PropertyType.BG_COLOR);
-  const color = getFieldProps(field.id, PropertyType.COLOR);
-  const padding = getFieldProps(field.id, PropertyType.PADDING);
-  const borderRadius = getFieldProps(field.id, PropertyType.BORDER_RADIUS);
-  const boxShadow = getFieldProps(field.id, PropertyType.BOX_SHADOW);
+  const margin = getFieldProp(field, PropertyType.MARGIN);
+  const bgColor = getFieldProp(field, PropertyType.BG_COLOR);
+  const color = getFieldProp(field, PropertyType.COLOR);
+  const padding = getFieldProp(field, PropertyType.PADDING);
+  const borderRadius = getFieldProp(field, PropertyType.BORDER_RADIUS);
+  const boxShadow = getFieldProp(field, PropertyType.BOX_SHADOW);
 
   return (
     <div

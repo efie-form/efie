@@ -4,19 +4,18 @@ import {
   widthToStyle,
   type ImageFormField,
 } from '@efie-form/core';
-import { useSchemaStore } from '../../../../lib/state/schema.state';
 import { DEFAULT_IMAGE_URL } from '../../../../lib/constant';
+import { getFieldProp } from '../../../../lib/utils';
 interface ImageFieldProps {
   field: ImageFormField;
 }
 
 function ImageField({ field }: ImageFieldProps) {
-  const { getFieldProps } = useSchemaStore();
-  const textAlign = getFieldProps(field.id, PropertyType.TEXT_ALIGN);
-  const src = getFieldProps(field.id, PropertyType.SRC);
-  const alt = getFieldProps(field.id, PropertyType.ALT);
-  const width = getFieldProps(field.id, PropertyType.WIDTH);
-  const objectFit = getFieldProps(field.id, PropertyType.OBJECT_FIT);
+  const textAlign = getFieldProp(field, PropertyType.TEXT_ALIGN);
+  const src = getFieldProp(field, PropertyType.SRC);
+  const alt = getFieldProp(field, PropertyType.ALT);
+  const width = getFieldProp(field, PropertyType.WIDTH);
+  const objectFit = getFieldProp(field, PropertyType.OBJECT_FIT);
 
   return (
     <div

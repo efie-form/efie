@@ -3,18 +3,17 @@ import {
   PropertyType,
   type DividerFormField,
 } from '@efie-form/core';
-import { useSchemaStore } from '../../../../lib/state/schema.state';
+import { getFieldProp } from '../../../../lib/utils';
 
 interface DividerFieldProps {
   field: DividerFormField;
 }
 
 function DividerField({ field }: DividerFieldProps) {
-  const { getFieldProps } = useSchemaStore();
-  const width = getFieldProps(field.id, PropertyType.WIDTH);
-  const height = getFieldProps(field.id, PropertyType.HEIGHT);
-  const color = getFieldProps(field.id, PropertyType.COLOR);
-  const style = getFieldProps(field.id, PropertyType.BORDER_STYLE);
+  const width = getFieldProp(field, PropertyType.WIDTH);
+  const height = getFieldProp(field, PropertyType.HEIGHT);
+  const color = getFieldProp(field, PropertyType.COLOR);
+  const style = getFieldProp(field, PropertyType.BORDER_STYLE);
 
   return (
     <div className="py-1">

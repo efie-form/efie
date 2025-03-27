@@ -7,6 +7,7 @@ import { useSchemaStore } from '../../../lib/state/schema.state';
 import { useControllableState } from '../../../lib/hooks/useControllableState';
 import { Input } from '../../../components/form';
 import SettingsFieldHorizontal from '../property-layouts/SettingsFieldHorizontal';
+import { getFieldProp } from '../../../lib/utils';
 
 const defaultMaxFiles: MaxFilesProperty = {
   type: PropertyType.MAX_FILES,
@@ -20,8 +21,8 @@ interface PropSettingsMaxFilesProps {
 export default function PropSettingsMaxFiles({
   field,
 }: PropSettingsMaxFilesProps) {
-  const { updateFieldProps, getFieldProps } = useSchemaStore();
-  const maxFilesProp = getFieldProps(field.id, PropertyType.MAX_FILES);
+  const { updateFieldProps } = useSchemaStore();
+  const maxFilesProp = getFieldProp(field, PropertyType.MAX_FILES);
   const [maxFiles, setMaxFiles] = useControllableState({
     onChange: (value) => {
       updateFieldProps(field.id, PropertyType.MAX_FILES, value);

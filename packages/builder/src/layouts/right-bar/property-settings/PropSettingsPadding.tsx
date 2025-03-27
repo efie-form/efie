@@ -1,12 +1,11 @@
 import { useControllableState } from '../../../lib/hooks/useControllableState';
 import { useSchemaStore } from '../../../lib/state/schema.state';
-import SettingsField4Sides from '../property-layouts/SettingsField4Sides';
 import {
   PropertyType,
   type PaddingProperty,
   type FormField,
 } from '@efie-form/core';
-import SettingsField4Sizes from '../property-layouts/SettingsField4SidesNew';
+import SettingsField4Sizes from '../property-layouts/SettingsField4Sizes';
 
 interface PropSettingsPaddingProps {
   field: FormField;
