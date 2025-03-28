@@ -451,11 +451,8 @@ export interface FileFormField extends BaseFormField {
 }
 
 // Layout field types
-export interface LayoutFormField extends BaseFormField {
-  type:
-    | typeof FormFieldType.ROW
-    | typeof FormFieldType.COLUMN
-    | typeof FormFieldType.BLOCK;
+export interface BlockFormField extends BaseFormField {
+  type: typeof FormFieldType.BLOCK;
   children: FormField[];
   props: (
     | GapProperty
@@ -471,6 +468,18 @@ export interface LayoutFormField extends BaseFormField {
     | BorderColorProperty
     | BorderStyleProperty
   )[];
+}
+
+export interface RowFormField extends BaseFormField {
+  type: typeof FormFieldType.ROW;
+  children: ColumnFormField[];
+  props: (WidthProperty | HeightProperty)[];
+}
+
+export interface ColumnFormField extends BaseFormField {
+  type: typeof FormFieldType.COLUMN;
+  children: FormField[];
+  props: (WidthProperty | HeightProperty)[];
 }
 
 // Content field types
@@ -545,12 +554,14 @@ export type FormField =
   | ChoiceFormField
   | DateTimeFormField
   | FileFormField
-  | LayoutFormField
+  | BlockFormField
   | ContentFormField
   | ImageFormField
   | ButtonFormField
   | PageFormField
-  | DividerFormField;
+  | DividerFormField
+  | ColumnFormField
+  | RowFormField;
 
 export interface FormSchema {
   version: string;

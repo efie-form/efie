@@ -20,6 +20,17 @@
   --btn-text-color-disabled: var(--color-neutral-600);
 }
 
+.danger {
+  --btn-bg-color: var(--color-red-500);
+  --btn-bg-color-hover: var(--color-red-600);
+  --btn-text-color: var(--color-neutral-50);
+  --btn-text-color-hover: var(--color-red-50);
+  --btn-border-color: var(--color-red-500);
+  --btn-border-color-hover: var(--color-red-600);
+  --btn-bg-color-disabled: var(--color-neutral-200);
+  --btn-text-color-disabled: var(--color-neutral-500);
+}
+
 .button {
   background-color: var(--btn-bg-color);
   display: flex;

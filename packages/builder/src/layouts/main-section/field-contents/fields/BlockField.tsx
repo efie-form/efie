@@ -4,13 +4,13 @@ import {
   paddingToStyle,
   PropertyType,
   boxShadowToStyle,
-  type LayoutFormField,
+  type BlockFormField,
 } from '@efie-form/core';
 import RenderField from '../RenderField';
 import { getFieldProp } from '../../../../lib/utils';
 
 interface BlockFieldProps {
-  field: LayoutFormField;
+  field: BlockFormField;
 }
 
 function BlockField({ field }: BlockFieldProps) {

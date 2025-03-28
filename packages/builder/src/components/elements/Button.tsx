@@ -6,7 +6,7 @@ interface ButtonProps extends ButtonPropsWithoutRef {
   children: ReactNode;
   startIcon?: ElementType;
   endIcon?: ElementType;
-  variant?: 'primary' | 'secondary';
+  variant?: 'primary' | 'secondary' | 'danger';
 }
 
 function Button({

@@ -27,6 +27,7 @@ interface SchemaState {
     type: T
   ) => Extract<PropertyDefinition, { type: T }> | undefined;
   updateFieldForm: (fieldId: string, form: FormField['form']) => void;
+  replaceFieldChildren: (fieldId: string, children: FormField[]) => void;
   deleteField: (fieldId: string) => void;
   fieldParentMap: Map<string, string>;
   maxHistories: number;
@@ -168,6 +169,43 @@ export const useSchemaStore = create<SchemaState>((set, getState) => ({
     field.form = form;
     fieldMap.set(fieldId, field);
     addHistory(schema);
+  },
+  replaceFieldChildren: (fieldId, children) => {
+    const { fieldMap, schema, addHistory, fieldKeyMap, fieldParentMap } =
+      getState();
+    const field = fieldMap.get(fieldId);
+    if (!field || !('children' in field)) return;
+    const originalChildrenId = field.children.map((child) => child.id);
+    const newChildrenId = children.map((child) => child.id);
+
+    const childrenToDelete = originalChildrenId.filter(
+      (id) => !newChildrenId.includes(id)
+    );
+    const childrenToAdd = newChildrenId.filter(
+      (id) => !originalChildrenId.includes(id)
+    );
+
+    field.children = children;
+    for (const child of childrenToDelete) {
+      fieldMap.delete(child);
+      fieldKeyMap.delete(child);
+      fieldParentMap.delete(child);
+    }
+
+    for (const child of childrenToAdd) {
+      const childField = children.find((c) => c.id === child);
+      if (!childField) continue;
+      fieldMap.set(child, childField);
+      fieldKeyMap.set(
+        child,
+        `form.fields.${children.findIndex((c) => c.id === child)}`
+      );
+      fieldParentMap.set(child, fieldId);
+    }
+
+    fieldMap.set(fieldId, field);
+    addHistory(schema);
+    set({ fieldMap, fieldKeyMap, fieldParentMap });
   },
   deleteField: (fieldId) => {
     const { fieldMap, fieldKeyMap, fieldParentMap, schema, addHistory } =

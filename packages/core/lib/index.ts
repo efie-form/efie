@@ -23,12 +23,14 @@ export type {
   ChoiceFormField,
   DateTimeFormField,
   FileFormField,
-  LayoutFormField,
   ContentFormField,
   ImageFormField,
   ButtonFormField,
   PageFormField,
   DividerFormField,
+  RowFormField,
+  ColumnFormField,
+  BlockFormField,
 } from './types/formSchema.type';
 export type { RootRule } from './types/RootRule.type';
 export type { BuilderCustomInput } from './types/builderCustomInput.type';

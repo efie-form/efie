@@ -1,9 +1,9 @@
-import type { FormFieldColumn } from '@efie-form/core';
+import type { ColumnFormField } from '@efie-form/core';
 import RenderField from '../RenderField';
 import Droppable from '../../../../components/dnd-kit/Droppable';
 
 interface ColumnsFieldProps {
-  field: FormFieldColumn;
+  field: ColumnFormField;
 }
 
 function ColumnsField({ field }: ColumnsFieldProps) {

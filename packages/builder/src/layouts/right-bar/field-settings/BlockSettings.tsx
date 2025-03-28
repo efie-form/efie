@@ -1,4 +1,4 @@
-import type { LayoutFormField } from '@efie-form/core';
+import type { BlockFormField } from '@efie-form/core';
 import PropSettingsBgColor from '../property-settings/PropSettingsBgColor';
 import PropSettingsColor from '../property-settings/PropSettingsColor';
 import PropSettingsPadding from '../property-settings/PropSettingsPadding';
@@ -7,7 +7,7 @@ import PropSettingsBorderRadius from '../property-settings/PropSettingsBorderRad
 import PropSettingsShadow from '../property-settings/PropSettingsShadow';
 
 interface BlockSettingsProps {
-  field: LayoutFormField;
+  field: BlockFormField;
 }
 
 function BlockSettings({ field }: BlockSettingsProps) {

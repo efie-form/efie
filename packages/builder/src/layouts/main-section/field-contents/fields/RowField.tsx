@@ -1,15 +1,16 @@
-import type { LayoutFormField } from '@efie-form/core';
+import type { RowFormField } from '@efie-form/core';
 import RenderField from '../RenderField';
 import { useSettingsStore } from '../../../../lib/state/settings.state';
 import { cn, getFieldProp } from '../../../../lib/utils';
 import { FormFieldType, PropertyType, widthToStyle } from '@efie-form/core';
 
 interface RowFieldProps {
-  field: LayoutFormField;
+  field: RowFormField;
 }
 
 function RowField({ field }: RowFieldProps) {
   const { previewDevice } = useSettingsStore();
+
   const isMobile = previewDevice === 'mobile';
 
   return (
@@ -19,6 +20,7 @@ function RowField({ field }: RowFieldProps) {
       })}
     >
       {field.children
+        .filter(Boolean)
         .filter((child) => child.type === FormFieldType.COLUMN)
         .map((child) => (
           <div

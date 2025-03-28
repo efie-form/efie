@@ -10,8 +10,8 @@ interface ColumnProps {
   width: number;
 }
 
-interface GetDefaultFieldProps {
-  type: (typeof FormFieldType)[keyof typeof FormFieldType];
+interface GetDefaultFieldProps<T extends FormFieldType> {
+  type: T;
   page?: PageProps;
   column?: ColumnProps;
   formKey?: string;
@@ -19,17 +19,17 @@ interface GetDefaultFieldProps {
 
 const ID_LENGTH = 10;
 
-export const getDefaultField = ({
+export const getDefaultField = <T extends FormFieldType>({
   type,
   page,
   column,
   formKey,
-}: GetDefaultFieldProps): FormField => {
+}: GetDefaultFieldProps<T>): Extract<FormField, { type: T }> => {
   switch (type) {
     case FormFieldType.SHORT_TEXT: {
       return {
-        type: FormFieldType.SHORT_TEXT,
         id: generateId(ID_LENGTH),
+        type: FormFieldType.SHORT_TEXT,
         form: {
           key: formKey || '',
         },
@@ -542,6 +542,9 @@ export const getDefaultField = ({
           },
         ],
       };
+    }
+    default: {
+      return undefined;
     }
   }
 };

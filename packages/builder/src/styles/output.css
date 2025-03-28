@@ -554,40 +554,6 @@ video {
   display: none;
 }
 
-.container {
-  width: 100%;
-}
-
-@media (min-width: 640px) {
-  .container {
-    max-width: 640px;
-  }
-}
-
-@media (min-width: 768px) {
-  .container {
-    max-width: 768px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .container {
-    max-width: 1024px;
-  }
-}
-
-@media (min-width: 1280px) {
-  .container {
-    max-width: 1280px;
-  }
-}
-
-@media (min-width: 1536px) {
-  .container {
-    max-width: 1536px;
-  }
-}
-
 .invisible {
   visibility: hidden;
 }
@@ -1438,6 +1404,17 @@ video {
   --btn-border-color-hover: var(--color-neutral-300);
   --btn-bg-color-disabled: var(--color-neutral-200);
   --btn-text-color-disabled: var(--color-neutral-600);
+}
+
+.danger {
+  --btn-bg-color: var(--color-red-500);
+  --btn-bg-color-hover: var(--color-red-600);
+  --btn-text-color: var(--color-neutral-50);
+  --btn-text-color-hover: var(--color-red-50);
+  --btn-border-color: var(--color-red-500);
+  --btn-border-color-hover: var(--color-red-600);
+  --btn-bg-color-disabled: var(--color-neutral-200);
+  --btn-text-color-disabled: var(--color-neutral-500);
 }
 
 .button {
