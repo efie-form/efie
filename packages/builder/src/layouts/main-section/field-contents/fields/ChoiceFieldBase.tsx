@@ -22,6 +22,7 @@ import type { DragEndEvent } from '@dnd-kit/core';
 import ChoiceFieldOption from './ChoiceFieldOption';
 import { useFieldLabel } from '../../../../lib/hooks/properties/useFieldLabel';
 import { useFieldOptions } from '../../../../lib/hooks/properties/useFieldOptions';
+import { getFieldProp } from '../../../../lib/utils';
 
 type OptionType = OptionsProperty['value'][number];
 
@@ -44,12 +45,9 @@ function ChoiceFieldBase({ fieldId, field, inputType }: ChoiceFieldBaseProps) {
     })
   );
 
-  const optionsProp = field.props.find(
-    (prop: PropertyDefinition) => prop.type === PropertyType.OPTIONS
-  );
-  const isValueDifferent = optionsProp?.value.some(
-    (option) => option.value !== option.label
-  );
+  const optionsProp = getFieldProp(field, PropertyType.OPTIONS);
+  const isValueDifferent =
+    optionsProp?.value.some((option) => option.value !== option.label) || false;
 
   const handleNewOption = () => {
     const name = `Option ${options.length + 1}`;

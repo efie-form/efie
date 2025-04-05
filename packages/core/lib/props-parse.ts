@@ -2,6 +2,7 @@ import type {
   BorderRadiusProperty,
   BoxShadowProperty,
   ColorProperty,
+  DividerHeightProperty,
   FontSizeProperty,
   FontWeightProperty,
   MarginProperty,
@@ -130,4 +131,10 @@ export const fontWeightToStyle = (fontWeight?: FontWeightProperty) => {
   if (!fontWeight) return;
 
   return fontWeight.value;
+};
+
+export const sizeToStyle = (size?: Size) => {
+  if (!size) return;
+
+  return toSize(size);
 };

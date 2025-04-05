@@ -49,6 +49,7 @@ export {
   colorToStyle,
   fontSizeToStyle,
   fontWeightToStyle,
+  sizeToStyle,
 } from './props-parse';
 
 export {
@@ -77,6 +78,7 @@ export {
   type BorderWidthProperty,
   type BorderColorProperty,
   type BorderStyleProperty,
+  type DividerHeightProperty,
   type LabelProperty,
   type PlaceholderProperty,
   type StringDefaultValueProperty,

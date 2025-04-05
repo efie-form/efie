@@ -295,6 +295,11 @@ export interface BorderStyleProperty {
   value: string;
 }
 
+export interface DividerHeightProperty {
+  type: typeof PropertyType.DIVIDER_HEIGHT;
+  value: Size;
+}
+
 // Union type of all property definitions
 export type PropertyDefinition =
   | LabelProperty
@@ -339,4 +344,5 @@ export type PropertyDefinition =
   | BorderWidthProperty
   | BorderColorProperty
   | BorderStyleProperty
-  | NameProperty;
+  | NameProperty
+  | DividerHeightProperty;

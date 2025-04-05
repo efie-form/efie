@@ -224,6 +224,7 @@ export const PropertyType = {
   // Divider field specific
   DIVIDER: 'divider',
   HEIGHT: 'height',
+  DIVIDER_HEIGHT: 'dividerHeight',
   STYLE: 'style',
   // Container specific
   MARGIN: 'margin',

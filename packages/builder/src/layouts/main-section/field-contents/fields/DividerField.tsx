@@ -1,7 +1,9 @@
 import {
   colorToStyle,
   PropertyType,
+  widthToStyle,
   type DividerFormField,
+  sizeToStyle,
 } from '@efie-form/core';
 import { getFieldProp } from '../../../../lib/utils';
 
@@ -11,7 +13,7 @@ interface DividerFieldProps {
 
 function DividerField({ field }: DividerFieldProps) {
   const width = getFieldProp(field, PropertyType.WIDTH);
-  const height = getFieldProp(field, PropertyType.HEIGHT);
+  const dividerHeight = getFieldProp(field, PropertyType.DIVIDER_HEIGHT);
   const color = getFieldProp(field, PropertyType.COLOR);
   const style = getFieldProp(field, PropertyType.BORDER_STYLE);
 
@@ -20,10 +22,10 @@ function DividerField({ field }: DividerFieldProps) {
       <hr
         className="my-4 mx-auto"
         style={{
-          width: `${width?.value.value}%`,
+          width: widthToStyle(width),
           borderStyle: style?.value,
           borderColor: colorToStyle(color),
-          borderTopWidth: `${height?.value.value}px`,
+          borderTopWidth: sizeToStyle(dividerHeight?.value),
         }}
       />
     </div>

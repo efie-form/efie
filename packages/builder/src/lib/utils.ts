@@ -1,5 +1,6 @@
 import {
   FormFieldType,
+  type PropertyType,
   type FormField,
   type PropertyDefinition,
 } from '@efie-form/core';
@@ -23,10 +24,10 @@ export function isValidFieldType(type: string) {
   return Object.values(FormFieldType).includes(type as FormFieldType);
 }
 
-export function getFieldProp<T extends PropertyDefinition['type']>(
+export function getFieldProp<T extends PropertyType>(
   field: FormField,
   type: T
-) {
+): Extract<PropertyDefinition, { type: T }> | undefined {
   // Find the property with the matching type
   const prop = field.props.find((prop) => prop.type === type);
   if (!prop) return;
