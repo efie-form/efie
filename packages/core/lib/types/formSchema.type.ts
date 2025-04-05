@@ -43,6 +43,7 @@ import type {
   BoxShadowProperty,
   BorderStyleProperty,
   MaxFilesProperty,
+  NameProperty,
 } from './fieldProperties.type';
 import type { RootRule } from './RootRule.type';
 import type { ContentProperty } from './fieldProperties.type';
@@ -374,6 +375,7 @@ export interface BaseFormField {
     | BorderColorProperty
     | BorderStyleProperty
     | MaxFilesProperty
+    | NameProperty
   )[];
   container?: {
     props: (
@@ -534,7 +536,7 @@ export interface ButtonFormField extends BaseFormField {
 export interface PageFormField extends BaseFormField {
   type: typeof FormFieldType.PAGE;
   children: FormField[];
-  props: WidthProperty[];
+  props: (WidthProperty | NameProperty)[];
 }
 
 // Divider field type

@@ -8,6 +8,7 @@ import { useControllableState } from '../../../lib/hooks/useControllableState';
 import Switch from '../../../components/form/Switch';
 import SettingsFieldSwitchWithDropdown from '../property-layouts/SettingsFieldSwitchWithDropdown';
 import { getFieldProp } from '../../../lib/utils';
+import { useRef } from 'react';
 
 interface PropSettingsAcceptProps {
   field: FormField;
@@ -41,6 +42,7 @@ export default function PropSettingsAccept({ field }: PropSettingsAcceptProps) {
     },
     defaultValue: acceptProp || defaultAccept,
   });
+  const prevFormats = useRef(accept.formats);
 
   const handleExtensionChange = (extensions: string[], checked: boolean) => {
     const currentExtensions = accept.formats?.filter(Boolean) || [];
@@ -55,15 +57,19 @@ export default function PropSettingsAccept({ field }: PropSettingsAcceptProps) {
   };
 
   const handleAllowAllChange = (checked: boolean) => {
+    if (!checked) {
+      prevFormats.current = accept.formats;
+    }
     setAccept((prev) => ({
       ...prev,
-      allowAll: checked,
+      allowAll: !checked,
+      formats: checked ? prevFormats.current || [] : [],
     }));
   };
 
   return (
     <SettingsFieldSwitchWithDropdown
-      isOpen={accept.allowAll}
+      isOpen={!accept.allowAll}
       onOpenChange={handleAllowAllChange}
       label="Only allow specific file types"
       divider

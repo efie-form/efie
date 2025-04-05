@@ -11,6 +11,7 @@ interface FileFieldProps {
 function FileField({ field }: FileFieldProps) {
   const { label, updateLabel } = useFieldLabel(field);
   const acceptProp = getFieldProp(field, PropertyType.ACCEPT);
+  const maxFilesProp = getFieldProp(field, PropertyType.MAX_FILES);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -30,7 +31,12 @@ function FileField({ field }: FileFieldProps) {
         </p>
       </div>
       <div className="flex justify-between text-neutral-500 typography-body3 mt-2">
-        <p>Supported formats: {acceptProp?.formats?.join(', ')}</p>
+        {!acceptProp?.allowAll && (
+          <p>Supported formats: {acceptProp?.formats?.join(', ')}</p>
+        )}
+        {maxFilesProp && maxFilesProp?.value > 1 && (
+          <p>Max files: {maxFilesProp?.value}</p>
+        )}
       </div>
     </div>
   );

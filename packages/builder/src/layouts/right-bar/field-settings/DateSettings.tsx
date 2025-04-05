@@ -1,5 +1,4 @@
 import type { DateTimeFormField } from '@efie-form/core';
-import PropSettingsPlaceholder from '../property-settings/PropSettingsPlaceholder';
 import PropSettingsLabel from '../property-settings/PropSettingsLabel';
 import PropSettingsFormKey from '../property-settings/PropSettingsFormKey';
 import PropSettingsRequired from '../property-settings/PropSettingsRequired';
@@ -15,7 +14,6 @@ function DateSettings({ field }: DateSettingsProps) {
       </div>
       <PropSettingsFormKey field={field} />
       <PropSettingsLabel field={field} />
-      <PropSettingsPlaceholder field={field} />
       <PropSettingsRequired field={field} />
     </div>
   );

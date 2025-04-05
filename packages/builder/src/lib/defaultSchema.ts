@@ -82,7 +82,12 @@ const defaultSchema: FormSchema = {
             ],
           },
         ],
-        props: [],
+        props: [
+          {
+            type: PropertyType.NAME,
+            value: 'Page 1',
+          },
+        ],
       },
     ],
     rules: [],

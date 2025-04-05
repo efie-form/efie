@@ -104,6 +104,11 @@ export interface WidthProperty {
   autoWidth: boolean;
 }
 
+export interface NameProperty {
+  type: typeof PropertyType.NAME;
+  value: string;
+}
+
 // Content properties
 export interface TagProperty {
   type: typeof PropertyType.TAG;
@@ -333,4 +338,5 @@ export type PropertyDefinition =
   | BorderRadiusProperty
   | BorderWidthProperty
   | BorderColorProperty
-  | BorderStyleProperty;
+  | BorderStyleProperty
+  | NameProperty;

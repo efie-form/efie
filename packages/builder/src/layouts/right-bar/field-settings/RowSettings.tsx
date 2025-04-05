@@ -112,15 +112,16 @@ function RowSettings({ field }: RowSettingsProps) {
       }
 
       const widthProp = getFieldProp(colField, PropertyType.WIDTH);
+      const width = Math.floor(100 / (field.children.length - 1));
       if (widthProp) {
         widthProp.value = {
-          value: 100 / (field.children.length - 1),
+          value: width,
           unit: '%',
         };
       } else {
         colField.props.push({
           type: PropertyType.WIDTH,
-          value: { value: 100 / (field.children.length - 1), unit: '%' },
+          value: { value: width, unit: '%' },
           autoWidth: false,
         });
       }

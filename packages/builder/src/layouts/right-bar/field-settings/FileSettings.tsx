@@ -1,6 +1,5 @@
 import type { FileFormField } from '@efie-form/core';
 import PropSettingsRequired from '../property-settings/PropSettingsRequired';
-import PropSettingsPlaceholder from '../property-settings/PropSettingsPlaceholder';
 import PropSettingsLabel from '../property-settings/PropSettingsLabel';
 import PropSettingsFormKey from '../property-settings/PropSettingsFormKey';
 import PropSettingsAccept from '../property-settings/PropSettingsAccept';
@@ -18,7 +17,6 @@ function FileSettings({ field }: FileSettingsProps) {
       </div>
       <PropSettingsFormKey field={field} />
       <PropSettingsLabel field={field} />
-      <PropSettingsPlaceholder field={field} />
       <PropSettingsRequired field={field} />
       <PropSettingsAccept field={field} />
       <PropSettingsMaxFiles field={field} />
