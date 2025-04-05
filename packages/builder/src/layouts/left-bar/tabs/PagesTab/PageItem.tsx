@@ -37,7 +37,7 @@ export default function PageItem({
   const [inputName, setInputName] = useState(nameProp?.value);
 
   const style: CSSProperties = {
-    transform: transform ? `translateY(${transform.y}px` : undefined,
+    transform: transform ? `translateY(${transform.y}px)` : undefined,
     transition,
   };
 

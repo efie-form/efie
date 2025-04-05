@@ -1,4 +1,8 @@
-import type { FormField, PropertyDefinition } from '@efie-form/core';
+import type {
+  FormField,
+  OptionsProperty,
+  PropertyDefinition,
+} from '@efie-form/core';
 import { PropertyType } from '@efie-form/core';
 import { useRef } from 'react';
 import {
@@ -19,10 +23,7 @@ import ChoiceFieldOption from './ChoiceFieldOption';
 import { useFieldLabel } from '../../../../lib/hooks/properties/useFieldLabel';
 import { useFieldOptions } from '../../../../lib/hooks/properties/useFieldOptions';
 
-interface OptionType {
-  value: string;
-  label: string;
-}
+type OptionType = OptionsProperty['value'][number];
 
 interface ChoiceFieldBaseProps {
   fieldId: string;
