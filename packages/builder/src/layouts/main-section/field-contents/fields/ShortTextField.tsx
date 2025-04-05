@@ -1,6 +1,6 @@
 import { PropertyType, type InputFormField } from '@efie-form/core';
 import { getFieldProp } from '../../../../lib/utils';
-import { useFieldLabel } from '../../../../lib/hooks/useFieldLabel';
+import { useFieldLabel } from '../../../../lib/hooks/properties/useFieldLabel';
 
 interface ShortTextFieldProps {
   field: InputFormField;

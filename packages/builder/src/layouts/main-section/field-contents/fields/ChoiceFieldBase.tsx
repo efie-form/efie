@@ -18,6 +18,7 @@ import type { DragEndEvent } from '@dnd-kit/core';
 import ChoiceFieldOption from './ChoiceFieldOption';
 import { useSchemaStore } from '../../../../lib/state/schema.state';
 import { useControllableState } from '../../../../lib/hooks/useControllableState';
+import { useFieldLabel } from '../../../../lib/hooks/properties/useFieldLabel';
 
 interface OptionType {
   value: string;
@@ -33,6 +34,8 @@ interface ChoiceFieldBaseProps {
 function ChoiceFieldBase({ fieldId, field, inputType }: ChoiceFieldBaseProps) {
   const { updateFieldProps } = useSchemaStore();
   const lastInputRef = useRef<HTMLInputElement>(null);
+
+  const { label, updateLabel } = useFieldLabel(field);
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -98,24 +101,11 @@ function ChoiceFieldBase({ fieldId, field, inputType }: ChoiceFieldBaseProps) {
     setOptions(newOptions);
   };
 
-  const labelProp = field.props.find(
-    (prop: PropertyDefinition) => prop.type === PropertyType.LABEL
-  );
-
-  const handleLabelChange = (value: string) => {
-    updateFieldProps(field.id, PropertyType.LABEL, {
-      ...labelProp,
-      value,
-    });
-  };
-
   return (
     <div className="p-2">
       <input
-        value={labelProp?.value || ''}
-        onChange={(e) => {
-          handleLabelChange(e.target.value);
-        }}
+        value={label}
+        onChange={(e) => updateLabel(e.target.value)}
         className="mb-2 typography-body2 bg-white bg-opacity-0 focus:outline-none cursor-text w-full"
         type="text"
       />

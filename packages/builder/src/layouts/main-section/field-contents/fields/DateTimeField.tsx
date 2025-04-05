@@ -1,20 +1,18 @@
-import { useSchemaStore } from '../../../../lib/state/schema.state';
-import type { FormFieldDateTime } from '@efie-form/core';
+import type { DateTimeFormField } from '@efie-form/core';
+import { useFieldLabel } from '../../../../lib/hooks/properties/useFieldLabel';
 
 interface DateTimeFieldProps {
-  field: FormFieldDateTime;
+  field: DateTimeFormField;
 }
 
 function DateTimeField({ field }: DateTimeFieldProps) {
-  const { updateFieldProps } = useSchemaStore();
+  const { label, updateLabel } = useFieldLabel(field);
 
   return (
     <div className="p-2">
       <input
-        value={field.props.label}
-        onChange={(e) =>
-          updateFieldProps(field.id, 'props.label', e.target.value)
-        }
+        value={label}
+        onChange={(e) => updateLabel(e.target.value)}
         className="mb-2 typography-body2 bg-white bg-opacity-0 focus:outline-none cursor-text w-full"
         type="text"
       />

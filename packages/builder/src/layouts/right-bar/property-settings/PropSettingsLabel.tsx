@@ -1,7 +1,7 @@
 import { type FormField } from '@efie-form/core';
 import { Input } from '../../../components/form';
 import SettingsFieldVertical from '../property-layouts/SettingsFieldVertical';
-import { useFieldLabel } from '../../../lib/hooks/useFieldLabel';
+import { useFieldLabel } from '../../../lib/hooks/properties/useFieldLabel';
 
 interface PropSettingsLabelProps {
   field: FormField;
