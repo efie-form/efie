@@ -69,7 +69,7 @@ function ChoiceFieldOption({
               label: e.target.value,
             };
 
-            if (isValueDifferent) {
+            if (isValueDifferent && option.value === option.label) {
               newValue.value = e.target.value;
             }
 
