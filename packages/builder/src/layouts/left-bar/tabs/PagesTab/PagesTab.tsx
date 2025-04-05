@@ -1,4 +1,4 @@
-import type { FormFieldPage } from '@efie-form/core';
+import type { PageFormField } from '@efie-form/core';
 import { useSettingsStore } from '../../../../lib/state/settings.state';
 import type { DragEndEvent } from '@dnd-kit/core';
 import {
@@ -20,7 +20,7 @@ import { useSchemaStore } from '../../../../lib/state/schema.state';
 import PageItem from './PageItem';
 
 function PagesTab() {
-  const { updatePages, schema, updateFieldProps } = useSchemaStore();
+  const { updatePages, schema } = useSchemaStore();
   const { setPage, page } = useSettingsStore();
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -51,7 +51,7 @@ function PagesTab() {
     updatePages(newPages);
   };
 
-  const handleDeletePage = (deletedPage: FormFieldPage) => {
+  const handleDeletePage = (deletedPage: PageFormField) => {
     const currentPageIndex = pages.findIndex((p) => p.id === deletedPage.id);
     const newPages = pages.filter((p) => p.id !== deletedPage.id);
 
@@ -99,10 +99,6 @@ function PagesTab() {
                 key={p.id}
                 page={p}
                 onDelete={() => handleDeletePage(p)}
-                name={p.props.name}
-                onRename={(newName) => {
-                  updateFieldProps(p.id, 'props.name', newName);
-                }}
                 isCurrentPage={p.id === page}
                 onSelect={() => setPage(p.id)}
               />

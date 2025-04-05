@@ -1,25 +1,35 @@
-import type { FormFieldHeader } from '@efie-form/core';
-import { textAlignMap } from '../../../../lib/constant';
+import {
+  colorToStyle,
+  fontSizeToStyle,
+  PropertyType,
+  textAlignToStyle,
+  type ContentFormField,
+} from '@efie-form/core';
 import { RichTextEditor } from '../../../../components/rich-text-editor';
 import { useSettingsStore } from '../../../../lib/state/settings.state';
+import { getFieldProp } from '../../../../lib/utils';
 
 interface HeaderFieldProps {
-  field: FormFieldHeader;
+  field: ContentFormField;
 }
 
 function HeaderField({ field }: HeaderFieldProps) {
   const { selectedFieldId } = useSettingsStore();
+  const fontSize = getFieldProp(field, PropertyType.FONT_SIZE);
+  const textAlign = getFieldProp(field, PropertyType.TEXT_ALIGN);
+  const color = getFieldProp(field, PropertyType.COLOR);
+  const content = getFieldProp(field, PropertyType.CONTENT);
 
   return (
     <div
       style={{
-        fontSize: `${field.props.font.size}px`,
-        textAlign: textAlignMap[field.props.textAlign],
-        color: field.props.color,
+        fontSize: fontSizeToStyle(fontSize),
+        textAlign: textAlignToStyle(textAlign),
+        color: colorToStyle(color),
       }}
     >
       <RichTextEditor
-        value={field.props.content}
+        value={content?.value || {}}
         onChange={() => {}}
         active={selectedFieldId === field.id}
       />

@@ -1,16 +1,14 @@
-import type { FormFieldPage } from '@efie-form/core';
+import { PropertyType, type PageFormField } from '@efie-form/core';
 import { useSchemaStore } from '../../../../lib/state/schema.state';
 import { useSortable } from '@dnd-kit/sortable';
 import { type CSSProperties, useEffect, useRef, useState } from 'react';
-import { cn } from '../../../../lib/utils';
+import { cn, getFieldProp } from '../../../../lib/utils';
 import { MdOutlineDragIndicator } from 'react-icons/md';
 import { FaCheck, FaTrash, FaXmark } from 'react-icons/fa6';
 
 interface PageItemProps {
-  page: FormFieldPage;
+  page: PageFormField;
   onDelete: () => void;
-  name: string;
-  onRename: (name: string) => void;
   isCurrentPage: boolean;
   onSelect: () => void;
 }
@@ -18,12 +16,10 @@ interface PageItemProps {
 export default function PageItem({
   page,
   onDelete,
-  name,
-  onRename,
   isCurrentPage,
   onSelect,
 }: PageItemProps) {
-  const { schema } = useSchemaStore();
+  const { schema, updateFieldProps } = useSchemaStore();
   const {
     attributes,
     listeners,
@@ -37,10 +33,11 @@ export default function PageItem({
   const [deleteConfirm, setDeleteConfirm] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
-  const [inputName, setInputName] = useState(name);
+  const nameProp = getFieldProp(page, PropertyType.NAME);
+  const [inputName, setInputName] = useState(nameProp?.value);
 
   const style: CSSProperties = {
-    transform: transform ? `translateY(${transform.y}px` : undefined,
+    transform: transform ? `translateY(${transform.y}px)` : undefined,
     transition,
   };
 
@@ -51,12 +48,15 @@ export default function PageItem({
   }, [editMode]);
 
   const handleRename = () => {
-    onRename(inputName);
+    updateFieldProps(page.id, PropertyType.NAME, {
+      type: PropertyType.NAME,
+      value: inputName,
+    });
     setEditMode(false);
   };
 
   const handleCancelRename = () => {
-    setInputName(name);
+    setInputName(nameProp?.value);
     setEditMode(false);
   };
 

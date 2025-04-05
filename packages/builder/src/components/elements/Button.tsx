@@ -6,6 +6,7 @@ interface ButtonProps extends ButtonPropsWithoutRef {
   children: ReactNode;
   startIcon?: ElementType;
   endIcon?: ElementType;
+  variant?: 'primary' | 'secondary' | 'danger';
 }
 
 function Button({
@@ -14,12 +15,13 @@ function Button({
   startIcon: StartIcon,
   endIcon: EndIcon,
   disabled,
+  variant = 'primary',
   ...props
 }: ButtonProps) {
   return (
     <button
       disabled={disabled}
-      className={cn('button typography-button2', className, {
+      className={cn('button typography-button3', className, variant, {
         disabled,
       })}
       {...props}

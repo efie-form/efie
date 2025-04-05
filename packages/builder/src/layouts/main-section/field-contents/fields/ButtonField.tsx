@@ -1,8 +1,13 @@
-import type { FormFieldButton } from '@efie-form/core';
-import { cn } from '../../../../lib/utils';
-
+import { cn, getFieldProp } from '../../../../lib/utils';
+import {
+  type ButtonFormField,
+  borderRadiusToStyle,
+  paddingToStyle,
+  PropertyType,
+  widthToStyle,
+} from '@efie-form/core';
 interface ButtonFieldProps {
-  field: FormFieldButton;
+  field: ButtonFormField;
 }
 
 const alignMap = {
@@ -12,24 +17,26 @@ const alignMap = {
 };
 
 function ButtonField({ field }: ButtonFieldProps) {
+  const bgColor = getFieldProp(field, PropertyType.BG_COLOR);
+  const color = getFieldProp(field, PropertyType.COLOR);
+  const padding = getFieldProp(field, PropertyType.PADDING);
+  const borderRadius = getFieldProp(field, PropertyType.BORDER_RADIUS);
+  const align = getFieldProp(field, PropertyType.TEXT_ALIGN);
+  const width = getFieldProp(field, PropertyType.WIDTH);
+  const label = getFieldProp(field, PropertyType.LABEL);
+
   return (
-    <div className={cn('p-2', alignMap[field.props.align])}>
+    <div className={cn('p-2', align ? alignMap[align.value] : '')}>
       <button
         style={{
-          backgroundColor: field.props.bgColor,
-          color: field.props.color,
-          paddingTop: field.props.padding.top,
-          paddingRight: field.props.padding.right,
-          paddingBottom: field.props.padding.bottom,
-          paddingLeft: field.props.padding.left,
-          width: field.props.fullWidth ? '100%' : 'auto',
-          borderTopLeftRadius: field.props.border.radius.topLeft,
-          borderTopRightRadius: field.props.border.radius.topRight,
-          borderBottomRightRadius: field.props.border.radius.bottomRight,
-          borderBottomLeftRadius: field.props.border.radius.bottomLeft,
+          padding: paddingToStyle(padding),
+          backgroundColor: bgColor?.value,
+          borderRadius: borderRadiusToStyle(borderRadius),
+          color: color?.value,
+          width: widthToStyle(width),
         }}
       >
-        {field.props.label}
+        {label?.value}
       </button>
     </div>
   );

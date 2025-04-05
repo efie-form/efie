@@ -1,5 +1,5 @@
 import type { FormField } from '@efie-form/core';
-import { FormFieldType } from '@efie-form/core';
+import { FormFieldType, PropertyType } from '@efie-form/core';
 import { generateId } from './utils';
 
 interface PageProps {
@@ -10,8 +10,8 @@ interface ColumnProps {
   width: number;
 }
 
-interface GetDefaultFieldProps {
-  type: (typeof FormFieldType)[keyof typeof FormFieldType];
+interface GetDefaultFieldProps<T extends FormFieldType> {
+  type: T;
   page?: PageProps;
   column?: ColumnProps;
   formKey?: string;
@@ -19,51 +19,34 @@ interface GetDefaultFieldProps {
 
 const ID_LENGTH = 10;
 
-const containerDefaultProps = {
-  margin: {
-    top: 0,
-    right: 0,
-    bottom: 0,
-    left: 0,
-  },
-  padding: {
-    top: 0,
-    right: 0,
-    bottom: 0,
-    left: 0,
-  },
-  border: {
-    color: '#000000',
-    width: 0,
-    radius: {
-      topLeft: 0,
-      topRight: 0,
-      bottomRight: 0,
-      bottomLeft: 0,
-    },
-  },
-};
-
-export const getDefaultField = ({
+export const getDefaultField = <T extends FormFieldType>({
   type,
   page,
   column,
   formKey,
-}: GetDefaultFieldProps): FormField => {
+}: GetDefaultFieldProps<T>): Extract<FormField, { type: T }> => {
   switch (type) {
     case FormFieldType.SHORT_TEXT: {
       return {
-        type: FormFieldType.SHORT_TEXT,
         id: generateId(ID_LENGTH),
+        type: FormFieldType.SHORT_TEXT,
         form: {
           key: formKey || '',
         },
-        props: {
-          label: 'Short Text',
-          placeholder: 'Enter the placeholder',
-          required: false,
-          container: containerDefaultProps,
-        },
+        props: [
+          {
+            type: PropertyType.LABEL,
+            value: 'Short Text',
+          },
+          {
+            type: PropertyType.PLACEHOLDER,
+            value: 'Enter the placeholder',
+          },
+          {
+            type: PropertyType.REQUIRED,
+            value: false,
+          },
+        ],
       };
     }
     case FormFieldType.LONG_TEXT: {
@@ -73,12 +56,20 @@ export const getDefaultField = ({
         form: {
           key: formKey || '',
         },
-        props: {
-          label: 'Long Text',
-          placeholder: 'Enter the placeholder',
-          required: false,
-          container: containerDefaultProps,
-        },
+        props: [
+          {
+            type: PropertyType.LABEL,
+            value: 'Long Text',
+          },
+          {
+            type: PropertyType.PLACEHOLDER,
+            value: 'Enter the placeholder',
+          },
+          {
+            type: PropertyType.REQUIRED,
+            value: false,
+          },
+        ],
       };
     }
     case FormFieldType.NUMBER: {
@@ -88,12 +79,20 @@ export const getDefaultField = ({
         form: {
           key: formKey || '',
         },
-        props: {
-          label: 'Number',
-          placeholder: 'Enter the placeholder',
-          required: false,
-          container: containerDefaultProps,
-        },
+        props: [
+          {
+            type: PropertyType.LABEL,
+            value: 'Number',
+          },
+          {
+            type: PropertyType.PLACEHOLDER,
+            value: 'Enter the placeholder',
+          },
+          {
+            type: PropertyType.REQUIRED,
+            value: false,
+          },
+        ],
       };
     }
     case FormFieldType.SINGLE_CHOICE: {
@@ -103,17 +102,24 @@ export const getDefaultField = ({
         form: {
           key: formKey || '',
         },
-        props: {
-          label: 'Single Choice',
-          options: [
-            { label: 'Option 1', value: 'Option 1' },
-            { label: 'Option 2', value: 'Option 2' },
-            { label: 'Option 3', value: 'Option 3' },
-          ],
-          isValueDifferent: false,
-          required: false,
-          container: containerDefaultProps,
-        },
+        props: [
+          {
+            type: PropertyType.LABEL,
+            value: 'Single Choice',
+          },
+          {
+            type: PropertyType.OPTIONS,
+            value: [
+              { label: 'Option 1', value: 'Option 1' },
+              { label: 'Option 2', value: 'Option 2' },
+              { label: 'Option 3', value: 'Option 3' },
+            ],
+          },
+          {
+            type: PropertyType.REQUIRED,
+            value: false,
+          },
+        ],
       };
     }
     case FormFieldType.MULTIPLE_CHOICES: {
@@ -123,17 +129,24 @@ export const getDefaultField = ({
         form: {
           key: formKey || '',
         },
-        props: {
-          label: 'Multiple Choice',
-          options: [
-            { label: 'Option 1', value: 'Option 1' },
-            { label: 'Option 2', value: 'Option 2' },
-            { label: 'Option 3', value: 'Option 3' },
-          ],
-          isValueDifferent: false,
-          required: false,
-          container: containerDefaultProps,
-        },
+        props: [
+          {
+            type: PropertyType.LABEL,
+            value: 'Multiple Choice',
+          },
+          {
+            type: PropertyType.OPTIONS,
+            value: [
+              { label: 'Option 1', value: 'Option 1' },
+              { label: 'Option 2', value: 'Option 2' },
+              { label: 'Option 3', value: 'Option 3' },
+            ],
+          },
+          {
+            type: PropertyType.REQUIRED,
+            value: false,
+          },
+        ],
       };
     }
     case FormFieldType.PAGE: {
@@ -145,9 +158,12 @@ export const getDefaultField = ({
             type: FormFieldType.BLOCK,
           }),
         ],
-        props: {
-          name: page?.name || 'Page',
-        },
+        props: [
+          {
+            type: PropertyType.NAME,
+            value: page?.name || 'Page',
+          },
+        ],
       };
     }
     case FormFieldType.DATE: {
@@ -157,11 +173,16 @@ export const getDefaultField = ({
         form: {
           key: formKey || '',
         },
-        props: {
-          label: 'Date',
-          required: false,
-          container: containerDefaultProps,
-        },
+        props: [
+          {
+            type: PropertyType.LABEL,
+            value: 'Date',
+          },
+          {
+            type: PropertyType.REQUIRED,
+            value: false,
+          },
+        ],
       };
     }
     case FormFieldType.TIME: {
@@ -171,11 +192,16 @@ export const getDefaultField = ({
         form: {
           key: formKey || '',
         },
-        props: {
-          label: 'Time',
-          required: false,
-          container: containerDefaultProps,
-        },
+        props: [
+          {
+            type: PropertyType.LABEL,
+            value: 'Time',
+          },
+          {
+            type: PropertyType.REQUIRED,
+            value: false,
+          },
+        ],
       };
     }
     case FormFieldType.DATE_TIME: {
@@ -185,11 +211,16 @@ export const getDefaultField = ({
         form: {
           key: formKey || '',
         },
-        props: {
-          label: 'Date & Time',
-          required: false,
-          container: containerDefaultProps,
-        },
+        props: [
+          {
+            type: PropertyType.LABEL,
+            value: 'Date & Time',
+          },
+          {
+            type: PropertyType.REQUIRED,
+            value: false,
+          },
+        ],
       };
     }
     case FormFieldType.FILE: {
@@ -199,98 +230,168 @@ export const getDefaultField = ({
         form: {
           key: formKey || '',
         },
-        props: {
-          label: 'File',
-          required: false,
-          multiple: false,
-          accept: '',
-          container: containerDefaultProps,
-        },
+        props: [
+          {
+            type: PropertyType.LABEL,
+            value: 'File',
+          },
+          {
+            type: PropertyType.REQUIRED,
+            value: false,
+          },
+          {
+            type: PropertyType.MAX_FILES,
+            value: 1,
+          },
+          {
+            type: PropertyType.ACCEPT,
+            allowAll: false,
+            formats: [],
+          },
+        ],
       };
     }
     case FormFieldType.DIVIDER: {
       return {
         type: FormFieldType.DIVIDER,
         id: generateId(ID_LENGTH),
-        props: {
-          color: '#000000',
-          style: 'solid',
-          width: 100,
-          height: 1,
-        },
+        props: [
+          {
+            type: PropertyType.COLOR,
+            value: '#000000',
+          },
+          {
+            type: PropertyType.STYLE,
+            value: {
+              display: 'block',
+            },
+          },
+          {
+            type: PropertyType.WIDTH,
+            value: { value: 100, unit: '%' },
+            autoWidth: true,
+          },
+          {
+            type: PropertyType.HEIGHT,
+            value: { value: 1, unit: 'px' },
+          },
+        ],
       };
     }
     case FormFieldType.HEADER: {
       return {
         type: FormFieldType.HEADER,
         id: generateId(ID_LENGTH),
-        props: {
-          content: generateJsonContent('Header'),
-          font: {
-            size: 24,
-            unit: 'px',
-            weight: 400,
+        props: [
+          {
+            type: PropertyType.CONTENT,
+            value: generateJsonContent('Header'),
           },
-          tag: 'h1',
-          color: '#000000',
-          textAlign: 'center',
-        },
+          {
+            type: PropertyType.FONT_SIZE,
+            value: { value: 32, unit: 'px' },
+          },
+          {
+            type: PropertyType.TAG,
+            value: 'h1',
+          },
+          {
+            type: PropertyType.COLOR,
+            value: '#000000',
+          },
+          {
+            type: PropertyType.TEXT_ALIGN,
+            value: 'center',
+          },
+        ],
       };
     }
     case FormFieldType.PARAGRAPH: {
       return {
         type: FormFieldType.PARAGRAPH,
         id: generateId(ID_LENGTH),
-        props: {
-          content: generateJsonContent('Paragraph'),
-          font: {
-            size: 16,
-            unit: 'px',
-            weight: 400,
+        props: [
+          {
+            type: PropertyType.CONTENT,
+            value: generateJsonContent('Lorem ipsum dolor sit amet'),
           },
-          color: '#000000',
-          textAlign: 'center',
-        },
+          {
+            type: PropertyType.FONT_SIZE,
+            value: { value: 16, unit: 'px' },
+          },
+          {
+            type: PropertyType.COLOR,
+            value: '#000000',
+          },
+          {
+            type: PropertyType.TEXT_ALIGN,
+            value: 'center',
+          },
+        ],
       };
     }
     case FormFieldType.IMAGE: {
       return {
         type: FormFieldType.IMAGE,
         id: generateId(ID_LENGTH),
-        props: {
-          src: '',
-          alt: 'Placeholder',
-          objectFit: 'contain',
-          textAlign: 'center',
-          width: {
-            value: 100,
+        props: [
+          {
+            type: PropertyType.SRC,
+            value: '',
+          },
+          {
+            type: PropertyType.ALT,
+            value: 'Placeholder',
+          },
+          {
+            type: PropertyType.OBJECT_FIT,
+            value: 'contain',
+          },
+          {
+            type: PropertyType.TEXT_ALIGN,
+            value: 'center',
+          },
+          {
+            type: PropertyType.WIDTH,
+            value: { value: 100, unit: '%' },
             autoWidth: true,
           },
-        },
+        ],
       };
     }
     case FormFieldType.ROW: {
       return {
         type: FormFieldType.ROW,
         id: generateId(ID_LENGTH),
-        props: {
-          gap: 0,
-        },
+        props: [
+          {
+            type: PropertyType.GAP,
+            value: { value: 0, unit: 'px' },
+          },
+        ],
         children: [
           {
             id: generateId(ID_LENGTH),
             type: FormFieldType.COLUMN,
-            props: {
-              width: 50,
-            },
+            props: [
+              {
+                type: PropertyType.WIDTH,
+                value: { value: 50, unit: '%' },
+                autoWidth: false,
+              },
+            ],
             children: [],
           },
           {
             id: generateId(ID_LENGTH),
             type: FormFieldType.COLUMN,
-            props: {
-              width: 50,
-            },
+            props: [
+              {
+                type: PropertyType.WIDTH,
+                value: { value: 50, unit: '%' },
+                autoWidth: false,
+              },
+            ],
             children: [],
           },
         ],
@@ -300,9 +401,13 @@ export const getDefaultField = ({
       return {
         type: FormFieldType.COLUMN,
         id: generateId(ID_LENGTH),
-        props: {
-          width: column?.width || 100,
-        },
+        props: [
+          {
+            type: PropertyType.WIDTH,
+            value: { value: column?.width || 100, unit: '%' },
+            autoWidth: false,
+          },
+        ],
         children: [],
       };
     }
@@ -311,86 +416,135 @@ export const getDefaultField = ({
         id: generateId(ID_LENGTH),
         type: FormFieldType.BLOCK,
         children: [],
-        props: {
-          padding: {
-            top: 16,
-            right: 16,
-            bottom: 16,
-            left: 16,
-          },
-          boxShadow: [
-            {
-              x: 0,
-              y: 4,
-              blur: 6,
-              spread: -1,
-              color: '#00000019',
-              inset: false,
-            },
-            {
-              x: 0,
-              y: 2,
-              blur: 4,
-              spread: -2,
-              color: '#00000019',
-              inset: false,
-            },
-          ],
-          bgColor: '#FFFFFF',
-          border: {
-            color: '#000000',
-            width: 0,
-            radius: {
-              topLeft: 8,
-              topRight: 8,
-              bottomRight: 8,
-              bottomLeft: 8,
+        props: [
+          {
+            type: PropertyType.PADDING,
+            value: {
+              top: { value: 16, unit: 'px' },
+              right: { value: 16, unit: 'px' },
+              bottom: { value: 16, unit: 'px' },
+              left: { value: 16, unit: 'px' },
             },
           },
-          color: '#494949',
-          margin: {
-            bottom: 8,
-            left: 0,
-            right: 0,
-            top: 0,
+          {
+            type: PropertyType.MARGIN,
+            value: {
+              top: { value: 0, unit: 'px' },
+              right: { value: 0, unit: 'px' },
+              bottom: { value: 8, unit: 'px' },
+              left: { value: 0, unit: 'px' },
+            },
           },
-        },
+          {
+            type: PropertyType.BG_COLOR,
+            value: '#FFFFFF',
+          },
+          {
+            type: PropertyType.COLOR,
+            value: '#494949',
+          },
+          {
+            type: PropertyType.BORDER_WIDTH,
+            value: { value: 1, unit: 'px' },
+          },
+          {
+            type: PropertyType.BORDER_COLOR,
+            value: '#00000019',
+          },
+          {
+            type: PropertyType.BORDER_RADIUS,
+            value: {
+              topLeft: { value: 8, unit: 'px' },
+              topRight: { value: 8, unit: 'px' },
+              bottomLeft: { value: 8, unit: 'px' },
+              bottomRight: { value: 8, unit: 'px' },
+            },
+          },
+          {
+            type: PropertyType.BOX_SHADOW,
+            value: [
+              {
+                x: { value: 0, unit: 'px' },
+                y: { value: 4, unit: 'px' },
+                blur: { value: 6, unit: 'px' },
+                spread: { value: 0, unit: 'px' },
+                color: '#00000019',
+                inset: false,
+              },
+              {
+                x: { value: 0, unit: 'px' },
+                y: { value: 2, unit: 'px' },
+                blur: { value: 4, unit: 'px' },
+                spread: { value: -2, unit: 'px' },
+                color: '#00000019',
+                inset: false,
+              },
+            ],
+          },
+        ],
       };
     }
     case FormFieldType.BUTTON: {
       return {
         id: generateId(ID_LENGTH),
         type: FormFieldType.BUTTON,
-        props: {
-          label: 'Submit',
-          color: '#FFFFFF',
-          bgColor: '#5083a7',
-          font: {
-            size: 16,
-            unit: 'px',
-            weight: 400,
+        props: [
+          {
+            type: PropertyType.LABEL,
+            value: 'Submit',
           },
-          fullWidth: false,
-          btnType: 'submit',
-          border: {
-            color: '#000000',
-            width: 0,
-            radius: {
-              topLeft: 6,
-              topRight: 6,
-              bottomRight: 6,
-              bottomLeft: 6,
+          {
+            type: PropertyType.COLOR,
+            value: '#FFFFFF',
+          },
+          {
+            type: PropertyType.BG_COLOR,
+            value: '#5083a7',
+          },
+          {
+            type: PropertyType.FONT_SIZE,
+            value: { value: 16, unit: 'px' },
+          },
+          {
+            type: PropertyType.WIDTH,
+            value: { value: 100, unit: '%' },
+            autoWidth: true,
+          },
+          {
+            type: PropertyType.BTN_TYPE,
+            value: 'submit',
+          },
+          {
+            type: PropertyType.TEXT_ALIGN,
+            value: 'center',
+          },
+          {
+            type: PropertyType.FONT_WEIGHT,
+            value: 600,
+          },
+          {
+            type: PropertyType.BORDER_RADIUS,
+            value: {
+              topLeft: { value: 6, unit: 'px' },
+              topRight: { value: 6, unit: 'px' },
+              bottomLeft: { value: 6, unit: 'px' },
+              bottomRight: { value: 6, unit: 'px' },
             },
           },
-          padding: {
-            top: 6,
-            right: 12,
-            bottom: 6,
-            left: 12,
+          {
+            type: PropertyType.PADDING,
+            value: {
+              top: { value: 6, unit: 'px' },
+              right: { value: 12, unit: 'px' },
+              bottom: { value: 6, unit: 'px' },
+              left: { value: 12, unit: 'px' },
+            },
           },
-          align: 'center',
-        },
+        ],
       };
+    }
+    default: {
+      return undefined;
     }
   }
 };

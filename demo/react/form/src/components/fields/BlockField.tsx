@@ -9,15 +9,6 @@ function BlockField({
   boxShadow,
   borderRadius,
 }: BlockFieldProps) {
-  console.log({
-    margin,
-    padding,
-    backgroundColor,
-    color,
-    boxShadow,
-    borderRadius,
-  });
-
   return (
     <div
       style={{

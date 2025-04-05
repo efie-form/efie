@@ -1,15 +1,16 @@
-import type { FormFieldRow } from '@efie-form/core';
+import type { RowFormField } from '@efie-form/core';
 import RenderField from '../RenderField';
 import { useSettingsStore } from '../../../../lib/state/settings.state';
-import { cn } from '../../../../lib/utils';
-import { FormFieldType } from '@efie-form/core';
+import { cn, getFieldProp } from '../../../../lib/utils';
+import { FormFieldType, PropertyType, widthToStyle } from '@efie-form/core';
 
 interface RowFieldProps {
-  field: FormFieldRow;
+  field: RowFormField;
 }
 
 function RowField({ field }: RowFieldProps) {
   const { previewDevice } = useSettingsStore();
+
   const isMobile = previewDevice === 'mobile';
 
   return (
@@ -19,12 +20,15 @@ function RowField({ field }: RowFieldProps) {
       })}
     >
       {field.children
+        .filter(Boolean)
         .filter((child) => child.type === FormFieldType.COLUMN)
         .map((child) => (
           <div
             key={`${field.id}-${child.id}`}
             style={{
-              width: isMobile ? '100%' : `${child.props.width}%`,
+              width: isMobile
+                ? '100%'
+                : widthToStyle(getFieldProp(child, PropertyType.WIDTH)),
             }}
             className="self-stretch"
           >
