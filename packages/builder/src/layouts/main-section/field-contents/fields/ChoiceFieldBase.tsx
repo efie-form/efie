@@ -16,9 +16,8 @@ import {
 } from '@dnd-kit/sortable';
 import type { DragEndEvent } from '@dnd-kit/core';
 import ChoiceFieldOption from './ChoiceFieldOption';
-import { useSchemaStore } from '../../../../lib/state/schema.state';
-import { useControllableState } from '../../../../lib/hooks/useControllableState';
 import { useFieldLabel } from '../../../../lib/hooks/properties/useFieldLabel';
+import { useFieldOptions } from '../../../../lib/hooks/properties/useFieldOptions';
 
 interface OptionType {
   value: string;
@@ -32,10 +31,10 @@ interface ChoiceFieldBaseProps {
 }
 
 function ChoiceFieldBase({ fieldId, field, inputType }: ChoiceFieldBaseProps) {
-  const { updateFieldProps } = useSchemaStore();
   const lastInputRef = useRef<HTMLInputElement>(null);
 
   const { label, updateLabel } = useFieldLabel(field);
+  const { options, updateOptions } = useFieldOptions(field);
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -51,16 +50,6 @@ function ChoiceFieldBase({ fieldId, field, inputType }: ChoiceFieldBaseProps) {
     (option) => option.value !== option.label
   );
 
-  const [options, setOptions] = useControllableState({
-    defaultValue: optionsProp?.value || [],
-    onChange: (value) => {
-      updateFieldProps(field.id, PropertyType.OPTIONS, {
-        ...optionsProp,
-        value,
-      });
-    },
-  });
-
   const handleNewOption = () => {
     const name = `Option ${options.length + 1}`;
     const newOptions = [
@@ -70,7 +59,7 @@ function ChoiceFieldBase({ fieldId, field, inputType }: ChoiceFieldBaseProps) {
         label: name,
       },
     ];
-    setOptions(newOptions);
+    updateOptions(newOptions);
     requestAnimationFrame(() => {
       lastInputRef.current?.focus();
     });
@@ -86,19 +75,19 @@ function ChoiceFieldBase({ fieldId, field, inputType }: ChoiceFieldBaseProps) {
     const newOptions = [...options];
     const [removed] = newOptions.splice(oldIndex, 1);
     newOptions.splice(newIndex, 0, removed);
-    setOptions(newOptions);
+    updateOptions(newOptions);
   };
 
   const handleRemove = (index: number) => {
     const newOptions = [...options];
     newOptions.splice(index, 1);
-    setOptions(newOptions);
+    updateOptions(newOptions);
   };
 
   const handleUpdate = (index: number, value: OptionType) => {
     const newOptions = [...options];
     newOptions[index] = value;
-    setOptions(newOptions);
+    updateOptions(newOptions);
   };
 
   return (

@@ -3,8 +3,6 @@ import {
   type FormField,
   type OptionsProperty,
 } from '@efie-form/core';
-import { useSchemaStore } from '../../../lib/state/schema.state';
-import { useControllableState } from '../../../lib/hooks/useControllableState';
 import { Input, Switch } from '../../../components/form';
 import { useRef, useState } from 'react';
 import { MdAdd, MdOutlineClose, MdOutlineDragIndicator } from 'react-icons/md';
@@ -26,95 +24,68 @@ import {
   useSensors,
   type DragEndEvent,
 } from '@dnd-kit/core';
+import { useFieldOptions } from '../../../lib/hooks/properties/useFieldOptions';
 
 interface PropSettingsOptionProps {
   field: FormField;
 }
 
-const defaultOption: OptionsProperty = {
-  type: PropertyType.OPTIONS,
-  value: [
-    {
-      label: 'Option 1',
-      value: 'Option 1',
-    },
-    {
-      label: 'Option 2',
-      value: 'Option 2',
-    },
-    {
-      label: 'Option 3',
-      value: 'Option 3',
-    },
-  ],
-  errorMessage: '',
-};
-
 export default function PropSettingsOption({ field }: PropSettingsOptionProps) {
-  const { updateFieldProps } = useSchemaStore();
   const optionsProp = getFieldProp(field, PropertyType.OPTIONS);
   const [isValueDifferent, setIsValueDifferent] = useState(
     optionsProp?.value?.some((option) => option.value !== option.label) || false
   );
-  const [options, setOptions] = useControllableState({
-    onChange: (value) => {
-      updateFieldProps(field.id, PropertyType.OPTIONS, value);
-    },
-    defaultValue: optionsProp || defaultOption,
-  });
+
+  const { options, updateOptions } = useFieldOptions(field);
   const prevOptionsRef = useRef<OptionsProperty['value']>();
 
   const handleChangeDifferentValue = (value: boolean) => {
     setIsValueDifferent(value);
     if (value) {
-      setOptions((prev) => ({
-        ...prev,
-        value: prev.value.map((option, index) => ({
-          ...option,
-          value:
-            prevOptionsRef.current?.find((_, i) => i === index)?.value ||
-            option.value,
-        })),
+      const newOptions = options.map((option, index) => ({
+        ...option,
+        value:
+          prevOptionsRef.current?.find((_, i) => i === index)?.value ||
+          option.value,
       }));
+      updateOptions(newOptions);
     } else {
-      prevOptionsRef.current = options.value;
+      prevOptionsRef.current = options;
 
-      setOptions((prev) => ({
-        ...prev,
-        value: prev.value.map((option) => ({
-          ...option,
-          value: option.label,
-        })),
+      const newOptions = options.map((option) => ({
+        ...option,
+        value: option.label,
       }));
+      updateOptions(newOptions);
     }
   };
 
   const handleLabelChange = (index: number, value: string) => {
-    const newOptions = [...options.value];
+    const newOptions = [...options];
     newOptions[index].label = value;
     if (!isValueDifferent) {
       newOptions[index].value = value;
     }
-    setOptions({ ...options, value: newOptions });
+    updateOptions(newOptions);
   };
 
   const handleValueChange = (index: number, value: string) => {
-    const newOptions = [...options.value];
+    const newOptions = [...options];
     newOptions[index].value = value;
-    setOptions({ ...options, value: newOptions });
+    updateOptions(newOptions);
   };
 
   const handleRemoveOption = (index: number) => {
-    const newOptions = [...options.value];
+    const newOptions = [...options];
     newOptions.splice(index, 1);
-    setOptions({ ...options, value: newOptions });
+    updateOptions(newOptions);
   };
 
   const handleAddOption = () => {
-    const newOptions = [...options.value];
+    const newOptions = [...options];
     const name = `Option ${newOptions.length + 1}`;
     newOptions.push({ label: name, value: name });
-    setOptions({ ...options, value: newOptions });
+    updateOptions(newOptions);
   };
 
   const sensors = useSensors(
@@ -127,10 +98,12 @@ export default function PropSettingsOption({ field }: PropSettingsOptionProps) {
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
     if (active.id !== over?.id) {
-      setOptions((prev) => ({
-        ...prev,
-        value: arrayMove(prev.value, Number(active.id), Number(over?.id)),
-      }));
+      const newOptions = arrayMove(
+        options,
+        Number(active.id),
+        Number(over?.id)
+      );
+      updateOptions(newOptions);
     }
   };
 
@@ -155,11 +128,11 @@ export default function PropSettingsOption({ field }: PropSettingsOptionProps) {
             onDragEnd={handleDragEnd}
           >
             <SortableContext
-              items={options.value.map((_, index) => index.toString())}
+              items={options.map((_, index) => index.toString())}
               strategy={verticalListSortingStrategy}
             >
               <div className="flex flex-col gap-2">
-                {options.value.map((option, index) => (
+                {options.map((option, index) => (
                   <OptionItem
                     key={index}
                     index={index}
