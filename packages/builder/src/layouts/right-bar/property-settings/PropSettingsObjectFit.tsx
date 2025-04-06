@@ -32,7 +32,7 @@ export default function PropSettingsObjectFit({
 }: PropSettingsObjectFitProps) {
   const { updateFieldProps } = useSchemaStore();
   const objectFitProp = field.props.find(
-    (field) => field.type === PropertyType.OBJECT_FIT
+    field => field.type === PropertyType.OBJECT_FIT,
   );
   const [objectFit, setObjectFit] = useControllableState({
     onChange: (value) => {

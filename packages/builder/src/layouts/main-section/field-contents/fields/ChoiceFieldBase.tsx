@@ -1,7 +1,6 @@
 import type {
   FormField,
   OptionsProperty,
-  PropertyDefinition,
 } from '@efie-form/core';
 import { PropertyType } from '@efie-form/core';
 import { useRef } from 'react';
@@ -42,12 +41,12 @@ function ChoiceFieldBase({ fieldId, field, inputType }: ChoiceFieldBaseProps) {
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
-    })
+    }),
   );
 
   const optionsProp = getFieldProp(field, PropertyType.OPTIONS);
-  const isValueDifferent =
-    optionsProp?.value.some((option) => option.value !== option.label) || false;
+  const isValueDifferent
+    = optionsProp?.value.some(option => option.value !== option.label) || false;
 
   const handleNewOption = () => {
     const name = `Option ${options.length + 1}`;
@@ -93,7 +92,7 @@ function ChoiceFieldBase({ fieldId, field, inputType }: ChoiceFieldBaseProps) {
     <div className="p-2">
       <input
         value={label}
-        onChange={(e) => updateLabel(e.target.value)}
+        onChange={e => updateLabel(e.target.value)}
         className="mb-2 typography-body2 bg-white bg-opacity-0 focus:outline-none cursor-text w-full"
         type="text"
       />
@@ -118,7 +117,7 @@ function ChoiceFieldBase({ fieldId, field, inputType }: ChoiceFieldBaseProps) {
                 inputType={inputType}
                 fieldId={fieldId}
                 isValueDifferent={isValueDifferent}
-                onUpdate={(value) => handleUpdate(index, value)}
+                onUpdate={value => handleUpdate(index, value)}
                 onRemove={() => handleRemove(index)}
                 inputRef={
                   index === options.length - 1 ? lastInputRef : undefined

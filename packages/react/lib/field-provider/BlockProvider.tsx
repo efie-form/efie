@@ -27,7 +27,7 @@ function BlockProvider({ field, Component, ...props }: BlockProviderProps) {
     boxShadow: toBoxShadowStyle(field.props.boxShadow),
     children: (
       <>
-        {field.children.map((field) => (
+        {field.children.map(field => (
           <div key={field.id}>
             <RenderField field={field} {...props} />
           </div>

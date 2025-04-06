@@ -21,8 +21,8 @@ function RowField({ field }: RowFieldProps) {
     >
       {field.children
         .filter(Boolean)
-        .filter((child) => child.type === FormFieldType.COLUMN)
-        .map((child) => (
+        .filter(child => child.type === FormFieldType.COLUMN)
+        .map(child => (
           <div
             key={`${field.id}-${child.id}`}
             style={{

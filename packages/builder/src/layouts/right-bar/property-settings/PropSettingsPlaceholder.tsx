@@ -22,7 +22,7 @@ export default function PropSettingsPlaceholder({
 }: PropSettingsPlaceholderProps) {
   const { updateFieldProps } = useSchemaStore();
   const placeholderProp = field.props.find(
-    (field) => field.type === PropertyType.PLACEHOLDER
+    field => field.type === PropertyType.PLACEHOLDER,
   );
   const [placeholder, setPlaceholder] = useControllableState({
     onChange: (value) => {

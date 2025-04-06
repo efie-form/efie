@@ -36,7 +36,8 @@ function RowSettings({ field }: RowSettingsProps) {
         const widthProp = getFieldProp(existingColumn, PropertyType.WIDTH);
         if (widthProp) {
           widthProp.value = { value: width, unit: '%' };
-        } else {
+        }
+        else {
           existingColumn.props.push({
             type: PropertyType.WIDTH,
             value: { value: width, unit: '%' },
@@ -76,7 +77,8 @@ function RowSettings({ field }: RowSettingsProps) {
       const widthProp = getFieldProp(colField, PropertyType.WIDTH);
       if (widthProp) {
         widthProp.value = { value: avgWidth, unit: '%' };
-      } else {
+      }
+      else {
         colField.props.push({
           type: PropertyType.WIDTH,
           value: { value: avgWidth, unit: '%' },
@@ -104,9 +106,9 @@ function RowSettings({ field }: RowSettingsProps) {
     for (const col of field.children) {
       const colField = getFieldById(col.id);
       if (
-        !colField ||
-        colField.type !== 'column' ||
-        colField.id === removedFieldId
+        !colField
+        || colField.type !== 'column'
+        || colField.id === removedFieldId
       ) {
         continue;
       }
@@ -118,7 +120,8 @@ function RowSettings({ field }: RowSettingsProps) {
           value: width,
           unit: '%',
         };
-      } else {
+      }
+      else {
         colField.props.push({
           type: PropertyType.WIDTH,
           value: { value: width, unit: '%' },
@@ -150,7 +153,8 @@ function RowSettings({ field }: RowSettingsProps) {
                     style={{ flex: width }}
                   >
                     <p className="typography-body4 text-neutral-700 invisible group-hover:visible">
-                      {width}%
+                      {width}
+                      %
                     </p>
                   </div>
                 ))}
@@ -174,14 +178,16 @@ function RowSettings({ field }: RowSettingsProps) {
                 value={column.id}
                 className="px-4 py-2 whitespace-nowrap border-b-2 border-primary border-opacity-0 transition-colors data-[state=active]:border-opacity-100 typography-body3 text-neutral-700 data-[state=active]:text-primary"
               >
-                Column {index + 1}
+                Column
+                {' '}
+                {index + 1}
               </Tabs.Trigger>
             ))}
           </Tabs.List>
         </div>
 
         {field.children
-          .filter((column) => column.type === 'column')
+          .filter(column => column.type === 'column')
           .map((column, index) => (
             <Tabs.Content key={column.id} value={column.id}>
               <ColumnSettings

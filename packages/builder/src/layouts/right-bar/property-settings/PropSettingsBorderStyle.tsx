@@ -35,7 +35,7 @@ export default function PropSettingsBorderStyle({
 }: PropSettingsBorderStyleProps) {
   const { updateFieldProps } = useSchemaStore();
   const borderStyleProp = field.props.find(
-    (field) => field.type === PropertyType.BORDER_STYLE
+    field => field.type === PropertyType.BORDER_STYLE,
   );
   const [borderStyle, setBorderStyle] = useControllableState({
     onChange: (value) => {
@@ -49,7 +49,7 @@ export default function PropSettingsBorderStyle({
       <Select
         value={borderStyle.value}
         onChange={(newValue) => {
-          setBorderStyle((prev) => ({
+          setBorderStyle(prev => ({
             ...prev,
             value: newValue,
           }));

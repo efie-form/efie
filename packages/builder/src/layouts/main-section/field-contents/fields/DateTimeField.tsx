@@ -12,7 +12,7 @@ function DateTimeField({ field }: DateTimeFieldProps) {
     <div className="p-2">
       <input
         value={label}
-        onChange={(e) => updateLabel(e.target.value)}
+        onChange={e => updateLabel(e.target.value)}
         className="mb-2 typography-body2 bg-white bg-opacity-0 focus:outline-none cursor-text w-full"
         type="text"
       />

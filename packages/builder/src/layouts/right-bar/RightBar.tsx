@@ -44,7 +44,7 @@ function RightBar() {
     },
   ];
 
-  const TabContent = tabs.find((tab) => tab.id === activeTab)?.tab;
+  const TabContent = tabs.find(tab => tab.id === activeTab)?.tab;
 
   return (
     <div className="h-full flex w-full">
@@ -53,8 +53,8 @@ function RightBar() {
       </div>
       <div className="bg-neutral-100/40 h-full">
         {tabs
-          .filter((tab) => !tab.hidden)
-          .map((tab) => (
+          .filter(tab => !tab.hidden)
+          .map(tab => (
             <Tooltip
               key={tab.id}
               content={tab.label}
@@ -67,7 +67,7 @@ function RightBar() {
                   'p-3 hover:bg-neutral-200/30 cursor-pointer transition-all duration-100',
                   {
                     '!bg-neutral-200/80': tab.id === activeTab,
-                  }
+                  },
                 )}
                 onClick={() => setActiveTab(tab.id)}
               >

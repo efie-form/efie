@@ -27,7 +27,7 @@ export function useFieldOptions(field: FormField) {
 
   // Local state for immediate feedback
   const [localOptions, setLocalOptions] = useState(
-    optionsProp?.value || defaultOptions.value
+    optionsProp?.value || defaultOptions.value,
   );
 
   // Ref to store pending update

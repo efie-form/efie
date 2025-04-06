@@ -26,7 +26,7 @@ function FormContent() {
                 maxWidth: SCREEN_SIZES[previewDevice],
               }}
             >
-              {selectedPage.children.map((field) => (
+              {selectedPage.children.map(field => (
                 <RenderField field={field} key={field.id} />
               ))}
             </div>

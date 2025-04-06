@@ -34,7 +34,7 @@ export default function PropSettingsFontWeight({
 }: PropSettingsFontWeightProps) {
   const { updateFieldProps } = useSchemaStore();
   const fontWeightProp = field.props.find(
-    (field) => field.type === PropertyType.FONT_WEIGHT
+    field => field.type === PropertyType.FONT_WEIGHT,
   );
   const [fontWeight, setFontWeight] = useControllableState({
     onChange: (value) => {
@@ -48,7 +48,7 @@ export default function PropSettingsFontWeight({
       <Select
         value={fontWeight.value.toString()}
         onChange={(newValue) => {
-          setFontWeight((prev) => ({
+          setFontWeight(prev => ({
             ...prev,
             value: Number(newValue),
           }));

@@ -26,7 +26,7 @@ export default function PropSettingsFontSize({
 }: PropSettingsFontSizeProps) {
   const { updateFieldProps } = useSchemaStore();
   const fontSizeProp = field.props.find(
-    (field) => field.type === PropertyType.FONT_SIZE
+    field => field.type === PropertyType.FONT_SIZE,
   );
   const [fontSize, setFontSize] = useControllableState({
     onChange: (value) => {
@@ -44,7 +44,7 @@ export default function PropSettingsFontSize({
           }}
           value={fontSize.value.value.toString()}
           onChange={(newValue) => {
-            setFontSize((prev) => ({
+            setFontSize(prev => ({
               ...prev,
               value: {
                 ...prev.value,
@@ -56,7 +56,7 @@ export default function PropSettingsFontSize({
         <Select
           value={fontSize.value.unit}
           onChange={(newUnit) => {
-            setFontSize((prev) => ({
+            setFontSize(prev => ({
               ...prev,
               value: {
                 ...prev.value,

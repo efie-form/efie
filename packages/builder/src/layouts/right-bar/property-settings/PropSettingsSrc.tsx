@@ -20,7 +20,7 @@ const defaultSrc: SrcProperty = {
 
 export default function PropSettingsSrc({ field }: PropSettingsSrcProps) {
   const { updateFieldProps } = useSchemaStore();
-  const srcProp = field.props.find((field) => field.type === PropertyType.SRC);
+  const srcProp = field.props.find(field => field.type === PropertyType.SRC);
   const [src, setSrc] = useControllableState({
     onChange: (value) => {
       updateFieldProps(field.id, PropertyType.SRC, value);

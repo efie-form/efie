@@ -48,9 +48,9 @@ export default function PropSettingsAccept({ field }: PropSettingsAcceptProps) {
     const currentExtensions = accept.formats?.filter(Boolean) || [];
     const newExtensions = checked
       ? [...currentExtensions, ...extensions]
-      : currentExtensions.filter((ext) => !extensions.includes(ext));
+      : currentExtensions.filter(ext => !extensions.includes(ext));
 
-    setAccept((prev) => ({
+    setAccept(prev => ({
       ...prev,
       formats: newExtensions,
     }));
@@ -60,7 +60,7 @@ export default function PropSettingsAccept({ field }: PropSettingsAcceptProps) {
     if (!checked) {
       prevFormats.current = accept.formats;
     }
-    setAccept((prev) => ({
+    setAccept(prev => ({
       ...prev,
       allowAll: !checked,
       formats: checked ? prevFormats.current || [] : [],
@@ -75,19 +75,18 @@ export default function PropSettingsAccept({ field }: PropSettingsAcceptProps) {
       divider
     >
       <div className="grid grid-cols-2">
-        {FILE_EXTENSIONS.map((extension) => (
+        {FILE_EXTENSIONS.map(extension => (
           <div
             key={extension.label}
             className="flex items-center gap-2 p-2 rounded-md hover:bg-neutral-50 transition-colors"
           >
             <div>
               <Switch
-                checked={extension.value.some((ext) =>
-                  accept.formats?.includes(ext)
+                checked={extension.value.some(ext =>
+                  accept.formats?.includes(ext),
                 )}
                 onChange={(checked: boolean) =>
-                  handleExtensionChange(extension.value, checked)
-                }
+                  handleExtensionChange(extension.value, checked)}
               />
             </div>
             <span className="typography-body3 text-neutral-600">

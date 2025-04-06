@@ -16,7 +16,7 @@ function PageProvider({ field, Component, ...props }: PageProviderProps) {
     id: field.id,
     children: (
       <>
-        {field.children.map((field) => (
+        {field.children.map(field => (
           <RenderField key={field.id} field={field} {...props} />
         ))}
       </>

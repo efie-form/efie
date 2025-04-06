@@ -26,7 +26,7 @@ export default function PropSettingsBorderRadius({
 }: PropSettingsBorderRadiusProps) {
   const { updateFieldProps } = useSchemaStore();
   const borderRadiusProp = field.props.find(
-    (field) => field.type === PropertyType.BORDER_RADIUS
+    field => field.type === PropertyType.BORDER_RADIUS,
   );
   const [borderRadius, setBorderRadius] = useControllableState({
     onChange: (value) => {

@@ -35,7 +35,7 @@ export default function PropSettingsTextAlign({
       <Select
         value={textAlignValue.value}
         onChange={(newValue) => {
-          setTextAlignValue((prev) => ({
+          setTextAlignValue(prev => ({
             ...prev,
             value: newValue,
           }));

@@ -28,7 +28,7 @@ const ALIGN_OPTIONS: Array<{ value: TextAlign; label: string }> = [
 export default function PropSettingsAlign({ field }: PropSettingsAlignProps) {
   const { updateFieldProps } = useSchemaStore();
   const alignProp = field.props.find(
-    (field) => field.type === PropertyType.TEXT_ALIGN
+    field => field.type === PropertyType.TEXT_ALIGN,
   );
   const [align, setAlign] = useControllableState({
     onChange: (value) => {

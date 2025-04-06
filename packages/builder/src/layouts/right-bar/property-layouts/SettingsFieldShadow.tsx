@@ -38,7 +38,7 @@ function SettingsFieldShadow({
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
-    })
+    }),
   );
 
   if (!('boxShadow' in field.props)) return <></>;
@@ -101,7 +101,7 @@ function SettingsFieldShadow({
                 if (!active || !over) return;
                 handleMoveShadow(
                   Number.parseInt(active.id as string, 10),
-                  Number.parseInt(over.id as string, 10)
+                  Number.parseInt(over.id as string, 10),
                 );
               }}
             >
@@ -172,10 +172,22 @@ function ShadowItem({ index, onDelete, field, shadow }: ShadowItemProps) {
                 <MdOutlineDragIndicator />
               </span>
             </div>
-            <span>{shadow?.x}px</span>
-            <span>{shadow?.y}px</span>
-            <span>{shadow?.blur}px</span>
-            <span>{shadow?.spread}px</span>
+            <span>
+              {shadow?.x}
+              px
+            </span>
+            <span>
+              {shadow?.y}
+              px
+            </span>
+            <span>
+              {shadow?.blur}
+              px
+            </span>
+            <span>
+              {shadow?.spread}
+              px
+            </span>
             <span
               style={{
                 backgroundColor: shadow?.color,
@@ -203,7 +215,7 @@ function ShadowItem({ index, onDelete, field, shadow }: ShadowItemProps) {
                     updateFieldProps(
                       field.id,
                       `props.boxShadow.${index}.x`,
-                      newValue
+                      newValue,
                     );
                   }}
                   suffix="px"
@@ -221,7 +233,7 @@ function ShadowItem({ index, onDelete, field, shadow }: ShadowItemProps) {
                     updateFieldProps(
                       field.id,
                       `props.boxShadow.${index}.y`,
-                      newValue
+                      newValue,
                     );
                   }}
                   suffix="px"
@@ -239,7 +251,7 @@ function ShadowItem({ index, onDelete, field, shadow }: ShadowItemProps) {
                     updateFieldProps(
                       field.id,
                       `props.boxShadow.${index}.color`,
-                      newValue
+                      newValue,
                     );
                   }}
                 />
@@ -255,7 +267,7 @@ function ShadowItem({ index, onDelete, field, shadow }: ShadowItemProps) {
                     updateFieldProps(
                       field.id,
                       `props.boxShadow.${index}.blur`,
-                      newValue
+                      newValue,
                     );
                   }}
                   suffix="px"
@@ -273,7 +285,7 @@ function ShadowItem({ index, onDelete, field, shadow }: ShadowItemProps) {
                     updateFieldProps(
                       field.id,
                       `props.boxShadow.${index}.spread`,
-                      newValue
+                      newValue,
                     );
                   }}
                   suffix="px"
@@ -291,7 +303,7 @@ function ShadowItem({ index, onDelete, field, shadow }: ShadowItemProps) {
                     updateFieldProps(
                       field.id,
                       `props.boxShadow.${index}.inset`,
-                      newValue
+                      newValue,
                     );
                   }}
                 />

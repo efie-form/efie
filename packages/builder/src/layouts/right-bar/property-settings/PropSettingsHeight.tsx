@@ -24,7 +24,7 @@ const defaultHeight: HeightProperty = {
 export default function PropSettingsHeight({ field }: PropSettingsHeightProps) {
   const { updateFieldProps } = useSchemaStore();
   const heightProp = field.props.find(
-    (field) => field.type === PropertyType.HEIGHT
+    field => field.type === PropertyType.HEIGHT,
   );
   const [height, setHeight] = useControllableState({
     onChange: (value) => {
@@ -42,7 +42,7 @@ export default function PropSettingsHeight({ field }: PropSettingsHeightProps) {
           }}
           value={height.value.value.toString()}
           onChange={(newValue) => {
-            setHeight((prev) => ({
+            setHeight(prev => ({
               ...prev,
               value: {
                 ...prev.value,
@@ -54,7 +54,7 @@ export default function PropSettingsHeight({ field }: PropSettingsHeightProps) {
         <Select
           value={height.value.unit}
           onChange={(newUnit) => {
-            setHeight((prev) => ({
+            setHeight(prev => ({
               ...prev,
               value: {
                 ...prev.value,

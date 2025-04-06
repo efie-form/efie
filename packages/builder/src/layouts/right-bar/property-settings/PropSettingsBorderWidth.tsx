@@ -26,7 +26,7 @@ export default function PropSettingsBorderWidth({
 }: PropSettingsBorderWidthProps) {
   const { updateFieldProps } = useSchemaStore();
   const borderWidthProp = field.props.find(
-    (field) => field.type === PropertyType.BORDER_WIDTH
+    field => field.type === PropertyType.BORDER_WIDTH,
   );
   const [borderWidth, setBorderWidth] = useControllableState({
     onChange: (value) => {
@@ -44,7 +44,7 @@ export default function PropSettingsBorderWidth({
           }}
           value={borderWidth.value.value.toString()}
           onChange={(newValue) => {
-            setBorderWidth((prev) => ({
+            setBorderWidth(prev => ({
               ...prev,
               value: {
                 ...prev.value,
@@ -56,7 +56,7 @@ export default function PropSettingsBorderWidth({
         <Select
           value={borderWidth.value.unit}
           onChange={(newUnit) => {
-            setBorderWidth((prev) => ({
+            setBorderWidth(prev => ({
               ...prev,
               value: {
                 ...prev.value,

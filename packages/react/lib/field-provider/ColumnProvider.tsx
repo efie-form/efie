@@ -16,7 +16,7 @@ function ColumnProvider({ field, Component, ...props }: ColumnProviderProps) {
     id: field.id,
     children: (
       <>
-        {field.children.map((field) => (
+        {field.children.map(field => (
           <div key={field.id}>
             <RenderField field={field} {...props} />
           </div>

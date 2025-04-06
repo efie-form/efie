@@ -24,8 +24,9 @@ export default class Builder {
   onDataReset: ((data: FormSchema) => void) | undefined = undefined;
   onDataRequest: (() => FormSchema) | undefined = undefined;
   onHeightChange: ((height: number) => void) | undefined = undefined;
-  onFormInputsChange: ((formInputs: BuilderCustomInput[]) => void) | undefined =
-    undefined;
+  onFormInputsChange: ((formInputs: BuilderCustomInput[]) => void) | undefined
+    = undefined;
+
   onInitialized: ((data: InitializedPayload) => void) | undefined = undefined;
   isDataInitialized = false;
 
@@ -62,8 +63,8 @@ export default class Builder {
 
   private initializedHandler(event: MessageEvent) {
     if (
-      event.data.type !== EXTERNAL_ACTION_TYPE.INIT_DATA ||
-      this.isDataInitialized
+      event.data.type !== EXTERNAL_ACTION_TYPE.INIT_DATA
+      || this.isDataInitialized
     )
       return;
     this.isDataInitialized = true;
@@ -131,7 +132,7 @@ export default class Builder {
         type,
         data,
       },
-      '*'
+      '*',
     );
   }
 }

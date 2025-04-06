@@ -22,7 +22,7 @@ export default function PropSettingsBgColor({
 }: PropSettingsBgColorProps) {
   const { updateFieldProps } = useSchemaStore();
   const bgColorProp = field.props.find(
-    (field) => field.type === PropertyType.BG_COLOR
+    field => field.type === PropertyType.BG_COLOR,
   );
   const [bgColor, setBgColor] = useControllableState({
     onChange: (value) => {
@@ -36,7 +36,7 @@ export default function PropSettingsBgColor({
       <ColorPicker
         value={bgColor?.value}
         onChange={(newColor) => {
-          setBgColor((prev) => ({
+          setBgColor(prev => ({
             ...prev,
             value: newColor,
           }));

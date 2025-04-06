@@ -33,7 +33,7 @@ interface PropSettingsOptionProps {
 export default function PropSettingsOption({ field }: PropSettingsOptionProps) {
   const optionsProp = getFieldProp(field, PropertyType.OPTIONS);
   const [isValueDifferent, setIsValueDifferent] = useState(
-    optionsProp?.value?.some((option) => option.value !== option.label) || false
+    optionsProp?.value?.some(option => option.value !== option.label) || false,
   );
 
   const { options, updateOptions } = useFieldOptions(field);
@@ -45,14 +45,15 @@ export default function PropSettingsOption({ field }: PropSettingsOptionProps) {
       const newOptions = options.map((option, index) => ({
         ...option,
         value:
-          prevOptionsRef.current?.find((_, i) => i === index)?.value ||
-          option.value,
+          prevOptionsRef.current?.find((_, i) => i === index)?.value
+          || option.value,
       }));
       updateOptions(newOptions);
-    } else {
+    }
+    else {
       prevOptionsRef.current = options;
 
-      const newOptions = options.map((option) => ({
+      const newOptions = options.map(option => ({
         ...option,
         value: option.label,
       }));
@@ -92,7 +93,7 @@ export default function PropSettingsOption({ field }: PropSettingsOptionProps) {
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
-    })
+    }),
   );
 
   const handleDragEnd = (event: DragEndEvent) => {
@@ -101,7 +102,7 @@ export default function PropSettingsOption({ field }: PropSettingsOptionProps) {
       const newOptions = arrayMove(
         options,
         Number(active.id),
-        Number(over?.id)
+        Number(over?.id),
       );
       updateOptions(newOptions);
     }
@@ -210,12 +211,12 @@ function OptionItem({
       </div>
       <Input
         value={option.label}
-        onChange={(value) => handleLabelChange(index, value)}
+        onChange={value => handleLabelChange(index, value)}
       />
       {isValueDifferent && (
         <Input
           value={option.value}
-          onChange={(value) => handleValueChange(index, value)}
+          onChange={value => handleValueChange(index, value)}
         />
       )}
       <div className="invisible group-hover:visible">

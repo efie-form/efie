@@ -37,7 +37,7 @@ export default function insertField({
 
 const findField = (
   fields: FormField[],
-  fieldId: string
+  fieldId: string,
 ): FormField | undefined => {
   let result: FormField | undefined;
   for (const field of fields) {
@@ -54,7 +54,7 @@ const findField = (
 const appendFieldToChildren = (
   fields: FormField[],
   newField: FormField,
-  dropFieldId: string
+  dropFieldId: string,
 ) => {
   const field = findField(fields, dropFieldId);
   if (!field || !('children' in field)) return fields;
@@ -63,7 +63,8 @@ const appendFieldToChildren = (
     if (newField.type === 'column') {
       field.children.push(newField);
     }
-  } else {
+  }
+  else {
     field.children.push(newField);
   }
 
@@ -74,7 +75,7 @@ const addFieldToSiblings = (
   fields: FormField[],
   newField: FormField,
   dropFieldId: string,
-  direction: 'up' | 'down'
+  direction: 'up' | 'down',
 ) => {
   const dropFieldParentId = findFieldParentId(fields, dropFieldId);
   if (!dropFieldParentId) return fields;
@@ -83,13 +84,14 @@ const addFieldToSiblings = (
   if (!dropFieldParent || !('children' in dropFieldParent)) return fields;
 
   const dropFieldIndex = dropFieldParent.children.findIndex(
-    (field) => field.id === dropFieldId
+    field => field.id === dropFieldId,
   );
   if (dropFieldIndex === -1) return fields;
 
   if (direction === 'up') {
     dropFieldParent.children.splice(dropFieldIndex, 0, newField);
-  } else {
+  }
+  else {
     dropFieldParent.children.splice(dropFieldIndex + 1, 0, newField);
   }
 

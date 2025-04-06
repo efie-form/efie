@@ -28,7 +28,7 @@ const defaultShadow: BoxShadowProperty = {
 export default function PropSettingsShadow({ field }: PropSettingsShadowProps) {
   const { updateFieldProps } = useSchemaStore();
   const shadowProp = field.props.find(
-    (field) => field.type === PropertyType.BOX_SHADOW
+    field => field.type === PropertyType.BOX_SHADOW,
   );
   const [shadow, setShadow] = useControllableState({
     onChange: (value) => {

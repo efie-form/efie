@@ -72,7 +72,7 @@ export default function PageItem({
         {
           'bg-neutral-200': isDragging,
           '!bg-neutral-100': isCurrentPage,
-        }
+        },
       )}
       onClick={() => onSelect()}
       onDoubleClick={() => {
@@ -89,67 +89,72 @@ export default function PageItem({
         >
           <MdOutlineDragIndicator />
         </span>
-        {editMode ? (
-          <input
-            ref={inputRef}
-            value={inputName}
-            className="typography-body3 px-1 py-0.5 outline-primary"
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                handleRename();
-              } else if (e.key === 'Escape') {
-                handleCancelRename();
-              }
-            }}
-            onChange={(e) => setInputName(e.target.value)}
-            onBlur={() => {
-              handleRename();
-            }}
-          />
-        ) : (
-          <span className="typography-body3 text-neutral-900">{inputName}</span>
-        )}
+        {editMode
+          ? (
+              <input
+                ref={inputRef}
+                value={inputName}
+                className="typography-body3 px-1 py-0.5 outline-primary"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    handleRename();
+                  }
+                  else if (e.key === 'Escape') {
+                    handleCancelRename();
+                  }
+                }}
+                onChange={e => setInputName(e.target.value)}
+                onBlur={() => {
+                  handleRename();
+                }}
+              />
+            )
+          : (
+              <span className="typography-body3 text-neutral-900">{inputName}</span>
+            )}
       </div>
       <span className="pe-2 invisible group-hover:visible flex gap-2">
-        {deleteConfirm ? (
-          <>
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
+        {deleteConfirm
+          ? (
+              <>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
 
-                onDelete();
-                setDeleteConfirm(false);
-              }}
-            >
-              <FaCheck className="text-success" size={14} />
-            </button>
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
+                    onDelete();
+                    setDeleteConfirm(false);
+                  }}
+                >
+                  <FaCheck className="text-success" size={14} />
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
 
-                setDeleteConfirm(false);
-              }}
-            >
-              <FaXmark className="text-danger" size={14} />
-            </button>
-          </>
-        ) : (
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              setDeleteConfirm(true);
-            }}
-            disabled={schema.form.fields.length === 1}
-          >
-            <FaTrash
-              className={cn('text-danger', {
-                'opacity-50 cursor-not-allowed':
+                    setDeleteConfirm(false);
+                  }}
+                >
+                  <FaXmark className="text-danger" size={14} />
+                </button>
+              </>
+            )
+          : (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setDeleteConfirm(true);
+                }}
+                disabled={schema.form.fields.length === 1}
+              >
+                <FaTrash
+                  className={cn('text-danger', {
+                    'opacity-50 cursor-not-allowed':
                   schema.form.fields.length === 1,
-              })}
-              size={12}
-            />
-          </button>
-        )}
+                  })}
+                  size={12}
+                />
+              </button>
+            )}
       </span>
     </li>
   );

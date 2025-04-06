@@ -33,12 +33,12 @@ const tabs = [
 
 function LeftBar() {
   const [activeTab, setActiveTab] = useState(tabs[0].id);
-  const currentTab = tabs.find((tab) => tab.id === activeTab);
+  const currentTab = tabs.find(tab => tab.id === activeTab);
 
   return (
     <div className="h-full flex">
       <div className="bg-neutral-100/40 h-full">
-        {tabs.map((tab) => (
+        {tabs.map(tab => (
           <Tooltip
             key={tab.id}
             content={tab.label}
@@ -51,7 +51,7 @@ function LeftBar() {
                 'p-3 hover:bg-neutral-200/30 cursor-pointer transition-all duration-100',
                 {
                   '!bg-neutral-200/80': tab.id === activeTab,
-                }
+                },
               )}
               onClick={() => setActiveTab(tab.id)}
             >
