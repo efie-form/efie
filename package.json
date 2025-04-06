@@ -8,7 +8,8 @@
     "dev:react-builder-demo": "nx serve react-builder-demo",
     "tw": "pnpm run tw --filter @efie-form/core",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "prepare": "husky"
   },
   "repository": {
     "type": "git",
@@ -39,13 +40,20 @@
     "eslint-plugin-unicorn": "^57.0.0",
     "eslint-plugin-unused-imports": "^4.1.4",
     "globals": "^16.0.0",
+    "husky": "^9.1.7",
     "jest": "^29.7.0",
+    "lint-staged": "^15.5.0",
     "nx": "20.7.1",
     "typescript-eslint": "^8.25.0",
     "vite": "^6.2.5",
     "vitest": "^1.6.1"
   },
   "nx": {},
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix"
+    ]
+  },
   "pnpm": {
     "ignoredBuiltDependencies": [
       "@swc/core",
