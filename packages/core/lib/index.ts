@@ -96,4 +96,5 @@ export {
   type TagProperty,
   type TextAlignProperty,
   type ContentProperty,
+  type BoxShadow,
 } from './types/fieldProperties.type';
