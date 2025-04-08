@@ -1,10 +1,7 @@
 import { FaPlus } from 'react-icons/fa';
-import { useControllableState } from '../../../lib/hooks/useControllableState';
-import { useSchemaStore } from '../../../lib/state/schema.state';
+import { useFieldShadow } from '../../../lib/hooks/properties/useFieldShadow';
 import {
-  PropertyType,
   type BoxShadow,
-  type BoxShadowProperty,
   type FormField,
 } from '@efie-form/core';
 import * as Accordion from '@radix-ui/react-accordion';
@@ -39,61 +36,45 @@ interface PropSettingsShadowProps {
   field: FormField;
 }
 
-const defaultShadow: BoxShadowProperty = {
-  type: PropertyType.BOX_SHADOW,
-  value: [
-    defaultShadowItem,
-  ],
-};
-
 export default function PropSettingsShadow({ field }: PropSettingsShadowProps) {
-  const { updateFieldProps } = useSchemaStore();
+  const { shadows, updateShadows } = useFieldShadow(field);
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
     }),
   );
-  const shadowProp = field.props.find(
-    field => field.type === PropertyType.BOX_SHADOW,
-  );
-  const [shadows, setShadows] = useControllableState({
-    onChange: (value) => {
-      updateFieldProps(field.id, PropertyType.BOX_SHADOW, value);
-    },
-    defaultValue: shadowProp || defaultShadow,
-  });
 
   const handleAddShadow = () => {
-    setShadows(prev => ({
-      ...prev,
-      value: [...prev.value, defaultShadowItem],
-    }));
+    updateShadows({
+      ...shadows,
+      value: [...shadows.value, defaultShadowItem],
+    });
   };
 
   const handleRemoveShadow = (index: number) => {
-    setShadows(prev => ({
-      ...prev,
-      value: prev.value.filter((_, i) => i !== index),
-    }));
+    updateShadows({
+      ...shadows,
+      value: shadows.value.filter((_, i) => i !== index),
+    });
   };
 
   const handleMoveShadow = (from: number, to: number) => {
-    setShadows(prev => ({
-      ...prev,
-      value: arraySwap(prev.value, from, to),
-    }));
+    updateShadows({
+      ...shadows,
+      value: arraySwap(shadows.value, from, to),
+    });
   };
 
   const handleUpdateShadow = (index: number, shadow: BoxShadow) => {
-    setShadows(prev => ({
-      ...prev,
-      value: prev.value.map((s, i) => i === index ? shadow : s),
-    }));
+    updateShadows({
+      ...shadows,
+      value: shadows.value.map((s, i) => i === index ? shadow : s),
+    });
+  };
 
   return (
     <>
-
       <div className="px-4 py-3.5">
         <div className="flex justify-between items-center">
           <div>
@@ -128,6 +109,7 @@ export default function PropSettingsShadow({ field }: PropSettingsShadowProps) {
                     index={index}
                     onDelete={() => handleRemoveShadow(index)}
                     shadow={shadow}
+                    onUpdate={shadow => handleUpdateShadow(index, shadow)}
                   />
                 ))}
               </SortableContext>
@@ -141,15 +123,16 @@ export default function PropSettingsShadow({ field }: PropSettingsShadowProps) {
       </div>
     </>
   );
-}
+};
 
 interface ShadowItemProps {
   index: number;
   onDelete: () => void;
+  onUpdate: (shadow: BoxShadow) => void;
   shadow: BoxShadow;
 }
 
-function ShadowItem({ index, onDelete, shadow }: ShadowItemProps) {
+function ShadowItem({ index, onDelete, onUpdate, shadow }: ShadowItemProps) {
   const {
     attributes,
     listeners,
@@ -160,6 +143,13 @@ function ShadowItem({ index, onDelete, shadow }: ShadowItemProps) {
   } = useSortable({
     id: index.toString(),
   });
+
+  const handleUpdate = (updates: Partial<BoxShadow>) => {
+    onUpdate({
+      ...shadow,
+      ...updates,
+    });
+  };
 
   const style = {
     transform: transform ? `translateY(${transform.y}px)` : undefined,
@@ -227,7 +217,12 @@ function ShadowItem({ index, onDelete, shadow }: ShadowItemProps) {
                 <Number
                   value={shadow.x.value}
                   onChange={(newValue) => {
-                    //
+                    handleUpdate({
+                      x: {
+                        ...shadow.x,
+                        value: newValue || 0,
+                      },
+                    });
                   }}
                   suffix="px"
                   suffixType="text"
@@ -241,7 +236,12 @@ function ShadowItem({ index, onDelete, shadow }: ShadowItemProps) {
                 <Number
                   value={shadow.y.value}
                   onChange={(newValue) => {
-                    //
+                    handleUpdate({
+                      y: {
+                        ...shadow.y,
+                        value: newValue || 0,
+                      },
+                    });
                   }}
                   suffix="px"
                   suffixType="text"
@@ -255,7 +255,9 @@ function ShadowItem({ index, onDelete, shadow }: ShadowItemProps) {
                 <ColorPicker
                   value={shadow.color}
                   onChange={(newValue) => {
-                    //
+                    handleUpdate({
+                      color: newValue || '#000000',
+                    });
                   }}
                 />
               </div>
@@ -267,7 +269,15 @@ function ShadowItem({ index, onDelete, shadow }: ShadowItemProps) {
                 <Number
                   value={shadow.blur.value}
                   onChange={(newValue) => {
-                    //
+                    handleUpdate({
+                      blur: {
+                        ...shadow.blur,
+                        value: newValue || 0,
+                      },
+                    });
+                  }}
+                  inputProps={{
+                    min: 0,
                   }}
                   suffix="px"
                   suffixType="text"
@@ -281,7 +291,15 @@ function ShadowItem({ index, onDelete, shadow }: ShadowItemProps) {
                 <Number
                   value={shadow.spread.value}
                   onChange={(newValue) => {
-                    //
+                    handleUpdate({
+                      spread: {
+                        ...shadow.spread,
+                        value: newValue || 0,
+                      },
+                    });
+                  }}
+                  inputProps={{
+                    min: 0,
                   }}
                   suffix="px"
                   suffixType="text"
@@ -295,7 +313,9 @@ function ShadowItem({ index, onDelete, shadow }: ShadowItemProps) {
                 <Switch
                   checked={shadow.inset}
                   onChange={(newValue) => {
-                    //
+                    handleUpdate({
+                      inset: newValue || false,
+                    });
                   }}
                 />
               </div>
