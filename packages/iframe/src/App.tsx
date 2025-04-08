@@ -31,7 +31,6 @@ function App() {
     return () => {
       editorRef.current = undefined;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function initializeFormBuilder() {

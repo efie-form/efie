@@ -3,7 +3,7 @@ import type { BoxShadow } from '@efie-form/core';
 export const toBoxShadowStyle = (shadows: BoxShadow[]) => {
   if (!shadows) return;
 
-  return shadows.map((shadow) => toShadow(shadow)).join(', ');
+  return shadows.map(shadow => toShadow(shadow)).join(', ');
 };
 
 const toShadow = (shadow: BoxShadow) => {

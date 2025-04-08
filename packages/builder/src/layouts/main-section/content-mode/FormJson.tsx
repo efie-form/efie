@@ -34,10 +34,10 @@ export default function FormJson() {
   const handleSave = () => {
     const schema = validateSchema(value);
     if (!schema || !isChanged()) return;
-    setInternalIndex((prev) => prev + 1);
+    setInternalIndex(prev => prev + 1);
     setIsUpdating(true);
     const firstPage = schema.form.fields.find(
-      (f) => f.type === FormFieldType.PAGE
+      f => f.type === FormFieldType.PAGE,
     );
     if (firstPage) setPage(firstPage.id);
     setSchema(schema);
@@ -51,7 +51,8 @@ export default function FormJson() {
       const isValid = checkSchema(parsedSchema);
       setIsValidSchema(isValid);
       if (isValid) return parsedSchema;
-    } catch {
+    }
+    catch {
       setIsValidSchema(false);
     }
   };

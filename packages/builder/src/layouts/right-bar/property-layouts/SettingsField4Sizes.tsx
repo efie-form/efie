@@ -27,7 +27,7 @@ function getDefaultValue<T extends string>(sizes: Size<T>[]) {
 }
 
 const isAllEqual = <T extends string>(sizes: Size<T>[]) => {
-  return sizes.every((size) => size.value === sizes[0].value);
+  return sizes.every(size => size.value === sizes[0].value);
 };
 
 export default function SettingsField4Sizes<T extends string>({
@@ -44,12 +44,12 @@ export default function SettingsField4Sizes<T extends string>({
       onChange(value);
     },
   });
-  const prev4SidesRef =
-    useRef<Record<T, { value: number; unit: SizeUnit }>>(defaultSize);
+  const prev4SidesRef
+    = useRef<Record<T, { value: number; unit: SizeUnit }>>(defaultSize);
   const prevAllSideRef = useRef<{ value: number; unit: SizeUnit }>();
 
   const handleToggleCustomPadding = () => {
-    setIsSplitSides((prev) => !prev);
+    setIsSplitSides(prev => !prev);
 
     if (isSplitSides && !isAllEqual(sizes)) {
       // to change from split to all equal
@@ -90,7 +90,7 @@ export default function SettingsField4Sizes<T extends string>({
   };
 
   const handleChangeSize = (key: T, value: number) => {
-    setValue((prev) => ({
+    setValue(prev => ({
       ...prev,
       [key]: {
         ...prev[key],
@@ -132,7 +132,7 @@ export default function SettingsField4Sizes<T extends string>({
         <div className="mt-5">
           {isSplitSides && (
             <div className="grid grid-cols-2 gap-x-2 gap-y-4">
-              {sizes.map((item) => (
+              {sizes.map(item => (
                 <div key={item.key} className="">
                   <p className="typography-body3 text-neutral-700 mb-2">
                     {item.label}

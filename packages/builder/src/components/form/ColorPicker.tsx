@@ -21,8 +21,8 @@ interface ColorPickerProps {
   onClose?: () => void;
 }
 
-const inputStyle =
-  'text-xs outline-none border border-neutral-200 rounded-md px-2 py-1';
+const inputStyle
+  = 'text-xs outline-none border border-neutral-200 rounded-md px-2 py-1';
 
 interface FormSchema {
   hex: string;
@@ -72,7 +72,7 @@ function ColorPicker({
       setColorObject(ColorService.convert('hex', hex));
     },
     250,
-    [watch('hex')]
+    [watch('hex')],
   );
 
   useDebounce(
@@ -82,7 +82,7 @@ function ColorPicker({
       setColorObject(ColorService.convert('rgb', rgb));
     },
     250,
-    [watch('rgb.r'), watch('rgb.g'), watch('rgb.b'), watch('rgb.a')]
+    [watch('rgb.r'), watch('rgb.g'), watch('rgb.b'), watch('rgb.a')],
   );
 
   const handleColorChange = (color: IColor) => {
@@ -157,18 +157,18 @@ function ColorPicker({
                           if (!HEX_ALLOWED_CHARS.test(e.target.value)) return;
                           setEdited(true);
 
-                          const hex =
-                            '#' +
-                            e.target.value
-                              .toUpperCase()
-                              .replaceAll('#', '')
-                              .slice(0, 8);
+                          const hex
+                            = '#'
+                              + e.target.value
+                                .toUpperCase()
+                                .replaceAll('#', '')
+                                .slice(0, 8);
 
                           onChange(hex);
                         }}
                       />
                     )}
-                    name={'hex'}
+                    name="hex"
                     control={control}
                   />
                   <p className="typography-body4 text-center">hex</p>

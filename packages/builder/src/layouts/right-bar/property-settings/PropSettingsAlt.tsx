@@ -19,7 +19,7 @@ const defaultAlt: AltProperty = {
 
 export default function PropSettingsAlt({ field }: PropSettingsAltProps) {
   const { updateFieldProps } = useSchemaStore();
-  const altProp = field.props.find((field) => field.type === PropertyType.ALT);
+  const altProp = field.props.find(field => field.type === PropertyType.ALT);
   const [alt, setAlt] = useControllableState({
     onChange: (value) => {
       updateFieldProps(field.id, PropertyType.ALT, value);

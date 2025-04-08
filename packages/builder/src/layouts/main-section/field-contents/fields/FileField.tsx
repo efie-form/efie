@@ -19,7 +19,7 @@ function FileField({ field }: FileFieldProps) {
     <div className="p-2">
       <input
         value={label}
-        onChange={(e) => updateLabel(e.target.value)}
+        onChange={e => updateLabel(e.target.value)}
         className="mb-2 typography-body2 bg-white bg-opacity-0 focus:outline-none cursor-text w-full"
         type="text"
       />
@@ -32,10 +32,16 @@ function FileField({ field }: FileFieldProps) {
       </div>
       <div className="flex justify-between text-neutral-500 typography-body3 mt-2">
         {!acceptProp?.allowAll && (
-          <p>Supported formats: {acceptProp?.formats?.join(', ')}</p>
+          <p>
+            Supported formats:
+            {acceptProp?.formats?.join(', ')}
+          </p>
         )}
         {maxFilesProp && maxFilesProp?.value > 1 && (
-          <p>Max files: {maxFilesProp?.value}</p>
+          <p>
+            Max files:
+            {maxFilesProp?.value}
+          </p>
         )}
       </div>
     </div>

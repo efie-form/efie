@@ -22,7 +22,7 @@ export default function PropSettingsRequired({
 }: PropSettingsRequiredProps) {
   const { updateFieldProps } = useSchemaStore();
   const requiredProp = field.props.find(
-    (field) => field.type === PropertyType.REQUIRED
+    field => field.type === PropertyType.REQUIRED,
   );
   const [required, setRequired] = useControllableState({
     onChange: (value) => {
@@ -36,7 +36,7 @@ export default function PropSettingsRequired({
       <Switch
         checked={required.value}
         onChange={(newValue) => {
-          setRequired((prev) => ({
+          setRequired(prev => ({
             ...prev,
             value: newValue,
           }));

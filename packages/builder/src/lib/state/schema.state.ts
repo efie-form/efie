@@ -53,7 +53,7 @@ export const useSchemaStore = create<SchemaState>((set, getState) => ({
   setSchema: (schema) => {
     const { addHistory } = getState();
     const { fieldKeyMap, fieldMap, fieldParentMap } = getFieldInfoMap(
-      schema.form.fields
+      schema.form.fields,
     );
     addHistory(schema);
     set({
@@ -86,8 +86,8 @@ export const useSchemaStore = create<SchemaState>((set, getState) => ({
     if (!pageId) return;
     const { schema } = getState();
     return schema.form.fields
-      .filter((field) => field.type === 'page')
-      .find((field) => field.id === pageId);
+      .filter(field => field.type === 'page')
+      .find(field => field.id === pageId);
   },
   updatePages: (pages) => {
     const { fieldMap, fieldKeyMap, schema, addHistory } = getState();
@@ -127,7 +127,7 @@ export const useSchemaStore = create<SchemaState>((set, getState) => ({
     if (!field) return;
 
     // Find the property with the matching type
-    const propIndex = field.props.findIndex((prop) => prop.type === type);
+    const propIndex = field.props.findIndex(prop => prop.type === type);
 
     // Create a new property with the correct type
     const newProp = {
@@ -139,7 +139,8 @@ export const useSchemaStore = create<SchemaState>((set, getState) => ({
       // Add new property if it doesn't exist
       // @ts-expect-error - This is a valid operation
       field.props.push(newProp);
-    } else {
+    }
+    else {
       // Update existing property
       field.props[propIndex] = newProp;
     }
@@ -149,14 +150,14 @@ export const useSchemaStore = create<SchemaState>((set, getState) => ({
   },
   getFieldProps: <T extends PropertyDefinition['type']>(
     fieldId: string,
-    type: T
+    type: T,
   ): Extract<PropertyDefinition, { type: T }> | undefined => {
     const { fieldMap } = getState();
     const field = fieldMap.get(fieldId);
     if (!field) return;
 
     // Find the property with the matching type
-    const prop = field.props.find((prop) => prop.type === type);
+    const prop = field.props.find(prop => prop.type === type);
     if (!prop) return;
 
     // Type guard to ensure we're returning the correct property type
@@ -171,18 +172,18 @@ export const useSchemaStore = create<SchemaState>((set, getState) => ({
     addHistory(schema);
   },
   replaceFieldChildren: (fieldId, children) => {
-    const { fieldMap, schema, addHistory, fieldKeyMap, fieldParentMap } =
-      getState();
+    const { fieldMap, schema, addHistory, fieldKeyMap, fieldParentMap }
+      = getState();
     const field = fieldMap.get(fieldId);
     if (!field || !('children' in field)) return;
-    const originalChildrenId = field.children.map((child) => child.id);
-    const newChildrenId = children.map((child) => child.id);
+    const originalChildrenId = field.children.map(child => child.id);
+    const newChildrenId = children.map(child => child.id);
 
     const childrenToDelete = originalChildrenId.filter(
-      (id) => !newChildrenId.includes(id)
+      id => !newChildrenId.includes(id),
     );
     const childrenToAdd = newChildrenId.filter(
-      (id) => !originalChildrenId.includes(id)
+      id => !originalChildrenId.includes(id),
     );
 
     field.children = children;
@@ -193,12 +194,12 @@ export const useSchemaStore = create<SchemaState>((set, getState) => ({
     }
 
     for (const child of childrenToAdd) {
-      const childField = children.find((c) => c.id === child);
+      const childField = children.find(c => c.id === child);
       if (!childField) continue;
       fieldMap.set(child, childField);
       fieldKeyMap.set(
         child,
-        `form.fields.${children.findIndex((c) => c.id === child)}`
+        `form.fields.${children.findIndex(c => c.id === child)}`,
       );
       fieldParentMap.set(child, fieldId);
     }
@@ -208,14 +209,14 @@ export const useSchemaStore = create<SchemaState>((set, getState) => ({
     set({ fieldMap, fieldKeyMap, fieldParentMap });
   },
   deleteField: (fieldId) => {
-    const { fieldMap, fieldKeyMap, fieldParentMap, schema, addHistory } =
-      getState();
+    const { fieldMap, fieldKeyMap, fieldParentMap, schema, addHistory }
+      = getState();
     const parentId = fieldParentMap.get(fieldId);
     if (parentId) {
       const parent = fieldMap.get(parentId);
       if (parent && 'children' in parent) {
         parent.children = parent.children.filter(
-          (child) => child.id !== fieldId
+          child => child.id !== fieldId,
         );
         fieldMap.set(parentId, parent);
       }
@@ -239,7 +240,7 @@ export const useSchemaStore = create<SchemaState>((set, getState) => ({
     const newSchema = JSON.parse(nextHistory);
 
     const { fieldMap, fieldKeyMap, fieldParentMap } = getFieldInfoMap(
-      newSchema.form.fields
+      newSchema.form.fields,
     );
 
     set({
@@ -258,7 +259,7 @@ export const useSchemaStore = create<SchemaState>((set, getState) => ({
     const newSchema = JSON.parse(previousHistory);
 
     const { fieldMap, fieldKeyMap, fieldParentMap } = getFieldInfoMap(
-      newSchema.form.fields
+      newSchema.form.fields,
     );
 
     set({
@@ -308,7 +309,7 @@ function getFieldInfoMap(
   fieldKeyMap: Map<string, string> = new Map(),
   fieldMap: Map<string, FormField> = new Map(),
   fieldParentMap: Map<string, string> = new Map(),
-  fieldKey: string = 'form.fields'
+  fieldKey: string = 'form.fields',
 ) {
   for (const i in fields) {
     const field = fields[i];
@@ -323,7 +324,7 @@ function getFieldInfoMap(
         fieldKeyMap,
         fieldMap,
         fieldParentMap,
-        `${fieldKey}.${i}.children`
+        `${fieldKey}.${i}.children`,
       );
     }
   }

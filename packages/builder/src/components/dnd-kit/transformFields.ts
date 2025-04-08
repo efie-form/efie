@@ -26,7 +26,7 @@ const checkMoveDirection = (
   fields: FormField[],
   activeFieldId: string,
   overFieldId: string,
-  direction: 'up' | 'down'
+  direction: 'up' | 'down',
 ) => {
   const fieldPathMap = new Map<string, string>();
   generateLocationMap(fields, '0', (id, path) => {
@@ -42,7 +42,7 @@ const checkMoveDirection = (
 const generateLocationMap = (
   fields: FormField[],
   parentPath: string,
-  cb: (id: string, path: string) => void
+  cb: (id: string, path: string) => void,
 ) => {
   for (const [index, field] of fields.entries()) {
     const path = `${parentPath}${index}`;
@@ -57,7 +57,7 @@ const generateLocationMap = (
 const checkDirection = (
   activeFieldPath: string,
   overFieldPath: string,
-  direction: 'up' | 'down'
+  direction: 'up' | 'down',
 ) => {
   if (activeFieldPath.length === overFieldPath.length) {
     // same children

@@ -19,15 +19,15 @@ interface DndState {
   ) => void;
 }
 
-export const useDndStore = create<DndState>((set) => ({
+export const useDndStore = create<DndState>(set => ({
   action: undefined,
-  setAction: (action) => set({ action }),
+  setAction: action => set({ action }),
   draggedType: undefined,
-  setDraggedType: (type) => set({ draggedType: type }),
+  setDraggedType: type => set({ draggedType: type }),
   direction: undefined,
-  setDirection: (direction) => set({ direction }),
+  setDirection: direction => set({ direction }),
   clearDraggingState: () => set({ draggedType: undefined, action: undefined }),
   originalRect: {},
   setOriginalRect: (key, rect) =>
-    set((state) => ({ originalRect: { ...state.originalRect, [key]: rect } })),
+    set(state => ({ originalRect: { ...state.originalRect, [key]: rect } })),
 }));

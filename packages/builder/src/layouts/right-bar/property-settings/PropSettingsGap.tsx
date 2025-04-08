@@ -23,7 +23,7 @@ const defaultGap: GapProperty = {
 
 export default function PropSettingsGap({ field }: PropSettingsGapProps) {
   const { updateFieldProps } = useSchemaStore();
-  const gapProp = field.props.find((field) => field.type === PropertyType.GAP);
+  const gapProp = field.props.find(field => field.type === PropertyType.GAP);
   const [gap, setGap] = useControllableState({
     onChange: (value) => {
       updateFieldProps(field.id, PropertyType.GAP, value);
@@ -40,7 +40,7 @@ export default function PropSettingsGap({ field }: PropSettingsGapProps) {
           }}
           value={gap.value.value.toString()}
           onChange={(newValue) => {
-            setGap((prev) => ({
+            setGap(prev => ({
               ...prev,
               value: {
                 ...prev.value,
@@ -52,7 +52,7 @@ export default function PropSettingsGap({ field }: PropSettingsGapProps) {
         <Select
           value={gap.value.unit}
           onChange={(newUnit) => {
-            setGap((prev) => ({
+            setGap(prev => ({
               ...prev,
               value: {
                 ...prev.value,

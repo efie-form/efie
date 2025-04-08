@@ -46,7 +46,7 @@ export default function moveField({
       fieldParentId,
       fieldId,
       dropFieldId,
-      direction
+      direction,
     );
   }
 
@@ -56,7 +56,7 @@ export default function moveField({
     fieldParentId,
     dropFieldId,
     dropFieldParentId,
-    direction
+    direction,
   );
 }
 
@@ -64,7 +64,7 @@ const moveFieldToChildrenEnd = (
   fields: FormField[],
   fieldId: string,
   fieldParentId: string,
-  columnId: string
+  columnId: string,
 ) => {
   const fieldParent = findField(fields, fieldParentId);
   const dropFieldParent = findField(fields, columnId);
@@ -74,16 +74,17 @@ const moveFieldToChildrenEnd = (
     return fields;
 
   const fieldIndex = fieldParent.children.findIndex(
-    (field) => field.id === fieldId
+    field => field.id === fieldId,
   );
   const temp = fieldParent.children.splice(fieldIndex, 1);
 
   if (dropFieldParent.type === 'row') {
     const columnFieldsOnly = dropFieldParent.children.filter(
-      (field) => field.type === 'column'
+      field => field.type === 'column',
     );
     dropFieldParent.children.push(...columnFieldsOnly);
-  } else {
+  }
+  else {
     dropFieldParent.children.push(...temp);
   }
 
@@ -96,7 +97,7 @@ const swapAcrossDifferentParents = (
   fieldParentId: string,
   dropFieldId: string,
   dropFieldParentId: string,
-  direction: 'up' | 'down'
+  direction: 'up' | 'down',
 ) => {
   const fieldParent = findField(fields, fieldParentId);
   const dropFieldParent = findField(fields, dropFieldParentId);
@@ -107,17 +108,18 @@ const swapAcrossDifferentParents = (
     return fields;
 
   const fieldIndex = fieldParent.children.findIndex(
-    (field) => field.id === fieldId
+    field => field.id === fieldId,
   );
   const temp = fieldParent.children.splice(fieldIndex, 1);
 
   const dropFieldIndex = dropFieldParent.children.findIndex(
-    (field) => field.id === dropFieldId
+    field => field.id === dropFieldId,
   );
 
   if (direction === 'up') {
     dropFieldParent.children.splice(dropFieldIndex, 0, ...temp);
-  } else {
+  }
+  else {
     dropFieldParent.children.splice(dropFieldIndex + 1, 0, ...temp);
   }
 
@@ -129,25 +131,26 @@ const swapBetweenSiblings = (
   parentFieldId: string,
   fieldId: string,
   dropFieldId: string,
-  direction: 'up' | 'down'
+  direction: 'up' | 'down',
 ) => {
   const parentField = findField(fields, parentFieldId);
 
   if (!parentField || !('children' in parentField)) return fields;
 
   const fieldIndex = parentField.children.findIndex(
-    (field) => field.id === fieldId
+    field => field.id === fieldId,
   );
 
   const temp = parentField.children.splice(fieldIndex, 1);
 
   const dropFieldIndex = parentField.children.findIndex(
-    (field) => field.id === dropFieldId
+    field => field.id === dropFieldId,
   );
 
   if (direction === 'up') {
     parentField.children.splice(dropFieldIndex, 0, ...temp);
-  } else {
+  }
+  else {
     parentField.children.splice(dropFieldIndex + 1, 0, ...temp);
   }
 
@@ -156,7 +159,7 @@ const swapBetweenSiblings = (
 
 const findField = (
   fields: FormField[],
-  fieldId: string
+  fieldId: string,
 ): FormField | undefined => {
   let result: FormField | undefined;
   for (const field of fields) {

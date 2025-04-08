@@ -13,7 +13,7 @@ function ColumnsField({ field }: ColumnsFieldProps) {
     <Droppable id={field.id} type={field.type} className="h-full">
       {hasChildren && (
         <div>
-          {field.children.map((child) => (
+          {field.children.map(child => (
             <RenderField key={`${field.id}-${child.id}`} field={child} />
           ))}
         </div>

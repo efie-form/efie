@@ -7,12 +7,12 @@ function SingleChoiceField({ label, id, options }: SingleChoiceFieldProps) {
       <Select
         id={id}
         size="small"
-        value={''}
+        value=""
         fullWidth
         variant="outlined"
         label={label}
       >
-        {options.map((option) => (
+        {options.map(option => (
           <MenuItem key={option.value} value={option.value}>
             {option.label}
           </MenuItem>

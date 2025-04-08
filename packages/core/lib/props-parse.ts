@@ -2,7 +2,6 @@ import type {
   BorderRadiusProperty,
   BoxShadowProperty,
   ColorProperty,
-  DividerHeightProperty,
   FontSizeProperty,
   FontWeightProperty,
   MarginProperty,
@@ -67,9 +66,9 @@ export const borderRadiusToStyle = (borderRadius?: BorderRadiusProperty) => {
   const bottomRight = toSize(borderRadius.value.bottomRight);
 
   if (
-    topLeft === topRight &&
-    topRight === bottomLeft &&
-    bottomLeft === bottomRight
+    topLeft === topRight
+    && topRight === bottomLeft
+    && bottomLeft === bottomRight
   ) {
     return topLeft;
   }

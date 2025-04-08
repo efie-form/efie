@@ -55,7 +55,7 @@ function RenderField({ field, noSelect }: RenderFieldProps) {
     popperElement,
     {
       placement: 'left-start',
-    }
+    },
   );
 
   const { attributes, dragHandlerProps } = useDndItem({
@@ -81,7 +81,7 @@ function RenderField({ field, noSelect }: RenderFieldProps) {
             '!outline-primary relative z-50': isSelected,
             '[&:not(:has(div[data-field=true]:hover))]:hover:outline-neutral-100':
               field.type !== 'column',
-          }
+          },
         )}
         {...(!noSelect && {
           onClick: (e: MouseEvent) => {
@@ -91,8 +91,8 @@ function RenderField({ field, noSelect }: RenderFieldProps) {
           },
         })}
       >
-        {isSelected &&
-          createPortal(
+        {isSelected
+          && createPortal(
             <div
               ref={(el) => {
                 if (!el) return;
@@ -117,7 +117,7 @@ function RenderField({ field, noSelect }: RenderFieldProps) {
                 <HiTrash />
               </button>
             </div>,
-            document.querySelector('#form-zone')!
+            document.querySelector('#form-zone')!,
           )}
         <FieldItem field={field} />
       </div>
@@ -181,7 +181,9 @@ function FieldItem({ field }: RenderFieldProps) {
     default: {
       return (
         <div className="px-4 py-2">
-          {field.id} {field.type}
+          {field.id}
+          {' '}
+          {field.type}
         </div>
       );
     }

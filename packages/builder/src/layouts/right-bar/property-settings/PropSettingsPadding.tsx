@@ -26,7 +26,7 @@ export default function PropSettingsPadding({
 }: PropSettingsPaddingProps) {
   const { updateFieldProps } = useSchemaStore();
   const paddingProp = field.props.find(
-    (field) => field.type === PropertyType.PADDING
+    field => field.type === PropertyType.PADDING,
   );
   const [padding, setPadding] = useControllableState({
     onChange: (value) => {

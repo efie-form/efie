@@ -29,7 +29,7 @@ export default function PropSettingsButtonType({
 }: PropSettingsButtonTypeProps) {
   const { updateFieldProps } = useSchemaStore();
   const buttonTypeProp = field.props.find(
-    (field) => field.type === PropertyType.BTN_TYPE
+    field => field.type === PropertyType.BTN_TYPE,
   );
   const [buttonType, setButtonType] = useControllableState({
     onChange: (value) => {

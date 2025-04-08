@@ -36,7 +36,7 @@ interface SettingsState {
   setIsInputReusable: (inputReusable: SettingsState['isInputReusable']) => void;
 }
 
-export const useSettingsStore = create<SettingsState>((set) => ({
+export const useSettingsStore = create<SettingsState>(set => ({
   formInputs: [],
   setFormInputs: (inputs) => {
     set({ formInputs: inputs });

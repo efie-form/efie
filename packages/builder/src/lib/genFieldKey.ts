@@ -19,7 +19,7 @@ export type FieldPropsValueType = FieldPathValue<
 
 function genFieldKey<T extends FieldPropsKey>(
   fieldKey: FieldKeyPrefix,
-  fieldProperty: T
+  fieldProperty: T,
 ): `form.fields.${number}.${T}` {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-expect-error

@@ -73,7 +73,8 @@ export default function PropSettingsWidth({ field }: PropSettingsWidthProps) {
               disabled={width.autoWidth}
             />
             <p className="typography-body3 text-neutral-800">
-              {width.value.value}%
+              {width.value.value}
+              %
             </p>
           </div>
         </div>

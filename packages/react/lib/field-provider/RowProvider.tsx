@@ -16,7 +16,7 @@ function RowProvider({ field, Component, ...props }: RowProviderProps) {
     id: field.id,
     children: (
       <>
-        {field.children.map((field) => (
+        {field.children.map(field => (
           <Fragment key={field.id}>
             <RenderField field={field} {...props} />
           </Fragment>

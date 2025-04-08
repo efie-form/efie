@@ -18,7 +18,7 @@ export default function FormKeySettings({
   return (
     <SettingsFieldVertical label="Form key" divider>
       <Input
-        onChange={(value) => updateFieldProps(fieldId, 'form.key', value)}
+        onChange={value => updateFieldProps(fieldId, 'form.key', value)}
         value={value}
         disabled={!formKeyEditable}
       />

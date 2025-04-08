@@ -30,7 +30,7 @@ const TAG_OPTIONS: Array<{ value: HeadingTag; label: string }> = [
 
 export default function PropSettingsTag({ field }: PropSettingsTagProps) {
   const { updateFieldProps } = useSchemaStore();
-  const tagProp = field.props.find((field) => field.type === PropertyType.TAG);
+  const tagProp = field.props.find(field => field.type === PropertyType.TAG);
   const [tag, setTag] = useControllableState({
     onChange: (value) => {
       updateFieldProps(field.id, PropertyType.TAG, value);

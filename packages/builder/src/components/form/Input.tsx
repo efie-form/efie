@@ -41,7 +41,7 @@ function Input({
         className,
         {
           'bg-neutral-100': disabled,
-        }
+        },
       )}
     >
       <RenderPrefixSuffix type={prefixType}>{prefix}</RenderPrefixSuffix>
@@ -49,13 +49,13 @@ function Input({
         {...inputProps}
         disabled={disabled}
         value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
+        onChange={e => setInputValue(e.target.value)}
         placeholder={placeholder}
         className={cn(
           'outline-none w-full flex-1 py-1 placeholder-neutral-400 typography-body3',
           prefix ? 'ps-1' : 'ps-2',
           suffix ? 'pe-1' : 'pe-2',
-          disabled ? 'text-neutral-600' : 'text-neutral-800'
+          disabled ? 'text-neutral-600' : 'text-neutral-800',
         )}
       />
       <RenderPrefixSuffix type={suffixType}>{suffix}</RenderPrefixSuffix>

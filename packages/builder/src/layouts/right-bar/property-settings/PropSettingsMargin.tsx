@@ -24,7 +24,7 @@ const defaultMargin: MarginProperty = {
 export default function PropSettingsMargin({ field }: PropSettingsMarginProps) {
   const { updateFieldProps } = useSchemaStore();
   const marginProp = field.props.find(
-    (field) => field.type === PropertyType.MARGIN
+    field => field.type === PropertyType.MARGIN,
   );
   const [margin, setMargin] = useControllableState({
     onChange: (value) => {

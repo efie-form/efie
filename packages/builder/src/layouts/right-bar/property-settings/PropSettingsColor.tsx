@@ -20,7 +20,7 @@ const defaultColor: ColorProperty = {
 export default function PropSettingsColor({ field }: PropSettingsColorProps) {
   const { updateFieldProps } = useSchemaStore();
   const colorProp = field.props.find(
-    (field) => field.type === PropertyType.COLOR
+    field => field.type === PropertyType.COLOR,
   );
   const [color, setColor] = useControllableState({
     onChange: (value) => {
@@ -34,7 +34,7 @@ export default function PropSettingsColor({ field }: PropSettingsColorProps) {
       <ColorPicker
         value={color?.value}
         onChange={(newColor) => {
-          setColor((prev) => ({
+          setColor(prev => ({
             ...prev,
             value: newColor,
           }));

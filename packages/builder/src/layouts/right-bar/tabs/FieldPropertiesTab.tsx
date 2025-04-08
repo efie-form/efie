@@ -29,7 +29,8 @@ function FieldPropertiesTab() {
     if (parentField.type === 'page') {
       clearSelectedFieldId();
       setActiveTab(RIGHT_BAR_TABS.PAGE);
-    } else {
+    }
+    else {
       setSelectedFieldId(parentField.id);
       setActiveTab(RIGHT_BAR_TABS.FIELD_SETTINGS);
     }

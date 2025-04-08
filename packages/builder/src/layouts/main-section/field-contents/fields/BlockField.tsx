@@ -33,7 +33,7 @@ function BlockField({ field }: BlockFieldProps) {
         color: color?.value,
       }}
     >
-      {field.children.map((child) => (
+      {field.children.map(child => (
         <RenderField field={child} key={child.id} />
       ))}
     </div>

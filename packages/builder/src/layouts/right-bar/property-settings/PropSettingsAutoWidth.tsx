@@ -22,7 +22,7 @@ export default function PropSettingsAutoWidth({
 }: PropSettingsAutoWidthProps) {
   const { updateFieldProps } = useSchemaStore();
   const autoWidthProp = field.props.find(
-    (field) => field.type === PropertyType.AUTO_WIDTH
+    field => field.type === PropertyType.AUTO_WIDTH,
   );
   const [autoWidth, setAutoWidth] = useControllableState({
     onChange: (value) => {

@@ -10,7 +10,7 @@ interface ReactFormProps extends Partial<FieldPropsMap> {
 function ReactForm({ schema, ...props }: ReactFormProps) {
   return (
     <div>
-      {schema.form.fields.map((field) => (
+      {schema.form.fields.map(field => (
         <Fragment key={field.id}>
           <RenderField field={field} {...props} />
         </Fragment>

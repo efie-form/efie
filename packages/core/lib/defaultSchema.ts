@@ -6,7 +6,7 @@ const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 export function generateId(length: number = 10) {
   return Array.from(
     { length },
-    () => chars[Math.floor(Math.random() * chars.length)]
+    () => chars[Math.floor(Math.random() * chars.length)],
   ).join('');
 }
 
