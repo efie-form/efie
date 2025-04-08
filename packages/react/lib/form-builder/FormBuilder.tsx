@@ -57,7 +57,14 @@ const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
           builderRef.current = undefined;
         }
       };
-    }, [formInputs, height, formInputDetectsChanges, schema]);
+    }, [
+      formInputs,
+      height,
+      formInputDetectsChanges,
+      schema,
+      formKeyNonEditable,
+      inputNonReusable,
+    ]);
 
     // Update height when prop changes
     useEffect(() => {
