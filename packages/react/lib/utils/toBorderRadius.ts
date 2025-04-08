@@ -6,9 +6,9 @@ export const toBorderRadius = (radius: BorderRadius) => {
   const { topLeft, topRight, bottomRight, bottomLeft } = radius;
 
   if (
-    topLeft === topRight &&
-    bottomRight === bottomLeft &&
-    topLeft === bottomRight
+    topLeft === topRight
+    && bottomRight === bottomLeft
+    && topLeft === bottomRight
   ) {
     return `${topLeft}px`;
   }

@@ -19,7 +19,7 @@ export default function useFormBuilder() {
 
   const resetSchema = useCallback((data: FormSchema) => {
     setSchema(data);
-    const firstPage = data.form.fields.find((field) => field.type === 'page');
+    const firstPage = data.form.fields.find(field => field.type === 'page');
     if (firstPage) {
       setPage(firstPage.id);
     }

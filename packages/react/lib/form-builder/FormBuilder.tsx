@@ -24,12 +24,12 @@ export interface FormBuilderRef {
 const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
   (
     { height, formInputs, schema, formKeyNonEditable, inputNonReusable },
-    ref
+    ref,
   ) => {
     const builderRef = useRef<Iframe | undefined>();
     const containerRef = useRef<HTMLDivElement>(null);
     const formInputDetectsChanges = formInputs?.map(
-      (input) => `${input.id}-${input.type}`
+      input => `${input.id}-${input.type}`,
     );
 
     // Initialize Iframe once
@@ -57,7 +57,14 @@ const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
           builderRef.current = undefined;
         }
       };
-    }, [formInputs, height, formInputDetectsChanges, schema]);
+    }, [
+      formInputs,
+      height,
+      formInputDetectsChanges,
+      schema,
+      formKeyNonEditable,
+      inputNonReusable,
+    ]);
 
     // Update height when prop changes
     useEffect(() => {
@@ -74,7 +81,7 @@ const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
           return builderRef.current?.getValue() as FormSchema;
         },
       }),
-      []
+      [],
     );
 
     useEffect(() => {
@@ -93,7 +100,7 @@ const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
         }}
       />
     );
-  }
+  },
 );
 
 export default FormBuilder;

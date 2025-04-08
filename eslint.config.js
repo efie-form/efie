@@ -5,8 +5,15 @@ import reactRefresh from 'eslint-plugin-react-refresh';
 import reactHooks from 'eslint-plugin-react-hooks';
 import unusedImports from 'eslint-plugin-unused-imports';
 import eslintPluginUnicorn from 'eslint-plugin-unicorn';
+import eslintPluginStylistic from '@stylistic/eslint-plugin';
 
 export default [
+  eslintPluginStylistic.configs.customize({
+    indent: 2,
+    quotes: 'single',
+    semi: true,
+    jsx: true,
+  }),
   {
     ignores: ['**/dist/**', '**/node_modules/**', '**/*.d.ts'],
   },
@@ -21,6 +28,24 @@ export default [
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
   eslintPluginUnicorn.configs.recommended,
+  {
+    plugins: {
+      'unused-imports': unusedImports,
+    },
+    rules: {
+      'no-unused-vars': 'off', // or "@typescript-eslint/no-unused-vars": "off",
+      'unused-imports/no-unused-imports': 'error',
+      'unused-imports/no-unused-vars': [
+        'warn',
+        {
+          vars: 'all',
+          varsIgnorePattern: '^_',
+          args: 'after-used',
+          argsIgnorePattern: '^_',
+        },
+      ],
+    },
+  },
   {
     rules: {
       '@typescript-eslint/consistent-type-imports': 'error',
@@ -40,21 +65,10 @@ export default [
     plugins: {
       'react-refresh': reactRefresh,
       'react-hooks': reactHooks,
-      'unused-imports': unusedImports,
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
-      '@typescript-eslint/no-unused-vars': 'off',
-      'unused-imports/no-unused-imports': 'error',
-      'unused-imports/no-unused-vars': [
-        'warn',
-        {
-          vars: 'all',
-          varsIgnorePattern: '^_',
-          args: 'after-used',
-          argsIgnorePattern: '^_',
-        },
-      ],
+      'react-hooks/exhaustive-deps': 'warn',
     },
   },
 ];

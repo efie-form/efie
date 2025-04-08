@@ -1,29 +1,35 @@
-import type { FormFieldImage } from '@efie-form/core';
-import { textAlignMap } from '../../../../lib/constant';
-
+import {
+  PropertyType,
+  textAlignToStyle,
+  widthToStyle,
+  type ImageFormField,
+} from '@efie-form/core';
+import { DEFAULT_IMAGE_URL } from '../../../../lib/constant';
+import { getFieldProp } from '../../../../lib/utils';
 interface ImageFieldProps {
-  field: FormFieldImage;
+  field: ImageFormField;
 }
 
-const DEFAULT_IMAGE_URL =
-  'https://via.assets.so/img.jpg?w=720&h=120&t=Image+Placeholder&tc=#555555&bg=#aaaaaa';
-
 function ImageField({ field }: ImageFieldProps) {
+  const textAlign = getFieldProp(field, PropertyType.TEXT_ALIGN);
+  const src = getFieldProp(field, PropertyType.SRC);
+  const alt = getFieldProp(field, PropertyType.ALT);
+  const width = getFieldProp(field, PropertyType.WIDTH);
+  const objectFit = getFieldProp(field, PropertyType.OBJECT_FIT);
+
   return (
     <div
       style={{
-        textAlign: textAlignMap[field.props.textAlign],
+        textAlign: textAlignToStyle(textAlign),
       }}
     >
       <img
-        src={field.props.src || DEFAULT_IMAGE_URL}
-        alt={field.props.alt}
+        src={src?.value || DEFAULT_IMAGE_URL}
+        alt={alt?.value}
         className="text-neutral-800 inline-block"
         style={{
-          width: field.props.width.autoWidth
-            ? 'auto'
-            : `${field.props.width.value}%`,
-          objectFit: field.props.objectFit,
+          width: widthToStyle(width),
+          objectFit: objectFit?.value,
         }}
       />
     </div>

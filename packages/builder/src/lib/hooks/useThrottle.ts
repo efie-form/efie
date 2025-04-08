@@ -2,7 +2,7 @@ import { useRef } from 'react';
 
 function useThrottle<T extends (...props: Parameters<T>) => void>(
   fn: T,
-  delay: number
+  delay: number,
 ): (...props: Parameters<T>) => void {
   const timeoutRef = useRef<NodeJS.Timeout | undefined>();
   return (...props) => {

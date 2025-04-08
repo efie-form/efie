@@ -15,5 +15,5 @@ const isColorString = (color: string) => {
     /#[0-9a-fA-F]{3}/,
     /rgb\(\d{1,3},\d{1,3},\d{1,3}\)/,
   ];
-  return regex.some((r) => r.test(color));
+  return regex.some(r => r.test(color));
 };

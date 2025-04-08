@@ -17,9 +17,9 @@ function SettingsFieldWidth({
   const { updateFieldProps } = useSchemaStore();
 
   if (
-    !('props' in field) ||
-    !('width' in field.props) ||
-    typeof field.props.width !== 'object'
+    !('props' in field)
+    || !('width' in field.props)
+    || typeof field.props.width !== 'object'
   )
     return <></>;
 
@@ -34,9 +34,8 @@ function SettingsFieldWidth({
             <p className="typography-body4 text-neutral-800">Auto Width</p>
             <Switch
               checked={field.props.width.autoWidth}
-              onChange={(value) =>
-                updateFieldProps(field.id, 'props.width.autoWidth', value)
-              }
+              onChange={value =>
+                updateFieldProps(field.id, 'props.width.autoWidth', value)}
             />
           </div>
         </div>
@@ -44,16 +43,16 @@ function SettingsFieldWidth({
           <div className="flex items-center gap-2">
             <Slider
               value={field.props.width.value}
-              onChange={(value) =>
-                updateFieldProps(field.id, 'props.width.value', value)
-              }
+              onChange={value =>
+                updateFieldProps(field.id, 'props.width.value', value)}
               min={0}
               max={100}
               step={1}
               disabled={field.props.width.autoWidth}
             />
             <p className="typography-body3 text-neutral-800">
-              {field.props.width.value}%
+              {field.props.width.value}
+              %
             </p>
           </div>
         </div>

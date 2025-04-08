@@ -1,354 +1,574 @@
-import type { FormFieldType } from '../InputType';
 import type { JSONContent } from '@tiptap/core';
+import type {
+  FormFieldType,
+  RuleType,
+  ActionType,
+  DisplayPosition,
+  SizeUnit,
+} from './formSchema.constant';
+import type {
+  LabelProperty,
+  PlaceholderProperty,
+  StringDefaultValueProperty,
+  NumberDefaultValueProperty,
+  ArrayDefaultValueProperty,
+  RequiredProperty,
+  MinProperty,
+  MaxProperty,
+  FormatProperty,
+  OptionsProperty,
+  TagProperty,
+  TextAlignProperty,
+  ColorProperty,
+  FontSizeProperty,
+  FontWeightProperty,
+  SrcProperty,
+  AltProperty,
+  ObjectFitProperty,
+  AutoWidthProperty,
+  WidthProperty,
+  HeightProperty,
+  StyleProperty,
+  AcceptProperty,
+  MultipleProperty,
+  ButtonTypeProperty,
+  BgColorProperty,
+  AlignProperty,
+  GapProperty,
+  MarginProperty,
+  PaddingProperty,
+  BorderColorProperty,
+  BorderWidthProperty,
+  BorderRadiusProperty,
+  BoxShadowProperty,
+  BorderStyleProperty,
+  MaxFilesProperty,
+  NameProperty,
+} from './fieldProperties.type';
+import type { RootRule } from './RootRule.type';
+import type { ContentProperty } from './fieldProperties.type';
 
-export interface BorderRadius {
-  topLeft: number;
-  topRight: number;
-  bottomRight: number;
-  bottomLeft: number;
+// Base types for units and measurements
+export interface Size {
+  value: number;
+  unit: SizeUnit;
 }
 
-interface Border {
-  width: number;
-  color: string;
-  radius: BorderRadius;
+// Field condition types
+export interface FieldCondition {
+  fieldId: string;
+  operator: string;
+  value: FieldConditionValue;
 }
 
-// interface Size {
-//   value: number;
-//   unit: 'px' | 'em' | 'rem' | '%';
-// }
-
-export interface Padding {
-  top: number;
-  right: number;
-  bottom: number;
-  left: number;
+export interface FieldConditionGroup {
+  operator: 'and' | 'or';
+  conditions: (FieldCondition | FieldConditionGroup)[];
 }
 
-export interface Margin {
-  top: number;
-  right: number;
-  bottom: number;
-  left: number;
+export type FieldConditionValue = FieldValue | RegExp;
+
+// Field rule types
+export interface FieldVisibilityRule {
+  type: typeof RuleType.VISIBILITY;
+  conditions: FieldCondition | FieldConditionGroup;
+  action: {
+    type: typeof ActionType.SHOW | typeof ActionType.HIDE;
+    fields: string[];
+  };
 }
 
-export interface BoxShadow {
-  x: number;
-  y: number;
-  blur: number;
-  spread: number;
-  color: string;
-  inset: boolean;
+// Field condition operators
+export type FieldConditionOperator =
+  | 'equals'
+  | 'notEquals'
+  | 'contains'
+  | 'notContains'
+  | 'greaterThan'
+  | 'lessThan'
+  | 'greaterThanOrEqual'
+  | 'lessThanOrEqual'
+  | 'regex'
+  | 'isEmpty'
+  | 'isNotEmpty'
+  | 'isValid'
+  | 'isInvalid'
+  | 'custom';
+
+// Field value types
+export type FieldValue = string | number | boolean | null | undefined;
+
+// Field rule types
+export interface FieldRequirementRule {
+  type: typeof RuleType.REQUIREMENT;
+  conditions: FieldCondition | FieldConditionGroup;
+  action: {
+    type: typeof ActionType.READONLY | typeof ActionType.EDITABLE;
+    fields: string[];
+  };
 }
 
-interface Font {
-  size: number;
-  unit: 'px' | 'em' | 'rem';
-  weight: number;
+export interface FieldEnableRule {
+  type: typeof RuleType.ENABLE;
+  conditions: FieldCondition | FieldConditionGroup;
+  action: {
+    type: typeof ActionType.READONLY | typeof ActionType.EDITABLE;
+    fields: string[];
+  };
 }
+
+export interface FieldValueRule {
+  type: typeof RuleType.VALUE;
+  conditions: FieldCondition | FieldConditionGroup;
+  action: {
+    type:
+      | typeof ActionType.SET
+      | typeof ActionType.CLEAR
+      | typeof ActionType.COPY
+      | typeof ActionType.CALCULATE;
+    fields: string[];
+    value?: FieldConditionValue;
+  };
+}
+
+export interface FieldStyleRule {
+  type: typeof RuleType.STYLE;
+  conditions: FieldCondition | FieldConditionGroup;
+  action: {
+    type: typeof ActionType.TRANSFORM;
+    fields: string[];
+    style: Record<string, string | number>;
+  };
+}
+
+export interface FieldValidationRule {
+  type: typeof RuleType.VALIDATION;
+  conditions: FieldCondition | FieldConditionGroup;
+  action: {
+    type: 'crossField';
+    fields: string[];
+    rules: ValidationSchema[];
+    preventSubmission?: boolean;
+  };
+}
+
+export interface FieldDependencyRule {
+  type: typeof RuleType.DEPENDENCY;
+  conditions: FieldCondition | FieldConditionGroup;
+  action: {
+    type: typeof ActionType.WATCH | typeof ActionType.UNWATCH;
+    fields: string[];
+  };
+}
+
+export interface FieldBehaviorRule {
+  type: typeof RuleType.BEHAVIOR;
+  conditions: FieldCondition | FieldConditionGroup;
+  action: {
+    type:
+      | typeof ActionType.FOCUS
+      | typeof ActionType.BLUR
+      | typeof ActionType.SCROLL_INTO_VIEW
+      | typeof ActionType.TRIGGER_EVENT;
+    fields: string[];
+    event?: string;
+  };
+}
+
+export interface FieldAccessRule {
+  type: typeof RuleType.ACCESS;
+  conditions: FieldCondition | FieldConditionGroup;
+  action: {
+    type: typeof ActionType.HIDDEN | typeof ActionType.VISIBLE;
+    fields: string[];
+  };
+}
+
+export interface FieldFormatRule {
+  type: typeof RuleType.FORMAT;
+  conditions: FieldCondition | FieldConditionGroup;
+  action: {
+    type: typeof ActionType.MASK | typeof ActionType.UNMASK;
+    fields: string[];
+    format?: string;
+  };
+}
+
+export interface FieldErrorRule {
+  type: typeof RuleType.ERROR;
+  conditions: FieldCondition | FieldConditionGroup;
+  action: {
+    type: typeof ActionType.DISPLAY;
+    fields: string[];
+    display: {
+      position: DisplayPosition;
+      style?: Record<string, string | number>;
+    };
+  };
+}
+
+export interface FieldStateRule {
+  type: typeof RuleType.STATE;
+  conditions: FieldCondition | FieldConditionGroup;
+  action: {
+    type:
+      | typeof ActionType.LOADING
+      | typeof ActionType.SUCCESS
+      | typeof ActionType.ERROR
+      | typeof ActionType.WARNING;
+    message?: string;
+  };
+}
+
+export type FieldRule =
+  | FieldVisibilityRule
+  | FieldRequirementRule
+  | FieldEnableRule
+  | FieldValueRule
+  | FieldStyleRule
+  | FieldValidationRule
+  | FieldDependencyRule
+  | FieldBehaviorRule
+  | FieldAccessRule
+  | FieldFormatRule
+  | FieldErrorRule
+  | FieldStateRule;
+
+// Validation types
+export type ValidationOperator =
+  | 'equals'
+  | 'notEquals'
+  | 'contains'
+  | 'notContains'
+  | 'greaterThan'
+  | 'lessThan'
+  | 'greaterThanOrEqual'
+  | 'lessThanOrEqual'
+  | 'regex';
+
+// Base validation rule interface
+export interface BaseValidationRule {
+  type: string;
+  message: string;
+}
+
+// Standard validation rule
+export interface StandardValidationRule extends BaseValidationRule {
+  type: 'standard';
+  operator: ValidationOperator;
+  value: FieldConditionValue;
+}
+
+// Future extensibility: Add new validation rule types here
+export type ValidationRule = StandardValidationRule;
+
+export interface ValidationGroup {
+  type: 'group';
+  operator: 'and' | 'or';
+  rules: (ValidationRule | ValidationGroup)[];
+}
+
+export interface ValidationCondition {
+  type: 'condition';
+  fieldId: string;
+  operator: ValidationOperator;
+  value: FieldConditionValue;
+  then: ValidationRule | ValidationGroup;
+  else?: ValidationRule | ValidationGroup;
+}
+
+export interface ValidationCase {
+  type: 'case';
+  fieldId: string;
+  cases: {
+    value: FieldConditionValue;
+    rules: ValidationRule | ValidationGroup;
+  }[];
+  default?: ValidationRule | ValidationGroup;
+}
+
+export type ValidationSchema =
+  | ValidationRule
+  | ValidationGroup
+  | ValidationCondition
+  | ValidationCase;
+
+// Property value types
+export type PropertyValue =
+  | string
+  | number
+  | boolean
+  | JSONContent
+  | Record<string, string | number | boolean | JSONContent>
+  | (string | number | boolean | JSONContent)[]
+  | null
+  | undefined;
+
+// Common container styles
+export interface ContainerStyle {
+  margin: Size;
+  padding: Size;
+  border: {
+    width: Size;
+    color: string;
+    radius: {
+      topLeft: Size;
+      topRight: Size;
+      bottomRight: Size;
+      bottomLeft: Size;
+    };
+  };
+  boxShadow?: {
+    x: Size;
+    y: Size;
+    blur: Size;
+    spread: Size;
+    color: string;
+    inset: boolean;
+  }[];
+  backgroundColor?: string;
+}
+
+// Base form field interface
+export interface BaseFormField {
+  id: string;
+  type: FormFieldType;
+  form?: {
+    key: string;
+    validation?: ValidationSchema[];
+  };
+  props: (
+    | LabelProperty
+    | PlaceholderProperty
+    | StringDefaultValueProperty
+    | NumberDefaultValueProperty
+    | ArrayDefaultValueProperty
+    | RequiredProperty
+    | MinProperty
+    | MaxProperty
+    | FormatProperty
+    | OptionsProperty
+    | TagProperty
+    | TextAlignProperty
+    | ColorProperty
+    | FontSizeProperty
+    | FontWeightProperty
+    | SrcProperty
+    | AltProperty
+    | ObjectFitProperty
+    | AutoWidthProperty
+    | WidthProperty
+    | HeightProperty
+    | StyleProperty
+    | AcceptProperty
+    | MultipleProperty
+    | ButtonTypeProperty
+    | BgColorProperty
+    | AlignProperty
+    | GapProperty
+    | MarginProperty
+    | PaddingProperty
+    | ContentProperty
+    | BoxShadowProperty
+    | BorderRadiusProperty
+    | BorderWidthProperty
+    | BorderColorProperty
+    | BorderStyleProperty
+    | MaxFilesProperty
+    | NameProperty
+  )[];
+  container?: {
+    props: (
+      | WidthProperty
+      | HeightProperty
+      | ColorProperty
+      | BgColorProperty
+      | TextAlignProperty
+      | AlignProperty
+      | GapProperty
+      | FontSizeProperty
+      | FontWeightProperty
+      | StyleProperty
+    )[];
+  };
+  rules?: FieldRule[];
+}
+
+// Input field types
+export interface InputFormField extends BaseFormField {
+  type:
+    | typeof FormFieldType.SHORT_TEXT
+    | typeof FormFieldType.LONG_TEXT
+    | typeof FormFieldType.NUMBER;
+  props: (
+    | LabelProperty
+    | PlaceholderProperty
+    | StringDefaultValueProperty
+    | NumberDefaultValueProperty
+    | RequiredProperty
+    | MinProperty
+    | MaxProperty
+    | FormatProperty
+  )[];
+}
+
+// Choice field types
+export interface ChoiceFormField extends BaseFormField {
+  type:
+    | typeof FormFieldType.SINGLE_CHOICE
+    | typeof FormFieldType.MULTIPLE_CHOICES;
+  props: (
+    | LabelProperty
+    | OptionsProperty
+    | StringDefaultValueProperty
+    | ArrayDefaultValueProperty
+    | RequiredProperty
+    | MultipleProperty
+  )[];
+}
+
+// Date/Time field types
+export interface DateTimeFormField extends BaseFormField {
+  type:
+    | typeof FormFieldType.DATE
+    | typeof FormFieldType.TIME
+    | typeof FormFieldType.DATE_TIME;
+  props: (
+    | LabelProperty
+    | StringDefaultValueProperty
+    | RequiredProperty
+    | FormatProperty
+  )[];
+}
+
+// File field type
+export interface FileFormField extends BaseFormField {
+  type: typeof FormFieldType.FILE;
+  props: (
+    | LabelProperty
+    | AcceptProperty
+    | MaxFilesProperty
+    | RequiredProperty
+  )[];
+}
+
+// Layout field types
+export interface BlockFormField extends BaseFormField {
+  type: typeof FormFieldType.BLOCK;
+  children: FormField[];
+  props: (
+    | GapProperty
+    | WidthProperty
+    | HeightProperty
+    | MarginProperty
+    | PaddingProperty
+    | BgColorProperty
+    | ColorProperty
+    | BoxShadowProperty
+    | BorderRadiusProperty
+    | BorderWidthProperty
+    | BorderColorProperty
+    | BorderStyleProperty
+  )[];
+}
+
+export interface RowFormField extends BaseFormField {
+  type: typeof FormFieldType.ROW;
+  children: ColumnFormField[];
+  props: (WidthProperty | HeightProperty)[];
+}
+
+export interface ColumnFormField extends BaseFormField {
+  type: typeof FormFieldType.COLUMN;
+  children: FormField[];
+  props: (WidthProperty | HeightProperty)[];
+}
+
+// Content field types
+export interface ContentFormField extends BaseFormField {
+  type: typeof FormFieldType.HEADER | typeof FormFieldType.PARAGRAPH;
+  props: (
+    | ContentProperty
+    | TagProperty
+    | TextAlignProperty
+    | ColorProperty
+    | FontSizeProperty
+    | FontWeightProperty
+  )[];
+}
+
+// Image field type
+export interface ImageFormField extends BaseFormField {
+  type: typeof FormFieldType.IMAGE;
+  props: (
+    | LabelProperty
+    | SrcProperty
+    | AltProperty
+    | ObjectFitProperty
+    | AutoWidthProperty
+    | WidthProperty
+    | TextAlignProperty
+  )[];
+}
+
+// Button field type
+export interface ButtonFormField extends BaseFormField {
+  type: typeof FormFieldType.BUTTON;
+  props: (
+    | LabelProperty
+    | ButtonTypeProperty
+    | WidthProperty
+    | BgColorProperty
+    | ColorProperty
+    | TextAlignProperty
+    | FontSizeProperty
+    | FontWeightProperty
+    | BorderRadiusProperty
+    | BorderWidthProperty
+    | BorderColorProperty
+    | BorderStyleProperty
+    | PaddingProperty
+    | BorderRadiusProperty
+  )[];
+}
+
+// Page field type
+export interface PageFormField extends BaseFormField {
+  type: typeof FormFieldType.PAGE;
+  children: FormField[];
+  props: (WidthProperty | NameProperty)[];
+}
+
+// Divider field type
+export interface DividerFormField extends BaseFormField {
+  type: typeof FormFieldType.DIVIDER;
+  props: (
+    | LabelProperty
+    | ColorProperty
+    | WidthProperty
+    | HeightProperty
+    | StyleProperty
+  )[];
+}
+
+export type FormField =
+  | InputFormField
+  | ChoiceFormField
+  | DateTimeFormField
+  | FileFormField
+  | BlockFormField
+  | ContentFormField
+  | ImageFormField
+  | ButtonFormField
+  | PageFormField
+  | DividerFormField
+  | ColumnFormField
+  | RowFormField;
 
 export interface FormSchema {
   version: string;
   form: {
     fields: FormField[];
+    rules: RootRule[];
   };
 }
-
-export interface FormFieldShortText {
-  id: string;
-  type: typeof FormFieldType.SHORT_TEXT;
-  form: {
-    key: string;
-  };
-  validations: {
-    pattern: string;
-  };
-  props: {
-    label: string;
-    placeholder: string;
-    required: boolean;
-    container: {
-      margin: Margin;
-      padding: Padding;
-      border: Border;
-    };
-  };
-}
-
-export interface FormFieldLongText {
-  id: string;
-  type: typeof FormFieldType.LONG_TEXT;
-  form: {
-    key: string;
-  };
-  props: {
-    label: string;
-    placeholder: string;
-    required: boolean;
-    container: {
-      margin: Margin;
-      padding: Padding;
-      border: Border;
-    };
-  };
-}
-
-export interface FormFieldNumber {
-  id: string;
-  type: typeof FormFieldType.NUMBER;
-  form: {
-    key: string;
-  };
-  props: {
-    label: string;
-    placeholder: string;
-    required: boolean;
-    min?: number;
-    max?: number;
-    container: {
-      margin: Margin;
-      padding: Padding;
-      border: Border;
-    };
-  };
-}
-
-export interface OptionType {
-  label: string;
-  value: string;
-}
-
-export interface FormFieldSingleChoice {
-  id: string;
-  type: typeof FormFieldType.SINGLE_CHOICE;
-  form: {
-    key: string;
-  };
-  props: {
-    label: string;
-    options: OptionType[];
-    required: boolean;
-    isValueDifferent: boolean;
-    container: {
-      margin: Margin;
-      padding: Padding;
-      border: Border;
-    };
-  };
-}
-
-export interface FormFieldMultipleChoices {
-  id: string;
-  type: typeof FormFieldType.MULTIPLE_CHOICES;
-  form: {
-    key: string;
-  };
-  props: {
-    label: string;
-    options: OptionType[];
-    required: boolean;
-    isValueDifferent: boolean;
-    container: {
-      margin: Margin;
-      padding: Padding;
-      border: Border;
-    };
-  };
-}
-
-export interface FormFieldDate {
-  id: string;
-  type: typeof FormFieldType.DATE;
-  form: {
-    key: string;
-  };
-  props: {
-    label: string;
-    required: boolean;
-    container: {
-      margin: Margin;
-      padding: Padding;
-      border: Border;
-    };
-  };
-}
-
-export interface FormFieldTime {
-  id: string;
-  type: typeof FormFieldType.TIME;
-  form: {
-    key: string;
-  };
-  props: {
-    label: string;
-    required: boolean;
-    container: {
-      margin: Margin;
-      padding: Padding;
-      border: Border;
-    };
-  };
-}
-
-export interface FormFieldDateTime {
-  id: string;
-  type: typeof FormFieldType.DATE_TIME;
-  form: {
-    key: string;
-  };
-  props: {
-    label: string;
-    required: boolean;
-    container: {
-      margin: Margin;
-      padding: Padding;
-      border: Border;
-    };
-  };
-}
-
-export interface FormFieldFile {
-  id: string;
-  type: typeof FormFieldType.FILE;
-  form: {
-    key: string;
-  };
-  props: {
-    label: string;
-    required: boolean;
-    accept: string;
-    multiple: boolean;
-    container: {
-      margin: Margin;
-      padding: Padding;
-      border: Border;
-    };
-  };
-}
-
-export interface FormFieldDivider {
-  id: string;
-  type: typeof FormFieldType.DIVIDER;
-  props: {
-    color: string;
-    width: number;
-    height: number;
-    style: 'solid' | 'dashed' | 'dotted';
-  };
-}
-
-export interface FormFieldHeader {
-  id: string;
-  type: typeof FormFieldType.HEADER;
-  props: {
-    content: JSONContent;
-    tag: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
-    textAlign: 'left' | 'center' | 'right';
-    color: string;
-    font: Font;
-  };
-}
-
-export interface FormFieldParagraph {
-  id: string;
-  type: typeof FormFieldType.PARAGRAPH;
-  props: {
-    content: JSONContent;
-    textAlign: 'left' | 'center' | 'right';
-    color: string;
-    font: Font;
-  };
-}
-
-export interface FormFieldImage {
-  id: string;
-  type: typeof FormFieldType.IMAGE;
-  props: {
-    src: string;
-    alt: string;
-    textAlign: 'left' | 'center' | 'right';
-    objectFit: 'fill' | 'contain' | 'cover' | 'none' | 'scale-down';
-    width: {
-      value: number;
-      autoWidth: boolean;
-    };
-  };
-}
-
-export interface FormFieldRow {
-  id: string;
-  type: typeof FormFieldType.ROW;
-  props: {
-    gap: number;
-  };
-  children: FormField[];
-}
-
-export interface FormFieldColumn {
-  id: string;
-  type: typeof FormFieldType.COLUMN;
-  props: {
-    width: number;
-  };
-  children: FormField[];
-}
-
-export interface FormFieldBlock {
-  id: string;
-  type: typeof FormFieldType.BLOCK;
-  children: FormField[];
-  props: {
-    padding: Padding;
-    margin: Margin;
-    boxShadow: BoxShadow[];
-    border: Border;
-    bgColor: string;
-    color: string;
-  };
-}
-
-export interface FormFieldButton {
-  id: string;
-  type: typeof FormFieldType.BUTTON;
-  props: {
-    label: string;
-    color: string;
-    bgColor: string;
-    btnType: 'submit' | 'button';
-    fullWidth: boolean;
-    font: Font;
-    border: Border;
-    padding: Padding;
-    align: 'left' | 'center' | 'right';
-  };
-}
-
-export interface FormFieldPage {
-  id: string;
-  type: typeof FormFieldType.PAGE;
-  children: FormField[];
-  props: {
-    name: string;
-  };
-}
-
-export type FormField =
-  | FormFieldShortText
-  | FormFieldLongText
-  | FormFieldNumber
-  | FormFieldSingleChoice
-  | FormFieldMultipleChoices
-  | FormFieldDate
-  | FormFieldTime
-  | FormFieldDateTime
-  | FormFieldFile
-  | FormFieldDivider
-  | FormFieldHeader
-  | FormFieldParagraph
-  | FormFieldImage
-  | FormFieldRow
-  | FormFieldColumn
-  | FormFieldBlock
-  | FormFieldButton
-  | FormFieldPage;

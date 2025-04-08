@@ -1,29 +1,36 @@
-import type { FormFieldParagraph } from '@efie-form/core';
-import { textAlignMap } from '../../../../lib/constant';
+import {
+  colorToStyle,
+  fontSizeToStyle,
+  PropertyType,
+  textAlignToStyle,
+  type ContentFormField,
+} from '@efie-form/core';
 import { RichTextEditor } from '../../../../components/rich-text-editor';
 import { useSettingsStore } from '../../../../lib/state/settings.state';
-import { useSchemaStore } from '../../../../lib/state/schema.state';
+import { getFieldProp } from '../../../../lib/utils';
 
 interface ParagraphFieldProps {
-  field: FormFieldParagraph;
+  field: ContentFormField;
 }
 
 function ParagraphField({ field }: ParagraphFieldProps) {
-  const { updateFieldProps } = useSchemaStore();
-
+  const fontSize = getFieldProp(field, PropertyType.FONT_SIZE);
+  const textAlign = getFieldProp(field, PropertyType.TEXT_ALIGN);
+  const color = getFieldProp(field, PropertyType.COLOR);
+  const content = getFieldProp(field, PropertyType.CONTENT);
   const { selectedFieldId } = useSettingsStore();
 
   return (
     <div
       style={{
-        textAlign: textAlignMap[field.props.textAlign],
-        fontSize: `${field.props.font.size}px`,
-        color: field.props.color,
+        textAlign: textAlignToStyle(textAlign),
+        fontSize: fontSizeToStyle(fontSize),
+        color: colorToStyle(color),
       }}
     >
       <RichTextEditor
-        value={field.props.content}
-        onChange={(value) => updateFieldProps(field.id, 'props.content', value)}
+        value={content?.value || {}}
+        onChange={() => {}}
         active={selectedFieldId === field.id}
       />
     </div>

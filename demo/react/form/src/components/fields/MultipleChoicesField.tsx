@@ -16,7 +16,7 @@ function MultipleChoicesField({
       multiple
       label={label}
     >
-      {options.map((option) => (
+      {options.map(option => (
         <MenuItem key={option.value} value={option.value}>
           {option.label}
         </MenuItem>

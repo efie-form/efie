@@ -49,8 +49,8 @@ export default class Iframe {
 
   private isIframeRendered() {
     return (
-      this.parentElem?.childElementCount &&
-      this.parentElem?.childElementCount >= 1
+      this.parentElem?.childElementCount
+      && this.parentElem?.childElementCount >= 1
     );
   }
 
@@ -136,7 +136,7 @@ export default class Iframe {
         type,
         data,
       },
-      '*'
+      '*',
     );
   }
 }

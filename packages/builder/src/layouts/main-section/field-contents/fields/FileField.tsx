@@ -1,24 +1,25 @@
-import type { FormFieldFile } from '@efie-form/core';
+import { PropertyType, type FileFormField } from '@efie-form/core';
 import { MdOutlineCloudUpload } from 'react-icons/md';
 import { useRef } from 'react';
-import { useSchemaStore } from '../../../../lib/state/schema.state';
+import { useFieldLabel } from '../../../../lib/hooks/properties/useFieldLabel';
+import { getFieldProp } from '../../../../lib/utils';
 
 interface FileFieldProps {
-  field: FormFieldFile;
+  field: FileFormField;
 }
 
 function FileField({ field }: FileFieldProps) {
-  const { updateFieldProps } = useSchemaStore();
+  const { label, updateLabel } = useFieldLabel(field);
+  const acceptProp = getFieldProp(field, PropertyType.ACCEPT);
+  const maxFilesProp = getFieldProp(field, PropertyType.MAX_FILES);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   return (
     <div className="p-2">
       <input
-        value={field.props.label}
-        onChange={(e) =>
-          updateFieldProps(field.id, 'props.label', e.target.value)
-        }
+        value={label}
+        onChange={e => updateLabel(e.target.value)}
         className="mb-2 typography-body2 bg-white bg-opacity-0 focus:outline-none cursor-text w-full"
         type="text"
       />
@@ -30,8 +31,18 @@ function FileField({ field }: FileFieldProps) {
         </p>
       </div>
       <div className="flex justify-between text-neutral-500 typography-body3 mt-2">
-        <p>Supported formats: {field.props.accept}</p>
-        <p></p>
+        {!acceptProp?.allowAll && (
+          <p>
+            Supported formats:
+            {acceptProp?.formats?.join(', ')}
+          </p>
+        )}
+        {maxFilesProp && maxFilesProp?.value > 1 && (
+          <p>
+            Max files:
+            {maxFilesProp?.value}
+          </p>
+        )}
       </div>
     </div>
   );

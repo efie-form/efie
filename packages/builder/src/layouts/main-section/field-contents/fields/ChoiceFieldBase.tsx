@@ -1,8 +1,8 @@
 import type {
-  FormFieldMultipleChoices,
-  FormFieldSingleChoice,
-  OptionType,
+  FormField,
+  OptionsProperty,
 } from '@efie-form/core';
+import { PropertyType } from '@efie-form/core';
 import { useRef } from 'react';
 import {
   DndContext,
@@ -19,42 +19,45 @@ import {
 } from '@dnd-kit/sortable';
 import type { DragEndEvent } from '@dnd-kit/core';
 import ChoiceFieldOption from './ChoiceFieldOption';
-import { useSchemaStore } from '../../../../lib/state/schema.state';
+import { useFieldLabel } from '../../../../lib/hooks/properties/useFieldLabel';
+import { useFieldOptions } from '../../../../lib/hooks/properties/useFieldOptions';
+import { getFieldProp } from '../../../../lib/utils';
+
+type OptionType = OptionsProperty['value'][number];
 
 interface ChoiceFieldBaseProps {
   fieldId: string;
-  field: FormFieldSingleChoice | FormFieldMultipleChoices;
+  field: FormField;
   inputType: 'radio' | 'checkbox';
-  isValueDifferent?: boolean;
 }
 
-function ChoiceFieldBase({
-  fieldId,
-  field,
-  inputType,
-  isValueDifferent,
-}: ChoiceFieldBaseProps) {
-  const { updateFieldProps } = useSchemaStore();
-
+function ChoiceFieldBase({ fieldId, field, inputType }: ChoiceFieldBaseProps) {
   const lastInputRef = useRef<HTMLInputElement>(null);
+
+  const { label, updateLabel } = useFieldLabel(field);
+  const { options, updateOptions } = useFieldOptions(field);
 
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
-    })
+    }),
   );
 
+  const optionsProp = getFieldProp(field, PropertyType.OPTIONS);
+  const isValueDifferent
+    = optionsProp?.value.some(option => option.value !== option.label) || false;
+
   const handleNewOption = () => {
-    const name = `Option ${field.props.options.length + 1}`;
+    const name = `Option ${options.length + 1}`;
     const newOptions = [
-      ...field.props.options,
+      ...options,
       {
         value: name,
         label: name,
       },
     ];
-    updateFieldProps(field.id, 'props.options', newOptions);
+    updateOptions(newOptions);
     requestAnimationFrame(() => {
       lastInputRef.current?.focus();
     });
@@ -67,31 +70,29 @@ function ChoiceFieldBase({
     const oldIndex = Number(active.id);
     const newIndex = Number(over.id);
 
-    const newOptions = [...field.props.options];
+    const newOptions = [...options];
     const [removed] = newOptions.splice(oldIndex, 1);
     newOptions.splice(newIndex, 0, removed);
-    updateFieldProps(field.id, 'props.options', newOptions);
+    updateOptions(newOptions);
   };
 
   const handleRemove = (index: number) => {
-    const newOptions = [...field.props.options];
+    const newOptions = [...options];
     newOptions.splice(index, 1);
-    updateFieldProps(field.id, 'props.options', newOptions);
+    updateOptions(newOptions);
   };
 
   const handleUpdate = (index: number, value: OptionType) => {
-    const newOptions = [...field.props.options];
+    const newOptions = [...options];
     newOptions[index] = value;
-    updateFieldProps(field.id, 'props.options', newOptions);
+    updateOptions(newOptions);
   };
 
   return (
     <div className="p-2">
       <input
-        value={field.props.label}
-        onChange={(e) => {
-          updateFieldProps(field.id, 'props.label', e.target.value);
-        }}
+        value={label}
+        onChange={e => updateLabel(e.target.value)}
         className="mb-2 typography-body2 bg-white bg-opacity-0 focus:outline-none cursor-text w-full"
         type="text"
       />
@@ -105,10 +106,10 @@ function ChoiceFieldBase({
           onDragEnd={handleDragEnd}
         >
           <SortableContext
-            items={field.props.options.map((_, index) => index.toString())}
+            items={options.map((_, index) => index.toString())}
             strategy={verticalListSortingStrategy}
           >
-            {field.props.options.map((option, index) => (
+            {options.map((option, index) => (
               <ChoiceFieldOption
                 key={index}
                 option={option}
@@ -116,12 +117,10 @@ function ChoiceFieldBase({
                 inputType={inputType}
                 fieldId={fieldId}
                 isValueDifferent={isValueDifferent}
-                onUpdate={(value) => handleUpdate(index, value)}
+                onUpdate={value => handleUpdate(index, value)}
                 onRemove={() => handleRemove(index)}
                 inputRef={
-                  index === field.props.options.length - 1
-                    ? lastInputRef
-                    : undefined
+                  index === options.length - 1 ? lastInputRef : undefined
                 }
               />
             ))}

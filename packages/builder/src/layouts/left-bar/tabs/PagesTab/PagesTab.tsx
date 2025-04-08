@@ -1,4 +1,4 @@
-import type { FormFieldPage } from '@efie-form/core';
+import type { PageFormField } from '@efie-form/core';
 import { useSettingsStore } from '../../../../lib/state/settings.state';
 import type { DragEndEvent } from '@dnd-kit/core';
 import {
@@ -20,16 +20,16 @@ import { useSchemaStore } from '../../../../lib/state/schema.state';
 import PageItem from './PageItem';
 
 function PagesTab() {
-  const { updatePages, schema, updateFieldProps } = useSchemaStore();
+  const { updatePages, schema } = useSchemaStore();
   const { setPage, page } = useSettingsStore();
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
-    })
+    }),
   );
 
-  const pages = schema.form.fields.filter((field) => field.type === 'page');
+  const pages = schema.form.fields.filter(field => field.type === 'page');
 
   const handleAddNewPage = () => {
     const newPage = getDefaultField({
@@ -39,7 +39,7 @@ function PagesTab() {
       },
     });
 
-    const newPages = [...pages, newPage].filter((p) => p.type === 'page');
+    const newPages = [...pages, newPage].filter(p => p.type === 'page');
 
     updatePages(newPages);
   };
@@ -51,15 +51,15 @@ function PagesTab() {
     updatePages(newPages);
   };
 
-  const handleDeletePage = (deletedPage: FormFieldPage) => {
-    const currentPageIndex = pages.findIndex((p) => p.id === deletedPage.id);
-    const newPages = pages.filter((p) => p.id !== deletedPage.id);
+  const handleDeletePage = (deletedPage: PageFormField) => {
+    const currentPageIndex = pages.findIndex(p => p.id === deletedPage.id);
+    const newPages = pages.filter(p => p.id !== deletedPage.id);
 
     updatePages(newPages);
 
     if (deletedPage.id === page) {
       setPage(
-        newPages[currentPageIndex + 1]?.id ?? newPages[currentPageIndex - 1]?.id
+        newPages[currentPageIndex + 1]?.id ?? newPages[currentPageIndex - 1]?.id,
       );
     }
   };
@@ -68,8 +68,8 @@ function PagesTab() {
     const { active, over } = props;
     if (!active || !over || active.id === over.id) return;
 
-    const activeIndex = pages.findIndex((p) => p.id === active.id);
-    const overIndex = pages.findIndex((p) => p.id === over.id);
+    const activeIndex = pages.findIndex(p => p.id === active.id);
+    const overIndex = pages.findIndex(p => p.id === over.id);
 
     if (activeIndex === -1 || overIndex === -1) return;
 
@@ -92,17 +92,13 @@ function PagesTab() {
         collisionDetection={closestCenter}
         onDragEnd={handleDragEnd}
       >
-        <SortableContext items={pages.map((p) => p.id)}>
+        <SortableContext items={pages.map(p => p.id)}>
           <ul>
-            {pages.map((p) => (
+            {pages.map(p => (
               <PageItem
                 key={p.id}
                 page={p}
                 onDelete={() => handleDeletePage(p)}
-                name={p.props.name}
-                onRename={(newName) => {
-                  updateFieldProps(p.id, 'props.name', newName);
-                }}
                 isCurrentPage={p.id === page}
                 onSelect={() => setPage(p.id)}
               />

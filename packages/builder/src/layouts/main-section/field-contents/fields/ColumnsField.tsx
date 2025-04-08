@@ -1,9 +1,9 @@
-import type { FormFieldColumn } from '@efie-form/core';
+import type { ColumnFormField } from '@efie-form/core';
 import RenderField from '../RenderField';
 import Droppable from '../../../../components/dnd-kit/Droppable';
 
 interface ColumnsFieldProps {
-  field: FormFieldColumn;
+  field: ColumnFormField;
 }
 
 function ColumnsField({ field }: ColumnsFieldProps) {
@@ -13,7 +13,7 @@ function ColumnsField({ field }: ColumnsFieldProps) {
     <Droppable id={field.id} type={field.type} className="h-full">
       {hasChildren && (
         <div>
-          {field.children.map((child) => (
+          {field.children.map(child => (
             <RenderField key={`${field.id}-${child.id}`} field={child} />
           ))}
         </div>

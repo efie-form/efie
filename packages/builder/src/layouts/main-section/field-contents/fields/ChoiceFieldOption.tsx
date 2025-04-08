@@ -1,6 +1,8 @@
 import { useSortable } from '@dnd-kit/sortable';
-import type { OptionType } from '@efie-form/core';
+import type { OptionsProperty } from '@efie-form/core';
 import { MdOutlineClose, MdOutlineDragIndicator } from 'react-icons/md';
+
+type OptionType = OptionsProperty['value'][number];
 
 interface ChoiceFieldOptionProps {
   option: OptionType;

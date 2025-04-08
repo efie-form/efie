@@ -13,11 +13,11 @@ function FieldsTab() {
 
   return (
     <div className="px-4 py-2">
-      {generateFieldItems().map((group) => (
+      {generateFieldItems().map(group => (
         <div key={group.id} className="mb-4">
           <p className="text-neutral-700 typography-body2">{group.label}</p>
           <div className="flex flex-col gap-1.5 mt-3">
-            {group.children.map((field) => (
+            {group.children.map(field => (
               <FieldItem
                 key={field.type}
                 label={field.label}
@@ -73,7 +73,7 @@ function FieldItem({ Icon, type, label, formKey, disabled }: FieldItemProps) {
           'hover:border-primary-400 hover:bg-primary-100 hover:bg-neutral-100/70 hover:text-primary':
             !disabled,
           'cursor-not-allowed text-neutral-400 bg-neutral-100/20': disabled,
-        }
+        },
       )}
     >
       <Icon />

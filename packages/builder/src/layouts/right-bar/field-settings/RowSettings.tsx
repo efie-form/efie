@@ -1,4 +1,5 @@
-import type { FormFieldRow } from '@efie-form/core';
+import type { ColumnFormField, RowFormField } from '@efie-form/core';
+import { FormFieldType, PropertyType } from '@efie-form/core';
 import { getDefaultField } from '../../../lib/getDefaultField';
 import * as Tabs from '@radix-ui/react-tabs';
 import { useState } from 'react';
@@ -6,6 +7,7 @@ import ColumnSettings from './ColumnSettings';
 import Button from '../../../components/elements/Button';
 import { FaPlus } from 'react-icons/fa6';
 import { useSchemaStore } from '../../../lib/state/schema.state';
+import { getFieldProp } from '../../../lib/utils';
 
 const LAYOUT_PRESETS = [
   [100],
@@ -17,26 +19,45 @@ const LAYOUT_PRESETS = [
 ];
 
 interface RowSettingsProps {
-  field: FormFieldRow;
+  field: RowFormField;
 }
 
 function RowSettings({ field }: RowSettingsProps) {
-  const { updateFieldProps, getFieldById } = useSchemaStore();
-  const [currentTab, setCurrentTab] = useState(field.children[0]?.id);
+  const { getFieldById, replaceFieldChildren } = useSchemaStore();
+  const [currentTab, setCurrentTab] = useState(field.children?.[0]?.id || '');
 
   const applyLayout = (columns: number[]) => {
-    const newColumns = columns.map((width, index) => {
-      const existingColumn = field.children[index];
-      const columnField = getFieldById(existingColumn.id);
+    const newColumns: ColumnFormField[] = [];
 
-      if (!columnField || columnField.type !== 'column') return existingColumn;
+    for (const [i, width] of columns.entries()) {
+      const existingColumn = field.children[i];
 
-      columnField.props.width = width;
-      return columnField;
-    });
+      if (existingColumn) {
+        const widthProp = getFieldProp(existingColumn, PropertyType.WIDTH);
+        if (widthProp) {
+          widthProp.value = { value: width, unit: '%' };
+        }
+        else {
+          existingColumn.props.push({
+            type: PropertyType.WIDTH,
+            value: { value: width, unit: '%' },
+            autoWidth: false,
+          });
+        }
+        newColumns.push(existingColumn);
+        continue;
+      }
 
-    updateFieldProps(field.id, 'children', newColumns);
-    setCurrentTab(newColumns[0].id);
+      const newColumn = getDefaultField({
+        type: FormFieldType.COLUMN,
+        column: { width },
+      });
+
+      newColumns.push(newColumn);
+    }
+
+    replaceFieldChildren(field.id, newColumns);
+    setCurrentTab(newColumns[0]?.id || '');
   };
 
   const addColumn = () => {
@@ -47,36 +68,75 @@ function RowSettings({ field }: RowSettingsProps) {
       column: { width: avgWidth },
     });
 
-    const newChildren = [
-      ...field.children.map((col) => {
-        const field = getFieldById(col.id);
-        if (!field || field.type !== 'column') return col;
-        field.props.width = avgWidth;
-        return field;
-      }),
-      newColumn,
-    ];
+    const newColumns = [];
 
-    updateFieldProps(field.id, 'children', newChildren);
+    for (const col of field.children) {
+      const colField = getFieldById(col.id);
+      if (!colField || colField.type !== 'column') return col;
 
-    // Set focus to the new column
+      const widthProp = getFieldProp(colField, PropertyType.WIDTH);
+      if (widthProp) {
+        widthProp.value = { value: avgWidth, unit: '%' };
+      }
+      else {
+        colField.props.push({
+          type: PropertyType.WIDTH,
+          value: { value: avgWidth, unit: '%' },
+          autoWidth: false,
+        });
+      }
+
+      newColumns.push(colField);
+    }
+
+    newColumns.push(newColumn);
+
+    replaceFieldChildren(field.id, newColumns);
+
     setCurrentTab(newColumn.id);
   };
 
   const removeColumn = (index: number) => {
-    const prevField = field.children[index - 1];
-    if (index === -1) return;
-    const newChildren = field.children
-      .filter((_, i) => i !== index)
-      .map((col, _, arr) => {
-        const field = getFieldById(col.id);
-        if (!field || field.type !== 'column') return col;
+    if (index === -1 || field.children.length <= 1) return;
 
-        field.props.width = Math.floor(100 / arr.length);
-        return field;
-      });
-    updateFieldProps(field.id, 'children', newChildren);
-    setCurrentTab(prevField?.id || newChildren[0]?.id);
+    const removedFieldId = field.children[index].id;
+
+    const newColumns = [];
+
+    for (const col of field.children) {
+      const colField = getFieldById(col.id);
+      if (
+        !colField
+        || colField.type !== 'column'
+        || colField.id === removedFieldId
+      ) {
+        continue;
+      }
+
+      const widthProp = getFieldProp(colField, PropertyType.WIDTH);
+      const width = Math.floor(100 / (field.children.length - 1));
+      if (widthProp) {
+        widthProp.value = {
+          value: width,
+          unit: '%',
+        };
+      }
+      else {
+        colField.props.push({
+          type: PropertyType.WIDTH,
+          value: { value: width, unit: '%' },
+          autoWidth: false,
+        });
+      }
+
+      newColumns.push(colField);
+    }
+
+    replaceFieldChildren(field.id, newColumns);
+
+    const prevFieldId = field.children[index - 1]?.id;
+
+    setCurrentTab(prevFieldId || newColumns[0]?.id || '');
   };
 
   return (
@@ -93,7 +153,8 @@ function RowSettings({ field }: RowSettingsProps) {
                     style={{ flex: width }}
                   >
                     <p className="typography-body4 text-neutral-700 invisible group-hover:visible">
-                      {width}%
+                      {width}
+                      %
                     </p>
                   </div>
                 ))}
@@ -103,7 +164,7 @@ function RowSettings({ field }: RowSettingsProps) {
         </div>
         <div className="flex justify-center mt-4">
           <Button onClick={addColumn} startIcon={FaPlus}>
-            Add Column
+            Add
           </Button>
         </div>
       </div>
@@ -113,20 +174,22 @@ function RowSettings({ field }: RowSettingsProps) {
           <Tabs.List className="flex-1 flex overflow-x-auto">
             {field.children.map((column, index) => (
               <Tabs.Trigger
-                key={index}
+                key={column.id}
                 value={column.id}
                 className="px-4 py-2 whitespace-nowrap border-b-2 border-primary border-opacity-0 transition-colors data-[state=active]:border-opacity-100 typography-body3 text-neutral-700 data-[state=active]:text-primary"
               >
-                Column {index + 1}
+                Column
+                {' '}
+                {index + 1}
               </Tabs.Trigger>
             ))}
           </Tabs.List>
         </div>
 
         {field.children
-          .filter((column) => column.type === 'column')
+          .filter(column => column.type === 'column')
           .map((column, index) => (
-            <Tabs.Content key={index} value={column.id}>
+            <Tabs.Content key={column.id} value={column.id}>
               <ColumnSettings
                 field={column}
                 onRemove={() => removeColumn(index)}
