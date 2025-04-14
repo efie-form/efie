@@ -1,10 +1,10 @@
-import type { DateTimeFormField } from '@efie-form/core';
+import type { TimeFormField } from '@efie-form/core';
 import PropSettingsRequired from '../property-settings/PropSettingsRequired';
 import PropSettingsLabel from '../property-settings/PropSettingsLabel';
 import PropSettingsFormKey from '../property-settings/PropSettingsFormKey';
 
 interface TimeSettingsProps {
-  field: DateTimeFormField;
+  field: TimeFormField;
 }
 
 function TimeSettings({ field }: TimeSettingsProps) {

@@ -1,8 +1,8 @@
-import type { ChoiceFormField } from '@efie-form/core';
+import type { SingleChoiceFormField } from '@efie-form/core';
 import ChoiceFieldBase from './ChoiceFieldBase';
 
 interface SingleChoiceProps {
-  field: ChoiceFormField;
+  field: SingleChoiceFormField;
 }
 
 function SingleChoiceField({ field }: SingleChoiceProps) {

@@ -80,7 +80,7 @@ function RenderField({ field, noSelect }: RenderFieldProps) {
           {
             '!outline-primary relative z-50': isSelected,
             '[&:not(:has(div[data-field=true]:hover))]:hover:outline-neutral-100':
-              field.type !== 'column',
+              field.type !== FormFieldType.COLUMN,
           },
         )}
         {...(!noSelect && {
@@ -179,13 +179,7 @@ function FieldItem({ field }: RenderFieldProps) {
       return <BlockField field={field} />;
     }
     default: {
-      return (
-        <div className="px-4 py-2">
-          {field.id}
-          {' '}
-          {field.type}
-        </div>
-      );
+      throw new Error(`Unknown field type: ${field.type}`);
     }
   }
 }

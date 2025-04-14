@@ -1,11 +1,11 @@
-import type { InputFormField } from '@efie-form/core';
+import type { NumberFormField } from '@efie-form/core';
 import PropSettingsRequired from '../property-settings/PropSettingsRequired';
 import PropSettingsPlaceholder from '../property-settings/PropSettingsPlaceholder';
 import PropSettingsLabel from '../property-settings/PropSettingsLabel';
 import PropSettingsFormKey from '../property-settings/PropSettingsFormKey';
 
 interface NumberSettingsProps {
-  field: InputFormField;
+  field: NumberFormField;
 }
 
 function NumberSettings({ field }: NumberSettingsProps) {

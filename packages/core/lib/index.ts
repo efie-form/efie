@@ -19,11 +19,7 @@ export type {
   PropertyValue,
   ContainerStyle,
   BaseFormField,
-  InputFormField,
-  ChoiceFormField,
-  DateTimeFormField,
   FileFormField,
-  ContentFormField,
   ImageFormField,
   ButtonFormField,
   PageFormField,
@@ -31,6 +27,16 @@ export type {
   RowFormField,
   ColumnFormField,
   BlockFormField,
+  HeaderFormField,
+  ParagraphFormField,
+  DateFormField,
+  TimeFormField,
+  DateTimeFormField,
+  SingleChoiceFormField,
+  MultipleChoiceFormField,
+  ShortTextFormField,
+  LongTextFormField,
+  NumberFormField,
 } from './types/formSchema.type';
 export type { RootRule } from './types/RootRule.type';
 export type { BuilderCustomInput } from './types/builderCustomInput.type';

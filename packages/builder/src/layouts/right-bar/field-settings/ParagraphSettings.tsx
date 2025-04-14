@@ -1,10 +1,10 @@
-import type { ContentFormField } from '@efie-form/core';
+import type { ParagraphFormField } from '@efie-form/core';
 import PropSettingsFontSize from '../property-settings/PropSettingsFontSize';
 import PropSettingsTextAlign from '../property-settings/PropSettingsTextAlign';
 import PropSettingsColor from '../property-settings/PropSettingsColor';
 
 interface ParagraphSettingsProps {
-  field: ContentFormField;
+  field: ParagraphFormField;
 }
 
 function ParagraphSettings({ field }: ParagraphSettingsProps) {

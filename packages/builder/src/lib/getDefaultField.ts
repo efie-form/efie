@@ -1,4 +1,4 @@
-import type { FormField } from '@efie-form/core';
+import type { ShortTextFormField, LongTextFormField, NumberFormField, MultipleChoiceFormField, TimeFormField, DateFormField, SingleChoiceFormField, DateTimeFormField, FileFormField, BlockFormField, RowFormField, ColumnFormField, ImageFormField, ParagraphFormField, HeaderFormField, ButtonFormField, PageFormField, DividerFormField } from '@efie-form/core';
 import { FormFieldType, PropertyType } from '@efie-form/core';
 import { generateId } from './utils';
 
@@ -19,12 +19,34 @@ interface GetDefaultFieldProps<T extends FormFieldType> {
 
 const ID_LENGTH = 10;
 
-export const getDefaultField = <T extends FormFieldType>({
+interface GetDefaultFieldReturn {
+  short_text: ShortTextFormField;
+  long_text: LongTextFormField;
+  number: NumberFormField;
+  single_choice: SingleChoiceFormField;
+  multiple_choices: MultipleChoiceFormField;
+  date: DateFormField;
+  time: TimeFormField;
+  date_time: DateTimeFormField;
+  file: FileFormField;
+  block: BlockFormField;
+  row: RowFormField;
+  column: ColumnFormField;
+  header: HeaderFormField;
+  paragraph: ParagraphFormField;
+  image: ImageFormField;
+  button: ButtonFormField;
+  page: PageFormField;
+  divider: DividerFormField;
+}
+
+export function getDefaultField<T extends FormFieldType>(props: GetDefaultFieldProps<T>): GetDefaultFieldReturn[T];
+export function getDefaultField<T extends FormFieldType>({
   type,
   page,
   column,
   formKey,
-}: GetDefaultFieldProps<T>): Extract<FormField, { type: T }> => {
+}: GetDefaultFieldProps<T>) {
   switch (type) {
     case FormFieldType.SHORT_TEXT: {
       return {
@@ -47,7 +69,7 @@ export const getDefaultField = <T extends FormFieldType>({
             value: false,
           },
         ],
-      };
+      } satisfies GetDefaultFieldReturn[typeof FormFieldType.SHORT_TEXT];
     }
     case FormFieldType.LONG_TEXT: {
       return {
@@ -70,7 +92,7 @@ export const getDefaultField = <T extends FormFieldType>({
             value: false,
           },
         ],
-      };
+      } satisfies GetDefaultFieldReturn[typeof FormFieldType.LONG_TEXT];
     }
     case FormFieldType.NUMBER: {
       return {
@@ -93,7 +115,7 @@ export const getDefaultField = <T extends FormFieldType>({
             value: false,
           },
         ],
-      };
+      } satisfies GetDefaultFieldReturn[typeof FormFieldType.NUMBER];
     }
     case FormFieldType.SINGLE_CHOICE: {
       return {
@@ -120,7 +142,7 @@ export const getDefaultField = <T extends FormFieldType>({
             value: false,
           },
         ],
-      };
+      } satisfies GetDefaultFieldReturn[typeof FormFieldType.SINGLE_CHOICE];
     }
     case FormFieldType.MULTIPLE_CHOICES: {
       return {
@@ -147,7 +169,7 @@ export const getDefaultField = <T extends FormFieldType>({
             value: false,
           },
         ],
-      };
+      } satisfies GetDefaultFieldReturn[typeof FormFieldType.MULTIPLE_CHOICES];
     }
     case FormFieldType.PAGE: {
       return {
@@ -164,7 +186,7 @@ export const getDefaultField = <T extends FormFieldType>({
             value: page?.name || 'Page',
           },
         ],
-      };
+      } satisfies GetDefaultFieldReturn[typeof FormFieldType.PAGE];
     }
     case FormFieldType.DATE: {
       return {
@@ -183,7 +205,7 @@ export const getDefaultField = <T extends FormFieldType>({
             value: false,
           },
         ],
-      };
+      } satisfies GetDefaultFieldReturn[typeof FormFieldType.DATE];
     }
     case FormFieldType.TIME: {
       return {
@@ -202,7 +224,7 @@ export const getDefaultField = <T extends FormFieldType>({
             value: false,
           },
         ],
-      };
+      } satisfies GetDefaultFieldReturn[typeof FormFieldType.TIME];
     }
     case FormFieldType.DATE_TIME: {
       return {
@@ -221,7 +243,7 @@ export const getDefaultField = <T extends FormFieldType>({
             value: false,
           },
         ],
-      };
+      } satisfies GetDefaultFieldReturn[typeof FormFieldType.DATE_TIME];
     }
     case FormFieldType.FILE: {
       return {
@@ -245,11 +267,11 @@ export const getDefaultField = <T extends FormFieldType>({
           },
           {
             type: PropertyType.ACCEPT,
-            allowAll: false,
+            allowAll: true,
             formats: [],
           },
         ],
-      };
+      } satisfies GetDefaultFieldReturn[typeof FormFieldType.FILE];
     }
     case FormFieldType.DIVIDER: {
       return {
@@ -276,7 +298,7 @@ export const getDefaultField = <T extends FormFieldType>({
             value: { value: 1, unit: 'px' },
           },
         ],
-      };
+      } satisfies GetDefaultFieldReturn[typeof FormFieldType.DIVIDER];
     }
     case FormFieldType.HEADER: {
       return {
@@ -304,7 +326,7 @@ export const getDefaultField = <T extends FormFieldType>({
             value: 'center',
           },
         ],
-      };
+      } satisfies GetDefaultFieldReturn[typeof FormFieldType.HEADER];
     }
     case FormFieldType.PARAGRAPH: {
       return {
@@ -328,7 +350,7 @@ export const getDefaultField = <T extends FormFieldType>({
             value: 'center',
           },
         ],
-      };
+      } satisfies GetDefaultFieldReturn[typeof FormFieldType.PARAGRAPH];
     }
     case FormFieldType.IMAGE: {
       return {
@@ -357,18 +379,13 @@ export const getDefaultField = <T extends FormFieldType>({
             autoWidth: true,
           },
         ],
-      };
+      } satisfies GetDefaultFieldReturn[typeof FormFieldType.IMAGE];
     }
     case FormFieldType.ROW: {
       return {
         type: FormFieldType.ROW,
         id: generateId(ID_LENGTH),
-        props: [
-          {
-            type: PropertyType.GAP,
-            value: { value: 0, unit: 'px' },
-          },
-        ],
+        props: [],
         children: [
           {
             id: generateId(ID_LENGTH),
@@ -395,7 +412,7 @@ export const getDefaultField = <T extends FormFieldType>({
             children: [],
           },
         ],
-      };
+      } satisfies GetDefaultFieldReturn[typeof FormFieldType.ROW];
     }
     case FormFieldType.COLUMN: {
       return {
@@ -409,7 +426,7 @@ export const getDefaultField = <T extends FormFieldType>({
           },
         ],
         children: [],
-      };
+      } satisfies GetDefaultFieldReturn[typeof FormFieldType.COLUMN];
     }
     case FormFieldType.BLOCK: {
       return {
@@ -482,7 +499,7 @@ export const getDefaultField = <T extends FormFieldType>({
             ],
           },
         ],
-      };
+      } satisfies GetDefaultFieldReturn[typeof FormFieldType.BLOCK];
     }
     case FormFieldType.BUTTON: {
       return {
@@ -541,10 +558,10 @@ export const getDefaultField = <T extends FormFieldType>({
             },
           },
         ],
-      };
+      } satisfies GetDefaultFieldReturn[typeof FormFieldType.BUTTON];
     }
     default: {
-      return undefined;
+      throw new Error(`Unsupported field type: ${type}`);
     }
   }
 };

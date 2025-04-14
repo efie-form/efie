@@ -1,8 +1,8 @@
-import type { DateTimeFormField } from '@efie-form/core';
+import type { DateFormField } from '@efie-form/core';
 import { useFieldLabel } from '../../../../lib/hooks/properties/useFieldLabel';
 
 interface DateFieldProps {
-  field: DateTimeFormField;
+  field: DateFormField;
 }
 
 function DateField({ field }: DateFieldProps) {

@@ -1,11 +1,11 @@
-import type { InputFormField } from '@efie-form/core';
+import type { ShortTextFormField } from '@efie-form/core';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import PropSettingsLabel from '../property-settings/PropSettingsLabel';
 import PropSettingsPlaceholder from '../property-settings/PropSettingsPlaceholder';
 import PropSettingsRequired from '../property-settings/PropSettingsRequired';
 import PropSettingsFormKey from '../property-settings/PropSettingsFormKey';
 interface ShortTextSettingsProps {
-  field: InputFormField;
+  field: ShortTextFormField;
 }
 
 function ShortTextSettings({ field }: ShortTextSettingsProps) {

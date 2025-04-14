@@ -1,5 +1,5 @@
 import type { FormField } from '@efie-form/core';
-import type { FormFieldType } from '@efie-form/core';
+import { FormFieldType } from '@efie-form/core';
 import { findFieldParentId } from './findFieldParentId';
 
 interface MoveFieldProps {
@@ -12,8 +12,8 @@ interface MoveFieldProps {
 }
 
 const isDropOnChildren = (moveType: FormFieldType, dropType: FormFieldType) => {
-  if (moveType !== 'block' && dropType === 'block') return true;
-  if (dropType === 'column' || dropType === 'page') return true;
+  if (moveType !== FormFieldType.BLOCK && dropType === FormFieldType.BLOCK) return true;
+  if (dropType === FormFieldType.COLUMN || dropType === FormFieldType.PAGE) return true;
   //
   return false;
 };
@@ -78,9 +78,9 @@ const moveFieldToChildrenEnd = (
   );
   const temp = fieldParent.children.splice(fieldIndex, 1);
 
-  if (dropFieldParent.type === 'row') {
+  if (dropFieldParent.type === FormFieldType.ROW) {
     const columnFieldsOnly = dropFieldParent.children.filter(
-      field => field.type === 'column',
+      field => field.type === FormFieldType.COLUMN,
     );
     dropFieldParent.children.push(...columnFieldsOnly);
   }

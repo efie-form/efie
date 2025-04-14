@@ -1,9 +1,12 @@
-import { PropertyType, type InputFormField } from '@efie-form/core';
+import {
+  PropertyType,
+  type NumberFormField,
+} from '@efie-form/core';
 import { useFieldLabel } from '../../../../lib/hooks/properties/useFieldLabel';
 import { getFieldProp } from '../../../../lib/utils';
 
 interface NumberFieldProps {
-  field: InputFormField;
+  field: NumberFormField;
 }
 
 function NumberField({ field }: NumberFieldProps) {

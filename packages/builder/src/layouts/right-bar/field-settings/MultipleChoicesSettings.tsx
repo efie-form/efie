@@ -1,4 +1,4 @@
-import type { ChoiceFormField } from '@efie-form/core';
+import type { MultipleChoiceFormField } from '@efie-form/core';
 import PropSettingsRequired from '../property-settings/PropSettingsRequired';
 import PropSettingsPlaceholder from '../property-settings/PropSettingsPlaceholder';
 import PropSettingsLabel from '../property-settings/PropSettingsLabel';
@@ -6,7 +6,7 @@ import PropSettingsFormKey from '../property-settings/PropSettingsFormKey';
 import PropSettingsOption from '../property-settings/PropSettingsOption';
 
 interface MultipleChoicesSettingsProps {
-  field: ChoiceFormField;
+  field: MultipleChoiceFormField;
 }
 
 function MultipleChoicesSettings({ field }: MultipleChoicesSettingsProps) {
