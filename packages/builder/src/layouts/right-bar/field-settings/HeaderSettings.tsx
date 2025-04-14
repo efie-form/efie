@@ -1,11 +1,11 @@
-import type { ContentFormField } from '@efie-form/core';
+import type { HeaderFormField } from '@efie-form/core';
 import PropSettingsTextAlign from '../property-settings/PropSettingsTextAlign';
 import PropSettingsColor from '../property-settings/PropSettingsColor';
 import PropSettingsTag from '../property-settings/PropSettingsTag';
 import PropSettingsFontSize from '../property-settings/PropSettingsFontSize';
 
 interface HeaderSettingsProps {
-  field: ContentFormField;
+  field: HeaderFormField;
 }
 
 function HeaderSettings({ field }: HeaderSettingsProps) {

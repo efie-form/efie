@@ -3,14 +3,14 @@ import {
   fontSizeToStyle,
   PropertyType,
   textAlignToStyle,
-  type ContentFormField,
+  type ParagraphFormField,
 } from '@efie-form/core';
 import { RichTextEditor } from '../../../../components/rich-text-editor';
 import { useSettingsStore } from '../../../../lib/state/settings.state';
 import { getFieldProp } from '../../../../lib/utils';
 
 interface ParagraphFieldProps {
-  field: ContentFormField;
+  field: ParagraphFormField;
 }
 
 function ParagraphField({ field }: ParagraphFieldProps) {

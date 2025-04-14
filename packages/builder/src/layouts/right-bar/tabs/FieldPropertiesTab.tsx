@@ -9,6 +9,7 @@ import { HiX } from 'react-icons/hi';
 import { LuCornerLeftUp } from 'react-icons/lu';
 import Tooltip from '../../../components/elements/Tooltip';
 import getSettingsParentField from '../../../lib/getSettingsParentField';
+import { FormFieldType } from '@efie-form/core';
 
 function FieldPropertiesTab() {
   const {
@@ -26,7 +27,7 @@ function FieldPropertiesTab() {
     const parentField = getSettingsParentField(selectedFieldId);
     if (!parentField) return;
 
-    if (parentField.type === 'page') {
+    if (parentField.type === FormFieldType.PAGE) {
       clearSelectedFieldId();
       setActiveTab(RIGHT_BAR_TABS.PAGE);
     }

@@ -64,7 +64,7 @@ function RowSettings({ field }: RowSettingsProps) {
     const avgWidth = Math.floor(100 / (field.children.length + 1));
 
     const newColumn = getDefaultField({
-      type: 'column',
+      type: FormFieldType.COLUMN,
       column: { width: avgWidth },
     });
 
@@ -72,7 +72,7 @@ function RowSettings({ field }: RowSettingsProps) {
 
     for (const col of field.children) {
       const colField = getFieldById(col.id);
-      if (!colField || colField.type !== 'column') return col;
+      if (!colField || colField.type !== FormFieldType.COLUMN) return col;
 
       const widthProp = getFieldProp(colField, PropertyType.WIDTH);
       if (widthProp) {
@@ -107,7 +107,7 @@ function RowSettings({ field }: RowSettingsProps) {
       const colField = getFieldById(col.id);
       if (
         !colField
-        || colField.type !== 'column'
+        || colField.type !== FormFieldType.COLUMN
         || colField.id === removedFieldId
       ) {
         continue;
@@ -187,7 +187,7 @@ function RowSettings({ field }: RowSettingsProps) {
         </div>
 
         {field.children
-          .filter(column => column.type === 'column')
+          .filter(column => column.type === FormFieldType.COLUMN)
           .map((column, index) => (
             <Tabs.Content key={column.id} value={column.id}>
               <ColumnSettings

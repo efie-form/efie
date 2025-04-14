@@ -1,7 +1,8 @@
-import type {
-  FormField,
-  FormSchema,
-  PropertyDefinition,
+import {
+  FormFieldType,
+  type FormField,
+  type FormSchema,
+  type PropertyDefinition,
 } from '@efie-form/core';
 import { create } from 'zustand';
 import defaultSchema from '../defaultSchema';
@@ -86,7 +87,7 @@ export const useSchemaStore = create<SchemaState>((set, getState) => ({
     if (!pageId) return;
     const { schema } = getState();
     return schema.form.fields
-      .filter(field => field.type === 'page')
+      .filter(field => field.type === FormFieldType.PAGE)
       .find(field => field.id === pageId);
   },
   updatePages: (pages) => {

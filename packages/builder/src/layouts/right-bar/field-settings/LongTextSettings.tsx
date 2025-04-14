@@ -1,11 +1,11 @@
-import type { InputFormField } from '@efie-form/core';
+import type { LongTextFormField } from '@efie-form/core';
 import PropSettingsFormKey from '../property-settings/PropSettingsFormKey';
 import PropSettingsLabel from '../property-settings/PropSettingsLabel';
 import PropSettingsPlaceholder from '../property-settings/PropSettingsPlaceholder';
 import PropSettingsRequired from '../property-settings/PropSettingsRequired';
 
 interface LongTextSettingsProps {
-  field: InputFormField;
+  field: LongTextFormField;
 }
 
 function LongTextSettings({ field }: LongTextSettingsProps) {

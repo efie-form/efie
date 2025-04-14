@@ -1,8 +1,8 @@
-import type { ChoiceFormField } from '@efie-form/core';
+import type { MultipleChoiceFormField } from '@efie-form/core';
 import ChoiceFieldBase from './ChoiceFieldBase';
 
 interface MultipleChoicesProps {
-  field: ChoiceFormField;
+  field: MultipleChoiceFormField;
 }
 
 function MultipleChoicesField({ field }: MultipleChoicesProps) {

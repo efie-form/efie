@@ -1,5 +1,5 @@
 import type { FormField } from '@efie-form/core';
-import type { FormFieldType } from '@efie-form/core';
+import { FormFieldType } from '@efie-form/core';
 import { findFieldParentId } from './findFieldParentId';
 
 interface InsertFieldProps {
@@ -12,8 +12,8 @@ interface InsertFieldProps {
 }
 
 const isDropOnChildren = (newType: FormFieldType, dropType: FormFieldType) => {
-  if (newType !== 'block' && dropType === 'block') return true;
-  if (dropType === 'column' || dropType === 'page') return true;
+  if (newType !== FormFieldType.BLOCK && dropType === FormFieldType.BLOCK) return true;
+  if (dropType === FormFieldType.COLUMN || dropType === FormFieldType.PAGE) return true;
   //
   return false;
 };
@@ -59,8 +59,8 @@ const appendFieldToChildren = (
   const field = findField(fields, dropFieldId);
   if (!field || !('children' in field)) return fields;
 
-  if (field.type === 'row') {
-    if (newField.type === 'column') {
+  if (field.type === FormFieldType.ROW) {
+    if (newField.type === FormFieldType.COLUMN) {
       field.children.push(newField);
     }
   }

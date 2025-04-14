@@ -3,14 +3,14 @@ import {
   fontSizeToStyle,
   PropertyType,
   textAlignToStyle,
-  type ContentFormField,
+  type HeaderFormField,
 } from '@efie-form/core';
 import { RichTextEditor } from '../../../../components/rich-text-editor';
 import { useSettingsStore } from '../../../../lib/state/settings.state';
 import { getFieldProp } from '../../../../lib/utils';
 
 interface HeaderFieldProps {
-  field: ContentFormField;
+  field: HeaderFormField;
 }
 
 function HeaderField({ field }: HeaderFieldProps) {
