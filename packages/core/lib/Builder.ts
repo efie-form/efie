@@ -1,6 +1,6 @@
 import { EXTERNAL_ACTION_TYPE, INTERNAL_ACTION_TYPE } from './constant';
-import type { BuilderCustomInput } from './types/builderCustomInput.type';
-import type { FormSchema } from './types/formSchema.type';
+import type { BuilderCustomInput } from './types/builder-custom-input.type';
+import type { FormSchema } from './types/form-schema.type';
 
 interface InitializedPayload {
   schema: FormSchema;

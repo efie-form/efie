@@ -5,7 +5,6 @@ import {
   ColorService,
   Hue,
   Saturation,
-  useColor,
 } from 'react-color-palette';
 import 'react-color-palette/css';
 import { cn } from '../../lib/utils';
@@ -50,7 +49,7 @@ function ColorPicker({
   });
 
   const [colorObject, setColorObject] = useState(() => ColorService.convert('hex', internalValue!));
-  
+
   const { control, watch, getValues, setValue } = useForm<FormSchema>({
     defaultValues: {
       hex: colorObject.hex,
