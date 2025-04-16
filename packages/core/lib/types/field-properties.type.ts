@@ -1,12 +1,12 @@
 import type { JSONContent } from '@tiptap/core';
-import type { Size } from './formSchema.type';
+import type { Size } from './form-schema.type';
 import type {
   TextAlign,
   ObjectFit,
   ButtonType,
   HeadingTag,
-} from './formSchema.constant';
-import type { PropertyType } from './formSchema.constant';
+} from './form-schema.constant';
+import type { PropertyType } from './form-schema.constant';
 
 // Label property
 export interface LabelProperty {

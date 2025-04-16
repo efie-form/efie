@@ -5,7 +5,6 @@ import {
   ColorService,
   Hue,
   Saturation,
-  useColor,
 } from 'react-color-palette';
 import 'react-color-palette/css';
 import { cn } from '../../lib/utils';
@@ -48,7 +47,9 @@ function ColorPicker({
     onChange,
     prop: value,
   });
-  const [colorObject, setColorObject] = useColor(internalValue!);
+
+  const [colorObject, setColorObject] = useState(() => ColorService.convert('hex', internalValue!));
+
   const { control, watch, getValues, setValue } = useForm<FormSchema>({
     defaultValues: {
       hex: colorObject.hex,
@@ -62,6 +63,13 @@ function ColorPicker({
   });
 
   const [edited, setEdited] = useState(false);
+
+  // Update colorObject when internalValue changes
+  useEffect(() => {
+    if (!edited) {
+      setColorObject(ColorService.convert('hex', internalValue!));
+    }
+  }, [internalValue, edited]);
 
   useDebounce(
     () => {

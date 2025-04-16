@@ -1,7 +1,7 @@
 import { EXTERNAL_ACTION_TYPE, INTERNAL_ACTION_TYPE } from './constant';
-import defaultSchema from './defaultSchema';
-import type { BuilderCustomInput } from './types/builderCustomInput.type';
-import type { FormSchema } from './types/formSchema.type';
+import defaultSchema from './default-schema';
+import type { BuilderCustomInput } from './types/builder-custom-input.type';
+import type { FormSchema } from './types/form-schema.type';
 
 interface IframeProps {
   id: string;

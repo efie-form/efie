@@ -8,9 +8,9 @@ import type {
   PaddingProperty,
   TextAlignProperty,
   WidthProperty,
-} from './types/fieldProperties.type';
-import { TextAlign } from './types/formSchema.constant';
-import type { Size } from './types/formSchema.type';
+} from './types/field-properties.type';
+import { TextAlign } from './types/form-schema.constant';
+import type { Size } from './types/form-schema.type';
 
 export const toSize = (size?: Size) => {
   if (!size) return;

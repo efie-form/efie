@@ -1,4 +1,4 @@
-import type { FormFieldType } from '../InputType';
+import type { FormFieldType } from '../input-type';
 
 export interface BuilderCustomInputShortText {
   id: string;

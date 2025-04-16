@@ -2,14 +2,12 @@ export { default as Iframe } from './Iframe';
 export { default as Builder } from './Builder';
 export type {
   FormSchema,
-  FormField,
   Size,
   FieldCondition,
   FieldConditionGroup,
   FieldConditionValue,
   FieldConditionOperator,
   FieldValue,
-  FieldRule,
   ValidationOperator,
   ValidationRule,
   ValidationGroup,
@@ -18,6 +16,12 @@ export type {
   ValidationSchema,
   PropertyValue,
   ContainerStyle,
+} from './types/form-schema.type';
+export type { RootRule } from './types/root-rules.type';
+export type { BuilderCustomInput } from './types/builder-custom-input.type';
+export type { PropertyDefinition } from './types/field-properties.type';
+
+export type {
   BaseFormField,
   FileFormField,
   ImageFormField,
@@ -37,13 +41,11 @@ export type {
   ShortTextFormField,
   LongTextFormField,
   NumberFormField,
-} from './types/formSchema.type';
-export type { RootRule } from './types/RootRule.type';
-export type { BuilderCustomInput } from './types/builderCustomInput.type';
-export type { PropertyDefinition } from './types/fieldProperties.type';
+  FormField,
+} from './types/form-field.type';
 
-export { FormFieldType } from './InputType';
-export { PropertyType, SizeUnit } from './types/formSchema.constant';
+export { FormFieldType } from './input-type';
+export { PropertyType, SizeUnit } from './types/form-schema.constant';
 
 export {
   marginToStyle,
@@ -103,4 +105,4 @@ export {
   type TextAlignProperty,
   type ContentProperty,
   type BoxShadow,
-} from './types/fieldProperties.type';
+} from './types/field-properties.type';

@@ -2,8 +2,8 @@ import type {
   FieldCondition,
   FieldConditionGroup,
   FieldValue,
-} from './formSchema.type';
-import type { ValidationRule } from './formSchema.type';
+} from './form-schema.type';
+import type { ValidationRule } from './form-schema.type';
 
 // Root page rule
 export interface RootPageRule {
