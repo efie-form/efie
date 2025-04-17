@@ -1,0 +1,169 @@
+/* Default styles for Efie Form components */
+
+/* Common field container */
+.efie-field-container {
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+/* Labels */
+.efie-field-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+.efie-field-required {
+  color: #ef4444;
+  margin-left: 0.25rem;
+}
+
+/* Text inputs */
+.efie-field-input,
+.efie-field-textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  transition: border-color 0.15s ease-in-out;
+}
+
+.efie-field-input:focus,
+.efie-field-textarea:focus {
+  outline: none;
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.efie-field-textarea {
+  resize: vertical;
+  min-height: 6rem;
+}
+
+/* Radio and checkbox groups */
+.efie-field-radio-group,
+.efie-field-checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.efie-field-radio-option,
+.efie-field-checkbox-option {
+  display: flex;
+  align-items: center;
+}
+
+.efie-field-radio,
+.efie-field-checkbox {
+  margin-right: 0.5rem;
+}
+
+.efie-field-radio-label,
+.efie-field-checkbox-label {
+  cursor: pointer;
+}
+
+/* File upload */
+.efie-field-file-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.efie-field-file-input {
+  width: 100%;
+}
+
+.efie-field-file-info {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+/* Error messages */
+.efie-field-error {
+  margin-top: 0.25rem;
+  color: #ef4444;
+  font-size: 0.875rem;
+}
+
+/* Content fields */
+.efie-field-header,
+.efie-field-paragraph {
+  margin-bottom: 1rem;
+}
+
+.efie-field-image-container {
+  margin-bottom: 1rem;
+}
+
+.efie-field-image {
+  max-width: 100%;
+}
+
+/* Layout fields */
+.efie-field-row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -0.5rem;
+  margin-bottom: 1rem;
+}
+
+.efie-field-column {
+  flex: 1;
+  min-width: 0;
+  padding: 0 0.5rem;
+}
+
+.efie-field-block {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background-color: #f9fafb;
+  border-radius: 0.5rem;
+}
+
+.efie-field-page {
+  width: 100%;
+}
+
+/* Button */
+.efie-field-button {
+  display: inline-block;
+  font-weight: 500;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  user-select: none;
+  border: 1px solid transparent;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  cursor: pointer;
+}
+
+.efie-field-button:hover {
+  opacity: 0.9;
+}
+
+.efie-field-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .efie-field-row {
+    flex-direction: column;
+  }
+  
+  .efie-field-column {
+    width: 100% !important;
+    margin-bottom: 1rem;
+  }
+}

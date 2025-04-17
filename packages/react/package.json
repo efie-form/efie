@@ -1,18 +1,27 @@
 {
   "name": "@efie-form/react",
-  "private": true,
   "version": "0.1.0",
   "type": "module",
-  "main": "index.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
   "keywords": [
     "react",
     "form",
-    "form-builder"
+    "form-builder",
+    "drag-and-drop",
+    "form-generator"
   ],
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "@efie-form/core": "workspace:*",
