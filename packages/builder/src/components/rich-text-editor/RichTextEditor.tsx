@@ -65,8 +65,11 @@ function RichTextEditor({ value, onChange, active }: RichTextEditorProps) {
       }}
     >
       <EditorContent editor={editor} />
-      {active
-        && createPortal(
+      {active && (() => {
+        const formZone = document.querySelector('#form-zone');
+        if (!formZone) return;
+
+        return createPortal(
           <div
             ref={(el) => {
               if (el) setPopperElement(el);
@@ -100,8 +103,9 @@ function RichTextEditor({ value, onChange, active }: RichTextEditorProps) {
               />
             </div>
           </div>,
-          document.querySelector('#form-zone')!,
-        )}
+          formZone,
+        );
+      })()}
     </div>
   );
 }
