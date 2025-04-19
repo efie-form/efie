@@ -42,6 +42,7 @@ export type {
   LongTextFormField,
   NumberFormField,
   FormField,
+  FormInputField,
 } from './types/form-field.type';
 
 export { FormFieldType } from './input-type';
