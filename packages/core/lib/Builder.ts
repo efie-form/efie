@@ -8,6 +8,7 @@ interface InitializedPayload {
   height: number;
   formKeyNonEditable: boolean;
   inputNonReusable: boolean;
+  maxHistories?: number;
 }
 
 interface BuilderProps {

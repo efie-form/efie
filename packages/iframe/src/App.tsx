@@ -15,6 +15,7 @@ function App() {
     setHeight,
     setFormKeyEditable,
     setIsInputReusable,
+    setMaxHistories,
   } = useFormBuilder();
 
   useWatchSchema((schema) => {
@@ -49,12 +50,14 @@ function App() {
         schema,
         formKeyNonEditable,
         inputNonReusable,
+        maxHistories,
       }) => {
         setFormInputs(formInputs);
         setHeight(height);
         if (schema) resetSchema(schema);
         if (formKeyNonEditable) setFormKeyEditable(false);
         if (inputNonReusable) setIsInputReusable(false);
+        if (maxHistories) setMaxHistories(maxHistories);
       },
     });
   }

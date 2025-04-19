@@ -10,6 +10,7 @@ interface IframeProps {
   schema?: FormSchema;
   formKeyNonEditable?: boolean;
   inputNonReusable?: boolean;
+  maxHistories?: number;
 }
 
 export default class Iframe {
@@ -21,6 +22,7 @@ export default class Iframe {
   private formKeyNonEditable = false;
   private inputNonReusable = true;
   private height: number = 0;
+  private maxHistories?: number;
 
   constructor({
     id,
@@ -29,6 +31,7 @@ export default class Iframe {
     schema,
     formKeyNonEditable,
     inputNonReusable,
+    maxHistories,
   }: IframeProps) {
     const elem = document.querySelector(`#${id}`);
     if (!elem || !(elem instanceof HTMLElement)) {
@@ -42,6 +45,7 @@ export default class Iframe {
     if (schema) this.schema = schema;
     this.formKeyNonEditable = !!formKeyNonEditable;
     this.inputNonReusable = !!inputNonReusable;
+    if (maxHistories) this.maxHistories = maxHistories;
 
     this.renderIframe();
     this.listenMessage();
@@ -103,6 +107,7 @@ export default class Iframe {
       height: this.height,
       formKeyNonEditable: this.formKeyNonEditable,
       inputNonReusable: this.inputNonReusable,
+      maxHistories: this.maxHistories,
     });
   }
 
