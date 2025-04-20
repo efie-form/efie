@@ -1,22 +1,23 @@
 import type { ElementType } from 'react';
 import { createElement } from 'react';
 import type { DateFieldProps } from '../../types/FieldProps';
-import type { FormFieldDate } from '@efie-form/core';
+import { PropertyType, type DateFormField } from '@efie-form/core';
 
 interface DateProviderProps {
-  field: FormFieldDate;
+  field: DateFormField;
   Component?: ElementType<DateFieldProps>;
 }
 
 function DateProvider({ field, Component }: DateProviderProps) {
   if (!Component) return <></>;
 
+  const label = field.props.find(prop => prop.type === PropertyType.LABEL);
+  const required = field.props.find(prop => prop.type === PropertyType.REQUIRED);
+
   return createElement(Component, {
     id: field.id,
-    value: new Date(),
-    onChange: () => new Date(),
-    label: field.props.label,
-    required: field.props.required,
+    fieldLabel: label?.value || '',
+    required: required?.value || false,
     disabled: false,
   });
 }

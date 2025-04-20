@@ -1,7 +1,7 @@
 import type { SingleChoiceFieldProps } from '@efie-form/react';
 import { MenuItem, Select } from '@mui/material';
 
-function SingleChoiceField({ label, id, options }: SingleChoiceFieldProps) {
+function SingleChoiceField({ fieldLabel, id, options }: SingleChoiceFieldProps) {
   return (
     <div>
       <Select
@@ -10,11 +10,11 @@ function SingleChoiceField({ label, id, options }: SingleChoiceFieldProps) {
         value=""
         fullWidth
         variant="outlined"
-        label={label}
+        label={fieldLabel}
       >
         {options.map(option => (
           <MenuItem key={option.value} value={option.value}>
-            {option.label}
+            {option.optionLabel}
           </MenuItem>
         ))}
       </Select>

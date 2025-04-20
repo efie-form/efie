@@ -1,335 +1,660 @@
-import type { FormSchema } from '@efie-form/react';
+import { type FormSchema } from '@efie-form/react';
 
 export const sampleSchema: FormSchema = {
   version: 'v1',
   form: {
     fields: [
       {
-        id: 'QPBMlESAAd',
-        type: FormFieldType.PAGE,
+        id: 'YeLBRjSODi',
+        type: 'page',
         children: [
           {
-            id: 'PKoJpERvox',
-            type: FormFieldType.BLOCK,
-            children: [
-              {
-                type: FormFieldType.IMAGE,
-                id: 'hMIiisJZNk',
-                props: {
-                  src: 'https://cmsv2-assets.apptegy.net/uploads/4208/file/1627793/76083d0e-1006-4d17-b552-c9c8b50cabf0.jpeg',
-                  alt: 'Placeholder',
-                  objectFit: 'contain',
-                  textAlign: 'center',
-                  width: {
-                    value: 100,
-                    autoWidth: false,
-                  },
-                },
-              },
-            ],
-            props: {
-              padding: {
-                bottom: 0,
-                left: 0,
-                right: 0,
-                top: 0,
-              },
-              margin: {
-                bottom: 0,
-                left: 0,
-                right: 0,
-                top: 0,
-              },
-              border: {
-                radius: {
-                  bottomLeft: 8,
-                  bottomRight: 8,
-                  topLeft: 8,
-                  topRight: 8,
-                },
-              },
-              boxShadow: [
-                {
-                  x: 0,
-                  y: 4,
-                  blur: 6,
-                  spread: -1,
-                  color: '#00000019',
-                  inset: false,
-                },
-                {
-                  x: 0,
-                  y: 2,
-                  blur: 4,
-                  spread: -2,
-                  color: '#00000019',
-                  inset: false,
-                },
-              ],
-              bgColor: '#FFFFFF',
-              color: '#494949',
-            },
-          },
-          {
-            id: 'qmLzbQiKkv',
+            id: 'UPoiuQseYY',
             type: 'block',
             children: [
               {
                 type: 'header',
-                id: 'czUZjmpdLR',
-                props: {
-                  content: {
-                    type: 'doc',
-                    content: [
-                      {
-                        type: 'paragraph',
-                        content: [
-                          {
-                            type: 'text',
-                            text: 'Header',
-                          },
-                        ],
-                      },
-                    ],
+                id: 'fVNvXQnKCS',
+                props: [
+                  {
+                    type: 'content',
+                    value: {
+                      type: 'doc',
+                      content: [
+                        {
+                          type: 'paragraph',
+                          content: [
+                            {
+                              type: 'text',
+                              text: 'Header',
+                            },
+                          ],
+                        },
+                      ],
+                    },
                   },
-                  font: {
-                    size: 24,
-                    unit: 'px',
-                    weight: 400,
+                  {
+                    type: 'fontSize',
+                    value: {
+                      value: 32,
+                      unit: 'px',
+                    },
                   },
-                  tag: 'h1',
-                  color: '#000000',
-                  textAlign: 'center',
-                },
+                  {
+                    type: 'tag',
+                    value: 'h1',
+                  },
+                  {
+                    type: 'color',
+                    value: '#000000',
+                  },
+                  {
+                    type: 'textAlign',
+                    value: 'center',
+                  },
+                ],
               },
               {
                 type: 'paragraph',
-                id: 'PuGLxyYSBK',
-                props: {
-                  content: {
-                    type: 'doc',
-                    content: [
+                id: 'lALTvFtwVJ',
+                props: [
+                  {
+                    type: 'content',
+                    value: {
+                      type: 'doc',
+                      content: [
+                        {
+                          type: 'paragraph',
+                          content: [
+                            {
+                              type: 'text',
+                              text: 'Lorem ipsum dolor sit amet',
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  },
+                  {
+                    type: 'fontSize',
+                    value: {
+                      value: 16,
+                      unit: 'px',
+                    },
+                  },
+                  {
+                    type: 'color',
+                    value: '#000000',
+                  },
+                  {
+                    type: 'textAlign',
+                    value: 'center',
+                  },
+                ],
+              },
+              {
+                type: 'row',
+                id: 'gbmAYEjGyS',
+                props: [],
+                children: [
+                  {
+                    id: 'uXwBNYlYXg',
+                    type: 'column',
+                    props: [
                       {
-                        type: 'paragraph',
-                        content: [
+                        type: 'width',
+                        value: {
+                          value: 50,
+                          unit: '%',
+                        },
+                        autoWidth: false,
+                      },
+                    ],
+                    children: [
+                      {
+                        id: 'QGeXsGUtIY',
+                        type: 'short_text',
+                        form: {
+                          key: '',
+                        },
+                        props: [
                           {
-                            type: 'text',
-                            text: 'Paragraph',
+                            type: 'label',
+                            value: 'First name',
+                          },
+                          {
+                            type: 'placeholder',
+                            value: 'Enter your first name',
+                          },
+                          {
+                            type: 'required',
+                            value: true,
                           },
                         ],
                       },
                     ],
                   },
-                  font: {
-                    size: 16,
-                    unit: 'px',
-                    weight: 400,
+                  {
+                    id: 'DfopFwvXgG',
+                    type: 'column',
+                    props: [
+                      {
+                        type: 'width',
+                        value: {
+                          value: 50,
+                          unit: '%',
+                        },
+                        autoWidth: false,
+                      },
+                    ],
+                    children: [
+                      {
+                        id: 'EXYzbnGTZf',
+                        type: 'short_text',
+                        form: {
+                          key: '',
+                        },
+                        props: [
+                          {
+                            type: 'label',
+                            value: 'Last name',
+                          },
+                          {
+                            type: 'placeholder',
+                            value: 'Enter your last name',
+                          },
+                          {
+                            type: 'required',
+                            value: false,
+                          },
+                        ],
+                      },
+                    ],
                   },
-                  color: '#000000',
-                  textAlign: 'center',
-                },
+                ],
               },
               {
-                type: 'divider',
-                id: 'yVVEPHNxOm',
-                props: {
-                  color: '#000000',
-                  style: 'solid',
-                  width: 100,
-                  height: 1,
+                id: 'beDGOJDhlJ',
+                type: 'short_text',
+                form: {
+                  key: '',
                 },
-              },
-              {
-                type: FormFieldType.SHORT_TEXT,
-                id: 'rsfFczKJaY',
-                props: {
-                  label: 'Short Text',
-                  placeholder: 'Enter the placeholder',
-                  required: false,
-                },
-              },
-              {
-                type: FormFieldType.LONG_TEXT,
-                id: 'KOTBVhEJoj',
-                props: {
-                  label: 'Long Text',
-                  placeholder: 'Enter the placeholder',
-                  required: false,
-                },
-              },
-              {
-                type: FormFieldType.NUMBER,
-                id: 'jlIYBpskIx',
-                props: {
-                  label: 'Number',
-                  placeholder: 'Enter the placeholder',
-                  required: false,
-                  min: undefined,
-                  max: undefined,
-                },
-              },
-              {
-                type: FormFieldType.SINGLE_CHOICE,
-                id: 'WOIqhtUiCG',
-                props: {
-                  label: 'Single Choice',
-                  options: [
-                    {
-                      label: 'Option 1',
-                      value: 'Option 1',
-                    },
-                    {
-                      label: 'Option 2',
-                      value: 'Option 2',
-                    },
-                    {
-                      label: 'Option 3',
-                      value: 'Option 3',
-                    },
-                  ],
-                  isValueDifferent: false,
-                  required: false,
-                },
-              },
-              {
-                type: FormFieldType.MULTIPLE_CHOICES,
-                id: 'smSWYkNOCH',
-                props: {
-                  label: 'Multiple Choice',
-                  options: [
-                    {
-                      label: 'Option 1',
-                      value: 'Option 1',
-                    },
-                    {
-                      label: 'Option 2',
-                      value: 'Option 2',
-                    },
-                    {
-                      label: 'Option 3',
-                      value: 'Option 3',
-                    },
-                  ],
-                  isValueDifferent: false,
-                  required: false,
-                },
-              },
-              {
-                type: FormFieldType.DATE,
-                id: 'kbcSTswHJA',
-                props: {
-                  label: 'Date',
-                  required: false,
-                },
-              },
-              {
-                type: FormFieldType.TIME,
-                id: 'weayGfVRRa',
-                props: {
-                  label: 'Time',
-                  required: false,
-                },
-              },
-              {
-                type: FormFieldType.DATE_TIME,
-                id: 'YYOvibtYuE',
-                props: {
-                  label: 'Date & Time',
-                  required: false,
-                },
-              },
-              {
-                type: FormFieldType.FILE,
-                id: 'vVgMzOoJal',
-                props: {
-                  label: 'File',
-                  required: false,
-                  multiple: false,
-                  accept: '',
-                },
-              },
-              {
-                id: 'mxFxIKTgOK',
-                type: FormFieldType.BUTTON,
-                props: {
-                  label: 'Submit',
-                  color: '#FFFFFF',
-                  bgColor: '#5083a7',
-                  font: {
-                    size: 16,
-                    unit: 'px',
-                    weight: 400,
+                props: [
+                  {
+                    type: 'label',
+                    value: 'Address line',
                   },
-                  fullWidth: false,
-                  btnType: 'submit',
-                  border: {
-                    color: '#000000',
-                    width: 0,
-                    radius: {
-                      topLeft: 6,
-                      topRight: 6,
-                      bottomRight: 6,
-                      bottomLeft: 6,
+                  {
+                    type: 'placeholder',
+                    value: 'Enter your full address',
+                  },
+                  {
+                    type: 'required',
+                    value: false,
+                  },
+                ],
+              },
+              {
+                type: 'single_choice',
+                id: 'eTfPfJASgT',
+                form: {
+                  key: '',
+                },
+                props: [
+                  {
+                    type: 'label',
+                    value: 'Coutry',
+                  },
+                  {
+                    type: 'options',
+                    value: [
+                      {
+                        label: 'Malaysia',
+                        value: 'Malaysia',
+                      },
+                      {
+                        label: 'Singapore',
+                        value: 'Singapore',
+                      },
+                      {
+                        label: 'China',
+                        value: 'China',
+                      },
+                    ],
+                  },
+                  {
+                    type: 'required',
+                    value: true,
+                  },
+                ],
+              },
+              {
+                type: 'paragraph',
+                id: 'harPFrzhzs',
+                props: [
+                  {
+                    type: 'content',
+                    value: {
+                      type: 'doc',
+                      content: [
+                        {
+                          type: 'paragraph',
+                          content: [
+                            {
+                              type: 'text',
+                              text: 'Lorem ipsum dolor sit amet',
+                            },
+                          ],
+                        },
+                      ],
                     },
                   },
-                  padding: {
-                    top: 6,
-                    right: 12,
-                    bottom: 6,
-                    left: 12,
+                  {
+                    type: 'fontSize',
+                    value: {
+                      value: 16,
+                      unit: 'px',
+                    },
                   },
-                  align: 'center',
-                },
+                  {
+                    type: 'color',
+                    value: '#000000',
+                  },
+                  {
+                    type: 'textAlign',
+                    value: 'center',
+                  },
+                ],
+              },
+              {
+                type: 'row',
+                id: 'QpFMAWUhoC',
+                props: [],
+                children: [
+                  {
+                    id: 'UWSAoUblZy',
+                    type: 'column',
+                    props: [
+                      {
+                        type: 'width',
+                        value: {
+                          value: 50,
+                          unit: '%',
+                        },
+                        autoWidth: false,
+                      },
+                    ],
+                    children: [
+                      {
+                        id: 'IjPhzMgXYj',
+                        type: 'short_text',
+                        form: {
+                          key: '',
+                        },
+                        props: [
+                          {
+                            type: 'label',
+                            value: 'Name on card',
+                          },
+                          {
+                            type: 'placeholder',
+                            value: '',
+                          },
+                          {
+                            type: 'required',
+                            value: true,
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                  {
+                    id: 'WVFSYgpCGi',
+                    type: 'column',
+                    props: [
+                      {
+                        type: 'width',
+                        value: {
+                          value: 50,
+                          unit: '%',
+                        },
+                        autoWidth: false,
+                      },
+                    ],
+                    children: [
+                      {
+                        id: 'yGYCuVfkLb',
+                        type: 'short_text',
+                        form: {
+                          key: '',
+                        },
+                        props: [
+                          {
+                            type: 'label',
+                            value: 'Card number',
+                          },
+                          {
+                            type: 'placeholder',
+                            value: '',
+                          },
+                          {
+                            type: 'required',
+                            value: true,
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                type: 'row',
+                id: 'VCMMkfIEfz',
+                props: [],
+                children: [
+                  {
+                    id: 'frTHLgRNTd',
+                    type: 'column',
+                    props: [
+                      {
+                        type: 'width',
+                        value: {
+                          value: 50,
+                          unit: '%',
+                        },
+                        autoWidth: false,
+                      },
+                    ],
+                    children: [
+                      {
+                        id: 'KTJubPiQwC',
+                        type: 'short_text',
+                        form: {
+                          key: '',
+                        },
+                        props: [
+                          {
+                            type: 'label',
+                            value: 'Expire date',
+                          },
+                          {
+                            type: 'placeholder',
+                            value: '',
+                          },
+                          {
+                            type: 'required',
+                            value: false,
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                  {
+                    id: 'ellaKvePBQ',
+                    type: 'column',
+                    props: [
+                      {
+                        type: 'width',
+                        value: {
+                          value: 50,
+                          unit: '%',
+                        },
+                        autoWidth: false,
+                      },
+                    ],
+                    children: [
+                      {
+                        id: 'sKqCtjwSva',
+                        type: 'short_text',
+                        form: {
+                          key: '',
+                        },
+                        props: [
+                          {
+                            type: 'label',
+                            value: 'CVV',
+                          },
+                          {
+                            type: 'placeholder',
+                            value: '',
+                          },
+                          {
+                            type: 'required',
+                            value: false,
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                id: 'QAwbXUScoP',
+                type: 'button',
+                props: [
+                  {
+                    type: 'label',
+                    value: 'Submit',
+                  },
+                  {
+                    type: 'color',
+                    value: '#FFFFFF',
+                  },
+                  {
+                    type: 'bgColor',
+                    value: '#5083a7',
+                  },
+                  {
+                    type: 'fontSize',
+                    value: {
+                      value: 16,
+                      unit: 'px',
+                    },
+                  },
+                  {
+                    type: 'width',
+                    value: {
+                      value: 100,
+                      unit: '%',
+                    },
+                    autoWidth: true,
+                  },
+                  {
+                    type: 'btnType',
+                    value: 'submit',
+                  },
+                  {
+                    type: 'textAlign',
+                    value: 'center',
+                  },
+                  {
+                    type: 'fontWeight',
+                    value: 600,
+                  },
+                  {
+                    type: 'borderRadius',
+                    value: {
+                      topLeft: {
+                        value: 6,
+                        unit: 'px',
+                      },
+                      topRight: {
+                        value: 6,
+                        unit: 'px',
+                      },
+                      bottomLeft: {
+                        value: 6,
+                        unit: 'px',
+                      },
+                      bottomRight: {
+                        value: 6,
+                        unit: 'px',
+                      },
+                    },
+                  },
+                  {
+                    type: 'padding',
+                    value: {
+                      top: {
+                        value: 6,
+                        unit: 'px',
+                      },
+                      right: {
+                        value: 12,
+                        unit: 'px',
+                      },
+                      bottom: {
+                        value: 6,
+                        unit: 'px',
+                      },
+                      left: {
+                        value: 12,
+                        unit: 'px',
+                      },
+                    },
+                  },
+                ],
               },
             ],
-            props: {
-              padding: {
-                top: 16,
-                right: 16,
-                bottom: 16,
-                left: 16,
-              },
-              boxShadow: [
-                {
-                  x: 0,
-                  y: 4,
-                  blur: 6,
-                  spread: -1,
-                  color: '#00000019',
-                  inset: false,
-                },
-                {
-                  x: 0,
-                  y: 2,
-                  blur: 4,
-                  spread: -2,
-                  color: '#00000019',
-                  inset: false,
-                },
-              ],
-              bgColor: '#FFFFFF',
-              border: {
-                radius: {
-                  topLeft: 8,
-                  topRight: 8,
-                  bottomRight: 8,
-                  bottomLeft: 8,
+            props: [
+              {
+                type: 'padding',
+                value: {
+                  top: {
+                    value: 16,
+                    unit: 'px',
+                  },
+                  right: {
+                    value: 16,
+                    unit: 'px',
+                  },
+                  bottom: {
+                    value: 16,
+                    unit: 'px',
+                  },
+                  left: {
+                    value: 16,
+                    unit: 'px',
+                  },
                 },
               },
-              color: '#494949',
-              margin: {
-                bottom: 0,
-                left: 0,
-                right: 0,
-                top: 0,
+              {
+                type: 'margin',
+                value: {
+                  top: {
+                    value: 0,
+                    unit: 'px',
+                  },
+                  right: {
+                    value: 0,
+                    unit: 'px',
+                  },
+                  bottom: {
+                    value: 8,
+                    unit: 'px',
+                  },
+                  left: {
+                    value: 0,
+                    unit: 'px',
+                  },
+                },
               },
-            },
+              {
+                type: 'bgColor',
+                value: '#FFFFFF',
+              },
+              {
+                type: 'color',
+                value: '#494949',
+              },
+              {
+                type: 'borderWidth',
+                value: {
+                  value: 1,
+                  unit: 'px',
+                },
+              },
+              {
+                type: 'borderColor',
+                value: '#00000019',
+              },
+              {
+                type: 'borderRadius',
+                value: {
+                  topLeft: {
+                    value: 8,
+                    unit: 'px',
+                  },
+                  topRight: {
+                    value: 8,
+                    unit: 'px',
+                  },
+                  bottomLeft: {
+                    value: 8,
+                    unit: 'px',
+                  },
+                  bottomRight: {
+                    value: 8,
+                    unit: 'px',
+                  },
+                },
+              },
+              {
+                type: 'boxShadow',
+                value: [
+                  {
+                    x: {
+                      value: 0,
+                      unit: 'px',
+                    },
+                    y: {
+                      value: 4,
+                      unit: 'px',
+                    },
+                    blur: {
+                      value: 6,
+                      unit: 'px',
+                    },
+                    spread: {
+                      value: 0,
+                      unit: 'px',
+                    },
+                    color: '#00000019',
+                    inset: false,
+                  },
+                  {
+                    x: {
+                      value: 0,
+                      unit: 'px',
+                    },
+                    y: {
+                      value: 2,
+                      unit: 'px',
+                    },
+                    blur: {
+                      value: 4,
+                      unit: 'px',
+                    },
+                    spread: {
+                      value: -2,
+                      unit: 'px',
+                    },
+                    color: '#00000019',
+                    inset: false,
+                  },
+                ],
+              },
+            ],
           },
         ],
-        props: {
-          name: 'Page 1',
-        },
+        props: [
+          {
+            type: 'name',
+            value: 'Page 1',
+          },
+        ],
       },
     ],
+    rules: [],
   },
 };

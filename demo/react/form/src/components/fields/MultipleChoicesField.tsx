@@ -3,7 +3,7 @@ import { MenuItem, Select } from '@mui/material';
 
 function MultipleChoicesField({
   id,
-  label,
+  fieldLabel,
   options,
 }: MultipleChoicesFieldProps) {
   return (
@@ -14,11 +14,11 @@ function MultipleChoicesField({
       fullWidth
       variant="outlined"
       multiple
-      label={label}
+      label={fieldLabel}
     >
       {options.map(option => (
         <MenuItem key={option.value} value={option.value}>
-          {option.label}
+          {option.optionLabel}
         </MenuItem>
       ))}
     </Select>

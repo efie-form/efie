@@ -1,7 +1,7 @@
 import type { LongTextFieldProps } from '@efie-form/react';
 import { TextField } from '@mui/material';
 
-function LongTextField({ id, label, placeholder }: LongTextFieldProps) {
+function LongTextField({ id, fieldLabel, placeholder }: LongTextFieldProps) {
   return (
     <TextField
       id={id}
@@ -11,7 +11,7 @@ function LongTextField({ id, label, placeholder }: LongTextFieldProps) {
       variant="outlined"
       multiline
       rows={4}
-      label={label}
+      label={fieldLabel}
     />
   );
 }

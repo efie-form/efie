@@ -1,36 +1,53 @@
 import type { ElementType } from 'react';
 import { createElement } from 'react';
 import type { BlockFieldProps, FieldPropsMap } from '../../types/FieldProps';
-import type { FormFieldBlock } from '@efie-form/core';
+import {
+  borderRadiusToStyle,
+  boxShadowToStyle,
+  marginToStyle,
+  paddingToStyle,
+  PropertyType,
+  type BlockFormField,
+} from '@efie-form/core';
 import RenderField from '../RenderField';
-import { toMarginStyle } from '../utils/toMargin';
-import { toPaddingStyle } from '../utils/toPadding';
-import { toBorderRadius } from '../utils/toBorderRadius';
-import { toBgColorStyle, toColorStyle } from '../utils/color';
-import { toBoxShadowStyle } from '../utils/boxShadow';
 
 interface BlockProviderProps extends Partial<FieldPropsMap> {
-  field: FormFieldBlock;
+  field: BlockFormField;
   Component?: ElementType<BlockFieldProps>;
 }
 
 function BlockProvider({ field, Component, ...props }: BlockProviderProps) {
   if (!Component) return <></>;
 
+  const margin = field.props.find(field => field.type === PropertyType.MARGIN);
+  const padding = field.props.find(field => field.type === PropertyType.PADDING);
+  const borderRadius = field.props.find(
+    field => field.type === PropertyType.BORDER_RADIUS,
+  );
+  const boxShadow = field.props.find(
+    field => field.type === PropertyType.BOX_SHADOW,
+  );
+  const bgColor = field.props.find(
+    field => field.type === PropertyType.BG_COLOR,
+  );
+  const color = field.props.find(field => field.type === PropertyType.COLOR);
+
   return createElement(Component, {
     id: field.id,
-    margin: toMarginStyle(field.props.margin),
-    padding: toPaddingStyle(field.props.padding),
-    borderRadius: toBorderRadius(field.props.border.radius),
-    color: toColorStyle(field.props.color),
-    backgroundColor: toBgColorStyle(field.props.bgColor),
-    boxShadow: toBoxShadowStyle(field.props.boxShadow),
+    blockMargin: marginToStyle(margin),
+    blockPadding: paddingToStyle(padding),
+    blockBorderRadius: borderRadiusToStyle(borderRadius),
+    blockColor: color?.value,
+    blockBackgroundColor: bgColor?.value,
+    blockBoxShadow: boxShadowToStyle(boxShadow),
     children: (
       <>
         {field.children.map(field => (
-          <div key={field.id}>
-            <RenderField field={field} {...props} />
-          </div>
+          <RenderField
+            key={field.id}
+            field={field}
+            {...props}
+          />
         ))}
       </>
     ),

@@ -29,7 +29,7 @@ function App() {
     <div>
       <FormBuilder
         ref={formBuilderRef}
-        height={height - 50} /* Adjust height to account for the new control */
+        height={height}
         schema={schema}
         formKeyNonEditable
         inputNonReusable

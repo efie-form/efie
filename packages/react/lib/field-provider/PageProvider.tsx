@@ -1,11 +1,11 @@
 import type { ElementType } from 'react';
 import { createElement } from 'react';
 import type { FieldPropsMap, PageFieldProps } from '../../types/FieldProps';
-import type { FormFieldPage } from '@efie-form/core';
+import { type PageFormField } from '@efie-form/core';
 import RenderField from '../RenderField';
 
 interface PageProviderProps extends Partial<FieldPropsMap> {
-  field: FormFieldPage;
+  field: PageFormField;
   Component?: ElementType<PageFieldProps>;
 }
 

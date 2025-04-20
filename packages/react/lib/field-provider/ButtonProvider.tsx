@@ -1,19 +1,21 @@
 import type { ElementType } from 'react';
 import { createElement } from 'react';
 import type { ButtonFieldProps } from '../../types/FieldProps';
-import type { FormFieldButton } from '@efie-form/core';
+import { PropertyType, type ButtonFormField } from '@efie-form/core';
 
 interface ButtonProviderProps {
-  field: FormFieldButton;
+  field: ButtonFormField;
   Component?: ElementType<ButtonFieldProps>;
 }
 
 function ButtonProvider({ field, Component }: ButtonProviderProps) {
   if (!Component) return <></>;
 
+  const label = field.props.find(prop => prop.type === PropertyType.LABEL);
+
   return createElement(Component, {
     id: field.id,
-    label: field.props.label,
+    buttonLabel: label?.value || '',
   });
 }
 

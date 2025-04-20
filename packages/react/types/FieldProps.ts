@@ -6,9 +6,7 @@ interface Error {
 
 export interface ShortTextFieldProps {
   id: string;
-  value: string;
-  onChange: (value: string) => void;
-  label: string;
+  fieldLabel: string;
   required: boolean;
   disabled: boolean;
   placeholder?: string;
@@ -18,9 +16,7 @@ export interface ShortTextFieldProps {
 
 export interface LongTextFieldProps {
   id: string;
-  value: string;
-  onChange: (value: string) => void;
-  label: string;
+  fieldLabel: string;
   required: boolean;
   disabled: boolean;
   placeholder?: string;
@@ -30,9 +26,7 @@ export interface LongTextFieldProps {
 
 export interface NumberFieldProps {
   id: string;
-  value: string;
-  onChange: (value: string) => void;
-  label: string;
+  fieldLabel: string;
   required: boolean;
   disabled: boolean;
   placeholder?: string;
@@ -44,13 +38,11 @@ export interface NumberFieldProps {
 
 export interface SingleChoiceFieldProps {
   id: string;
-  value: string;
-  onChange: (value: string) => void;
-  label: string;
+  fieldLabel: string;
   required: boolean;
   disabled: boolean;
   options: {
-    label: string;
+    optionLabel: string;
     value: string;
   }[];
   // visible: boolean;
@@ -59,13 +51,11 @@ export interface SingleChoiceFieldProps {
 
 export interface MultipleChoicesFieldProps {
   id: string;
-  value: string[];
-  onChange: (value: string[]) => void;
-  label: string;
+  fieldLabel: string;
   required: boolean;
   disabled: boolean;
   options: {
-    label: string;
+    optionLabel: string;
     value: string;
   }[];
   // visible: boolean;
@@ -74,9 +64,7 @@ export interface MultipleChoicesFieldProps {
 
 export interface DateFieldProps {
   id: string;
-  value: Date;
-  onChange: (value: Date) => void;
-  label: string;
+  fieldLabel: string;
   required: boolean;
   disabled: boolean;
   // visible: boolean;
@@ -85,9 +73,7 @@ export interface DateFieldProps {
 
 export interface TimeFieldProps {
   id: string;
-  value: Date;
-  onChange: (value: Date) => void;
-  label: string;
+  fieldLabel: string;
   required: boolean;
   disabled: boolean;
   // visible: boolean;
@@ -96,9 +82,7 @@ export interface TimeFieldProps {
 
 export interface DateTimeFieldProps {
   id: string;
-  value: Date;
-  onChange: (value: Date) => void;
-  label: string;
+  fieldLabel: string;
   required: boolean;
   disabled: boolean;
   // visible: boolean;
@@ -107,9 +91,7 @@ export interface DateTimeFieldProps {
 
 export interface FileFieldProps {
   id: string;
-  value: File;
-  onChange: (value: File) => void;
-  label: string;
+  fieldLabel: string;
   required: boolean;
   disabled: boolean;
   accept: string;
@@ -121,16 +103,16 @@ export interface FileFieldProps {
 export interface DividerFieldProps {
   id: string;
   // visible: boolean;
-  color: string;
-  width: number;
-  style: 'solid' | 'dashed' | 'dotted';
+  dividerColor: string;
+  dividerWidth: number;
+  dividerStyle: 'solid' | 'dashed' | 'dotted';
 }
 
 export interface HeaderFieldProps {
   id: string;
   // visible: boolean;
   text: string;
-  tag: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+  headingTag: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
   textAlign: 'left' | 'center' | 'right';
   font: {
     size: number;
@@ -158,8 +140,8 @@ export interface ImageFieldProps {
   alt: string;
   objectFit: 'fill' | 'contain' | 'cover' | 'none' | 'scale-down';
   textAlign: 'left' | 'center' | 'right';
-  width: string;
-  height: string;
+  imageWidth: string;
+  imageHeight: string;
 }
 
 export interface RowFieldProps {
@@ -172,19 +154,19 @@ export interface ColumnFieldProps {
   id: string;
   // visible: boolean;
   children: ReactNode;
-  width: string;
+  columnWidth: string;
 }
 
 export interface BlockFieldProps {
   id: string;
   // visible: boolean;
   children: ReactNode;
-  borderRadius?: string;
-  boxShadow?: string;
-  backgroundColor?: string;
-  color?: string;
-  padding?: string;
-  margin?: string;
+  blockBorderRadius?: string;
+  blockBoxShadow?: string;
+  blockBackgroundColor?: string;
+  blockColor?: string;
+  blockPadding?: string;
+  blockMargin?: string;
 }
 
 export interface PageFieldProps {
@@ -196,7 +178,7 @@ export interface PageFieldProps {
 export interface ButtonFieldProps {
   id: string;
   // visible: boolean;
-  label: string;
+  buttonLabel: string;
 }
 
 export interface FieldPropsMap {

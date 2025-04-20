@@ -1,7 +1,7 @@
 import type { ShortTextFieldProps } from '@efie-form/react';
 import { TextField } from '@mui/material';
 
-function ShortTextField({ id, label, placeholder }: ShortTextFieldProps) {
+function ShortTextField({ id, fieldLabel, placeholder }: ShortTextFieldProps) {
   return (
     <div>
       <div className="efie-input-wrapper">
@@ -11,7 +11,7 @@ function ShortTextField({ id, label, placeholder }: ShortTextFieldProps) {
           placeholder={placeholder}
           fullWidth
           variant="outlined"
-          label={label}
+          label={fieldLabel}
         />
       </div>
     </div>

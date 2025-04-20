@@ -1,7 +1,7 @@
 import type { TimeFieldProps } from '@efie-form/react';
 import { TimePicker } from '@mui/x-date-pickers';
 
-function TimeField({ label }: TimeFieldProps) {
+function TimeField({ fieldLabel }: TimeFieldProps) {
   return (
     <div>
       <TimePicker
@@ -10,7 +10,7 @@ function TimeField({ label }: TimeFieldProps) {
             fullWidth: true,
             variant: 'outlined',
             size: 'small',
-            label,
+            label: fieldLabel,
           },
         }}
       />

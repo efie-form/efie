@@ -56,6 +56,7 @@ const App = () => {
         schema={existingSchema} // Optional: Load an existing form schema
         formKeyNonEditable={true} // Optional: Prevent editing form keys
         inputNonReusable={true} // Optional: Prevent reusing input fields
+        maxHistories={50} // Optional: Limit the maximum undo history entries
         formInputs={[
           // Optional: Custom input fields
           {
@@ -113,6 +114,7 @@ A component that renders a form builder interface.
 | `formInputs` | `BuilderCustomInput[]` | No | Custom input fields |
 | `formKeyNonEditable` | `boolean` | No | Prevent editing form keys |
 | `inputNonReusable` | `boolean` | No | Prevent reusing input fields |
+| `maxHistories` | `number` | No | Maximum number of undo history entries to keep (default: 50) |
 
 **Ref Methods:**
 

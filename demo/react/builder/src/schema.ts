@@ -5,46 +5,16 @@ export const schema: FormSchema = {
   form: {
     fields: [
       {
-        id: 'mlrlFkadFD',
+        id: 'YeLBRjSODi',
         type: 'page',
         children: [
           {
-            id: 'tgVmfdyEVL',
+            id: 'UPoiuQseYY',
             type: 'block',
             children: [
               {
-                type: 'image',
-                id: 'eKuvqzhYfG',
-                props: [
-                  {
-                    type: 'src',
-                    value: '',
-                  },
-                  {
-                    type: 'alt',
-                    value: 'Placeholder',
-                  },
-                  {
-                    type: 'objectFit',
-                    value: 'contain',
-                  },
-                  {
-                    type: 'textAlign',
-                    value: 'center',
-                  },
-                  {
-                    type: 'width',
-                    value: {
-                      value: 100,
-                      unit: '%',
-                    },
-                    autoWidth: true,
-                  },
-                ],
-              },
-              {
                 type: 'header',
-                id: 'twCFXNmRRe',
+                id: 'fVNvXQnKCS',
                 props: [
                   {
                     type: 'content',
@@ -86,7 +56,7 @@ export const schema: FormSchema = {
               },
               {
                 type: 'paragraph',
-                id: 'XNzWmGwDsb',
+                id: 'lALTvFtwVJ',
                 props: [
                   {
                     type: 'content',
@@ -123,38 +93,88 @@ export const schema: FormSchema = {
                 ],
               },
               {
-                type: 'divider',
-                id: 'WruHHsdzzL',
-                props: [
+                type: 'row',
+                id: 'gbmAYEjGyS',
+                props: [],
+                children: [
                   {
-                    type: 'color',
-                    value: '#000000',
+                    id: 'uXwBNYlYXg',
+                    type: 'column',
+                    props: [
+                      {
+                        type: 'width',
+                        value: {
+                          value: 50,
+                          unit: '%',
+                        },
+                        autoWidth: false,
+                      },
+                    ],
+                    children: [
+                      {
+                        id: 'QGeXsGUtIY',
+                        type: 'short_text',
+                        form: {
+                          key: '',
+                        },
+                        props: [
+                          {
+                            type: 'label',
+                            value: 'First name',
+                          },
+                          {
+                            type: 'placeholder',
+                            value: 'Enter your first name',
+                          },
+                          {
+                            type: 'required',
+                            value: true,
+                          },
+                        ],
+                      },
+                    ],
                   },
                   {
-                    type: 'style',
-                    value: {
-                      display: 'block',
-                    },
-                  },
-                  {
-                    type: 'width',
-                    value: {
-                      value: 100,
-                      unit: '%',
-                    },
-                    autoWidth: true,
-                  },
-                  {
-                    type: 'height',
-                    value: {
-                      value: 1,
-                      unit: 'px',
-                    },
+                    id: 'DfopFwvXgG',
+                    type: 'column',
+                    props: [
+                      {
+                        type: 'width',
+                        value: {
+                          value: 50,
+                          unit: '%',
+                        },
+                        autoWidth: false,
+                      },
+                    ],
+                    children: [
+                      {
+                        id: 'EXYzbnGTZf',
+                        type: 'short_text',
+                        form: {
+                          key: '',
+                        },
+                        props: [
+                          {
+                            type: 'label',
+                            value: 'Last name',
+                          },
+                          {
+                            type: 'placeholder',
+                            value: 'Enter your last name',
+                          },
+                          {
+                            type: 'required',
+                            value: false,
+                          },
+                        ],
+                      },
+                    ],
                   },
                 ],
               },
               {
-                id: 'rQDnBQxKoq',
+                id: 'beDGOJDhlJ',
                 type: 'short_text',
                 form: {
                   key: '',
@@ -162,11 +182,11 @@ export const schema: FormSchema = {
                 props: [
                   {
                     type: 'label',
-                    value: 'Short Text',
+                    value: 'Address line',
                   },
                   {
                     type: 'placeholder',
-                    value: 'Enter the placeholder',
+                    value: 'Enter your full address',
                   },
                   {
                     type: 'required',
@@ -175,54 +195,84 @@ export const schema: FormSchema = {
                 ],
               },
               {
-                type: 'long_text',
-                id: 'MIREavJOjB',
+                type: 'single_choice',
+                id: 'eTfPfJASgT',
                 form: {
                   key: '',
                 },
                 props: [
                   {
                     type: 'label',
-                    value: 'Long Text',
+                    value: 'Coutry',
                   },
                   {
-                    type: 'placeholder',
-                    value: 'Enter the placeholder',
+                    type: 'options',
+                    value: [
+                      {
+                        label: 'Malaysia',
+                        value: 'Malaysia',
+                      },
+                      {
+                        label: 'Singapore',
+                        value: 'Singapore',
+                      },
+                      {
+                        label: 'China',
+                        value: 'China',
+                      },
+                    ],
                   },
                   {
                     type: 'required',
-                    value: false,
+                    value: true,
                   },
                 ],
               },
               {
-                type: 'number',
-                id: 'EWOyJelaDS',
-                form: {
-                  key: '',
-                },
+                type: 'paragraph',
+                id: 'harPFrzhzs',
                 props: [
                   {
-                    type: 'label',
-                    value: 'Number',
+                    type: 'content',
+                    value: {
+                      type: 'doc',
+                      content: [
+                        {
+                          type: 'paragraph',
+                          content: [
+                            {
+                              type: 'text',
+                              text: 'Lorem ipsum dolor sit amet',
+                            },
+                          ],
+                        },
+                      ],
+                    },
                   },
                   {
-                    type: 'placeholder',
-                    value: 'Enter the placeholder',
+                    type: 'fontSize',
+                    value: {
+                      value: 16,
+                      unit: 'px',
+                    },
                   },
                   {
-                    type: 'required',
-                    value: false,
+                    type: 'color',
+                    value: '#000000',
+                  },
+                  {
+                    type: 'textAlign',
+                    value: 'center',
                   },
                 ],
               },
               {
                 type: 'row',
-                id: 'MCfHCvMmRH',
+                id: 'QpFMAWUhoC',
                 props: [],
                 children: [
                   {
-                    id: 'dDKjyGGjtf',
+                    id: 'UWSAoUblZy',
                     type: 'column',
                     props: [
                       {
@@ -236,43 +286,30 @@ export const schema: FormSchema = {
                     ],
                     children: [
                       {
-                        type: 'single_choice',
-                        id: 'IcFYvpxWsP',
+                        id: 'IjPhzMgXYj',
+                        type: 'short_text',
                         form: {
                           key: '',
                         },
                         props: [
                           {
                             type: 'label',
-                            value: 'Single Choice',
+                            value: 'Name on card',
                           },
                           {
-                            type: 'options',
-                            value: [
-                              {
-                                label: 'Option 1',
-                                value: 'Option 1',
-                              },
-                              {
-                                label: 'Option 2',
-                                value: 'Option 2',
-                              },
-                              {
-                                label: 'Option 3',
-                                value: 'Option 3',
-                              },
-                            ],
+                            type: 'placeholder',
+                            value: '',
                           },
                           {
                             type: 'required',
-                            value: false,
+                            value: true,
                           },
                         ],
                       },
                     ],
                   },
                   {
-                    id: 'OyHzRLjNIp',
+                    id: 'WVFSYgpCGi',
                     type: 'column',
                     props: [
                       {
@@ -286,32 +323,100 @@ export const schema: FormSchema = {
                     ],
                     children: [
                       {
-                        type: 'multiple_choices',
-                        id: 'tvEXslMoaB',
+                        id: 'yGYCuVfkLb',
+                        type: 'short_text',
                         form: {
                           key: '',
                         },
                         props: [
                           {
                             type: 'label',
-                            value: 'Multiple Choice',
+                            value: 'Card number',
                           },
                           {
-                            type: 'options',
-                            value: [
-                              {
-                                label: 'Option 1',
-                                value: 'Option 1',
-                              },
-                              {
-                                label: 'Option 2',
-                                value: 'Option 2',
-                              },
-                              {
-                                label: 'Option 3',
-                                value: 'Option 3',
-                              },
-                            ],
+                            type: 'placeholder',
+                            value: '',
+                          },
+                          {
+                            type: 'required',
+                            value: true,
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                type: 'row',
+                id: 'VCMMkfIEfz',
+                props: [],
+                children: [
+                  {
+                    id: 'frTHLgRNTd',
+                    type: 'column',
+                    props: [
+                      {
+                        type: 'width',
+                        value: {
+                          value: 50,
+                          unit: '%',
+                        },
+                        autoWidth: false,
+                      },
+                    ],
+                    children: [
+                      {
+                        id: 'KTJubPiQwC',
+                        type: 'short_text',
+                        form: {
+                          key: '',
+                        },
+                        props: [
+                          {
+                            type: 'label',
+                            value: 'Expire date',
+                          },
+                          {
+                            type: 'placeholder',
+                            value: '',
+                          },
+                          {
+                            type: 'required',
+                            value: false,
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                  {
+                    id: 'ellaKvePBQ',
+                    type: 'column',
+                    props: [
+                      {
+                        type: 'width',
+                        value: {
+                          value: 50,
+                          unit: '%',
+                        },
+                        autoWidth: false,
+                      },
+                    ],
+                    children: [
+                      {
+                        id: 'sKqCtjwSva',
+                        type: 'short_text',
+                        form: {
+                          key: '',
+                        },
+                        props: [
+                          {
+                            type: 'label',
+                            value: 'CVV',
+                          },
+                          {
+                            type: 'placeholder',
+                            value: '',
                           },
                           {
                             type: 'required',
@@ -324,67 +429,7 @@ export const schema: FormSchema = {
                 ],
               },
               {
-                type: 'time',
-                id: 'sNlnKzttTx',
-                form: {
-                  key: '',
-                },
-                props: [
-                  {
-                    type: 'label',
-                    value: 'Time',
-                  },
-                  {
-                    type: 'required',
-                    value: false,
-                  },
-                ],
-              },
-              {
-                type: 'date',
-                id: 'ySgpeuooej',
-                form: {
-                  key: '',
-                },
-                props: [
-                  {
-                    type: 'label',
-                    value: 'Date',
-                  },
-                  {
-                    type: 'required',
-                    value: false,
-                  },
-                ],
-              },
-              {
-                type: 'file',
-                id: 'WRnkQtPZrN',
-                form: {
-                  key: '',
-                },
-                props: [
-                  {
-                    type: 'label',
-                    value: 'File',
-                  },
-                  {
-                    type: 'required',
-                    value: false,
-                  },
-                  {
-                    type: 'maxFiles',
-                    value: 1,
-                  },
-                  {
-                    type: 'accept',
-                    allowAll: true,
-                    formats: [],
-                  },
-                ],
-              },
-              {
-                id: 'liZYAiVrko',
+                id: 'QAwbXUScoP',
                 type: 'button',
                 props: [
                   {

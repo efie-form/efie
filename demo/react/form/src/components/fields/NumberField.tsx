@@ -1,7 +1,7 @@
 import type { NumberFieldProps } from '@efie-form/react';
 import { TextField } from '@mui/material';
 
-function NumberField({ id, label, placeholder }: NumberFieldProps) {
+function NumberField({ id, fieldLabel, placeholder }: NumberFieldProps) {
   return (
     <div>
       <div className="efie-input-wrapper">
@@ -12,7 +12,7 @@ function NumberField({ id, label, placeholder }: NumberFieldProps) {
           fullWidth
           variant="outlined"
           type="number"
-          label={label}
+          label={fieldLabel}
         />
       </div>
     </div>

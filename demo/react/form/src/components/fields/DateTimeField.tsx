@@ -1,7 +1,7 @@
 import type { DateTimeFieldProps } from '@efie-form/react';
 import { DateTimePicker } from '@mui/x-date-pickers';
 
-function DateTimeField({ label }: DateTimeFieldProps) {
+function DateTimeField({ fieldLabel }: DateTimeFieldProps) {
   return (
     <div>
       <DateTimePicker
@@ -10,7 +10,7 @@ function DateTimeField({ label }: DateTimeFieldProps) {
             fullWidth: true,
             variant: 'outlined',
             size: 'small',
-            label,
+            label: fieldLabel,
           },
         }}
       />
