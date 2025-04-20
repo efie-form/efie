@@ -19,6 +19,7 @@ function NumberProvider({ field, Component }: NumberProviderProps) {
 
   return createElement(Component, {
     id: field.id,
+    name: field.form.key || field.id,
     errors: {
       message: '',
     },

@@ -20,6 +20,7 @@ function MultipleChoicesProvider({
 
   return createElement(Component, {
     id: field.id,
+    name: field.form.key || field.id,
     errors: {
       message: '',
     },

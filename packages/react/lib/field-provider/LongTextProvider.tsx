@@ -17,6 +17,7 @@ function LongTextProvider({ field, Component }: LongTextProviderProps) {
 
   return createElement(Component, {
     id: field.id,
+    name: field.form.key || '',
     errors: {
       message: '',
     },

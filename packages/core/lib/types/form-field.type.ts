@@ -62,7 +62,7 @@ export interface BaseFormField {
 }
 
 export interface FormInputField {
-  form?: {
+  form: {
     key: string;
     validation?: ValidationSchema[];
   };

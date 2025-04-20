@@ -6,6 +6,7 @@ interface Error {
 
 export interface ShortTextFieldProps {
   id: string;
+  name: string;
   fieldLabel: string;
   required: boolean;
   disabled: boolean;
@@ -16,6 +17,7 @@ export interface ShortTextFieldProps {
 
 export interface LongTextFieldProps {
   id: string;
+  name: string;
   fieldLabel: string;
   required: boolean;
   disabled: boolean;
@@ -26,6 +28,7 @@ export interface LongTextFieldProps {
 
 export interface NumberFieldProps {
   id: string;
+  name: string;
   fieldLabel: string;
   required: boolean;
   disabled: boolean;
@@ -38,6 +41,7 @@ export interface NumberFieldProps {
 
 export interface SingleChoiceFieldProps {
   id: string;
+  name: string;
   fieldLabel: string;
   required: boolean;
   disabled: boolean;
@@ -51,6 +55,7 @@ export interface SingleChoiceFieldProps {
 
 export interface MultipleChoicesFieldProps {
   id: string;
+  name: string;
   fieldLabel: string;
   required: boolean;
   disabled: boolean;
@@ -64,6 +69,7 @@ export interface MultipleChoicesFieldProps {
 
 export interface DateFieldProps {
   id: string;
+  name: string;
   fieldLabel: string;
   required: boolean;
   disabled: boolean;
@@ -73,6 +79,7 @@ export interface DateFieldProps {
 
 export interface TimeFieldProps {
   id: string;
+  name: string;
   fieldLabel: string;
   required: boolean;
   disabled: boolean;
@@ -82,6 +89,7 @@ export interface TimeFieldProps {
 
 export interface DateTimeFieldProps {
   id: string;
+  name: string;
   fieldLabel: string;
   required: boolean;
   disabled: boolean;
@@ -91,6 +99,7 @@ export interface DateTimeFieldProps {
 
 export interface FileFieldProps {
   id: string;
+  name: string;
   fieldLabel: string;
   required: boolean;
   disabled: boolean;

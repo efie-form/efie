@@ -16,6 +16,7 @@ function DateTimeProvider({ field, Component }: DateTimeProviderProps) {
 
   return createElement(Component, {
     id: field.id,
+    name: field.form.key || field.id,
     fieldLabel: label?.value || '',
     required: required?.value || false,
     disabled: false,

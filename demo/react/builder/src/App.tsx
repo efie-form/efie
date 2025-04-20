@@ -31,7 +31,6 @@ function App() {
         ref={formBuilderRef}
         height={height}
         schema={schema}
-        formKeyNonEditable
         inputNonReusable
         maxHistories={25}
         formInputs={[

@@ -115,7 +115,7 @@ export const sampleSchema: FormSchema = {
                         id: 'QGeXsGUtIY',
                         type: 'short_text',
                         form: {
-                          key: '',
+                          key: 'firstName',
                         },
                         props: [
                           {
@@ -152,7 +152,7 @@ export const sampleSchema: FormSchema = {
                         id: 'EXYzbnGTZf',
                         type: 'short_text',
                         form: {
-                          key: '',
+                          key: 'lastName',
                         },
                         props: [
                           {
@@ -177,7 +177,7 @@ export const sampleSchema: FormSchema = {
                 id: 'beDGOJDhlJ',
                 type: 'short_text',
                 form: {
-                  key: '',
+                  key: 'address',
                 },
                 props: [
                   {
@@ -198,12 +198,12 @@ export const sampleSchema: FormSchema = {
                 type: 'single_choice',
                 id: 'eTfPfJASgT',
                 form: {
-                  key: '',
+                  key: 'country',
                 },
                 props: [
                   {
                     type: 'label',
-                    value: 'Coutry',
+                    value: 'Country',
                   },
                   {
                     type: 'options',
@@ -289,7 +289,7 @@ export const sampleSchema: FormSchema = {
                         id: 'IjPhzMgXYj',
                         type: 'short_text',
                         form: {
-                          key: '',
+                          key: 'card_name',
                         },
                         props: [
                           {
@@ -326,7 +326,7 @@ export const sampleSchema: FormSchema = {
                         id: 'yGYCuVfkLb',
                         type: 'short_text',
                         form: {
-                          key: '',
+                          key: 'card_number',
                         },
                         props: [
                           {
@@ -370,7 +370,7 @@ export const sampleSchema: FormSchema = {
                         id: 'KTJubPiQwC',
                         type: 'short_text',
                         form: {
-                          key: '',
+                          key: 'exp',
                         },
                         props: [
                           {
@@ -407,7 +407,7 @@ export const sampleSchema: FormSchema = {
                         id: 'sKqCtjwSva',
                         type: 'short_text',
                         form: {
-                          key: '',
+                          key: 'cvv',
                         },
                         props: [
                           {

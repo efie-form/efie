@@ -19,6 +19,9 @@ function BlockField({
         boxShadow: blockBoxShadow,
         borderRadius: blockBorderRadius,
         overflow: 'hidden',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '1rem',
       }}
     >
       {children}
