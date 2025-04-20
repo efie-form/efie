@@ -1,27 +1,34 @@
 import type { ElementType } from 'react';
 import { createElement } from 'react';
 import type { NumberFieldProps } from '../../types/FieldProps';
-import type { FormFieldNumber } from '@efie-form/core';
+import { PropertyType, type NumberFormField } from '@efie-form/core';
 
 interface NumberProviderProps {
-  field: FormFieldNumber;
+  field: NumberFormField;
   Component?: ElementType<NumberFieldProps>;
 }
 
 function NumberProvider({ field, Component }: NumberProviderProps) {
   if (!Component) return <></>;
 
+  const label = field.props.find(prop => prop.type === PropertyType.LABEL);
+  const placeholder = field.props.find(prop => prop.type === PropertyType.PLACEHOLDER);
+  const required = field.props.find(prop => prop.type === PropertyType.REQUIRED);
+  const min = field.props.find(prop => prop.type === PropertyType.MIN);
+  const max = field.props.find(prop => prop.type === PropertyType.MAX);
+
   return createElement(Component, {
     id: field.id,
+    name: field.form.key || field.id,
     errors: {
       message: '',
     },
-    value: '',
-    onChange: () => ``,
-    label: field.props.label,
-    required: field.props.required,
+    fieldLabel: label?.value || '',
+    required: required?.value || false,
     disabled: false,
-    placeholder: field.props.placeholder,
+    placeholder: placeholder?.value || '',
+    min: min?.value,
+    max: max?.value,
   });
 }
 

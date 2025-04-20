@@ -4,15 +4,15 @@ function ImageField({
   src,
   alt,
   textAlign,
-  height,
-  width,
+  imageHeight,
+  imageWidth,
   objectFit,
 }: ImageFieldProps) {
   return (
     <img
       src={src}
-      width={width}
-      height={height}
+      width={imageWidth}
+      height={imageHeight}
       alt={alt}
       style={{
         objectFit,

@@ -1,24 +1,28 @@
 import type { SingleChoiceFieldProps } from '@efie-form/react';
 import { MenuItem, Select } from '@mui/material';
+import { useFormContext } from 'react-hook-form';
 
-function SingleChoiceField({ label, id, options }: SingleChoiceFieldProps) {
+function SingleChoiceField({ fieldLabel, id, options, name }: SingleChoiceFieldProps) {
+  const { watch, setValue } = useFormContext();
+
   return (
-    <div>
-      <Select
-        id={id}
-        size="small"
-        value=""
-        fullWidth
-        variant="outlined"
-        label={label}
-      >
-        {options.map(option => (
-          <MenuItem key={option.value} value={option.value}>
-            {option.label}
-          </MenuItem>
-        ))}
-      </Select>
-    </div>
+    <Select
+      id={id}
+      value={watch(name)}
+      onChange={(e) => {
+        setValue(name, e.target.value);
+      }}
+      size="small"
+      fullWidth
+      variant="outlined"
+      label={fieldLabel}
+    >
+      {options.map(option => (
+        <MenuItem key={option.value} value={option.value}>
+          {option.optionLabel}
+        </MenuItem>
+      ))}
+    </Select>
   );
 }
 

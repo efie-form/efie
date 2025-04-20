@@ -1,4 +1,4 @@
-import type { FormFieldType } from 'lib/input-type';
+import type { FormFieldType } from './../input-type';
 import type { ValidationSchema } from './form-schema.type';
 import type {
   LabelProperty,
@@ -62,7 +62,7 @@ export interface BaseFormField {
 }
 
 export interface FormInputField {
-  form?: {
+  form: {
     key: string;
     validation?: ValidationSchema[];
   };

@@ -91,8 +91,11 @@ function RenderField({ field, noSelect }: RenderFieldProps) {
           },
         })}
       >
-        {isSelected
-          && createPortal(
+        {isSelected && (() => {
+          const formZone = document.querySelector('#form-zone');
+          if (!formZone) return;
+
+          return createPortal(
             <div
               ref={(el) => {
                 if (!el) return;
@@ -117,8 +120,9 @@ function RenderField({ field, noSelect }: RenderFieldProps) {
                 <HiTrash />
               </button>
             </div>,
-            document.querySelector('#form-zone')!,
-          )}
+            formZone,
+          );
+        })()}
         <FieldItem field={field} />
       </div>
     </Droppable>

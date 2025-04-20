@@ -20,33 +20,45 @@ import PageField from './components/fields/PageField';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import ButtonField from './components/fields/ButtonField';
+import { FormProvider, useForm } from 'react-hook-form';
 
 function App() {
+  const methods = useForm();
+  const { handleSubmit } = methods;
+
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <ReactForm
-        schema={sampleSchema}
-        shortText={ShortTextField}
-        longText={LongTextField}
-        block={BlockField}
-        column={ColumnField}
-        row={RowField}
-        date={DateField}
-        time={TimeField}
-        dateTime={DateTimeField}
-        divider={DividerField}
-        file={FileField}
-        header={HeaderField}
-        image={ImageField}
-        multipleChoices={MultipleChoicesField}
-        singleChoice={SingleChoiceField}
-        number={NumberField}
-        paragraph={ParagraphField}
-        page={PageField}
-        button={ButtonField}
-      />
-    </LocalizationProvider>
+    <form onSubmit={handleSubmit(onSave)}>
+      <FormProvider {...methods}>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <ReactForm
+            schema={sampleSchema}
+            shortText={ShortTextField}
+            longText={LongTextField}
+            block={BlockField}
+            column={ColumnField}
+            row={RowField}
+            date={DateField}
+            time={TimeField}
+            dateTime={DateTimeField}
+            divider={DividerField}
+            file={FileField}
+            header={HeaderField}
+            image={ImageField}
+            multipleChoices={MultipleChoicesField}
+            singleChoice={SingleChoiceField}
+            number={NumberField}
+            paragraph={ParagraphField}
+            page={PageField}
+            button={ButtonField}
+          />
+        </LocalizationProvider>
+      </FormProvider>
+    </form>
   );
 }
+
+const onSave = (data: Record<string, unknown>) => {
+  console.log(data);
+};
 
 export default App;

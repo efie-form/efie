@@ -1,7 +1,9 @@
 import {
   FormFieldType,
   type FormField,
+  type FormInputField,
   type FormSchema,
+  type PageFormField,
   type PropertyDefinition,
 } from '@efie-form/core';
 import { create } from 'zustand';
@@ -16,7 +18,7 @@ interface SchemaState {
     type: PropertyDefinition['type'],
     props: Omit<PropertyDefinition, 'type'>
   ) => void;
-  getPage: (pageId?: string) => FormField | undefined;
+  getPage: (pageId?: string) => PageFormField | undefined;
   updatePages: (pages: FormField[]) => void;
   fieldMap: Map<string, FormField>;
   fieldKeyMap: Map<string, string>;
@@ -27,7 +29,7 @@ interface SchemaState {
     fieldId: string,
     type: T
   ) => Extract<PropertyDefinition, { type: T }> | undefined;
-  updateFieldForm: (fieldId: string, form: FormField['form']) => void;
+  updateFieldForm: (fieldId: string, form: FormInputField['form']) => void;
   replaceFieldChildren: (fieldId: string, children: FormField[]) => void;
   deleteField: (fieldId: string) => void;
   fieldParentMap: Map<string, string>;
@@ -167,7 +169,7 @@ export const useSchemaStore = create<SchemaState>((set, getState) => ({
   updateFieldForm: (fieldId, form) => {
     const { fieldMap, schema, addHistory } = getState();
     const field = fieldMap.get(fieldId);
-    if (!field) return;
+    if (!field || !('form' in field)) return;
     field.form = form;
     fieldMap.set(fieldId, field);
     addHistory(schema);

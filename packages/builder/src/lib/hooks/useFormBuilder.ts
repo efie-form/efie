@@ -11,7 +11,7 @@ export default function useFormBuilder() {
     setFormKeyEditable,
     setIsInputReusable,
   } = useSettingsStore();
-  const { schema, currentHistoryIndex, setSchema } = useSchemaStore();
+  const { schema, currentHistoryIndex, setSchema, setMaxHistories } = useSchemaStore();
 
   const getSchema = useCallback(() => {
     return schema;
@@ -32,5 +32,6 @@ export default function useFormBuilder() {
     setHeight,
     setFormKeyEditable,
     setIsInputReusable,
+    setMaxHistories,
   };
 }

@@ -1,25 +1,31 @@
 import type { ElementType } from 'react';
 import { createElement } from 'react';
 import type { HeaderFieldProps } from '../../types/FieldProps';
-import type { FormFieldHeader } from '@efie-form/core';
+import { PropertyType, type HeaderFormField } from '@efie-form/core';
 
 interface HeaderProviderProps {
-  field: FormFieldHeader;
+  field: HeaderFormField;
   Component?: ElementType<HeaderFieldProps>;
 }
 
 function HeaderProvider({ field, Component }: HeaderProviderProps) {
   if (!Component) return <></>;
 
+  const content = field.props.find(prop => prop.type === PropertyType.CONTENT);
+  const tag = field.props.find(prop => prop.type === PropertyType.TAG);
+  const textAlign = field.props.find(prop => prop.type === PropertyType.TEXT_ALIGN);
+  const fontSize = field.props.find(prop => prop.type === PropertyType.FONT_SIZE);
+  const fontWeight = field.props.find(prop => prop.type === PropertyType.FONT_WEIGHT);
+
   return createElement(Component, {
     id: field.id,
-    text: field.props.text,
-    tag: field.props.tag,
-    textAlign: field.props.textAlign,
+    text: typeof content?.value?.content === 'string' ? content?.value?.content : 'Header',
+    headingTag: tag?.value || 'h1',
+    textAlign: textAlign?.value || 'left',
     font: {
-      size: field.props.font.size,
-      weight: field.props.font.weight,
-      unit: field.props.font.unit,
+      size: fontSize?.value?.value || 16,
+      weight: fontWeight?.value || 400,
+      unit: (fontSize?.value?.unit === 'px' || fontSize?.value?.unit === 'em' || fontSize?.value?.unit === 'rem') ? fontSize?.value?.unit : 'px',
     },
   });
 }

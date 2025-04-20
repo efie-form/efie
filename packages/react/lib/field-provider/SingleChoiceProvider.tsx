@@ -1,27 +1,35 @@
 import type { ElementType } from 'react';
 import { createElement } from 'react';
 import type { SingleChoiceFieldProps } from '../../types/FieldProps';
-import type { FormFieldSingleChoice } from '@efie-form/core';
+import { PropertyType, type SingleChoiceFormField } from '@efie-form/core';
 
 interface SingleChoiceProviderProps {
-  field: FormFieldSingleChoice;
+  field: SingleChoiceFormField;
   Component?: ElementType<SingleChoiceFieldProps>;
 }
 
 function SingleChoiceProvider({ field, Component }: SingleChoiceProviderProps) {
   if (!Component) return <></>;
 
+  const label = field.props.find(prop => prop.type === PropertyType.LABEL);
+  const required = field.props.find(prop => prop.type === PropertyType.REQUIRED);
+  const options = field.props.find(prop => prop.type === PropertyType.OPTIONS);
+
   return createElement(Component, {
     id: field.id,
+    name: field.form.key || field.id,
     errors: {
       message: '',
     },
-    value: '',
-    onChange: () => ``,
-    label: field.props.label,
-    required: field.props.required,
+    fieldLabel: label?.value || '',
+    required: required?.value || false,
     disabled: false,
-    options: field.props.options,
+    options: options?.value
+      ? options.value.map(opt => ({
+          optionLabel: opt.label,
+          value: opt.value,
+        }))
+      : [],
   });
 }
 

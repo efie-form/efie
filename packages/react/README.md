@@ -3,8 +3,16 @@
 [![Version](https://img.shields.io/npm/v/@efie-form/react.svg?style=flat-square)](https://npmjs.com/package/@efie-form/react)
 [![License](https://img.shields.io/npm/l/@efie-form/react.svg?style=flat-square)](https://npmjs.com/package/@efie-form/react)
 
-This package is part of [efie-form](https://npmjs.com/package/efie-form), a form library for building forms with Drag &
-Drop.
+A React component library for building dynamic forms with drag-and-drop functionality. This package is part of the [efie-form](https://npmjs.com/package/efie-form) ecosystem.
+
+## Features
+
+- 🧩 **Form Builder**: Drag-and-drop interface for creating forms
+- 📝 **Headless Form**: Render headless forms created with the form builder
+- 🔌 **Extensible**: Customize form fields with your own components
+- 🎨 **Themeable**: Style forms to match your application's design
+- 🌐 **Responsive**: Works on all screen sizes
+- 🧰 **Rich Field Types**: Support for text, number, date, file, and more
 
 ## Installation
 
@@ -21,76 +29,138 @@ $ pnpm add @efie-form/react
 
 ## Usage
 
-To render the form builder to your page:
+### FormBuilder Component
+
+The `FormBuilder` component provides a drag-and-drop interface for creating forms. It uses an iframe to render the form builder UI.
 
 ```tsx
-import { useState } from 'react';
-import { FormSchema, FormBuilder, FormBuilderOptions$$ } from '@efie-form/core';
+import { useRef } from 'react';
+import { FormBuilder, FormBuilderRef, FormSchema } from '@efie-form/react';
 
 const App = () => {
-  const ref = useRef<FormBuilderRef>(null);
-  const options: FormBuilderOptions = {
-    // customize options here
-  };
-  // load value from your database
+  const formBuilderRef = useRef<FormBuilderRef>(null);
 
   const handleSave = () => {
-    const editor = ref.current?.getEditor();
-
-    const schema = editor?.getSchema();
+    const schema = formBuilderRef.current?.getSchema();
     console.log(schema);
-    // save schema to your database
-  };
-
-  const onReady = () => {
-    // form builder is loaded and ready to use
-    // you can load the schema from your database here
-
-    const schema = {
-      // your schema
-    };
-    ref.current?.loadSchema(schema);
+    // Save schema to your database
   };
 
   return (
-    <>
-      <button onClick={handleSave}>Save</button>
+    <div>
+      <button onClick={handleSave}>Save Form</button>
 
-      <FormBuilder ref={ref} onReady={onReady} options={options} />
-    </>
+      <FormBuilder
+        ref={formBuilderRef}
+        height={600} // Height of the form builder in pixels
+        schema={existingSchema} // Optional: Load an existing form schema
+        formKeyNonEditable={true} // Optional: Prevent editing form keys
+        inputNonReusable={true} // Optional: Prevent reusing input fields
+        maxHistories={50} // Optional: Limit the maximum undo history entries
+        formInputs={[
+          // Optional: Custom input fields
+          {
+            id: 'custom_field',
+            label: 'Custom Field',
+            type: 'short_text',
+          }
+        ]}
+      />
+    </div>
   );
 };
 ```
 
-## Properties
+### ReactForm Component
 
-| Name      | Description                                                                                                     | Type                        | Default |
-| --------- | --------------------------------------------------------------------------------------------------------------- | --------------------------- | ------- |
-| `ref`     | (Required) The ref to the form builder                                                                          | `RefObject<FormBuilderRef>` | -       |
-| `onReady` | (Optional) Function called when the form builder is loaded and ready to use                                     | `(editor: Editor) => void`  | -       |
-| `height`  | (Optional) The height of the form builder in pixels, the form builder will fit to parent height if not provided | `number`                    | -       |
-| `options` | (Optional) Customize available options for the form builder                                                     | `string[]`                  | -       |
+The `ReactForm` component renders a form based on a schema created with the FormBuilder.
 
-## API
+```tsx
+import { ReactForm, FormSchema } from '@efie-form/react';
+import { MyCustomTextField, MyCustomNumberField } from './my-components';
 
-`loadSchema(schema: FormSchema)`
+const App = () => {
+  // Form schema from your database or state
+  const schema: FormSchema = {
+    // Your form schema
+  };
 
-Load the schema to the form builder.
+  return (
+    <ReactForm
+      schema={schema}
+      // Provide your custom components for each field type
+      shortText={MyCustomTextField}
+      number={MyCustomNumberField}
+      // ... other field types
+    />
+  );
+};
+```
 
-`getSchema()`
+## API Reference
 
-Get the schema from the form builder.
+### Components
 
-## Options
+#### `FormBuilder`
 
-`options`
+A component that renders a form builder interface.
 
-Customize available options for the form builder.
+**Props:**
 
-`options.inputFields`
+| Prop | Type | Required | Description |
+|------|------|----------|-------------|
+| `height` | `number` | Yes | Height of the form builder in pixels |
+| `schema` | `FormSchema` | No | Initial form schema |
+| `formInputs` | `BuilderCustomInput[]` | No | Custom input fields |
+| `formKeyNonEditable` | `boolean` | No | Prevent editing form keys |
+| `inputNonReusable` | `boolean` | No | Prevent reusing input fields |
+| `maxHistories` | `number` | No | Maximum number of undo history entries to keep (default: 50) |
 
-Customize available input fields with custom label & field name.
+**Ref Methods:**
 
-`options.hiddenFields`
+| Method | Return Type | Description |
+|--------|-------------|-------------|
+| `getSchema()` | `FormSchema` | Get the current form schema |
 
-Hide available fields from the form builder.
+#### `ReactForm`
+
+A component that renders a form based on a schema.
+
+**Props:**
+
+| Prop | Type | Required | Description |
+|------|------|----------|-------------|
+| `schema` | `FormSchema` | Yes | Form schema to render |
+| `shortText` | `ElementType<ShortTextFieldProps>` | No | Component for short text fields |
+| `longText` | `ElementType<LongTextFieldProps>` | No | Component for long text fields |
+| `number` | `ElementType<NumberFieldProps>` | No | Component for number fields |
+| `singleChoice` | `ElementType<SingleChoiceFieldProps>` | No | Component for single choice fields |
+| `multipleChoices` | `ElementType<MultipleChoicesFieldProps>` | No | Component for multiple choice fields |
+| `date` | `ElementType<DateFieldProps>` | No | Component for date fields |
+| `time` | `ElementType<TimeFieldProps>` | No | Component for time fields |
+| `dateTime` | `ElementType<DateTimeFieldProps>` | No | Component for date-time fields |
+| `file` | `ElementType<FileFieldProps>` | No | Component for file fields |
+| `divider` | `ElementType<DividerFieldProps>` | No | Component for divider fields |
+| `header` | `ElementType<HeaderFieldProps>` | No | Component for header fields |
+| `paragraph` | `ElementType<ParagraphFieldProps>` | No | Component for paragraph fields |
+| `image` | `ElementType<ImageFieldProps>` | No | Component for image fields |
+| `row` | `ElementType<RowFieldProps>` | No | Component for row layout |
+| `column` | `ElementType<ColumnFieldProps>` | No | Component for column layout |
+| `block` | `ElementType<BlockFieldProps>` | No | Component for block layout |
+| `page` | `ElementType<PageFieldProps>` | No | Component for page layout |
+| `button` | `ElementType<ButtonFieldProps>` | No | Component for button fields |
+
+## Examples
+
+Check out the demo applications in the repository for complete examples:
+
+- Form Builder Demo: `demo/react/builder`
+- Form Renderer Demo: `demo/react/form`
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.

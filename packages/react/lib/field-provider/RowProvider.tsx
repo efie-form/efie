@@ -1,11 +1,11 @@
 import type { ElementType } from 'react';
-import { createElement, Fragment } from 'react';
+import { createElement } from 'react';
 import type { FieldPropsMap, RowFieldProps } from '../../types/FieldProps';
-import type { FormFieldRow } from '@efie-form/core';
+import { type RowFormField } from '@efie-form/core';
 import RenderField from '../RenderField';
 
 interface RowProviderProps extends Partial<FieldPropsMap> {
-  field: FormFieldRow;
+  field: RowFormField;
   Component?: ElementType<RowFieldProps>;
 }
 
@@ -17,9 +17,11 @@ function RowProvider({ field, Component, ...props }: RowProviderProps) {
     children: (
       <>
         {field.children.map(field => (
-          <Fragment key={field.id}>
-            <RenderField field={field} {...props} />
-          </Fragment>
+          <RenderField
+            key={field.id}
+            field={field}
+            {...props}
+          />
         ))}
       </>
     ),

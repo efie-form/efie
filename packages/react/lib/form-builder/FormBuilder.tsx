@@ -15,6 +15,7 @@ interface FormBuilderProps {
   schema?: FormSchema;
   formKeyNonEditable?: boolean;
   inputNonReusable?: boolean;
+  maxHistories?: number;
 }
 
 export interface FormBuilderRef {
@@ -23,7 +24,7 @@ export interface FormBuilderRef {
 
 const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
   (
-    { height, formInputs, schema, formKeyNonEditable, inputNonReusable },
+    { height, formInputs, schema, formKeyNonEditable, inputNonReusable, maxHistories },
     ref,
   ) => {
     const builderRef = useRef<Iframe | undefined>();
@@ -43,6 +44,7 @@ const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
           schema,
           formKeyNonEditable,
           inputNonReusable,
+          maxHistories,
         });
       }
 
@@ -64,6 +66,7 @@ const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
       schema,
       formKeyNonEditable,
       inputNonReusable,
+      maxHistories,
     ]);
 
     // Update height when prop changes
