@@ -4,7 +4,7 @@ import type {
   ActionType,
   SizeUnit,
 } from './form-schema.constant';
-import type { RootRule } from './root-rules.type';
+import type { RootRule } from './root-rule.type';
 import type { FormField } from './form-field.type';
 
 // Base types for units and measurements

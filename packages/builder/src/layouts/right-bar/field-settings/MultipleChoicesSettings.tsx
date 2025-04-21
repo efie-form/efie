@@ -4,6 +4,7 @@ import PropSettingsPlaceholder from '../property-settings/PropSettingsPlaceholde
 import PropSettingsLabel from '../property-settings/PropSettingsLabel';
 import PropSettingsFormKey from '../property-settings/PropSettingsFormKey';
 import PropSettingsOption from '../property-settings/PropSettingsOption';
+import PropSettingsOptionType from '../property-settings/PropSettingsOptionType';
 
 interface MultipleChoicesSettingsProps {
   field: MultipleChoiceFormField;
@@ -20,6 +21,7 @@ function MultipleChoicesSettings({ field }: MultipleChoicesSettingsProps) {
       <PropSettingsPlaceholder field={field} />
       <PropSettingsRequired field={field} />
       <PropSettingsOption field={field} />
+      <PropSettingsOptionType field={field} defaultType="checkbox" />
     </div>
   );
 }

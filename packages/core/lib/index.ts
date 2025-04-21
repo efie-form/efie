@@ -17,7 +17,7 @@ export type {
   PropertyValue,
   ContainerStyle,
 } from './types/form-schema.type';
-export type { RootRule } from './types/root-rules.type';
+export type { RootRule } from './types/root-rule.type';
 export type { BuilderCustomInput } from './types/builder-custom-input.type';
 export type { PropertyDefinition } from './types/field-properties.type';
 
@@ -106,4 +106,5 @@ export {
   type TextAlignProperty,
   type ContentProperty,
   type BoxShadow,
+  type OptionTypeProperty,
 } from './types/field-properties.type';

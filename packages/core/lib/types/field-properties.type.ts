@@ -130,6 +130,12 @@ export interface FontSizeProperty {
   value: Size;
 }
 
+export interface OptionTypeProperty {
+  type: typeof PropertyType.OPTION_TYPE;
+  displayType: 'radio' | 'checkbox' | 'dropdown';
+  direction: 'vertical' | 'horizontal';
+}
+
 export interface FontWeightProperty {
   type: typeof PropertyType.FONT_WEIGHT;
   value: number;
@@ -345,4 +351,5 @@ export type PropertyDefinition =
   | BorderColorProperty
   | BorderStyleProperty
   | NameProperty
-  | DividerHeightProperty;
+  | DividerHeightProperty
+  | OptionTypeProperty;

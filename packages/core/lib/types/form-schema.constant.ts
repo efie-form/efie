@@ -169,6 +169,7 @@ export const PropertyType = {
   CHOICE: 'choice',
   CHOICES: 'choices',
   IS_VALUE_DIFFERENT: 'isValueDifferent',
+  OPTION_TYPE: 'optionType',
   // Layout field specific
   ROW: 'row',
   COLUMN: 'column',

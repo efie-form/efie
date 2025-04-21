@@ -39,6 +39,7 @@ import type {
   MaxFilesProperty,
   NameProperty,
   ContentProperty,
+  OptionTypeProperty,
 } from './field-properties.type';
 
 // Base form field interface
@@ -111,6 +112,7 @@ export interface SingleChoiceFormField extends BaseFormField, FormInputField {
     | ArrayDefaultValueProperty
     | RequiredProperty
     | MultipleProperty
+    | OptionTypeProperty
   )[];
 }
 
@@ -123,6 +125,7 @@ export interface MultipleChoiceFormField extends BaseFormField, FormInputField {
     | ArrayDefaultValueProperty
     | RequiredProperty
     | MultipleProperty
+    | OptionTypeProperty
   )[];
 }
 
