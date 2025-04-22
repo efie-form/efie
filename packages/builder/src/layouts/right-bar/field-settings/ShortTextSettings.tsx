@@ -1,4 +1,4 @@
-import type { ShortTextFormField } from '@efie-form/core';
+import { WidgetType, type ShortTextFormField, type Widget } from '@efie-form/core';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import PropSettingsLabel from '../property-settings/PropSettingsLabel';
 import PropSettingsPlaceholder from '../property-settings/PropSettingsPlaceholder';
@@ -7,6 +7,26 @@ import PropSettingsFormKey from '../property-settings/PropSettingsFormKey';
 interface ShortTextSettingsProps {
   field: ShortTextFormField;
 }
+
+const widgets: Widget[] = [
+  {
+    type: WidgetType.TEXT,
+    label: 'Form Key',
+  },
+  {
+    type: WidgetType.TEXT,
+    label: 'Label',
+  },
+  {
+    type: WidgetType.TEXT,
+    label: 'Placeholder',
+  },
+  {
+    type: WidgetType.SWITCH,
+    label: 'Required',
+    defaultValue: false,
+  },
+];
 
 function ShortTextSettings({ field }: ShortTextSettingsProps) {
   const { getFieldKeyById } = useSchemaStore();

@@ -17,7 +17,7 @@ export type {
   PropertyValue,
   ContainerStyle,
 } from './types/form-schema.type';
-export type { RootRule } from './types/root-rules.type';
+export type { RootRule } from './types/root-rule.type';
 export type { BuilderCustomInput } from './types/builder-custom-input.type';
 export type { PropertyDefinition } from './types/field-properties.type';
 
@@ -107,3 +107,18 @@ export {
   type ContentProperty,
   type BoxShadow,
 } from './types/field-properties.type';
+
+export {
+  WidgetType,
+  type Widget,
+  type TextWidget,
+  type NumberWidget,
+  type RangeWidget,
+  type SwitchWidget,
+  type OptionsWidget,
+  type FourSideWidget,
+  type BoxShadowWidget,
+  type ColorWidget,
+  type SizeWidget,
+  type CountryWidget,
+} from './types/widget.type';
