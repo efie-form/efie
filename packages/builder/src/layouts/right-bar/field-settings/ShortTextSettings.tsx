@@ -1,9 +1,6 @@
 import { WidgetType, type ShortTextFormField, type Widget } from '@efie-form/core';
 import { useSchemaStore } from '../../../lib/state/schema.state';
-import PropSettingsLabel from '../property-settings/PropSettingsLabel';
-import PropSettingsPlaceholder from '../property-settings/PropSettingsPlaceholder';
-import PropSettingsRequired from '../property-settings/PropSettingsRequired';
-import PropSettingsFormKey from '../property-settings/PropSettingsFormKey';
+import RenderWidget from '../widget/render-widget';
 interface ShortTextSettingsProps {
   field: ShortTextFormField;
 }
@@ -38,10 +35,9 @@ function ShortTextSettings({ field }: ShortTextSettingsProps) {
       <div className="px-4 py-2 bg-neutral-100 text-neutral-800 typography-body3 uppercase">
         General
       </div>
-      <PropSettingsFormKey field={field} />
-      <PropSettingsLabel field={field} />
-      <PropSettingsPlaceholder field={field} />
-      <PropSettingsRequired field={field} />
+      {widgets.map(widget => (
+        <RenderWidget widget={widget} />
+      ))}
     </div>
   );
 }
