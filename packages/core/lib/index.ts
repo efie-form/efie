@@ -109,7 +109,7 @@ export {
 } from './types/field-properties.type';
 
 export {
-  WidgetType,
+  WidgetFormat,
   type Widget,
   type TextWidget,
   type NumberWidget,

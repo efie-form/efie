@@ -1,4 +1,4 @@
-export const WidgetType = {
+export const WidgetFormat = {
   TEXT: 'text',
   NUMBER: 'number',
   RANGE: 'range',
@@ -11,60 +11,66 @@ export const WidgetType = {
   COUNTRY: 'country',
 } as const;
 
-export type WidgetType = (typeof WidgetType)[keyof typeof WidgetType];
+export type WidgetFormat = (typeof WidgetFormat)[keyof typeof WidgetFormat];
 
 interface WidgetBase {
   label: string;
+  name: string;
+  tag?: string;
 }
 
 export interface TextWidget extends WidgetBase {
-  type: typeof WidgetType.TEXT;
+  format: typeof WidgetFormat.TEXT;
 }
 
 export interface NumberWidget extends WidgetBase {
-  type: typeof WidgetType.NUMBER;
+  format: typeof WidgetFormat.NUMBER;
   min?: number;
   max?: number;
 }
 
 export interface RangeWidget extends WidgetBase {
-  type: typeof WidgetType.RANGE;
+  format: typeof WidgetFormat.RANGE;
   min?: number;
   max?: number;
   step?: number;
 }
 
 export interface SwitchWidget extends WidgetBase {
-  type: typeof WidgetType.SWITCH;
+  format: typeof WidgetFormat.SWITCH;
   defaultValue: boolean;
 }
 
 export interface OptionsWidget extends WidgetBase {
-  type: typeof WidgetType.OPTIONS;
-  defaultOptions: { label: string; value: string; name: string }[];
+  format: typeof WidgetFormat.OPTIONS;
+  defaultOptions: { label: string; value: string }[];
 }
 
 export interface FourSideWidget extends WidgetBase {
-  type: typeof WidgetType.FOUR_SIDE;
-  sides: {};
+  format: typeof WidgetFormat.FOUR_SIDE;
+  allName: string;
+  sides: {
+    label: string;
+    name: string;
+  }[];
 }
 
 export interface BoxShadowWidget extends WidgetBase {
-  type: typeof WidgetType.BOX_SHADOW;
+  format: typeof WidgetFormat.BOX_SHADOW;
 }
 
 export interface ColorWidget extends WidgetBase {
-  type: typeof WidgetType.COLOR;
+  format: typeof WidgetFormat.COLOR;
   defaultColor: string;
 }
 
 export interface SizeWidget extends WidgetBase {
-  type: typeof WidgetType.SIZE;
+  format: typeof WidgetFormat.SIZE;
   defaultValue: number;
 }
 
 export interface CountryWidget extends WidgetBase {
-  type: typeof WidgetType.COUNTRY;
+  format: typeof WidgetFormat.COUNTRY;
   defaultCountry: string;
 }
 

@@ -14,8 +14,8 @@ import useDebounce from '../../lib/hooks/useDebounce';
 import { useControllableState } from '@radix-ui/react-use-controllable-state';
 
 interface ColorPickerProps {
-  value: string;
-  onChange: (value: string) => void;
+  value?: string;
+  onChange?: (value: string) => void;
   defaultColor?: string;
   onClose?: () => void;
 }

@@ -1,29 +1,60 @@
-import type { ButtonFormField } from '@efie-form/core';
-import PropSettingsLabel from '../property-settings/PropSettingsLabel';
-import PropSettingsBgColor from '../property-settings/PropSettingsBgColor';
-import PropSettingsColor from '../property-settings/PropSettingsColor';
-import PropSettingsPadding from '../property-settings/PropSettingsPadding';
-import PropSettingsBorderRadius from '../property-settings/PropSettingsBorderRadius';
-import PropSettingsTextAlign from '../property-settings/PropSettingsTextAlign';
-import PropSettingsWidth from '../property-settings/PropSettingsWidth';
+import { WidgetFormat, type ButtonFormField, type Widget } from '@efie-form/core';
+import { useSchemaStore } from '../../../lib/state/schema.state';
+import RenderWidget from '../widget/render-widget';
 
 interface ButtonSettingsProps {
   field: ButtonFormField;
 }
 
+const widgets: Widget[] = [
+  {
+    format: WidgetFormat.TEXT,
+    label: 'Label',
+  },
+  {
+    format: WidgetFormat.COLOR,
+    label: 'Text Color',
+    defaultColor: '#FFFFFF',
+  },
+  {
+    format: WidgetFormat.COLOR,
+    label: 'Background Color',
+    defaultColor: '#3B82F6',
+  },
+  {
+    format: WidgetFormat.FOUR_SIDE,
+    label: 'Padding',
+    sides: {},
+  },
+  {
+    format: WidgetFormat.FOUR_SIDE,
+    label: 'Border Radius',
+    sides: {},
+  },
+  {
+    format: WidgetFormat.NUMBER,
+    label: 'Width',
+    min: 0,
+  },
+  {
+    format: WidgetFormat.TEXT,
+    label: 'Text Align',
+  },
+];
+
 function ButtonSettings({ field }: ButtonSettingsProps) {
+  const { getFieldKeyById } = useSchemaStore();
+  const fieldKey = getFieldKeyById(field.id);
+  if (!fieldKey) return <></>;
+
   return (
     <div>
       <div className="px-4 py-2 bg-neutral-100 text-neutral-800 typography-body3 uppercase">
         General
       </div>
-      <PropSettingsLabel field={field} />
-      <PropSettingsColor field={field} />
-      <PropSettingsBgColor field={field} />
-      <PropSettingsPadding field={field} />
-      <PropSettingsBorderRadius field={field} />
-      <PropSettingsWidth field={field} />
-      <PropSettingsTextAlign field={field} />
+      {widgets.map(widget => (
+        <RenderWidget key={widget.label} widget={widget} />
+      ))}
     </div>
   );
 }

@@ -1,23 +1,46 @@
-import type { ParagraphFormField } from '@efie-form/core';
-import PropSettingsFontSize from '../property-settings/PropSettingsFontSize';
-import PropSettingsTextAlign from '../property-settings/PropSettingsTextAlign';
-import PropSettingsColor from '../property-settings/PropSettingsColor';
+import { WidgetFormat, type ParagraphFormField, type Widget } from '@efie-form/core';
+import { useSchemaStore } from '../../../lib/state/schema.state';
+import RenderWidget from '../widget/render-widget';
 
 interface ParagraphSettingsProps {
   field: ParagraphFormField;
 }
 
+const widgets: Widget[] = [
+  {
+    format: WidgetFormat.TEXT,
+    label: 'Content',
+  },
+  {
+    format: WidgetFormat.NUMBER,
+    label: 'Font Size',
+    min: 8,
+    max: 72,
+  },
+  {
+    format: WidgetFormat.TEXT,
+    label: 'Text Align',
+  },
+  {
+    format: WidgetFormat.COLOR,
+    label: 'Color',
+    defaultColor: '#000000',
+  },
+];
+
 function ParagraphSettings({ field }: ParagraphSettingsProps) {
+  const { getFieldKeyById } = useSchemaStore();
+  const fieldKey = getFieldKeyById(field.id);
+  if (!fieldKey) return <></>;
+
   return (
     <div>
-      <div>
-        <div className="px-4 py-2 bg-neutral-100 text-neutral-800 typography-body2">
-          Text
-        </div>
-        <PropSettingsFontSize field={field} />
-        <PropSettingsTextAlign field={field} />
-        <PropSettingsColor field={field} />
+      <div className="px-4 py-2 bg-neutral-100 text-neutral-800 typography-body3 uppercase">
+        Text
       </div>
+      {widgets.map(widget => (
+        <RenderWidget key={widget.label} widget={widget} />
+      ))}
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { WidgetType, type Widget } from '@efie-form/core';
+import { WidgetFormat, type FormField, type Widget } from '@efie-form/core';
 import TextWidget from './text-widget';
 import NumberWidget from './number-widget';
 import RangeWidget from './range-widget';
@@ -10,40 +10,56 @@ import ColorWidget from './color-widget';
 import SizeWidget from './size-widget';
 import CountryWidget from './country-widget';
 
-interface RenderWidgetProps {
-  widget: Widget;
+interface RenderWidgetsProps {
+  widgets: Widget[];
+  field: FormField;
 }
 
-export default function RenderWidget({ widget }: RenderWidgetProps) {
-  switch (widget.type) {
-    case WidgetType.TEXT: {
-      return <TextWidget widget={widget} />;
+export default function RenderWidgets({ widgets, field }: RenderWidgetsProps) {
+  return (
+    <>
+      {widgets.map(widget => (
+        <RenderWidget key={widget.label} widget={widget} field={field} />
+      ))}
+    </>
+  );
+}
+
+interface RenderWidgetProps {
+  widget: Widget;
+  field: FormField;
+}
+
+function RenderWidget({ widget, field }: RenderWidgetProps) {
+  switch (widget.format) {
+    case WidgetFormat.TEXT: {
+      return <TextWidget widget={widget} field={field} />;
     }
-    case WidgetType.NUMBER: {
+    case WidgetFormat.NUMBER: {
       return <NumberWidget widget={widget} />;
     }
-    case WidgetType.RANGE: {
+    case WidgetFormat.RANGE: {
       return <RangeWidget widget={widget} />;
     }
-    case WidgetType.SWITCH: {
+    case WidgetFormat.SWITCH: {
       return <SwitchWidget widget={widget} />;
     }
-    case WidgetType.OPTIONS: {
+    case WidgetFormat.OPTIONS: {
       return <OptionsWidget widget={widget} />;
     }
-    case WidgetType.FOUR_SIDE: {
+    case WidgetFormat.FOUR_SIDE: {
       return <FourSideWidget widget={widget} />;
     }
-    case WidgetType.BOX_SHADOW: {
+    case WidgetFormat.BOX_SHADOW: {
       return <BoxShadowWidget widget={widget} />;
     }
-    case WidgetType.COLOR: {
+    case WidgetFormat.COLOR: {
       return <ColorWidget widget={widget} />;
     }
-    case WidgetType.SIZE: {
+    case WidgetFormat.SIZE: {
       return <SizeWidget widget={widget} />;
     }
-    case WidgetType.COUNTRY: {
+    case WidgetFormat.COUNTRY: {
       return <CountryWidget widget={widget} />;
     }
     default: {
