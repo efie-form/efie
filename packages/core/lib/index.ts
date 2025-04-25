@@ -122,3 +122,14 @@ export {
   type SizeWidget,
   type CountryWidget,
 } from './types/widget.type';
+
+export {
+  type PropValue,
+  type TextValue,
+  type SwitchValue,
+  type NumberValue,
+  type RangeValue,
+  type OptionsValue,
+  type FourSideValue,
+  type ColorValue,
+} from './types/prop-value.type';

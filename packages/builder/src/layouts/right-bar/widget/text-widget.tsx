@@ -1,6 +1,7 @@
 import type { FormField, TextWidget } from '@efie-form/core';
-import { Input } from '../../../components/form';
+import { useFieldText } from '../../../lib/hooks/properties/useFieldText';
 import SettingsFieldVertical from '../property-layouts/SettingsFieldVertical';
+import { Input } from '../../../components/form';
 
 interface TextWidgetProps {
   widget: TextWidget;
@@ -8,14 +9,15 @@ interface TextWidgetProps {
 }
 
 export default function TextWidget({ widget: { format, label, name, tag }, field }: TextWidgetProps) {
-  const widgetProp = field.props.find(prop => prop.type === name);
-  console.log(widgetProp);
+  const { updateValue, value } = useFieldText({
+    field,
+    type: name,
+  });
+  console.log(name);
 
   return (
-    <>
-      <SettingsFieldVertical label={label} divider>
-        <Input />
-      </SettingsFieldVertical>
-    </>
+    <SettingsFieldVertical label={label} divider>
+      <Input key={name} value={value} onChange={updateValue} />
+    </SettingsFieldVertical>
   );
 }

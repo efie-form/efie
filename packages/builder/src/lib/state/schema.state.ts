@@ -5,6 +5,7 @@ import {
   type FormSchema,
   type PageFormField,
   type PropertyDefinition,
+  type PropValue,
 } from '@efie-form/core';
 import { create } from 'zustand';
 import defaultSchema from '../defaultSchema';
@@ -15,8 +16,8 @@ interface SchemaState {
   setFields: (fields: FormField[]) => void;
   updateFieldProps: (
     fieldId: string,
-    type: PropertyDefinition['type'],
-    props: Omit<PropertyDefinition, 'type'>
+    type: string,
+    props: PropValue
   ) => void;
   getPage: (pageId?: string) => PageFormField | undefined;
   updatePages: (pages: FormField[]) => void;
@@ -134,13 +135,12 @@ export const useSchemaStore = create<SchemaState>((set, getState) => ({
 
     // Create a new property with the correct type
     const newProp = {
-      type,
       ...props,
+      type,
     } as (typeof field.props)[number];
 
     if (propIndex === -1) {
       // Add new property if it doesn't exist
-      // @ts-expect-error - This is a valid operation
       field.props.push(newProp);
     }
     else {

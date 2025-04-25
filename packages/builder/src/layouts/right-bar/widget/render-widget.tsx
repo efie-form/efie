@@ -19,7 +19,7 @@ export default function RenderWidgets({ widgets, field }: RenderWidgetsProps) {
   return (
     <>
       {widgets.map(widget => (
-        <RenderWidget key={widget.label} widget={widget} field={field} />
+        <RenderWidget key={widget.name} widget={widget} field={field} />
       ))}
     </>
   );
@@ -42,7 +42,7 @@ function RenderWidget({ widget, field }: RenderWidgetProps) {
       return <RangeWidget widget={widget} />;
     }
     case WidgetFormat.SWITCH: {
-      return <SwitchWidget widget={widget} />;
+      return <SwitchWidget widget={widget} field={field} />;
     }
     case WidgetFormat.OPTIONS: {
       return <OptionsWidget widget={widget} />;

@@ -8,32 +8,43 @@ export interface NumberValue {
   value: number;
 }
 
-export interface RangeWidget {
+export interface RangeValue {
   type: string;
   min: number;
   max: number;
   step: number;
 }
 
-export interface SwitchWidget {
+export interface SwitchValue {
   type: string;
   value: boolean;
 }
 
-export interface OptionsWidget {
+export interface OptionsValue {
   type: string;
   value: { label: string; value: string }[];
 }
 
-export interface FourSideWidget {
+export interface FourSideValue {
   type: string;
   sides: {};
+}
+
+export interface ColorValue {
+  type: string;
+  rgba: {
+    r: number;
+    g: number;
+    b: number;
+    a: number;
+  };
 }
 
 export type PropValue =
   | TextValue
   | NumberValue
-  | RangeWidget
-  | SwitchWidget
-  | OptionsWidget
-  | FourSideWidget;
+  | RangeValue
+  | SwitchValue
+  | OptionsValue
+  | FourSideValue
+  | ColorValue;
