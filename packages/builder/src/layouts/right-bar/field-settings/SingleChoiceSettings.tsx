@@ -1,6 +1,6 @@
 import { WidgetFormat, type SingleChoiceFormField, type Widget } from '@efie-form/core';
 import { useSchemaStore } from '../../../lib/state/schema.state';
-import RenderWidget from '../widget/render-widget';
+import RenderWidgets from '../widget/render-widget';
 
 interface SingleChoiceSettingsProps {
   field: SingleChoiceFormField;
@@ -49,9 +49,7 @@ function SingleChoiceSettings({ field }: SingleChoiceSettingsProps) {
       <div className="px-4 py-2 bg-neutral-100 text-neutral-800 typography-body3 uppercase">
         General
       </div>
-      {widgets.map(widget => (
-        <RenderWidget key={widget.label} widget={widget} />
-      ))}
+      <RenderWidgets widgets={widgets} field={field} />
     </div>
   );
 }
