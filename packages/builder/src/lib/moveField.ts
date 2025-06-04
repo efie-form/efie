@@ -76,13 +76,27 @@ const moveFieldToChildrenEnd = (
   const fieldIndex = fieldParent.children.findIndex(
     field => field.id === fieldId,
   );
+
+  // Early return if field not found to prevent accidental deletion
+  if (fieldIndex === -1) return fields;
+
   const temp = fieldParent.children.splice(fieldIndex, 1);
 
   if (dropFieldParent.type === FormFieldType.ROW) {
-    const columnFieldsOnly = dropFieldParent.children.filter(
+    // For ROW containers, find the first column and add the field there
+    // If no columns exist, create one or add to the end
+    const firstColumn = dropFieldParent.children.find(
       field => field.type === FormFieldType.COLUMN,
     );
-    dropFieldParent.children.push(...columnFieldsOnly);
+
+    if (firstColumn && 'children' in firstColumn) {
+      // Add the field to the first column
+      firstColumn.children.push(...temp);
+    }
+    else {
+      // Fallback: add directly to ROW (this shouldn't normally happen)
+      dropFieldParent.children.push(...temp);
+    }
   }
   else {
     dropFieldParent.children.push(...temp);
@@ -110,11 +124,18 @@ const swapAcrossDifferentParents = (
   const fieldIndex = fieldParent.children.findIndex(
     field => field.id === fieldId,
   );
-  const temp = fieldParent.children.splice(fieldIndex, 1);
+
+  // Early return if field not found to prevent accidental deletion
+  if (fieldIndex === -1) return fields;
 
   const dropFieldIndex = dropFieldParent.children.findIndex(
     field => field.id === dropFieldId,
   );
+
+  // Early return if drop target not found to prevent accidental deletion
+  if (dropFieldIndex === -1) return fields;
+
+  const temp = fieldParent.children.splice(fieldIndex, 1);
 
   if (direction === 'up') {
     dropFieldParent.children.splice(dropFieldIndex, 0, ...temp);
@@ -141,17 +162,28 @@ const swapBetweenSiblings = (
     field => field.id === fieldId,
   );
 
-  const temp = parentField.children.splice(fieldIndex, 1);
+  // Early return if field not found to prevent accidental deletion
+  if (fieldIndex === -1) return fields;
 
   const dropFieldIndex = parentField.children.findIndex(
     field => field.id === dropFieldId,
   );
 
+  // Early return if drop target not found to prevent accidental deletion
+  if (dropFieldIndex === -1) return fields;
+
+  const temp = parentField.children.splice(fieldIndex, 1);
+
+  // Recalculate dropFieldIndex after removing the field
+  const newDropFieldIndex = parentField.children.findIndex(
+    field => field.id === dropFieldId,
+  );
+
   if (direction === 'up') {
-    parentField.children.splice(dropFieldIndex, 0, ...temp);
+    parentField.children.splice(newDropFieldIndex, 0, ...temp);
   }
   else {
-    parentField.children.splice(dropFieldIndex + 1, 0, ...temp);
+    parentField.children.splice(newDropFieldIndex + 1, 0, ...temp);
   }
 
   return fields;

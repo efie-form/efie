@@ -34,6 +34,7 @@ export default function DndProvider({ children }: DndContextProps) {
   const handleDragEnd = (e: DragEndEvent) => {
     clearDraggingState();
     if (!direction || !e.active.data.current || !e.over?.data.current) return;
+
     let newFields;
     const fieldType = e.active.data.current.type;
     const dropFieldType = e.over.data.current.type;
@@ -63,8 +64,12 @@ export default function DndProvider({ children }: DndContextProps) {
         newField,
       });
     }
-    if (!newFields) return;
-    setFields(newFields);
+
+    // Only update fields if we have valid new fields
+    // This prevents accidental field loss if moveField/insertField returns undefined
+    if (newFields && newFields !== schema.form.fields) {
+      setFields(newFields);
+    }
   };
 
   const handleDragStart = (e: DragStartEvent) => {
