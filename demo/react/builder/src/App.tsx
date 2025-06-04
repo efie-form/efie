@@ -8,7 +8,7 @@ function App() {
   const [height, setHeight] = useState(window.innerHeight);
 
   useEffect(() => {
-    let resizeTimeout: NodeJS.Timeout;
+    let resizeTimeout: number;
     const handleResize = () => {
       clearTimeout(resizeTimeout);
       resizeTimeout = setTimeout(() => {
