@@ -26,4 +26,4 @@ export { createHistoryActions } from './history-actions';
 export { createLegacyActions } from './legacy-actions';
 
 // Development utilities
-export { testHistoryFunctionality, quickTest } from './test-history';
+export { testHistoryFunctionality, quickTest, testSetFields, testAddFieldMethod } from './test-history';

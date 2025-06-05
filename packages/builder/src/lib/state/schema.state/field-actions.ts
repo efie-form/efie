@@ -11,7 +11,6 @@ export function createFieldActions({ set, getState }: StateSetters) {
   return {
     // Field management methods (optimized)
     addField: (field: FormField, parentId?: string, index?: number) => {
-      console.log('addField called, current fields:', getState().schema.form.fields.length);
       const { schema, addHistory, enableOptimizations } = getState();
       const newField = deepClone(field);
       newField.id = generateId();
@@ -57,7 +56,6 @@ export function createFieldActions({ set, getState }: StateSetters) {
         };
 
         const newFields = addFieldToTree(schema.form.fields, newField, parentId, index);
-        console.log('After addFieldToTree, new count:', newFields.length);
 
         const newSchema = {
           ...schema,

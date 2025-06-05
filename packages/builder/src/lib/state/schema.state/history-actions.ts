@@ -22,20 +22,16 @@ export function createHistoryActions({ set, getState }: StateSetters) {
         // Get the current history slice (up to current index)
         let newHistories = histories.slice(0, currentHistoryIndex + 1);
 
-        console.log('addToHistory: field count =', schema.form.fields.length, 'histories =', newHistories.length);
-
-        // For debugging, temporarily disable optimization
+        // Skip if the schema hasn't actually changed (optimization)
         if (enableOptimizations && newHistories.length > 0) {
           const lastHistory = newHistories.at(-1);
           if (lastHistory === stringifiedSchema) {
-            console.log('Skipping duplicate history');
-            return;
+            return; // No changes, skip adding to history
           }
         }
 
         // Add the new history entry
         newHistories.push(stringifiedSchema);
-        console.log('Added history entry. New total:', newHistories.length);
 
         // Trim if exceeding max histories
         if (newHistories.length > maxHistories) {
@@ -54,7 +50,7 @@ export function createHistoryActions({ set, getState }: StateSetters) {
       }
       else {
         // Use shorter debounce for better user experience (100ms instead of 250ms)
-        debounce(addToHistory, 100, 'addHistory');
+        debounce(addToHistory, 250, 'addHistory');
       }
     },
 

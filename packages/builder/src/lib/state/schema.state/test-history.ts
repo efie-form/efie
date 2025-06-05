@@ -45,6 +45,61 @@ export function quickTest() {
   console.log('After:', after.totalHistories, 'histories,', after.schema.form.fields.length, 'fields, canUndo:', after.canUndo());
 }
 
+// Test the addField method (now used by DndProvider)
+export function testAddFieldMethod() {
+  const store = useSchemaStore.getState();
+  console.log('Before addField:', store.totalHistories, 'histories,', store.schema.form.fields.length, 'fields');
+
+  // Simulate what DndProvider now does
+  const newField = {
+    id: 'dnd-test-' + Date.now(),
+    type: 'short-text' as const,
+    props: [],
+  };
+
+  store.addField(newField);
+
+  const after = useSchemaStore.getState();
+  console.log('After addField:', after.totalHistories, 'histories,', after.schema.form.fields.length, 'fields, canUndo:', after.canUndo());
+
+  if (after.canUndo()) {
+    console.log('SUCCESS: addField properly added to history!');
+    after.undo();
+    const undoState = useSchemaStore.getState();
+    console.log('After undo:', undoState.totalHistories, 'histories,', undoState.schema.form.fields.length, 'fields');
+  }
+  else {
+    console.log('ERROR: addField did not add to history!');
+  }
+}
+
+// Test the setFields method (legacy - no longer used by DndProvider)
+export function testSetFields() {
+  const store = useSchemaStore.getState();
+  console.log('Before setFields:', store.totalHistories, 'histories,', store.schema.form.fields.length, 'fields');
+
+  // Simulate what DndProvider used to do
+  const newFields = [
+    ...store.schema.form.fields,
+    { id: 'dnd-test-' + Date.now(), type: 'short-text' as const, props: [] },
+  ];
+
+  store.setFields(newFields);
+
+  const after = useSchemaStore.getState();
+  console.log('After setFields:', after.totalHistories, 'histories,', after.schema.form.fields.length, 'fields, canUndo:', after.canUndo());
+
+  if (after.canUndo()) {
+    console.log('SUCCESS: setFields properly added to history!');
+    after.undo();
+    const undoState = useSchemaStore.getState();
+    console.log('After undo:', undoState.totalHistories, 'histories,', undoState.schema.form.fields.length, 'fields');
+  }
+  else {
+    console.log('ERROR: setFields did not add to history!');
+  }
+}
+
 // Export for use in development
 if (globalThis.window !== undefined) {
   (globalThis as any).testHistoryFunctionality = testHistoryFunctionality;

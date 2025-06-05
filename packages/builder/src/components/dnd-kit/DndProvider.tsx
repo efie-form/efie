@@ -5,18 +5,70 @@ import type {
 } from './dnd-kit.type';
 import { DndContext } from './index';
 import { customCollisionDetectionAlgorithm } from './customCollisionDetectionAlgorithm';
-import moveField from '../../lib/moveField';
-import insertField from '../../lib/insertField';
 import { useDndStore } from '../../lib/state/dnd.state';
 import type { ReactNode } from 'react';
 import { useState } from 'react';
 import { useSchemaStore } from '../../lib/state/schema.state';
 import type { FormField } from '@efie-form/core';
+import { FormFieldType } from '@efie-form/core';
 import { getDefaultField } from '../../lib/getDefaultField';
 
 interface DndContextProps {
   children: ReactNode;
 }
+
+// Helper function to determine if field should be dropped as child
+const isDropOnChildren = (newType: FormFieldType, dropType: FormFieldType) => {
+  if (newType !== FormFieldType.BLOCK && dropType === FormFieldType.BLOCK) return true;
+  if (dropType === FormFieldType.COLUMN || dropType === FormFieldType.PAGE) return true;
+  return false;
+};
+
+// Helper function to find drop location for addField
+const findDropLocation = (
+  dropFieldId: string,
+  dropFieldType: FormFieldType,
+  direction: 'up' | 'down',
+  newFieldType: FormFieldType,
+  schema: { form: { fields: FormField[] } },
+  fieldMap: Map<string, FormField>,
+  fieldParentMap: Map<string, string>,
+) => {
+  if (isDropOnChildren(newFieldType, dropFieldType)) {
+    // Drop as child - add to the end of children
+    return { parentId: dropFieldId, index: undefined };
+  }
+  else {
+    // Drop as sibling - find parent and calculate index
+    const dropField = fieldMap.get(dropFieldId);
+    if (!dropField) return { parentId: undefined, index: undefined };
+
+    const parentId = fieldParentMap.get(dropFieldId);
+    if (parentId) {
+      // Has parent - find index in parent's children
+      const parent = fieldMap.get(parentId);
+      if (!parent || !('children' in parent)) return { parentId: undefined, index: undefined };
+
+      const siblingIndex = parent.children.findIndex((f: FormField) => f.id === dropFieldId);
+      if (siblingIndex === -1) return { parentId: undefined, index: undefined };
+
+      return {
+        parentId,
+        index: direction === 'up' ? siblingIndex : siblingIndex + 1,
+      };
+    }
+    else {
+      // Root level - find index in root fields
+      const rootIndex = schema.form.fields.findIndex((f: FormField) => f.id === dropFieldId);
+      if (rootIndex === -1) return { parentId: undefined, index: undefined };
+
+      return {
+        parentId: undefined,
+        index: direction === 'up' ? rootIndex : rootIndex + 1,
+      };
+    }
+  }
+};
 
 export default function DndProvider({ children }: DndContextProps) {
   const {
@@ -27,7 +79,7 @@ export default function DndProvider({ children }: DndContextProps) {
     clearDraggingState,
     setOriginalRect,
   } = useDndStore();
-  const { schema, setFields } = useSchemaStore();
+  const { schema, addField, moveField, fieldMap, fieldParentMap } = useSchemaStore();
 
   const [prevMouseY, setPrevMouseY] = useState(0);
 
@@ -35,40 +87,29 @@ export default function DndProvider({ children }: DndContextProps) {
     clearDraggingState();
     if (!direction || !e.active.data.current || !e.over?.data.current) return;
 
-    let newFields;
     const fieldType = e.active.data.current.type;
     const dropFieldType = e.over.data.current.type;
+    const dropFieldId = e.over.data.current.id;
 
     if (e.active.data.current.action === 'move') {
-      newFields = moveField({
-        fields: schema.form.fields,
-        fieldType,
-        direction,
-        fieldId: e.active.data.current.id,
-        dropFieldId: e.over.data.current.id,
-        dropFieldType,
-      });
+      // Use moveField from schema store
+      const fieldId = e.active.data.current.id;
+      const dropLocation = findDropLocation(dropFieldId, dropFieldType, direction, fieldType, schema, fieldMap, fieldParentMap);
+
+      if (dropLocation.parentId !== undefined || dropLocation.index !== undefined) {
+        moveField(fieldId, dropLocation.parentId || '', dropLocation.index || 0);
+      }
     }
+
     if (e.active.data.current.action === 'new') {
+      // Use addField from schema store
       const newField = getDefaultField({
         type: fieldType,
         formKey: e.active.data.current.formKey,
       });
 
-      newFields = insertField({
-        fields: schema.form.fields,
-        direction,
-        dropFieldId: e.over.data.current.id,
-        dropFieldType,
-        newFieldType: fieldType,
-        newField,
-      });
-    }
-
-    // Only update fields if we have valid new fields
-    // This prevents accidental field loss if moveField/insertField returns undefined
-    if (newFields && newFields !== schema.form.fields) {
-      setFields(newFields);
+      const dropLocation = findDropLocation(dropFieldId, dropFieldType, direction, fieldType, schema, fieldMap, fieldParentMap);
+      addField(newField, dropLocation.parentId, dropLocation.index);
     }
   };
 
