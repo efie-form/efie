@@ -137,7 +137,9 @@ export default function DndProvider({ children }: DndContextProps) {
   };
 
   const findFieldElemAndUpdateRect = (field: FormField) => {
-    const elem = document.querySelector(`#${field.id}`);
+    // Escape the ID for use in CSS selector - handle IDs that start with numbers
+    const escapedId = CSS.escape(field.id);
+    const elem = document.querySelector(`#${escapedId}`);
     if (elem) {
       const rect = elem.getBoundingClientRect();
       setOriginalRect(field.id, {
