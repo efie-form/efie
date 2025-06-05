@@ -7,7 +7,7 @@ export function createSchemaActions({ set, getState }: StateSetters) {
     setSchema: (schema: FormSchema) => {
       const { addHistory } = getState();
       const { fieldKeyMap, fieldMap, fieldParentMap } = getFieldInfoMap(schema.form.fields);
-      addHistory(schema);
+      addHistory(schema, true); // Skip debounce for schema changes
       set({ schema, fieldKeyMap, fieldMap, fieldParentMap });
     },
 
@@ -18,7 +18,7 @@ export function createSchemaActions({ set, getState }: StateSetters) {
         ...schema,
         form: { fields, rules: schema.form.rules },
       };
-      addHistory(newSchema);
+      addHistory(newSchema, true); // Skip debounce for field changes
       set({ schema: newSchema, fieldKeyMap, fieldMap, fieldParentMap });
     },
   };

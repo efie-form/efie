@@ -10,14 +10,34 @@ export function createHistoryActions({ set, getState }: StateSetters) {
       set({ maxHistories });
     },
 
-    addHistory: (schema: FormSchema) => {
-      const { maxHistories, histories, currentHistoryIndex } = getState();
-      debounce(() => {
+    addHistory: (schema: FormSchema, skipDebounce?: boolean) => {
+      // Get state at the time of call to ensure we have the latest values
+      const currentState = getState();
+      const { maxHistories, histories, currentHistoryIndex, enableOptimizations } = currentState;
+
+      const addToHistory = () => {
+        // Create a deterministic JSON string
         const stringifiedSchema = JSON.stringify(schema);
 
+        // Get the current history slice (up to current index)
         let newHistories = histories.slice(0, currentHistoryIndex + 1);
-        newHistories.push(stringifiedSchema);
 
+        console.log('addToHistory: field count =', schema.form.fields.length, 'histories =', newHistories.length);
+
+        // For debugging, temporarily disable optimization
+        if (enableOptimizations && newHistories.length > 0) {
+          const lastHistory = newHistories.at(-1);
+          if (lastHistory === stringifiedSchema) {
+            console.log('Skipping duplicate history');
+            return;
+          }
+        }
+
+        // Add the new history entry
+        newHistories.push(stringifiedSchema);
+        console.log('Added history entry. New total:', newHistories.length);
+
+        // Trim if exceeding max histories
         if (newHistories.length > maxHistories) {
           newHistories = newHistories.slice(newHistories.length - maxHistories);
         }
@@ -27,7 +47,15 @@ export function createHistoryActions({ set, getState }: StateSetters) {
           totalHistories: newHistories.length,
           currentHistoryIndex: newHistories.length - 1,
         });
-      }, 250);
+      };
+
+      if (skipDebounce) {
+        addToHistory();
+      }
+      else {
+        // Use shorter debounce for better user experience (100ms instead of 250ms)
+        debounce(addToHistory, 100, 'addHistory');
+      }
     },
 
     undo: () => {

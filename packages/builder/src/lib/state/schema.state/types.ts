@@ -11,7 +11,7 @@ export interface SchemaState {
   setSchema: (schema: FormSchema) => void;
   setFields: (fields: FormField[]) => void;
 
-  // Enhanced property management methods
+  // Enhanced property management methods (optimized)
   updateFieldProperty: <T extends PropertyDefinition>(
     fieldId: string,
     property: T
@@ -60,11 +60,11 @@ export interface SchemaState {
   deleteField: (fieldId: string) => void;
   fieldParentMap: Map<string, string>;
 
-  // History management
+  // History management (optimized)
   maxHistories: number;
   setMaxHistories: (maxHistories: number) => void;
   histories: string[];
-  addHistory: (schema: FormSchema) => void;
+  addHistory: (schema: FormSchema, skipDebounce?: boolean) => void;
   undo: () => void;
   redo: () => void;
   clearHistories: () => void;
@@ -72,6 +72,10 @@ export interface SchemaState {
   currentHistoryIndex: number;
   canUndo: () => boolean;
   canRedo: () => boolean;
+
+  // Performance optimization flags
+  enableOptimizations: boolean;
+  setEnableOptimizations: (enabled: boolean) => void;
 }
 
 export interface FieldMaps {

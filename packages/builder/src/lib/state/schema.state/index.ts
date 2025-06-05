@@ -5,7 +5,18 @@ export { useSchemaStore } from './schema.state';
 export type { SchemaState, FieldMaps, StateSetters } from './types';
 
 // Utilities
-export { generateId, deepClone, getFieldInfoMap, debounce } from './utils';
+export {
+  generateId,
+  deepClone,
+  getFieldInfoMap,
+  debounce,
+  updateFieldInMaps,
+  findFieldInTree,
+  removeFieldFromTree,
+  addFieldToTree,
+  moveFieldInTree,
+  clearAllDebounceTimers,
+} from './utils';
 
 // Action creators (for advanced usage)
 export { createSchemaActions } from './schema-actions';
@@ -13,3 +24,6 @@ export { createFieldActions } from './field-actions';
 export { createPropertyActions } from './property-actions';
 export { createHistoryActions } from './history-actions';
 export { createLegacyActions } from './legacy-actions';
+
+// Development utilities
+export { testHistoryFunctionality, quickTest } from './test-history';
