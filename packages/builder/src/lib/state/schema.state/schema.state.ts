@@ -29,12 +29,6 @@ export const useSchemaStore = create<SchemaState>((set, getState) => {
     totalHistories: 1,
     currentHistoryIndex: 0,
 
-    // Performance optimization flags
-    enableOptimizations: true,
-    setEnableOptimizations: (enabled: boolean) => {
-      set({ enableOptimizations: enabled });
-    },
-
     // Combine all actions
     ...schemaActions,
     ...fieldActions,

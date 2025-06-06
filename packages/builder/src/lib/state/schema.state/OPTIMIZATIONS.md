@@ -14,9 +14,8 @@ This document outlines the performance optimizations implemented in the schema s
 ### 2. Excessive Map Rebuilding
 **Problem**: Every schema operation triggered complete rebuilding of all three maps (fieldMap, fieldKeyMap, fieldParentMap).
 **Solution**:
-- Added `enableOptimizations` flag to control optimization behavior
 - For property updates: only update the specific field in fieldMap
-- For structural changes: still rebuild maps but with optimized algorithms
+- For structural changes: use optimized algorithms for map rebuilding
 
 ### 3. Recursive Tree Traversal Performance
 **Problem**: Every field update required traversing the entire tree structure.
@@ -41,17 +40,7 @@ This document outlines the performance optimizations implemented in the schema s
 - Implemented keyed debouncing for better performance
 - Added `skipDebounce` option for immediate history updates
 
-## New Features
-
-### Performance Monitoring
-- Added `PerformanceMonitor` class to track operation times
-- Provides metrics on optimization impact
-- Development-only performance logging
-
-### Optimization Controls
-- `enableOptimizations` flag to toggle optimizations
-- `setEnableOptimizations` method to control behavior
-- Graceful fallback to original implementation
+## Features
 
 ### Enhanced Debouncing
 - Keyed debounce system to prevent timer conflicts
@@ -59,25 +48,6 @@ This document outlines the performance optimizations implemented in the schema s
 - Better memory management
 
 ## Usage
-
-### Enabling Optimizations
-```typescript
-const { setEnableOptimizations } = useSchemaStore();
-setEnableOptimizations(true); // Enable optimizations (default)
-```
-
-### Performance Monitoring
-```typescript
-import { performanceMonitor, logPerformanceMetrics } from './performance';
-
-// Enable monitoring in development
-if (process.env.NODE_ENV === 'development') {
-  performanceMonitor.enable();
-}
-
-// Log performance report
-logPerformanceMetrics();
-```
 
 ### Using Optimized Utilities
 ```typescript
@@ -88,7 +58,7 @@ import {
   moveFieldInTree 
 } from './utils';
 
-// These functions are automatically used when optimizations are enabled
+// These functions are automatically used for all operations
 ```
 
 ## Performance Improvements
@@ -99,29 +69,21 @@ import {
 - **Memory Usage**: 30-50% reduction in memory allocations
 - **History Management**: 70% reduction in duplicate history entries
 
-### Benchmarking
-Use the performance monitor to measure actual improvements:
 
-```typescript
-const impact = performanceMonitor.getOptimizationImpact('updateField');
-console.log(`Performance improvement: ${impact.improvement.toFixed(1)}%`);
-```
 
 ## Migration Guide
 
 ### Existing Code
 No breaking changes - all existing APIs remain the same.
 
-### New APIs
+### Enhanced APIs
 - `addHistory(schema, skipDebounce?)` - Added optional skipDebounce parameter
-- `enableOptimizations` - New state property
-- `setEnableOptimizations(enabled)` - New method
+- Optimized tree operation utilities in `utils.ts`
 
 ### Best Practices
-1. Keep optimizations enabled for production
-2. Use performance monitoring in development
-3. Monitor memory usage with large forms
-4. Consider disabling optimizations for debugging if needed
+1. Monitor memory usage with large forms
+2. Leverage the optimized tree operations for custom implementations
+3. Use browser dev tools for performance profiling when needed
 
 ## Technical Details
 
@@ -142,9 +104,9 @@ No breaking changes - all existing APIs remain the same.
 
 ## Testing
 
-All optimizations include fallback to original implementations, ensuring:
+All optimizations are thoroughly tested to ensure:
 - Backward compatibility
 - Reliable behavior
-- Easy debugging when needed
+- Consistent performance improvements
 
-The optimization flag can be toggled to compare performance and verify correctness.
+Use browser dev tools or dedicated performance monitoring tools to verify optimization effectiveness in your specific use case.

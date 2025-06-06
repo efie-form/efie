@@ -73,9 +73,6 @@ export interface SchemaState {
   canUndo: () => boolean;
   canRedo: () => boolean;
 
-  // Performance optimization flags
-  enableOptimizations: boolean;
-  setEnableOptimizations: (enabled: boolean) => void;
 }
 
 export interface FieldMaps {

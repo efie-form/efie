@@ -4,9 +4,9 @@ import { getFieldInfoMap } from './utils';
 
 export function createPropertyActions({ set, getState }: StateSetters) {
   return {
-    // Enhanced property management methods (optimized)
+    // Enhanced property management methods
     updateFieldProperty: <T extends PropertyDefinition>(fieldId: string, property: T) => {
-      const { schema, addHistory, enableOptimizations, fieldMap } = getState();
+      const { schema, addHistory, fieldMap } = getState();
       const field = fieldMap.get(fieldId);
       if (!field) return;
 
@@ -20,63 +20,38 @@ export function createPropertyActions({ set, getState }: StateSetters) {
         newProps[existingIndex] = property;
       }
 
-      if (enableOptimizations) {
-        // For property updates, we can optimize by only updating the specific field
-        // without rebuilding all maps since the structure doesn't change
-        const updatedField = { ...field, props: newProps } as FormField;
+      // For property updates, we can optimize by only updating the specific field
+      // without rebuilding all maps since the structure doesn't change
+      const updatedField = { ...field, props: newProps } as FormField;
 
-        // Update field in schema using optimized tree traversal
-        const updateFieldInTree = (fields: FormField[]): FormField[] => {
-          return fields.map((f) => {
-            if (f.id === fieldId) {
-              return updatedField;
-            }
-            if ('children' in f && f.children) {
-              const updatedChildren = updateFieldInTree(f.children);
-              if (updatedChildren !== f.children) {
-                return { ...f, children: updatedChildren } as FormField;
-              }
-            }
-            return f;
-          });
-        };
-
-        const newFields = updateFieldInTree(schema.form.fields);
-        const newSchema = {
-          ...schema,
-          form: { ...schema.form, fields: newFields },
-        };
-
-        // Only update the specific field in fieldMap for better performance
-        const newFieldMap = new Map(fieldMap);
-        newFieldMap.set(fieldId, updatedField);
-
-        addHistory(newSchema);
-        set({ schema: newSchema, fieldMap: newFieldMap });
-        return;
-      }
-
-      // Fallback to original implementation
-      const updateFieldInSchema = (fields: FormField[]): FormField[] => {
+      // Update field in schema using optimized tree traversal
+      const updateFieldInTree = (fields: FormField[]): FormField[] => {
         return fields.map((f) => {
           if (f.id === fieldId) {
-            return { ...f, props: newProps } as FormField;
+            return updatedField;
           }
           if ('children' in f && f.children) {
-            return { ...f, children: updateFieldInSchema(f.children) } as FormField;
+            const updatedChildren = updateFieldInTree(f.children);
+            if (updatedChildren !== f.children) {
+              return { ...f, children: updatedChildren } as FormField;
+            }
           }
           return f;
         });
       };
 
+      const newFields = updateFieldInTree(schema.form.fields);
       const newSchema = {
         ...schema,
-        form: { ...schema.form, fields: updateFieldInSchema(schema.form.fields) },
+        form: { ...schema.form, fields: newFields },
       };
 
-      const { fieldKeyMap, fieldMap: newFieldMap, fieldParentMap } = getFieldInfoMap(newSchema.form.fields);
+      // Only update the specific field in fieldMap for better performance
+      const newFieldMap = new Map(fieldMap);
+      newFieldMap.set(fieldId, updatedField);
+
       addHistory(newSchema);
-      set({ schema: newSchema, fieldMap: newFieldMap, fieldKeyMap, fieldParentMap });
+      set({ schema: newSchema, fieldMap: newFieldMap });
     },
 
     addFieldProperty: <T extends PropertyDefinition>(fieldId: string, property: T) => {

@@ -13,7 +13,7 @@ export function createHistoryActions({ set, getState }: StateSetters) {
     addHistory: (schema: FormSchema, skipDebounce?: boolean) => {
       // Get state at the time of call to ensure we have the latest values
       const currentState = getState();
-      const { maxHistories, histories, currentHistoryIndex, enableOptimizations } = currentState;
+      const { maxHistories, histories, currentHistoryIndex } = currentState;
 
       const addToHistory = () => {
         // Create a deterministic JSON string
@@ -23,7 +23,7 @@ export function createHistoryActions({ set, getState }: StateSetters) {
         let newHistories = histories.slice(0, currentHistoryIndex + 1);
 
         // Skip if the schema hasn't actually changed (optimization)
-        if (enableOptimizations && newHistories.length > 0) {
+        if (newHistories.length > 0) {
           const lastHistory = newHistories.at(-1);
           if (lastHistory === stringifiedSchema) {
             return; // No changes, skip adding to history
