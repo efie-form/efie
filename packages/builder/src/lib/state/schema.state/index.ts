@@ -24,6 +24,3 @@ export { createFieldActions } from './field-actions';
 export { createPropertyActions } from './property-actions';
 export { createHistoryActions } from './history-actions';
 export { createLegacyActions } from './legacy-actions';
-
-// Development utilities
-export { testHistoryFunctionality, quickTest, testSetFields, testAddFieldMethod } from './test-history';
