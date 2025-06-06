@@ -5,14 +5,13 @@ import type {
 } from './dnd-kit.type';
 import { DndContext } from './index';
 import { customCollisionDetectionAlgorithm } from './customCollisionDetectionAlgorithm';
-import moveField from '../../lib/moveField';
-import insertField from '../../lib/insertField';
 import { useDndStore } from '../../lib/state/dnd.state';
 import type { ReactNode } from 'react';
 import { useState } from 'react';
 import { useSchemaStore } from '../../lib/state/schema.state';
 import type { FormField } from '@efie-form/core';
 import { getDefaultField } from '../../lib/getDefaultField';
+import findDropLocation from '../../lib/findDropLocation';
 
 interface DndContextProps {
   children: ReactNode;
@@ -27,44 +26,38 @@ export default function DndProvider({ children }: DndContextProps) {
     clearDraggingState,
     setOriginalRect,
   } = useDndStore();
-  const { schema, setFields } = useSchemaStore();
+  const { schema, addField, moveField, fieldMap, fieldParentMap } = useSchemaStore();
 
   const [prevMouseY, setPrevMouseY] = useState(0);
 
   const handleDragEnd = (e: DragEndEvent) => {
     clearDraggingState();
     if (!direction || !e.active.data.current || !e.over?.data.current) return;
-    let newFields;
+
     const fieldType = e.active.data.current.type;
     const dropFieldType = e.over.data.current.type;
+    const dropFieldId = e.over.data.current.id;
 
     if (e.active.data.current.action === 'move') {
-      newFields = moveField({
-        fields: schema.form.fields,
-        fieldType,
-        direction,
-        fieldId: e.active.data.current.id,
-        dropFieldId: e.over.data.current.id,
-        dropFieldType,
-      });
+      // Use moveField from schema store
+      const fieldId = e.active.data.current.id;
+      const dropLocation = findDropLocation({ dropFieldId, dropFieldType, direction, newFieldType: fieldType, schema, fieldMap, fieldParentMap });
+
+      if (dropLocation.parentId !== undefined || dropLocation.index !== undefined) {
+        moveField(fieldId, dropLocation.parentId || '', dropLocation.index || 0);
+      }
     }
+
     if (e.active.data.current.action === 'new') {
+      // Use addField from schema store
       const newField = getDefaultField({
         type: fieldType,
         formKey: e.active.data.current.formKey,
       });
 
-      newFields = insertField({
-        fields: schema.form.fields,
-        direction,
-        dropFieldId: e.over.data.current.id,
-        dropFieldType,
-        newFieldType: fieldType,
-        newField,
-      });
+      const dropLocation = findDropLocation({ dropFieldId, dropFieldType, direction, newFieldType: fieldType, schema, fieldMap, fieldParentMap });
+      addField(newField, dropLocation.parentId, dropLocation.index);
     }
-    if (!newFields) return;
-    setFields(newFields);
   };
 
   const handleDragStart = (e: DragStartEvent) => {
@@ -91,7 +84,9 @@ export default function DndProvider({ children }: DndContextProps) {
   };
 
   const findFieldElemAndUpdateRect = (field: FormField) => {
-    const elem = document.querySelector(`#${field.id}`);
+    // Escape the ID for use in CSS selector - handle IDs that start with numbers
+    const escapedId = CSS.escape(field.id);
+    const elem = document.querySelector(`#${escapedId}`);
     if (elem) {
       const rect = elem.getBoundingClientRect();
       setOriginalRect(field.id, {

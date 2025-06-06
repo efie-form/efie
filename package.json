@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nx serve @efie-form/iframe",
     "dev:react-builder-demo": "nx serve react-builder-demo",
-    "tw": "pnpm run tw --filter @efie-form/core",
+    "tw": "pnpm --filter @efie-form/builder run tw",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "prepare": "husky"
