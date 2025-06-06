@@ -10,65 +10,12 @@ import type { ReactNode } from 'react';
 import { useState } from 'react';
 import { useSchemaStore } from '../../lib/state/schema.state';
 import type { FormField } from '@efie-form/core';
-import { FormFieldType } from '@efie-form/core';
 import { getDefaultField } from '../../lib/getDefaultField';
+import findDropLocation from '../../lib/findDropLocation';
 
 interface DndContextProps {
   children: ReactNode;
 }
-
-// Helper function to determine if field should be dropped as child
-const isDropOnChildren = (newType: FormFieldType, dropType: FormFieldType) => {
-  if (newType !== FormFieldType.BLOCK && dropType === FormFieldType.BLOCK) return true;
-  if (dropType === FormFieldType.COLUMN || dropType === FormFieldType.PAGE) return true;
-  return false;
-};
-
-// Helper function to find drop location for addField
-const findDropLocation = (
-  dropFieldId: string,
-  dropFieldType: FormFieldType,
-  direction: 'up' | 'down',
-  newFieldType: FormFieldType,
-  schema: { form: { fields: FormField[] } },
-  fieldMap: Map<string, FormField>,
-  fieldParentMap: Map<string, string>,
-) => {
-  if (isDropOnChildren(newFieldType, dropFieldType)) {
-    // Drop as child - add to the end of children
-    return { parentId: dropFieldId, index: undefined };
-  }
-  else {
-    // Drop as sibling - find parent and calculate index
-    const dropField = fieldMap.get(dropFieldId);
-    if (!dropField) return { parentId: undefined, index: undefined };
-
-    const parentId = fieldParentMap.get(dropFieldId);
-    if (parentId) {
-      // Has parent - find index in parent's children
-      const parent = fieldMap.get(parentId);
-      if (!parent || !('children' in parent)) return { parentId: undefined, index: undefined };
-
-      const siblingIndex = parent.children.findIndex((f: FormField) => f.id === dropFieldId);
-      if (siblingIndex === -1) return { parentId: undefined, index: undefined };
-
-      return {
-        parentId,
-        index: direction === 'up' ? siblingIndex : siblingIndex + 1,
-      };
-    }
-    else {
-      // Root level - find index in root fields
-      const rootIndex = schema.form.fields.findIndex((f: FormField) => f.id === dropFieldId);
-      if (rootIndex === -1) return { parentId: undefined, index: undefined };
-
-      return {
-        parentId: undefined,
-        index: direction === 'up' ? rootIndex : rootIndex + 1,
-      };
-    }
-  }
-};
 
 export default function DndProvider({ children }: DndContextProps) {
   const {
@@ -94,7 +41,7 @@ export default function DndProvider({ children }: DndContextProps) {
     if (e.active.data.current.action === 'move') {
       // Use moveField from schema store
       const fieldId = e.active.data.current.id;
-      const dropLocation = findDropLocation(dropFieldId, dropFieldType, direction, fieldType, schema, fieldMap, fieldParentMap);
+      const dropLocation = findDropLocation({ dropFieldId, dropFieldType, direction, newFieldType: fieldType, schema, fieldMap, fieldParentMap });
 
       if (dropLocation.parentId !== undefined || dropLocation.index !== undefined) {
         moveField(fieldId, dropLocation.parentId || '', dropLocation.index || 0);
@@ -108,7 +55,7 @@ export default function DndProvider({ children }: DndContextProps) {
         formKey: e.active.data.current.formKey,
       });
 
-      const dropLocation = findDropLocation(dropFieldId, dropFieldType, direction, fieldType, schema, fieldMap, fieldParentMap);
+      const dropLocation = findDropLocation({ dropFieldId, dropFieldType, direction, newFieldType: fieldType, schema, fieldMap, fieldParentMap });
       addField(newField, dropLocation.parentId, dropLocation.index);
     }
   };
