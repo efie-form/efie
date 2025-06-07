@@ -1,9 +1,9 @@
 import { useCallback } from 'react';
 import { useSchemaStore } from '../../../lib/state/schema.state';
-import SettingsFieldVertical from '../property-layouts/SettingsFieldVertical';
 import type { PropSettingsBoolean } from '../../../types/prop-settings.type';
 import type { PropertyDefinition } from '@efie-form/core';
 import { Switch } from '../../../components/form';
+import SettingsFieldHorizontal from '../property-layouts/SettingsFieldHorizontal';
 
 interface PropTemplateBoolean extends PropSettingsBoolean {
   fieldId: string;
@@ -28,12 +28,12 @@ export default function PropsTemplateBoolean({ label, fieldId, type }: PropTempl
   }, [fieldId, updateFieldProperty]);
 
   return (
-    <SettingsFieldVertical label={label} divider>
+    <SettingsFieldHorizontal label={label} divider>
       <Switch
         checked={value}
         onChange={handleChange}
       />
-    </SettingsFieldVertical>
+    </SettingsFieldHorizontal>
   );
 }
 
