@@ -1,20 +1,24 @@
-import type { ShortTextFormField } from '@efie-form/core';
-import { useSchemaStore } from '../../../lib/state/schema.state';
+import { PropertyType, type ShortTextFormField } from '@efie-form/core';
 import PropSettingsLabel from '../property-settings/PropSettingsLabel';
 import PropSettingsPlaceholder from '../property-settings/PropSettingsPlaceholder';
 import PropSettingsRequired from '../property-settings/PropSettingsRequired';
 import PropSettingsFormKey from '../property-settings/PropSettingsFormKey';
+import DynamicSettings from '../DynamicSettings';
+
 interface ShortTextSettingsProps {
   field: ShortTextFormField;
 }
 
 function ShortTextSettings({ field }: ShortTextSettingsProps) {
-  const { getFieldKeyById } = useSchemaStore();
-  const fieldKey = getFieldKeyById(field.id);
-  if (!fieldKey) return <></>;
-
   return (
     <div>
+      <DynamicSettings
+        settings={[
+          { template: 'text', label: 'Label', type: PropertyType.LABEL },
+          { template: 'text', label: 'Placeholder', type: PropertyType.PLACEHOLDER },
+        ]}
+        fieldId={field.id}
+      />
       <div className="px-4 py-2 bg-neutral-100 text-neutral-800 typography-body3 uppercase">
         General
       </div>
