@@ -7,12 +7,6 @@ export interface PropSettingsText {
   placeholder?: string;
 }
 
-export interface PropSettingsNumber {
-  template: 'number';
-  type: PropertyDefinition['type'];
-  label: string;
-}
-
 export interface PropSettingsBoolean {
   template: 'boolean';
   type: PropertyDefinition['type'];
@@ -30,9 +24,19 @@ export interface PropSettingsOption {
   defaultOptions: string[];
 }
 
+export interface PropSettingsNumber {
+  template: 'number';
+  type: PropertyDefinition['type'];
+  label: string;
+  placeholder?: string;
+  min?: number;
+  max?: number;
+}
+
 export type PropSettings =
   | PropSettingsText
   | PropSettingsNumber
   | PropSettingsBoolean
   | PropSettingsFormKey
-  | PropSettingsOption;
+  | PropSettingsOption
+  | PropSettingsNumber;

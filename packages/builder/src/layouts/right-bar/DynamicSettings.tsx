@@ -2,6 +2,7 @@ import type { PropSettings } from '../../types/prop-settings.type';
 import PropsSettingsFormKey from './property-settings-2/props-settings-form-key';
 import PropsSettingsOptions from './property-settings-2/props-settings-options';
 import PropsTemplateBoolean from './property-templates/props-template-boolean';
+import PropsTemplateNumber from './property-templates/props-template-number';
 import PropsTemplateText from './property-templates/props-template-text';
 
 interface DynamicSettingsProps {
@@ -42,11 +43,10 @@ function DynamicSettingsType({ settings, fieldId }: DynamicSettingsTypeProps) {
     }
     case 'number': {
       return (
-        <div>
-          {settings.label}
-          {' '}
-          (Number Input)
-        </div>
+        <PropsTemplateNumber
+          fieldId={fieldId}
+          {...settings}
+        />
       );
     }
     case 'boolean': {
