@@ -16,7 +16,21 @@ const jestConfig = {
     'src/**/*.{js,jsx,ts,tsx}',
     '!src/**/*.d.ts',
     '!src/index.ts',
+    '!src/**/__tests__/**',
+    '!src/**/*.test.{js,jsx,ts,tsx}',
+    '!src/**/*.spec.{js,jsx,ts,tsx}',
   ],
+  coverageDirectory: 'coverage',
+  coverageReporters: ['text', 'lcov', 'html'],
+  // Temporarily disabled coverage thresholds for CI
+  // coverageThreshold: {
+  //   global: {
+  //     branches: 70,
+  //     functions: 70,
+  //     lines: 70,
+  //     statements: 70,
+  //   },
+  // },
   transform: {
     '^.+\\.tsx?$': ['ts-jest', {
       useESM: true,

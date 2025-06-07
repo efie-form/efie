@@ -24,3 +24,31 @@ This package simplifies the process of building and managing forms in your web a
 - `@efie-form/builder`: The form builder implementation
 
 See individual package READMEs for detailed documentation.
+
+## Development
+
+### Testing
+
+The project uses Jest for testing with comprehensive coverage reporting:
+
+```bash
+# Run all tests
+pnpm test
+
+# Run tests with coverage
+pnpm test:coverage
+
+# Run linting
+pnpm lint
+```
+
+### CI/CD
+
+The project uses GitHub Actions for continuous integration:
+
+- **Tests**: Automated testing on Node.js 18 and 20
+- **Linting**: ESLint checks on all pull requests
+- **Coverage**: Coverage reports uploaded to Codecov
+- **Build**: Automated builds for all packages
+
+See [CI/CD Documentation](docs/ci-cd.md) for detailed information.
