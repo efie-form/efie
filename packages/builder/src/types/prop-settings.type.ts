@@ -23,8 +23,16 @@ export interface PropSettingsFormKey {
   template: 'formKey';
 }
 
+export interface PropSettingsOption {
+  template: 'option';
+  type: PropertyDefinition['type'];
+  label: string;
+  defaultOptions: string[];
+}
+
 export type PropSettings =
   | PropSettingsText
   | PropSettingsNumber
   | PropSettingsBoolean
-  | PropSettingsFormKey;
+  | PropSettingsFormKey
+  | PropSettingsOption;

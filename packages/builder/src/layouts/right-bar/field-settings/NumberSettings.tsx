@@ -1,8 +1,5 @@
-import type { NumberFormField } from '@efie-form/core';
-import PropSettingsRequired from '../property-settings/PropSettingsRequired';
-import PropSettingsPlaceholder from '../property-settings/PropSettingsPlaceholder';
-import PropSettingsLabel from '../property-settings/PropSettingsLabel';
-import PropSettingsFormKey from '../property-settings/PropSettingsFormKey';
+import { PropertyType, type NumberFormField } from '@efie-form/core';
+import DynamicSettings from '../DynamicSettings';
 
 interface NumberSettingsProps {
   field: NumberFormField;
@@ -15,10 +12,15 @@ function NumberSettings({ field }: NumberSettingsProps) {
         <div className="px-4 py-2 bg-neutral-100 text-neutral-800 typography-body2">
           General
         </div>
-        <PropSettingsFormKey field={field} />
-        <PropSettingsLabel field={field} />
-        <PropSettingsPlaceholder field={field} />
-        <PropSettingsRequired field={field} />
+        <DynamicSettings
+          settings={[
+            { template: 'formKey' },
+            { template: 'text', label: 'Label', type: PropertyType.LABEL },
+            { template: 'text', label: 'Placeholder', type: PropertyType.PLACEHOLDER },
+            { template: 'boolean', label: 'Required', type: PropertyType.REQUIRED },
+          ]}
+          fieldId={field.id}
+        />
       </div>
     </div>
   );
