@@ -1,4 +1,5 @@
 import type { PropSettings } from '../../types/prop-settings.type';
+import PropsTemplateBoolean from './property-templates/props-template-boolean';
 import PropsTemplateText from './property-templates/props-template-text';
 
 interface DynamicSettingsProps {
@@ -48,11 +49,10 @@ function DynamicSettingsType({ settings, fieldId }: DynamicSettingsTypeProps) {
     }
     case 'boolean': {
       return (
-        <div>
-          {settings.label}
-          {' '}
-          (Boolean Input)
-        </div>
+        <PropsTemplateBoolean
+          fieldId={fieldId}
+          {...settings}
+        />
       );
     }
   }

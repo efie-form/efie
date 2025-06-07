@@ -19,4 +19,12 @@ export interface PropSettingsBoolean {
   label: string;
 }
 
-export type PropSettings = PropSettingsText | PropSettingsNumber | PropSettingsBoolean;
+export interface PropSettingsFormKey {
+  template: 'formKey';
+}
+
+export type PropSettings =
+  | PropSettingsText
+  | PropSettingsNumber
+  | PropSettingsBoolean
+  | PropSettingsFormKey;

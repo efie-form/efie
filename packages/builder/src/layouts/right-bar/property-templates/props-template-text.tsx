@@ -2,7 +2,7 @@ import { Input } from '../../../components/form';
 import SettingsFieldVertical from '../property-layouts/SettingsFieldVertical';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import type { PropSettingsText } from '../../../types/prop-settings.type';
-import { useEffect, useState } from 'react';
+import { useCallback } from 'react';
 import type { PropertyDefinition } from '@efie-form/core';
 
 interface PropsTemplateTextProps extends PropSettingsText {
@@ -10,18 +10,29 @@ interface PropsTemplateTextProps extends PropSettingsText {
 }
 
 export default function PropsTemplateText({ label, placeholder, type, fieldId }: PropsTemplateTextProps) {
-  const { getFieldProperty } = useSchemaStore();
-  const fieldProperty = getFieldProperty(fieldId, type);
+  const fieldProperty = useSchemaStore(
+    useCallback(
+      state => state.getFieldProperty(fieldId, type),
+      [fieldId, type],
+    ),
+  );
+  const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
+  const value = getValue(fieldProperty);
 
-  const [value, setValue] = useState(getValue(fieldProperty));
-
-  useEffect(() => {
-    console.log(value);
-  }, [fieldProperty?.value]);
+  const handleChange = useCallback((newValue: string) => {
+    updateFieldProperty(fieldId, {
+      type,
+      value: newValue,
+    } as PropertyDefinition);
+  }, [fieldId, type, updateFieldProperty]);
 
   return (
     <SettingsFieldVertical label={label} divider>
-      <Input placeholder={placeholder} value={value} />
+      <Input
+        placeholder={placeholder}
+        value={value}
+        onChange={handleChange}
+      />
     </SettingsFieldVertical>
   );
 }
