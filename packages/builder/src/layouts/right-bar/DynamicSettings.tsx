@@ -1,4 +1,5 @@
 import type { PropSettings } from '../../types/prop-settings.type';
+import PropsSettingsAccept from './property-settings-2/props-settings-accept';
 import PropsSettingsFormKey from './property-settings-2/props-settings-form-key';
 import PropsSettingsOptions from './property-settings-2/props-settings-options';
 import PropsTemplateBoolean from './property-templates/props-template-boolean';
@@ -68,6 +69,14 @@ function DynamicSettingsType({ settings, fieldId }: DynamicSettingsTypeProps) {
     case 'option': {
       return (
         <PropsSettingsOptions
+          fieldId={fieldId}
+          {...settings}
+        />
+      );
+    }
+    case 'accept': {
+      return (
+        <PropsSettingsAccept
           fieldId={fieldId}
           {...settings}
         />

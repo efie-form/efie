@@ -1,5 +1,4 @@
 import { PropertyType, type FileFormField } from '@efie-form/core';
-import PropSettingsAccept from '../property-settings/PropSettingsAccept';
 import DynamicSettings from '../DynamicSettings';
 
 interface FileSettingsProps {
@@ -18,10 +17,10 @@ function FileSettings({ field }: FileSettingsProps) {
           { template: 'text', label: 'Label', type: PropertyType.LABEL },
           { template: 'boolean', label: 'Required', type: PropertyType.REQUIRED },
           { template: 'number', label: 'Max Files', type: PropertyType.MAX_FILES, min: 1 },
+          { template: 'accept', label: 'Accepted File Types', type: PropertyType.ACCEPT },
         ]}
         fieldId={field.id}
       />
-      <PropSettingsAccept field={field} />
     </div>
   );
 }

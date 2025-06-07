@@ -33,10 +33,16 @@ export interface PropSettingsNumber {
   max?: number;
 }
 
+export interface PropSettingsAccept {
+  template: 'accept';
+  type: PropertyDefinition['type'];
+  label: string;
+}
+
 export type PropSettings =
   | PropSettingsText
   | PropSettingsNumber
   | PropSettingsBoolean
   | PropSettingsFormKey
   | PropSettingsOption
-  | PropSettingsNumber;
+  | PropSettingsAccept;
