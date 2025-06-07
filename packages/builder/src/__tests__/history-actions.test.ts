@@ -30,11 +30,12 @@ describe('History Actions', () => {
       };
 
       const initialHistoryLength = store.histories.length;
-      console.log('initialHistoryLength', initialHistoryLength);
       store.addField(newField, 'block-1');
-      console.log('store.histories', store.histories);
-      expect(store.histories.length).toBeGreaterThan(initialHistoryLength);
-      expect(store.currentHistoryIndex).toBe(store.histories.length - 1);
+
+      // Get updated state after the change
+      const updatedStore = useStore.getState();
+      expect(updatedStore.histories.length).toBeGreaterThan(initialHistoryLength);
+      expect(updatedStore.currentHistoryIndex).toBe(updatedStore.histories.length - 1);
     });
 
     it('should support undo operation', () => {
@@ -150,13 +151,17 @@ describe('History Actions', () => {
       store.addField(newField, 'block-1');
       store.updateField('block-1', { props: [{ type: PropertyType.BG_COLOR, value: '#FF0000' }] });
 
-      expect(store.histories.length).toBeGreaterThan(1);
+      // Get updated state after changes
+      let updatedStore = useStore.getState();
+      expect(updatedStore.histories.length).toBeGreaterThan(1);
 
       store.clearHistories();
 
-      expect(store.histories).toHaveLength(1);
-      expect(store.currentHistoryIndex).toBe(0);
-      expect(store.totalHistories).toBe(1);
+      // Get updated state after clearing
+      updatedStore = useStore.getState();
+      expect(updatedStore.histories).toHaveLength(1);
+      expect(updatedStore.currentHistoryIndex).toBe(0);
+      expect(updatedStore.totalHistories).toBe(1);
     });
 
     it('should respect maximum history limit', () => {
@@ -164,7 +169,10 @@ describe('History Actions', () => {
 
       // Set a small limit for testing
       store.setMaxHistories(3);
-      expect(store.maxHistories).toBe(3);
+
+      // Get updated state after setting max histories
+      let updatedStore = useStore.getState();
+      expect(updatedStore.maxHistories).toBe(3);
 
       // Make multiple changes
       for (let i = 0; i < 5; i++) {
@@ -173,8 +181,10 @@ describe('History Actions', () => {
         });
       }
 
+      // Get updated state after changes
+      updatedStore = useStore.getState();
       // Should not exceed max histories
-      expect(store.histories.length).toBeLessThanOrEqual(3);
+      expect(updatedStore.histories.length).toBeLessThanOrEqual(3);
 
       // Restore original limit
       store.setMaxHistories(originalMaxHistories);
@@ -222,7 +232,9 @@ describe('History Actions', () => {
       store.addField(newField1, 'block-1');
       store.addField(newField2, 'block-1');
 
-      const historyLengthAfterChanges = store.histories.length;
+      // Get updated state after changes
+      let updatedStore = useStore.getState();
+      const historyLengthAfterChanges = updatedStore.histories.length;
 
       // Undo once
       store.undo();
@@ -239,9 +251,11 @@ describe('History Actions', () => {
 
       store.addField(newField3, 'block-1');
 
-      // History should be shorter than before
-      expect(store.histories.length).toBeLessThan(historyLengthAfterChanges);
-      expect(store.canRedo()).toBe(false);
+      // Get updated state after final change
+      updatedStore = useStore.getState();
+      // History should be the same length or shorter (future history was truncated)
+      expect(updatedStore.histories.length).toBeLessThanOrEqual(historyLengthAfterChanges);
+      expect(updatedStore.canRedo()).toBe(false);
     });
   });
 });

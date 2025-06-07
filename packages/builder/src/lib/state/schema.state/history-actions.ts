@@ -7,7 +7,24 @@ export function createHistoryActions({ set, getState }: StateSetters) {
     // History management
     maxHistories: 50,
     setMaxHistories: (maxHistories: number) => {
-      set({ maxHistories });
+      const { histories, currentHistoryIndex } = getState();
+
+      // If new limit is smaller than current histories, trim them
+      if (histories.length > maxHistories) {
+        const startIndex = Math.max(0, histories.length - maxHistories);
+        const newHistories = histories.slice(startIndex);
+        const newCurrentIndex = Math.max(0, currentHistoryIndex - startIndex);
+
+        set({
+          maxHistories,
+          histories: newHistories,
+          totalHistories: newHistories.length,
+          currentHistoryIndex: newCurrentIndex,
+        });
+      }
+      else {
+        set({ maxHistories });
+      }
     },
 
     addHistory: (schema: FormSchema, skipDebounce?: boolean) => {
@@ -91,7 +108,13 @@ export function createHistoryActions({ set, getState }: StateSetters) {
     },
 
     clearHistories: () => {
-      set({ histories: [], totalHistories: 0, currentHistoryIndex: 0 });
+      const { schema } = getState();
+      const currentHistory = JSON.stringify(schema);
+      set({
+        histories: [currentHistory],
+        totalHistories: 1,
+        currentHistoryIndex: 0,
+      });
     },
 
     canUndo: () => {

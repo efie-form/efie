@@ -140,7 +140,7 @@ describe('Field Actions', () => {
       expect(duplicated?.type).toBe(FormFieldType.SHORT_TEXT);
       expect(duplicated?.props).toEqual([
         {
-          type: PropertyType.NAME,
+          type: PropertyType.LABEL,
           value: 'Text Field 1',
         },
       ]);
@@ -209,17 +209,20 @@ describe('Field Actions', () => {
     it('should delete field and update parent', () => {
       store.deleteField('field-1');
 
+      // Get updated state after deletion
+      const updatedStore = useStore.getState();
+
       // Field should no longer exist
-      const deletedField = store.getFieldById('field-1');
+      const deletedField = updatedStore.getFieldById('field-1');
       expect(deletedField).toBeUndefined();
 
       // Parent should no longer have the child
-      const parentBlock = store.getFieldById('block-1');
+      const parentBlock = updatedStore.getFieldById('block-1');
       expect('children' in parentBlock! && parentBlock.children).toHaveLength(0);
 
       // Field maps should be updated
-      expect(store.fieldMap.has('field-1')).toBe(false);
-      expect(store.fieldParentMap.has('field-1')).toBe(false);
+      expect(updatedStore.fieldMap.has('field-1')).toBe(false);
+      expect(updatedStore.fieldParentMap.has('field-1')).toBe(false);
     });
 
     it('should delete field with children recursively', () => {
