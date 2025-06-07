@@ -112,10 +112,7 @@ export function removeFieldFromTree(
     .filter(field => field.id !== fieldId)
     .map((field) => {
       if ('children' in field && field.children) {
-        const updatedChildren = removeFieldFromTree(field.children, fieldId);
-        if (updatedChildren.length !== field.children.length) {
-          return { ...field, children: updatedChildren } as FormField;
-        }
+        field.children = removeFieldFromTree(field.children, fieldId);
       }
       return field;
     });
