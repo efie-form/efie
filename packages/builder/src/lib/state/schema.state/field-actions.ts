@@ -26,11 +26,11 @@ export function createFieldActions({ set, getState }: StateSetters) {
 
       const { fieldKeyMap, fieldMap, fieldParentMap } = getFieldInfoMap(newFields);
 
-      // Add to history BEFORE updating state
-      addHistory(newSchema, true); // Skip debounce for field additions
-
-      // Then update state
+      // Update state first
       set({ schema: newSchema, fieldMap, fieldKeyMap, fieldParentMap });
+
+      // Then add to history
+      addHistory(newSchema, true); // Skip debounce for field additions
     },
 
     updateField: (fieldId: string, updates: Partial<FormField>) => {
@@ -48,8 +48,8 @@ export function createFieldActions({ set, getState }: StateSetters) {
       };
 
       const { fieldKeyMap, fieldMap: newFieldMap, fieldParentMap } = getFieldInfoMap(newFields);
-      addHistory(newSchema);
       set({ schema: newSchema, fieldMap: newFieldMap, fieldKeyMap, fieldParentMap });
+      addHistory(newSchema);
     },
 
     duplicateField: (fieldId: string): FormField | undefined => {
@@ -108,8 +108,8 @@ export function createFieldActions({ set, getState }: StateSetters) {
       newSchema.form.fields = addToParent(newSchema.form.fields);
 
       const { fieldKeyMap, fieldMap, fieldParentMap } = getFieldInfoMap(newSchema.form.fields);
-      addHistory(newSchema, true); // Skip debounce for field moves
       set({ schema: newSchema, fieldMap, fieldKeyMap, fieldParentMap });
+      addHistory(newSchema, true); // Skip debounce for field moves
     },
 
     deleteField: (fieldId: string) => {
@@ -123,8 +123,8 @@ export function createFieldActions({ set, getState }: StateSetters) {
       };
 
       const { fieldKeyMap, fieldMap, fieldParentMap } = getFieldInfoMap(newFields);
-      addHistory(newSchema, true); // Skip debounce for field deletions
       set({ schema: newSchema, fieldMap, fieldKeyMap, fieldParentMap });
+      addHistory(newSchema, true); // Skip debounce for field deletions
     },
 
     // Core field access methods

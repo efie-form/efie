@@ -9,6 +9,9 @@
     "tw": "pnpm --filter @efie-form/builder run tw",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
+    "test": "nx test @efie-form/builder",
+    "test:builder": "nx test @efie-form/builder",
+    "test:coverage": "nx test @efie-form/builder --coverage",
     "prepare": "husky"
   },
   "repository": {
