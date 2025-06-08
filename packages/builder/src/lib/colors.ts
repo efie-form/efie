@@ -106,7 +106,7 @@ function fromHex(color: string): Color {
 
   return {
     rgba: { r, g, b, a },
-    hsla: { h: hsl[0], s: hsl[1], l: hsl[2], a },
+    hsla: { h: Math.round(hsl[0]), s: Math.round(hsl[1]), l: Math.round(hsl[2]), a },
     hex: color.startsWith('#') ? color : `#${color}`,
   };
 }
@@ -128,11 +128,11 @@ function fromRgba(rgba: ColorRgba): Color {
   // Convert to HSL
   const hsl = convert.rgb.hsl([r, g, b]);
 
-  return {
-    rgba,
-    hsla: { h: hsl[0], s: hsl[1], l: hsl[2], a },
+  return toColor({
+    rgba: { r, g, b, a },
+    hsla: { h: (hsl[0]), s: (hsl[1]), l: (hsl[2]), a },
     hex,
-  };
+  });
 }
 
 /**
@@ -152,11 +152,11 @@ function fromHsla(hsla: ColorHsla): Color {
     ? `#${hexWithoutAlpha}${numToHex(a * 255)}`
     : `#${hexWithoutAlpha}`;
 
-  return {
+  return toColor({
     rgba: { r, g, b, a },
     hsla,
     hex,
-  };
+  });
 }
 
 /**
@@ -194,10 +194,28 @@ export function hslaToHex(h: number, s: number, l: number, a = 1): string {
   const [r, g, b] = convert.hsl.rgb([h, s, l]);
 
   // Then convert RGB to hex with alpha
-  return rgbaToHex(r, g, b, a);
+  return rgbaToHex(Math.round(r), Math.round(g), Math.round(b), a);
 }
 
 // Helper function for converting numbers to hex strings
 function numToHex(value: number): string {
   return Math.round(value).toString(16).padStart(2, '0');
+}
+
+function toColor(color: Color): Color {
+  return {
+    rgba: {
+      r: Math.round(color.rgba.r),
+      g: Math.round(color.rgba.g),
+      b: Math.round(color.rgba.b),
+      a: color.rgba.a,
+    },
+    hsla: {
+      h: Math.round(color.hsla.h),
+      s: Math.round(color.hsla.s),
+      l: Math.round(color.hsla.l),
+      a: color.hsla.a,
+    },
+    hex: color.hex,
+  };
 }

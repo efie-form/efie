@@ -4,6 +4,7 @@ import type { PropSettingsColor } from '../../../types/prop-settings.type';
 import SettingsFieldHorizontal from '../property-layouts/SettingsFieldHorizontal';
 import ColorPicker2 from '../../../components/form/color-picker-2';
 import { isColorValue, type Color, type PropertyDefinition } from '@efie-form/core';
+import { getColorObject } from '../../../lib/colors';
 
 interface PropsTemplateColorProps extends PropSettingsColor {
   fieldId: string;
@@ -34,7 +35,9 @@ export default function PropsTemplateColor({ fieldId, label, type }: PropsTempla
 }
 
 function getValue(props?: PropertyDefinition) {
-  if (!isColorValue(props)) return {};
+  if (!isColorValue(props)) return {
+    value: getColorObject('#FFFFFF'),
+  };
 
   return {
     value: props.value,
