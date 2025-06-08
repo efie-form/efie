@@ -48,7 +48,11 @@ const defaultSchema: FormSchema = {
               },
               {
                 type: PropertyType.COLOR,
-                value: '#494949',
+                value: {
+                  hex: '#000000',
+                  rgba: { r: 0, g: 0, b: 0, a: 1 },
+                  hsla: { h: 0, s: 0, l: 0, a: 1 },
+                },
               },
               {
                 type: PropertyType.BORDER_WIDTH,

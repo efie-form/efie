@@ -38,25 +38,6 @@ export function isColorValue(props?: PropertyDefinition): props is Extract<Prope
     return false;
   }
 
-  // Validate RGB values
-  if (value.rgb) {
-    if (!('r' in value.rgb) || !('g' in value.rgb) || !('b' in value.rgb)) {
-      return false;
-    }
-
-    if (!Number.isFinite(value.rgb.r)
-      || !Number.isFinite(value.rgb.g)
-      || !Number.isFinite(value.rgb.b)) {
-      return false;
-    }
-
-    if (value.rgb.r < 0 || value.rgb.r > 255
-      || value.rgb.g < 0 || value.rgb.g > 255
-      || value.rgb.b < 0 || value.rgb.b > 255) {
-      return false;
-    }
-  }
-
   // Validate RGBA values
   if (value.rgba) {
     if (!('r' in value.rgba) || !('g' in value.rgba) || !('b' in value.rgba) || !('a' in value.rgba)) {
@@ -74,25 +55,6 @@ export function isColorValue(props?: PropertyDefinition): props is Extract<Prope
       || value.rgba.g < 0 || value.rgba.g > 255
       || value.rgba.b < 0 || value.rgba.b > 255
       || value.rgba.a < 0 || value.rgba.a > 1) {
-      return false;
-    }
-  }
-
-  // Validate HSL values
-  if (value.hsl) {
-    if (!('h' in value.hsl) || !('s' in value.hsl) || !('l' in value.hsl)) {
-      return false;
-    }
-
-    if (!Number.isFinite(value.hsl.h)
-      || !Number.isFinite(value.hsl.s)
-      || !Number.isFinite(value.hsl.l)) {
-      return false;
-    }
-
-    if (value.hsl.h < 0 || value.hsl.h > 360
-      || value.hsl.s < 0 || value.hsl.s > 100
-      || value.hsl.l < 0 || value.hsl.l > 100) {
       return false;
     }
   }

@@ -110,6 +110,8 @@ export {
 
 export type {
   Color,
+  ColorHsla,
+  ColorRgba,
 } from './types/common.type';
 
 export {
