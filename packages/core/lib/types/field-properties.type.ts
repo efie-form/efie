@@ -161,7 +161,9 @@ export interface AutoWidthProperty {
 
 export interface ContentProperty {
   type: typeof PropertyType.CONTENT;
-  value: JSONContent;
+  value: {
+    jsonContent: JSONContent;
+  };
 }
 
 // Button properties

@@ -42,7 +42,7 @@ export interface PropSettingsAccept {
 export interface PropSettingsColor {
   template: 'color';
   type: PropertyDefinition['type'];
-  label?: string;
+  label: string;
 }
 
 export type PropSettings =

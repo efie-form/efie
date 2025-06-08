@@ -3,7 +3,7 @@ import { Input } from '../../../components/form';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import type { PropSettingsNumber } from '../../../types/prop-settings.type';
 import SettingsFieldHorizontal from '../property-layouts/SettingsFieldHorizontal';
-import type { PropertyDefinition } from '@efie-form/core';
+import { isNumberValue, type PropertyDefinition } from '@efie-form/core';
 
 interface PropsTemplateNumberProps extends PropSettingsNumber {
   fieldId: string;
@@ -37,12 +37,7 @@ export default function PropsTemplateNumber({ fieldId, label, type, placeholder 
 }
 
 function getValue(props?: PropertyDefinition) {
-  if (!props || !('value' in props)) return '';
-
-  if (typeof props.value !== 'number') {
-    console.warn('Expected number value for property, but got:', props.value);
-    return '';
-  }
+  if (!isNumberValue(props)) return '';
 
   return props.value.toLocaleString();
 }

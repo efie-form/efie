@@ -1,8 +1,9 @@
 import { useCallback } from 'react';
-import { ColorPicker } from '../../../components/form';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import type { PropSettingsColor } from '../../../types/prop-settings.type';
 import SettingsFieldHorizontal from '../property-layouts/SettingsFieldHorizontal';
+import ColorPicker2 from '../../../components/form/color-picker-2';
+import { isColorValue, type Color, type PropertyDefinition } from '@efie-form/core';
 
 interface PropsTemplateColorProps extends PropSettingsColor {
   fieldId: string;
@@ -13,25 +14,29 @@ export default function PropsTemplateColor({ fieldId, label, type }: PropsTempla
     useCallback(state => state.getFieldProperty(fieldId, type), [fieldId, type]),
   );
   const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
+  const value = getValue(fieldProperty);
 
-  const handleChange = (newColor) => {
+  const handleChange = (newColor: Color) => {
     updateFieldProperty(fieldId, {
       ...fieldProperty,
       value: newColor,
-    });
+    } as PropertyDefinition);
   };
 
   return (
-    <SettingsFieldHorizontal label="Background Color" divider>
-      <ColorPicker
-        value={bgColor?.value}
-        onChange={(newColor) => {
-          setBgColor(prev => ({
-            ...prev,
-            value: newColor,
-          }));
-        }}
+    <SettingsFieldHorizontal label={label} divider>
+      <ColorPicker2
+        value={value.value}
+        onChange={handleChange}
       />
     </SettingsFieldHorizontal>
   );
+}
+
+function getValue(props?: PropertyDefinition) {
+  if (!isColorValue(props)) return {};
+
+  return {
+    value: props.value,
+  };
 }

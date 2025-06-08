@@ -111,3 +111,10 @@ export {
 export type {
   Color,
 } from './types/common.type';
+
+export {
+  isStringValue,
+  isColorValue,
+  isNumberValue,
+  isBooleanValue,
+} from './value-validator';

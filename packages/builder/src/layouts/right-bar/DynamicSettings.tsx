@@ -3,6 +3,7 @@ import PropsSettingsAccept from './property-settings-2/props-settings-accept';
 import PropsSettingsFormKey from './property-settings-2/props-settings-form-key';
 import PropsSettingsOptions from './property-settings-2/props-settings-options';
 import PropsTemplateBoolean from './property-templates/props-template-boolean';
+import PropsTemplateColor from './property-templates/props-template-color';
 import PropsTemplateNumber from './property-templates/props-template-number';
 import PropsTemplateText from './property-templates/props-template-text';
 
@@ -77,6 +78,14 @@ function DynamicSettingsType({ settings, fieldId }: DynamicSettingsTypeProps) {
     case 'accept': {
       return (
         <PropsSettingsAccept
+          fieldId={fieldId}
+          {...settings}
+        />
+      );
+    }
+    case 'color': {
+      return (
+        <PropsTemplateColor
           fieldId={fieldId}
           {...settings}
         />

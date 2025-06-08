@@ -39,7 +39,7 @@ const defaultSchema: FormSchema = {
               },
               {
                 type: PropertyType.COLOR,
-                value: '#494949',
+                value: '',
               },
               {
                 type: PropertyType.BORDER_WIDTH,
