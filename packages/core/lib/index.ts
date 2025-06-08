@@ -107,3 +107,7 @@ export {
   type ContentProperty,
   type BoxShadow,
 } from './types/field-properties.type';
+
+export type {
+  Color,
+} from './types/common.type';

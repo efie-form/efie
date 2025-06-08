@@ -7,6 +7,7 @@ import type {
   HeadingTag,
 } from './form-schema.constant';
 import type { PropertyType } from './form-schema.constant';
+import type { Color } from './common.type';
 
 // Label property
 export interface LabelProperty {
@@ -122,7 +123,7 @@ export interface TextAlignProperty {
 
 export interface ColorProperty {
   type: typeof PropertyType.COLOR;
-  value: string;
+  value: Color;
 }
 
 export interface FontSizeProperty {

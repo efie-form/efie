@@ -243,6 +243,14 @@ export const SizeUnit = {
   VW: 'vw',
 } as const;
 
+export const ColorType = {
+  HEX: 'hex',
+  RGB: 'rgb',
+  RGBA: 'rgba',
+  HSL: 'hsl',
+  HSLA: 'hsla',
+} as const;
+
 // Export types for all constants
 export type Unit = (typeof Unit)[keyof typeof Unit];
 export type FieldConditionOperator =
@@ -260,3 +268,4 @@ export type DividerStyle = (typeof DividerStyle)[keyof typeof DividerStyle];
 export type HeadingTag = (typeof HeadingTag)[keyof typeof HeadingTag];
 export type PropertyType = (typeof PropertyType)[keyof typeof PropertyType];
 export type SizeUnit = (typeof SizeUnit)[keyof typeof SizeUnit];
+export type ColorType = (typeof ColorType)[keyof typeof ColorType];

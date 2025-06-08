@@ -39,10 +39,17 @@ export interface PropSettingsAccept {
   label: string;
 }
 
+export interface PropSettingsColor {
+  template: 'color';
+  type: PropertyDefinition['type'];
+  label?: string;
+}
+
 export type PropSettings =
   | PropSettingsText
   | PropSettingsNumber
   | PropSettingsBoolean
   | PropSettingsFormKey
   | PropSettingsOption
-  | PropSettingsAccept;
+  | PropSettingsAccept
+  | PropSettingsColor;
