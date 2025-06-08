@@ -179,7 +179,7 @@ export interface FullWidthProperty {
 
 export interface BgColorProperty {
   type: typeof PropertyType.BG_COLOR;
-  value: string;
+  value: Color;
 }
 
 export interface AlignProperty {
@@ -290,7 +290,7 @@ export interface BorderWidthProperty {
 
 export interface BorderColorProperty {
   type: typeof PropertyType.BORDER_COLOR;
-  value: string;
+  value: Color;
 }
 
 export interface BorderStyleProperty {

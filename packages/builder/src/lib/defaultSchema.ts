@@ -1,6 +1,7 @@
 import { FormFieldType, PropertyType } from '@efie-form/core';
 import type { FormSchema } from '@efie-form/core';
 import { generateId } from './utils';
+import { getColorObject } from './colors';
 
 const defaultSchema: FormSchema = {
   version: 'v1',
@@ -35,11 +36,11 @@ const defaultSchema: FormSchema = {
               },
               {
                 type: PropertyType.BG_COLOR,
-                value: '#FFFFFF',
+                value: getColorObject('#FFFFFF'),
               },
               {
                 type: PropertyType.COLOR,
-                value: '',
+                value: getColorObject('#000000'),
               },
               {
                 type: PropertyType.BORDER_WIDTH,
@@ -47,7 +48,7 @@ const defaultSchema: FormSchema = {
               },
               {
                 type: PropertyType.BORDER_COLOR,
-                value: '#00000019',
+                value: getColorObject('#00000019'),
               },
               {
                 type: PropertyType.BORDER_RADIUS,
