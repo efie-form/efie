@@ -45,6 +45,13 @@ export interface PropSettingsColor {
   label: string;
 }
 
+export interface PropSettingsImageUrl {
+  template: 'imageUrl';
+  type: PropertyDefinition['type'];
+  label: string;
+  placeholder?: string;
+}
+
 export type PropSettings =
   | PropSettingsText
   | PropSettingsNumber
@@ -52,4 +59,5 @@ export type PropSettings =
   | PropSettingsFormKey
   | PropSettingsOption
   | PropSettingsAccept
-  | PropSettingsColor;
+  | PropSettingsColor
+  | PropSettingsImageUrl;

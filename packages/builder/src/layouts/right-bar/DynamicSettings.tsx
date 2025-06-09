@@ -4,6 +4,7 @@ import PropsSettingsFormKey from './property-settings-2/props-settings-form-key'
 import PropsSettingsOptions from './property-settings-2/props-settings-options';
 import PropsTemplateBoolean from './property-templates/props-template-boolean';
 import PropsTemplateColor from './property-templates/props-template-color';
+import PropsTemplateImageUrl from './property-templates/props-template-image-url';
 import PropsTemplateNumber from './property-templates/props-template-number';
 import PropsTemplateText from './property-templates/props-template-text';
 
@@ -86,6 +87,14 @@ function DynamicSettingsType({ settings, fieldId }: DynamicSettingsTypeProps) {
     case 'color': {
       return (
         <PropsTemplateColor
+          fieldId={fieldId}
+          {...settings}
+        />
+      );
+    }
+    case 'imageUrl': {
+      return (
+        <PropsTemplateImageUrl
           fieldId={fieldId}
           {...settings}
         />
