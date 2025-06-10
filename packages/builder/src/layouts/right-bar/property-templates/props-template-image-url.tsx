@@ -4,9 +4,10 @@ import { useSchemaStore } from '../../../lib/state/schema.state';
 import type { PropSettingsImageUrl } from '../../../types/prop-settings.type';
 import { useCallback, useRef, useState } from 'react';
 import { isStringValue, type PropertyDefinition } from '@efie-form/core';
-import { MdOutlineCloudUpload, MdOutlineImage, MdDelete } from 'react-icons/md';
+import { MdDelete, MdOutlineImage } from 'react-icons/md';
 import { FaImage } from 'react-icons/fa6';
 import { cn } from '../../../lib/utils';
+import { useFileDragDrop } from '../../../lib/hooks/useFileDragDrop';
 
 interface PropsTemplateImageUrlProps extends PropSettingsImageUrl {
   fieldId: string;
@@ -28,7 +29,6 @@ export default function PropsTemplateImageUrl({
   const value = getValue(fieldProperty);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [dragActive, setDragActive] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [imageError, setImageError] = useState(false);
   const [imageDimensions, setImageDimensions] = useState<{ width: number; height: number }>();
@@ -49,38 +49,10 @@ export default function PropsTemplateImageUrl({
     handleChange(localUrl);
   }, [handleChange]);
 
-  const handleDrag = useCallback((e: React.DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (e.type === 'dragenter' || e.type === 'dragover') {
-      setDragActive(true);
-    }
-    else if (e.type === 'dragleave') {
-      setDragActive(false);
-    }
-  }, []);
-
-  const handleDrop = useCallback((e: React.DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setDragActive(false);
-
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      const file = e.dataTransfer.files[0];
-      if (file.type.startsWith('image/')) {
-        handleFileSelect(file);
-      }
-    }
-  }, [handleFileSelect]);
-
-  const handleFileInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      if (file.type.startsWith('image/')) {
-        handleFileSelect(file);
-      }
-    }
-  }, [handleFileSelect]);
+  const { dragActive, isDraggedFileValid, handleDrag, handleDrop, handleFileInputChange } = useFileDragDrop({
+    onFileSelect: handleFileSelect,
+    acceptedFileTypes: ['image/'], // Only accept image files for this component
+  });
 
   const handleUploadClick = useCallback(() => {
     fileInputRef.current?.click();
@@ -111,19 +83,32 @@ export default function PropsTemplateImageUrl({
   return (
     <SettingsFieldVertical label={label} divider>
       <div className="space-y-3">
-        {/* URL Input */}
-        <Input
-          placeholder={placeholder || 'Enter image URL...'}
-          value={value}
-          onChange={handleChange}
-        />
+        <div className="flex gap-2">
+          {/* URL Input */}
+          <Input
+            placeholder={placeholder || 'Enter image URL...'}
+            value={value}
+            onChange={handleChange}
+          />
+          {hasImage
+            && (
+              <button
+                onClick={handleRemoveImage}
+                className="flex items-center gap-2 text-danger hover:text-danger-600 typography-body4 transition-colors"
+              >
+                <MdDelete size={16} />
+              </button>
+            )}
+        </div>
 
         {/* Upload/Drop Zone */}
         <div
           className={cn(
             'relative border-2 border-dashed rounded-lg transition-colors cursor-pointer',
             {
-              'border-primary-400 bg-primary-50': dragActive,
+              'border-primary-400 bg-primary-50': dragActive && isDraggedFileValid === true,
+              'border-danger-400 bg-danger-50': dragActive && isDraggedFileValid === false,
+              'border-neutral-400 bg-neutral-50': dragActive && isDraggedFileValid === undefined,
               'border-neutral-300 hover:border-neutral-400': !dragActive,
             },
           )}
@@ -151,30 +136,32 @@ export default function PropsTemplateImageUrl({
                   onLoad={() => checkImageSize(value)}
                   onError={() => setImageError(true)}
                 />
-                <div className="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-10 rounded-lg transition-all duration-200 ease-in-out flex items-center justify-center">
-                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                    <MdOutlineCloudUpload size={24} className="text-gray-600" />
-                  </div>
-                </div>
               </div>
-              <button
-                onClick={handleRemoveImage}
-                className="mt-2 flex items-center gap-2 text-red-500 hover:text-red-600 typography-body4 transition-colors"
-              >
-                <MdDelete size={16} />
-                <span>Remove image</span>
-              </button>
             </>
           )}
           {!hasImage && (
             <div className="flex flex-col items-center justify-center py-8 px-4">
               <FaImage size={32} className="text-neutral-400 mb-2" />
-              <p className="text-neutral-600 typography-body3 text-center mb-1">
-                Click to upload or drag & drop
-              </p>
-              <p className="text-neutral-400 typography-body4 text-center">
-                PNG, JPG, GIF up to 10MB
-              </p>
+              {dragActive && isDraggedFileValid === true && (
+                <p className="text-primary-600 typography-body3 text-center mb-1">
+                  ✅ Drop to upload image
+                </p>
+              )}
+              {dragActive && isDraggedFileValid === false && (
+                <p className="text-red-600 typography-body3 text-center mb-1">
+                  ❌ Only image files are allowed
+                </p>
+              )}
+              {!dragActive && (
+                <>
+                  <p className="text-neutral-600 typography-body3 text-center mb-1">
+                    Click to upload or drag & drop
+                  </p>
+                  <p className="text-neutral-400 typography-body4 text-center">
+                    PNG, JPG, GIF up to 10MB
+                  </p>
+                </>
+              )}
             </div>
           )}
         </div>
