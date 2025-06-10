@@ -40,6 +40,17 @@
   --color-red-700: #9d3535;
   --color-red-800: #832c2c;
   --color-red-900: #692424;
+
+  --color-green-50: #e6f9ed;
+  --color-green-100: #c3f0d6;
+  --color-green-200: #8ee6b7;
+  --color-green-300: #5edb9b;
+  --color-green-400: #2fc97a;
+  --color-green-500: #1fa463;
+  --color-green-600: #18804e;
+  --color-green-700: #156642;
+  --color-green-800: #124f36;
+  --color-green-900: #0e3a29;
 }
 
 html {

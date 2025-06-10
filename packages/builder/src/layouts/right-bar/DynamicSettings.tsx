@@ -37,68 +37,28 @@ interface DynamicSettingsTypeProps {
 function DynamicSettingsType({ settings, fieldId }: DynamicSettingsTypeProps) {
   switch (settings.template) {
     case 'text': {
-      return (
-        <PropsTemplateText
-          fieldId={fieldId}
-          {...settings}
-        />
-      );
+      return <PropsTemplateText fieldId={fieldId} {...settings} />;
     }
     case 'number': {
-      return (
-        <PropsTemplateNumber
-          fieldId={fieldId}
-          {...settings}
-        />
-      );
+      return <PropsTemplateNumber fieldId={fieldId} {...settings} />;
     }
     case 'boolean': {
-      return (
-        <PropsTemplateBoolean
-          fieldId={fieldId}
-          {...settings}
-        />
-      );
-    }
-    case 'formKey': {
-      return (
-        <PropsSettingsFormKey
-          fieldId={fieldId}
-          {...settings}
-        />
-      );
-    }
-    case 'option': {
-      return (
-        <PropsSettingsOptions
-          fieldId={fieldId}
-          {...settings}
-        />
-      );
-    }
-    case 'accept': {
-      return (
-        <PropsSettingsAccept
-          fieldId={fieldId}
-          {...settings}
-        />
-      );
+      return <PropsTemplateBoolean fieldId={fieldId} {...settings} />;
     }
     case 'color': {
-      return (
-        <PropsTemplateColor
-          fieldId={fieldId}
-          {...settings}
-        />
-      );
+      return <PropsTemplateColor fieldId={fieldId} {...settings} />;
     }
     case 'imageUrl': {
-      return (
-        <PropsTemplateImageUrl
-          fieldId={fieldId}
-          {...settings}
-        />
-      );
+      return <PropsTemplateImageUrl fieldId={fieldId} {...settings} />;
+    }
+    case 'accept': {
+      return <PropsSettingsAccept fieldId={fieldId} {...settings} />;
+    }
+    case 'formKey': {
+      return <PropsSettingsFormKey fieldId={fieldId} {...settings} />;
+    }
+    case 'option': {
+      return <PropsSettingsOptions fieldId={fieldId} {...settings} />;
     }
   }
 }

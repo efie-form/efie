@@ -2,12 +2,12 @@ import { Input } from '../../../components/form';
 import SettingsFieldVertical from '../property-layouts/SettingsFieldVertical';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import type { PropSettingsImageUrl } from '../../../types/prop-settings.type';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { isStringValue, type PropertyDefinition } from '@efie-form/core';
-import { MdDelete, MdOutlineImage } from 'react-icons/md';
-import { FaImage } from 'react-icons/fa6';
-import { cn } from '../../../lib/utils';
+import { MdOutlineImage } from 'react-icons/md';
 import { useFileDragDrop } from '../../../lib/hooks/useFileDragDrop';
+import { getImageFileInfo } from './utils-image-info';
+import { cn } from '../../../lib/utils';
 
 interface PropsTemplateImageUrlProps extends PropSettingsImageUrl {
   fieldId: string;
@@ -29,9 +29,27 @@ export default function PropsTemplateImageUrl({
   const value = getValue(fieldProperty);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [isLoading, setIsLoading] = useState(false);
   const [imageError, setImageError] = useState(false);
   const [imageDimensions, setImageDimensions] = useState<{ width: number; height: number }>();
+  const dimensionString = imageDimensions
+    ? `${imageDimensions.width} × ${imageDimensions.height}`
+    : undefined;
+  const [fileInfo, setFileInfo] = useState<{ name: string; size: number }>();
+  const [isHovered, setIsHovered] = useState(false);
+
+  // Helper handlers for drag events to allow multiple statements
+  const handleDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
+    handleDrag(e);
+    setIsHovered(true);
+  };
+  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+    handleDrag(e);
+    setIsHovered(false);
+  };
+  const handleDropWithHover = (e: React.DragEvent<HTMLDivElement>) => {
+    handleDrop(e);
+    setIsHovered(false);
+  };
 
   const handleChange = useCallback((newValue: string) => {
     updateFieldProperty(fieldId, {
@@ -39,17 +57,23 @@ export default function PropsTemplateImageUrl({
       value: newValue,
     } as PropertyDefinition);
     setImageError(false);
-    setIsLoading(false);
+    // setIsLoading(false);
   }, [fieldId, type, updateFieldProperty]);
 
   const handleFileSelect = useCallback((file: File) => {
+    // Store file information
+    setFileInfo({
+      name: file.name,
+      size: file.size,
+    });
+
     // TODO: Implement S3 upload functionality
     // For now, create a local URL for preview
     const localUrl = URL.createObjectURL(file);
     handleChange(localUrl);
   }, [handleChange]);
 
-  const { dragActive, isDraggedFileValid, handleDrag, handleDrop, handleFileInputChange } = useFileDragDrop({
+  const { handleDrag, handleDrop, handleFileInputChange, dragActive, isDraggedFileValid } = useFileDragDrop({
     onFileSelect: handleFileSelect,
     acceptedFileTypes: ['image/'], // Only accept image files for this component
   });
@@ -58,65 +82,76 @@ export default function PropsTemplateImageUrl({
     fileInputRef.current?.click();
   }, []);
 
-  const handleRemoveImage = useCallback(() => {
-    handleChange('');
-  }, [handleChange]);
-
   // Check image size
   const checkImageSize = (url: string) => {
-    setIsLoading(true);
     const img = new globalThis.Image();
     img.addEventListener('load', () => {
       setImageDimensions({ width: img.width, height: img.height });
-      setIsLoading(false);
     });
     img.addEventListener('error', () => {
-      setIsLoading(false);
       setImageError(true);
       setImageDimensions(undefined);
     });
     img.src = url;
   };
 
+  // Effect: when value changes and is a URL, fetch image info
+  useEffect(() => {
+    if (!value) return;
+    const fetchInfo = async () => {
+      try {
+        const info = await getImageFileInfo(value, fileInfo);
+        if (info) {
+          setFileInfo({ name: info.name, size: info.size });
+          setImageDimensions(info.dimensions);
+        }
+        else {
+          setFileInfo(undefined);
+          setImageDimensions(undefined);
+        }
+      }
+      catch {
+        setFileInfo(undefined);
+        setImageDimensions(undefined);
+      }
+    };
+    fetchInfo();
+  }, [value]);
+
   const hasImage = value && value.trim() && !imageError;
+  console.log(isHovered, dragActive, isDraggedFileValid);
 
   return (
     <SettingsFieldVertical label={label} divider>
-      <div className="space-y-3">
-        <div className="flex gap-2">
-          {/* URL Input */}
-          <Input
-            placeholder={placeholder || 'Enter image URL...'}
-            value={value}
-            onChange={handleChange}
-          />
-          {hasImage
-            && (
-              <button
-                onClick={handleRemoveImage}
-                className="flex items-center gap-2 text-danger hover:text-danger-600 typography-body4 transition-colors"
-              >
-                <MdDelete size={16} />
-              </button>
-            )}
-        </div>
-
-        {/* Upload/Drop Zone */}
+      <div className="flex flex-col gap-2">
+        {/* Input field below preview/info */}
+        <Input
+          placeholder={placeholder || 'Enter image URL...'}
+          value={value}
+          onChange={handleChange}
+          className="w-full min-w-0"
+        />
+        {/* Preview, upload, file info, and dimensions in a single box */}
         <div
           className={cn(
-            'relative border-2 border-dashed rounded-lg transition-colors cursor-pointer',
+            'flex items-center group gap-3 border border-dashed rounded-lg p-2 bg-neutral-50 relative cursor-pointer',
+            'hover:border-primary hover:bg-primary-300/10 transition-colors duration-200',
+            // isHovered && 'border-primary-400',
+            // imageError && 'border-danger-400',
+            // hasImage && !imageError && 'border-success-400',
+            // !isHovered && !imageError && !(hasImage && !imageError) && 'border-neutral-200',
             {
-              'border-primary-400 bg-primary-50': dragActive && isDraggedFileValid === true,
-              'border-danger-400 bg-danger-50': dragActive && isDraggedFileValid === false,
-              'border-neutral-400 bg-neutral-50': dragActive && isDraggedFileValid === undefined,
-              'border-neutral-300 hover:border-neutral-400': !dragActive,
+              'border-danger-400 bg-danger-50/20': dragActive && !isDraggedFileValid,
+              'border-success-400 bg-success-50/20': dragActive && isDraggedFileValid,
             },
           )}
-          onDragEnter={handleDrag}
-          onDragLeave={handleDrag}
+          onClick={handleUploadClick}
+          onDragEnter={handleDragEnter}
+          onDragLeave={handleDragLeave}
           onDragOver={handleDrag}
-          onDrop={handleDrop}
-          onClick={hasImage ? undefined : handleUploadClick}
+          onDrop={handleDropWithHover}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
         >
           <input
             ref={fileInputRef}
@@ -125,76 +160,79 @@ export default function PropsTemplateImageUrl({
             onChange={handleFileInputChange}
             className="hidden"
           />
-
+          {/* Preview */}
           {hasImage && (
-            <>
-              <div className="relative group cursor-pointer" onClick={handleUploadClick}>
+            <div className="grid grid-cols-3">
+              <div
+                className="resize flex items-center justify-center bg-neutral-100/30 border border-neutral-200 rounded aspect-square p-1"
+              >
                 <img
                   src={value}
                   alt="Preview"
-                  className="w-full h-32 object-contain rounded-lg p-2"
+                  className="object-contain max-w-full max-h-full"
                   onLoad={() => checkImageSize(value)}
                   onError={() => setImageError(true)}
+                  draggable={false}
                 />
               </div>
-            </>
+              <div className="col-span-2 px-2 flex flex-col justify-center">
+                {fileInfo && (
+                  <p className="truncate text-xs text-neutral-800 font-medium" title={fileInfo.name}>{fileInfo.name}</p>
+                )}
+                {!!fileInfo && fileInfo.size > 0 && (
+                  <p className="text-xs text-neutral-500 truncate" title={formatFileSize(fileInfo.size)}>
+                    {formatFileSize(fileInfo.size)}
+                  </p>
+                )}
+                {/* Image dimensions (right aligned) */}
+                {hasImage && imageDimensions && (
+                  <p className="text-xs text-neutral-400">
+                    {dimensionString}
+                  </p>
+                )}
+              </div>
+            </div>
           )}
           {!hasImage && (
-            <div className="flex flex-col items-center justify-center py-8 px-4">
-              <FaImage size={32} className="text-neutral-400 mb-2" />
-              {dragActive && isDraggedFileValid === true && (
-                <p className="text-primary-600 typography-body3 text-center mb-1">
-                  ✅ Drop to upload image
-                </p>
-              )}
-              {dragActive && isDraggedFileValid === false && (
-                <p className="text-red-600 typography-body3 text-center mb-1">
-                  ❌ Only image files are allowed
-                </p>
-              )}
-              {!dragActive && (
-                <>
-                  <p className="text-neutral-600 typography-body3 text-center mb-1">
-                    Click to upload or drag & drop
-                  </p>
-                  <p className="text-neutral-400 typography-body4 text-center">
-                    PNG, JPG, GIF up to 10MB
-                  </p>
-                </>
-              )}
+            <div className="py-2 text-center w-full">
+              <div className="flex justify-center">
+                <MdOutlineImage
+                  size={64}
+                  className={cn('text-neutral-200 mb-2 group-hover:text-primary-300',
+                    {
+                      'text-danger-400': dragActive && !isDraggedFileValid,
+                      'text-success-200': dragActive && isDraggedFileValid,
+                    },
+                  )}
+                />
+              </div>
+              <p className={cn(
+                'typography-body3 text-neutral-600 font-medium',
+                'group-hover:text-primary-400',
+                {
+                  'text-danger-600': dragActive && !isDraggedFileValid,
+                  'text-success-600': dragActive && isDraggedFileValid,
+                })}
+              >
+                Click or drag to upload
+              </p>
+              <p className={cn(
+                'typography-body4 text-neutral-400',
+                'group-hover:text-primary-300',
+                {
+                  'text-danger': dragActive && !isDraggedFileValid,
+                  'text-success': dragActive && isDraggedFileValid,
+                })}
+              >
+                PNG, JPG, GIF up to 10MB
+              </p>
+            </div>
+          )}
+          {dragActive && !isDraggedFileValid && (
+            <div className="absolute inset-0 bg-danger-100/30 border border-danger-400 rounded-lg flex items-center justify-center">
             </div>
           )}
         </div>
-
-        {/* Image Status/Info */}
-        {isLoading && (
-          <div className="flex items-center gap-2 text-neutral-500 typography-body4">
-            <MdOutlineImage size={16} />
-            <span>Loading image...</span>
-          </div>
-        )}
-
-        {imageError && (
-          <div className="flex items-center gap-2 text-danger typography-body4">
-            <MdOutlineImage size={16} />
-            <span>Failed to load image</span>
-          </div>
-        )}
-
-        {!isLoading && !imageError && hasImage && (
-          <div className="flex items-center gap-2 text-success typography-body4">
-            <MdOutlineImage size={16} />
-            <span>Image loaded successfully</span>
-            {imageDimensions && (
-              <span className="ml-2 text-xs text-neutral-500">
-                {imageDimensions.width}
-                {' × '}
-                {imageDimensions.height}
-                px
-              </span>
-            )}
-          </div>
-        )}
       </div>
     </SettingsFieldVertical>
   );
@@ -203,4 +241,12 @@ export default function PropsTemplateImageUrl({
 const getValue = (props?: PropertyDefinition) => {
   if (!isStringValue(props)) return '';
   return props.value;
+};
+
+const formatFileSize = (bytes: number): string => {
+  if (bytes === 0) return '0 Bytes';
+  const k = 1024;
+  const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return `${Number.parseFloat((bytes / Math.pow(k, i)).toFixed(2))} ${sizes[i]}`;
 };

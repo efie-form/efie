@@ -10,7 +10,18 @@ export default {
     extend: {},
     colors: {
       white: '#FFFFFF',
-      success: '#34D399',
+      success: {
+        50: hexWithOpacity('--color-green-50'),
+        100: hexWithOpacity('--color-green-100'),
+        200: hexWithOpacity('--color-green-200'),
+        300: hexWithOpacity('--color-green-300'),
+        400: hexWithOpacity('--color-green-400'),
+        DEFAULT: hexWithOpacity('--color-green-500'),
+        600: hexWithOpacity('--color-green-600'),
+        700: hexWithOpacity('--color-green-700'),
+        800: hexWithOpacity('--color-green-800'),
+        900: hexWithOpacity('--color-green-900'),
+      },
       primary: {
         50: hexWithOpacity('--color-primary-50'),
         100: hexWithOpacity('--color-primary-100'),
