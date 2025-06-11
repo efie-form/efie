@@ -9,9 +9,17 @@ import type { FormField } from './form-field.type';
 
 // Base types for units and measurements
 export interface Size {
+  type: 'size';
   value: number;
   unit: SizeUnit;
 }
+
+export type AnchorSize = {
+  type: 'anchor-size';
+  anchorName?: string;
+  anchorSize?: string;
+  lengthPercentage?: number;
+};
 
 // Field condition types
 export interface FieldCondition {

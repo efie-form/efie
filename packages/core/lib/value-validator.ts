@@ -1,5 +1,6 @@
 import type { Color } from './types/common.type';
-import type { PropertyDefinition } from './types/field-properties.type';
+import type { PropertyDefinition, WidthProperty } from './types/field-properties.type';
+import { PropertyType } from './types/form-schema.constant';
 
 export function isStringValue(props?: PropertyDefinition): props is Extract<PropertyDefinition, { value: string }> {
   return (
@@ -67,5 +68,43 @@ export function isColorValue(props?: PropertyDefinition): props is Extract<Prope
     return true;
   }
 
+  return false;
+}
+
+export function isWidthValue(props?: PropertyDefinition): props is WidthProperty {
+  if (!props || props.type !== PropertyType.WIDTH || typeof props !== 'object' || !('value' in props)) {
+    return false;
+  }
+  const value = props.value;
+  if (!value || typeof value !== 'object') return false;
+
+  // size type
+  if (value.type === 'size' && value.value && typeof value.value === 'object' && 'value' in value.value && 'unit' in value.value) {
+    return true;
+  }
+  // fit-content type
+  if (value.type === 'fit-content' && (value.value === undefined || (typeof value.value === 'object' && 'value' in value.value && 'unit' in value.value))) {
+    return true;
+  }
+  // anchor-size type
+  if (value.type === 'anchor-size') {
+    // anchorName, anchorSize, lengthPercentage are all optional
+    return true;
+  }
+  // keyword type
+  if (value.type === 'keyword' && typeof value.value === 'string') {
+    return [
+      'auto',
+      'stretch',
+      'max-content',
+      'min-content',
+      'fit-content',
+      'inherit',
+      'initial',
+      'unset',
+      'revert',
+      'revert-layer',
+    ].includes(value.value);
+  }
   return false;
 }

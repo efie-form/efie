@@ -136,3 +136,12 @@ div.tiptap:focus-visible {
     height: 0;
   }
 }
+
+.hide-input-arrow[type='number']::-webkit-outer-spin-button,
+.hide-input-arrow[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.hide-input-arrow[type='number'] {
+  -moz-appearance: textfield;
+}

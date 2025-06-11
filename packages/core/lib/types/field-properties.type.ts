@@ -1,5 +1,5 @@
 import type { JSONContent } from '@tiptap/core';
-import type { Size } from './form-schema.type';
+import type { AnchorSize, Size } from './form-schema.type';
 import type {
   TextAlign,
   ObjectFit,
@@ -99,9 +99,15 @@ export interface GapProperty {
   value: Size;
 }
 
+export type Width =
+  | { type: 'size'; value: Size }
+  | { type: 'anchor-size'; value: AnchorSize }
+  | { type: 'fit-content'; value?: Size }
+  | { type: 'keyword'; value: 'auto' | 'stretch' | 'max-content' | 'min-content' | 'inherit' | 'initial' | 'unset' | 'revert' | 'revert-layer' };
+
 export interface WidthProperty {
   type: typeof PropertyType.WIDTH;
-  value: Size;
+  value: Width;
   autoWidth: boolean;
 }
 

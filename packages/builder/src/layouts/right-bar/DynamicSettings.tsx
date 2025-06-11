@@ -7,6 +7,7 @@ import PropsTemplateColor from './property-templates/props-template-color';
 import PropsTemplateImageUrl from './property-templates/props-template-image-url';
 import PropsTemplateNumber from './property-templates/props-template-number';
 import PropsTemplateText from './property-templates/props-template-text';
+import { PropsTemplateWidth } from './property-templates/props-template-width';
 
 interface DynamicSettingsProps {
   settings?: PropSettings[];
@@ -59,6 +60,9 @@ function DynamicSettingsType({ settings, fieldId }: DynamicSettingsTypeProps) {
     }
     case 'option': {
       return <PropsSettingsOptions fieldId={fieldId} {...settings} />;
+    }
+    case 'width': {
+      return <PropsTemplateWidth fieldId={fieldId} {...settings} />;
     }
   }
 }

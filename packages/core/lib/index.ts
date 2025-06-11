@@ -106,6 +106,9 @@ export {
   type TextAlignProperty,
   type ContentProperty,
   type BoxShadow,
+  type Margin,
+  type NameProperty,
+  type Width,
 } from './types/field-properties.type';
 
 export type {
@@ -119,4 +122,5 @@ export {
   isColorValue,
   isNumberValue,
   isBooleanValue,
+  isWidthValue,
 } from './value-validator';

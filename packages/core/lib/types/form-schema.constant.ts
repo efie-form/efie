@@ -241,6 +241,11 @@ export const SizeUnit = {
   PERCENT: '%',
   VH: 'vh',
   VW: 'vw',
+  PT: 'pt',
+  PC: 'pc',
+  IN: 'in',
+  CM: 'cm',
+  MM: 'mm',
 } as const;
 
 export const ColorType = {
