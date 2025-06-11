@@ -3,6 +3,7 @@ import { useSchemaStore } from '../../../lib/state/schema.state';
 import { isWidthValue, type PropertyDefinition, type WidthHeightSize } from '@efie-form/core';
 import SizeInput from '../../../components/form/SizeInput';
 import type { PropSettingsWidth } from '../../../types/prop-settings.type';
+import SettingsFieldHorizontal from '../property-layouts/SettingsFieldHorizontal';
 
 interface PropsTemplateWidthProps extends PropSettingsWidth {
   fieldId: string;
@@ -26,15 +27,12 @@ export function PropsTemplateWidth({ fieldId, label, type }: PropsTemplateWidthP
   }, [fieldId, type, updateFieldProperty]);
 
   return (
-    <div className="p-4 border-b border-neutral-100">
-      <div className="space-y-4">
-        <h3 className="typography-body2 font-medium text-neutral-800">{label}</h3>
-        <SizeInput
-          value={value}
-          onValueChange={handleChange}
-        />
-      </div>
-    </div>
+    <SettingsFieldHorizontal label={label} divider>
+      <SizeInput
+        value={value}
+        onValueChange={handleChange}
+      />
+    </SettingsFieldHorizontal>
   );
 }
 

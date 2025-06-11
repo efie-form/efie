@@ -56,7 +56,7 @@ export default function SizeInput({ value, onValueChange, className }: SizeInput
 
     if (isValidNumber) {
       const valueWithoutCommas = rawValue.replaceAll(',', '');
-      setInternalValue(prev => ({ ...prev, value: valueWithoutCommas }));
+      setInternalValue(prev => ({ ...prev, value: Number(valueWithoutCommas).toLocaleString() }));
     }
     else {
       setInternalValue(prev => ({ ...prev, value: rawValue }));
@@ -140,10 +140,10 @@ function transformSizeToInternalValue(size?: Size): InternalValueType {
       return { type: 'auto' };
     }
     case 'length': {
-      return { value: size.value === 0 ? '' : size.value.toString(), type: size.unit };
+      return { value: size.value === 0 ? '' : size.value.toLocaleString(), type: size.unit };
     }
     case 'percentage': {
-      return { value: size.value === 0 ? '' : size.value.toString(), type: '%' };
+      return { value: size.value === 0 ? '' : size.value.toLocaleString(), type: '%' };
     }
     case 'initial': {
       return { type: 'initial' };
