@@ -1,6 +1,7 @@
 import type { ShortTextFormField, LongTextFormField, NumberFormField, MultipleChoiceFormField, TimeFormField, DateFormField, SingleChoiceFormField, DateTimeFormField, FileFormField, BlockFormField, RowFormField, ColumnFormField, ImageFormField, ParagraphFormField, HeaderFormField, ButtonFormField, PageFormField, DividerFormField } from '@efie-form/core';
-import { FormFieldType, PropertyType } from '@efie-form/core';
+import { FormFieldType, PropertyType, SizeType } from '@efie-form/core';
 import { generateId } from './utils';
+import { getColorObject } from './colors';
 
 interface PageProps {
   name: string;
@@ -280,7 +281,7 @@ export function getDefaultField<T extends FormFieldType>({
         props: [
           {
             type: PropertyType.COLOR,
-            value: '#000000',
+            value: getColorObject('#000000'),
           },
           {
             type: PropertyType.STYLE,
@@ -290,8 +291,7 @@ export function getDefaultField<T extends FormFieldType>({
           },
           {
             type: PropertyType.WIDTH,
-            value: { value: 100, unit: '%' },
-            autoWidth: true,
+            value: { type: SizeType.PERCENTAGE, value: 100 },
           },
           {
             type: PropertyType.HEIGHT,

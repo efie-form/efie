@@ -1,6 +1,5 @@
 import { PropertyType, type DividerFormField } from '@efie-form/core';
 import PropSettingsHeight from '../property-settings/PropSettingsHeight';
-import PropSettingsColor from '../property-settings/PropSettingsColor';
 import PropSettingsBorderStyle from '../property-settings/PropSettingsBorderStyle';
 import DynamicSettings from '../DynamicSettings';
 
@@ -19,11 +18,11 @@ function DividerSettings({ field }: DividerSettingsProps) {
           fieldId={field.id}
           settings={[
             { template: 'width', type: PropertyType.WIDTH, label: 'Width' },
+            { template: 'color', type: PropertyType.COLOR, label: 'Color' },
           ]}
         />
         <PropSettingsHeight field={field} />
         <PropSettingsBorderStyle field={field} />
-        <PropSettingsColor field={field} />
       </div>
     </div>
   );

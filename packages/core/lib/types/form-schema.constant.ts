@@ -3,14 +3,21 @@ export const Unit = {
   PX: 'px',
   EM: 'em',
   REM: 'rem',
-  PERCENT: '%',
   VH: 'vh',
   VW: 'vw',
-  PT: 'pt',
-  PC: 'pc',
-  IN: 'in',
-  CM: 'cm',
-  MM: 'mm',
+  // PT: 'pt',
+  // PC: 'pc',
+  // IN: 'in',
+  // CM: 'cm',
+  // MM: 'mm',
+} as const;
+
+export const SizeType = {
+  AUTO: 'auto',
+  LENGTH: 'length',
+  PERCENTAGE: 'percentage',
+  INITIAL: 'initial',
+  INHERIT: 'inherit',
 } as const;
 
 // Field Condition Operators
@@ -274,3 +281,4 @@ export type HeadingTag = (typeof HeadingTag)[keyof typeof HeadingTag];
 export type PropertyType = (typeof PropertyType)[keyof typeof PropertyType];
 export type SizeUnit = (typeof SizeUnit)[keyof typeof SizeUnit];
 export type ColorType = (typeof ColorType)[keyof typeof ColorType];
+export type SizeType = (typeof SizeType)[keyof typeof SizeType];

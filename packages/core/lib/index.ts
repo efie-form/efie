@@ -2,7 +2,6 @@ export { default as Iframe } from './Iframe';
 export { default as Builder } from './Builder';
 export type {
   FormSchema,
-  Size,
   FieldCondition,
   FieldConditionGroup,
   FieldConditionValue,
@@ -46,7 +45,7 @@ export type {
 } from './types/form-field.type';
 
 export { FormFieldType } from './input-type';
-export { PropertyType, SizeUnit } from './types/form-schema.constant';
+export { PropertyType, SizeUnit, SizeType } from './types/form-schema.constant';
 
 export {
   marginToStyle,
@@ -115,6 +114,15 @@ export type {
   Color,
   ColorHsla,
   ColorRgba,
+  SizeAuto,
+  SizeLength,
+  SizePercentage,
+  SizeInitial,
+  SizeInherit,
+  WidthHeightSize,
+  MarginSize,
+  PaddingSize,
+  Size,
 } from './types/common.type';
 
 export {

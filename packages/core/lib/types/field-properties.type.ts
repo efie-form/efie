@@ -1,5 +1,5 @@
 import type { JSONContent } from '@tiptap/core';
-import type { AnchorSize, Size } from './form-schema.type';
+import type { Size } from './form-schema.type';
 import type {
   TextAlign,
   ObjectFit,
@@ -7,7 +7,7 @@ import type {
   HeadingTag,
 } from './form-schema.constant';
 import type { PropertyType } from './form-schema.constant';
-import type { Color } from './common.type';
+import type { Color, WidthHeightSize } from './common.type';
 
 // Label property
 export interface LabelProperty {
@@ -99,16 +99,9 @@ export interface GapProperty {
   value: Size;
 }
 
-export type Width =
-  | { type: 'size'; value: Size }
-  | { type: 'anchor-size'; value: AnchorSize }
-  | { type: 'fit-content'; value?: Size }
-  | { type: 'keyword'; value: 'auto' | 'stretch' | 'max-content' | 'min-content' | 'inherit' | 'initial' | 'unset' | 'revert' | 'revert-layer' };
-
 export interface WidthProperty {
   type: typeof PropertyType.WIDTH;
-  value: Width;
-  autoWidth: boolean;
+  value: WidthHeightSize;
 }
 
 export interface NameProperty {
