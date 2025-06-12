@@ -9,14 +9,40 @@ import type {
   TextAlignProperty,
   WidthProperty,
 } from './types/field-properties.type';
-import { TextAlign } from './types/form-schema.constant';
-import type { Size } from './types/form-schema.type';
+import { TextAlign, SizeType } from './types/form-schema.constant';
+import type { Size, MarginSize, PaddingSize, FontSize, WidthHeightSize } from './types/common.type';
 
-export const toSize = (size?: Size) => {
+export const toSize = (size?: Size | MarginSize | PaddingSize | FontSize | WidthHeightSize) => {
   if (!size) return;
-  if (size.value === 0) return '0';
 
-  return `${size.value}${size.unit}`;
+  switch (size.type) {
+    case SizeType.AUTO: {
+      return 'auto';
+    }
+    case SizeType.INITIAL: {
+      return 'initial';
+    }
+    case SizeType.INHERIT: {
+      return 'inherit';
+    }
+    case SizeType.LENGTH: {
+      if (size.value === 0) return '0';
+      return `${size.value}${size.unit}`;
+    }
+    case SizeType.PERCENTAGE: {
+      if (size.value === 0) return '0';
+      return `${size.value}%`;
+    }
+    case SizeType.ABSOLUTE: {
+      return size.value;
+    }
+    case SizeType.RELATIVE: {
+      return size.value;
+    }
+    default: {
+      return;
+    }
+  }
 };
 
 export const marginToStyle = (margin?: MarginProperty) => {
@@ -99,7 +125,7 @@ export const boxShadowToStyle = (boxShadow?: BoxShadowProperty) => {
 export const widthToStyle = (width?: WidthProperty) => {
   if (!width) return;
 
-  return width.autoWidth ? 'auto' : `${width.value.value}${width.value.unit}`;
+  return toSize(width.value);
 };
 
 const textAlignMap = {
@@ -123,7 +149,7 @@ export const colorToStyle = (color?: ColorProperty) => {
 export const fontSizeToStyle = (fontSize?: FontSizeProperty) => {
   if (!fontSize) return;
 
-  return `${fontSize.value.value}${fontSize.value.unit}`;
+  return toSize(fontSize.value);
 };
 
 export const fontWeightToStyle = (fontWeight?: FontWeightProperty) => {
