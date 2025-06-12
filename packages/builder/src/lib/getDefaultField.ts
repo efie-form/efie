@@ -307,11 +307,17 @@ export function getDefaultField<T extends FormFieldType>({
         props: [
           {
             type: PropertyType.CONTENT,
-            value: generateJsonContent('Header'),
+            value: {
+              jsonContent: generateJsonContent('Header'),
+            },
           },
           {
             type: PropertyType.FONT_SIZE,
-            value: { value: 32, unit: 'px' },
+            value: {
+              type: SizeType.LENGTH,
+              value: 24,
+              unit: 'px',
+            },
           },
           {
             type: PropertyType.TAG,
@@ -335,15 +341,21 @@ export function getDefaultField<T extends FormFieldType>({
         props: [
           {
             type: PropertyType.CONTENT,
-            value: generateJsonContent('Lorem ipsum dolor sit amet'),
+            value: {
+              jsonContent: generateJsonContent('Lorem ipsum dolor sit amet'),
+            },
           },
           {
             type: PropertyType.FONT_SIZE,
-            value: { value: 16, unit: 'px' },
+            value: {
+              type: SizeType.LENGTH,
+              value: 16,
+              unit: 'px',
+            },
           },
           {
             type: PropertyType.COLOR,
-            value: '#000000',
+            value: getColorObject('#000000'),
           },
           {
             type: PropertyType.TEXT_ALIGN,
@@ -375,8 +387,10 @@ export function getDefaultField<T extends FormFieldType>({
           },
           {
             type: PropertyType.WIDTH,
-            value: { value: 100, unit: '%' },
-            autoWidth: true,
+            value: {
+              type: SizeType.PERCENTAGE,
+              value: 100,
+            },
           },
         ],
       } satisfies GetDefaultFieldReturn[typeof FormFieldType.IMAGE];
@@ -393,8 +407,10 @@ export function getDefaultField<T extends FormFieldType>({
             props: [
               {
                 type: PropertyType.WIDTH,
-                value: { value: 50, unit: '%' },
-                autoWidth: false,
+                value: {
+                  type: SizeType.PERCENTAGE,
+                  value: 50,
+                },
               },
             ],
             children: [],
@@ -405,8 +421,10 @@ export function getDefaultField<T extends FormFieldType>({
             props: [
               {
                 type: PropertyType.WIDTH,
-                value: { value: 50, unit: '%' },
-                autoWidth: false,
+                value: {
+                  type: SizeType.PERCENTAGE,
+                  value: 50,
+                },
               },
             ],
             children: [],
@@ -421,8 +439,10 @@ export function getDefaultField<T extends FormFieldType>({
         props: [
           {
             type: PropertyType.WIDTH,
-            value: { value: column?.width || 100, unit: '%' },
-            autoWidth: false,
+            value: {
+              type: SizeType.PERCENTAGE,
+              value: column?.width || 100,
+            },
           },
         ],
         children: [],
@@ -437,62 +457,62 @@ export function getDefaultField<T extends FormFieldType>({
           {
             type: PropertyType.PADDING,
             value: {
-              top: { value: 16, unit: 'px' },
-              right: { value: 16, unit: 'px' },
-              bottom: { value: 16, unit: 'px' },
-              left: { value: 16, unit: 'px' },
+              top: { type: SizeType.LENGTH, value: 16, unit: 'px' },
+              right: { type: SizeType.LENGTH, value: 16, unit: 'px' },
+              bottom: { type: SizeType.LENGTH, value: 16, unit: 'px' },
+              left: { type: SizeType.LENGTH, value: 16, unit: 'px' },
             },
           },
           {
             type: PropertyType.MARGIN,
             value: {
-              top: { value: 0, unit: 'px' },
-              right: { value: 0, unit: 'px' },
-              bottom: { value: 8, unit: 'px' },
-              left: { value: 0, unit: 'px' },
+              top: { type: SizeType.LENGTH, value: 0, unit: 'px' },
+              right: { type: SizeType.LENGTH, value: 0, unit: 'px' },
+              bottom: { type: SizeType.LENGTH, value: 8, unit: 'px' },
+              left: { type: SizeType.LENGTH, value: 0, unit: 'px' },
             },
           },
           {
             type: PropertyType.BG_COLOR,
-            value: '#FFFFFF',
+            value: getColorObject('#FFFFFF'),
           },
           {
             type: PropertyType.COLOR,
-            value: '#494949',
+            value: getColorObject('#494949'),
           },
           {
             type: PropertyType.BORDER_WIDTH,
-            value: { value: 1, unit: 'px' },
+            value: { type: SizeType.LENGTH, value: 1, unit: 'px' },
           },
           {
             type: PropertyType.BORDER_COLOR,
-            value: '#00000019',
+            value: getColorObject('#00000019'),
           },
           {
             type: PropertyType.BORDER_RADIUS,
             value: {
-              topLeft: { value: 8, unit: 'px' },
-              topRight: { value: 8, unit: 'px' },
-              bottomLeft: { value: 8, unit: 'px' },
-              bottomRight: { value: 8, unit: 'px' },
+              topLeft: { type: SizeType.LENGTH, value: 8, unit: 'px' },
+              topRight: { type: SizeType.LENGTH, value: 8, unit: 'px' },
+              bottomLeft: { type: SizeType.LENGTH, value: 8, unit: 'px' },
+              bottomRight: { type: SizeType.LENGTH, value: 8, unit: 'px' },
             },
           },
           {
             type: PropertyType.BOX_SHADOW,
             value: [
               {
-                x: { value: 0, unit: 'px' },
-                y: { value: 4, unit: 'px' },
-                blur: { value: 6, unit: 'px' },
-                spread: { value: 0, unit: 'px' },
+                x: { type: SizeType.LENGTH, value: 0, unit: 'px' },
+                y: { type: SizeType.LENGTH, value: 4, unit: 'px' },
+                blur: { type: SizeType.LENGTH, value: 6, unit: 'px' },
+                spread: { type: SizeType.LENGTH, value: 0, unit: 'px' },
                 color: '#00000019',
                 inset: false,
               },
               {
-                x: { value: 0, unit: 'px' },
-                y: { value: 2, unit: 'px' },
-                blur: { value: 4, unit: 'px' },
-                spread: { value: -2, unit: 'px' },
+                x: { type: SizeType.LENGTH, value: 0, unit: 'px' },
+                y: { type: SizeType.LENGTH, value: 2, unit: 'px' },
+                blur: { type: SizeType.LENGTH, value: 4, unit: 'px' },
+                spread: { type: SizeType.LENGTH, value: -2, unit: 'px' },
                 color: '#00000019',
                 inset: false,
               },
@@ -512,20 +532,22 @@ export function getDefaultField<T extends FormFieldType>({
           },
           {
             type: PropertyType.COLOR,
-            value: '#FFFFFF',
+            value: getColorObject('#FFFFFF'),
           },
           {
             type: PropertyType.BG_COLOR,
-            value: '#5083a7',
+            value: getColorObject('#5083a7'),
           },
           {
             type: PropertyType.FONT_SIZE,
-            value: { value: 16, unit: 'px' },
+            value: { type: SizeType.LENGTH, value: 16, unit: 'px' },
           },
           {
             type: PropertyType.WIDTH,
-            value: { value: 100, unit: '%' },
-            autoWidth: true,
+            value: {
+              type: SizeType.PERCENTAGE,
+              value: 100,
+            },
           },
           {
             type: PropertyType.BTN_TYPE,
@@ -542,19 +564,19 @@ export function getDefaultField<T extends FormFieldType>({
           {
             type: PropertyType.BORDER_RADIUS,
             value: {
-              topLeft: { value: 6, unit: 'px' },
-              topRight: { value: 6, unit: 'px' },
-              bottomLeft: { value: 6, unit: 'px' },
-              bottomRight: { value: 6, unit: 'px' },
+              topLeft: { type: SizeType.LENGTH, value: 6, unit: 'px' },
+              topRight: { type: SizeType.LENGTH, value: 6, unit: 'px' },
+              bottomLeft: { type: SizeType.LENGTH, value: 6, unit: 'px' },
+              bottomRight: { type: SizeType.LENGTH, value: 6, unit: 'px' },
             },
           },
           {
             type: PropertyType.PADDING,
             value: {
-              top: { value: 6, unit: 'px' },
-              right: { value: 12, unit: 'px' },
-              bottom: { value: 6, unit: 'px' },
-              left: { value: 12, unit: 'px' },
+              top: { type: SizeType.LENGTH, value: 6, unit: 'px' },
+              right: { type: SizeType.LENGTH, value: 12, unit: 'px' },
+              bottom: { type: SizeType.LENGTH, value: 6, unit: 'px' },
+              left: { type: SizeType.LENGTH, value: 12, unit: 'px' },
             },
           },
         ],

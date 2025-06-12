@@ -18,6 +18,24 @@ export const SizeType = {
   PERCENTAGE: 'percentage',
   INITIAL: 'initial',
   INHERIT: 'inherit',
+  ABSOLUTE: 'absolute',
+  RELATIVE: 'relative',
+} as const;
+
+export const AbsoluteSize = {
+  XXSmall: 'xx-small',
+  XSmall: 'x-small',
+  Small: 'small',
+  Medium: 'medium',
+  Large: 'large',
+  XLarge: 'x-large',
+  XXLarge: 'xx-large',
+  XXXLarge: 'xxx-large',
+} as const;
+
+export const RelativeSize = {
+  SMALLER: 'smaller',
+  LARGER: 'larger',
 } as const;
 
 // Field Condition Operators
@@ -282,3 +300,5 @@ export type PropertyType = (typeof PropertyType)[keyof typeof PropertyType];
 export type SizeUnit = (typeof SizeUnit)[keyof typeof SizeUnit];
 export type ColorType = (typeof ColorType)[keyof typeof ColorType];
 export type SizeType = (typeof SizeType)[keyof typeof SizeType];
+export type AbsoluteSize = (typeof AbsoluteSize)[keyof typeof AbsoluteSize];
+export type RelativeSize = (typeof RelativeSize)[keyof typeof RelativeSize];

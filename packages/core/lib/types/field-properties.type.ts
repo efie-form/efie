@@ -1,5 +1,4 @@
 import type { JSONContent } from '@tiptap/core';
-import type { Size } from './form-schema.type';
 import type {
   TextAlign,
   ObjectFit,
@@ -7,7 +6,7 @@ import type {
   HeadingTag,
 } from './form-schema.constant';
 import type { PropertyType } from './form-schema.constant';
-import type { Color, WidthHeightSize } from './common.type';
+import type { Color, FontSize, MarginSize, PaddingSize, WidthHeightSize, Size } from './common.type';
 
 // Label property
 export interface LabelProperty {
@@ -127,7 +126,7 @@ export interface ColorProperty {
 
 export interface FontSizeProperty {
   type: typeof PropertyType.FONT_SIZE;
-  value: Size;
+  value: FontSize;
 }
 
 export interface FontWeightProperty {
@@ -209,17 +208,17 @@ export interface StyleProperty {
 }
 
 export interface Margin {
-  top: Size;
-  right: Size;
-  bottom: Size;
-  left: Size;
+  top: MarginSize;
+  right: MarginSize;
+  bottom: MarginSize;
+  left: MarginSize;
 }
 
 export interface Padding {
-  top: Size;
-  right: Size;
-  bottom: Size;
-  left: Size;
+  top: PaddingSize;
+  right: PaddingSize;
+  bottom: PaddingSize;
+  left: PaddingSize;
 }
 
 // Container properties

@@ -1,4 +1,4 @@
-import type { SizeType, Unit } from './form-schema.constant';
+import type { AbsoluteSize, RelativeSize, SizeType, Unit } from './form-schema.constant';
 
 export interface ColorRgba {
   r: number;
@@ -43,7 +43,18 @@ export interface SizeInherit {
   type: typeof SizeType.INHERIT;
 }
 
+export interface SizeAbsolute {
+  type: typeof SizeType.ABSOLUTE;
+  value: AbsoluteSize;
+}
+
+export interface SizeRelative {
+  type: typeof SizeType.RELATIVE;
+  value: RelativeSize;
+}
+
 export type WidthHeightSize = SizeAuto | SizeLength | SizePercentage | SizeInitial | SizeInherit;
 export type MarginSize = SizeAuto | SizeLength | SizePercentage | SizeInherit;
 export type PaddingSize = SizeLength | SizePercentage | SizeInherit;
-export type Size = SizeAuto | SizeLength | SizePercentage | SizeInitial | SizeInherit;
+export type FontSize = SizeAbsolute | SizeRelative | SizeAuto | SizeLength | SizePercentage | SizeInitial | SizeInherit;
+export type Size = SizeAuto | SizeLength | SizePercentage | SizeInitial | SizeInherit | SizeAbsolute;

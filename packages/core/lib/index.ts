@@ -107,7 +107,6 @@ export {
   type BoxShadow,
   type Margin,
   type NameProperty,
-  type Width,
 } from './types/field-properties.type';
 
 export type {
@@ -123,6 +122,9 @@ export type {
   MarginSize,
   PaddingSize,
   Size,
+  FontSize,
+  SizeAbsolute,
+  SizeRelative,
 } from './types/common.type';
 
 export {

@@ -1,4 +1,4 @@
-import type { HeaderFormField } from '@efie-form/core';
+import { PropertyType, type HeaderFormField } from '@efie-form/core';
 import PropSettingsTextAlign from '../property-settings/PropSettingsTextAlign';
 import PropSettingsTag from '../property-settings/PropSettingsTag';
 import DynamicSettings from '../DynamicSettings';
@@ -17,8 +17,8 @@ function HeaderSettings({ field }: HeaderSettingsProps) {
         <DynamicSettings
           fieldId={field.id}
           settings={[
-            { template: 'color', type: 'color', label: 'Text Color' },
-            { template: 'size', type: 'fontSize', label: 'Font Size' },
+            { template: 'color', type: PropertyType.COLOR, label: 'Text Color' },
+            { template: 'size', type: PropertyType.FONT_SIZE, label: 'Font Size' },
           ]}
         />
         <PropSettingsTag field={field} />

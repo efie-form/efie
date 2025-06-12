@@ -1,4 +1,4 @@
-import { FormFieldType, PropertyType } from '@efie-form/core';
+import { FormFieldType, PropertyType, SizeType } from '@efie-form/core';
 import type { FormSchema } from '@efie-form/core';
 import { generateId } from './utils';
 import { getColorObject } from './colors';
@@ -19,19 +19,19 @@ const defaultSchema: FormSchema = {
               {
                 type: PropertyType.PADDING,
                 value: {
-                  top: { value: 16, unit: 'px' },
-                  right: { value: 16, unit: 'px' },
-                  bottom: { value: 16, unit: 'px' },
-                  left: { value: 16, unit: 'px' },
+                  top: { type: SizeType.LENGTH, value: 16, unit: 'px' },
+                  right: { type: SizeType.LENGTH, value: 16, unit: 'px' },
+                  bottom: { type: SizeType.LENGTH, value: 16, unit: 'px' },
+                  left: { type: SizeType.LENGTH, value: 16, unit: 'px' },
                 },
               },
               {
                 type: PropertyType.MARGIN,
                 value: {
-                  top: { value: 0, unit: 'px' },
-                  right: { value: 0, unit: 'px' },
-                  bottom: { value: 8, unit: 'px' },
-                  left: { value: 0, unit: 'px' },
+                  top: { type: SizeType.LENGTH, value: 0, unit: 'px' },
+                  right: { type: SizeType.LENGTH, value: 0, unit: 'px' },
+                  bottom: { type: SizeType.LENGTH, value: 8, unit: 'px' },
+                  left: { type: SizeType.LENGTH, value: 0, unit: 'px' },
                 },
               },
               {
@@ -44,7 +44,7 @@ const defaultSchema: FormSchema = {
               },
               {
                 type: PropertyType.BORDER_WIDTH,
-                value: { value: 1, unit: 'px' },
+                value: { type: SizeType.LENGTH, value: 1, unit: 'px' },
               },
               {
                 type: PropertyType.BORDER_COLOR,
@@ -53,28 +53,28 @@ const defaultSchema: FormSchema = {
               {
                 type: PropertyType.BORDER_RADIUS,
                 value: {
-                  topLeft: { value: 8, unit: 'px' },
-                  topRight: { value: 8, unit: 'px' },
-                  bottomLeft: { value: 8, unit: 'px' },
-                  bottomRight: { value: 8, unit: 'px' },
+                  topLeft: { type: SizeType.LENGTH, value: 8, unit: 'px' },
+                  topRight: { type: SizeType.LENGTH, value: 8, unit: 'px' },
+                  bottomLeft: { type: SizeType.LENGTH, value: 8, unit: 'px' },
+                  bottomRight: { type: SizeType.LENGTH, value: 8, unit: 'px' },
                 },
               },
               {
                 type: PropertyType.BOX_SHADOW,
                 value: [
                   {
-                    x: { value: 0, unit: 'px' },
-                    y: { value: 4, unit: 'px' },
-                    blur: { value: 6, unit: 'px' },
-                    spread: { value: 0, unit: 'px' },
+                    x: { type: SizeType.LENGTH, value: 0, unit: 'px' },
+                    y: { type: SizeType.LENGTH, value: 4, unit: 'px' },
+                    blur: { type: SizeType.LENGTH, value: 6, unit: 'px' },
+                    spread: { type: SizeType.LENGTH, value: 0, unit: 'px' },
                     color: '#00000019',
                     inset: false,
                   },
                   {
-                    x: { value: 0, unit: 'px' },
-                    y: { value: 2, unit: 'px' },
-                    blur: { value: 4, unit: 'px' },
-                    spread: { value: -2, unit: 'px' },
+                    x: { type: SizeType.LENGTH, value: 0, unit: 'px' },
+                    y: { type: SizeType.LENGTH, value: 2, unit: 'px' },
+                    blur: { type: SizeType.LENGTH, value: 4, unit: 'px' },
+                    spread: { type: SizeType.LENGTH, value: -2, unit: 'px' },
                     color: '#00000019',
                     inset: false,
                   },
