@@ -1,8 +1,7 @@
 import type { HeaderFormField } from '@efie-form/core';
 import PropSettingsTextAlign from '../property-settings/PropSettingsTextAlign';
-import PropSettingsColor from '../property-settings/PropSettingsColor';
 import PropSettingsTag from '../property-settings/PropSettingsTag';
-import PropSettingsFontSize from '../property-settings/PropSettingsFontSize';
+import DynamicSettings from '../DynamicSettings';
 
 interface HeaderSettingsProps {
   field: HeaderFormField;
@@ -15,10 +14,15 @@ function HeaderSettings({ field }: HeaderSettingsProps) {
         <div className="px-4 py-2 bg-neutral-100 text-neutral-800 typography-body2">
           Text
         </div>
-        <PropSettingsFontSize field={field} />
+        <DynamicSettings
+          fieldId={field.id}
+          settings={[
+            { template: 'color', type: 'color', label: 'Text Color' },
+            { template: 'size', type: 'fontSize', label: 'Font Size' },
+          ]}
+        />
         <PropSettingsTag field={field} />
         <PropSettingsTextAlign field={field} />
-        <PropSettingsColor field={field} />
       </div>
     </div>
   );

@@ -2,14 +2,14 @@ import { useCallback } from 'react';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import { isWidthValue, type PropertyDefinition, type WidthHeightSize } from '@efie-form/core';
 import SizeInput from '../../../components/form/SizeInput';
-import type { PropSettingsWidth } from '../../../types/prop-settings.type';
+import type { PropSettingsSize } from '../../../types/prop-settings.type';
 import SettingsFieldHorizontal from '../property-layouts/SettingsFieldHorizontal';
 
-interface PropsTemplateWidthProps extends PropSettingsWidth {
+interface PropsTemplateSizeProps extends PropSettingsSize {
   fieldId: string;
 }
 
-export function PropsTemplateWidth({ fieldId, label, type }: PropsTemplateWidthProps) {
+export function PropsTemplateSize({ fieldId, label, type }: PropsTemplateSizeProps) {
   const fieldProperty = useSchemaStore(
     useCallback(
       state => state.getFieldProperty(fieldId, type),

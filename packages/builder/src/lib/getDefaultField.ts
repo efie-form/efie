@@ -295,7 +295,7 @@ export function getDefaultField<T extends FormFieldType>({
           },
           {
             type: PropertyType.HEIGHT,
-            value: { value: 1, unit: 'px' },
+            value: { type: SizeType.LENGTH, value: 1, unit: 'px' },
           },
         ],
       } satisfies GetDefaultFieldReturn[typeof FormFieldType.DIVIDER];
@@ -319,7 +319,7 @@ export function getDefaultField<T extends FormFieldType>({
           },
           {
             type: PropertyType.COLOR,
-            value: '#000000',
+            value: getColorObject('#000000'),
           },
           {
             type: PropertyType.TEXT_ALIGN,

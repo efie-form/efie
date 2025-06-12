@@ -16,7 +16,7 @@ const UNITS = [
   { type: 'rem', label: 'rem' },
   { type: 'vw', label: 'vw' },
   { type: 'vh', label: 'vh' },
-  { type: '%', label: '%' },
+  { type: 'percentage', label: '%' },
   { type: 'inherit', label: 'Inherit' },
   { type: 'initial', label: 'Initial' },
 ] as const;
@@ -27,7 +27,7 @@ const requiredValueTypes = new Set([
   'rem',
   'vw',
   'vh',
-  '%',
+  'percentage',
 ]);
 
 type ValueType = typeof UNITS[number]['type'];
@@ -69,7 +69,7 @@ export default function SizeInput({ value, onValueChange, className }: SizeInput
         setInternalValue({ type: 'auto' });
         break;
       }
-      case '%':
+      case 'percentage':
       case 'px':
       case 'em':
       case 'rem':
@@ -143,7 +143,7 @@ function transformSizeToInternalValue(size?: Size): InternalValueType {
       return { value: size.value === 0 ? '' : size.value.toLocaleString(), type: size.unit };
     }
     case 'percentage': {
-      return { value: size.value === 0 ? '' : size.value.toLocaleString(), type: '%' };
+      return { value: size.value === 0 ? '' : size.value.toLocaleString(), type: 'percentage' };
     }
     case 'initial': {
       return { type: 'initial' };
@@ -166,6 +166,9 @@ function transformInternalValueToSize(internalValue: InternalValueType): Size {
   }
   if (internalValue.type === 'inherit') {
     return { type: 'inherit' };
+  }
+  if (internalValue.type === 'percentage') {
+    return { type: 'percentage', value: internalValue.value ? Number(internalValue.value.replaceAll(',', '')) : 0 };
   }
   if (internalValue.value === undefined || internalValue.value === '') {
     return { type: 'length', value: 0, unit: internalValue.type };

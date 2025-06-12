@@ -1,7 +1,6 @@
 import { PropertyType, type ImageFormField } from '@efie-form/core';
 import PropSettingsTextAlign from '../property-settings/PropSettingsTextAlign';
 import PropSettingsObjectFit from '../property-settings/PropSettingsObjectFit';
-import PropSettingsWidth from '../property-settings/PropSettingsWidth';
 import DynamicSettings from '../DynamicSettings';
 interface ImageSettingsProps {
   field: ImageFormField;
@@ -19,11 +18,11 @@ function ImageSettings({ field }: ImageSettingsProps) {
           settings={[
             { template: 'imageUrl', type: PropertyType.SRC, label: 'Image URL', placeholder: 'https://example.com/image.jpg' },
             { template: 'text', type: PropertyType.ALT, label: 'Alt Text', placeholder: 'Enter alt text for the image' },
+            { template: 'size', type: PropertyType.WIDTH, label: 'Width' },
           ]}
         />
         <PropSettingsTextAlign field={field} />
         <PropSettingsObjectFit field={field} />
-        <PropSettingsWidth field={field} />
       </div>
     </div>
   );

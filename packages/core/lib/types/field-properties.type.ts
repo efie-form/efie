@@ -189,7 +189,7 @@ export interface AlignProperty {
 // Divider properties
 export interface HeightProperty {
   type: typeof PropertyType.HEIGHT;
-  value: Size;
+  value: WidthHeightSize;
 }
 
 export interface StyleProperty {

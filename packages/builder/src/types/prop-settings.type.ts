@@ -52,8 +52,8 @@ export interface PropSettingsImageUrl {
   placeholder?: string;
 }
 
-export interface PropSettingsWidth {
-  template: 'width';
+export interface PropSettingsSize {
+  template: 'size';
   type: PropertyDefinition['type'];
   label: string;
 }
@@ -67,4 +67,4 @@ export type PropSettings =
   | PropSettingsAccept
   | PropSettingsColor
   | PropSettingsImageUrl
-  | PropSettingsWidth;
+  | PropSettingsSize;
