@@ -12,6 +12,7 @@ import PropsSettingsBorderRadius from './property-settings-2/props-settings-bord
 import PropsSettingsMargin from './property-settings-2/props-settings-margin';
 import PropsSettingsPadding from './property-settings-2/props-settings-padding';
 import PropsSettingsBoxShadow from './property-settings-2/props-settings-box-shadow';
+import PropsSettingsSelect from './property-settings-2/props-settings-select';
 
 interface DynamicSettingsProps {
   settings?: PropSettings[];
@@ -79,6 +80,9 @@ function DynamicSettingsType({ settings, fieldId }: DynamicSettingsTypeProps) {
     }
     case 'boxShadow': {
       return <PropsSettingsBoxShadow fieldId={fieldId} {...settings} />;
+    }
+    case 'select': {
+      return <PropsSettingsSelect fieldId={fieldId} {...settings} />;
     }
   }
 }

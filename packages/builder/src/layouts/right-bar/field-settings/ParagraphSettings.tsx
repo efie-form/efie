@@ -1,5 +1,4 @@
 import { PropertyType, type ParagraphFormField } from '@efie-form/core';
-import PropSettingsTextAlign from '../property-settings/PropSettingsTextAlign';
 import DynamicSettings from '../DynamicSettings';
 
 interface ParagraphSettingsProps {
@@ -18,9 +17,13 @@ function ParagraphSettings({ field }: ParagraphSettingsProps) {
           settings={[
             { template: 'size', type: PropertyType.FONT_SIZE, label: 'Font Size' },
             { template: 'color', type: PropertyType.COLOR, label: 'Text Color' },
+            { template: 'select', type: PropertyType.TEXT_ALIGN, label: 'Text Alignment', options: [
+              { value: 'left', label: 'Left' },
+              { value: 'center', label: 'Center' },
+              { value: 'right', label: 'Right' },
+            ] },
           ]}
         />
-        <PropSettingsTextAlign field={field} />
       </div>
     </div>
   );

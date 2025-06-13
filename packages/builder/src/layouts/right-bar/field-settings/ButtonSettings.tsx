@@ -1,5 +1,4 @@
 import { PropertyType, type ButtonFormField } from '@efie-form/core';
-import PropSettingsTextAlign from '../property-settings/PropSettingsTextAlign';
 import DynamicSettings from '../DynamicSettings';
 
 interface ButtonSettingsProps {
@@ -21,9 +20,13 @@ function ButtonSettings({ field }: ButtonSettingsProps) {
           { template: 'size', type: PropertyType.WIDTH, label: 'Width' },
           { template: 'borderRadius', type: PropertyType.BORDER_RADIUS, label: 'Border Radius' },
           { template: 'padding', type: PropertyType.PADDING, label: 'Padding' },
+          { template: 'select', type: PropertyType.TEXT_ALIGN, label: 'Text Alignment', options: [
+            { value: 'left', label: 'Left' },
+            { value: 'center', label: 'Center' },
+            { value: 'right', label: 'Right' },
+          ] },
         ]}
       />
-      <PropSettingsTextAlign field={field} />
     </div>
   );
 }

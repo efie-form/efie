@@ -1,6 +1,4 @@
 import { PropertyType, type HeaderFormField } from '@efie-form/core';
-import PropSettingsTextAlign from '../property-settings/PropSettingsTextAlign';
-import PropSettingsTag from '../property-settings/PropSettingsTag';
 import DynamicSettings from '../DynamicSettings';
 
 interface HeaderSettingsProps {
@@ -19,10 +17,21 @@ function HeaderSettings({ field }: HeaderSettingsProps) {
           settings={[
             { template: 'color', type: PropertyType.COLOR, label: 'Text Color' },
             { template: 'size', type: PropertyType.FONT_SIZE, label: 'Font Size' },
+            { template: 'select', type: PropertyType.TEXT_ALIGN, label: 'Text Alignment', options: [
+              { value: 'left', label: 'Left' },
+              { value: 'center', label: 'Center' },
+              { value: 'right', label: 'Right' },
+            ] },
+            { template: 'select', type: PropertyType.TAG, label: 'Tag', options: [
+              { value: 'h1', label: 'H1' },
+              { value: 'h2', label: 'H2' },
+              { value: 'h3', label: 'H3' },
+              { value: 'h4', label: 'H4' },
+              { value: 'h5', label: 'H5' },
+              { value: 'h6', label: 'H6' },
+            ] },
           ]}
         />
-        <PropSettingsTag field={field} />
-        <PropSettingsTextAlign field={field} />
       </div>
     </div>
   );

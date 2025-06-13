@@ -82,6 +82,17 @@ export interface PropSettingsBoxShadow {
   label: string;
 }
 
+export interface PropSettingsSelect {
+  template: 'select';
+  type: PropertyDefinition['type'];
+  label: string;
+  options: Array<{
+    value: string | number;
+    label: string;
+  }>;
+  placeholder?: string;
+}
+
 export type PropSettings =
   | PropSettingsText
   | PropSettingsNumber
@@ -95,4 +106,5 @@ export type PropSettings =
   | PropSettingsBorderRadius
   | PropSettingsMargin
   | PropSettingsPadding
-  | PropSettingsBoxShadow;
+  | PropSettingsBoxShadow
+  | PropSettingsSelect;
