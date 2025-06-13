@@ -4,13 +4,14 @@ import type { PropSettingsBoxShadow } from '../../../types/prop-settings.type';
 import { type BoxShadowProperty, type PropertyDefinition, type BoxShadow, type Size, SizeType, isBoxShadowValue, type Color } from '@efie-form/core';
 import Button from '../../../components/elements/Button';
 import { closestCenter, DndContext, KeyboardSensor, PointerSensor, useSensor, useSensors, type DragEndEvent } from '@dnd-kit/core';
-import { MdAdd, MdOutlineClose, MdOutlineDragIndicator } from 'react-icons/md';
+import { MdAdd, MdOutlineDelete, MdOutlineDragIndicator } from 'react-icons/md';
 import { cn } from '../../../lib/utils';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import { useCallback, useState } from 'react';
 import ColorPicker2 from '../../../components/form/color-picker-2';
 import SizeInput from '../../../components/form/SizeInput';
 import { getColorObject } from '../../../lib/colors';
+import * as Collapsible from '@radix-ui/react-collapsible';
 
 interface PropsSettingsBoxShadowProps extends PropSettingsBoxShadow {
   fieldId: string;
@@ -160,69 +161,68 @@ function ShadowItem({ index, shadow, onUpdate, onRemove }: ShadowItemProps) {
     onUpdate({ inset: isInset });
   };
 
-  console.log('ShadowItem render', shadow);
-
   return (
-    <div
-      key={index}
-      className={cn('border border-neutral-200 rounded-lg bg-white group relative', {
+    <Collapsible.Root
+      open={isExpanded}
+      onOpenChange={setIsExpanded}
+      className={cn('border border-neutral-200 rounded-lg bg-white group relative overflow-hidden', {
         'z-50': isDragging,
       })}
       ref={setNodeRef}
       style={style}
     >
       {/* Header */}
-      <div
-        className="flex items-center justify-between p-3 cursor-pointer hover:bg-neutral-50 rounded-t-lg"
-        onClick={() => setIsExpanded(!isExpanded)}
-      >
-        <div className="flex items-center gap-2">
-          <div
-            className="cursor-grab p-1 hover:bg-neutral-100 rounded"
-            {...attributes}
-            {...listeners}
-            onClick={e => e.stopPropagation()}
-          >
-            <MdOutlineDragIndicator className="text-neutral-500" />
-          </div>
-          <div className="flex items-center gap-2 typography-body3 text-neutral-800">
-            <span>
-              {sizeToString(shadow.x)}
-            </span>
-            <span>
-              {sizeToString(shadow.y)}
-            </span>
-            <span>
-              {sizeToString(shadow.blur)}
-            </span>
-            <span>
-              {sizeToString(shadow.spread)}
-            </span>
+      <Collapsible.Trigger asChild>
+        <div
+          className="flex items-center justify-between px-2 py-1.5 cursor-pointer hover:bg-neutral-50 rounded-t-lg"
+        >
+          <div className="flex items-center gap-2">
             <div
-              className="w-4 h-4 rounded border border-neutral-300"
-              style={{ backgroundColor: shadow.color.hex }}
-            />
-            {shadow.inset && <span className="text-xs px-1 py-0.5 bg-neutral-100 rounded">inset</span>}
+              className="cursor-grab p-1 hover:bg-neutral-100 rounded"
+              {...attributes}
+              {...listeners}
+              onClick={e => e.stopPropagation()}
+            >
+              <MdOutlineDragIndicator className="text-neutral-500" />
+            </div>
+            <div className="flex items-center gap-2 typography-body3 text-neutral-800">
+              <span>
+                {sizeToString(shadow.x)}
+              </span>
+              <span>
+                {sizeToString(shadow.y)}
+              </span>
+              <span>
+                {sizeToString(shadow.blur)}
+              </span>
+              <span>
+                {sizeToString(shadow.spread)}
+              </span>
+              <div
+                className="w-4 h-4 rounded border border-neutral-300"
+                style={{ backgroundColor: shadow.color.hex }}
+              />
+              {shadow.inset && <span className="text-xs px-1 py-0.5 bg-neutral-100 rounded">inset</span>}
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onRemove();
+              }}
+              className="invisible group-hover:visible p-1 hover:bg-neutral-100 rounded"
+            >
+              <MdOutlineDelete className="text-neutral-500 hover:text-danger" />
+            </button>
           </div>
         </div>
-        <div className="flex items-center gap-2">
-          <span className="text-xs text-neutral-500">
-            {isExpanded ? '▼' : '▶'}
-          </span>
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              onRemove();
-            }}
-            className="invisible group-hover:visible p-1 hover:bg-neutral-100 rounded"
-          >
-            <MdOutlineClose className="text-neutral-500 hover:text-neutral-700" />
-          </button>
-        </div>
-      </div>
+      </Collapsible.Trigger>
 
       {/* Expanded Content */}
-      {isExpanded && (
+      <Collapsible.Content
+        className="overflow-hidden data-[state=open]:animate-collapsible-down data-[state=closed]:animate-collapsible-up"
+      >
         <div className="border-t border-neutral-200 p-3 space-y-4">
           {/* Position and Blur */}
           <div className="grid grid-cols-2 gap-3">
@@ -280,8 +280,8 @@ function ShadowItem({ index, shadow, onUpdate, onRemove }: ShadowItemProps) {
             </div>
           </div>
         </div>
-      )}
-    </div>
+      </Collapsible.Content>
+    </Collapsible.Root>
   );
 }
 

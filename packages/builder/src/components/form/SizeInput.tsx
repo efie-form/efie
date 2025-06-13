@@ -115,6 +115,16 @@ export default function SizeInput({ value, onChange, className }: SizeInputProps
               const rawValue = e.target.value;
               handleValueChange(rawValue);
             }}
+            onKeyDown={(e) => {
+              if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+                e.preventDefault();
+                const currentValue = internalValue.value ? Number(internalValue.value.replaceAll(',', '')) : 0;
+                const increment = e.shiftKey ? 10 : 1;
+                const newValue = e.key === 'ArrowUp' ? currentValue + increment : currentValue - increment;
+                const clampedValue = Math.max(0, newValue); // Prevent negative values
+                handleValueChange(clampedValue.toString());
+              }
+            }}
           />
         </div>
       )}
