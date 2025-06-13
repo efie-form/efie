@@ -58,6 +58,7 @@ export {
   fontSizeToStyle,
   fontWeightToStyle,
   sizeToStyle,
+  toSize,
 } from './props-parse';
 
 export {
@@ -107,6 +108,7 @@ export {
   type BoxShadow,
   type Margin,
   type NameProperty,
+  type BorderRadius,
 } from './types/field-properties.type';
 
 export type {
@@ -133,4 +135,5 @@ export {
   isNumberValue,
   isBooleanValue,
   isWidthValue,
+  isBorderRadiusValue,
 } from './value-validator';

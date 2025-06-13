@@ -58,6 +58,12 @@ export interface PropSettingsSize {
   label: string;
 }
 
+export interface PropSettingsBorderRadius {
+  template: 'borderRadius';
+  type: PropertyDefinition['type'];
+  label: string;
+}
+
 export type PropSettings =
   | PropSettingsText
   | PropSettingsNumber
@@ -67,4 +73,5 @@ export type PropSettings =
   | PropSettingsAccept
   | PropSettingsColor
   | PropSettingsImageUrl
-  | PropSettingsSize;
+  | PropSettingsSize
+  | PropSettingsBorderRadius;

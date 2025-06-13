@@ -31,7 +31,7 @@ function ButtonField({ field }: ButtonFieldProps) {
         style={{
           padding: paddingToStyle(padding),
           backgroundColor: bgColor?.value,
-          borderRadius: borderRadiusToStyle(borderRadius),
+          borderRadius: borderRadiusToStyle(borderRadius?.value),
           color: color?.value,
           width: widthToStyle(width),
         }}

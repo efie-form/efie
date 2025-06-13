@@ -1,5 +1,6 @@
 import type { Color } from './types/common.type';
 import type { PropertyDefinition, WidthProperty } from './types/field-properties.type';
+import { PropertyType } from './types/form-schema.constant';
 
 export function isStringValue(props?: PropertyDefinition): props is Extract<PropertyDefinition, { value: string }> {
   return (
@@ -75,4 +76,18 @@ export function isWidthValue(props?: PropertyDefinition): props is WidthProperty
     return false;
   }
   return true;
+}
+
+export function isBorderRadiusValue(props?: PropertyDefinition): props is Extract<PropertyDefinition, { type: typeof PropertyType.BORDER_RADIUS }> {
+  return (
+    !!props
+    && 'value' in props
+    && props.type === PropertyType.BORDER_RADIUS
+    && typeof props.value === 'object'
+    && 'topLeft' in props.value
+    && 'topRight' in props.value
+    && 'bottomLeft' in props.value
+    && 'bottomRight' in props.value
+    // TODO: Valid whether its size value
+  );
 }

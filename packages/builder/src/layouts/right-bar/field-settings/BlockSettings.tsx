@@ -19,6 +19,7 @@ function BlockSettings({ field }: BlockSettingsProps) {
         settings={[
           { template: 'color', label: 'Background Color', type: PropertyType.BG_COLOR },
           { template: 'color', label: 'Text Color', type: PropertyType.COLOR },
+          { template: 'borderRadius', label: 'Border Radius', type: PropertyType.BORDER_RADIUS },
         ]}
         fieldId={field.id}
       />

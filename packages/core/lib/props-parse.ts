@@ -83,13 +83,20 @@ export const paddingToStyle = (padding?: PaddingProperty) => {
   return `${top} ${right} ${bottom} ${left}`;
 };
 
-export const borderRadiusToStyle = (borderRadius?: BorderRadiusProperty) => {
+function radiusToSize(radius: Size | Size[]) {
+  if (Array.isArray(radius)) {
+    return radius.map(s => toSize(s)).join(' ');
+  }
+  return toSize(radius);
+}
+
+export const borderRadiusToStyle = (borderRadius?: BorderRadiusProperty['value']) => {
   if (!borderRadius) return;
 
-  const topLeft = toSize(borderRadius.value.topLeft);
-  const topRight = toSize(borderRadius.value.topRight);
-  const bottomLeft = toSize(borderRadius.value.bottomLeft);
-  const bottomRight = toSize(borderRadius.value.bottomRight);
+  const topLeft = radiusToSize(borderRadius.topLeft);
+  const topRight = radiusToSize(borderRadius.topRight);
+  const bottomLeft = radiusToSize(borderRadius.bottomLeft);
+  const bottomRight = radiusToSize(borderRadius.bottomRight);
 
   if (
     topLeft === topRight
@@ -103,7 +110,7 @@ export const borderRadiusToStyle = (borderRadius?: BorderRadiusProperty) => {
     return `${topLeft} ${topRight}`;
   }
 
-  return `${topLeft} ${topRight} ${bottomLeft} ${bottomRight}`;
+  return `${topLeft} ${topRight} ${bottomRight} ${bottomLeft}`;
 };
 
 export const boxShadowToStyle = (boxShadow?: BoxShadowProperty) => {

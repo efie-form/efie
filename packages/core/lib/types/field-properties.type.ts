@@ -271,13 +271,15 @@ export interface BoxShadowProperty {
   value: BoxShadow[];
 }
 
+export type BorderRadius = Size | Size[];
+
 export interface BorderRadiusProperty {
   type: typeof PropertyType.BORDER_RADIUS;
   value: {
-    topLeft: Size;
-    topRight: Size;
-    bottomLeft: Size;
-    bottomRight: Size;
+    topLeft: BorderRadius;
+    topRight: BorderRadius;
+    bottomLeft: BorderRadius;
+    bottomRight: BorderRadius;
   };
 }
 

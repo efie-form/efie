@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useSchemaStore } from '../../../lib/state/schema.state';
-import { isWidthValue, type PropertyDefinition, type WidthHeightSize } from '@efie-form/core';
+import { isWidthValue, type PropertyDefinition, type Size, type WidthHeightSize } from '@efie-form/core';
 import SizeInput from '../../../components/form/SizeInput';
 import type { PropSettingsSize } from '../../../types/prop-settings.type';
 import SettingsFieldHorizontal from '../property-layouts/SettingsFieldHorizontal';
@@ -19,7 +19,7 @@ export function PropsTemplateSize({ fieldId, label, type }: PropsTemplateSizePro
   const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
   const value = getValue(fieldProperty);
 
-  const handleChange = useCallback((newValue: WidthHeightSize) => {
+  const handleChange = useCallback((newValue: Size) => {
     updateFieldProperty(fieldId, {
       type,
       value: newValue,
@@ -30,7 +30,7 @@ export function PropsTemplateSize({ fieldId, label, type }: PropsTemplateSizePro
     <SettingsFieldHorizontal label={label} divider>
       <SizeInput
         value={value}
-        onValueChange={handleChange}
+        onChange={handleChange}
       />
     </SettingsFieldHorizontal>
   );

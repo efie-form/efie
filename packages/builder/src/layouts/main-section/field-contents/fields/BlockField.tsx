@@ -27,7 +27,7 @@ function BlockField({ field }: BlockFieldProps) {
       style={{
         margin: marginToStyle(margin),
         padding: paddingToStyle(padding),
-        borderRadius: borderRadiusToStyle(borderRadius),
+        borderRadius: borderRadiusToStyle(borderRadius?.value),
         boxShadow: boxShadowToStyle(boxShadow),
         backgroundColor: bgColor?.value,
         color: color?.value,

@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import type { PropSettingsBoolean } from '../../../types/prop-settings.type';
-import type { PropertyDefinition } from '@efie-form/core';
+import { isBooleanValue, type PropertyDefinition } from '@efie-form/core';
 import { Switch } from '../../../components/form';
 import SettingsFieldHorizontal from '../property-layouts/SettingsFieldHorizontal';
 
@@ -38,11 +38,7 @@ export default function PropsTemplateBoolean({ label, fieldId, type }: PropTempl
 }
 
 function getValue(props?: PropertyDefinition) {
-  if (!props || !('value' in props)) return false;
+  if (!isBooleanValue(props)) return false;
 
-  if (typeof props.value !== 'boolean') {
-    console.warn('Expected boolean value for property, but got:', props.value);
-    return false;
-  }
   return props.value;
 }

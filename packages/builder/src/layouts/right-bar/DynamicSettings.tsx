@@ -8,6 +8,7 @@ import PropsTemplateImageUrl from './property-templates/props-template-image-url
 import PropsTemplateNumber from './property-templates/props-template-number';
 import PropsTemplateText from './property-templates/props-template-text';
 import { PropsTemplateSize } from './property-templates/props-template-size';
+import PropsSettingsBorderRadius from './property-settings-2/props-settings-border-radius';
 
 interface DynamicSettingsProps {
   settings?: PropSettings[];
@@ -63,6 +64,9 @@ function DynamicSettingsType({ settings, fieldId }: DynamicSettingsTypeProps) {
     }
     case 'size': {
       return <PropsTemplateSize fieldId={fieldId} {...settings} />;
+    }
+    case 'borderRadius': {
+      return <PropsSettingsBorderRadius fieldId={fieldId} {...settings} />;
     }
   }
 }

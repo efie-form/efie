@@ -5,7 +5,7 @@ import { cn } from '../../lib/utils';
 
 interface SizeInputProps {
   value?: Size;
-  onValueChange?: (value: Size) => void;
+  onChange?: (value: Size) => void;
   className?: string;
 }
 
@@ -37,11 +37,11 @@ interface InternalValueType {
   type: ValueType;
 }
 
-export default function SizeInput({ value, onValueChange, className }: SizeInputProps) {
+export default function SizeInput({ value, onChange, className }: SizeInputProps) {
   const [internalValue, setInternalValue] = useControllableState({
     onChange: (newValue: InternalValueType) => {
-      if (onValueChange && checkIsNumberValid(newValue.value)) {
-        onValueChange(transformInternalValueToSize(newValue));
+      if (onChange && checkIsNumberValid(newValue.value)) {
+        onChange(transformInternalValueToSize(newValue));
       }
     },
     defaultValue: transformSizeToInternalValue(value),
@@ -90,9 +90,15 @@ export default function SizeInput({ value, onValueChange, className }: SizeInput
 
   return (
     <div
-      className={cn(`relative flex w-36 h-7 items-center border border-neutral-200 rounded-md bg-white overflow-hidden focus-within:outline focus-within:outline-primary focus-within:outline-1`, className, {
-        'outline !outline-danger-400 bg-danger-50': valueRequired && !isValidNumber,
-      })}
+      className={
+        cn(
+          `relative flex w-28 h-7 items-center border border-neutral-200 rounded-md bg-white overflow-hidden focus-within:outline focus-within:outline-primary focus-within:outline-1`,
+          className,
+          {
+            'outline !outline-danger-400 bg-danger-50': valueRequired && !isValidNumber,
+          },
+        )
+      }
     >
       {valueRequired && (
         <div className="flex-1 h-full border-e border-e-neutral-200">
@@ -114,7 +120,7 @@ export default function SizeInput({ value, onValueChange, className }: SizeInput
       )}
       <select
         className={cn('h-full typography-body3 border-none text-center outline-none focus:ring-0 focus:outline-none bg-transparent px-0.5',
-          valueRequired ? 'w-16' : 'w-full',
+          valueRequired ? 'w-12' : 'w-full',
         )}
         value={internalValue.type}
         onChange={(e) => {

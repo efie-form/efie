@@ -36,7 +36,7 @@ function BlockProvider({ field, Component, ...props }: BlockProviderProps) {
     id: field.id,
     blockMargin: marginToStyle(margin),
     blockPadding: paddingToStyle(padding),
-    blockBorderRadius: borderRadiusToStyle(borderRadius),
+    blockBorderRadius: borderRadiusToStyle(borderRadius?.value),
     blockColor: color?.value,
     blockBackgroundColor: bgColor?.value,
     blockBoxShadow: boxShadowToStyle(boxShadow),

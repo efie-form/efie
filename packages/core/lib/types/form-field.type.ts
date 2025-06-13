@@ -254,7 +254,6 @@ export interface ButtonFormField extends BaseFormField {
     | BorderColorProperty
     | BorderStyleProperty
     | PaddingProperty
-    | BorderRadiusProperty
   )[];
 }
 
