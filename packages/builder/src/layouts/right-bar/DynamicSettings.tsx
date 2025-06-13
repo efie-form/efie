@@ -10,6 +10,7 @@ import PropsTemplateText from './property-templates/props-template-text';
 import { PropsTemplateSize } from './property-templates/props-template-size';
 import PropsSettingsBorderRadius from './property-settings-2/props-settings-border-radius';
 import PropsSettingsMargin from './property-settings-2/props-settings-margin';
+import PropsSettingsPadding from './property-settings-2/props-settings-padding';
 
 interface DynamicSettingsProps {
   settings?: PropSettings[];
@@ -71,6 +72,9 @@ function DynamicSettingsType({ settings, fieldId }: DynamicSettingsTypeProps) {
     }
     case 'margin': {
       return <PropsSettingsMargin fieldId={fieldId} {...settings} />;
+    }
+    case 'padding': {
+      return <PropsSettingsPadding fieldId={fieldId} {...settings} />;
     }
   }
 }

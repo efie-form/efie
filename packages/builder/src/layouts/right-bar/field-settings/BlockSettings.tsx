@@ -1,5 +1,4 @@
 import { PropertyType, type BlockFormField } from '@efie-form/core';
-import PropSettingsPadding from '../property-settings/PropSettingsPadding';
 import PropSettingsShadow from '../property-settings/PropSettingsShadow';
 import DynamicSettings from '../DynamicSettings';
 
@@ -18,11 +17,11 @@ function BlockSettings({ field }: BlockSettingsProps) {
           { template: 'color', label: 'Background Color', type: PropertyType.BG_COLOR },
           { template: 'color', label: 'Text Color', type: PropertyType.COLOR },
           { template: 'borderRadius', label: 'Border Radius', type: PropertyType.BORDER_RADIUS },
-          { template: 'margin', label: 'Margin', type: PropertyType.MARGIN },
+          { template: 'margin', label: 'Marg|in', type: PropertyType.MARGIN },
+          { template: 'padding', label: 'Padding', type: PropertyType.PADDING },
         ]}
         fieldId={field.id}
       />
-      <PropSettingsPadding field={field} />
       <PropSettingsShadow field={field} />
     </div>
   );

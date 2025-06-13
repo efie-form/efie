@@ -70,6 +70,12 @@ export interface PropSettingsMargin {
   label: string;
 }
 
+export interface PropSettingsPadding {
+  template: 'padding';
+  type: PropertyDefinition['type'];
+  label: string;
+}
+
 export type PropSettings =
   | PropSettingsText
   | PropSettingsNumber
@@ -81,4 +87,5 @@ export type PropSettings =
   | PropSettingsImageUrl
   | PropSettingsSize
   | PropSettingsBorderRadius
-  | PropSettingsMargin;
+  | PropSettingsMargin
+  | PropSettingsPadding;
