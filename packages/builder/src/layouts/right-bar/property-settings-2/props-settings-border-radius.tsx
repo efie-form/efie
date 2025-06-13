@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useRef, useEffect } from 'react';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import type { PropSettingsBorderRadius } from '../../../types/prop-settings.type';
 import { borderRadiusToStyle, isBorderRadiusValue, SizeType, type BorderRadius, type BorderRadiusProperty, type PropertyDefinition, type Size } from '@efie-form/core';
@@ -17,8 +17,71 @@ export default function PropsSettingsBorderRadius({ fieldId, label, type }: Prop
   const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
   const value = getValue(fieldProperty);
   const [isLinked, setIsLink] = useState(false);
+  const [hasUserInteracted, setHasUserInteracted] = useState(false);
+  const previousValuesRef = useRef<BorderRadiusProperty['value'] | null>(null);
+
+  // Helper function to check if all corner values are the same
+  const areAllCornersSame = useCallback((borderValue: BorderRadiusProperty['value']): boolean => {
+    const { topLeft, topRight, bottomLeft, bottomRight } = borderValue;
+
+    // Helper to normalize values for comparison
+    const normalizeValue = (val: BorderRadius): string => {
+      if (Array.isArray(val)) {
+        return JSON.stringify(val);
+      }
+      return JSON.stringify(val);
+    };
+
+    const topLeftStr = normalizeValue(topLeft);
+    const topRightStr = normalizeValue(topRight);
+    const bottomLeftStr = normalizeValue(bottomLeft);
+    const bottomRightStr = normalizeValue(bottomRight);
+
+    return topLeftStr === topRightStr
+      && topRightStr === bottomLeftStr
+      && bottomLeftStr === bottomRightStr;
+  }, []);
+
+  // Check if all corners are the same when component mounts or value changes
+  useEffect(() => {
+    const allSame = areAllCornersSame(value);
+    // Only auto-link if currently unlinked, all corners are the same, AND user hasn't manually interacted
+    if (allSame && !isLinked && !hasUserInteracted) {
+      setIsLink(true);
+    }
+    // Don't auto-unlink if values become different - let user control this
+  }, [value, areAllCornersSame, isLinked, hasUserInteracted]);
 
   const toggleLink = () => {
+    // Mark that user has manually interacted with the link state
+    setHasUserInteracted(true);
+
+    if (isLinked) {
+      // Restore previous values when unlinking
+      if (previousValuesRef.current) {
+        updateFieldProperty(fieldId, {
+          type,
+          value: previousValuesRef.current,
+        } as PropertyDefinition);
+      }
+    }
+    else {
+      // Store current values before linking (only if they're not already the same)
+      if (!areAllCornersSame(value)) {
+        previousValuesRef.current = { ...value };
+      }
+      // Set all corners to the same value (using topLeft as reference)
+      const uniformValue = value.topLeft;
+      updateFieldProperty(fieldId, {
+        type,
+        value: {
+          topLeft: uniformValue,
+          topRight: uniformValue,
+          bottomLeft: uniformValue,
+          bottomRight: uniformValue,
+        },
+      } as PropertyDefinition);
+    }
     setIsLink(!isLinked);
   };
 
@@ -32,6 +95,27 @@ export default function PropsSettingsBorderRadius({ fieldId, label, type }: Prop
     } as PropertyDefinition);
   }, [fieldId, updateFieldProperty, type, value]);
 
+  const handleLinkedChange = useCallback((newValue: Size) => {
+    updateFieldProperty(fieldId, {
+      type,
+      value: {
+        topLeft: newValue,
+        topRight: newValue,
+        bottomLeft: newValue,
+        bottomRight: newValue,
+      },
+    } as PropertyDefinition);
+  }, [fieldId, updateFieldProperty, type]);
+
+  // Get the first value for linked mode (assuming all corners have the same value when linked)
+  const getLinkedValue = (): Size => {
+    const topLeft = value.topLeft;
+    if (Array.isArray(topLeft)) {
+      return topLeft[0] || { type: SizeType.LENGTH, value: 0, unit: 'px' };
+    }
+    return topLeft;
+  };
+
   return (
     <>
       <div className="px-4 py-3.5">
@@ -44,53 +128,77 @@ export default function PropsSettingsBorderRadius({ fieldId, label, type }: Prop
           </div>
         </div>
         <div className="flex gap-4">
-          <div className="grid grid-cols-3">
-            <div>
-              <p className="typography-body4 text-neutral-600">Top left</p>
-              <BorderCorner
-                value={value}
-                handleChange={handleChange}
-                borderType="topLeft"
-              />
-            </div>
-            <div />
-            <div>
-              <p className="typography-body4 text-neutral-600">Top right</p>
-              <BorderCorner
-                value={value}
-                handleChange={handleChange}
-                borderType="topRight"
-              />
-            </div>
-            <div />
-            <div className="flex items-center justify-center">
-              <div
-                className="border-2 border-neutral-400 aspect-square w-1/2"
-                style={{
-                  borderRadius: borderRadiusToStyle(value),
-                }}
-              >
-              </div>
-            </div>
-            <div />
-            <div>
-              <p className="typography-body4 text-neutral-600">Bottom left</p>
-              <BorderCorner
-                value={value}
-                handleChange={handleChange}
-                borderType="bottomLeft"
-              />
-            </div>
-            <div />
-            <div>
-              <p className="typography-body4 text-neutral-600">Bottom right</p>
-              <BorderCorner
-                value={value}
-                handleChange={handleChange}
-                borderType="bottomRight"
-              />
-            </div>
-          </div>
+          {isLinked
+            ? (
+                <div className="flex gap-4 items-start w-full">
+                  <div className="flex flex-col gap-2 flex-1">
+                    <p className="typography-body4 text-neutral-600">All corners</p>
+                    <SizeInput
+                      className="w-full"
+                      value={getLinkedValue()}
+                      onChange={handleLinkedChange}
+                    />
+                  </div>
+                  <div className="flex items-center justify-center">
+                    <div
+                      className="border-2 border-neutral-400 aspect-square w-16 h-16"
+                      style={{
+                        borderRadius: borderRadiusToStyle(value),
+                      }}
+                    >
+                    </div>
+                  </div>
+                </div>
+              )
+            : (
+                <div className="grid grid-cols-3">
+                  <div>
+                    <p className="typography-body4 text-neutral-600">Top left</p>
+                    <BorderCorner
+                      value={value}
+                      handleChange={handleChange}
+                      borderType="topLeft"
+                    />
+                  </div>
+                  <div />
+                  <div>
+                    <p className="typography-body4 text-neutral-600">Top right</p>
+                    <BorderCorner
+                      value={value}
+                      handleChange={handleChange}
+                      borderType="topRight"
+                    />
+                  </div>
+                  <div />
+                  <div className="flex items-center justify-center">
+                    <div
+                      className="border-2 border-neutral-400 aspect-square w-1/2"
+                      style={{
+                        borderRadius: borderRadiusToStyle(value),
+                      }}
+                    >
+                    </div>
+                  </div>
+                  <div />
+                  <div>
+                    <p className="typography-body4 text-neutral-600">Bottom left</p>
+                    <BorderCorner
+                      value={value}
+                      handleChange={handleChange}
+                      borderType="bottomLeft"
+                    />
+                  </div>
+                  <div />
+                  <div>
+                    <p className="typography-body4 text-neutral-600">Bottom right</p>
+                    <BorderCorner
+                      value={value}
+                      handleChange={handleChange}
+                      borderType="bottomRight"
+                    />
+                  </div>
+                </div>
+              )}
         </div>
       </div>
       <div className="mx-4">
