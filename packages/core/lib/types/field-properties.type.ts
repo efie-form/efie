@@ -263,7 +263,7 @@ export interface BoxShadow {
   y: Size;
   blur: Size;
   spread: Size;
-  color: string;
+  color: Color;
   inset: boolean;
 }
 export interface BoxShadowProperty {

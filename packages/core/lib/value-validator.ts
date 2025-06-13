@@ -91,3 +91,20 @@ export function isBorderRadiusValue(props?: PropertyDefinition): props is Extrac
     // TODO: Valid whether its size value
   );
 }
+
+export function isBoxShadowValue(props?: PropertyDefinition): props is Extract<PropertyDefinition, { type: typeof PropertyType.BOX_SHADOW }> {
+  return (
+    !!props
+    && 'value' in props
+    && props.type === PropertyType.BOX_SHADOW
+    && Array.isArray(props.value)
+    && props.value.every(
+      shadow => typeof shadow === 'object'
+        && 'x' in shadow
+        && 'x' in shadow
+        && 'blur' in shadow
+        && 'spread' in shadow
+        && 'color' in shadow,
+    )
+  );
+}

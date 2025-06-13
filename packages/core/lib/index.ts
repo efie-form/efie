@@ -136,4 +136,5 @@ export {
   isBooleanValue,
   isWidthValue,
   isBorderRadiusValue,
+  isBoxShadowValue,
 } from './value-validator';

@@ -1,7 +1,7 @@
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { Switch } from '../../../components/form';
 import type { PropSettingsBoxShadow } from '../../../types/prop-settings.type';
-import { type BoxShadowProperty, type PropertyDefinition, type BoxShadow, type Size, SizeType } from '@efie-form/core';
+import { type BoxShadowProperty, type PropertyDefinition, type BoxShadow, type Size, SizeType, isBoxShadowValue, type Color } from '@efie-form/core';
 import Button from '../../../components/elements/Button';
 import { closestCenter, DndContext, KeyboardSensor, PointerSensor, useSensor, useSensors, type DragEndEvent } from '@dnd-kit/core';
 import { MdAdd, MdOutlineClose, MdOutlineDragIndicator } from 'react-icons/md';
@@ -21,7 +21,7 @@ const defaultShadowItem: BoxShadow = {
   y: { type: SizeType.LENGTH, value: 4, unit: 'px' },
   blur: { type: SizeType.LENGTH, value: 6, unit: 'px' },
   spread: { type: SizeType.LENGTH, value: 0, unit: 'px' },
-  color: '#000000',
+  color: getColorObject('#000000'),
   inset: false,
 };
 
@@ -117,18 +117,11 @@ export default function PropsSettingsBoxShadow({ fieldId, label, type }: PropsSe
 }
 
 function getValue(props?: PropertyDefinition): BoxShadowProperty {
-  if (
-    !props
-    || !('value' in props)
-    || !Array.isArray(props.value)
-  ) {
+  if (!isBoxShadowValue(props)) {
     return { type: 'boxShadow', value: [] };
   }
 
-  return {
-    type: 'boxShadow',
-    value: props.value.filter(shadow => shadow && typeof shadow === 'object'),
-  };
+  return props;
 }
 
 interface ShadowItemProps {
@@ -159,15 +152,15 @@ function ShadowItem({ index, shadow, onUpdate, onRemove }: ShadowItemProps) {
     onUpdate({ [property]: newSize });
   };
 
-  const handleColorUpdate = (newColor: any) => {
-    // Convert color object to hex string if needed
-    const colorValue = typeof newColor === 'string' ? newColor : newColor.hex;
-    onUpdate({ color: colorValue });
+  const handleColorUpdate = (newColor: Color) => {
+    onUpdate({ color: newColor });
   };
 
   const handleInsetToggle = (isInset: boolean) => {
     onUpdate({ inset: isInset });
   };
+
+  console.log('ShadowItem render', shadow);
 
   return (
     <div
@@ -194,24 +187,20 @@ function ShadowItem({ index, shadow, onUpdate, onRemove }: ShadowItemProps) {
           </div>
           <div className="flex items-center gap-2 typography-body3 text-neutral-800">
             <span>
-              {shadow.x.value}
-              {shadow.x.type === 'length' ? shadow.x.unit : ''}
+              {sizeToString(shadow.x)}
             </span>
             <span>
-              {shadow.y.value}
-              {shadow.y.type === 'length' ? shadow.y.unit : ''}
+              {sizeToString(shadow.y)}
             </span>
             <span>
-              {shadow.blur.value}
-              {shadow.blur.type === 'length' ? shadow.blur.unit : ''}
+              {sizeToString(shadow.blur)}
             </span>
             <span>
-              {shadow.spread.value}
-              {shadow.spread.type === 'length' ? shadow.spread.unit : ''}
+              {sizeToString(shadow.spread)}
             </span>
             <div
               className="w-4 h-4 rounded border border-neutral-300"
-              style={{ backgroundColor: shadow.color }}
+              style={{ backgroundColor: shadow.color.hex }}
             />
             {shadow.inset && <span className="text-xs px-1 py-0.5 bg-neutral-100 rounded">inset</span>}
           </div>
@@ -276,7 +265,7 @@ function ShadowItem({ index, shadow, onUpdate, onRemove }: ShadowItemProps) {
             <div>
               <label className="typography-body3 text-neutral-700 mb-1 block">Color</label>
               <ColorPicker2
-                value={getColorObject(shadow.color)}
+                value={getColorObject(shadow.color.hex)}
                 onChange={handleColorUpdate}
               />
             </div>
@@ -295,3 +284,18 @@ function ShadowItem({ index, shadow, onUpdate, onRemove }: ShadowItemProps) {
     </div>
   );
 }
+
+function sizeToString(size: Size): string {
+  switch (size.type) {
+    case SizeType.LENGTH: {
+      return `${size.value}${size.unit}`;
+    }
+    case SizeType.PERCENTAGE: {
+      return `${size.value}%`;
+    }
+    default: {
+      return '';
+    }
+  }
+}
+//
