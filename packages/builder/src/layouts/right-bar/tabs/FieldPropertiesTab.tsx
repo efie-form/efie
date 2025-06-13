@@ -40,7 +40,7 @@ function FieldPropertiesTab() {
   if (!field) return <></>;
 
   return (
-    <>
+    <div className="flex flex-col h-full relative">
       <div className="flex items-center justify-between border-b border-neutral-100">
         <div className="flex items-center gap-1 px-2">
           <Tooltip content="Go to parent">
@@ -62,8 +62,12 @@ function FieldPropertiesTab() {
           <HiX />
         </button>
       </div>
-      <RenderSettings field={field} />
-    </>
+      <div className="flex-1 min-h-0">
+        <div className="h-full overflow-y-auto">
+          <RenderSettings field={field} />
+        </div>
+      </div>
+    </div>
   );
 }
 

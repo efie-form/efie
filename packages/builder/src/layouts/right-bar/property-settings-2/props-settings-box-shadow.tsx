@@ -73,7 +73,6 @@ export default function PropsSettingsBoxShadow({ fieldId, label, type }: PropsSe
           <p className="typography-body3 text-neutral-800">{label}</p>
           <Button
             variant="secondary"
-            size="sm"
             startIcon={MdAdd}
             onClick={handleAddShadow}
           >
