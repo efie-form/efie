@@ -76,6 +76,12 @@ export interface PropSettingsPadding {
   label: string;
 }
 
+export interface PropSettingsBoxShadow {
+  template: 'boxShadow';
+  type: PropertyDefinition['type'];
+  label: string;
+}
+
 export type PropSettings =
   | PropSettingsText
   | PropSettingsNumber
@@ -88,4 +94,5 @@ export type PropSettings =
   | PropSettingsSize
   | PropSettingsBorderRadius
   | PropSettingsMargin
-  | PropSettingsPadding;
+  | PropSettingsPadding
+  | PropSettingsBoxShadow;
