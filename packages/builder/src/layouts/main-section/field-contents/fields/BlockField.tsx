@@ -5,6 +5,7 @@ import {
   PropertyType,
   boxShadowToStyle,
   type BlockFormField,
+  colorToStyle,
 } from '@efie-form/core';
 import RenderField from '../RenderField';
 import { getFieldProp } from '../../../../lib/utils';
@@ -29,8 +30,8 @@ function BlockField({ field }: BlockFieldProps) {
         padding: paddingToStyle(padding),
         borderRadius: borderRadiusToStyle(borderRadius?.value),
         boxShadow: boxShadowToStyle(boxShadow),
-        backgroundColor: bgColor?.value,
-        color: color?.value,
+        backgroundColor: colorToStyle(bgColor?.value),
+        color: colorToStyle(color?.value),
       }}
     >
       {field.children.map(child => (

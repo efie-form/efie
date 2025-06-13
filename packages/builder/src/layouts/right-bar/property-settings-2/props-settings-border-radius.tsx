@@ -119,7 +119,7 @@ export default function PropsSettingsBorderRadius({ fieldId, label, type }: Prop
   return (
     <>
       <div className="px-4 py-3.5">
-        <div className="mb-2 flex justify-between items-center">
+        <div className="mb-4 flex justify-between items-center">
           <p className="typography-body3 text-neutral-800">{label}</p>
           <div>
             <button onClick={toggleLink} className="flex items-center gap-2 text-neutral-600">
@@ -130,11 +130,10 @@ export default function PropsSettingsBorderRadius({ fieldId, label, type }: Prop
         <div className="flex gap-4">
           {isLinked
             ? (
-                <div className="flex gap-4 items-start w-full">
-                  <div className="flex flex-col gap-2 flex-1">
+                <div className="flex gap-4 items-start justify-between w-full">
+                  <div className="flex flex-col gap-2">
                     <p className="typography-body4 text-neutral-600">All corners</p>
                     <SizeInput
-                      className="w-full"
                       value={getLinkedValue()}
                       onChange={handleLinkedChange}
                     />

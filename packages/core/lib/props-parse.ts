@@ -1,7 +1,6 @@
 import type {
   BorderRadiusProperty,
   BoxShadowProperty,
-  ColorProperty,
   FontSizeProperty,
   FontWeightProperty,
   MarginProperty,
@@ -10,7 +9,7 @@ import type {
   WidthProperty,
 } from './types/field-properties.type';
 import { TextAlign, SizeType } from './types/form-schema.constant';
-import type { Size, MarginSize, PaddingSize, FontSize, WidthHeightSize } from './types/common.type';
+import type { Size, MarginSize, PaddingSize, FontSize, WidthHeightSize, Color } from './types/common.type';
 
 export const toSize = (size?: Size | MarginSize | PaddingSize | FontSize | WidthHeightSize) => {
   if (!size) return;
@@ -147,10 +146,10 @@ export const textAlignToStyle = (textAlign?: TextAlignProperty) => {
   return textAlignMap[textAlign.value];
 };
 
-export const colorToStyle = (color?: ColorProperty) => {
+export const colorToStyle = (color?: Color) => {
   if (!color) return;
 
-  return color.value;
+  return color.hex;
 };
 
 export const fontSizeToStyle = (fontSize?: FontSizeProperty) => {
