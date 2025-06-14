@@ -15,9 +15,10 @@
     }
   },
   "devDependencies": {
-    "typescript": "^5.6.3",
-    "@tiptap/core": "^2.11.5"
+    "@tiptap/core": "^2.11.5",
+    "typescript": "^5.6.3"
   },
   "dependencies": {
+    "color-convert": "^3.1.0"
   }
 }

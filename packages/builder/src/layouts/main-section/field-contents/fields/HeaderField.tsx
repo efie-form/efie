@@ -25,7 +25,7 @@ function HeaderField({ field }: HeaderFieldProps) {
       style={{
         fontSize: fontSizeToStyle(fontSize),
         textAlign: textAlignToStyle(textAlign),
-        color: colorToStyle(color),
+        color: colorToStyle(color?.value),
       }}
     >
       <RichTextEditor

@@ -1,6 +1,9 @@
-import { FormFieldType, PropertyType } from '@efie-form/core';
+import { FormFieldType, PropertyType, getColorObject } from '@efie-form/core';
 import type { FormField } from '@efie-form/core';
 import { createTestStore } from './test-utils';
+
+// Helper function to create Color objects from hex strings
+const createColor = (hex: string) => getColorObject(hex);
 
 describe('Schema State Store', () => {
   let useStore: ReturnType<typeof createTestStore>;
@@ -92,7 +95,7 @@ describe('Schema State Store', () => {
       const updates = {
         props: [
           {
-            type: PropertyType.BG_COLOR,
+            type: PropertyType.BACKGROUND_COLOR,
             value: '#FF0000',
           },
         ],
@@ -112,8 +115,8 @@ describe('Schema State Store', () => {
       expect(duplicatedField?.type).toBe(FormFieldType.BLOCK);
       expect(duplicatedField?.props).toEqual([
         {
-          type: PropertyType.BG_COLOR,
-          value: '#FFFFFF',
+          type: PropertyType.BACKGROUND_COLOR,
+          value: createColor('#FFFFFF'),
         },
       ]);
     });

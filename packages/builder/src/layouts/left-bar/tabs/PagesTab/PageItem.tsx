@@ -1,10 +1,11 @@
-import { PropertyType, type PageFormField } from '@efie-form/core';
+import { isStringValue, PropertyType, type PageFormField, type PropValue, type PropValueString } from '@efie-form/core';
 import { useSchemaStore } from '../../../../lib/state/schema.state';
 import { useSortable } from '@dnd-kit/sortable';
-import { type CSSProperties, useEffect, useRef, useState } from 'react';
-import { cn, getFieldProp } from '../../../../lib/utils';
+import { type CSSProperties, useCallback, useEffect, useRef, useState } from 'react';
+import { cn } from '../../../../lib/utils';
 import { MdOutlineDragIndicator } from 'react-icons/md';
 import { FaCheck, FaTrash, FaXmark } from 'react-icons/fa6';
+import type { PageNameProperty } from '../../../../../../core/lib/types/field-properties.type';
 
 interface PageItemProps {
   page: PageFormField;
@@ -19,7 +20,7 @@ export default function PageItem({
   isCurrentPage,
   onSelect,
 }: PageItemProps) {
-  const { schema, updateFieldProps } = useSchemaStore();
+  const { schema } = useSchemaStore();
   const {
     attributes,
     listeners,
@@ -33,8 +34,18 @@ export default function PageItem({
   const [deleteConfirm, setDeleteConfirm] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
-  const nameProp = getFieldProp(page, PropertyType.NAME);
-  const [inputName, setInputName] = useState(nameProp?.value);
+  const fieldProperty = useSchemaStore(
+    useCallback(state => state.getFieldProperty(page.id, PropertyType.PAGE_NAME), [page.id]),
+  );
+  const updateFieldProperty = useSchemaStore(
+    useCallback(
+      state => state.updateFieldProperty,
+      [page.id, PropertyType.PAGE_NAME],
+    ),
+  );
+  const name = getValue(fieldProperty?.value);
+
+  const [inputName, setInputName] = useState(name);
 
   const style: CSSProperties = {
     transform: transform ? `translateY(${transform.y}px)` : undefined,
@@ -48,15 +59,16 @@ export default function PageItem({
   }, [editMode]);
 
   const handleRename = () => {
-    updateFieldProps(page.id, PropertyType.NAME, {
-      type: PropertyType.NAME,
+    updateFieldProperty(page.id, {
+      type: PropertyType.PAGE_NAME,
       value: inputName,
-    });
+    } as PageNameProperty);
+
     setEditMode(false);
   };
 
   const handleCancelRename = () => {
-    setInputName(nameProp?.value);
+    setInputName(name);
     setEditMode(false);
   };
 
@@ -158,4 +170,11 @@ export default function PageItem({
       </span>
     </li>
   );
+}
+
+function getValue(value?: PropValue): PropValueString {
+  if (isStringValue(value)) {
+    return value;
+  }
+  return '';
 }

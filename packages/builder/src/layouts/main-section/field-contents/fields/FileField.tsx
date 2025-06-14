@@ -31,10 +31,10 @@ function FileField({ field }: FileFieldProps) {
         </p>
       </div>
       <div className="flex justify-between text-neutral-500 typography-body3 mt-2">
-        {!acceptProp?.allowAll && (
+        {!acceptProp?.value?.allowAll && (
           <p>
             Supported formats:
-            {acceptProp?.formats?.join(', ')}
+            {acceptProp?.value?.formats?.join(', ')}
           </p>
         )}
         {maxFilesProp && maxFilesProp?.value > 1 && (

@@ -1,0 +1,44 @@
+import { useCallback } from 'react';
+import { useSchemaStore } from '../../../lib/state/schema.state';
+import { isSizeValue, type PropertyDefinition, type PropValue, type Size } from '@efie-form/core';
+import SizeInput from '../../../components/form/SizeInput';
+import type { PropSettingsSize } from '../../../types/prop-settings.type';
+import SettingsFieldHorizontal from '../property-layouts/SettingsFieldHorizontal';
+
+interface PropsTemplateSizeProps extends PropSettingsSize {
+  fieldId: string;
+}
+
+export function PropsTemplateSize({ fieldId, label, type }: PropsTemplateSizeProps) {
+  const fieldProperty = useSchemaStore(
+    useCallback(
+      state => state.getFieldProperty(fieldId, type),
+      [fieldId, type],
+    ),
+  );
+  const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
+  const value = getValue(fieldProperty?.value);
+
+  const handleChange = useCallback((newValue: Size) => {
+    updateFieldProperty(fieldId, {
+      type,
+      value: newValue,
+    } as PropertyDefinition);
+  }, [fieldId, type, updateFieldProperty]);
+
+  return (
+    <SettingsFieldHorizontal label={label} divider>
+      <SizeInput
+        value={value}
+        onChange={handleChange}
+      />
+    </SettingsFieldHorizontal>
+  );
+}
+
+function getValue(value?: PropValue): Size {
+  if (!isSizeValue(value)) return {
+    type: 'auto',
+  };
+  return value;
+}

@@ -1,31 +1,51 @@
 import type {
-  BorderRadiusProperty,
-  BoxShadowProperty,
-  ColorProperty,
   FontSizeProperty,
-  FontWeightProperty,
-  MarginProperty,
-  PaddingProperty,
   TextAlignProperty,
-  WidthProperty,
 } from './types/field-properties.type';
-import { TextAlign } from './types/form-schema.constant';
-import type { Size } from './types/form-schema.type';
+import { TextAlign, SizeType } from './types/form-schema.constant';
+import type { Size, Color } from './types/common.type';
+import type { PropValueBorderRadius, PropValueBoxShadow, PropValueMargin, PropValuePadding, PropValueSize } from './types/field-property-value.type';
 
 export const toSize = (size?: Size) => {
   if (!size) return;
-  if (size.value === 0) return '0';
 
-  return `${size.value}${size.unit}`;
+  switch (size.type) {
+    case SizeType.AUTO: {
+      return 'auto';
+    }
+    case SizeType.INITIAL: {
+      return 'initial';
+    }
+    case SizeType.INHERIT: {
+      return 'inherit';
+    }
+    case SizeType.LENGTH: {
+      if (size.value === 0) return '0';
+      return `${size.value}${size.unit}`;
+    }
+    case SizeType.PERCENTAGE: {
+      if (size.value === 0) return '0';
+      return `${size.value}%`;
+    }
+    case SizeType.ABSOLUTE: {
+      return size.value;
+    }
+    case SizeType.RELATIVE: {
+      return size.value;
+    }
+    default: {
+      return;
+    }
+  }
 };
 
-export const marginToStyle = (margin?: MarginProperty) => {
+export const marginToStyle = (margin?: PropValueMargin) => {
   if (!margin) return;
 
-  const top = toSize(margin.value.top);
-  const right = toSize(margin.value.right);
-  const bottom = toSize(margin.value.bottom);
-  const left = toSize(margin.value.left);
+  const top = toSize(margin.top);
+  const right = toSize(margin.right);
+  const bottom = toSize(margin.bottom);
+  const left = toSize(margin.left);
 
   if (top === right && right === bottom && bottom === left) {
     return top;
@@ -38,13 +58,13 @@ export const marginToStyle = (margin?: MarginProperty) => {
   return `${top} ${right} ${bottom} ${left}`;
 };
 
-export const paddingToStyle = (padding?: PaddingProperty) => {
+export const paddingToStyle = (padding?: PropValuePadding) => {
   if (!padding) return;
 
-  const top = toSize(padding.value.top);
-  const right = toSize(padding.value.right);
-  const bottom = toSize(padding.value.bottom);
-  const left = toSize(padding.value.left);
+  const top = toSize(padding.top);
+  const right = toSize(padding.right);
+  const bottom = toSize(padding.bottom);
+  const left = toSize(padding.left);
 
   if (top === right && right === bottom && bottom === left) {
     return top;
@@ -57,13 +77,20 @@ export const paddingToStyle = (padding?: PaddingProperty) => {
   return `${top} ${right} ${bottom} ${left}`;
 };
 
-export const borderRadiusToStyle = (borderRadius?: BorderRadiusProperty) => {
+function radiusToSize(radius: Size | Size[]) {
+  if (Array.isArray(radius)) {
+    return radius.map(s => toSize(s)).join(' ');
+  }
+  return toSize(radius);
+}
+
+export const borderRadiusToStyle = (borderRadius?: PropValueBorderRadius) => {
   if (!borderRadius) return;
 
-  const topLeft = toSize(borderRadius.value.topLeft);
-  const topRight = toSize(borderRadius.value.topRight);
-  const bottomLeft = toSize(borderRadius.value.bottomLeft);
-  const bottomRight = toSize(borderRadius.value.bottomRight);
+  const topLeft = radiusToSize(borderRadius.topLeft);
+  const topRight = radiusToSize(borderRadius.topRight);
+  const bottomLeft = radiusToSize(borderRadius.bottomLeft);
+  const bottomRight = radiusToSize(borderRadius.bottomRight);
 
   if (
     topLeft === topRight
@@ -77,29 +104,29 @@ export const borderRadiusToStyle = (borderRadius?: BorderRadiusProperty) => {
     return `${topLeft} ${topRight}`;
   }
 
-  return `${topLeft} ${topRight} ${bottomLeft} ${bottomRight}`;
+  return `${topLeft} ${topRight} ${bottomRight} ${bottomLeft}`;
 };
 
-export const boxShadowToStyle = (boxShadow?: BoxShadowProperty) => {
+export const boxShadowToStyle = (boxShadow?: PropValueBoxShadow) => {
   if (!boxShadow) return;
 
-  return boxShadow.value
+  return boxShadow
     .map((shadow) => {
       const x = toSize(shadow.x);
       const y = toSize(shadow.y);
       const blur = toSize(shadow.blur);
       const spread = toSize(shadow.spread);
-      const color = shadow.color;
+      const color = shadow.color.hex;
       const inset = shadow.inset ? 'inset' : '';
       return `${x} ${y} ${blur} ${spread} ${color} ${inset}`;
     })
     .join(',');
 };
 
-export const widthToStyle = (width?: WidthProperty) => {
+export const widthToStyle = (width?: PropValueSize) => {
   if (!width) return;
 
-  return width.autoWidth ? 'auto' : `${width.value.value}${width.value.unit}`;
+  return toSize(width);
 };
 
 const textAlignMap = {
@@ -114,22 +141,16 @@ export const textAlignToStyle = (textAlign?: TextAlignProperty) => {
   return textAlignMap[textAlign.value];
 };
 
-export const colorToStyle = (color?: ColorProperty) => {
+export const colorToStyle = (color?: Color) => {
   if (!color) return;
 
-  return color.value;
+  return color.hex;
 };
 
 export const fontSizeToStyle = (fontSize?: FontSizeProperty) => {
   if (!fontSize) return;
 
-  return `${fontSize.value.value}${fontSize.value.unit}`;
-};
-
-export const fontWeightToStyle = (fontWeight?: FontWeightProperty) => {
-  if (!fontWeight) return;
-
-  return fontWeight.value;
+  return toSize(fontSize.value);
 };
 
 export const sizeToStyle = (size?: Size) => {

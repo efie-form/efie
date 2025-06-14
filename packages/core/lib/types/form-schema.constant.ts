@@ -1,16 +1,29 @@
 // Units
-export const Unit = {
-  PX: 'px',
-  EM: 'em',
-  REM: 'rem',
-  PERCENT: '%',
-  VH: 'vh',
-  VW: 'vw',
-  PT: 'pt',
-  PC: 'pc',
-  IN: 'in',
-  CM: 'cm',
-  MM: 'mm',
+
+export const SizeType = {
+  AUTO: 'auto',
+  LENGTH: 'length',
+  PERCENTAGE: 'percentage',
+  INITIAL: 'initial',
+  INHERIT: 'inherit',
+  ABSOLUTE: 'absolute',
+  RELATIVE: 'relative',
+} as const;
+
+export const AbsoluteSize = {
+  XXSmall: 'xx-small',
+  XSmall: 'x-small',
+  Small: 'small',
+  Medium: 'medium',
+  Large: 'large',
+  XLarge: 'x-large',
+  XXLarge: 'xx-large',
+  XXXLarge: 'xxx-large',
+} as const;
+
+export const RelativeSize = {
+  SMALLER: 'smaller',
+  LARGER: 'larger',
 } as const;
 
 // Field Condition Operators
@@ -143,94 +156,33 @@ export const HeadingTag = {
 
 // Property Types
 export const PropertyType = {
-  // Common
-  TEXT: 'text',
-  NAME: 'name',
-  LABEL: 'label',
-  CONTENT: 'content',
-  TYPE: 'type',
-  VALUE: 'value',
-  KEY: 'key',
-  PLACEHOLDER: 'placeholder',
-  REQUIRED: 'required',
-  IS_ARRAY: 'isArray',
-  ARRAY_ITEM_TYPE: 'arrayItemType',
-  DEFAULT_VALUE: 'defaultValue',
-  OPTIONS: 'options',
-  VALIDATION: 'validation',
-  // Input field specific
-  MIN: 'min',
-  MAX: 'max',
-  FORMAT: 'format',
-  ACCEPT: 'accept',
-  MULTIPLE: 'multiple',
-  MAX_FILES: 'maxFiles',
-  // Choice field specific
-  CHOICE: 'choice',
-  CHOICES: 'choices',
-  IS_VALUE_DIFFERENT: 'isValueDifferent',
-  // Layout field specific
-  ROW: 'row',
-  COLUMN: 'column',
-  BLOCK: 'block',
-  PAGE: 'page',
-  GAP: 'gap',
-  WIDTH: 'width',
-  // Content field specific
-  TAG: 'tag',
-  TEXT_ALIGN: 'textAlign',
+  BACKGROUND_COLOR: 'backgroundColor',
   COLOR: 'color',
-  FONT: 'font',
+  BORDER_RADIUS: 'borderRadius',
+  BORDER_WIDTH: 'borderWidth',
+  BORDER_COLOR: 'borderColor',
+  MARGIN: 'margin',
+  PADDING: 'padding',
+  BOX_SHADOW: 'boxShadow',
+  LABEL: 'label',
+  WIDTH: 'width',
+  HEIGHT: 'height',
+  TEXT_ALIGN: 'textAlign',
+  REQUIRED: 'required',
+  BORDER_STYLE: 'borderStyle',
+  MAX_FILES: 'maxFiles',
+  ACCEPT: 'accept',
   FONT_SIZE: 'fontSize',
   FONT_WEIGHT: 'fontWeight',
-  // Image field specific
-  IMAGE: 'image',
+  TAG: 'tag',
   SRC: 'src',
   ALT: 'alt',
   OBJECT_FIT: 'objectFit',
-  AUTO_WIDTH: 'autoWidth',
-  // Button field specific
-  BUTTON: 'button',
-  BTN_TYPE: 'btnType',
-  FULL_WIDTH: 'fullWidth',
-  BG_COLOR: 'bgColor',
-  ALIGN: 'align',
-  // Divider field specific
-  DIVIDER: 'divider',
-  HEIGHT: 'height',
-  DIVIDER_HEIGHT: 'dividerHeight',
-  STYLE: 'style',
-  // Container specific
-  MARGIN: 'margin',
-  PADDING: 'padding',
-  DISPLAY: 'display',
-  FLEX_DIRECTION: 'flexDirection',
-  ALIGN_ITEMS: 'alignItems',
-  JUSTIFY_CONTENT: 'justifyContent',
-  // Rich text specific
-  RICH_TEXT: 'rich-text',
-  // Form field specific
-  NUMBER: 'number',
-  SELECT: 'select',
-  OBJECT: 'object',
-  ARRAY: 'array',
-  STRING: 'string',
-  EMAIL: 'email',
-  TAX: 'tax',
-  ADDRESS: 'address',
-  CITY: 'city',
-  STATE: 'state',
-  ZIP: 'zip',
-  DATE: 'date',
-  TIME: 'time',
-  DATE_TIME: 'date_time',
-  FILE: 'file',
-  // Border field specific
-  BORDER_RADIUS: 'borderRadius',
-  BOX_SHADOW: 'boxShadow',
-  BORDER_WIDTH: 'borderWidth',
-  BORDER_COLOR: 'borderColor',
-  BORDER_STYLE: 'borderStyle',
+  PLACEHOLDER: 'placeholder',
+  OPTIONS: 'options',
+  PAGE_NAME: 'pageName',
+  BUTTON_TYPE: 'buttonType',
+  CONTENT: 'content',
 } as const;
 
 // Size unit
@@ -238,13 +190,24 @@ export const SizeUnit = {
   PX: 'px',
   EM: 'em',
   REM: 'rem',
-  PERCENT: '%',
   VH: 'vh',
   VW: 'vw',
+  // PT: 'pt',
+  // PC: 'pc',
+  // IN: 'in',
+  // CM: 'cm',
+  // MM: 'mm',
+} as const;
+
+export const ColorType = {
+  HEX: 'hex',
+  RGB: 'rgb',
+  RGBA: 'rgba',
+  HSL: 'hsl',
+  HSLA: 'hsla',
 } as const;
 
 // Export types for all constants
-export type Unit = (typeof Unit)[keyof typeof Unit];
 export type FieldConditionOperator =
   (typeof FieldConditionOperator)[keyof typeof FieldConditionOperator];
 export type ValidationOperator =
@@ -260,3 +223,7 @@ export type DividerStyle = (typeof DividerStyle)[keyof typeof DividerStyle];
 export type HeadingTag = (typeof HeadingTag)[keyof typeof HeadingTag];
 export type PropertyType = (typeof PropertyType)[keyof typeof PropertyType];
 export type SizeUnit = (typeof SizeUnit)[keyof typeof SizeUnit];
+export type ColorType = (typeof ColorType)[keyof typeof ColorType];
+export type SizeType = (typeof SizeType)[keyof typeof SizeType];
+export type AbsoluteSize = (typeof AbsoluteSize)[keyof typeof AbsoluteSize];
+export type RelativeSize = (typeof RelativeSize)[keyof typeof RelativeSize];

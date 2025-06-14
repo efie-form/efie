@@ -1,10 +1,5 @@
-import type { BlockFormField } from '@efie-form/core';
-import PropSettingsBgColor from '../property-settings/PropSettingsBgColor';
-import PropSettingsColor from '../property-settings/PropSettingsColor';
-import PropSettingsPadding from '../property-settings/PropSettingsPadding';
-import PropSettingsMargin from '../property-settings/PropSettingsMargin';
-import PropSettingsBorderRadius from '../property-settings/PropSettingsBorderRadius';
-import PropSettingsShadow from '../property-settings/PropSettingsShadow';
+import { PropertyType, type BlockFormField } from '@efie-form/core';
+import DynamicSettings from '../DynamicSettings';
 
 interface BlockSettingsProps {
   field: BlockFormField;
@@ -16,12 +11,17 @@ function BlockSettings({ field }: BlockSettingsProps) {
       <div className="px-4 py-2 bg-neutral-100 text-neutral-800 typography-body3 uppercase">
         Spacing
       </div>
-      <PropSettingsPadding field={field} />
-      <PropSettingsMargin field={field} />
-      <PropSettingsBorderRadius field={field} />
-      <PropSettingsShadow field={field} />
-      <PropSettingsBgColor field={field} />
-      <PropSettingsColor field={field} />
+      <DynamicSettings
+        settings={[
+          { template: 'color', label: 'Background Color', type: PropertyType.BACKGROUND_COLOR },
+          { template: 'color', label: 'Text Color', type: PropertyType.COLOR },
+          { template: 'borderRadius', label: 'Border Radius', type: PropertyType.BORDER_RADIUS },
+          { template: 'margin', label: 'Marg|in', type: PropertyType.MARGIN },
+          { template: 'padding', label: 'Padding', type: PropertyType.PADDING },
+          { template: 'boxShadow', label: 'Box Shadow', type: PropertyType.BOX_SHADOW },
+        ]}
+        fieldId={field.id}
+      />
     </div>
   );
 }

@@ -1,7 +1,5 @@
-import type { DateFormField } from '@efie-form/core';
-import PropSettingsLabel from '../property-settings/PropSettingsLabel';
-import PropSettingsFormKey from '../property-settings/PropSettingsFormKey';
-import PropSettingsRequired from '../property-settings/PropSettingsRequired';
+import { PropertyType, type DateFormField } from '@efie-form/core';
+import DynamicSettings from '../DynamicSettings';
 interface DateSettingsProps {
   field: DateFormField;
 }
@@ -12,9 +10,14 @@ function DateSettings({ field }: DateSettingsProps) {
       <div className="px-4 py-2 bg-neutral-100 text-neutral-800 typography-body3 uppercase">
         General
       </div>
-      <PropSettingsFormKey field={field} />
-      <PropSettingsLabel field={field} />
-      <PropSettingsRequired field={field} />
+      <DynamicSettings
+        settings={[
+          { template: 'formKey' },
+          { template: 'text', label: 'Label', type: PropertyType.LABEL },
+          { template: 'boolean', label: 'Required', type: PropertyType.REQUIRED },
+        ]}
+        fieldId={field.id}
+      />
     </div>
   );
 }

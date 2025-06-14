@@ -2,7 +2,6 @@ export { default as Iframe } from './Iframe';
 export { default as Builder } from './Builder';
 export type {
   FormSchema,
-  Size,
   FieldCondition,
   FieldConditionGroup,
   FieldConditionValue,
@@ -46,7 +45,7 @@ export type {
 } from './types/form-field.type';
 
 export { FormFieldType } from './input-type';
-export { PropertyType, SizeUnit } from './types/form-schema.constant';
+export { PropertyType, SizeUnit, SizeType } from './types/form-schema.constant';
 
 export {
   marginToStyle,
@@ -57,53 +56,84 @@ export {
   textAlignToStyle,
   colorToStyle,
   fontSizeToStyle,
-  fontWeightToStyle,
   sizeToStyle,
+  toSize,
 } from './props-parse';
 
 export {
   type BgColorProperty,
   type ColorProperty,
   type FontSizeProperty,
-  type FontWeightProperty,
   type SrcProperty,
   type AltProperty,
   type ObjectFitProperty,
-  type AutoWidthProperty,
-  type ButtonTypeProperty,
-  type FullWidthProperty,
-  type AlignProperty,
   type HeightProperty,
-  type StyleProperty,
   type MarginProperty,
   type PaddingProperty,
-  type DisplayProperty,
-  type FlexDirectionProperty,
-  type AlignItemsProperty,
   type MaxFilesProperty,
-  type JustifyContentProperty,
   type BoxShadowProperty,
   type BorderRadiusProperty,
-  type BorderWidthProperty,
-  type BorderColorProperty,
   type BorderStyleProperty,
-  type DividerHeightProperty,
   type LabelProperty,
   type PlaceholderProperty,
-  type StringDefaultValueProperty,
-  type NumberDefaultValueProperty,
-  type ArrayDefaultValueProperty,
   type RequiredProperty,
-  type MinProperty,
-  type MaxProperty,
-  type FormatProperty,
   type AcceptProperty,
-  type MultipleProperty,
   type OptionsProperty,
-  type GapProperty,
   type WidthProperty,
   type TagProperty,
   type TextAlignProperty,
   type ContentProperty,
-  type BoxShadow,
+  type PageNameProperty,
 } from './types/field-properties.type';
+
+export type {
+  Color,
+  ColorHsla,
+  ColorRgba,
+  SizeAuto,
+  SizeLength,
+  SizePercentage,
+  SizeInitial,
+  SizeInherit,
+  WidthHeightSize,
+  MarginSize,
+  PaddingSize,
+  Size,
+  FontSize,
+  SizeAbsolute,
+  SizeRelative,
+} from './types/common.type';
+
+export {
+  isStringValue,
+  isColorValue,
+  isNumberValue,
+  isBooleanValue,
+  isWidthValue,
+  isBorderRadiusValue,
+  isBoxShadowValue,
+  isSizeValue,
+  isAcceptValue,
+  isMarginValue,
+  isPaddingValue,
+  isOptionsValue,
+} from './value-validator';
+
+export type {
+  PropValue,
+  PropValueAccept,
+  PropValueColor,
+  PropValueString,
+  PropValueNumber,
+  PropValueBoolean,
+  PropValueBorderRadius,
+  PropValueBoxShadow,
+  PropValueSize,
+  PropValueMargin,
+  PropValuePadding,
+  PropValueOptions,
+  BorderRadius,
+  BoxShadow,
+} from './types/field-property-value.type';
+
+export { getColorObject, hslaToHex, rgbaToHex } from './colors';

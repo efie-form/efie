@@ -2,14 +2,18 @@
  * @type {import('jest').Config}
  */
 const jestConfig = {
-  preset: 'ts-jest',
+  preset: 'ts-jest/presets/default-esm',
   testEnvironment: 'node',
   extensionsToTreatAsEsm: ['.ts', '.tsx'],
+  setupFilesAfterEnv: ['<rootDir>/src/__tests__/setupTests.ts'],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
+    '^color-convert$': '<rootDir>/src/__mocks__/color-convert.ts',
   },
+  transformIgnorePatterns: [
+    'node_modules/(?!(color-convert)/)',
+  ],
   testMatch: [
-    '<rootDir>/src/**/__tests__/**/*.{test,spec}.{js,jsx,ts,tsx}',
     '<rootDir>/src/**/*.{test,spec}.{js,jsx,ts,tsx}',
   ],
   collectCoverageFrom: [
@@ -25,7 +29,7 @@ const jestConfig = {
   // Temporarily disabled coverage thresholds for CI
   // coverageThreshold: {
   //   global: {
-  //     branches: 70,
+  //     branches: 70,1
   //     functions: 70,
   //     lines: 70,
   //     statements: 70,

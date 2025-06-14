@@ -13,7 +13,7 @@ interface DividerFieldProps {
 
 function DividerField({ field }: DividerFieldProps) {
   const width = getFieldProp(field, PropertyType.WIDTH);
-  const dividerHeight = getFieldProp(field, PropertyType.DIVIDER_HEIGHT);
+  const dividerHeight = getFieldProp(field, PropertyType.HEIGHT);
   const color = getFieldProp(field, PropertyType.COLOR);
   const style = getFieldProp(field, PropertyType.BORDER_STYLE);
 
@@ -22,9 +22,9 @@ function DividerField({ field }: DividerFieldProps) {
       <hr
         className="my-4 mx-auto"
         style={{
-          width: widthToStyle(width),
+          width: widthToStyle(width?.value),
           borderStyle: style?.value,
-          borderColor: colorToStyle(color),
+          borderColor: colorToStyle(color?.value),
           borderTopWidth: sizeToStyle(dividerHeight?.value),
         }}
       />

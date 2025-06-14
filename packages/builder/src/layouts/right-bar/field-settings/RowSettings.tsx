@@ -1,5 +1,5 @@
 import type { ColumnFormField, RowFormField } from '@efie-form/core';
-import { FormFieldType, PropertyType } from '@efie-form/core';
+import { FormFieldType, PropertyType, SizeType } from '@efie-form/core';
 import { getDefaultField } from '../../../lib/getDefaultField';
 import * as Tabs from '@radix-ui/react-tabs';
 import { useState } from 'react';
@@ -35,13 +35,12 @@ function RowSettings({ field }: RowSettingsProps) {
       if (existingColumn) {
         const widthProp = getFieldProp(existingColumn, PropertyType.WIDTH);
         if (widthProp) {
-          widthProp.value = { value: width, unit: '%' };
+          widthProp.value = { type: SizeType.PERCENTAGE, value: width };
         }
         else {
           existingColumn.props.push({
             type: PropertyType.WIDTH,
-            value: { value: width, unit: '%' },
-            autoWidth: false,
+            value: { type: SizeType.PERCENTAGE, value: width },
           });
         }
         newColumns.push(existingColumn);
@@ -76,13 +75,12 @@ function RowSettings({ field }: RowSettingsProps) {
 
       const widthProp = getFieldProp(colField, PropertyType.WIDTH);
       if (widthProp) {
-        widthProp.value = { value: avgWidth, unit: '%' };
+        widthProp.value = { type: SizeType.PERCENTAGE, value: avgWidth };
       }
       else {
         colField.props.push({
           type: PropertyType.WIDTH,
-          value: { value: avgWidth, unit: '%' },
-          autoWidth: false,
+          value: { type: SizeType.PERCENTAGE, value: avgWidth },
         });
       }
 
@@ -117,15 +115,14 @@ function RowSettings({ field }: RowSettingsProps) {
       const width = Math.floor(100 / (field.children.length - 1));
       if (widthProp) {
         widthProp.value = {
+          type: SizeType.PERCENTAGE,
           value: width,
-          unit: '%',
         };
       }
       else {
         colField.props.push({
           type: PropertyType.WIDTH,
-          value: { value: width, unit: '%' },
-          autoWidth: false,
+          value: { type: SizeType.PERCENTAGE, value: width },
         });
       }
 
