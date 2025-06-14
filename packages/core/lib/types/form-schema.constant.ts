@@ -1,16 +1,4 @@
 // Units
-export const Unit = {
-  PX: 'px',
-  EM: 'em',
-  REM: 'rem',
-  VH: 'vh',
-  VW: 'vw',
-  // PT: 'pt',
-  // PC: 'pc',
-  // IN: 'in',
-  // CM: 'cm',
-  // MM: 'mm',
-} as const;
 
 export const SizeType = {
   AUTO: 'auto',
@@ -171,6 +159,8 @@ export const PropertyType = {
   BACKGROUND_COLOR: 'backgroundColor',
   COLOR: 'color',
   BORDER_RADIUS: 'borderRadius',
+  BORDER_WIDTH: 'borderWidth',
+  BORDER_COLOR: 'borderColor',
   MARGIN: 'margin',
   PADDING: 'padding',
   BOX_SHADOW: 'boxShadow',
@@ -183,12 +173,16 @@ export const PropertyType = {
   MAX_FILES: 'maxFiles',
   ACCEPT: 'accept',
   FONT_SIZE: 'fontSize',
+  FONT_WEIGHT: 'fontWeight',
   TAG: 'tag',
   SRC: 'src',
   ALT: 'alt',
   OBJECT_FIT: 'objectFit',
   PLACEHOLDER: 'placeholder',
   OPTIONS: 'options',
+  PAGE_NAME: 'pageName',
+  BUTTON_TYPE: 'buttonType',
+  CONTENT: 'content',
 } as const;
 
 // Size unit
@@ -196,14 +190,13 @@ export const SizeUnit = {
   PX: 'px',
   EM: 'em',
   REM: 'rem',
-  PERCENT: '%',
   VH: 'vh',
   VW: 'vw',
-  PT: 'pt',
-  PC: 'pc',
-  IN: 'in',
-  CM: 'cm',
-  MM: 'mm',
+  // PT: 'pt',
+  // PC: 'pc',
+  // IN: 'in',
+  // CM: 'cm',
+  // MM: 'mm',
 } as const;
 
 export const ColorType = {
@@ -215,7 +208,6 @@ export const ColorType = {
 } as const;
 
 // Export types for all constants
-export type Unit = (typeof Unit)[keyof typeof Unit];
 export type FieldConditionOperator =
   (typeof FieldConditionOperator)[keyof typeof FieldConditionOperator];
 export type ValidationOperator =

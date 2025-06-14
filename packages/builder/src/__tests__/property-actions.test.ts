@@ -1,6 +1,16 @@
-import { PropertyType } from '@efie-form/core';
-import type { PropertyDefinition } from '@efie-form/core';
+import { getColorObject, PropertyType, SizeType } from '@efie-form/core';
+import type { PropertyDefinition, Size } from '@efie-form/core';
 import { createTestStore, createPropertyTestSchema } from './test-utils';
+
+// Helper function to create Color objects from hex strings
+const createColor = (hex: string) => getColorObject(hex);
+
+// Helper function to create Size objects
+const createSize = (value: number, unit: string): Size => ({
+  type: SizeType.LENGTH,
+  value,
+  unit: unit as 'px' | 'em' | 'rem' | '%' | 'vh' | 'vw',
+});
 
 describe('Property Actions', () => {
   let useStore: ReturnType<typeof createTestStore>;
@@ -16,31 +26,31 @@ describe('Property Actions', () => {
     it('should update an existing property', () => {
       const newProperty: PropertyDefinition = {
         type: PropertyType.BACKGROUND_COLOR,
-        value: '#FF0000',
+        value: createColor('#FF0000'),
       };
 
       store.updateFieldProperty('block-1', newProperty);
 
       const updatedProperty = store.getFieldProperty('block-1', PropertyType.BACKGROUND_COLOR);
-      expect(updatedProperty?.value).toBe('#FF0000');
+      expect(updatedProperty?.value).toEqual(createColor('#FF0000'));
     });
 
     it('should add a new property if it does not exist', () => {
       const newProperty: PropertyDefinition = {
-        type: PropertyType.BORDER_WIDTH,
-        value: { value: 2, unit: 'px' },
+        type: PropertyType.FONT_SIZE,
+        value: createSize(2, 'px'),
       };
 
       store.updateFieldProperty('block-1', newProperty);
 
-      const addedProperty = store.getFieldProperty('block-1', PropertyType.BORDER_WIDTH);
+      const addedProperty = store.getFieldProperty('block-1', PropertyType.FONT_SIZE);
       expect(addedProperty?.value).toEqual({ value: 2, unit: 'px' });
     });
 
     it('should not update property for non-existent field', () => {
       const newProperty: PropertyDefinition = {
         type: PropertyType.COLOR,
-        value: '#000000',
+        value: getColorObject('#000000'),
       };
 
       // Should not throw error
@@ -57,10 +67,10 @@ describe('Property Actions', () => {
       const newProperty: PropertyDefinition = {
         type: PropertyType.BORDER_RADIUS,
         value: {
-          topLeft: { value: 4, unit: 'px' },
-          topRight: { value: 4, unit: 'px' },
-          bottomLeft: { value: 4, unit: 'px' },
-          bottomRight: { value: 4, unit: 'px' },
+          topLeft: { type: SizeType.LENGTH, value: 4, unit: 'px' },
+          topRight: { type: SizeType.LENGTH, value: 4, unit: 'px' },
+          bottomLeft: { type: SizeType.LENGTH, value: 4, unit: 'px' },
+          bottomRight: { type: SizeType.LENGTH, value: 4, unit: 'px' },
         },
       };
 
@@ -78,7 +88,7 @@ describe('Property Actions', () => {
     it('should not add property if it already exists', () => {
       const existingProperty: PropertyDefinition = {
         type: PropertyType.BACKGROUND_COLOR,
-        value: '#FF0000',
+        value: getColorObject('#FF0000'),
       };
 
       // Get original property value
@@ -102,7 +112,7 @@ describe('Property Actions', () => {
 
     it('should not error when removing non-existent property', () => {
       // Should not throw error
-      store.removeFieldProperty('block-1', PropertyType.BORDER_WIDTH);
+      store.removeFieldProperty('block-1', PropertyType.BORDER_RADIUS);
 
       // Other properties should remain
       const colorProperty = store.getFieldProperty('block-1', PropertyType.COLOR);
@@ -116,19 +126,19 @@ describe('Property Actions', () => {
         {
           type: PropertyType.PADDING,
           value: {
-            top: { value: 16, unit: 'px' },
-            right: { value: 16, unit: 'px' },
-            bottom: { value: 16, unit: 'px' },
-            left: { value: 16, unit: 'px' },
+            top: { type: SizeType.LENGTH, value: 16, unit: 'px' },
+            right: { type: SizeType.LENGTH, value: 16, unit: 'px' },
+            bottom: { type: SizeType.LENGTH, value: 16, unit: 'px' },
+            left: { type: SizeType.LENGTH, value: 16, unit: 'px' },
           },
         },
         {
           type: PropertyType.MARGIN,
           value: {
-            top: { value: 8, unit: 'px' },
-            right: { value: 8, unit: 'px' },
-            bottom: { value: 8, unit: 'px' },
-            left: { value: 8, unit: 'px' },
+            top: { type: SizeType.LENGTH, value: 8, unit: 'px' },
+            right: { type: SizeType.LENGTH, value: 8, unit: 'px' },
+            bottom: { type: SizeType.LENGTH, value: 8, unit: 'px' },
+            left: { type: SizeType.LENGTH, value: 8, unit: 'px' },
           },
         },
       ];

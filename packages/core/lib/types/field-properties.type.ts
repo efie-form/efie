@@ -5,6 +5,7 @@ import type {
 } from './form-schema.constant';
 import type { PropertyType } from './form-schema.constant';
 import type { PropValueAccept, PropValueBoolean, PropValueBorderRadius, PropValueBoxShadow, PropValueColor, PropValueMargin, PropValueNumber, PropValueOptions, PropValuePadding, PropValueSize, PropValueString } from './field-property-value.type';
+import type { JSONContent } from '@tiptap/core';
 
 // Label property
 export interface LabelProperty {
@@ -120,6 +121,18 @@ export interface BorderStyleProperty {
   value: PropValueString;
 }
 
+export interface ContentProperty {
+  type: typeof PropertyType.CONTENT;
+  value: {
+    jsonContent: JSONContent;
+  };
+}
+
+export interface PageNameProperty {
+  type: typeof PropertyType.PAGE_NAME;
+  value: PropValueString;
+}
+
 // Union type of all property definitions
 export type PropertyDefinition =
   | LabelProperty
@@ -142,4 +155,6 @@ export type PropertyDefinition =
   | PaddingProperty
   | BoxShadowProperty
   | BorderRadiusProperty
-  | BorderStyleProperty;
+  | BorderStyleProperty
+  | ContentProperty
+  | PageNameProperty;

@@ -1,5 +1,5 @@
-import { FormFieldType, PropertyType } from '@efie-form/core';
-import type { FormSchema } from '@efie-form/core';
+import { FormFieldType, getColorObject, PropertyType } from '@efie-form/core';
+import type { FormSchema, Color } from '@efie-form/core';
 import { create } from 'zustand';
 import type { SchemaState } from '../lib/state/schema.state/types';
 import { createSchemaActions } from '../lib/state/schema.state/schema-actions';
@@ -8,6 +8,9 @@ import { createPropertyActions } from '../lib/state/schema.state/property-action
 import { createHistoryActions } from '../lib/state/schema.state/history-actions';
 import { createLegacyActions } from '../lib/state/schema.state/legacy-actions';
 import { getFieldInfoMap } from '../lib/state/schema.state/utils';
+
+// Helper function to create Color objects from hex strings
+const createColor = (hex: string): Color => getColorObject(hex);
 
 export const createTestSchema = (): FormSchema => ({
   version: 'v1',
@@ -24,14 +27,14 @@ export const createTestSchema = (): FormSchema => ({
             props: [
               {
                 type: PropertyType.BACKGROUND_COLOR,
-                value: '#FFFFFF',
+                value: createColor('#FFFFFF'),
               },
             ],
           },
         ],
         props: [
           {
-            type: PropertyType.NAME,
+            type: PropertyType.PAGE_NAME,
             value: 'Test Page',
           },
         ],
@@ -103,7 +106,7 @@ export const createComplexTestSchema = (): FormSchema => ({
             props: [
               {
                 type: PropertyType.BACKGROUND_COLOR,
-                value: '#FFFFFF',
+                value: createColor('#FFFFFF'),
               },
             ],
           },
@@ -114,14 +117,14 @@ export const createComplexTestSchema = (): FormSchema => ({
             props: [
               {
                 type: PropertyType.BACKGROUND_COLOR,
-                value: '#F0F0F0',
+                value: createColor('#F0F0F0'),
               },
             ],
           },
         ],
         props: [
           {
-            type: PropertyType.NAME,
+            type: PropertyType.PAGE_NAME,
             value: 'Test Page',
           },
         ],
@@ -146,18 +149,18 @@ export const createPropertyTestSchema = (): FormSchema => ({
             props: [
               {
                 type: PropertyType.BACKGROUND_COLOR,
-                value: '#FFFFFF',
+                value: createColor('#FFFFFF'),
               },
               {
                 type: PropertyType.COLOR,
-                value: '#000000',
+                value: createColor('#000000'),
               },
             ],
           },
         ],
         props: [
           {
-            type: PropertyType.NAME,
+            type: PropertyType.PAGE_NAME,
             value: 'Test Page',
           },
         ],

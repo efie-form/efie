@@ -1,4 +1,4 @@
-import type { AbsoluteSize, RelativeSize, SizeType, Unit } from './form-schema.constant';
+import type { AbsoluteSize, RelativeSize, SizeType, SizeUnit } from './form-schema.constant';
 
 export interface ColorRgba {
   r: number;
@@ -27,7 +27,7 @@ export interface SizeAuto {
 export interface SizeLength {
   type: typeof SizeType.LENGTH;
   value: number;
-  unit: (typeof Unit)[keyof typeof Unit];
+  unit: (typeof SizeUnit)[keyof typeof SizeUnit];
 }
 
 export interface SizePercentage {

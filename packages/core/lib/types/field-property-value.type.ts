@@ -1,3 +1,4 @@
+import type { JSONContent } from '@tiptap/core';
 import type { Color, Size } from './common.type';
 
 export type PropValueString = string;
@@ -18,7 +19,7 @@ type Direction = 'top' | 'right' | 'bottom' | 'left';
 export type PropValueMargin = Record<Direction, Size>;
 export type PropValuePadding = Record<Direction, Size>;
 
-export interface Shadow {
+export interface BoxShadow {
   x: Size;
   y: Size;
   blur: Size;
@@ -26,11 +27,15 @@ export interface Shadow {
   color: Color;
   inset: boolean;
 }
-export type PropValueBoxShadow = Shadow[];
+export type PropValueBoxShadow = BoxShadow[];
 
 type Corner = 'topLeft' | 'topRight' | 'bottomRight' | 'bottomLeft';
 export type BorderRadius = Size | Size[];
 export type PropValueBorderRadius = Record<Corner, BorderRadius>;
+
+export type PropValueJsonContent = {
+  jsonContent: JSONContent;
+};
 
 export type PropValue =
   | PropValueString
@@ -43,4 +48,5 @@ export type PropValue =
   | PropValueMargin
   | PropValuePadding
   | PropValueBoxShadow
-  | PropValueBorderRadius;
+  | PropValueBorderRadius
+  | PropValueJsonContent;

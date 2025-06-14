@@ -1,7 +1,7 @@
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { Switch } from '../../../components/form';
 import type { PropSettingsBoxShadow } from '../../../types/prop-settings.type';
-import { type BoxShadowProperty, type BoxShadow, type Size, SizeType, isBoxShadowValue, type Color, type PropValue, type PropValueBoxShadow } from '@efie-form/core';
+import { type BoxShadowProperty, type Size, SizeType, isBoxShadowValue, type Color, type PropValue, type PropValueBoxShadow, getColorObject, type BoxShadow } from '@efie-form/core';
 import Button from '../../../components/elements/Button';
 import { closestCenter, DndContext, KeyboardSensor, PointerSensor, useSensor, useSensors, type DragEndEvent } from '@dnd-kit/core';
 import { MdAdd, MdOutlineDelete, MdOutlineDragIndicator } from 'react-icons/md';
@@ -10,7 +10,6 @@ import { useSchemaStore } from '../../../lib/state/schema.state';
 import { useCallback, useState } from 'react';
 import ColorPicker2 from '../../../components/form/color-picker-2';
 import SizeInput from '../../../components/form/SizeInput';
-import { getColorObject } from '../../../lib/colors';
 import * as Collapsible from '@radix-ui/react-collapsible';
 
 interface PropsSettingsBoxShadowProps extends PropSettingsBoxShadow {

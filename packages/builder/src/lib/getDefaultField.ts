@@ -1,7 +1,6 @@
 import type { ShortTextFormField, LongTextFormField, NumberFormField, MultipleChoiceFormField, TimeFormField, DateFormField, SingleChoiceFormField, DateTimeFormField, FileFormField, BlockFormField, RowFormField, ColumnFormField, ImageFormField, ParagraphFormField, HeaderFormField, ButtonFormField, PageFormField, DividerFormField } from '@efie-form/core';
-import { FormFieldType, PropertyType, SizeType } from '@efie-form/core';
+import { FormFieldType, getColorObject, PropertyType, SizeType } from '@efie-form/core';
 import { generateId } from './utils';
-import { getColorObject } from './colors';
 
 interface PageProps {
   name: string;
@@ -183,7 +182,7 @@ export function getDefaultField<T extends FormFieldType>({
         ],
         props: [
           {
-            type: PropertyType.NAME,
+            type: PropertyType.PAGE_NAME,
             value: page?.name || 'Page',
           },
         ],
@@ -268,8 +267,10 @@ export function getDefaultField<T extends FormFieldType>({
           },
           {
             type: PropertyType.ACCEPT,
-            allowAll: true,
-            formats: [],
+            value: {
+              allowAll: true,
+              formats: [],
+            },
           },
         ],
       } satisfies GetDefaultFieldReturn[typeof FormFieldType.FILE];
@@ -284,10 +285,8 @@ export function getDefaultField<T extends FormFieldType>({
             value: getColorObject('#000000'),
           },
           {
-            type: PropertyType.STYLE,
-            value: {
-              display: 'block',
-            },
+            type: PropertyType.BORDER_STYLE,
+            value: 'solid',
           },
           {
             type: PropertyType.WIDTH,
@@ -550,7 +549,7 @@ export function getDefaultField<T extends FormFieldType>({
             },
           },
           {
-            type: PropertyType.BTN_TYPE,
+            type: PropertyType.BUTTON_TYPE,
             value: 'submit',
           },
           {

@@ -82,6 +82,8 @@ export {
   type WidthProperty,
   type TagProperty,
   type TextAlignProperty,
+  type ContentProperty,
+  type PageNameProperty,
 } from './types/field-properties.type';
 
 export type {
@@ -131,5 +133,7 @@ export type {
   PropValuePadding,
   PropValueOptions,
   BorderRadius,
-  Shadow,
+  BoxShadow,
 } from './types/field-property-value.type';
+
+export { getColorObject, hslaToHex, rgbaToHex } from './colors';

@@ -3,8 +3,7 @@ import { useSchemaStore } from '../../../lib/state/schema.state';
 import type { PropSettingsColor } from '../../../types/prop-settings.type';
 import SettingsFieldHorizontal from '../property-layouts/SettingsFieldHorizontal';
 import ColorPicker2 from '../../../components/form/color-picker-2';
-import { isColorValue, type Color, type PropertyDefinition, type PropValue } from '@efie-form/core';
-import { getColorObject } from '../../../lib/colors';
+import { getColorObject, isColorValue, type Color, type PropertyDefinition, type PropValue } from '@efie-form/core';
 
 interface PropsTemplateColorProps extends PropSettingsColor {
   fieldId: string;

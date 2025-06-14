@@ -1,4 +1,4 @@
-import type { Color } from '@efie-form/core';
+import { getColorObject, type Color } from '@efie-form/core';
 import * as PopoverPrimitive from '@radix-ui/react-popover';
 import type { IColor } from 'react-color-palette';
 import {
@@ -12,7 +12,6 @@ import { cn } from '../../lib/utils';
 import { useState } from 'react';
 import Select from './Select';
 import { useControllableState } from '../../lib/hooks/useControllableState';
-import { getColorObject } from '../../lib/colors';
 
 interface ColorPicker2Props {
   value?: Color;

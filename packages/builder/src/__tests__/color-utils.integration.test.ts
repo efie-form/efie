@@ -13,7 +13,7 @@
  */
 
 // Import the actual functions (no mocking)
-import { rgbaToHex, hslaToHex } from '../lib/colors';
+import { rgbaToHex, hslaToHex } from '@efie-form/core';
 
 describe('Color Utility Functions - Integration Tests', () => {
   describe('Real color-convert library integration', () => {

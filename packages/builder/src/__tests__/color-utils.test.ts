@@ -44,7 +44,7 @@ jest.mock('color-convert', () => ({
   },
 }));
 
-import { rgbaToHex, hslaToHex } from '../lib/colors';
+import { rgbaToHex, hslaToHex } from '@efie-form/core';
 
 describe('Color Utility Functions', () => {
   describe('rgbaToHex', () => {

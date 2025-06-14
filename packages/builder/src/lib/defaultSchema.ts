@@ -1,7 +1,6 @@
-import { FormFieldType, PropertyType, SizeType } from '@efie-form/core';
+import { FormFieldType, getColorObject, PropertyType, SizeType } from '@efie-form/core';
 import type { FormSchema } from '@efie-form/core';
 import { generateId } from './utils';
-import { getColorObject } from './colors';
 
 const defaultSchema: FormSchema = {
   version: 'v1',
@@ -85,7 +84,7 @@ const defaultSchema: FormSchema = {
         ],
         props: [
           {
-            type: PropertyType.NAME,
+            type: PropertyType.PAGE_NAME,
             value: 'Page 1',
           },
         ],

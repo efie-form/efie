@@ -22,6 +22,14 @@ import type {
   BoxShadowProperty,
   BorderStyleProperty,
   MaxFilesProperty,
+  BorderWidthProperty,
+  BorderColorProperty,
+  NameProperty,
+  ContentProperty,
+  StyleProperty,
+  BtnTypeProperty,
+  FontWeightProperty,
+  DividerHeightProperty,
 } from './field-properties.type';
 
 // Base form field interface
@@ -141,6 +149,9 @@ export interface BlockFormField extends BaseFormField {
     | BoxShadowProperty
     | BorderRadiusProperty
     | BorderStyleProperty
+    | BorderWidthProperty
+    | BorderColorProperty
+    | StyleProperty
   )[];
 }
 
@@ -163,6 +174,7 @@ export interface HeaderFormField extends BaseFormField {
     | TextAlignProperty
     | ColorProperty
     | FontSizeProperty
+    | ContentProperty
   )[];
 }
 
@@ -173,6 +185,7 @@ export interface ParagraphFormField extends BaseFormField {
     | TextAlignProperty
     | ColorProperty
     | FontSizeProperty
+    | ContentProperty
   )[];
 }
 
@@ -199,9 +212,11 @@ export interface ButtonFormField extends BaseFormField {
     | ColorProperty
     | TextAlignProperty
     | FontSizeProperty
+    | FontWeightProperty
     | BorderRadiusProperty
     | BorderStyleProperty
     | PaddingProperty
+    | BtnTypeProperty
   )[];
 }
 
@@ -209,7 +224,7 @@ export interface ButtonFormField extends BaseFormField {
 export interface PageFormField extends BaseFormField {
   type: typeof FormFieldType.PAGE;
   children: FormField[];
-  props: (WidthProperty)[];
+  props: (WidthProperty | NameProperty)[];
 }
 
 // Divider field type
@@ -220,6 +235,7 @@ export interface DividerFormField extends BaseFormField {
     | ColorProperty
     | WidthProperty
     | HeightProperty
+    | DividerHeightProperty
   )[];
 }
 

@@ -8,6 +8,9 @@ const jestConfig = {
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
   },
+  transformIgnorePatterns: [
+    'node_modules/(?!(color-convert)/)',
+  ],
   testMatch: [
     '<rootDir>/src/**/__tests__/**/*.{test,spec}.{js,jsx,ts,tsx}',
     '<rootDir>/src/**/*.{test,spec}.{js,jsx,ts,tsx}',
@@ -25,7 +28,7 @@ const jestConfig = {
   // Temporarily disabled coverage thresholds for CI
   // coverageThreshold: {
   //   global: {
-  //     branches: 70,
+  //     branches: 70,1
   //     functions: 70,
   //     lines: 70,
   //     statements: 70,

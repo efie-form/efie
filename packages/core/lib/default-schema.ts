@@ -1,6 +1,7 @@
 import type { FormSchema } from './types/form-schema.type';
 import { FormFieldType } from './input-type';
 import { PropertyType, SizeType } from './types/form-schema.constant';
+import { getColorObject } from './colors';
 
 const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
@@ -44,7 +45,7 @@ const defaultSchema: FormSchema = {
               },
               {
                 type: PropertyType.BACKGROUND_COLOR,
-                value: '#FFFFFF',
+                value: getColorObject('#FFFFFF'),
               },
               {
                 type: PropertyType.COLOR,
@@ -60,7 +61,7 @@ const defaultSchema: FormSchema = {
               },
               {
                 type: PropertyType.BORDER_COLOR,
-                value: '#00000019',
+                value: getColorObject('#00000019'),
               },
               {
                 type: PropertyType.BORDER_RADIUS,
@@ -79,7 +80,7 @@ const defaultSchema: FormSchema = {
                     y: { type: SizeType.LENGTH, value: 4, unit: 'px' },
                     blur: { type: SizeType.LENGTH, value: 6, unit: 'px' },
                     spread: { type: SizeType.LENGTH, value: 0, unit: 'px' },
-                    color: '#00000019',
+                    color: getColorObject('#00000019'),
                     inset: false,
                   },
                   {
@@ -87,7 +88,7 @@ const defaultSchema: FormSchema = {
                     y: { type: SizeType.LENGTH, value: 2, unit: 'px' },
                     blur: { type: SizeType.LENGTH, value: 4, unit: 'px' },
                     spread: { type: SizeType.LENGTH, value: -2, unit: 'px' },
-                    color: '#00000019',
+                    color: getColorObject('#00000019'),
                     inset: false,
                   },
                 ],
@@ -97,7 +98,7 @@ const defaultSchema: FormSchema = {
         ],
         props: [
           {
-            type: PropertyType.NAME,
+            type: PropertyType.PAGE_NAME,
             value: 'Page 1',
           },
         ],
