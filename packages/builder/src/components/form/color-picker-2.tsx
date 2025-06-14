@@ -160,7 +160,7 @@ export default function ColorPicker2({
       }}
     >
       <PopoverPrimitive.Trigger asChild>
-        <button className="relative focus:outline-primary inline-block border p-[2px] border-neutral-200 rounded-sm cursor-pointer">
+        <button aria-label="Open color picker" className="relative focus:outline-primary inline-block border p-[2px] border-neutral-200 rounded-sm cursor-pointer">
           <div
             className="size-6 rounded-sm"
             style={{

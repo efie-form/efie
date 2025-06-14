@@ -2,6 +2,7 @@ import { cn, getFieldProp } from '../../../../lib/utils';
 import {
   type ButtonFormField,
   borderRadiusToStyle,
+  colorToStyle,
   paddingToStyle,
   PropertyType,
   widthToStyle,
@@ -32,7 +33,7 @@ function ButtonField({ field }: ButtonFieldProps) {
           padding: paddingToStyle(padding?.value),
           backgroundColor: bgColor?.value.hex,
           borderRadius: borderRadiusToStyle(borderRadius?.value),
-          color: color?.value.hex,
+          color: colorToStyle(color?.value),
           width: widthToStyle(width?.value),
         }}
       >
