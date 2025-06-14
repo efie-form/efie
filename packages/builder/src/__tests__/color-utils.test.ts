@@ -22,6 +22,39 @@ const hue2rgb = (p: number, q: number, t: number) => {
 
 // Mock color-convert for unit testing
 jest.mock('color-convert', () => ({
+  rgb: {
+    hsl: (rgb: number[]) => {
+      // Simplified RGB to HSL conversion for testing our utility logic
+      const [r, g, b] = rgb.map(v => v / 255);
+      const max = Math.max(r, g, b);
+      const min = Math.min(r, g, b);
+      const diff = max - min;
+      const sum = max + min;
+      const l = sum / 2;
+
+      let h = 0, s = 0;
+      if (diff !== 0) {
+        s = l > 0.5 ? diff / (2 - sum) : diff / sum;
+        switch (max) {
+          case r: {
+            h = (g - b) / diff + (g < b ? 6 : 0);
+            break;
+          }
+          case g: {
+            h = (b - r) / diff + 2;
+            break;
+          }
+          case b: {
+            h = (r - g) / diff + 4;
+            break;
+          }
+        }
+        h /= 6;
+      }
+
+      return [Math.round(h * 360), Math.round(s * 100), Math.round(l * 100)];
+    },
+  },
   hsl: {
     rgb: (hsl: number[]) => {
       // Simplified HSL to RGB conversion for testing our utility logic

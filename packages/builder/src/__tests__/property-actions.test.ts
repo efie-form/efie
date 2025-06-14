@@ -9,7 +9,7 @@ const createColor = (hex: string) => getColorObject(hex);
 const createSize = (value: number, unit: string): Size => ({
   type: SizeType.LENGTH,
   value,
-  unit: unit as 'px' | 'em' | 'rem' | '%' | 'vh' | 'vw',
+  unit: unit as 'px' | 'em' | 'rem' | 'vh' | 'vw',
 });
 
 describe('Property Actions', () => {
@@ -44,7 +44,7 @@ describe('Property Actions', () => {
       store.updateFieldProperty('block-1', newProperty);
 
       const addedProperty = store.getFieldProperty('block-1', PropertyType.FONT_SIZE);
-      expect(addedProperty?.value).toEqual({ value: 2, unit: 'px' });
+      expect(addedProperty?.value).toEqual(createSize(2, 'px'));
     });
 
     it('should not update property for non-existent field', () => {
@@ -78,10 +78,10 @@ describe('Property Actions', () => {
 
       const addedProperty = store.getFieldProperty('block-1', PropertyType.BORDER_RADIUS);
       expect(addedProperty?.value).toEqual({
-        topLeft: { value: 4, unit: 'px' },
-        topRight: { value: 4, unit: 'px' },
-        bottomLeft: { value: 4, unit: 'px' },
-        bottomRight: { value: 4, unit: 'px' },
+        topLeft: createSize(4, 'px'),
+        topRight: createSize(4, 'px'),
+        bottomLeft: createSize(4, 'px'),
+        bottomRight: createSize(4, 'px'),
       });
     });
 
@@ -116,7 +116,7 @@ describe('Property Actions', () => {
 
       // Other properties should remain
       const colorProperty = store.getFieldProperty('block-1', PropertyType.COLOR);
-      expect(colorProperty?.value).toBe('#000000');
+      expect(colorProperty?.value).toEqual(createColor('#000000'));
     });
   });
 
@@ -158,7 +158,7 @@ describe('Property Actions', () => {
   describe('getFieldProperty', () => {
     it('should return the correct property', () => {
       const bgColorProperty = store.getFieldProperty('block-1', PropertyType.BACKGROUND_COLOR);
-      expect(bgColorProperty?.value).toBe('#FFFFFF');
+      expect(bgColorProperty?.value).toEqual(createColor('#FFFFFF'));
     });
 
     it('should return undefined for non-existent property', () => {
