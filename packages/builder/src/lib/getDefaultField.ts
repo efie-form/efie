@@ -473,7 +473,7 @@ export function getDefaultField<T extends FormFieldType>({
             },
           },
           {
-            type: PropertyType.BG_COLOR,
+            type: PropertyType.BACKGROUND_COLOR,
             value: getColorObject('#FFFFFF'),
           },
           {
@@ -535,7 +535,7 @@ export function getDefaultField<T extends FormFieldType>({
             value: getColorObject('#FFFFFF'),
           },
           {
-            type: PropertyType.BG_COLOR,
+            type: PropertyType.BACKGROUND_COLOR,
             value: getColorObject('#5083a7'),
           },
           {

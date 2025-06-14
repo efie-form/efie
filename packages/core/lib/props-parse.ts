@@ -1,17 +1,12 @@
 import type {
-  BorderRadiusProperty,
-  BoxShadowProperty,
   FontSizeProperty,
-  FontWeightProperty,
-  MarginProperty,
-  PaddingProperty,
   TextAlignProperty,
-  WidthProperty,
 } from './types/field-properties.type';
 import { TextAlign, SizeType } from './types/form-schema.constant';
-import type { Size, MarginSize, PaddingSize, FontSize, WidthHeightSize, Color } from './types/common.type';
+import type { Size, Color } from './types/common.type';
+import type { PropValueBorderRadius, PropValueBoxShadow, PropValueMargin, PropValuePadding, PropValueSize } from './types/field-property-value.type';
 
-export const toSize = (size?: Size | MarginSize | PaddingSize | FontSize | WidthHeightSize) => {
+export const toSize = (size?: Size) => {
   if (!size) return;
 
   switch (size.type) {
@@ -44,13 +39,13 @@ export const toSize = (size?: Size | MarginSize | PaddingSize | FontSize | Width
   }
 };
 
-export const marginToStyle = (margin?: MarginProperty) => {
+export const marginToStyle = (margin?: PropValueMargin) => {
   if (!margin) return;
 
-  const top = toSize(margin.value.top);
-  const right = toSize(margin.value.right);
-  const bottom = toSize(margin.value.bottom);
-  const left = toSize(margin.value.left);
+  const top = toSize(margin.top);
+  const right = toSize(margin.right);
+  const bottom = toSize(margin.bottom);
+  const left = toSize(margin.left);
 
   if (top === right && right === bottom && bottom === left) {
     return top;
@@ -63,13 +58,13 @@ export const marginToStyle = (margin?: MarginProperty) => {
   return `${top} ${right} ${bottom} ${left}`;
 };
 
-export const paddingToStyle = (padding?: PaddingProperty) => {
+export const paddingToStyle = (padding?: PropValuePadding) => {
   if (!padding) return;
 
-  const top = toSize(padding.value.top);
-  const right = toSize(padding.value.right);
-  const bottom = toSize(padding.value.bottom);
-  const left = toSize(padding.value.left);
+  const top = toSize(padding.top);
+  const right = toSize(padding.right);
+  const bottom = toSize(padding.bottom);
+  const left = toSize(padding.left);
 
   if (top === right && right === bottom && bottom === left) {
     return top;
@@ -89,7 +84,7 @@ function radiusToSize(radius: Size | Size[]) {
   return toSize(radius);
 }
 
-export const borderRadiusToStyle = (borderRadius?: BorderRadiusProperty['value']) => {
+export const borderRadiusToStyle = (borderRadius?: PropValueBorderRadius) => {
   if (!borderRadius) return;
 
   const topLeft = radiusToSize(borderRadius.topLeft);
@@ -112,26 +107,26 @@ export const borderRadiusToStyle = (borderRadius?: BorderRadiusProperty['value']
   return `${topLeft} ${topRight} ${bottomRight} ${bottomLeft}`;
 };
 
-export const boxShadowToStyle = (boxShadow?: BoxShadowProperty) => {
+export const boxShadowToStyle = (boxShadow?: PropValueBoxShadow) => {
   if (!boxShadow) return;
 
-  return boxShadow.value
+  return boxShadow
     .map((shadow) => {
       const x = toSize(shadow.x);
       const y = toSize(shadow.y);
       const blur = toSize(shadow.blur);
       const spread = toSize(shadow.spread);
-      const color = shadow.color;
+      const color = shadow.color.hex;
       const inset = shadow.inset ? 'inset' : '';
       return `${x} ${y} ${blur} ${spread} ${color} ${inset}`;
     })
     .join(',');
 };
 
-export const widthToStyle = (width?: WidthProperty) => {
+export const widthToStyle = (width?: PropValueSize) => {
   if (!width) return;
 
-  return toSize(width.value);
+  return toSize(width);
 };
 
 const textAlignMap = {
@@ -156,12 +151,6 @@ export const fontSizeToStyle = (fontSize?: FontSizeProperty) => {
   if (!fontSize) return;
 
   return toSize(fontSize.value);
-};
-
-export const fontWeightToStyle = (fontWeight?: FontWeightProperty) => {
-  if (!fontWeight) return;
-
-  return fontWeight.value;
 };
 
 export const sizeToStyle = (size?: Size) => {

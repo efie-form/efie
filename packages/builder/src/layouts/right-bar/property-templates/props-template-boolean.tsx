@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import type { PropSettingsBoolean } from '../../../types/prop-settings.type';
-import { isBooleanValue, type PropertyDefinition } from '@efie-form/core';
+import { isBooleanValue, type PropertyDefinition, type PropValue } from '@efie-form/core';
 import { Switch } from '../../../components/form';
 import SettingsFieldHorizontal from '../property-layouts/SettingsFieldHorizontal';
 
@@ -18,7 +18,7 @@ export default function PropsTemplateBoolean({ label, fieldId, type }: PropTempl
   );
   const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
 
-  const value = getValue(fieldProperty);
+  const value = getValue(fieldProperty?.value);
 
   const handleChange = useCallback((newValue: boolean) => {
     updateFieldProperty(fieldId, {
@@ -37,8 +37,8 @@ export default function PropsTemplateBoolean({ label, fieldId, type }: PropTempl
   );
 }
 
-function getValue(props?: PropertyDefinition) {
-  if (!isBooleanValue(props)) return false;
+function getValue(value?: PropValue) {
+  if (!isBooleanValue(value)) return false;
 
-  return props.value;
+  return value;
 }

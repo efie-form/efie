@@ -3,7 +3,7 @@ import { Input } from '../../../components/form';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import type { PropSettingsNumber } from '../../../types/prop-settings.type';
 import SettingsFieldHorizontal from '../property-layouts/SettingsFieldHorizontal';
-import { isNumberValue, type PropertyDefinition } from '@efie-form/core';
+import { isNumberValue, type PropertyDefinition, type PropValue } from '@efie-form/core';
 
 interface PropsTemplateNumberProps extends PropSettingsNumber {
   fieldId: string;
@@ -12,7 +12,7 @@ interface PropsTemplateNumberProps extends PropSettingsNumber {
 export default function PropsTemplateNumber({ fieldId, label, type, placeholder }: PropsTemplateNumberProps) {
   const fieldProperty = useSchemaStore(useCallback(state => state.getFieldProperty(fieldId, type), [fieldId, type]));
   const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
-  const value = getValue(fieldProperty);
+  const value = getValue(fieldProperty?.value);
 
   const handleChange = (newValue: string) => {
     const trimmedValue = newValue.trim().replaceAll(',', '');
@@ -36,8 +36,8 @@ export default function PropsTemplateNumber({ fieldId, label, type, placeholder 
   );
 }
 
-function getValue(props?: PropertyDefinition) {
+function getValue(props?: PropValue) {
   if (!isNumberValue(props)) return '';
 
-  return props.value.toLocaleString();
+  return props.toLocaleString();
 }

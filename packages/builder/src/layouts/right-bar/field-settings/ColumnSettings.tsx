@@ -1,4 +1,4 @@
-import { type ColumnFormField } from '@efie-form/core';
+import { PropertyType, type ColumnFormField } from '@efie-form/core';
 import { FaTrash } from 'react-icons/fa';
 import Button from '../../../components/elements/Button';
 import DynamicSettings from '../DynamicSettings';
@@ -14,7 +14,7 @@ function ColumnSettings({ field, onRemove }: ColumnSettingsProps) {
       <DynamicSettings
         fieldId={field.id}
         settings={[
-          { template: 'size', type: 'width', label: 'Width' },
+          { template: 'size', type: PropertyType.WIDTH, label: 'Width' },
         ]}
       />
       <div className="flex justify-center mt-4 px-2">

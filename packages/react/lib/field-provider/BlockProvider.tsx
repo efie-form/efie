@@ -28,7 +28,7 @@ function BlockProvider({ field, Component, ...props }: BlockProviderProps) {
     field => field.type === PropertyType.BOX_SHADOW,
   );
   const bgColor = field.props.find(
-    field => field.type === PropertyType.BG_COLOR,
+    field => field.type === PropertyType.BACKGROUND_COLOR,
   );
   const color = field.props.find(field => field.type === PropertyType.COLOR);
 

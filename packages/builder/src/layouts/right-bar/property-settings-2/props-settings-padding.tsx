@@ -1,28 +1,13 @@
 import { useCallback, useState, useRef, useEffect } from 'react';
 import { useSchemaStore } from '../../../lib/state/schema.state';
-import type { PropertyDefinition, PaddingProperty } from '@efie-form/core';
-import { SizeType, type PaddingSize, type Size } from '@efie-form/core';
+import type { PropertyDefinition, PaddingProperty, PropValue, PropValuePadding } from '@efie-form/core';
+import { isPaddingValue, SizeType, type PaddingSize, type Size } from '@efie-form/core';
 import SizeInput from '../../../components/form/SizeInput';
 import { FaLink, FaUnlink } from 'react-icons/fa';
-import { PropertyType } from '@efie-form/core';
 import type { PropSettingsPadding } from '../../../types/prop-settings.type';
 
 interface PropsSettingsPaddingProps extends PropSettingsPadding {
   fieldId: string;
-}
-
-// Helper function to check if a property is a padding property
-function isPaddingValue(props?: PropertyDefinition): props is Extract<PropertyDefinition, { type: typeof PropertyType.PADDING }> {
-  return (
-    !!props
-    && 'value' in props
-    && props.type === PropertyType.PADDING
-    && typeof props.value === 'object'
-    && 'top' in props.value
-    && 'right' in props.value
-    && 'bottom' in props.value
-    && 'left' in props.value
-  );
 }
 
 export default function PropsSettingsPadding({ fieldId, label, type }: PropsSettingsPaddingProps) {
@@ -31,7 +16,7 @@ export default function PropsSettingsPadding({ fieldId, label, type }: PropsSett
     [fieldId, type],
   ));
   const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
-  const value = getValue(fieldProperty);
+  const value = getValue(fieldProperty?.value);
   const [isLinked, setIsLink] = useState(false);
   const [hasUserInteracted, setHasUserInteracted] = useState(false);
   const previousValuesRef = useRef<PaddingProperty['value'] | null>(null);
@@ -41,7 +26,7 @@ export default function PropsSettingsPadding({ fieldId, label, type }: PropsSett
     const { top, right, bottom, left } = paddingValue;
 
     // Helper to normalize values for comparison
-    const normalizeValue = (val: PaddingSize): string => {
+    const normalizeValue = (val: Size): string => {
       return JSON.stringify(val);
     };
 
@@ -250,7 +235,7 @@ function PaddingSide({ value, handleChange, paddingSide }: PaddingSideProps) {
   );
 }
 
-function getValue(props?: PropertyDefinition): PaddingProperty['value'] {
+function getValue(props?: PropValue): PropValuePadding {
   if (!isPaddingValue(props)) return {
     top: { type: SizeType.LENGTH, value: 0, unit: 'px' },
     right: { type: SizeType.LENGTH, value: 0, unit: 'px' },
@@ -258,5 +243,5 @@ function getValue(props?: PropertyDefinition): PaddingProperty['value'] {
     left: { type: SizeType.LENGTH, value: 0, unit: 'px' },
   };
 
-  return props.value;
+  return props;
 }

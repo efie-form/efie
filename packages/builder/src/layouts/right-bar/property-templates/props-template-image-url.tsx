@@ -3,7 +3,7 @@ import SettingsFieldVertical from '../property-layouts/SettingsFieldVertical';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import type { PropSettingsImageUrl } from '../../../types/prop-settings.type';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { isStringValue, type PropertyDefinition } from '@efie-form/core';
+import { isStringValue, type PropertyDefinition, type PropValue } from '@efie-form/core';
 import { MdOutlineImage } from 'react-icons/md';
 import { useFileDragDrop } from '../../../lib/hooks/useFileDragDrop';
 import { getImageFileInfo } from './utils-image-info';
@@ -26,7 +26,7 @@ export default function PropsTemplateImageUrl({
     ),
   );
   const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
-  const value = getValue(fieldProperty);
+  const value = getValue(fieldProperty?.value);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [imageError, setImageError] = useState(false);
@@ -238,9 +238,10 @@ export default function PropsTemplateImageUrl({
   );
 }
 
-const getValue = (props?: PropertyDefinition) => {
+const getValue = (props?: PropValue) => {
   if (!isStringValue(props)) return '';
-  return props.value;
+
+  return props;
 };
 
 const formatFileSize = (bytes: number): string => {

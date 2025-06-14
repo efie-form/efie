@@ -3,7 +3,7 @@ import SettingsFieldVertical from '../property-layouts/SettingsFieldVertical';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import type { PropSettingsText } from '../../../types/prop-settings.type';
 import { useCallback } from 'react';
-import { isStringValue, type PropertyDefinition } from '@efie-form/core';
+import { isStringValue, type PropertyDefinition, type PropValue } from '@efie-form/core';
 
 interface PropsTemplateTextProps extends PropSettingsText {
   fieldId: string;
@@ -17,7 +17,7 @@ export default function PropsTemplateText({ label, placeholder, type, fieldId }:
     ),
   );
   const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
-  const value = getValue(fieldProperty);
+  const value = getValue(fieldProperty?.value);
 
   const handleChange = useCallback((newValue: string) => {
     updateFieldProperty(fieldId, {
@@ -37,8 +37,8 @@ export default function PropsTemplateText({ label, placeholder, type, fieldId }:
   );
 }
 
-const getValue = (props?: PropertyDefinition) => {
+const getValue = (props?: PropValue) => {
   if (!isStringValue(props)) return '';
 
-  return props.value;
+  return props;
 };

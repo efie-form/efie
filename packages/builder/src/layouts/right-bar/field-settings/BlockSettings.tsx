@@ -13,7 +13,7 @@ function BlockSettings({ field }: BlockSettingsProps) {
       </div>
       <DynamicSettings
         settings={[
-          { template: 'color', label: 'Background Color', type: PropertyType.BG_COLOR },
+          { template: 'color', label: 'Background Color', type: PropertyType.BACKGROUND_COLOR },
           { template: 'color', label: 'Text Color', type: PropertyType.COLOR },
           { template: 'borderRadius', label: 'Border Radius', type: PropertyType.BORDER_RADIUS },
           { template: 'margin', label: 'Marg|in', type: PropertyType.MARGIN },

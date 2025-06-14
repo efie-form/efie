@@ -3,7 +3,7 @@ import { useSchemaStore } from '../../../lib/state/schema.state';
 import type { PropSettingsAccept } from '../../../types/prop-settings.type';
 import SettingsFieldSwitchWithDropdown from '../property-layouts/SettingsFieldSwitchWithDropdown';
 import { Switch } from '../../../components/form';
-import type { AcceptProperty, PropertyDefinition } from '@efie-form/core';
+import { isAcceptValue, type AcceptProperty, type PropValue, type PropValueAccept } from '@efie-form/core';
 
 const FILE_EXTENSIONS = [
   { label: 'PDF', value: ['.pdf'] },
@@ -25,7 +25,7 @@ interface PropsSettingsAcceptProps extends PropSettingsAccept {
 export default function PropsSettingsAccept({ fieldId, label = 'Only allow specific file types', type }: PropsSettingsAcceptProps) {
   const fieldProperty = useSchemaStore(useCallback(state => state.getFieldProperty(fieldId, type), [fieldId, type]));
   const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
-  const value = getValue(fieldProperty);
+  const value = getValue(fieldProperty?.value);
   const prevFormats = useRef(value.formats);
 
   const handleExtensionChange = useCallback(
@@ -36,8 +36,12 @@ export default function PropsSettingsAccept({ fieldId, label = 'Only allow speci
         : currentExtensions.filter(ext => !extensions.includes(ext));
 
       updateFieldProperty(fieldId, {
-        ...value,
-        formats: newExtensions,
+        type,
+        value: {
+          ...value,
+          formats: newExtensions,
+          allowAll: newExtensions.length === FILE_EXTENSIONS.flatMap(ext => ext.value).length,
+        },
       } as AcceptProperty);
     },
     [fieldId, type, value, updateFieldProperty],
@@ -49,9 +53,12 @@ export default function PropsSettingsAccept({ fieldId, label = 'Only allow speci
         prevFormats.current = value.formats;
       }
       updateFieldProperty(fieldId, {
-        ...value,
-        allowAll: !checked,
-        formats: checked ? prevFormats.current || [] : [],
+        type,
+        value: {
+          ...value,
+          allowAll: !checked,
+          formats: checked ? prevFormats.current || [] : [],
+        },
       } as AcceptProperty);
     },
     [fieldId, type, value, updateFieldProperty],
@@ -89,14 +96,10 @@ export default function PropsSettingsAccept({ fieldId, label = 'Only allow speci
   );
 }
 
-function getValue(props?: PropertyDefinition): AcceptProperty {
-  if (!props || !('formats' in props)) {
-    return { type: 'accept', formats: [], allowAll: false };
+function getValue(value?: PropValue): PropValueAccept {
+  if (!isAcceptValue(value)) {
+    return { formats: [], allowAll: false };
   }
 
-  return {
-    type: 'accept',
-    formats: props.formats || [],
-    allowAll: props.allowAll || false,
-  };
+  return value;
 }

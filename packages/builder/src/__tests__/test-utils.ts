@@ -23,7 +23,7 @@ export const createTestSchema = (): FormSchema => ({
             children: [],
             props: [
               {
-                type: PropertyType.BG_COLOR,
+                type: PropertyType.BACKGROUND_COLOR,
                 value: '#FFFFFF',
               },
             ],
@@ -102,7 +102,7 @@ export const createComplexTestSchema = (): FormSchema => ({
             ],
             props: [
               {
-                type: PropertyType.BG_COLOR,
+                type: PropertyType.BACKGROUND_COLOR,
                 value: '#FFFFFF',
               },
             ],
@@ -113,7 +113,7 @@ export const createComplexTestSchema = (): FormSchema => ({
             children: [],
             props: [
               {
-                type: PropertyType.BG_COLOR,
+                type: PropertyType.BACKGROUND_COLOR,
                 value: '#F0F0F0',
               },
             ],
@@ -145,7 +145,7 @@ export const createPropertyTestSchema = (): FormSchema => ({
             children: [],
             props: [
               {
-                type: PropertyType.BG_COLOR,
+                type: PropertyType.BACKGROUND_COLOR,
                 value: '#FFFFFF',
               },
               {

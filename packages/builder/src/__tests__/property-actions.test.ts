@@ -15,13 +15,13 @@ describe('Property Actions', () => {
   describe('updateFieldProperty', () => {
     it('should update an existing property', () => {
       const newProperty: PropertyDefinition = {
-        type: PropertyType.BG_COLOR,
+        type: PropertyType.BACKGROUND_COLOR,
         value: '#FF0000',
       };
 
       store.updateFieldProperty('block-1', newProperty);
 
-      const updatedProperty = store.getFieldProperty('block-1', PropertyType.BG_COLOR);
+      const updatedProperty = store.getFieldProperty('block-1', PropertyType.BACKGROUND_COLOR);
       expect(updatedProperty?.value).toBe('#FF0000');
     });
 
@@ -77,26 +77,26 @@ describe('Property Actions', () => {
 
     it('should not add property if it already exists', () => {
       const existingProperty: PropertyDefinition = {
-        type: PropertyType.BG_COLOR,
+        type: PropertyType.BACKGROUND_COLOR,
         value: '#FF0000',
       };
 
       // Get original property value
-      const originalProperty = store.getFieldProperty('block-1', PropertyType.BG_COLOR);
+      const originalProperty = store.getFieldProperty('block-1', PropertyType.BACKGROUND_COLOR);
 
       store.addFieldProperty('block-1', existingProperty);
 
       // Should still have original value
-      const unchangedProperty = store.getFieldProperty('block-1', PropertyType.BG_COLOR);
+      const unchangedProperty = store.getFieldProperty('block-1', PropertyType.BACKGROUND_COLOR);
       expect(unchangedProperty?.value).toBe(originalProperty?.value);
     });
   });
 
   describe('removeFieldProperty', () => {
     it('should remove an existing property', () => {
-      store.removeFieldProperty('block-1', PropertyType.BG_COLOR);
+      store.removeFieldProperty('block-1', PropertyType.BACKGROUND_COLOR);
 
-      const removedProperty = store.getFieldProperty('block-1', PropertyType.BG_COLOR);
+      const removedProperty = store.getFieldProperty('block-1', PropertyType.BACKGROUND_COLOR);
       expect(removedProperty).toBeUndefined();
     });
 
@@ -140,14 +140,14 @@ describe('Property Actions', () => {
       expect(allProperties).toEqual(newProperties);
 
       // Old BG_COLOR property should be gone
-      const bgColorProperty = store.getFieldProperty('block-1', PropertyType.BG_COLOR);
+      const bgColorProperty = store.getFieldProperty('block-1', PropertyType.BACKGROUND_COLOR);
       expect(bgColorProperty).toBeUndefined();
     });
   });
 
   describe('getFieldProperty', () => {
     it('should return the correct property', () => {
-      const bgColorProperty = store.getFieldProperty('block-1', PropertyType.BG_COLOR);
+      const bgColorProperty = store.getFieldProperty('block-1', PropertyType.BACKGROUND_COLOR);
       expect(bgColorProperty?.value).toBe('#FFFFFF');
     });
 
@@ -157,7 +157,7 @@ describe('Property Actions', () => {
     });
 
     it('should return undefined for non-existent field', () => {
-      const property = store.getFieldProperty('non-existent', PropertyType.BG_COLOR);
+      const property = store.getFieldProperty('non-existent', PropertyType.BACKGROUND_COLOR);
       expect(property).toBeUndefined();
     });
   });
@@ -166,7 +166,7 @@ describe('Property Actions', () => {
     it('should return all properties for a field', () => {
       const properties = store.getFieldProperties('block-1');
       expect(properties).toHaveLength(2);
-      expect(properties.map(p => p.type)).toContain(PropertyType.BG_COLOR);
+      expect(properties.map(p => p.type)).toContain(PropertyType.BACKGROUND_COLOR);
       expect(properties.map(p => p.type)).toContain(PropertyType.COLOR);
     });
 

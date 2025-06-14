@@ -43,7 +43,7 @@ const defaultSchema: FormSchema = {
                 },
               },
               {
-                type: PropertyType.BG_COLOR,
+                type: PropertyType.BACKGROUND_COLOR,
                 value: '#FFFFFF',
               },
               {

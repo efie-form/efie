@@ -1,39 +1,32 @@
-import type { Color } from './types/common.type';
+import type { Size } from './types/common.type';
 import type { PropertyDefinition, WidthProperty } from './types/field-properties.type';
-import { PropertyType } from './types/form-schema.constant';
+import type { PropValue, PropValueAccept, PropValueBoolean, PropValueBorderRadius, PropValueBoxShadow, PropValueColor, PropValueMargin, PropValueNumber, PropValueOptions, PropValueSize, PropValueString } from './types/field-property-value.type';
+import { SizeType } from './types/form-schema.constant';
 
-export function isStringValue(props?: PropertyDefinition): props is Extract<PropertyDefinition, { value: string }> {
+export function isStringValue(value?: PropValue): value is PropValueString {
   return (
-    !!props
-    && 'value' in props
-    && typeof props.value === 'string'
+    !!value
+    && typeof value === 'string'
   );
 }
 
-export function isNumberValue(props?: PropertyDefinition): props is Extract<PropertyDefinition, { value: number }> {
+export function isNumberValue(value?: PropValue): value is PropValueNumber {
   return (
-    !!props
-    && 'value' in props
-    && typeof props.value === 'number'
-    && !Number.isNaN(props.value)
+    value !== undefined && typeof value === 'number'
   );
 }
 
-export function isBooleanValue(props?: PropertyDefinition): props is Extract<PropertyDefinition, { value: boolean }> {
+export function isBooleanValue(value?: PropValue): value is PropValueBoolean {
   return (
-    !!props
-    && 'value' in props
-    && typeof props.value === 'boolean'
-    && (props.value === true || props.value === false)
+    value !== undefined
+    && typeof value === 'boolean'
   );
 }
 
-export function isColorValue(props?: PropertyDefinition): props is Extract<PropertyDefinition, { value: Color }> {
-  if (!props || !('value' in props) || !props.value || typeof props.value !== 'object') {
+export function isColorValue(value?: PropValue): value is PropValueColor {
+  if (!value || typeof value !== 'object') {
     return false;
   }
-
-  const value = props.value;
 
   // Validate RGBA values
   if ('rgba' in value && value.rgba) {
@@ -78,33 +71,89 @@ export function isWidthValue(props?: PropertyDefinition): props is WidthProperty
   return true;
 }
 
-export function isBorderRadiusValue(props?: PropertyDefinition): props is Extract<PropertyDefinition, { type: typeof PropertyType.BORDER_RADIUS }> {
+export function isBorderRadiusValue(value?: PropValue): value is PropValueBorderRadius {
   return (
-    !!props
-    && 'value' in props
-    && props.type === PropertyType.BORDER_RADIUS
-    && typeof props.value === 'object'
-    && 'topLeft' in props.value
-    && 'topRight' in props.value
-    && 'bottomLeft' in props.value
-    && 'bottomRight' in props.value
-    // TODO: Valid whether its size value
+    !!value
+    && typeof value === 'object'
+    && 'topLeft' in value
+    && 'topRight' in value
+    && 'bottomLeft' in value
+    && 'bottomRight' in value
   );
 }
 
-export function isBoxShadowValue(props?: PropertyDefinition): props is Extract<PropertyDefinition, { type: typeof PropertyType.BOX_SHADOW }> {
+export function isBoxShadowValue(value?: PropValue): value is PropValueBoxShadow {
   return (
-    !!props
-    && 'value' in props
-    && props.type === PropertyType.BOX_SHADOW
-    && Array.isArray(props.value)
-    && props.value.every(
+    !!value
+    && Array.isArray(value)
+    && value.every(
       shadow => typeof shadow === 'object'
         && 'x' in shadow
-        && 'x' in shadow
+        && 'y' in shadow
         && 'blur' in shadow
         && 'spread' in shadow
         && 'color' in shadow,
     )
+  );
+}
+
+export function isSizeValue(value?: PropValue): value is PropValueSize {
+  return isSize(value);
+}
+
+export function isAcceptValue(value?: PropValue): value is PropValueAccept {
+  return (
+    !!value
+    && typeof value === 'object'
+    && 'allowed' in value
+    && Array.isArray(value.allowed)
+    && 'allowAll' in value
+    && typeof value.allowAll === 'boolean'
+  );
+}
+
+export function isMarginValue(value?: PropValue): value is PropValueMargin {
+  return (
+    !!value
+    && typeof value === 'object'
+    && 'top' in value
+    && 'right' in value
+    && 'bottom' in value
+    && 'left' in value
+    && isSize(value.top)
+    && isSize(value.right)
+    && isSize(value.bottom)
+    && isSize(value.left)
+  );
+}
+
+export function isSize(value: unknown): value is Size {
+  return (
+    !!value
+    && typeof value === 'object'
+    && 'type' in value
+    && Object.values(SizeType).includes((value as Size).type)
+  );
+}
+
+export function isOptionsValue(value?: PropValue): value is PropValueOptions {
+  return (
+    Array.isArray(value)
+    && value.every(item => typeof item === 'object' && 'label' in item && 'value' in item)
+  );
+}
+
+export function isPaddingValue(value?: PropValue): value is PropValueMargin {
+  return (
+    !!value
+    && typeof value === 'object'
+    && 'top' in value
+    && 'right' in value
+    && 'bottom' in value
+    && 'left' in value
+    && isSize(value.top)
+    && isSize(value.right)
+    && isSize(value.bottom)
+    && isSize(value.left)
   );
 }

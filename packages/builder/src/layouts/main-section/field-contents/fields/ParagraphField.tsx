@@ -25,7 +25,7 @@ function ParagraphField({ field }: ParagraphFieldProps) {
       style={{
         textAlign: textAlignToStyle(textAlign),
         fontSize: fontSizeToStyle(fontSize),
-        color: colorToStyle(color),
+        color: colorToStyle(color?.value),
       }}
     >
       <RichTextEditor

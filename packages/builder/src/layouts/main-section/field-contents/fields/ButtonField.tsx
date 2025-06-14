@@ -17,7 +17,7 @@ const alignMap = {
 };
 
 function ButtonField({ field }: ButtonFieldProps) {
-  const bgColor = getFieldProp(field, PropertyType.BG_COLOR);
+  const bgColor = getFieldProp(field, PropertyType.BACKGROUND_COLOR);
   const color = getFieldProp(field, PropertyType.COLOR);
   const padding = getFieldProp(field, PropertyType.PADDING);
   const borderRadius = getFieldProp(field, PropertyType.BORDER_RADIUS);
@@ -29,11 +29,11 @@ function ButtonField({ field }: ButtonFieldProps) {
     <div className={cn('p-2', align ? alignMap[align.value] : '')}>
       <button
         style={{
-          padding: paddingToStyle(padding),
-          backgroundColor: bgColor?.value,
+          padding: paddingToStyle(padding?.value),
+          backgroundColor: bgColor?.value.hex,
           borderRadius: borderRadiusToStyle(borderRadius?.value),
-          color: color?.value,
-          width: widthToStyle(width),
+          color: color?.value.hex,
+          width: widthToStyle(width?.value),
         }}
       >
         {label?.value}

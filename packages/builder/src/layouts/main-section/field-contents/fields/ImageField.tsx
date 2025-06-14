@@ -28,7 +28,7 @@ function ImageField({ field }: ImageFieldProps) {
         alt={alt?.value}
         className="text-neutral-800 inline-block"
         style={{
-          width: widthToStyle(width),
+          width: widthToStyle(width?.value),
           objectFit: objectFit?.value,
         }}
       />

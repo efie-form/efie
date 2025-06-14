@@ -1,7 +1,7 @@
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { Input, Switch } from '../../../components/form';
 import type { PropSettingsOption } from '../../../types/prop-settings.type';
-import type { OptionsProperty, PropertyDefinition } from '@efie-form/core';
+import { isOptionsValue, type OptionsProperty, type PropValue, type PropValueOptions } from '@efie-form/core';
 import Button from '../../../components/elements/Button';
 import { closestCenter, DndContext, KeyboardSensor, PointerSensor, useSensor, useSensors, type DragEndEvent } from '@dnd-kit/core';
 import { MdAdd, MdOutlineClose, MdOutlineDragIndicator } from 'react-icons/md';
@@ -14,15 +14,15 @@ interface PropSettingsOptionssProps extends PropSettingsOption {
 }
 
 export default function PropsSettingsOptions({ fieldId, defaultOptions, label, type }: PropSettingsOptionssProps) {
-  const options = useSchemaStore(
+  const fieldProperty = useSchemaStore(
     useCallback(state => state.getFieldProperty(fieldId, type), [fieldId, defaultOptions]),
   );
   const updateOptions = useSchemaStore(state => state.updateFieldProperty);
-  const value = getValue(options);
+  const value = getValue(fieldProperty?.value);
   // Store previous values for restoration
-  const prevValuesRef = useRef<OptionsProperty['value']>(value.value.map(option => ({ ...option })));
+  const prevValuesRef = useRef<OptionsProperty['value']>(value.map(option => ({ ...option })));
   const [isValueDifferent, setIsValueDifferent] = useState(
-    value.value.some(option => option.value !== option.label) || false,
+    value.some(option => option.value !== option.label) || false,
   );
   // const prevOptionsRef = useRef<OptionsProperty['value']>();
 
@@ -37,8 +37,8 @@ export default function PropsSettingsOptions({ fieldId, defaultOptions, label, t
     setIsValueDifferent(different);
     if (different) {
       // Restore previous values if available
-      if (prevValuesRef.current && prevValuesRef.current.length === value.value.length) {
-        const restored = value.value.map((option, i) => ({
+      if (prevValuesRef.current && prevValuesRef.current.length === value.length) {
+        const restored = value.map((option, i) => ({
           ...option,
           value: prevValuesRef.current[i].value,
         }));
@@ -47,9 +47,9 @@ export default function PropsSettingsOptions({ fieldId, defaultOptions, label, t
     }
     else {
       // Save current values for restoration
-      prevValuesRef.current = value.value.map(option => ({ ...option }));
+      prevValuesRef.current = value.map(option => ({ ...option }));
       // Set value = label for all options
-      const newOptions = value.value.map(option => ({ ...option, value: option.label }));
+      const newOptions = value.map(option => ({ ...option, value: option.label }));
       updateOptions(fieldId, { type, value: newOptions } as OptionsProperty);
     }
   };
@@ -60,12 +60,12 @@ export default function PropsSettingsOptions({ fieldId, defaultOptions, label, t
     }
     const oldIndex = Number.parseInt(active.id as string, 10);
     const newIndex = Number.parseInt(over.id as string, 10);
-    const newOptions = arrayMove(value.value, oldIndex, newIndex);
+    const newOptions = arrayMove(value, oldIndex, newIndex);
     updateOptions(fieldId, { type, value: newOptions } as OptionsProperty);
   };
 
   const handleLabelChange = (index: number, changeType: 'value' | 'label', newValue: string) => {
-    const newOptions = [...value.value];
+    const newOptions = [...value];
     newOptions[index] = {
       ...newOptions[index],
       [changeType]: newValue,
@@ -74,14 +74,14 @@ export default function PropsSettingsOptions({ fieldId, defaultOptions, label, t
   };
 
   const handleRemoveOption = (index: number) => {
-    const newOptions = [...value.value];
+    const newOptions = [...value];
     newOptions.splice(index, 1);
     updateOptions(fieldId, { type, value: newOptions } as OptionsProperty);
   };
 
   const handleAddOption = () => {
-    const totalOptions = value.value.length;
-    const newOptions = [...value.value, { label: `Option ${totalOptions + 1}`, value: `Option ${totalOptions + 1}` }];
+    const totalOptions = value.length;
+    const newOptions = [...value, { label: `Option ${totalOptions + 1}`, value: `Option ${totalOptions + 1}` }];
     updateOptions(fieldId, { type, value: newOptions } as OptionsProperty);
   };
 
@@ -106,11 +106,11 @@ export default function PropsSettingsOptions({ fieldId, defaultOptions, label, t
             onDragEnd={handleDragEnd}
           >
             <SortableContext
-              items={value.value.map((_, index) => index.toString())}
+              items={value.map((_, index) => index.toString())}
               strategy={verticalListSortingStrategy}
             >
               <div className="flex flex-col gap-2">
-                {value.value.map((option, index) => (
+                {value.map((option, index) => (
                   <OptionItem
                     key={index}
                     index={index}
@@ -143,25 +143,17 @@ export default function PropsSettingsOptions({ fieldId, defaultOptions, label, t
   );
 }
 
-function getValue(props?: PropertyDefinition): OptionsProperty {
-  if (
-    !props
-    || !('value' in props)
-    || !Array.isArray(props.value)
-    || (props.value.length === 0)
-  ) {
-    return { type: 'options', value: [] };
+function getValue(props?: PropValue): PropValueOptions {
+  if (!isOptionsValue(props)) {
+    return [];
   }
 
-  return {
-    type: 'options',
-    value: props.value
-      .filter(option => option && 'value' in option && 'label' in option)
-      .map(option => ({
-        label: option.label,
-        value: option.value || option.label,
-      })),
-  };
+  return props
+    .filter(option => option && 'value' in option && 'label' in option)
+    .map(option => ({
+      label: option.label,
+      value: option.value || option.label,
+    }));
 }
 
 interface OptionItemProps {

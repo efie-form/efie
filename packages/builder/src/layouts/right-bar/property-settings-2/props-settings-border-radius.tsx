@@ -1,7 +1,7 @@
 import { useCallback, useState, useRef, useEffect } from 'react';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import type { PropSettingsBorderRadius } from '../../../types/prop-settings.type';
-import { borderRadiusToStyle, isBorderRadiusValue, SizeType, type BorderRadius, type BorderRadiusProperty, type PropertyDefinition, type Size } from '@efie-form/core';
+import { borderRadiusToStyle, isBorderRadiusValue, SizeType, type BorderRadius, type BorderRadiusProperty, type PropertyDefinition, type PropValue, type PropValueBorderRadius, type Size } from '@efie-form/core';
 import SizeInput from '../../../components/form/SizeInput';
 import { FaLink, FaUnlink } from 'react-icons/fa';
 
@@ -15,7 +15,7 @@ export default function PropsSettingsBorderRadius({ fieldId, label, type }: Prop
     [fieldId, type],
   ));
   const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
-  const value = getValue(fieldProperty);
+  const value = getValue(fieldProperty?.value);
   const [isLinked, setIsLink] = useState(false);
   const [hasUserInteracted, setHasUserInteracted] = useState(false);
   const previousValuesRef = useRef<BorderRadiusProperty['value'] | null>(null);
@@ -252,7 +252,7 @@ function BorderCorner({ value, handleChange, borderType }: BorderCornerProps) {
   );
 }
 
-function getValue(props?: PropertyDefinition): BorderRadiusProperty['value'] {
+function getValue(props?: PropValue): PropValueBorderRadius {
   if (!isBorderRadiusValue(props)) return {
     topLeft: { type: SizeType.LENGTH, value: 0, unit: 'px' },
     topRight: { type: SizeType.LENGTH, value: 0, unit: 'px' },
@@ -260,5 +260,5 @@ function getValue(props?: PropertyDefinition): BorderRadiusProperty['value'] {
     bottomRight: { type: SizeType.LENGTH, value: 0, unit: 'px' },
   };
 
-  return props.value;
+  return props;
 }

@@ -149,7 +149,7 @@ describe('History Actions', () => {
       };
 
       store.addField(newField, 'block-1');
-      store.updateField('block-1', { props: [{ type: PropertyType.BG_COLOR, value: '#FF0000' }] });
+      store.updateField('block-1', { props: [{ type: PropertyType.BACKGROUND_COLOR, value: '#FF0000' }] });
 
       // Get updated state after changes
       let updatedStore = useStore.getState();
@@ -177,7 +177,7 @@ describe('History Actions', () => {
       // Make multiple changes
       for (let i = 0; i < 5; i++) {
         store.updateField('block-1', {
-          props: [{ type: PropertyType.BG_COLOR, value: `#FF000${i}` }],
+          props: [{ type: PropertyType.BACKGROUND_COLOR, value: `#FF000${i}` }],
         });
       }
 

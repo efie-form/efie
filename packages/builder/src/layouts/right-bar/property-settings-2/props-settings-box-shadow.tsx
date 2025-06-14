@@ -1,7 +1,7 @@
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { Switch } from '../../../components/form';
 import type { PropSettingsBoxShadow } from '../../../types/prop-settings.type';
-import { type BoxShadowProperty, type PropertyDefinition, type BoxShadow, type Size, SizeType, isBoxShadowValue, type Color } from '@efie-form/core';
+import { type BoxShadowProperty, type BoxShadow, type Size, SizeType, isBoxShadowValue, type Color, type PropValue, type PropValueBoxShadow } from '@efie-form/core';
 import Button from '../../../components/elements/Button';
 import { closestCenter, DndContext, KeyboardSensor, PointerSensor, useSensor, useSensors, type DragEndEvent } from '@dnd-kit/core';
 import { MdAdd, MdOutlineDelete, MdOutlineDragIndicator } from 'react-icons/md';
@@ -31,7 +31,7 @@ export default function PropsSettingsBoxShadow({ fieldId, label, type }: PropsSe
     useCallback(state => state.getFieldProperty(fieldId, type), [fieldId, type]),
   );
   const updateBoxShadowProperty = useSchemaStore(state => state.updateFieldProperty);
-  const value = getValue(boxShadowProperty);
+  const value = getValue(boxShadowProperty?.value);
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -46,24 +46,24 @@ export default function PropsSettingsBoxShadow({ fieldId, label, type }: PropsSe
     }
     const oldIndex = Number.parseInt(active.id as string, 10);
     const newIndex = Number.parseInt(over.id as string, 10);
-    const newShadows = arrayMove(value.value, oldIndex, newIndex);
+    const newShadows = arrayMove(value, oldIndex, newIndex);
     updateBoxShadowProperty(fieldId, { type, value: newShadows } as BoxShadowProperty);
   };
 
   const handleUpdateShadow = (index: number, updates: Partial<BoxShadow>) => {
-    const newShadows = [...value.value];
+    const newShadows = [...value];
     newShadows[index] = { ...newShadows[index], ...updates };
     updateBoxShadowProperty(fieldId, { type, value: newShadows } as BoxShadowProperty);
   };
 
   const handleRemoveShadow = (index: number) => {
-    const newShadows = [...value.value];
+    const newShadows = [...value];
     newShadows.splice(index, 1);
     updateBoxShadowProperty(fieldId, { type, value: newShadows } as BoxShadowProperty);
   };
 
   const handleAddShadow = () => {
-    const newShadows = [...value.value, { ...defaultShadowItem }];
+    const newShadows = [...value, { ...defaultShadowItem }];
     updateBoxShadowProperty(fieldId, { type, value: newShadows } as BoxShadowProperty);
   };
 
@@ -87,11 +87,11 @@ export default function PropsSettingsBoxShadow({ fieldId, label, type }: PropsSe
             onDragEnd={handleDragEnd}
           >
             <SortableContext
-              items={value.value.map((_, index) => index.toString())}
+              items={value.map((_, index) => index.toString())}
               strategy={verticalListSortingStrategy}
             >
               <div className="flex flex-col gap-3">
-                {value.value.map((shadow, index) => (
+                {value.map((shadow, index) => (
                   <ShadowItem
                     key={index}
                     index={index}
@@ -103,7 +103,7 @@ export default function PropsSettingsBoxShadow({ fieldId, label, type }: PropsSe
               </div>
             </SortableContext>
           </DndContext>
-          {value.value.length === 0 && (
+          {value.length === 0 && (
             <div className="text-center py-4 text-neutral-500 typography-body3">
               No shadows added. Click "Add" to create your first shadow.
             </div>
@@ -117,9 +117,9 @@ export default function PropsSettingsBoxShadow({ fieldId, label, type }: PropsSe
   );
 }
 
-function getValue(props?: PropertyDefinition): BoxShadowProperty {
+function getValue(props?: PropValue): PropValueBoxShadow {
   if (!isBoxShadowValue(props)) {
-    return { type: 'boxShadow', value: [] };
+    return [];
   }
 
   return props;

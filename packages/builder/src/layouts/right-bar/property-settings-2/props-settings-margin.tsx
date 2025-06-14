@@ -1,10 +1,9 @@
 import { useCallback, useState, useRef, useEffect } from 'react';
 import { useSchemaStore } from '../../../lib/state/schema.state';
-import type { PropertyDefinition, MarginProperty } from '@efie-form/core';
-import { SizeType, type MarginSize, type Size } from '@efie-form/core';
+import type { PropertyDefinition, MarginProperty, PropValue, PropValueMargin } from '@efie-form/core';
+import { isMarginValue, SizeType, type MarginSize, type Size } from '@efie-form/core';
 import SizeInput from '../../../components/form/SizeInput';
 import { FaLink, FaUnlink } from 'react-icons/fa';
-import { PropertyType } from '@efie-form/core';
 
 interface PropSettingsMargin {
   template: 'margin';
@@ -16,27 +15,13 @@ interface PropsSettingsMarginProps extends PropSettingsMargin {
   fieldId: string;
 }
 
-// Helper function to check if a property is a margin property
-function isMarginValue(props?: PropertyDefinition): props is Extract<PropertyDefinition, { type: typeof PropertyType.MARGIN }> {
-  return (
-    !!props
-    && 'value' in props
-    && props.type === PropertyType.MARGIN
-    && typeof props.value === 'object'
-    && 'top' in props.value
-    && 'right' in props.value
-    && 'bottom' in props.value
-    && 'left' in props.value
-  );
-}
-
 export default function PropsSettingsMargin({ fieldId, label, type }: PropsSettingsMarginProps) {
   const fieldProperty = useSchemaStore(useCallback(
     state => (state.getFieldProperty(fieldId, type)),
     [fieldId, type],
   ));
   const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
-  const value = getValue(fieldProperty);
+  const value = getValue(fieldProperty?.value);
   const [isLinked, setIsLink] = useState(false);
   const [hasUserInteracted, setHasUserInteracted] = useState(false);
   const previousValuesRef = useRef<MarginProperty['value'] | null>(null);
@@ -46,7 +31,7 @@ export default function PropsSettingsMargin({ fieldId, label, type }: PropsSetti
     const { top, right, bottom, left } = marginValue;
 
     // Helper to normalize values for comparison
-    const normalizeValue = (val: MarginSize): string => {
+    const normalizeValue = (val: Size): string => {
       return JSON.stringify(val);
     };
 
@@ -255,13 +240,13 @@ function MarginSide({ value, handleChange, marginSide }: MarginSideProps) {
   );
 }
 
-function getValue(props?: PropertyDefinition): MarginProperty['value'] {
-  if (!isMarginValue(props)) return {
+function getValue(value?: PropValue): PropValueMargin {
+  if (!isMarginValue(value)) return {
     top: { type: SizeType.LENGTH, value: 0, unit: 'px' },
     right: { type: SizeType.LENGTH, value: 0, unit: 'px' },
     bottom: { type: SizeType.LENGTH, value: 0, unit: 'px' },
     left: { type: SizeType.LENGTH, value: 0, unit: 'px' },
   };
 
-  return props.value;
+  return value;
 }

@@ -57,4 +57,4 @@ export type WidthHeightSize = SizeAuto | SizeLength | SizePercentage | SizeIniti
 export type MarginSize = SizeAuto | SizeLength | SizePercentage | SizeInherit;
 export type PaddingSize = SizeLength | SizePercentage | SizeInherit;
 export type FontSize = SizeAbsolute | SizeRelative | SizeAuto | SizeLength | SizePercentage | SizeInitial | SizeInherit;
-export type Size = SizeAuto | SizeLength | SizePercentage | SizeInitial | SizeInherit | SizeAbsolute;
+export type Size = SizeAuto | SizeLength | SizePercentage | SizeInitial | SizeInherit | SizeAbsolute | SizeRelative;

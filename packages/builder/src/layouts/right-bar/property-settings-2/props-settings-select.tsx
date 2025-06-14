@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import Select from '../../../components/form/Select';
 import type { PropSettingsSelect } from '../../../types/prop-settings.type';
-import { isStringValue, type PropertyDefinition } from '@efie-form/core';
+import { isStringValue, type PropertyDefinition, type PropValue } from '@efie-form/core';
 import SettingsFieldHorizontal from '../property-layouts/SettingsFieldHorizontal';
 
 interface PropsSettingsSelectProps extends PropSettingsSelect {
@@ -18,7 +18,7 @@ export default function PropsSettingsSelect({
   const fieldProperty = useSchemaStore(
     useCallback(state => state.getFieldProperty(fieldId, type), [fieldId, type]),
   );
-  const value = getValue(fieldProperty);
+  const value = getValue(fieldProperty?.value);
 
   const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
 
@@ -50,9 +50,7 @@ export default function PropsSettingsSelect({
   );
 }
 
-function getValue(
-  fieldProperty: PropertyDefinition | undefined,
-): string | undefined {
-  if (!isStringValue(fieldProperty)) return undefined;
-  return fieldProperty.value ? String(fieldProperty.value) : undefined;
+function getValue(value?: PropValue) {
+  if (!isStringValue(value)) return '';
+  return value ? String(value) : '';
 }

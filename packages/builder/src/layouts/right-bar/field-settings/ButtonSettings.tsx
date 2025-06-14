@@ -16,7 +16,7 @@ function ButtonSettings({ field }: ButtonSettingsProps) {
         settings={[
           { template: 'text', type: PropertyType.LABEL, label: 'Label', placeholder: 'Enter button label' },
           { template: 'color', type: PropertyType.COLOR, label: 'Text Color' },
-          { template: 'color', type: PropertyType.BG_COLOR, label: 'Background Color' },
+          { template: 'color', type: PropertyType.BACKGROUND_COLOR, label: 'Background Color' },
           { template: 'size', type: PropertyType.WIDTH, label: 'Width' },
           { template: 'borderRadius', type: PropertyType.BORDER_RADIUS, label: 'Border Radius' },
           { template: 'padding', type: PropertyType.PADDING, label: 'Padding' },

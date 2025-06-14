@@ -92,7 +92,7 @@ describe('Schema State Store', () => {
       const updates = {
         props: [
           {
-            type: PropertyType.BG_COLOR,
+            type: PropertyType.BACKGROUND_COLOR,
             value: '#FF0000',
           },
         ],
@@ -112,7 +112,7 @@ describe('Schema State Store', () => {
       expect(duplicatedField?.type).toBe(FormFieldType.BLOCK);
       expect(duplicatedField?.props).toEqual([
         {
-          type: PropertyType.BG_COLOR,
+          type: PropertyType.BACKGROUND_COLOR,
           value: '#FFFFFF',
         },
       ]);
