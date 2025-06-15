@@ -21,6 +21,10 @@ import type {
   BorderRadiusProperty,
   BoxShadowProperty,
   BorderStyleProperty,
+  BorderWidthProperty,
+  BorderColorProperty,
+  FontWeightProperty,
+  ButtonTypeProperty,
   MaxFilesProperty,
   ContentProperty,
   PageNameProperty,
@@ -143,6 +147,8 @@ export interface BlockFormField extends BaseFormField {
     | BoxShadowProperty
     | BorderRadiusProperty
     | BorderStyleProperty
+    | BorderWidthProperty
+    | BorderColorProperty
   )[];
 }
 
@@ -203,6 +209,8 @@ export interface ButtonFormField extends BaseFormField {
     | ColorProperty
     | TextAlignProperty
     | FontSizeProperty
+    | FontWeightProperty
+    | ButtonTypeProperty
     | BorderRadiusProperty
     | BorderStyleProperty
     | PaddingProperty
@@ -224,6 +232,7 @@ export interface DividerFormField extends BaseFormField {
     | ColorProperty
     | WidthProperty
     | HeightProperty
+    | BorderStyleProperty
   )[];
 }
 

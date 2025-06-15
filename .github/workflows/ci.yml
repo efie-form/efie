@@ -95,6 +95,9 @@ jobs:
             pnpm install --no-frozen-lockfile
           }
 
+      - name: Build core package
+        run: pnpm --filter @efie-form/core run build
+
       - name: Run tests
         run: pnpm test
 

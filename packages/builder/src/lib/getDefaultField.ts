@@ -504,7 +504,7 @@ export function getDefaultField<T extends FormFieldType>({
                 y: { type: SizeType.LENGTH, value: 4, unit: 'px' },
                 blur: { type: SizeType.LENGTH, value: 6, unit: 'px' },
                 spread: { type: SizeType.LENGTH, value: 0, unit: 'px' },
-                color: '#00000019',
+                color: getColorObject('#00000019'),
                 inset: false,
               },
               {
@@ -512,7 +512,7 @@ export function getDefaultField<T extends FormFieldType>({
                 y: { type: SizeType.LENGTH, value: 2, unit: 'px' },
                 blur: { type: SizeType.LENGTH, value: 4, unit: 'px' },
                 spread: { type: SizeType.LENGTH, value: -2, unit: 'px' },
-                color: '#00000019',
+                color: getColorObject('#00000019'),
                 inset: false,
               },
             ],

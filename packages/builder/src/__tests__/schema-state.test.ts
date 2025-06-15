@@ -96,7 +96,7 @@ describe('Schema State Store', () => {
         props: [
           {
             type: PropertyType.BACKGROUND_COLOR,
-            value: '#FF0000',
+            value: createColor('#FF0000'),
           },
         ],
       };
