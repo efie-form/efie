@@ -1,15 +1,15 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "composite": true,
     "declarationMap": true,
     "allowJs": true,
     "verbatimModuleSyntax": true,
+    "incremental": false,
 
     // transpile
     "jsx": "react-jsx",
     // src
     "lib": ["DOM", "DOM.Iterable", "ESNext"]
   },
-  "include": ["src"]
+  "include": ["src/**/*"]
 }

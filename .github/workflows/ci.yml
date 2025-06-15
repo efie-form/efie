@@ -114,39 +114,47 @@ jobs:
   #   runs-on: ubuntu-latest
   #   needs: [lint, test]
 
-  #   steps:
-  #     - name: Checkout Code
-  #       uses: actions/checkout@v4
-
-  #     - name: Setup Node.js
-  #       uses: actions/setup-node@v4
-  #       with:
-  #         node-version: 20
-
-  #     - name: Setup pnpm
-  #       uses: pnpm/action-setup@v4
-  #       with:
-  #         version: 9
-
-  #     - name: Get pnpm store directory
-  #       shell: bash
-  #       run: |
-  #         echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-
-  #     - name: Setup pnpm cache
-  #       uses: actions/cache@v3
-  #       with:
-  #         path: ${{ env.STORE_PATH }}
-  #         key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-  #         restore-keys: |
-  #           ${{ runner.os }}-pnpm-store-
-
-  #     - name: Install dependencies
-  #       run: |
-  #         pnpm install --frozen-lockfile || {
-  #           echo "Frozen lockfile failed, updating lockfile..."
-  #           pnpm install --no-frozen-lockfile
-  #         }
-
   #     - name: Build packages
   #       run: npx nx run-many --target=build --all --skip-nx-cache
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    needs: [lint, test]
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: |
+          pnpm install --frozen-lockfile || {
+            echo "Frozen lockfile failed, updating lockfile..."
+            pnpm install --no-frozen-lockfile
+          }
+
+      - name: Build packages
+        run: pnpm build:packages
