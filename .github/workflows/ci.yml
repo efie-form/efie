@@ -96,7 +96,7 @@ jobs:
           }
 
       - name: Build core package
-        run: pnpm --filter @efie-form/core run build
+        run: pnpm --filter="@efie-form/core" build
 
       - name: Run tests
         run: pnpm test
