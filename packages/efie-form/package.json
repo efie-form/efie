@@ -1,6 +1,6 @@
 {
   "name": "efie-form",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Form builder for any framework - meta package",
   "author": "Wei Kang",
   "license": "MIT",
@@ -20,7 +20,7 @@
   ],
   "files": [
     "LICENSE",
-    "readme.md"
+    "README.md"
   ],
   "dependencies": {
     "@efie-form/core": "workspace:*",

@@ -1,6 +1,6 @@
 {
   "name": "@efie-form/vue",
-  "version": "0.0.1",
+  "version": "0.2.0",
   "description": "Vue components for Efie Form",
   "type": "module",
   "license": "MIT",
