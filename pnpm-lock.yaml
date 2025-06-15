@@ -4,6 +4,9 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  '@efie-form/core': link:./packages/core
+
 importers:
 
   .:
@@ -207,7 +210,7 @@ importers:
         specifier: ^3.2.2
         version: 3.2.2(react@19.0.0)
       '@efie-form/core':
-        specifier: workspace:*
+        specifier: link:../core
         version: link:../core
       '@monaco-editor/react':
         specifier: ^4.7.0
@@ -308,7 +311,7 @@ importers:
         version: 3.8.0(@swc/helpers@0.5.13)(vite@5.4.10(@types/node@22.13.8)(lightningcss@1.29.2))
       autoprefixer:
         specifier: ^10.4.20
-        version: 10.4.20(postcss@8.4.47)
+        version: 10.4.20(postcss@8.5.3)
       classnames:
         specifier: ^2.5.1
         version: 2.5.1
@@ -379,7 +382,7 @@ importers:
         specifier: workspace:*
         version: link:../builder
       '@efie-form/core':
-        specifier: workspace:*
+        specifier: link:../core
         version: link:../core
       react:
         specifier: ^19.0.0
@@ -428,7 +431,7 @@ importers:
   packages/react:
     dependencies:
       '@efie-form/core':
-        specifier: workspace:*
+        specifier: link:../core
         version: link:../core
       '@radix-ui/react-use-controllable-state':
         specifier: ^1.1.0
@@ -459,7 +462,7 @@ importers:
   packages/vue:
     dependencies:
       '@efie-form/core':
-        specifier: workspace:*
+        specifier: link:../core
         version: link:../core
       vue:
         specifier: ^3.0.0
@@ -10350,6 +10353,16 @@ snapshots:
       normalize-range: 0.1.2
       picocolors: 1.1.1
       postcss: 8.4.47
+      postcss-value-parser: 4.2.0
+
+  autoprefixer@10.4.20(postcss@8.5.3):
+    dependencies:
+      browserslist: 4.24.2
+      caniuse-lite: 1.0.30001674
+      fraction.js: 4.3.7
+      normalize-range: 0.1.2
+      picocolors: 1.1.1
+      postcss: 8.5.3
       postcss-value-parser: 4.2.0
 
   available-typed-arrays@1.0.7:

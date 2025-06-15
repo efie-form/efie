@@ -47,6 +47,7 @@ export default function SizeInput({ value, onChange, className }: SizeInputProps
     defaultValue: transformSizeToInternalValue(value),
   });
   const [isValidNumber, setIsValidNumber] = useState(true);
+  const [isInputFocused, setIsInputFocused] = useState(false);
 
   const handleValueChange = (rawValue: string) => {
     if (!requiredValueTypes.has(internalValue.type)) return; // Don't allow changes when auto is selected
@@ -115,6 +116,8 @@ export default function SizeInput({ value, onChange, className }: SizeInputProps
               const rawValue = e.target.value;
               handleValueChange(rawValue);
             }}
+            onFocus={() => setIsInputFocused(true)}
+            onBlur={() => setIsInputFocused(false)}
             onKeyDown={(e) => {
               if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
                 e.preventDefault();
@@ -123,6 +126,14 @@ export default function SizeInput({ value, onChange, className }: SizeInputProps
                 const newValue = e.key === 'ArrowUp' ? currentValue + increment : currentValue - increment;
                 handleValueChange(newValue.toString());
               }
+            }}
+            onWheel={(e) => {
+              if (internalValue.type === 'auto' || !isInputFocused) return;
+              e.preventDefault();
+              const currentValue = internalValue.value ? Number(internalValue.value.replaceAll(',', '')) : 0;
+              const increment = e.shiftKey ? 10 : 1;
+              const newValue = e.deltaY < 0 ? currentValue + increment : currentValue - increment;
+              handleValueChange(newValue.toString());
             }}
           />
         </div>

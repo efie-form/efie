@@ -1,6 +1,5 @@
 {
   "name": "@efie-form/react",
-  "private": true,
   "version": "0.1.0",
   "type": "module",
   "main": "index.ts",
@@ -8,6 +7,12 @@
     "react",
     "form",
     "form-builder"
+  ],
+  "files": [
+    "LICENSE",
+    "dist/",
+    "README.md",
+    "lib/"
   ],
   "scripts": {
     "dev": "vite",

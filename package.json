@@ -65,6 +65,9 @@
     ],
     "onlyBuiltDependencies": [
       "nx"
-    ]
+    ],
+    "overrides": {
+      "@efie-form/core": "link:./packages/core"
+    }
   }
 }
