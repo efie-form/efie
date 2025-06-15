@@ -24,7 +24,8 @@ Key packages include:
 - Use `unknown` instead of `any` where possible, and provide type guards.
 - Leverage TypeScript utility types (e.g., `Partial`, `Readonly`, `ReturnType`) to write more concise and maintainable code.
 
-### Linting & Formatting: ESLint & Prettier (via @stylistic/eslint-plugin)
+### Linting & Formatting: ESLint (via @stylistic/eslint-plugin)
+- This project doesn't use Prettier; instead, it relies on ESLint for both linting and formatting.
 - ESLint is configured in `eslint.config.js`.
 - Adhere to the ESLint rules defined. Run `pnpm lint` to check and `pnpm lint:fix` to automatically fix issues.
 - Key style points from `.eslintrc.js`:

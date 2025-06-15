@@ -1,10 +1,10 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "composite": true,
     "declarationMap": true,
     "allowJs": true,
     "verbatimModuleSyntax": true,
+    "incremental": false,
 
     // transpile
     "jsx": "react-jsx",
@@ -15,5 +15,5 @@
     "rootDir": "."
     // paths
   },
-  "include": ["lib", "types"]
+  "include": ["lib/**/*", "types/**/*", "index.ts"]
 }

@@ -1,32 +1,24 @@
-name: Test
+name: Release
 
 on:
   push:
-    branches: 
+    branches:
       - main
-  pull_request:
-    branches: 
-      - main
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
-  test:
-    name: Run Tests
+  release:
+    name: Release
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [18, 20]
-
     steps:
-      - name: Checkout Code
+      - name: Checkout Repo
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
-      - name: Setup Node.js ${{ matrix.node-version }}
+      - name: Setup Node.js 20
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 20
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -53,19 +45,18 @@ jobs:
             pnpm install --no-frozen-lockfile
           }
 
-      - name: Build core package
-        run: pnpm --filter="@efie-form/core" build
+      - name: Build packages
+        run: pnpm build:packages
 
-      - name: Run tests
-        run: pnpm test
-
-      - name: Run tests with coverage
-        run: pnpm test:coverage
-        if: matrix.node-version == 20
-
-      - name: Upload coverage reports
-        uses: codecov/codecov-action@v3
-        if: matrix.node-version == 20
+      - name: Create Release Pull Request or Publish to npm
+        id: changesets
+        uses: changesets/action@v1
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          fail_ci_if_error: false
+          # This expects you to have a script called release which does a build for your packages and calls changeset publish
+          publish: pnpm changeset:publish
+          version: pnpm version-packages
+          commit: "chore: release packages"
+          title: "chore: release packages"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

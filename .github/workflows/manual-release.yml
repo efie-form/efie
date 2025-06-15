@@ -1,32 +1,33 @@
-name: Test
+name: Manual Release
 
 on:
-  push:
-    branches: 
-      - main
-  pull_request:
-    branches: 
-      - main
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release type'
+        required: true
+        default: 'patch'
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
 
 jobs:
-  test:
-    name: Run Tests
+  release:
+    name: Manual Release
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [18, 20]
-
     steps:
-      - name: Checkout Code
+      - name: Checkout Repo
         uses: actions/checkout@v4
         with:
+          # This makes Actions fetch all Git history so that Changesets can generate changelogs with the correct commits
           fetch-depth: 0
 
-      - name: Setup Node.js ${{ matrix.node-version }}
+      - name: Setup Node.js 20
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 20
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -59,13 +60,13 @@ jobs:
       - name: Run tests
         run: pnpm test
 
-      - name: Run tests with coverage
-        run: pnpm test:coverage
-        if: matrix.node-version == 20
+      - name: Run linter
+        run: pnpm lint
 
-      - name: Upload coverage reports
-        uses: codecov/codecov-action@v3
-        if: matrix.node-version == 20
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          fail_ci_if_error: false
+      - name: Build packages
+        run: pnpm build:packages
+
+      - name: Release
+        run: pnpm release
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

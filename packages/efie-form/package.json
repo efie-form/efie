@@ -1,11 +1,34 @@
 {
   "name": "efie-form",
-  "version": "0.1.2",
-  "description": "Form builder for any framework",
-  "author": "Por Wei Kang <porweikang@hotmail.com>",
+  "version": "0.2.0",
+  "description": "Form builder for any framework - meta package",
+  "author": "Wei Kang",
   "license": "MIT",
+  "homepage": "https://github.com/pwkang/efie#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/efie-form/efie.git",
+    "directory": "packages/efie-form"
+  },
+  "bugs": {
+    "url": "https://github.com/pwkang/efie/issues"
+  },
+  "keywords": [
+    "form",
+    "form-builder",
+    "meta-package"
+  ],
   "files": [
     "LICENSE",
-    "readme.md"
-  ]
+    "README.md"
+  ],
+  "dependencies": {
+    "@efie-form/core": "workspace:*",
+    "@efie-form/builder": "workspace:*",
+    "@efie-form/react": "workspace:*",
+    "@efie-form/vue": "workspace:*"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
 }

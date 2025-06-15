@@ -1,4 +1,4 @@
-import type { Color, ColorHsla, ColorRgba } from '@efie-form/core';
+import type { Color, ColorHsla, ColorRgba } from './types/common.type.js';
 import convert from 'color-convert';
 
 /**

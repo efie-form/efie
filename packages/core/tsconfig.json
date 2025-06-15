@@ -1,10 +1,11 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "composite": true,
+    "composite": false,
     "declarationMap": true,
     "allowJs": true,
     "verbatimModuleSyntax": true,
+    "incremental": false,
 
     // transpile
     "jsx": "react-jsx",
@@ -15,5 +16,6 @@
     "rootDir": "."
     // paths
   },
-  "include": ["lib"]
+  "include": ["lib/**/*"],
+  "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.spec.ts"]
 }

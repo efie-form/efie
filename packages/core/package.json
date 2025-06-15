@@ -1,24 +1,55 @@
 {
   "name": "@efie-form/core",
   "description": "A form builder for any web framework",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "type": "module",
   "license": "MIT",
+  "author": "Wei Kang",
+  "homepage": "https://github.com/pwkang/efie#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/efie-form/efie.git",
+    "directory": "packages/core"
+  },
+  "bugs": {
+    "url": "https://github.com/pwkang/efie/issues"
+  },
+  "keywords": [
+    "form",
+    "form-builder",
+    "framework-agnostic",
+    "headless",
+    "typescript"
+  ],
   "files": [
     "LICENSE",
     "dist/",
     "README.md"
   ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "default": "./lib/index.ts"
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
     }
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "type-check": "tsc --noEmit"
   },
   "devDependencies": {
     "@tiptap/core": "^2.11.5",
+    "tsup": "^8.0.0",
     "typescript": "^5.6.3"
   },
   "dependencies": {
     "color-convert": "^3.1.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

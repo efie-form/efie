@@ -69,6 +69,16 @@ export interface FontSizeProperty {
   value: PropValueSize;
 }
 
+export interface FontWeightProperty {
+  type: typeof PropertyType.FONT_WEIGHT;
+  value: PropValueNumber;
+}
+
+export interface ButtonTypeProperty {
+  type: typeof PropertyType.BUTTON_TYPE;
+  value: PropValueString;
+}
+
 // Image properties
 export interface SrcProperty {
   type: typeof PropertyType.SRC;
@@ -121,6 +131,16 @@ export interface BorderStyleProperty {
   value: PropValueString;
 }
 
+export interface BorderWidthProperty {
+  type: typeof PropertyType.BORDER_WIDTH;
+  value: PropValueSize;
+}
+
+export interface BorderColorProperty {
+  type: typeof PropertyType.BORDER_COLOR;
+  value: PropValueColor;
+}
+
 export interface ContentProperty {
   type: typeof PropertyType.CONTENT;
   value: {
@@ -156,5 +176,9 @@ export type PropertyDefinition =
   | BoxShadowProperty
   | BorderRadiusProperty
   | BorderStyleProperty
+  | BorderWidthProperty
+  | BorderColorProperty
   | ContentProperty
-  | PageNameProperty;
+  | PageNameProperty
+  | FontWeightProperty
+  | ButtonTypeProperty;

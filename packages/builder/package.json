@@ -1,25 +1,54 @@
 {
   "name": "@efie-form/builder",
   "description": "A form builder for any web framework",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "type": "module",
   "license": "MIT",
+  "author": "Wei Kang",
+  "homepage": "https://github.com/pwkang/efie#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/efie-form/efie.git",
+    "directory": "packages/builder"
+  },
+  "bugs": {
+    "url": "https://github.com/pwkang/efie/issues"
+  },
+  "keywords": [
+    "form",
+    "form-builder",
+    "react",
+    "typescript",
+    "drag-and-drop"
+  ],
   "files": [
     "LICENSE",
     "dist/",
     "README.md"
   ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "default": "./src/index.ts"
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./styles": {
+      "import": "./dist/styles.css",
+      "require": "./dist/styles.css"
     }
   },
   "scripts": {
+    "build": "pnpm tw:build && tsup",
+    "dev": "tsup --watch",
     "tw": "tailwindcss -i src/styles/input.css -o src/styles/output.css --watch",
     "tw:build": "tailwindcss -i src/styles/input.css -o src/styles/output.css --minify",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "type-check": "tsc --noEmit"
   },
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0",
@@ -51,6 +80,7 @@
     "tailwindcss": "^3.4.14",
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
+    "tsup": "^8.0.0",
     "typescript": "^5.6.3",
     "typescript-transform-paths": "^3.5.4",
     "vite": "^5.4.1",
@@ -82,5 +112,8 @@
     "framer-motion": "^12.5.0",
     "immer": "^10.1.1",
     "react-popper": "^2.3.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

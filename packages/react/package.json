@@ -1,18 +1,44 @@
 {
   "name": "@efie-form/react",
-  "private": true,
-  "version": "0.1.0",
+  "version": "0.2.0",
+  "description": "React components for Efie Form",
   "type": "module",
-  "main": "index.ts",
+  "license": "MIT",
+  "author": "Wei Kang",
+  "homepage": "https://github.com/pwkang/efie#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/efie-form/efie.git",
+    "directory": "packages/react"
+  },
+  "bugs": {
+    "url": "https://github.com/pwkang/efie/issues"
+  },
   "keywords": [
     "react",
     "form",
-    "form-builder"
+    "form-builder",
+    "typescript"
   ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "LICENSE",
+    "dist/",
+    "README.md"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "preview": "vite preview"
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "@efie-form/core": "workspace:*",
@@ -22,6 +48,7 @@
     "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react-swc": "^3.5.0",
+    "tsup": "^8.0.0",
     "typescript": "~5.6.2",
     "vite": "^5.4.9",
     "react": "^18.0.0",
@@ -30,5 +57,8 @@
   "peerDependencies": {
     "react": "^18.0.0",
     "react-dom": "^18.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
