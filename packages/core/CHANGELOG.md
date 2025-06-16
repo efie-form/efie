@@ -4,7 +4,7 @@
 
 ### Patch Changes
 
-- Update readme
+- docs: update readme
 
 ## 0.2.0
 

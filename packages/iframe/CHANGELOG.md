@@ -4,7 +4,7 @@
 
 ### Patch Changes
 
-- Update readme
+- docs: update readme
 - Updated dependencies
   - @efie-form/builder@0.2.1
   - @efie-form/core@0.2.1
