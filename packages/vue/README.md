@@ -6,9 +6,9 @@
 
 Vue 3 components for building and rendering dynamic forms. Part of the [Efie Form](https://github.com/pwkang/efie) ecosystem.
 
-> **Note**: This package is currently under active development and will be available soon. The API may change before the stable release.
+> **⚠️ Preview Stage**: This package is currently in preview and **not recommended for production use**. The API may change significantly before the stable release. Use at your own risk.
 
-## Features (Coming Soon)
+## Features (Preview)
 
 - 🧩 **Form Builder**: Vue components for the visual form builder
 - 📝 **Form Renderer**: Render forms from JSON schemas

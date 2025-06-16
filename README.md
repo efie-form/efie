@@ -1,178 +1,82 @@
 # Efie Form
 
-[![GitHub license](https://img.shields.io/github/license/pwkang/efie)](https://github.com/pwkang/efie/blob/main/LICENSE)
-[![npm version](https://img.shields.io/npm/v/@efie-form/core)](https://www.npmjs.com/package/@efie-form/core)
-[![GitHub issues](https://img.shields.io/github/issues/pwkang/efie)](https://github.com/pwkang/efie/issues)
+[![GitHub license](https://img.shields.io/github/license/efie-form/efie)](https://github.com/pwkang/efie/blob/main/LICENSE)
+[![npm version](https://img.shields.io/npm/v/efie-form)](https://www.npmjs.com/package/@efie-form/core)
 
-A framework-agnostic form builder package for creating dynamic forms in any JavaScript environment, including React, Vue, and more. It provides both a visual form builder and headless rendering capabilities for maximum customization.
-
-## Description
-
-Efie Form simplifies the process of building and managing forms in your web applications. It offers a declarative way to define form structures and handles form rendering, validation, and submission. Its framework-agnostic design allows you to use it in any JavaScript project, regardless of the framework you're using. The headless rendering capability gives you complete control over the form's appearance and behavior, enabling you to tailor it to your specific design requirements.
+A powerful, framework-agnostic form builder that lets you create dynamic forms visually and render them in any JavaScript environment. Build once, use everywhere.
 
 ## Features
 
-- 🧩 **Visual Form Builder**: Drag-and-drop interface for creating forms with real-time preview
-- 📝 **Headless Form Rendering**: Render forms created with the form builder in any framework
-- 🔌 **Extensible Architecture**: Customize form fields with your own components
-- 🎨 **Themeable**: Style forms to match your application's design system
-- 🌐 **Responsive Design**: Works seamlessly on all screen sizes
-- 🧰 **Rich Field Types**: Support for text, number, date, file, select, checkbox, radio, and more
-- 🔄 **Undo/Redo**: Full undo/redo functionality with configurable history limit
-- 💾 **Schema Export/Import**: Save and load form schemas as JSON
-- 🎯 **TypeScript Support**: Comprehensive TypeScript definitions for type safety
-- 🏗️ **Layout System**: Advanced layout capabilities with blocks, rows, and columns
+### 🎨 Visual Form Builder
 
-## Packages
+- **Drag-and-Drop Interface**: Intuitive visual editor for creating forms without code
+- **Real-Time Preview**: See your forms as you build them
+- **Rich Field Types**: Text, number, date, file, select, checkbox, radio, and more
+- **Advanced Layout System**: Organize fields with blocks, rows, and columns
+- **Undo/Redo Support**: Full history management with configurable limits
 
-This is a monorepo containing the following packages:
+### 🔧 Headless Rendering
 
-- **[@efie-form/core](./packages/core)**: Core functionality and utilities used by all framework implementations
-- **[@efie-form/builder](./packages/builder)**: The visual form builder implementation with drag-and-drop interface
-- **[@efie-form/react](./packages/react)**: React components for form building and rendering
-- **[@efie-form/vue](./packages/vue)**: Vue components for form building and rendering (coming soon)
+- **Framework Agnostic**: Use with React, Vue, Angular, or vanilla JavaScript
+- **Complete Customization**: Full control over appearance and behavior
+- **Schema-Driven**: Export and import form configurations as JSON
+- **Type Safety**: Comprehensive TypeScript support
+
+### 🎯 Developer Experience
+
+- **Extensible Architecture**: Create custom field types and components
+- **Themeable**: Style forms to match your design system
+- **Responsive Design**: Works seamlessly across all screen sizes
+- **Modern Tooling**: Built with TypeScript, Tailwind CSS, and modern development practices
+
+## Supported Frameworks
+
+| Framework   | Status       | Package                |
+|-------------|--------------|------------------------|
+| **React**   | 🚧 Preview | `@efie-form/react`     |
+| **Vue**     | 🚧 Preview | `@efie-form/vue`      |
+| **Angular** | 📋 Planned   | `@efie-form/angular`   |
+| **Vanilla JS** | 📋 Planned | `@efie-form/vanilla`     |
+
+> **⚠️ Preview Warning**: The React and Vue packages are currently in preview stage and not recommended for production use.
 
 ## Quick Start
 
 ### Installation
 
+For most users, install the framework-specific package:
+
 ```bash
-# For React applications
-npm install @efie-form/react @efie-form/builder
+# React users (Preview - not for production)
+npm install @efie-form/react
 
-# For Vue applications (coming soon)
-npm install @efie-form/vue @efie-form/builder
+# Vue users (Preview - not for production)
+npm install @efie-form/vue
 
-# For framework-agnostic usage
-npm install @efie-form/core
+# Angular users (planned)
+npm install @efie-form/angular
+
+# Vanilla JS users (planned)
+npm install @efie-form/vanilla
 ```
 
-### Basic Usage with React
+> **Note**: `@efie-form/core` and `@efie-form/builder` are internal packages used by the framework integrations. You typically don't need to install them directly unless you're building custom framework integrations or need access to lower-level APIs.
 
-```tsx
-import React from 'react';
-import { FormBuilder } from '@efie-form/builder';
-import { Form } from '@efie-form/react';
-
-// Form Builder Component
-function MyFormBuilder() {
-  const handleSave = (schema) => {
-    console.log('Form schema:', schema);
-    // Save schema to your backend
-  };
-
-  return (
-    <FormBuilder
-      onSave={handleSave}
-      // Optional: Load existing schema
-      // initialSchema={existingSchema}
-    />
-  );
-}
-
-// Form Renderer Component
-function MyForm({ schema }) {
-  const handleSubmit = (data) => {
-    console.log('Form data:', data);
-    // Handle form submission
-  };
-
-  return (
-    <Form
-      schema={schema}
-      onSubmit={handleSubmit}
-    />
-  );
-}
-```
+### Documentation
 
 See individual package READMEs for detailed documentation and examples.
+
+- [React (Preview)](https://www.npmjs.com/package/@efie-form/react)
+- [Vue (Preview)](https://www.npmjs.com/package/@efie-form/vue)
+- Angular (planned)
+- Vanilla JS (planned)
 
 ## Documentation
 
 - [Getting Started Guide](./docs/getting-started.md)
 - [API Reference](./docs/api-reference.md)
 - [Form Schema Documentation](./docs/schema.md)
-- [CI/CD Documentation](./docs/ci-cd.md)
 - [Contributing Guidelines](./CONTRIBUTING.md)
-
-## Development
-
-This project uses a monorepo structure managed with [pnpm workspaces](https://pnpm.io/workspaces) and [Nx](https://nx.dev/).
-
-### Prerequisites
-
-- Node.js 18 or higher
-- pnpm 8 or higher
-
-### Setup
-
-```bash
-# Clone the repository
-git clone https://github.com/pwkang/efie.git
-cd efie
-
-# Install dependencies
-pnpm install
-
-# Start the development server (form builder demo)
-pnpm dev
-
-# Start React builder demo
-pnpm dev:react-builder-demo
-```
-
-### Available Scripts
-
-```bash
-# Development
-pnpm dev                    # Start iframe demo server
-pnpm dev:react-builder-demo # Start React builder demo
-pnpm tw                     # Start Tailwind CSS watcher
-
-# Testing
-pnpm test                   # Run all tests
-pnpm test:builder           # Run builder package tests
-pnpm test:coverage          # Run tests with coverage
-
-# Linting
-pnpm lint                   # Run ESLint
-pnpm lint:fix               # Fix ESLint issues
-
-# Building
-pnpm build                  # Build all packages
-pnpm build:packages         # Build only packages (exclude demos)
-
-# Release
-pnpm changeset              # Create a changeset
-pnpm version-packages       # Version packages
-pnpm release                # Build and publish packages
-```
-
-### Project Structure
-
-```
-efie/
-├── packages/
-│   ├── core/               # Core utilities and types
-│   ├── builder/            # Visual form builder
-│   ├── react/              # React components
-│   ├── vue/                # Vue components (coming soon)
-│   └── iframe/             # Iframe demo
-├── demo/
-│   ├── react/              # React demos
-│   └── vue/                # Vue demos
-├── docs/                   # Documentation
-└── scripts/                # Build and utility scripts
-```
-
-## Testing
-
-The project uses Jest for testing with comprehensive coverage reporting:
-
-- **Unit Tests**: Components and utilities are thoroughly tested
-- **Integration Tests**: End-to-end form building and rendering scenarios
-- **Coverage Reports**: Automated coverage reporting with Codecov integration
 
 ## Contributing
 
@@ -201,11 +105,3 @@ The project uses GitHub Actions for continuous integration:
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Acknowledgments
-
-- Built with [TypeScript](https://www.typescriptlang.org/)
-- UI components styled with [Tailwind CSS](https://tailwindcss.com/)
-- State management with [Zustand](https://github.com/pmndrs/zustand)
-- Drag and drop functionality powered by [@dnd-kit](https://dndkit.com/)
-- Monorepo managed with [Nx](https://nx.dev/) and [pnpm](https://pnpm.io/)

@@ -5,6 +5,8 @@
 
 A React component library for building dynamic forms with drag-and-drop functionality. This package is part of the [efie-form](https://npmjs.com/package/efie-form) ecosystem.
 
+> **⚠️ Preview Stage**: This package is currently in preview and **not recommended for production use**. The API may change significantly before the stable release. Use at your own risk.
+
 ## Features
 
 - 🧩 **Form Builder**: Drag-and-drop interface for creating forms

@@ -1,6 +1,6 @@
 {
   "name": "@efie-form/builder",
-  "description": "A form builder for any web framework",
+  "description": "Form builder logic for Efie Form (used internally)",
   "version": "0.2.0",
   "type": "module",
   "license": "MIT",
@@ -15,6 +15,8 @@
     "url": "https://github.com/pwkang/efie/issues"
   },
   "keywords": [
+    "internal",
+    "efie-form",
     "form",
     "form-builder",
     "react",
