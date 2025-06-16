@@ -33,10 +33,12 @@ A powerful, framework-agnostic form builder that lets you create dynamic forms v
 
 | Framework   | Status       | Package                |
 |-------------|--------------|------------------------|
-| **React**   | ✅ Available | `@efie-form/react`     |
-| **Vue**     | 🚧 Coming Soon | `@efie-form/vue`      |
-| **Angular** | 🚧 Coming Soon   | `@efie-form/angular`   |
-| **Vanilla JS** | 🚧 Coming Soon | `@efie-form/vanilla`     |
+| **React**   | 🚧 Preview | `@efie-form/react`     |
+| **Vue**     | 🚧 Preview | `@efie-form/vue`      |
+| **Angular** | 📋 Planned   | `@efie-form/angular`   |
+| **Vanilla JS** | 📋 Planned | `@efie-form/vanilla`     |
+
+> **⚠️ Preview Warning**: The React and Vue packages are currently in preview stage and not recommended for production use.
 
 ## Quick Start
 
@@ -45,16 +47,16 @@ A powerful, framework-agnostic form builder that lets you create dynamic forms v
 For most users, install the framework-specific package:
 
 ```bash
-# React users
+# React users (Preview - not for production)
 npm install @efie-form/react
 
-# Vue users (coming soon)
+# Vue users (Preview - not for production)
 npm install @efie-form/vue
 
-# Angular users (coming soon)
+# Angular users (planned)
 npm install @efie-form/angular
 
-# Vanilla JS users (coming soon)
+# Vanilla JS users (planned)
 npm install @efie-form/vanilla
 ```
 
@@ -64,10 +66,10 @@ npm install @efie-form/vanilla
 
 See individual package READMEs for detailed documentation and examples.
 
-- [React](https://www.npmjs.com/package/@efie-form/react)
-- Vue (coming soon)
-- Angular (coming soon)
-- Vanilla JS (coming soon)
+- [React (Preview)](https://www.npmjs.com/package/@efie-form/react)
+- [Vue (Preview)](https://www.npmjs.com/package/@efie-form/vue)
+- Angular (planned)
+- Vanilla JS (planned)
 
 ## Documentation
 
