@@ -1,5 +1,13 @@
 # @efie-form/react
 
+## 0.2.1
+
+### Patch Changes
+
+- docs: update readme
+- Updated dependencies
+  - @efie-form/core@0.2.1
+
 ## 0.2.0
 
 ### Minor Changes

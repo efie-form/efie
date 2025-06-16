@@ -1,5 +1,16 @@
 # efie-form
 
+## 0.2.1
+
+### Patch Changes
+
+- docs: update readme
+- Updated dependencies
+  - @efie-form/builder@0.2.1
+  - @efie-form/core@0.2.1
+  - @efie-form/react@0.2.1
+  - @efie-form/vue@0.2.1
+
 ## 0.2.0
 
 ### Minor Changes
