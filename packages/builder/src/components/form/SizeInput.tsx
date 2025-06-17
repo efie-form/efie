@@ -40,7 +40,7 @@ interface InternalValueType {
 export default function SizeInput({ value, onChange, className }: SizeInputProps) {
   const [internalValue, setInternalValue] = useControllableState({
     onChange: (newValue: InternalValueType) => {
-      if (onChange && checkIsNumberValid(newValue.value)) {
+      if (onChange && (['auto', 'inherit', 'initial'].includes(newValue.type) || checkIsNumberValid(newValue.value))) {
         onChange(transformInternalValueToSize(newValue));
       }
     },

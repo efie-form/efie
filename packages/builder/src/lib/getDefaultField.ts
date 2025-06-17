@@ -544,8 +544,7 @@ export function getDefaultField<T extends FormFieldType>({
           {
             type: PropertyType.WIDTH,
             value: {
-              type: SizeType.PERCENTAGE,
-              value: 100,
+              type: SizeType.AUTO,
             },
           },
           {
