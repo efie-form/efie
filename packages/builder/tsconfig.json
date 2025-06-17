@@ -5,11 +5,21 @@
     "allowJs": true,
     "verbatimModuleSyntax": true,
     "incremental": false,
-
     // transpile
     "jsx": "react-jsx",
     // src
-    "lib": ["DOM", "DOM.Iterable", "ESNext"]
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ESNext"
+    ],
+    "paths": {
+      "@efie-form/core": [
+        "../core/lib"
+      ],
+    }
   },
-  "include": ["src/**/*"]
+  "include": [
+    "src/**/*"
+  ]
 }

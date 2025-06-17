@@ -2,10 +2,19 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "./dist",
-    "rootDir": ".",
     "baseUrl": ".",
     "jsx": "react-jsx",
-    "moduleResolution": "bundler"
+    "moduleResolution": "bundler",
+    "paths": {
+      "@efie-form/core": [
+        "../core/src"
+      ],
+      "@efie-form/builder": [
+        "../builder/src"
+      ],
+    }
   },
-  "include": ["src"],
+  "include": [
+    "src"
+  ],
 }
