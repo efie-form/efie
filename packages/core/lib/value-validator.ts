@@ -105,10 +105,10 @@ export function isAcceptValue(value?: PropValue): value is PropValueAccept {
   return (
     !!value
     && typeof value === 'object'
-    && 'allowed' in value
-    && Array.isArray(value.allowed)
     && 'allowAll' in value
     && typeof value.allowAll === 'boolean'
+    && 'formats' in value
+    && Array.isArray(value.formats)
   );
 }
 

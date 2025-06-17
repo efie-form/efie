@@ -28,18 +28,20 @@
     "dist/",
     "README.md"
   ],
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
+      "development": "./src/index.ts",
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     },
     "./styles": {
-      "import": "./dist/styles.css",
-      "require": "./dist/styles.css"
+      "development": "./src/styles/output.css",
+      "import": "./dist/index.css",
+      "require": "./dist/index.css"
     }
   },
   "scripts": {
