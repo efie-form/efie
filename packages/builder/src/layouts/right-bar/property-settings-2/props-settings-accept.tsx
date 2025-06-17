@@ -1,23 +1,30 @@
-import { useCallback, useRef } from 'react';
+import { useCallback } from 'react';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import type { PropSettingsAccept } from '../../../types/prop-settings.type';
 import SettingsFieldSwitchWithDropdown from '../property-layouts/SettingsFieldSwitchWithDropdown';
 import { Switch } from '../../../components/form';
 import { isAcceptValue, type AcceptProperty, type PropValue, type PropValueAccept } from '@efie-form/core';
+import { useControllableState } from '../../../lib/hooks/useControllableState';
 
 const FILE_EXTENSIONS = [
-  { label: 'PDF', value: ['.pdf'] },
-  { label: 'Word', value: ['.doc', '.docx'] },
-  { label: 'Excel', value: ['.xls', '.xlsx'] },
-  { label: 'PowerPoint', value: ['.ppt', '.pptx'] },
-  { label: 'Images', value: ['.jpg', '.jpeg', '.png', '.gif'] },
-  { label: 'Text', value: ['.txt'] },
-  { label: 'CSV', value: ['.csv'] },
-  { label: 'ZIP', value: ['.zip'] },
-  { label: 'Audio', value: ['.mp3', '.wav', '.ogg'] },
-  { label: 'Video', value: ['.mp4', '.mov', '.avi'] },
-];
+  { type: 'pdf', label: 'PDF', value: ['.pdf'] },
+  { type: 'word', label: 'Word', value: ['.doc', '.docx'] },
+  { type: 'excel', label: 'Excel', value: ['.xls', '.xlsx'] },
+  { type: 'powerpoint', label: 'PowerPoint', value: ['.ppt', '.pptx'] },
+  { type: 'images', label: 'Images', value: ['.jpg', '.jpeg', '.png', '.gif'] },
+  { type: 'text', label: 'Text', value: ['.txt'] },
+  { type: 'csv', label: 'CSV', value: ['.csv'] },
+  { type: 'zip', label: 'ZIP', value: ['.zip'] },
+  { type: 'audio', label: 'Audio', value: ['.mp3', '.wav', '.ogg'] },
+  { type: 'video', label: 'Video', value: ['.mp4', '.mov', '.avi'] },
+] as const;
 
+type ExtensionType = typeof FILE_EXTENSIONS[number]['type'];
+
+interface InternalValue {
+  allowSpecific: boolean;
+  extensions: Record<ExtensionType, boolean>;
+}
 interface PropsSettingsAcceptProps extends PropSettingsAccept {
   fieldId: string;
 }
@@ -26,47 +33,46 @@ export default function PropsSettingsAccept({ fieldId, label = 'Only allow speci
   const fieldProperty = useSchemaStore(useCallback(state => state.getFieldProperty(fieldId, type), [fieldId, type]));
   const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
   const value = getValue(fieldProperty?.value);
-  const prevFormats = useRef(value.formats);
 
-  const handleExtensionChange = useCallback(
-    (extensions: string[], checked: boolean) => {
-      const currentExtensions = value.formats || [];
-      const newExtensions = checked
-        ? [...currentExtensions, ...extensions]
-        : currentExtensions.filter(ext => !extensions.includes(ext));
+  const [internalValue, setInternalValue] = useControllableState({
+    defaultValue: getInternalValue(value),
+    onChange: (newValue) => {
+      const formats = Object.entries(newValue.extensions)
+        .filter(ext => ext[1])
+        .flatMap(([k]) => FILE_EXTENSIONS.find(ext => ext.type === k)?.value || []);
+
+      const finalValue: PropValueAccept = {
+        allowAll: !newValue.allowSpecific,
+        formats: newValue.allowSpecific ? formats : [],
+      };
 
       updateFieldProperty(fieldId, {
         type,
-        value: {
-          ...value,
-          formats: newExtensions,
-          allowAll: newExtensions.length === FILE_EXTENSIONS.flatMap(ext => ext.value).length,
-        },
+        value: finalValue,
       } as AcceptProperty);
     },
-    [fieldId, type, value, updateFieldProperty],
-  );
+  });
 
-  const handleAllowAllChange = useCallback(
-    (checked: boolean) => {
-      if (!checked) {
-        prevFormats.current = value.formats;
-      }
-      updateFieldProperty(fieldId, {
-        type,
-        value: {
-          ...value,
-          allowAll: !checked,
-          formats: checked ? prevFormats.current || [] : [],
-        },
-      } as AcceptProperty);
-    },
-    [fieldId, type, value, updateFieldProperty],
-  );
+  const handleExtensionChange = (type: ExtensionType, checked: boolean) => {
+    setInternalValue(prev => ({
+      ...prev,
+      extensions: {
+        ...prev.extensions,
+        [type]: checked,
+      },
+    }));
+  };
+
+  const handleAllowAllChange = (checked: boolean) => {
+    setInternalValue(prev => ({
+      ...prev,
+      allowSpecific: checked,
+    }));
+  };
 
   return (
     <SettingsFieldSwitchWithDropdown
-      isOpen={!value.allowAll}
+      isOpen={internalValue.allowSpecific}
       onOpenChange={handleAllowAllChange}
       label={label}
       divider
@@ -79,11 +85,10 @@ export default function PropsSettingsAccept({ fieldId, label = 'Only allow speci
           >
             <div>
               <Switch
-                checked={extension.value.some(ext =>
-                  value.formats?.includes(ext),
-                )}
-                onChange={(checked: boolean) =>
-                  handleExtensionChange(extension.value, checked)}
+                checked={internalValue.extensions[extension.type]}
+                onChange={(checked: boolean) => {
+                  handleExtensionChange(extension.type, checked);
+                }}
               />
             </div>
             <span className="typography-body3 text-neutral-600">
@@ -102,4 +107,26 @@ function getValue(value?: PropValue): PropValueAccept {
   }
 
   return value;
+}
+
+function getInternalValue(value?: PropValueAccept): InternalValue {
+  console.log('getInternalValue', value);
+  const extTypes = {} as Record<ExtensionType, boolean>;
+  if (!value) {
+    for (const ext of FILE_EXTENSIONS) {
+      extTypes[ext.type] = false;
+    }
+    return {
+      allowSpecific: false,
+      extensions: extTypes,
+    };
+  }
+
+  for (const ext of FILE_EXTENSIONS) {
+    extTypes[ext.type] = ext.value.every(format => value.formats?.includes(format)) || false;
+  }
+  return {
+    allowSpecific: !value.allowAll,
+    extensions: extTypes,
+  };
 }
