@@ -9,7 +9,4 @@ export default defineConfig({
   server: {
     port,
   },
-  resolve: {
-    conditions: ['development'],
-  },
 });
