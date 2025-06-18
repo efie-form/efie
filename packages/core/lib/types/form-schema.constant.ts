@@ -181,7 +181,7 @@ export const PropertyType = {
   PLACEHOLDER: 'placeholder',
   OPTIONS: 'options',
   PAGE_NAME: 'pageName',
-  BUTTON_TYPE: 'buttonType',
+  BUTTON_ACTION: 'buttonAction',
   CONTENT: 'content',
 } as const;
 

@@ -74,8 +74,8 @@ export interface FontWeightProperty {
   value: PropValueNumber;
 }
 
-export interface ButtonTypeProperty {
-  type: typeof PropertyType.BUTTON_TYPE;
+export interface ButtonActionProperty {
+  type: typeof PropertyType.BUTTON_ACTION;
   value: PropValueString;
 }
 
@@ -181,4 +181,4 @@ export type PropertyDefinition =
   | ContentProperty
   | PageNameProperty
   | FontWeightProperty
-  | ButtonTypeProperty;
+  | ButtonActionProperty;

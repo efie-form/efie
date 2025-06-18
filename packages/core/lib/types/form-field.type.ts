@@ -24,7 +24,7 @@ import type {
   BorderWidthProperty,
   BorderColorProperty,
   FontWeightProperty,
-  ButtonTypeProperty,
+  ButtonActionProperty,
   MaxFilesProperty,
   ContentProperty,
   PageNameProperty,
@@ -210,7 +210,7 @@ export interface ButtonFormField extends BaseFormField {
     | TextAlignProperty
     | FontSizeProperty
     | FontWeightProperty
-    | ButtonTypeProperty
+    | ButtonActionProperty
     | BorderRadiusProperty
     | BorderStyleProperty
     | PaddingProperty

@@ -548,7 +548,7 @@ export function getDefaultField<T extends FormFieldType>({
             },
           },
           {
-            type: PropertyType.BUTTON_TYPE,
+            type: PropertyType.BUTTON_ACTION,
             value: 'submit',
           },
           {

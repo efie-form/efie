@@ -7,8 +7,6 @@ import type { ElementType } from 'react';
 import type { RightBarTab } from '../../lib/state/settings.state';
 import { RIGHT_BAR_TABS } from '../../lib/state/settings.state';
 import { useSettingsStore } from '../../lib/state/settings.state';
-import FormPropertiesTab from './tabs/FormPropertiesTab';
-import { RiFileInfoFill } from 'react-icons/ri';
 import Tooltip from '../../components/elements/Tooltip';
 
 interface Tab {
@@ -23,12 +21,6 @@ function RightBar() {
   const { selectedFieldId, activeTab, setActiveTab } = useSettingsStore();
 
   const tabs: Tab[] = [
-    {
-      id: RIGHT_BAR_TABS.FORM,
-      label: 'Form settings',
-      Icon: RiFileInfoFill,
-      tab: FormPropertiesTab,
-    },
     {
       id: RIGHT_BAR_TABS.PAGE,
       label: 'Page settings',
