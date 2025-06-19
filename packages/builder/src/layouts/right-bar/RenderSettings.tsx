@@ -15,7 +15,7 @@ import ShortTextSettings from './field-settings/ShortTextSettings';
 import SingleChoiceSettings from './field-settings/SingleChoiceSettings';
 import TimeSettings from './field-settings/TimeSettings';
 import ButtonSettings from './field-settings/ButtonSettings';
-import { FormFieldType } from '@efie-form/core';
+import { FieldType } from '@efie-form/core';
 
 interface RenderSettingsProps {
   field: FormField;
@@ -25,55 +25,55 @@ function RenderSettings({ field }: RenderSettingsProps) {
   if (!field) return <></>;
 
   switch (field?.type) {
-    case FormFieldType.DATE_TIME: {
+    case FieldType.DATE_TIME: {
       return <DateTimeSettings field={field} />;
     }
-    case FormFieldType.DATE: {
+    case FieldType.DATE: {
       return <DateSettings field={field} />;
     }
-    case FormFieldType.LONG_TEXT: {
+    case FieldType.LONG_TEXT: {
       return <LongTextSettings field={field} />;
     }
-    case FormFieldType.COLUMN: {
+    case FieldType.COLUMN: {
       return <></>;
     }
-    case FormFieldType.BLOCK: {
+    case FieldType.BLOCK: {
       return <BlockSettings field={field} />;
     }
-    case FormFieldType.DIVIDER: {
+    case FieldType.DIVIDER: {
       return <DividerSettings field={field} />;
     }
-    case FormFieldType.FILE: {
+    case FieldType.FILE: {
       return <FileSettings field={field} />;
     }
-    case FormFieldType.HEADER: {
+    case FieldType.HEADER: {
       return <HeaderSettings field={field} />;
     }
-    case FormFieldType.IMAGE: {
+    case FieldType.IMAGE: {
       return <ImageSettings field={field} />;
     }
-    case FormFieldType.MULTIPLE_CHOICES: {
+    case FieldType.MULTIPLE_CHOICES: {
       return <MultipleChoicesSettings field={field} />;
     }
-    case FormFieldType.ROW: {
+    case FieldType.ROW: {
       return <RowSettings field={field} />;
     }
-    case FormFieldType.NUMBER: {
+    case FieldType.NUMBER: {
       return <NumberSettings field={field} />;
     }
-    case FormFieldType.PARAGRAPH: {
+    case FieldType.PARAGRAPH: {
       return <ParagraphSettings field={field} />;
     }
-    case FormFieldType.SHORT_TEXT: {
+    case FieldType.SHORT_TEXT: {
       return <ShortTextSettings field={field} />;
     }
-    case FormFieldType.SINGLE_CHOICE: {
+    case FieldType.SINGLE_CHOICE: {
       return <SingleChoiceSettings field={field} />;
     }
-    case FormFieldType.TIME: {
+    case FieldType.TIME: {
       return <TimeSettings field={field} />;
     }
-    case FormFieldType.BUTTON: {
+    case FieldType.BUTTON: {
       return <ButtonSettings field={field} />;
     }
     default: {

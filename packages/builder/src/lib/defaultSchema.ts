@@ -1,4 +1,4 @@
-import { FormFieldType, getColorObject, PropertyType, SizeType } from '@efie-form/core';
+import { FieldType, getColorObject, PropertyType, SizeType } from '@efie-form/core';
 import type { FormSchema } from '@efie-form/core';
 import { generateId } from './utils';
 
@@ -8,11 +8,11 @@ const defaultSchema: FormSchema = {
     fields: [
       {
         id: generateId(10),
-        type: FormFieldType.PAGE,
+        type: FieldType.PAGE,
         children: [
           {
             id: generateId(10),
-            type: FormFieldType.BLOCK,
+            type: FieldType.BLOCK,
             children: [],
             props: [
               {

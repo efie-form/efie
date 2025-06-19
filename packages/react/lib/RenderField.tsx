@@ -1,4 +1,4 @@
-import { FormFieldType, type FormField } from '@efie-form/core';
+import { FieldType, type FormField } from '@efie-form/core';
 import type { FieldPropsMap } from '../types/FieldProps';
 import {
   BlockProvider,
@@ -27,30 +27,30 @@ interface RenderFieldProps extends Partial<FieldPropsMap> {
 
 function RenderField({ field, ...props }: RenderFieldProps) {
   switch (field.type) {
-    case FormFieldType.SHORT_TEXT: {
+    case FieldType.SHORT_TEXT: {
       return <ShortTextProvider field={field} Component={props.shortText} />;
     }
-    case FormFieldType.LONG_TEXT: {
+    case FieldType.LONG_TEXT: {
       return <LongTextProvider field={field} Component={props.longText} />;
     }
-    case FormFieldType.DIVIDER: {
+    case FieldType.DIVIDER: {
       return <DividerProvider field={field} Component={props.divider} />;
     }
-    case FormFieldType.BLOCK: {
+    case FieldType.BLOCK: {
       return <BlockProvider field={field} Component={props.block} {...props} />;
     }
-    case FormFieldType.IMAGE: {
+    case FieldType.IMAGE: {
       return <ImageProvider field={field} Component={props.image} />;
     }
-    case FormFieldType.FILE: {
+    case FieldType.FILE: {
       return <FileProvider field={field} Component={props.file} />;
     }
-    case FormFieldType.SINGLE_CHOICE: {
+    case FieldType.SINGLE_CHOICE: {
       return (
         <SingleChoiceProvider field={field} Component={props.singleChoice} />
       );
     }
-    case FormFieldType.MULTIPLE_CHOICES: {
+    case FieldType.MULTIPLE_CHOICES: {
       return (
         <MultipleChoicesProvider
           field={field}
@@ -58,36 +58,36 @@ function RenderField({ field, ...props }: RenderFieldProps) {
         />
       );
     }
-    case FormFieldType.HEADER: {
+    case FieldType.HEADER: {
       return <HeaderProvider field={field} Component={props.header} />;
     }
-    case FormFieldType.PARAGRAPH: {
+    case FieldType.PARAGRAPH: {
       return <ParagraphProvider field={field} Component={props.paragraph} />;
     }
-    case FormFieldType.DATE: {
+    case FieldType.DATE: {
       return <DateProvider field={field} Component={props.date} />;
     }
-    case FormFieldType.TIME: {
+    case FieldType.TIME: {
       return <TimeProvider field={field} Component={props.time} />;
     }
-    case FormFieldType.DATE_TIME: {
+    case FieldType.DATE_TIME: {
       return <DateTimeProvider field={field} Component={props.dateTime} />;
     }
-    case FormFieldType.COLUMN: {
+    case FieldType.COLUMN: {
       return (
         <ColumnProvider field={field} Component={props.column} {...props} />
       );
     }
-    case FormFieldType.ROW: {
+    case FieldType.ROW: {
       return <RowProvider field={field} Component={props.row} {...props} />;
     }
-    case FormFieldType.NUMBER: {
+    case FieldType.NUMBER: {
       return <NumberProvider field={field} Component={props.number} />;
     }
-    case FormFieldType.BUTTON: {
+    case FieldType.BUTTON: {
       return <ButtonProvider field={field} Component={props.button} />;
     }
-    case FormFieldType.PAGE: {
+    case FieldType.PAGE: {
       return <PageProvider field={field} Component={props.page} {...props} />;
     }
     default: {

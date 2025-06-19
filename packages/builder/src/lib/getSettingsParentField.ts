@@ -1,4 +1,4 @@
-import type { FormFieldType } from '@efie-form/core';
+import type { FieldType } from '@efie-form/core';
 import { useSchemaStore } from './state/schema.state';
 
 export default function getSettingsParentField(fieldId: string) {
@@ -9,7 +9,7 @@ export default function getSettingsParentField(fieldId: string) {
   return parentField;
 }
 
-const nonSelectableFields: Set<FormFieldType> = new Set(['column']);
+const nonSelectableFields: Set<FieldType> = new Set(['column']);
 
 function getSelectableParentField(fieldId: string) {
   const { getFieldParentId, getFieldById } = useSchemaStore.getState();

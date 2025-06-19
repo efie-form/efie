@@ -1,4 +1,4 @@
-import { FormFieldType, PropertyType, getColorObject } from '@efie-form/core';
+import { FieldType, PropertyType, getColorObject } from '@efie-form/core';
 import type { FormField } from '@efie-form/core';
 import { createTestStore } from './test-utils';
 
@@ -43,7 +43,7 @@ describe('Schema State Store', () => {
     it('should get field by id', () => {
       const field = store.getFieldById('block-1');
       expect(field).toBeDefined();
-      expect(field?.type).toBe(FormFieldType.BLOCK);
+      expect(field?.type).toBe(FieldType.BLOCK);
     });
 
     it('should return undefined for non-existent field', () => {
@@ -66,7 +66,7 @@ describe('Schema State Store', () => {
     it('should add a new field', () => {
       const newField: FormField = {
         id: 'temp-id', // This will be replaced
-        type: FormFieldType.SHORT_TEXT,
+        type: FieldType.SHORT_TEXT,
         form: {
           key: 'new-field',
         },
@@ -88,7 +88,7 @@ describe('Schema State Store', () => {
       // Check that the new field has a different ID
       const addedField = 'children' in blockField! ? blockField.children[0] : undefined;
       expect(addedField?.id).not.toBe('temp-id');
-      expect(addedField?.type).toBe(FormFieldType.SHORT_TEXT);
+      expect(addedField?.type).toBe(FieldType.SHORT_TEXT);
     });
 
     it('should update an existing field', () => {
@@ -112,7 +112,7 @@ describe('Schema State Store', () => {
 
       expect(duplicatedField).toBeDefined();
       expect(duplicatedField?.id).not.toBe('block-1');
-      expect(duplicatedField?.type).toBe(FormFieldType.BLOCK);
+      expect(duplicatedField?.type).toBe(FieldType.BLOCK);
       expect(duplicatedField?.props).toEqual([
         {
           type: PropertyType.BACKGROUND_COLOR,
@@ -125,7 +125,7 @@ describe('Schema State Store', () => {
       // First add a field to delete
       const newField: FormField = {
         id: 'temp-id',
-        type: FormFieldType.SHORT_TEXT,
+        type: FieldType.SHORT_TEXT,
         form: {
           key: 'test-field',
         },

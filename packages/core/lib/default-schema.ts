@@ -1,5 +1,5 @@
 import type { FormSchema } from './types/form-schema.type';
-import { FormFieldType } from './constants/field-type';
+import { FieldType } from './constants/field-type';
 import { PropertyType, SizeType } from './constants/form-schema.constant';
 import { getColorObject } from './utils/colors';
 
@@ -18,11 +18,11 @@ const defaultSchema: FormSchema = {
     fields: [
       {
         id: generateId(10),
-        type: FormFieldType.PAGE,
+        type: FieldType.PAGE,
         children: [
           {
             id: generateId(10),
-            type: FormFieldType.BLOCK,
+            type: FieldType.BLOCK,
             children: [],
             props: [
               {

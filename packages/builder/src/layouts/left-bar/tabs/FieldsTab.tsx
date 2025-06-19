@@ -1,7 +1,7 @@
 import { fieldIcons } from '../../../lib/fields-tab/fields';
 import { cn } from '../../../lib/utils';
 import { type ElementType } from 'react';
-import type { FormFieldType } from '@efie-form/core';
+import type { FieldType } from '@efie-form/core';
 import { useDraggable } from '../../../components/dnd-kit';
 import { DragOverlay } from '@dnd-kit/core';
 import { useDndStore } from '../../../lib/state/dnd.state';
@@ -45,7 +45,7 @@ function FieldsTab() {
 
 interface FieldItemProps {
   Icon: ElementType;
-  type: FormFieldType;
+  type: FieldType;
   label: string;
   formKey?: string;
   disabled?: boolean;

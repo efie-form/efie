@@ -1,9 +1,9 @@
 import { useDraggable } from './dnd-kit.type';
-import type { FormFieldType } from '@efie-form/core';
+import type { FieldType } from '@efie-form/core';
 
 interface UseDndItemProps {
   id: string;
-  type: FormFieldType;
+  type: FieldType;
 }
 
 function useDndItem({ id, type }: UseDndItemProps) {

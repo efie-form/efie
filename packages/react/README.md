@@ -111,7 +111,7 @@ The `FormBuilder` component provides a drag-and-drop interface for creating form
 
 ```tsx
 import React, { useRef } from 'react';
-import { FormBuilder, FormBuilderRef, FormSchema, FormFieldType } from '@efie-form/react';
+import { FormBuilder, FormBuilderRef, FormSchema, FieldType } from '@efie-form/react';
 
 const App = () => {
   const formBuilderRef = useRef<FormBuilderRef>(null);
@@ -138,7 +138,7 @@ const App = () => {
           {
             id: 'custom_field',
             label: 'Custom Field',
-            type: FormFieldType.SHORT_TEXT,
+            type: FieldType.SHORT_TEXT,
           }
         ]}
       />
@@ -151,7 +151,7 @@ const App = () => {
 
 ```tsx
 import React, { useRef, useState } from 'react';
-import { FormBuilder, FormBuilderRef, FormSchema, FormFieldType } from '@efie-form/react';
+import { FormBuilder, FormBuilderRef, FormSchema, FieldType } from '@efie-form/react';
 
 const AdvancedFormBuilder = () => {
   const formBuilderRef = useRef<FormBuilderRef>(null);
@@ -182,17 +182,17 @@ const AdvancedFormBuilder = () => {
     {
       id: 'employee_id',
       label: 'Employee ID',
-      type: FormFieldType.SHORT_TEXT,
+      type: FieldType.SHORT_TEXT,
     },
     {
       id: 'department',
       label: 'Department',
-      type: FormFieldType.SINGLE_CHOICE,
+      type: FieldType.SINGLE_CHOICE,
     },
     {
       id: 'salary_range',
       label: 'Salary Range',
-      type: FormFieldType.NUMBER,
+      type: FieldType.NUMBER,
     },
   ];
 
@@ -697,7 +697,7 @@ Custom input configuration for the FormBuilder:
 interface CustomInputDef {
   id: string;
   label: string;
-  type: FormFieldType;
+  type: FieldType;
 }
 
 // Example
@@ -705,22 +705,22 @@ const customInputs: CustomInputDef[] = [
   {
     id: 'employee_id',
     label: 'Employee ID',
-    type: FormFieldType.SHORT_TEXT,
+    type: FieldType.SHORT_TEXT,
   },
   {
     id: 'department',
     label: 'Department',
-    type: FormFieldType.SINGLE_CHOICE,
+    type: FieldType.SINGLE_CHOICE,
   },
 ];
 ```
 
-#### `FormFieldType`
+#### `FieldType`
 
 Enum of all available field types:
 
 ```tsx
-enum FormFieldType {
+enum FieldType {
   SHORT_TEXT = 'short_text',
   LONG_TEXT = 'long_text',
   NUMBER = 'number',

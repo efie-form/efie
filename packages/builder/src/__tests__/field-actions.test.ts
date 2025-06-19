@@ -1,4 +1,4 @@
-import { FormFieldType, PropertyType } from '@efie-form/core';
+import { FieldType, PropertyType } from '@efie-form/core';
 import type { FormField } from '@efie-form/core';
 import { createTestStore, createComplexTestSchema } from './test-utils';
 
@@ -16,7 +16,7 @@ describe('Field Actions', () => {
     it('should add field to specific parent at specific index', () => {
       const newField: FormField = {
         id: 'temp-id',
-        type: FormFieldType.LONG_TEXT,
+        type: FieldType.LONG_TEXT,
         form: {
           key: 'new-long-text',
         },
@@ -35,13 +35,13 @@ describe('Field Actions', () => {
 
       // Should be inserted at index 0
       const firstChild = 'children' in blockField! ? blockField.children[0] : undefined;
-      expect(firstChild?.type).toBe(FormFieldType.LONG_TEXT);
+      expect(firstChild?.type).toBe(FieldType.LONG_TEXT);
     });
 
     it('should add field to end if no index specified', () => {
       const newField: FormField = {
         id: 'temp-id',
-        type: FormFieldType.NUMBER,
+        type: FieldType.NUMBER,
         form: {
           key: 'new-number',
         },
@@ -55,13 +55,13 @@ describe('Field Actions', () => {
 
       // Should be added at the end
       const lastChild = 'children' in blockField! ? blockField.children[1] : undefined;
-      expect(lastChild?.type).toBe(FormFieldType.NUMBER);
+      expect(lastChild?.type).toBe(FieldType.NUMBER);
     });
 
     it('should generate unique ID for new field', () => {
       const newField: FormField = {
         id: 'temp-id',
-        type: FormFieldType.SHORT_TEXT,
+        type: FieldType.SHORT_TEXT,
         form: {
           key: 'new-short-text',
         },
@@ -102,7 +102,7 @@ describe('Field Actions', () => {
       // First add another field to block-1
       const newField: FormField = {
         id: 'temp-id',
-        type: FormFieldType.LONG_TEXT,
+        type: FieldType.LONG_TEXT,
         form: {
           key: 'new-long-text-2',
         },
@@ -137,7 +137,7 @@ describe('Field Actions', () => {
 
       expect(duplicated).toBeDefined();
       expect(duplicated?.id).not.toBe('field-1');
-      expect(duplicated?.type).toBe(FormFieldType.SHORT_TEXT);
+      expect(duplicated?.type).toBe(FieldType.SHORT_TEXT);
       expect(duplicated?.props).toEqual([
         {
           type: PropertyType.LABEL,
@@ -151,13 +151,13 @@ describe('Field Actions', () => {
 
       expect(duplicated).toBeDefined();
       expect(duplicated?.id).not.toBe('block-1');
-      expect(duplicated?.type).toBe(FormFieldType.BLOCK);
+      expect(duplicated?.type).toBe(FieldType.BLOCK);
 
       // Check children are duplicated with new IDs
       if ('children' in duplicated! && duplicated.children) {
         expect(duplicated.children).toHaveLength(1);
         expect(duplicated.children[0].id).not.toBe('field-1');
-        expect(duplicated.children[0].type).toBe(FormFieldType.SHORT_TEXT);
+        expect(duplicated.children[0].type).toBe(FieldType.SHORT_TEXT);
       }
     });
 

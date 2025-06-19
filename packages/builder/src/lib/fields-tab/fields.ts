@@ -16,11 +16,11 @@ import {
 } from 'react-icons/rx';
 import { FaImage } from 'react-icons/fa6';
 import { HiOutlineViewColumns } from 'react-icons/hi2';
-import { FormFieldType } from '@efie-form/core';
+import { FieldType } from '@efie-form/core';
 import { FIELDS_NAME } from '../constant';
 
 interface Field {
-  type: FormFieldType;
+  type: FieldType;
   Icon: ElementType;
   label: string;
   disabled?: boolean;
@@ -33,25 +33,25 @@ export interface FieldsTabGroup {
   children: Field[];
 }
 
-export const fieldIcons: Record<FormFieldType, ElementType> = {
-  [FormFieldType.SHORT_TEXT]: LuFormInput,
-  [FormFieldType.LONG_TEXT]: BsTextareaResize,
-  [FormFieldType.NUMBER]: LuHash,
-  [FormFieldType.SINGLE_CHOICE]: MdRadioButtonChecked,
-  [FormFieldType.MULTIPLE_CHOICES]: MdCheckBox,
-  [FormFieldType.DATE]: LuCalendar,
-  [FormFieldType.TIME]: LuClock,
-  [FormFieldType.DATE_TIME]: LuCalendarClock,
-  [FormFieldType.FILE]: MdUpload,
-  [FormFieldType.BUTTON]: RxButton,
-  [FormFieldType.DIVIDER]: RxDividerHorizontal,
-  [FormFieldType.HEADER]: RiText,
-  [FormFieldType.PARAGRAPH]: RxTextAlignCenter,
-  [FormFieldType.IMAGE]: FaImage,
-  [FormFieldType.ROW]: HiOutlineViewColumns,
-  [FormFieldType.BLOCK]: RiPageSeparator,
-  [FormFieldType.COLUMN]: HiOutlineViewColumns,
-  [FormFieldType.PAGE]: RiPageSeparator,
+export const fieldIcons: Record<FieldType, ElementType> = {
+  [FieldType.SHORT_TEXT]: LuFormInput,
+  [FieldType.LONG_TEXT]: BsTextareaResize,
+  [FieldType.NUMBER]: LuHash,
+  [FieldType.SINGLE_CHOICE]: MdRadioButtonChecked,
+  [FieldType.MULTIPLE_CHOICES]: MdCheckBox,
+  [FieldType.DATE]: LuCalendar,
+  [FieldType.TIME]: LuClock,
+  [FieldType.DATE_TIME]: LuCalendarClock,
+  [FieldType.FILE]: MdUpload,
+  [FieldType.BUTTON]: RxButton,
+  [FieldType.DIVIDER]: RxDividerHorizontal,
+  [FieldType.HEADER]: RiText,
+  [FieldType.PARAGRAPH]: RxTextAlignCenter,
+  [FieldType.IMAGE]: FaImage,
+  [FieldType.ROW]: HiOutlineViewColumns,
+  [FieldType.BLOCK]: RiPageSeparator,
+  [FieldType.COLUMN]: HiOutlineViewColumns,
+  [FieldType.PAGE]: RiPageSeparator,
 };
 
 const inputsGroup: FieldsTabGroup = {
@@ -59,49 +59,49 @@ const inputsGroup: FieldsTabGroup = {
   label: 'Inputs',
   children: [
     {
-      type: FormFieldType.SHORT_TEXT,
-      label: FIELDS_NAME[FormFieldType.SHORT_TEXT],
-      Icon: fieldIcons[FormFieldType.SHORT_TEXT],
+      type: FieldType.SHORT_TEXT,
+      label: FIELDS_NAME[FieldType.SHORT_TEXT],
+      Icon: fieldIcons[FieldType.SHORT_TEXT],
     },
     {
-      type: FormFieldType.LONG_TEXT,
-      label: FIELDS_NAME[FormFieldType.LONG_TEXT],
-      Icon: fieldIcons[FormFieldType.LONG_TEXT],
+      type: FieldType.LONG_TEXT,
+      label: FIELDS_NAME[FieldType.LONG_TEXT],
+      Icon: fieldIcons[FieldType.LONG_TEXT],
     },
     {
-      type: FormFieldType.NUMBER,
-      label: FIELDS_NAME[FormFieldType.NUMBER],
-      Icon: fieldIcons[FormFieldType.NUMBER],
+      type: FieldType.NUMBER,
+      label: FIELDS_NAME[FieldType.NUMBER],
+      Icon: fieldIcons[FieldType.NUMBER],
     },
     {
-      type: FormFieldType.SINGLE_CHOICE,
-      label: FIELDS_NAME[FormFieldType.SINGLE_CHOICE],
-      Icon: fieldIcons[FormFieldType.SINGLE_CHOICE],
+      type: FieldType.SINGLE_CHOICE,
+      label: FIELDS_NAME[FieldType.SINGLE_CHOICE],
+      Icon: fieldIcons[FieldType.SINGLE_CHOICE],
     },
     {
-      type: FormFieldType.MULTIPLE_CHOICES,
-      label: FIELDS_NAME[FormFieldType.MULTIPLE_CHOICES],
-      Icon: fieldIcons[FormFieldType.MULTIPLE_CHOICES],
+      type: FieldType.MULTIPLE_CHOICES,
+      label: FIELDS_NAME[FieldType.MULTIPLE_CHOICES],
+      Icon: fieldIcons[FieldType.MULTIPLE_CHOICES],
     },
     {
-      type: FormFieldType.DATE,
-      label: FIELDS_NAME[FormFieldType.DATE],
-      Icon: fieldIcons[FormFieldType.DATE],
+      type: FieldType.DATE,
+      label: FIELDS_NAME[FieldType.DATE],
+      Icon: fieldIcons[FieldType.DATE],
     },
     {
-      type: FormFieldType.TIME,
-      label: FIELDS_NAME[FormFieldType.TIME],
-      Icon: fieldIcons[FormFieldType.TIME],
+      type: FieldType.TIME,
+      label: FIELDS_NAME[FieldType.TIME],
+      Icon: fieldIcons[FieldType.TIME],
     },
     {
-      type: FormFieldType.DATE_TIME,
-      label: FIELDS_NAME[FormFieldType.DATE_TIME],
-      Icon: fieldIcons[FormFieldType.DATE_TIME],
+      type: FieldType.DATE_TIME,
+      label: FIELDS_NAME[FieldType.DATE_TIME],
+      Icon: fieldIcons[FieldType.DATE_TIME],
     },
     {
-      type: FormFieldType.FILE,
-      label: FIELDS_NAME[FormFieldType.FILE],
-      Icon: fieldIcons[FormFieldType.FILE],
+      type: FieldType.FILE,
+      label: FIELDS_NAME[FieldType.FILE],
+      Icon: fieldIcons[FieldType.FILE],
     },
   ],
 };
@@ -111,29 +111,29 @@ const staticGroup: FieldsTabGroup = {
   label: 'Static',
   children: [
     {
-      type: FormFieldType.BUTTON,
-      label: FIELDS_NAME[FormFieldType.BUTTON],
-      Icon: fieldIcons[FormFieldType.BUTTON],
+      type: FieldType.BUTTON,
+      label: FIELDS_NAME[FieldType.BUTTON],
+      Icon: fieldIcons[FieldType.BUTTON],
     },
     {
-      type: FormFieldType.DIVIDER,
-      label: FIELDS_NAME[FormFieldType.DIVIDER],
-      Icon: fieldIcons[FormFieldType.DIVIDER],
+      type: FieldType.DIVIDER,
+      label: FIELDS_NAME[FieldType.DIVIDER],
+      Icon: fieldIcons[FieldType.DIVIDER],
     },
     {
-      type: FormFieldType.HEADER,
-      label: FIELDS_NAME[FormFieldType.HEADER],
-      Icon: fieldIcons[FormFieldType.HEADER],
+      type: FieldType.HEADER,
+      label: FIELDS_NAME[FieldType.HEADER],
+      Icon: fieldIcons[FieldType.HEADER],
     },
     {
-      type: FormFieldType.PARAGRAPH,
-      label: FIELDS_NAME[FormFieldType.PARAGRAPH],
-      Icon: fieldIcons[FormFieldType.PARAGRAPH],
+      type: FieldType.PARAGRAPH,
+      label: FIELDS_NAME[FieldType.PARAGRAPH],
+      Icon: fieldIcons[FieldType.PARAGRAPH],
     },
     {
-      type: FormFieldType.IMAGE,
-      label: FIELDS_NAME[FormFieldType.IMAGE],
-      Icon: fieldIcons[FormFieldType.IMAGE],
+      type: FieldType.IMAGE,
+      label: FIELDS_NAME[FieldType.IMAGE],
+      Icon: fieldIcons[FieldType.IMAGE],
     },
   ],
 };
@@ -143,14 +143,14 @@ const layoutGroup: FieldsTabGroup = {
   label: 'Layout',
   children: [
     {
-      type: FormFieldType.ROW,
-      label: FIELDS_NAME[FormFieldType.ROW],
-      Icon: fieldIcons[FormFieldType.ROW],
+      type: FieldType.ROW,
+      label: FIELDS_NAME[FieldType.ROW],
+      Icon: fieldIcons[FieldType.ROW],
     },
     {
-      type: FormFieldType.BLOCK,
-      label: FIELDS_NAME[FormFieldType.BLOCK],
-      Icon: fieldIcons[FormFieldType.BLOCK],
+      type: FieldType.BLOCK,
+      label: FIELDS_NAME[FieldType.BLOCK],
+      Icon: fieldIcons[FieldType.BLOCK],
     },
   ],
 };

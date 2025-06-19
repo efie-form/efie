@@ -1,12 +1,12 @@
 import type { FormField } from '@efie-form/core';
 
-import { FormFieldType } from '@efie-form/core';
+import { FieldType } from '@efie-form/core';
 
 interface findDropLocation {
   dropFieldId: string;
-  dropFieldType: FormFieldType;
+  dropFieldType: FieldType;
   direction: 'up' | 'down';
-  newFieldType: FormFieldType;
+  newFieldType: FieldType;
   schema: { form: { fields: FormField[] } };
   fieldMap: Map<string, FormField>;
   fieldParentMap: Map<string, string>;
@@ -51,9 +51,9 @@ const findDropLocation = ({ dropFieldId, dropFieldType, direction, newFieldType,
 };
 
 // Helper function to determine if field should be dropped as child
-const isDropOnChildren = (newType: FormFieldType, dropType: FormFieldType) => {
-  if (newType !== FormFieldType.BLOCK && dropType === FormFieldType.BLOCK) return true;
-  if (dropType === FormFieldType.COLUMN || dropType === FormFieldType.PAGE) return true;
+const isDropOnChildren = (newType: FieldType, dropType: FieldType) => {
+  if (newType !== FieldType.BLOCK && dropType === FieldType.BLOCK) return true;
+  if (dropType === FieldType.COLUMN || dropType === FieldType.PAGE) return true;
   return false;
 };
 

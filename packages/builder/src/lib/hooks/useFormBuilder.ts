@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useSchemaStore } from '../state/schema.state';
 import { useSettingsStore } from '../state/settings.state';
-import { FormFieldType, type FormSchema } from '@efie-form/core';
+import { FieldType, type FormSchema } from '@efie-form/core';
 
 export default function useFormBuilder() {
   const {
@@ -19,7 +19,7 @@ export default function useFormBuilder() {
 
   const resetSchema = useCallback((data: FormSchema) => {
     setSchema(data);
-    const firstPage = data.form.fields.find(field => field.type === FormFieldType.PAGE);
+    const firstPage = data.form.fields.find(field => field.type === FieldType.PAGE);
     if (firstPage) {
       setPage(firstPage.id);
     }

@@ -1,5 +1,5 @@
 import type { ColumnFormField, RowFormField } from '@efie-form/core';
-import { FormFieldType, PropertyType, SizeType } from '@efie-form/core';
+import { FieldType, PropertyType, SizeType } from '@efie-form/core';
 import { getDefaultField } from '../../../lib/getDefaultField';
 import * as Tabs from '@radix-ui/react-tabs';
 import { useState } from 'react';
@@ -48,7 +48,7 @@ function RowSettings({ field }: RowSettingsProps) {
       }
 
       const newColumn = getDefaultField({
-        type: FormFieldType.COLUMN,
+        type: FieldType.COLUMN,
         column: { width },
       });
 
@@ -63,7 +63,7 @@ function RowSettings({ field }: RowSettingsProps) {
     const avgWidth = Math.floor(100 / (field.children.length + 1));
 
     const newColumn = getDefaultField({
-      type: FormFieldType.COLUMN,
+      type: FieldType.COLUMN,
       column: { width: avgWidth },
     });
 
@@ -71,7 +71,7 @@ function RowSettings({ field }: RowSettingsProps) {
 
     for (const col of field.children) {
       const colField = getFieldById(col.id);
-      if (!colField || colField.type !== FormFieldType.COLUMN) return col;
+      if (!colField || colField.type !== FieldType.COLUMN) return col;
 
       const widthProp = getFieldProp(colField, PropertyType.WIDTH);
       if (widthProp) {
@@ -105,7 +105,7 @@ function RowSettings({ field }: RowSettingsProps) {
       const colField = getFieldById(col.id);
       if (
         !colField
-        || colField.type !== FormFieldType.COLUMN
+        || colField.type !== FieldType.COLUMN
         || colField.id === removedFieldId
       ) {
         continue;
@@ -184,7 +184,7 @@ function RowSettings({ field }: RowSettingsProps) {
         </div>
 
         {field.children
-          .filter(column => column.type === FormFieldType.COLUMN)
+          .filter(column => column.type === FieldType.COLUMN)
           .map((column, index) => (
             <Tabs.Content key={column.id} value={column.id}>
               <ColumnSettings

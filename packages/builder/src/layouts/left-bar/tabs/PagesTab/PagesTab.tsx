@@ -1,4 +1,4 @@
-import { FormFieldType, type PageFormField } from '@efie-form/core';
+import { FieldType, type PageFormField } from '@efie-form/core';
 import { useSettingsStore } from '../../../../lib/state/settings.state';
 import type { DragEndEvent } from '@dnd-kit/core';
 import {
@@ -29,17 +29,17 @@ function PagesTab() {
     }),
   );
 
-  const pages = schema.form.fields.filter(field => field.type === FormFieldType.PAGE);
+  const pages = schema.form.fields.filter(field => field.type === FieldType.PAGE);
 
   const handleAddNewPage = () => {
     const newPage = getDefaultField({
-      type: FormFieldType.PAGE,
+      type: FieldType.PAGE,
       page: {
         name: `Page ${pages.length + 1}`,
       },
     });
 
-    const newPages = [...pages, newPage].filter(p => p.type === FormFieldType.PAGE);
+    const newPages = [...pages, newPage].filter(p => p.type === FieldType.PAGE);
 
     updatePages(newPages);
   };

@@ -2,7 +2,7 @@ import type { RowFormField } from '@efie-form/core';
 import RenderField from '../RenderField';
 import { useSettingsStore } from '../../../../lib/state/settings.state';
 import { cn, getFieldProp } from '../../../../lib/utils';
-import { FormFieldType, PropertyType, widthToStyle } from '@efie-form/core';
+import { FieldType, PropertyType, widthToStyle } from '@efie-form/core';
 
 interface RowFieldProps {
   field: RowFormField;
@@ -21,7 +21,7 @@ function RowField({ field }: RowFieldProps) {
     >
       {field.children
         .filter(Boolean)
-        .filter(child => child.type === FormFieldType.COLUMN)
+        .filter(child => child.type === FieldType.COLUMN)
         .map(child => (
           <div
             key={`${field.id}-${child.id}`}

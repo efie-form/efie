@@ -1,5 +1,5 @@
 import type { FormSchema } from '@efie-form/vue';
-import { FormFieldType } from '../../../../packages/core-old/src/InputType';
+import { FieldType } from '../../../../packages/core-old/src/InputType';
 
 export const schema: FormSchema = {
   version: 'v1',
@@ -14,7 +14,7 @@ export const schema: FormSchema = {
             type: 'block',
             children: [
               {
-                type: FormFieldType.LONG_TEXT,
+                type: FieldType.LONG_TEXT,
                 id: 'TLxvJNtKjf',
                 props: {
                   label: 'Long Text',
@@ -23,7 +23,7 @@ export const schema: FormSchema = {
                 },
               },
               {
-                type: FormFieldType.MULTIPLE_CHOICES,
+                type: FieldType.MULTIPLE_CHOICES,
                 id: 'UctxtDDfYO',
                 props: {
                   label: 'Multiple Choice',
@@ -46,13 +46,13 @@ export const schema: FormSchema = {
                 },
               },
               {
-                type: FormFieldType.ROW,
+                type: FieldType.ROW,
                 id: 'WXHUMjPlGG',
                 props: {},
                 children: [
                   {
                     id: 'qkOhaZGcSO',
-                    type: FormFieldType.COLUMN,
+                    type: FieldType.COLUMN,
                     props: {
                       width: 50,
                     },
@@ -60,7 +60,7 @@ export const schema: FormSchema = {
                   },
                   {
                     id: 'kkPtOzRVnD',
-                    type: FormFieldType.COLUMN,
+                    type: FieldType.COLUMN,
                     props: {
                       width: 50,
                     },

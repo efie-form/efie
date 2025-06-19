@@ -45,7 +45,7 @@ export type {
   FormInputField,
 } from './types/form-field.type';
 
-export { FormFieldType } from './constants/field-type';
+export { FieldType } from './constants/field-type';
 export { PropertyType, SizeUnit, SizeType } from './constants/form-schema.constant';
 
 export {

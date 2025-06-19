@@ -1,4 +1,4 @@
-import { type FormField, FormFieldType } from '@efie-form/core';
+import { type FormField, FieldType } from '@efie-form/core';
 import ColumnsField from './fields/ColumnsField';
 import RowField from './fields/RowField';
 import {
@@ -80,7 +80,7 @@ function RenderField({ field, noSelect }: RenderFieldProps) {
           {
             '!outline-primary relative z-50': isSelected,
             '[&:not(:has(div[data-field=true]:hover))]:hover:outline-neutral-100':
-              field.type !== FormFieldType.COLUMN,
+              field.type !== FieldType.COLUMN,
           },
         )}
         {...(!noSelect && {
@@ -131,55 +131,55 @@ function RenderField({ field, noSelect }: RenderFieldProps) {
 
 function FieldItem({ field }: RenderFieldProps) {
   switch (field.type) {
-    case FormFieldType.ROW: {
+    case FieldType.ROW: {
       return <RowField field={field} />;
     }
-    case FormFieldType.COLUMN: {
+    case FieldType.COLUMN: {
       return <ColumnsField field={field} />;
     }
-    case FormFieldType.HEADER: {
+    case FieldType.HEADER: {
       return <HeaderField field={field} />;
     }
-    case FormFieldType.PARAGRAPH: {
+    case FieldType.PARAGRAPH: {
       return <ParagraphField field={field} />;
     }
-    case FormFieldType.SHORT_TEXT: {
+    case FieldType.SHORT_TEXT: {
       return <ShortTextField field={field} />;
     }
-    case FormFieldType.LONG_TEXT: {
+    case FieldType.LONG_TEXT: {
       return <LongTextField field={field} />;
     }
-    case FormFieldType.NUMBER: {
+    case FieldType.NUMBER: {
       return <NumberField field={field} />;
     }
-    case FormFieldType.DIVIDER: {
+    case FieldType.DIVIDER: {
       return <DividerField field={field} />;
     }
-    case FormFieldType.IMAGE: {
+    case FieldType.IMAGE: {
       return <ImageField field={field} />;
     }
-    case FormFieldType.SINGLE_CHOICE: {
+    case FieldType.SINGLE_CHOICE: {
       return <SingleChoiceField field={field} />;
     }
-    case FormFieldType.MULTIPLE_CHOICES: {
+    case FieldType.MULTIPLE_CHOICES: {
       return <MultipleChoicesField field={field} />;
     }
-    case FormFieldType.DATE: {
+    case FieldType.DATE: {
       return <DateField field={field} />;
     }
-    case FormFieldType.TIME: {
+    case FieldType.TIME: {
       return <TimeField field={field} />;
     }
-    case FormFieldType.DATE_TIME: {
+    case FieldType.DATE_TIME: {
       return <DateTimeField field={field} />;
     }
-    case FormFieldType.FILE: {
+    case FieldType.FILE: {
       return <FileField field={field} />;
     }
-    case FormFieldType.BUTTON: {
+    case FieldType.BUTTON: {
       return <ButtonField field={field} />;
     }
-    case FormFieldType.BLOCK: {
+    case FieldType.BLOCK: {
       return <BlockField field={field} />;
     }
     default: {

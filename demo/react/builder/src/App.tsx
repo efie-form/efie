@@ -1,5 +1,5 @@
 import type { FormBuilderRef } from '@efie-form/react';
-import { FormBuilder, FormFieldType } from '@efie-form/react';
+import { FormBuilder, FieldType } from '@efie-form/react';
 import { schema } from './schema';
 import { useEffect, useRef, useState } from 'react';
 
@@ -37,17 +37,17 @@ function App() {
           {
             id: 'long_text',
             label: 'Short Text',
-            type: FormFieldType.SHORT_TEXT,
+            type: FieldType.SHORT_TEXT,
           },
           {
             id: 'multiple_choices',
             label: 'Long Text',
-            type: FormFieldType.LONG_TEXT,
+            type: FieldType.LONG_TEXT,
           },
           {
             id: 'fd123',
             label: 'Number',
-            type: FormFieldType.NUMBER,
+            type: FieldType.NUMBER,
           },
         ]}
       />

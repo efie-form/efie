@@ -1,5 +1,5 @@
 import type { ShortTextFormField, LongTextFormField, NumberFormField, MultipleChoiceFormField, TimeFormField, DateFormField, SingleChoiceFormField, DateTimeFormField, FileFormField, BlockFormField, RowFormField, ColumnFormField, ImageFormField, ParagraphFormField, HeaderFormField, ButtonFormField, PageFormField, DividerFormField } from '@efie-form/core';
-import { FormFieldType, getColorObject, PropertyType, SizeType } from '@efie-form/core';
+import { FieldType, getColorObject, PropertyType, SizeType } from '@efie-form/core';
 import { generateId } from './utils';
 
 interface PageProps {
@@ -10,7 +10,7 @@ interface ColumnProps {
   width: number;
 }
 
-interface GetDefaultFieldProps<T extends FormFieldType> {
+interface GetDefaultFieldProps<T extends FieldType> {
   type: T;
   page?: PageProps;
   column?: ColumnProps;
@@ -40,18 +40,18 @@ interface GetDefaultFieldReturn {
   divider: DividerFormField;
 }
 
-export function getDefaultField<T extends FormFieldType>(props: GetDefaultFieldProps<T>): GetDefaultFieldReturn[T];
-export function getDefaultField<T extends FormFieldType>({
+export function getDefaultField<T extends FieldType>(props: GetDefaultFieldProps<T>): GetDefaultFieldReturn[T];
+export function getDefaultField<T extends FieldType>({
   type,
   page,
   column,
   formKey,
 }: GetDefaultFieldProps<T>) {
   switch (type) {
-    case FormFieldType.SHORT_TEXT: {
+    case FieldType.SHORT_TEXT: {
       return {
         id: generateId(ID_LENGTH),
-        type: FormFieldType.SHORT_TEXT,
+        type: FieldType.SHORT_TEXT,
         form: {
           key: formKey || '',
         },
@@ -69,11 +69,11 @@ export function getDefaultField<T extends FormFieldType>({
             value: false,
           },
         ],
-      } satisfies GetDefaultFieldReturn[typeof FormFieldType.SHORT_TEXT];
+      } satisfies GetDefaultFieldReturn[typeof FieldType.SHORT_TEXT];
     }
-    case FormFieldType.LONG_TEXT: {
+    case FieldType.LONG_TEXT: {
       return {
-        type: FormFieldType.LONG_TEXT,
+        type: FieldType.LONG_TEXT,
         id: generateId(ID_LENGTH),
         form: {
           key: formKey || '',
@@ -92,11 +92,11 @@ export function getDefaultField<T extends FormFieldType>({
             value: false,
           },
         ],
-      } satisfies GetDefaultFieldReturn[typeof FormFieldType.LONG_TEXT];
+      } satisfies GetDefaultFieldReturn[typeof FieldType.LONG_TEXT];
     }
-    case FormFieldType.NUMBER: {
+    case FieldType.NUMBER: {
       return {
-        type: FormFieldType.NUMBER,
+        type: FieldType.NUMBER,
         id: generateId(ID_LENGTH),
         form: {
           key: formKey || '',
@@ -115,11 +115,11 @@ export function getDefaultField<T extends FormFieldType>({
             value: false,
           },
         ],
-      } satisfies GetDefaultFieldReturn[typeof FormFieldType.NUMBER];
+      } satisfies GetDefaultFieldReturn[typeof FieldType.NUMBER];
     }
-    case FormFieldType.SINGLE_CHOICE: {
+    case FieldType.SINGLE_CHOICE: {
       return {
-        type: FormFieldType.SINGLE_CHOICE,
+        type: FieldType.SINGLE_CHOICE,
         id: generateId(ID_LENGTH),
         form: {
           key: formKey || '',
@@ -142,11 +142,11 @@ export function getDefaultField<T extends FormFieldType>({
             value: false,
           },
         ],
-      } satisfies GetDefaultFieldReturn[typeof FormFieldType.SINGLE_CHOICE];
+      } satisfies GetDefaultFieldReturn[typeof FieldType.SINGLE_CHOICE];
     }
-    case FormFieldType.MULTIPLE_CHOICES: {
+    case FieldType.MULTIPLE_CHOICES: {
       return {
-        type: FormFieldType.MULTIPLE_CHOICES,
+        type: FieldType.MULTIPLE_CHOICES,
         id: generateId(ID_LENGTH),
         form: {
           key: formKey || '',
@@ -169,15 +169,15 @@ export function getDefaultField<T extends FormFieldType>({
             value: false,
           },
         ],
-      } satisfies GetDefaultFieldReturn[typeof FormFieldType.MULTIPLE_CHOICES];
+      } satisfies GetDefaultFieldReturn[typeof FieldType.MULTIPLE_CHOICES];
     }
-    case FormFieldType.PAGE: {
+    case FieldType.PAGE: {
       return {
-        type: FormFieldType.PAGE,
+        type: FieldType.PAGE,
         id: generateId(ID_LENGTH),
         children: [
           getDefaultField({
-            type: FormFieldType.BLOCK,
+            type: FieldType.BLOCK,
           }),
         ],
         props: [
@@ -186,11 +186,11 @@ export function getDefaultField<T extends FormFieldType>({
             value: page?.name || 'Page',
           },
         ],
-      } satisfies GetDefaultFieldReturn[typeof FormFieldType.PAGE];
+      } satisfies GetDefaultFieldReturn[typeof FieldType.PAGE];
     }
-    case FormFieldType.DATE: {
+    case FieldType.DATE: {
       return {
-        type: FormFieldType.DATE,
+        type: FieldType.DATE,
         id: generateId(ID_LENGTH),
         form: {
           key: formKey || '',
@@ -205,11 +205,11 @@ export function getDefaultField<T extends FormFieldType>({
             value: false,
           },
         ],
-      } satisfies GetDefaultFieldReturn[typeof FormFieldType.DATE];
+      } satisfies GetDefaultFieldReturn[typeof FieldType.DATE];
     }
-    case FormFieldType.TIME: {
+    case FieldType.TIME: {
       return {
-        type: FormFieldType.TIME,
+        type: FieldType.TIME,
         id: generateId(ID_LENGTH),
         form: {
           key: formKey || '',
@@ -224,11 +224,11 @@ export function getDefaultField<T extends FormFieldType>({
             value: false,
           },
         ],
-      } satisfies GetDefaultFieldReturn[typeof FormFieldType.TIME];
+      } satisfies GetDefaultFieldReturn[typeof FieldType.TIME];
     }
-    case FormFieldType.DATE_TIME: {
+    case FieldType.DATE_TIME: {
       return {
-        type: FormFieldType.DATE_TIME,
+        type: FieldType.DATE_TIME,
         id: generateId(ID_LENGTH),
         form: {
           key: formKey || '',
@@ -243,11 +243,11 @@ export function getDefaultField<T extends FormFieldType>({
             value: false,
           },
         ],
-      } satisfies GetDefaultFieldReturn[typeof FormFieldType.DATE_TIME];
+      } satisfies GetDefaultFieldReturn[typeof FieldType.DATE_TIME];
     }
-    case FormFieldType.FILE: {
+    case FieldType.FILE: {
       return {
-        type: FormFieldType.FILE,
+        type: FieldType.FILE,
         id: generateId(ID_LENGTH),
         form: {
           key: formKey || '',
@@ -273,11 +273,11 @@ export function getDefaultField<T extends FormFieldType>({
             },
           },
         ],
-      } satisfies GetDefaultFieldReturn[typeof FormFieldType.FILE];
+      } satisfies GetDefaultFieldReturn[typeof FieldType.FILE];
     }
-    case FormFieldType.DIVIDER: {
+    case FieldType.DIVIDER: {
       return {
-        type: FormFieldType.DIVIDER,
+        type: FieldType.DIVIDER,
         id: generateId(ID_LENGTH),
         props: [
           {
@@ -297,11 +297,11 @@ export function getDefaultField<T extends FormFieldType>({
             value: { type: SizeType.LENGTH, value: 1, unit: 'px' },
           },
         ],
-      } satisfies GetDefaultFieldReturn[typeof FormFieldType.DIVIDER];
+      } satisfies GetDefaultFieldReturn[typeof FieldType.DIVIDER];
     }
-    case FormFieldType.HEADER: {
+    case FieldType.HEADER: {
       return {
-        type: FormFieldType.HEADER,
+        type: FieldType.HEADER,
         id: generateId(ID_LENGTH),
         props: [
           {
@@ -331,11 +331,11 @@ export function getDefaultField<T extends FormFieldType>({
             value: 'center',
           },
         ],
-      } satisfies GetDefaultFieldReturn[typeof FormFieldType.HEADER];
+      } satisfies GetDefaultFieldReturn[typeof FieldType.HEADER];
     }
-    case FormFieldType.PARAGRAPH: {
+    case FieldType.PARAGRAPH: {
       return {
-        type: FormFieldType.PARAGRAPH,
+        type: FieldType.PARAGRAPH,
         id: generateId(ID_LENGTH),
         props: [
           {
@@ -361,11 +361,11 @@ export function getDefaultField<T extends FormFieldType>({
             value: 'center',
           },
         ],
-      } satisfies GetDefaultFieldReturn[typeof FormFieldType.PARAGRAPH];
+      } satisfies GetDefaultFieldReturn[typeof FieldType.PARAGRAPH];
     }
-    case FormFieldType.IMAGE: {
+    case FieldType.IMAGE: {
       return {
-        type: FormFieldType.IMAGE,
+        type: FieldType.IMAGE,
         id: generateId(ID_LENGTH),
         props: [
           {
@@ -392,17 +392,17 @@ export function getDefaultField<T extends FormFieldType>({
             },
           },
         ],
-      } satisfies GetDefaultFieldReturn[typeof FormFieldType.IMAGE];
+      } satisfies GetDefaultFieldReturn[typeof FieldType.IMAGE];
     }
-    case FormFieldType.ROW: {
+    case FieldType.ROW: {
       return {
-        type: FormFieldType.ROW,
+        type: FieldType.ROW,
         id: generateId(ID_LENGTH),
         props: [],
         children: [
           {
             id: generateId(ID_LENGTH),
-            type: FormFieldType.COLUMN,
+            type: FieldType.COLUMN,
             props: [
               {
                 type: PropertyType.WIDTH,
@@ -416,7 +416,7 @@ export function getDefaultField<T extends FormFieldType>({
           },
           {
             id: generateId(ID_LENGTH),
-            type: FormFieldType.COLUMN,
+            type: FieldType.COLUMN,
             props: [
               {
                 type: PropertyType.WIDTH,
@@ -429,11 +429,11 @@ export function getDefaultField<T extends FormFieldType>({
             children: [],
           },
         ],
-      } satisfies GetDefaultFieldReturn[typeof FormFieldType.ROW];
+      } satisfies GetDefaultFieldReturn[typeof FieldType.ROW];
     }
-    case FormFieldType.COLUMN: {
+    case FieldType.COLUMN: {
       return {
-        type: FormFieldType.COLUMN,
+        type: FieldType.COLUMN,
         id: generateId(ID_LENGTH),
         props: [
           {
@@ -445,12 +445,12 @@ export function getDefaultField<T extends FormFieldType>({
           },
         ],
         children: [],
-      } satisfies GetDefaultFieldReturn[typeof FormFieldType.COLUMN];
+      } satisfies GetDefaultFieldReturn[typeof FieldType.COLUMN];
     }
-    case FormFieldType.BLOCK: {
+    case FieldType.BLOCK: {
       return {
         id: generateId(ID_LENGTH),
-        type: FormFieldType.BLOCK,
+        type: FieldType.BLOCK,
         children: [],
         props: [
           {
@@ -518,12 +518,12 @@ export function getDefaultField<T extends FormFieldType>({
             ],
           },
         ],
-      } satisfies GetDefaultFieldReturn[typeof FormFieldType.BLOCK];
+      } satisfies GetDefaultFieldReturn[typeof FieldType.BLOCK];
     }
-    case FormFieldType.BUTTON: {
+    case FieldType.BUTTON: {
       return {
         id: generateId(ID_LENGTH),
-        type: FormFieldType.BUTTON,
+        type: FieldType.BUTTON,
         props: [
           {
             type: PropertyType.LABEL,
@@ -578,7 +578,7 @@ export function getDefaultField<T extends FormFieldType>({
             },
           },
         ],
-      } satisfies GetDefaultFieldReturn[typeof FormFieldType.BUTTON];
+      } satisfies GetDefaultFieldReturn[typeof FieldType.BUTTON];
     }
     default: {
       throw new Error(`Unsupported field type: ${type}`);

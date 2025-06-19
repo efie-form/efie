@@ -1,11 +1,11 @@
-import type { FormFieldType } from '@efie-form/core';
+import type { FieldType } from '@efie-form/core';
 import { create } from 'zustand';
 
 interface DndState {
   action?: 'move' | 'new';
   setAction: (action: DndState['action']) => void;
-  draggedType?: FormFieldType;
-  setDraggedType: (type: FormFieldType) => void;
+  draggedType?: FieldType;
+  setDraggedType: (type: FieldType) => void;
   direction?: 'up' | 'down';
   setDirection: (direction: DndState['direction']) => void;
   clearDraggingState: () => void;

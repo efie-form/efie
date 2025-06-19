@@ -1,4 +1,4 @@
-import type { FormFieldType } from '../constants/field-type';
+import type { FieldType } from '../constants/field-type';
 import type { ValidationSchema } from './field-conditions.type';
 import type {
   LabelProperty,
@@ -33,7 +33,7 @@ import type {
 // Base form field interface
 export interface BaseFormField {
   id: string;
-  type: FormFieldType;
+  type: FieldType;
   container?: {
     props: (
       | WidthProperty
@@ -54,7 +54,7 @@ export interface FormInputField {
 }
 
 export interface ShortTextFormField extends BaseFormField, FormInputField {
-  type: typeof FormFieldType.SHORT_TEXT;
+  type: typeof FieldType.SHORT_TEXT;
   props: (
     | LabelProperty
     | PlaceholderProperty
@@ -63,7 +63,7 @@ export interface ShortTextFormField extends BaseFormField, FormInputField {
 }
 
 export interface LongTextFormField extends BaseFormField, FormInputField {
-  type: typeof FormFieldType.LONG_TEXT;
+  type: typeof FieldType.LONG_TEXT;
   props: (
     | LabelProperty
     | PlaceholderProperty
@@ -72,7 +72,7 @@ export interface LongTextFormField extends BaseFormField, FormInputField {
 }
 
 export interface NumberFormField extends BaseFormField, FormInputField {
-  type: typeof FormFieldType.NUMBER;
+  type: typeof FieldType.NUMBER;
   props: (
     | LabelProperty
     | PlaceholderProperty
@@ -81,7 +81,7 @@ export interface NumberFormField extends BaseFormField, FormInputField {
 }
 
 export interface SingleChoiceFormField extends BaseFormField, FormInputField {
-  type: typeof FormFieldType.SINGLE_CHOICE;
+  type: typeof FieldType.SINGLE_CHOICE;
   props: (
     | LabelProperty
     | OptionsProperty
@@ -90,7 +90,7 @@ export interface SingleChoiceFormField extends BaseFormField, FormInputField {
 }
 
 export interface MultipleChoiceFormField extends BaseFormField, FormInputField {
-  type: typeof FormFieldType.MULTIPLE_CHOICES;
+  type: typeof FieldType.MULTIPLE_CHOICES;
   props: (
     | LabelProperty
     | OptionsProperty
@@ -99,7 +99,7 @@ export interface MultipleChoiceFormField extends BaseFormField, FormInputField {
 }
 
 export interface DateFormField extends BaseFormField, FormInputField {
-  type: typeof FormFieldType.DATE;
+  type: typeof FieldType.DATE;
   props: (
     | LabelProperty
     | RequiredProperty
@@ -107,7 +107,7 @@ export interface DateFormField extends BaseFormField, FormInputField {
 }
 
 export interface TimeFormField extends BaseFormField, FormInputField {
-  type: typeof FormFieldType.TIME;
+  type: typeof FieldType.TIME;
   props: (
     | LabelProperty
     | RequiredProperty
@@ -115,7 +115,7 @@ export interface TimeFormField extends BaseFormField, FormInputField {
 }
 
 export interface DateTimeFormField extends BaseFormField, FormInputField {
-  type: typeof FormFieldType.DATE_TIME;
+  type: typeof FieldType.DATE_TIME;
   props: (
     | LabelProperty
     | RequiredProperty
@@ -124,7 +124,7 @@ export interface DateTimeFormField extends BaseFormField, FormInputField {
 
 // File field type
 export interface FileFormField extends BaseFormField, FormInputField {
-  type: typeof FormFieldType.FILE;
+  type: typeof FieldType.FILE;
   props: (
     | LabelProperty
     | AcceptProperty
@@ -135,7 +135,7 @@ export interface FileFormField extends BaseFormField, FormInputField {
 
 // Layout field types
 export interface BlockFormField extends BaseFormField {
-  type: typeof FormFieldType.BLOCK;
+  type: typeof FieldType.BLOCK;
   children: FormField[];
   props: (
     | WidthProperty
@@ -153,19 +153,19 @@ export interface BlockFormField extends BaseFormField {
 }
 
 export interface RowFormField extends BaseFormField {
-  type: typeof FormFieldType.ROW;
+  type: typeof FieldType.ROW;
   children: ColumnFormField[];
   props: (WidthProperty | HeightProperty)[];
 }
 
 export interface ColumnFormField extends BaseFormField {
-  type: typeof FormFieldType.COLUMN;
+  type: typeof FieldType.COLUMN;
   children: FormField[];
   props: (WidthProperty | HeightProperty)[];
 }
 
 export interface HeaderFormField extends BaseFormField {
-  type: typeof FormFieldType.HEADER;
+  type: typeof FieldType.HEADER;
   props: (
     | TagProperty
     | TextAlignProperty
@@ -176,7 +176,7 @@ export interface HeaderFormField extends BaseFormField {
 }
 
 export interface ParagraphFormField extends BaseFormField {
-  type: typeof FormFieldType.PARAGRAPH;
+  type: typeof FieldType.PARAGRAPH;
   props: (
     | TagProperty
     | TextAlignProperty
@@ -188,7 +188,7 @@ export interface ParagraphFormField extends BaseFormField {
 
 // Image field type
 export interface ImageFormField extends BaseFormField {
-  type: typeof FormFieldType.IMAGE;
+  type: typeof FieldType.IMAGE;
   props: (
     | LabelProperty
     | SrcProperty
@@ -201,7 +201,7 @@ export interface ImageFormField extends BaseFormField {
 
 // Button field type
 export interface ButtonFormField extends BaseFormField {
-  type: typeof FormFieldType.BUTTON;
+  type: typeof FieldType.BUTTON;
   props: (
     | LabelProperty
     | WidthProperty
@@ -219,14 +219,14 @@ export interface ButtonFormField extends BaseFormField {
 
 // Page field type
 export interface PageFormField extends BaseFormField {
-  type: typeof FormFieldType.PAGE;
+  type: typeof FieldType.PAGE;
   children: FormField[];
   props: (WidthProperty | PageNameProperty)[];
 }
 
 // Divider field type
 export interface DividerFormField extends BaseFormField {
-  type: typeof FormFieldType.DIVIDER;
+  type: typeof FieldType.DIVIDER;
   props: (
     | LabelProperty
     | ColorProperty

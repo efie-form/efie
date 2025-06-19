@@ -12,11 +12,11 @@ import {
   useDroppable as useOriginalDroppable,
 } from '@dnd-kit/core';
 import { DndContext as OriginalDndContext } from '@dnd-kit/core';
-import type { FormFieldType } from '@efie-form/core';
+import type { FieldType } from '@efie-form/core';
 
 interface DroppableData {
   id: string;
-  type: FormFieldType;
+  type: FieldType;
 }
 
 interface UseDroppableTypesafeArguments
@@ -31,12 +31,12 @@ export function useDroppable(props: UseDroppableTypesafeArguments) {
 interface DraggableMoveData {
   id: string;
   action: 'move';
-  type: FormFieldType;
+  type: FieldType;
 }
 
 interface DraggableNewData {
   action: 'new';
-  type: FormFieldType;
+  type: FieldType;
   formKey?: string;
 }
 

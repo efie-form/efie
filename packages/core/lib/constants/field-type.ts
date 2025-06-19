@@ -28,11 +28,11 @@ export const FormActionType = {
   BUTTON: 'button',
 } as const;
 
-export const FormFieldType = {
+export const FieldType = {
   ...FormInputType,
   ...FormStaticType,
   ...FormLayoutType,
   ...FormActionType,
 } as const;
 
-export type FormFieldType = (typeof FormFieldType)[keyof typeof FormFieldType];
+export type FieldType = (typeof FieldType)[keyof typeof FieldType];

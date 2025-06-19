@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import { useSettingsStore } from '../../../lib/state/settings.state';
 import checkSchema from '../../../lib/checkSchema';
-import { FormFieldType, type FormSchema } from '@efie-form/core';
+import { FieldType, type FormSchema } from '@efie-form/core';
 import useDebounce from '../../../lib/hooks/useDebounce';
 import { motion } from 'framer-motion';
 import JsonEditor from '../../../components/elements/JsonEditor';
@@ -37,7 +37,7 @@ export default function FormJson() {
     setInternalIndex(prev => prev + 1);
     setIsUpdating(true);
     const firstPage = schema.form.fields.find(
-      f => f.type === FormFieldType.PAGE,
+      f => f.type === FieldType.PAGE,
     );
     if (firstPage) setPage(firstPage.id);
     setSchema(schema);
