@@ -2,8 +2,8 @@ import type {
   TextAlign,
   ObjectFit,
   HeadingTag,
-} from './form-schema.constant';
-import type { PropertyType } from './form-schema.constant';
+} from '../constants/form-schema.constant';
+import type { PropertyType } from '../constants/form-schema.constant';
 import type { PropValueAccept, PropValueBoolean, PropValueBorderRadius, PropValueBoxShadow, PropValueColor, PropValueMargin, PropValueNumber, PropValueOptions, PropValuePadding, PropValueSize, PropValueString } from './field-property-value.type';
 import type { JSONContent } from '@tiptap/core';
 

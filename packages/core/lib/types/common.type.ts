@@ -1,4 +1,4 @@
-import type { AbsoluteSize, RelativeSize, SizeType, SizeUnit } from './form-schema.constant';
+import type { AbsoluteSize, RelativeSize, SizeType, SizeUnit } from '../constants/form-schema.constant';
 
 export interface ColorRgba {
   r: number;

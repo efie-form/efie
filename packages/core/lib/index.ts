@@ -44,8 +44,8 @@ export type {
   FormInputField,
 } from './types/form-field.type';
 
-export { FormFieldType } from './input-type';
-export { PropertyType, SizeUnit, SizeType } from './types/form-schema.constant';
+export { FormFieldType } from './constants/input-type';
+export { PropertyType, SizeUnit, SizeType } from './constants/form-schema.constant';
 
 export {
   marginToStyle,
@@ -58,7 +58,7 @@ export {
   fontSizeToStyle,
   sizeToStyle,
   toSize,
-} from './props-parse';
+} from './utils/props-parse';
 
 export {
   type BgColorProperty,
@@ -117,7 +117,7 @@ export {
   isMarginValue,
   isPaddingValue,
   isOptionsValue,
-} from './value-validator';
+} from './utils/value-validator';
 
 export type {
   PropValue,
@@ -136,4 +136,4 @@ export type {
   BoxShadow,
 } from './types/field-property-value.type';
 
-export { getColorObject, hslaToHex, rgbaToHex } from './colors';
+export { getColorObject, hslaToHex, rgbaToHex } from './utils/colors';

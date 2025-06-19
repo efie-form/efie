@@ -1,4 +1,4 @@
-import { EXTERNAL_ACTION_TYPE, INTERNAL_ACTION_TYPE } from './constant';
+import { EXTERNAL_ACTION_TYPE, INTERNAL_ACTION_TYPE } from './constants/constant';
 import defaultSchema from './default-schema';
 import type { BuilderCustomInput } from './types/builder-custom-input.type';
 import type { FormSchema } from './types/form-schema.type';

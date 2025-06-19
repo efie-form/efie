@@ -1,4 +1,4 @@
-import type { FormFieldType } from './../input-type';
+import type { FormFieldType } from '../constants/input-type';
 import type { ValidationSchema } from './form-schema.type';
 import type {
   LabelProperty,

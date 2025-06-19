@@ -1,10 +1,10 @@
 import type {
   FontSizeProperty,
   TextAlignProperty,
-} from './types/field-properties.type';
-import { TextAlign, SizeType } from './types/form-schema.constant';
-import type { Size, Color } from './types/common.type';
-import type { PropValueBorderRadius, PropValueBoxShadow, PropValueMargin, PropValuePadding, PropValueSize } from './types/field-property-value.type';
+} from '../types/field-properties.type';
+import { TextAlign, SizeType } from '../constants/form-schema.constant';
+import type { Size, Color } from '../types/common.type';
+import type { PropValueBorderRadius, PropValueBoxShadow, PropValueMargin, PropValuePadding, PropValueSize } from '../types/field-property-value.type';
 
 export const toSize = (size?: Size) => {
   if (!size) return;

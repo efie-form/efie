@@ -1,7 +1,7 @@
 import type { FormSchema } from './types/form-schema.type';
-import { FormFieldType } from './input-type';
-import { PropertyType, SizeType } from './types/form-schema.constant';
-import { getColorObject } from './colors';
+import { FormFieldType } from './constants/input-type';
+import { PropertyType, SizeType } from './constants/form-schema.constant';
+import { getColorObject } from './utils/colors';
 
 const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 

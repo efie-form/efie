@@ -3,7 +3,7 @@ import type {
   RuleType,
   ActionType,
   SizeUnit,
-} from './form-schema.constant';
+} from '../constants/form-schema.constant';
 import type { RootRule } from './root-rule.type';
 import type { FormField } from './form-field.type';
 

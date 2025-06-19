@@ -1,7 +1,7 @@
-import type { Size } from './types/common.type';
-import type { PropertyDefinition, WidthProperty } from './types/field-properties.type';
-import type { PropValue, PropValueAccept, PropValueBoolean, PropValueBorderRadius, PropValueBoxShadow, PropValueColor, PropValueMargin, PropValueNumber, PropValueOptions, PropValueSize, PropValueString } from './types/field-property-value.type';
-import { SizeType } from './types/form-schema.constant';
+import type { Size } from '../types/common.type';
+import type { PropertyDefinition, WidthProperty } from '../types/field-properties.type';
+import type { PropValue, PropValueAccept, PropValueBoolean, PropValueBorderRadius, PropValueBoxShadow, PropValueColor, PropValueMargin, PropValueNumber, PropValueOptions, PropValueSize, PropValueString } from '../types/field-property-value.type';
+import { SizeType } from '../constants/form-schema.constant';
 
 export function isStringValue(value?: PropValue): value is PropValueString {
   return (
