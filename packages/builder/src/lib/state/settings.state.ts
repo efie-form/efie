@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import defaultSchema from '../defaultSchema';
+import defaultSchema from '../default-schema';
 import type { CustomInputDef } from '@efie-form/core';
 
 export const RIGHT_BAR_TABS = {

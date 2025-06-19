@@ -1,3 +1,3 @@
-export { default as useFormBuilder } from './lib/hooks/useFormBuilder';
-export { default as useWatchSchema } from './lib/hooks/useWatchSchema';
-export { default as FormBuilder } from './FormBuilder';
+export { default as useFormBuilder } from './lib/hooks/use-form-builder';
+export { default as useWatchSchema } from './lib/hooks/use-watch-schema';
+export { default as FormBuilder } from './form-builder';

@@ -1,7 +1,7 @@
-export { default as FormBuilder } from './lib/form-builder/FormBuilder';
+export { default as FormBuilder } from './lib/form-builder/form-builder';
 export type { FormSchema } from '@efie-form/core';
-export { default as ReactForm } from './lib/Form';
-export type { FormBuilderRef } from './lib/form-builder/FormBuilder';
+export { default as ReactForm } from './lib/form';
+export type { FormBuilderRef } from './lib/form-builder/form-builder';
 export { FieldType } from '@efie-form/core';
 export type {
   ShortTextFieldProps,
@@ -23,4 +23,4 @@ export type {
   ImageFieldProps,
   PageFieldProps,
   ParagraphFieldProps,
-} from './types/FieldProps';
+} from './types/field-props';

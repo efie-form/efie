@@ -1,10 +1,10 @@
 import { useCallback } from 'react';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import type { PropSettingsAccept } from '../../../types/prop-settings.type';
-import SettingsFieldSwitchWithDropdown from '../property-layouts/SettingsFieldSwitchWithDropdown';
+import SettingsFieldSwitchWithDropdown from '../property-layouts/settings-field-switch-with-dropdown';
 import { Switch } from '../../../components/form';
 import { isAcceptValue, type AcceptProperty, type PropValue, type PropValueAccept } from '@efie-form/core';
-import { useControllableState } from '../../../lib/hooks/useControllableState';
+import { useControllableState } from '../../../lib/hooks/use-controllable-state';
 
 const FILE_EXTENSIONS = [
   { type: 'pdf', label: 'PDF', value: ['.pdf'] },

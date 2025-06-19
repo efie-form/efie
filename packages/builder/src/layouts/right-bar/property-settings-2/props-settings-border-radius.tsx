@@ -2,7 +2,7 @@ import { useCallback, useState, useRef, useEffect } from 'react';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import type { PropSettingsBorderRadius } from '../../../types/prop-settings.type';
 import { borderRadiusToStyle, isBorderRadiusValue, SizeType, type BorderRadius, type BorderRadiusProperty, type PropertyDefinition, type PropValue, type PropValueBorderRadius, type Size } from '@efie-form/core';
-import SizeInput from '../../../components/form/SizeInput';
+import SizeInput from '../../../components/form/size-input';
 import { FaLink, FaUnlink } from 'react-icons/fa';
 
 interface PropsSettingsBorderRadiusProps extends PropSettingsBorderRadius {

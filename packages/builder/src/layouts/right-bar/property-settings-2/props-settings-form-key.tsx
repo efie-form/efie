@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useSchemaStore } from '../../../lib/state/schema.state';
-import SettingsFieldVertical from '../property-layouts/SettingsFieldVertical';
+import SettingsFieldVertical from '../property-layouts/settings-field-vertical';
 import { Input } from '../../../components/form';
 import type { PropSettingsFormKey } from '../../../types/prop-settings.type';
 

@@ -2,7 +2,7 @@ import { arrayMove, SortableContext, sortableKeyboardCoordinates, useSortable, v
 import { Input, Switch } from '../../../components/form';
 import type { PropSettingsOption } from '../../../types/prop-settings.type';
 import { isOptionsValue, type OptionsProperty, type PropValue, type PropValueOptions } from '@efie-form/core';
-import Button from '../../../components/elements/Button';
+import Button from '../../../components/elements/button';
 import { closestCenter, DndContext, KeyboardSensor, PointerSensor, useSensor, useSensors, type DragEndEvent } from '@dnd-kit/core';
 import { MdAdd, MdOutlineClose, MdOutlineDragIndicator } from 'react-icons/md';
 import { cn } from '../../../lib/utils';

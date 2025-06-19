@@ -2,7 +2,7 @@ import { useCallback, useState, useRef, useEffect } from 'react';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import type { PropertyDefinition, MarginProperty, PropValue, PropValueMargin } from '@efie-form/core';
 import { isMarginValue, SizeType, type MarginSize, type Size } from '@efie-form/core';
-import SizeInput from '../../../components/form/SizeInput';
+import SizeInput from '../../../components/form/size-input';
 import { FaLink, FaUnlink } from 'react-icons/fa';
 
 interface PropSettingsMargin {

@@ -1,11 +1,11 @@
 import { Input } from '../../../components/form';
-import SettingsFieldVertical from '../property-layouts/SettingsFieldVertical';
+import SettingsFieldVertical from '../property-layouts/settings-field-vertical';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import type { PropSettingsImageUrl } from '../../../types/prop-settings.type';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { isStringValue, type PropertyDefinition, type PropValue } from '@efie-form/core';
 import { MdOutlineImage } from 'react-icons/md';
-import { useFileDragDrop } from '../../../lib/hooks/useFileDragDrop';
+import { useFileDragDrop } from '../../../lib/hooks/use-file-drag-drop';
 import { getImageFileInfo } from './utils-image-info';
 import { cn } from '../../../lib/utils';
 

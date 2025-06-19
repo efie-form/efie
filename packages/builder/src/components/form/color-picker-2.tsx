@@ -10,8 +10,8 @@ import {
 import 'react-color-palette/css';
 import { cn } from '../../lib/utils';
 import { useState } from 'react';
-import Select from './Select';
-import { useControllableState } from '../../lib/hooks/useControllableState';
+import Select from './select';
+import { useControllableState } from '../../lib/hooks/use-controllable-state';
 
 interface ColorPicker2Props {
   value?: Color;
