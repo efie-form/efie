@@ -7,7 +7,7 @@
     "moduleResolution": "bundler",
     "paths": {
       "@efie-form/core": [
-        "../core/src"
+        "../core/lib"
       ],
       "@efie-form/builder": [
         "../builder/src"

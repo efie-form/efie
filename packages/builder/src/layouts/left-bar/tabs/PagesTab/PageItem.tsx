@@ -5,7 +5,7 @@ import { type CSSProperties, useCallback, useEffect, useRef, useState } from 're
 import { cn } from '../../../../lib/utils';
 import { MdOutlineDragIndicator } from 'react-icons/md';
 import { FaCheck, FaTrash, FaXmark } from 'react-icons/fa6';
-import type { PageNameProperty } from '../../../../../../core/lib/types/field-properties.type';
+import type { PageNameProperty } from '../../../../../../core/lib/types/property-definition';
 
 interface PageItemProps {
   page: PageFormField;

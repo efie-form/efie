@@ -1,9 +1,4 @@
-import type {
-  FieldCondition,
-  FieldConditionGroup,
-  FieldValue,
-} from './form-schema.type';
-import type { ValidationRule } from './form-schema.type';
+import type { FieldCondition, FieldConditionGroup, FieldValue, ValidationRule } from './field-conditions.type';
 
 // Root page rule
 export interface RootPageRule {

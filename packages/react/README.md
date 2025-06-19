@@ -623,7 +623,7 @@ A component that renders a form builder interface using an iframe.
 |------|------|----------|---------|-------------|
 | `height` | `number` | Yes | - | Height of the form builder in pixels |
 | `schema` | `FormSchema` | No | `undefined` | Initial form schema to load |
-| `formInputs` | `BuilderCustomInput[]` | No | `[]` | Custom input fields to add to the builder |
+| `formInputs` | `CustomInputDef[]` | No | `[]` | Custom input fields to add to the builder |
 | `formKeyNonEditable` | `boolean` | No | `false` | Prevent editing form keys |
 | `inputNonReusable` | `boolean` | No | `false` | Prevent reusing input fields |
 | `maxHistories` | `number` | No | `50` | Maximum number of undo history entries to keep |
@@ -689,19 +689,19 @@ interface FormSchema {
 }
 ```
 
-#### `BuilderCustomInput`
+#### `CustomInputDef`
 
 Custom input configuration for the FormBuilder:
 
 ```tsx
-interface BuilderCustomInput {
+interface CustomInputDef {
   id: string;
   label: string;
   type: FormFieldType;
 }
 
 // Example
-const customInputs: BuilderCustomInput[] = [
+const customInputs: CustomInputDef[] = [
   {
     id: 'employee_id',
     label: 'Employee ID',

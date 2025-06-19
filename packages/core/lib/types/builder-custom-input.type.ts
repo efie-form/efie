@@ -1,66 +1,66 @@
-import type { FormFieldType } from '../constants/input-type';
+import type { FormFieldType } from '../constants/field-type';
 
-export interface BuilderCustomInputShortText {
+export interface ShortTextDef {
   id: string;
   type: typeof FormFieldType.SHORT_TEXT;
   label: string;
 }
 
-export interface BuilderCustomInputLongText {
+export interface LongTextDef {
   id: string;
   type: typeof FormFieldType.LONG_TEXT;
   label: string;
 }
 
-export interface BuilderCustomInputNumber {
+export interface NumberDef {
   id: string;
   type: typeof FormFieldType.NUMBER;
   label: string;
 }
 
-export interface BuilderCustomInputSingleChoice {
+export interface SingleChoiceDef {
   id: string;
   type: typeof FormFieldType.SINGLE_CHOICE;
   label: string;
 }
 
-export interface BuilderCustomInputMultipleChoices {
+export interface MultipleChoicesDef {
   id: string;
   type: typeof FormFieldType.MULTIPLE_CHOICES;
   label: string;
 }
 
-export interface BuilderCustomInputDate {
+export interface DateDef {
   id: string;
   type: typeof FormFieldType.DATE;
   label: string;
 }
 
-export interface BuilderCustomInputTime {
+export interface TimeDef {
   id: string;
   type: typeof FormFieldType.TIME;
   label: string;
 }
 
-export interface BuilderCustomInputDateTime {
+export interface DateTimeDef {
   id: string;
   type: typeof FormFieldType.DATE_TIME;
   label: string;
 }
 
-export interface BuilderCustomInputFile {
+export interface FileDef {
   id: string;
   type: typeof FormFieldType.FILE;
   label: string;
 }
 
-export type BuilderCustomInput =
-  | BuilderCustomInputShortText
-  | BuilderCustomInputLongText
-  | BuilderCustomInputNumber
-  | BuilderCustomInputSingleChoice
-  | BuilderCustomInputMultipleChoices
-  | BuilderCustomInputDate
-  | BuilderCustomInputTime
-  | BuilderCustomInputDateTime
-  | BuilderCustomInputFile;
+export type CustomInputDef =
+  | ShortTextDef
+  | LongTextDef
+  | NumberDef
+  | SingleChoiceDef
+  | MultipleChoicesDef
+  | DateDef
+  | TimeDef
+  | DateTimeDef
+  | FileDef;

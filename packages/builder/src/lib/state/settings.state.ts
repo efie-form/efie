@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import defaultSchema from '../defaultSchema';
-import type { BuilderCustomInput } from '@efie-form/core';
+import type { CustomInputDef } from '@efie-form/core';
 
 export const RIGHT_BAR_TABS = {
   PAGE: 'page',
@@ -11,7 +11,7 @@ export const RIGHT_BAR_TABS = {
 export type RightBarTab = (typeof RIGHT_BAR_TABS)[keyof typeof RIGHT_BAR_TABS];
 
 interface SettingsState {
-  formInputs: BuilderCustomInput[];
+  formInputs: CustomInputDef[];
   setFormInputs: (inputs: SettingsState['formInputs']) => void;
   clearFormInputs: () => void;
   selectedFieldId?: string;

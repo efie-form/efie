@@ -1,12 +1,12 @@
-import { EXTERNAL_ACTION_TYPE, INTERNAL_ACTION_TYPE } from './constants/constant';
+import { EXTERNAL_MESSAGE_TYPE, INTERNAL_MESSAGE_TYPE } from './constants/message-types';
 import defaultSchema from './default-schema';
-import type { BuilderCustomInput } from './types/builder-custom-input.type';
+import type { CustomInputDef } from './types/builder-custom-input.type';
 import type { FormSchema } from './types/form-schema.type';
 
 interface IframeProps {
   id: string;
   height: number;
-  formInputs?: BuilderCustomInput[];
+  formInputs?: CustomInputDef[];
   schema?: FormSchema;
   formKeyNonEditable?: boolean;
   inputNonReusable?: boolean;
@@ -18,7 +18,7 @@ export default class Iframe {
   private iframeElem: HTMLIFrameElement | undefined = undefined;
   private schema: FormSchema = defaultSchema;
   private isIframeReady = false;
-  private formInputs: BuilderCustomInput[] | undefined = undefined;
+  private formInputs: CustomInputDef[] | undefined = undefined;
   private formKeyNonEditable = false;
   private inputNonReusable = true;
   private height: number = 0;
@@ -81,7 +81,7 @@ export default class Iframe {
 
     this.parentElem.style.height = `${height}px`;
 
-    this.postMessage(EXTERNAL_ACTION_TYPE.SET_HEIGHT, { height });
+    this.postMessage(EXTERNAL_MESSAGE_TYPE.SET_HEIGHT, { height });
   }
 
   private listenMessage() {
@@ -91,7 +91,7 @@ export default class Iframe {
     window.addEventListener('message', (event) => {
       this.iframeLoadedHandler(event);
       switch (event.data.type) {
-        case INTERNAL_ACTION_TYPE.SET_DATA: {
+        case INTERNAL_MESSAGE_TYPE.SET_DATA: {
           this.schema = event.data.data;
           break;
         }
@@ -100,8 +100,8 @@ export default class Iframe {
   }
 
   private iframeLoadedHandler(event: MessageEvent) {
-    if (event.data.type !== INTERNAL_ACTION_TYPE.LOADED) return;
-    this.postMessage(EXTERNAL_ACTION_TYPE.INIT_DATA, {
+    if (event.data.type !== INTERNAL_MESSAGE_TYPE.LOADED) return;
+    this.postMessage(EXTERNAL_MESSAGE_TYPE.INIT_DATA, {
       schema: this.schema,
       formInputs: this.formInputs,
       height: this.height,
@@ -126,12 +126,12 @@ export default class Iframe {
       return;
     }
 
-    this.postMessage(EXTERNAL_ACTION_TYPE.RESET_DATA, data);
+    this.postMessage(EXTERNAL_MESSAGE_TYPE.RESET_DATA, data);
   }
 
-  public setFormInputs(formInputs: BuilderCustomInput[]) {
+  public setFormInputs(formInputs: CustomInputDef[]) {
     this.formInputs = formInputs;
-    this.postMessage(EXTERNAL_ACTION_TYPE.SET_FORM_INPUTS, formInputs);
+    this.postMessage(EXTERNAL_MESSAGE_TYPE.SET_FORM_INPUTS, formInputs);
   }
 
   private postMessage(type: string, data: unknown) {

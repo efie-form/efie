@@ -1,10 +1,10 @@
-import { EXTERNAL_ACTION_TYPE, INTERNAL_ACTION_TYPE } from './constants/constant';
-import type { BuilderCustomInput } from './types/builder-custom-input.type';
+import { EXTERNAL_MESSAGE_TYPE, INTERNAL_MESSAGE_TYPE } from './constants/message-types';
+import type { CustomInputDef } from './types/builder-custom-input.type';
 import type { FormSchema } from './types/form-schema.type';
 
 interface InitializedPayload {
   schema: FormSchema;
-  formInputs: BuilderCustomInput[];
+  formInputs: CustomInputDef[];
   height: number;
   formKeyNonEditable: boolean;
   inputNonReusable: boolean;
@@ -15,7 +15,7 @@ interface BuilderProps {
   onDataReset: (data: FormSchema) => void;
   onDataRequest: () => FormSchema;
   onHeightChange: (height: number) => void;
-  onFormInputsChange: (formInputs: BuilderCustomInput[]) => void;
+  onFormInputsChange: (formInputs: CustomInputDef[]) => void;
   onInitialized: (data: InitializedPayload) => void;
 }
 
@@ -25,7 +25,7 @@ export default class Builder {
   onDataReset: ((data: FormSchema) => void) | undefined = undefined;
   onDataRequest: (() => FormSchema) | undefined = undefined;
   onHeightChange: ((height: number) => void) | undefined = undefined;
-  onFormInputsChange: ((formInputs: BuilderCustomInput[]) => void) | undefined
+  onFormInputsChange: ((formInputs: CustomInputDef[]) => void) | undefined
     = undefined;
 
   onInitialized: ((data: InitializedPayload) => void) | undefined = undefined;
@@ -54,17 +54,17 @@ export default class Builder {
 
     // Send INIT first to establish connection
     // wait for the outer window to be ready and send the initialized event
-    this.postMessage(INTERNAL_ACTION_TYPE.LOADED);
+    this.postMessage(INTERNAL_MESSAGE_TYPE.LOADED);
   }
 
   public setValue(value: FormSchema) {
     if (globalThis.window === undefined || !this.isLoaded) return;
-    this.postMessage(INTERNAL_ACTION_TYPE.SET_DATA, value);
+    this.postMessage(INTERNAL_MESSAGE_TYPE.SET_DATA, value);
   }
 
   private initializedHandler(event: MessageEvent) {
     if (
-      event.data.type !== EXTERNAL_ACTION_TYPE.INIT_DATA
+      event.data.type !== EXTERNAL_MESSAGE_TYPE.INIT_DATA
       || this.isDataInitialized
     )
       return;
@@ -93,7 +93,7 @@ export default class Builder {
    * @returns void
    */
   private dataResetHandler(event: MessageEvent) {
-    if (event.data.type !== EXTERNAL_ACTION_TYPE.RESET_DATA) return;
+    if (event.data.type !== EXTERNAL_MESSAGE_TYPE.RESET_DATA) return;
     if (this.onDataReset) this.onDataReset(event.data.data);
   }
 
@@ -104,7 +104,7 @@ export default class Builder {
    * @returns void
    */
   private heightHandler(event: MessageEvent) {
-    if (event.data.type !== EXTERNAL_ACTION_TYPE.SET_HEIGHT) return;
+    if (event.data.type !== EXTERNAL_MESSAGE_TYPE.SET_HEIGHT) return;
     if (this.onHeightChange) this.onHeightChange(event.data.data.height);
   }
 
@@ -115,7 +115,7 @@ export default class Builder {
    * @returns void
    */
   private formInputsHandler(event: MessageEvent) {
-    if (event.data.type !== EXTERNAL_ACTION_TYPE.SET_FORM_INPUTS) return;
+    if (event.data.type !== EXTERNAL_MESSAGE_TYPE.SET_FORM_INPUTS) return;
     if (this.onFormInputsChange) this.onFormInputsChange(event.data.data);
   }
 

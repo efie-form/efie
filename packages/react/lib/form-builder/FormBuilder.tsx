@@ -1,7 +1,7 @@
 import type { RefObject } from 'react';
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 import {
-  type BuilderCustomInput,
+  type CustomInputDef,
   type FormSchema,
   Iframe,
 } from '@efie-form/core';
@@ -11,7 +11,7 @@ const DIV_ID = 'efie-form-builder';
 interface FormBuilderProps {
   ref: RefObject<FormBuilderRef>;
   height: number;
-  formInputs?: BuilderCustomInput[];
+  formInputs?: CustomInputDef[];
   schema?: FormSchema;
   formKeyNonEditable?: boolean;
   inputNonReusable?: boolean;

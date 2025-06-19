@@ -1,5 +1,5 @@
-import type { FormFieldType } from '../constants/input-type';
-import type { ValidationSchema } from './form-schema.type';
+import type { FormFieldType } from '../constants/field-type';
+import type { ValidationSchema } from './field-conditions.type';
 import type {
   LabelProperty,
   PlaceholderProperty,
@@ -28,7 +28,7 @@ import type {
   MaxFilesProperty,
   ContentProperty,
   PageNameProperty,
-} from './field-properties.type';
+} from './property-definition';
 
 // Base form field interface
 export interface BaseFormField {

@@ -1,7 +1,7 @@
 import type {
   FontSizeProperty,
   TextAlignProperty,
-} from '../types/field-properties.type';
+} from '../types/property-definition';
 import { TextAlign, SizeType } from '../constants/form-schema.constant';
 import type { Size, Color } from '../types/common.type';
 import type { PropValueBorderRadius, PropValueBoxShadow, PropValueMargin, PropValuePadding, PropValueSize } from '../types/field-property-value.type';

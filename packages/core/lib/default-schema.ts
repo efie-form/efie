@@ -1,5 +1,5 @@
 import type { FormSchema } from './types/form-schema.type';
-import { FormFieldType } from './constants/input-type';
+import { FormFieldType } from './constants/field-type';
 import { PropertyType, SizeType } from './constants/form-schema.constant';
 import { getColorObject } from './utils/colors';
 

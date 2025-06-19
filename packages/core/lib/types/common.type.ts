@@ -58,3 +58,12 @@ export type MarginSize = SizeAuto | SizeLength | SizePercentage | SizeInherit;
 export type PaddingSize = SizeLength | SizePercentage | SizeInherit;
 export type FontSize = SizeAbsolute | SizeRelative | SizeAuto | SizeLength | SizePercentage | SizeInitial | SizeInherit;
 export type Size = SizeAuto | SizeLength | SizePercentage | SizeInitial | SizeInherit | SizeAbsolute | SizeRelative;
+
+export interface BoxShadow {
+  x: Size;
+  y: Size;
+  blur: Size;
+  spread: Size;
+  color: Color;
+  inset: boolean;
+}
