@@ -29,6 +29,10 @@ export type PropValueJsonContent = {
   jsonContent: JSONContent;
 };
 
+export type PropValueButtonAction = {
+  type: 'submit' | 'reset' | 'custom';
+};
+
 export type PropValue =
   | PropValueString
   | PropValueNumber
