@@ -5,7 +5,7 @@ const jestConfig = {
   preset: 'ts-jest/presets/default-esm',
   testEnvironment: 'node',
   extensionsToTreatAsEsm: ['.ts', '.tsx'],
-  setupFilesAfterEnv: ['<rootDir>/src/__tests__/setupTests.ts'],
+  setupFilesAfterEnv: ['<rootDir>/src/__tests__/setup-tests.ts'],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
     '^color-convert$': '<rootDir>/src/__mocks__/color-convert.ts',
