@@ -2,7 +2,7 @@ import { useCallback, useState, useRef, useEffect } from 'react';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import type { PropertyDefinition, PaddingProperty, PropValue, PropValuePadding } from '@efie-form/core';
 import { isPaddingValue, SizeType, type PaddingSize, type Size } from '@efie-form/core';
-import SizeInput from '../../../components/form/SizeInput';
+import SizeInput from '../../../components/form/size-input';
 import { FaLink, FaUnlink } from 'react-icons/fa';
 import type { PropSettingsPadding } from '../../../types/prop-settings.type';
 

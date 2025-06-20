@@ -1,66 +1,66 @@
-import type { FormFieldType } from '../input-type';
+import type { FieldType } from '../constants/field-type';
 
-export interface BuilderCustomInputShortText {
+export interface ShortTextDef {
   id: string;
-  type: typeof FormFieldType.SHORT_TEXT;
+  type: typeof FieldType.SHORT_TEXT;
   label: string;
 }
 
-export interface BuilderCustomInputLongText {
+export interface LongTextDef {
   id: string;
-  type: typeof FormFieldType.LONG_TEXT;
+  type: typeof FieldType.LONG_TEXT;
   label: string;
 }
 
-export interface BuilderCustomInputNumber {
+export interface NumberDef {
   id: string;
-  type: typeof FormFieldType.NUMBER;
+  type: typeof FieldType.NUMBER;
   label: string;
 }
 
-export interface BuilderCustomInputSingleChoice {
+export interface SingleChoiceDef {
   id: string;
-  type: typeof FormFieldType.SINGLE_CHOICE;
+  type: typeof FieldType.SINGLE_CHOICE;
   label: string;
 }
 
-export interface BuilderCustomInputMultipleChoices {
+export interface MultipleChoicesDef {
   id: string;
-  type: typeof FormFieldType.MULTIPLE_CHOICES;
+  type: typeof FieldType.MULTIPLE_CHOICES;
   label: string;
 }
 
-export interface BuilderCustomInputDate {
+export interface DateDef {
   id: string;
-  type: typeof FormFieldType.DATE;
+  type: typeof FieldType.DATE;
   label: string;
 }
 
-export interface BuilderCustomInputTime {
+export interface TimeDef {
   id: string;
-  type: typeof FormFieldType.TIME;
+  type: typeof FieldType.TIME;
   label: string;
 }
 
-export interface BuilderCustomInputDateTime {
+export interface DateTimeDef {
   id: string;
-  type: typeof FormFieldType.DATE_TIME;
+  type: typeof FieldType.DATE_TIME;
   label: string;
 }
 
-export interface BuilderCustomInputFile {
+export interface FileDef {
   id: string;
-  type: typeof FormFieldType.FILE;
+  type: typeof FieldType.FILE;
   label: string;
 }
 
-export type BuilderCustomInput =
-  | BuilderCustomInputShortText
-  | BuilderCustomInputLongText
-  | BuilderCustomInputNumber
-  | BuilderCustomInputSingleChoice
-  | BuilderCustomInputMultipleChoices
-  | BuilderCustomInputDate
-  | BuilderCustomInputTime
-  | BuilderCustomInputDateTime
-  | BuilderCustomInputFile;
+export type CustomInputDef =
+  | ShortTextDef
+  | LongTextDef
+  | NumberDef
+  | SingleChoiceDef
+  | MultipleChoicesDef
+  | DateDef
+  | TimeDef
+  | DateTimeDef
+  | FileDef;

@@ -1,0 +1,42 @@
+import type { RowFormField } from '@efie-form/core';
+import RenderField from '../render-field';
+import { useSettingsStore } from '../../../../lib/state/settings.state';
+import { cn, getFieldProp } from '../../../../lib/utils';
+import { FieldType, PropertyType, widthToStyle } from '@efie-form/core';
+
+interface RowFieldProps {
+  field: RowFormField;
+}
+
+function RowField({ field }: RowFieldProps) {
+  const { previewDevice } = useSettingsStore();
+
+  const isMobile = previewDevice === 'mobile';
+
+  return (
+    <div
+      className={cn('flex relative items-start content-start', {
+        'flex-col': isMobile,
+      })}
+    >
+      {field.children
+        .filter(Boolean)
+        .filter(child => child.type === FieldType.COLUMN)
+        .map(child => (
+          <div
+            key={`${field.id}-${child.id}`}
+            style={{
+              width: isMobile
+                ? '100%'
+                : widthToStyle(getFieldProp(child, PropertyType.WIDTH)?.value),
+            }}
+            className="self-stretch"
+          >
+            <RenderField field={child} noSelect />
+          </div>
+        ))}
+    </div>
+  );
+}
+
+export default RowField;

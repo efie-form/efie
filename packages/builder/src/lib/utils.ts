@@ -1,5 +1,5 @@
 import {
-  FormFieldType,
+  FieldType,
   type PropertyType,
   type FormField,
   type PropertyDefinition,
@@ -21,7 +21,7 @@ export function generateId(length: number = 10) {
 }
 
 export function isValidFieldType(type: string) {
-  return Object.values(FormFieldType).includes(type as FormFieldType);
+  return Object.values(FieldType).includes(type as FieldType);
 }
 
 export function getFieldProp<T extends PropertyType>(

@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { Input } from '../../../components/form';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import type { PropSettingsNumber } from '../../../types/prop-settings.type';
-import SettingsFieldHorizontal from '../property-layouts/SettingsFieldHorizontal';
+import SettingsFieldHorizontal from '../property-layouts/settings-field-horizontal';
 import { isNumberValue, type PropertyDefinition, type PropValue } from '@efie-form/core';
 
 interface PropsTemplateNumberProps extends PropSettingsNumber {

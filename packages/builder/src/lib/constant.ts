@@ -1,25 +1,25 @@
-import { FormFieldType } from '@efie-form/core';
+import { FieldType } from '@efie-form/core';
 
 export const FIELDS_NAME = {
-  [FormFieldType.SHORT_TEXT]: 'Short Text',
-  [FormFieldType.TIME]: 'Time',
-  [FormFieldType.SINGLE_CHOICE]: 'Single Choice',
-  [FormFieldType.PARAGRAPH]: 'Paragraph',
-  [FormFieldType.NUMBER]: 'Number',
-  [FormFieldType.ROW]: 'Row',
-  [FormFieldType.MULTIPLE_CHOICES]: 'Multiple Choices',
-  [FormFieldType.IMAGE]: 'Image',
-  [FormFieldType.HEADER]: 'Header',
-  [FormFieldType.FILE]: 'File Upload',
-  [FormFieldType.DIVIDER]: 'Divider',
-  [FormFieldType.BLOCK]: 'Block',
-  [FormFieldType.COLUMN]: 'Column',
-  [FormFieldType.LONG_TEXT]: 'Long Text',
-  [FormFieldType.DATE]: 'Date',
-  [FormFieldType.DATE_TIME]: 'Date & Time',
-  [FormFieldType.BUTTON]: 'Button',
-  [FormFieldType.PAGE]: 'Page',
-} satisfies Record<FormFieldType, string>;
+  [FieldType.SHORT_TEXT]: 'Short Text',
+  [FieldType.TIME]: 'Time',
+  [FieldType.SINGLE_CHOICE]: 'Single Choice',
+  [FieldType.PARAGRAPH]: 'Paragraph',
+  [FieldType.NUMBER]: 'Number',
+  [FieldType.ROW]: 'Row',
+  [FieldType.MULTIPLE_CHOICES]: 'Multiple Choices',
+  [FieldType.IMAGE]: 'Image',
+  [FieldType.HEADER]: 'Header',
+  [FieldType.FILE]: 'File Upload',
+  [FieldType.DIVIDER]: 'Divider',
+  [FieldType.BLOCK]: 'Block',
+  [FieldType.COLUMN]: 'Column',
+  [FieldType.LONG_TEXT]: 'Long Text',
+  [FieldType.DATE]: 'Date',
+  [FieldType.DATE_TIME]: 'Date & Time',
+  [FieldType.BUTTON]: 'Button',
+  [FieldType.PAGE]: 'Page',
+} satisfies Record<FieldType, string>;
 
 export const textAlignMap = {
   left: 'start',

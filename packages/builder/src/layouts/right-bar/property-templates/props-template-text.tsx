@@ -1,5 +1,5 @@
 import { Input } from '../../../components/form';
-import SettingsFieldVertical from '../property-layouts/SettingsFieldVertical';
+import SettingsFieldVertical from '../property-layouts/settings-field-vertical';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import type { PropSettingsText } from '../../../types/prop-settings.type';
 import { useCallback } from 'react';

@@ -1,9 +1,9 @@
 import { useCallback } from 'react';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import { isSizeValue, type PropertyDefinition, type PropValue, type Size } from '@efie-form/core';
-import SizeInput from '../../../components/form/SizeInput';
+import SizeInput from '../../../components/form/size-input';
 import type { PropSettingsSize } from '../../../types/prop-settings.type';
-import SettingsFieldHorizontal from '../property-layouts/SettingsFieldHorizontal';
+import SettingsFieldHorizontal from '../property-layouts/settings-field-horizontal';
 
 interface PropsTemplateSizeProps extends PropSettingsSize {
   fieldId: string;

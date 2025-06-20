@@ -1,6 +1,6 @@
-export { default as Number } from './Number';
-export { default as Select } from './Select';
-export { default as Input } from './Input';
-export { default as ColorPicker } from './ColorPicker';
-export { default as Slider } from './Slider';
-export { default as Switch } from './Switch';
+export { default as Number } from './number';
+export { default as Select } from './select';
+export { default as Input } from './input';
+export { default as ColorPicker } from './color-picker';
+export { default as Slider } from './slider';
+export { default as Switch } from './switch';

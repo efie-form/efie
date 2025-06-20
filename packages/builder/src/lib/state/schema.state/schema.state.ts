@@ -6,7 +6,7 @@ import { createPropertyActions } from './property-actions';
 import { createHistoryActions } from './history-actions';
 import { createLegacyActions } from './legacy-actions';
 import { getFieldInfoMap } from './utils';
-import defaultSchema from '../../defaultSchema';
+import defaultSchema from '../../default-schema';
 
 const fieldInfo = getFieldInfoMap(defaultSchema.form.fields);
 

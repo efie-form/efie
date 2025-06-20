@@ -3,7 +3,7 @@ import { useSchemaStore } from '../../../lib/state/schema.state';
 import type { PropSettingsBoolean } from '../../../types/prop-settings.type';
 import { isBooleanValue, type PropertyDefinition, type PropValue } from '@efie-form/core';
 import { Switch } from '../../../components/form';
-import SettingsFieldHorizontal from '../property-layouts/SettingsFieldHorizontal';
+import SettingsFieldHorizontal from '../property-layouts/settings-field-horizontal';
 
 interface PropTemplateBoolean extends PropSettingsBoolean {
   fieldId: string;

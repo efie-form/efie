@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import type { PropSettingsColor } from '../../../types/prop-settings.type';
-import SettingsFieldHorizontal from '../property-layouts/SettingsFieldHorizontal';
+import SettingsFieldHorizontal from '../property-layouts/settings-field-horizontal';
 import ColorPicker2 from '../../../components/form/color-picker-2';
 import { getColorObject, isColorValue, type Color, type PropertyDefinition, type PropValue } from '@efie-form/core';
 

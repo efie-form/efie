@@ -1,4 +1,4 @@
-import { FormFieldType, getColorObject, PropertyType } from '@efie-form/core';
+import { FieldType, getColorObject, PropertyType } from '@efie-form/core';
 import type { FormField } from '@efie-form/core';
 import { createTestStore } from './test-utils';
 
@@ -22,7 +22,7 @@ describe('History Actions', () => {
     it('should add history when making changes', () => {
       const newField: FormField = {
         id: 'temp-id',
-        type: FormFieldType.SHORT_TEXT,
+        type: FieldType.SHORT_TEXT,
         form: {
           key: 'test-field',
         },
@@ -42,7 +42,7 @@ describe('History Actions', () => {
       // Make a change
       const newField: FormField = {
         id: 'temp-id',
-        type: FormFieldType.SHORT_TEXT,
+        type: FieldType.SHORT_TEXT,
         form: {
           key: 'test-field-2',
         },
@@ -67,7 +67,7 @@ describe('History Actions', () => {
       // Make a change
       const newField: FormField = {
         id: 'temp-id',
-        type: FormFieldType.SHORT_TEXT,
+        type: FieldType.SHORT_TEXT,
         form: {
           key: 'test-field-3',
         },
@@ -97,7 +97,7 @@ describe('History Actions', () => {
       // Make a change
       const newField: FormField = {
         id: 'temp-id',
-        type: FormFieldType.SHORT_TEXT,
+        type: FieldType.SHORT_TEXT,
         form: {
           key: 'test-field-4',
         },
@@ -118,7 +118,7 @@ describe('History Actions', () => {
       // Make a change
       const newField: FormField = {
         id: 'temp-id',
-        type: FormFieldType.SHORT_TEXT,
+        type: FieldType.SHORT_TEXT,
         form: {
           key: 'test-field-5',
         },
@@ -141,7 +141,7 @@ describe('History Actions', () => {
       // Make some changes to create history
       const newField: FormField = {
         id: 'temp-id',
-        type: FormFieldType.SHORT_TEXT,
+        type: FieldType.SHORT_TEXT,
         form: {
           key: 'test-field-6',
         },
@@ -213,7 +213,7 @@ describe('History Actions', () => {
       // Make some changes
       const newField1: FormField = {
         id: 'temp-id-1',
-        type: FormFieldType.SHORT_TEXT,
+        type: FieldType.SHORT_TEXT,
         form: {
           key: 'test-field-7',
         },
@@ -222,7 +222,7 @@ describe('History Actions', () => {
 
       const newField2: FormField = {
         id: 'temp-id-2',
-        type: FormFieldType.LONG_TEXT,
+        type: FieldType.LONG_TEXT,
         form: {
           key: 'test-field-8',
         },
@@ -242,7 +242,7 @@ describe('History Actions', () => {
       // Make a new change (should truncate future history)
       const newField3: FormField = {
         id: 'temp-id-3',
-        type: FormFieldType.NUMBER,
+        type: FieldType.NUMBER,
         form: {
           key: 'test-field-9',
         },

@@ -1,9 +1,9 @@
 import { useCallback } from 'react';
 import { useSchemaStore } from '../../../lib/state/schema.state';
-import Select from '../../../components/form/Select';
+import Select from '../../../components/form/select';
 import type { PropSettingsSelect } from '../../../types/prop-settings.type';
 import { isStringValue, type PropertyDefinition, type PropValue } from '@efie-form/core';
-import SettingsFieldHorizontal from '../property-layouts/SettingsFieldHorizontal';
+import SettingsFieldHorizontal from '../property-layouts/settings-field-horizontal';
 
 interface PropsSettingsSelectProps extends PropSettingsSelect {
   fieldId: string;

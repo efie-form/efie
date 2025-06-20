@@ -1,4 +1,4 @@
-import { FormFieldType, getColorObject, PropertyType } from '@efie-form/core';
+import { FieldType, getColorObject, PropertyType } from '@efie-form/core';
 import type { FormSchema, Color } from '@efie-form/core';
 import { create } from 'zustand';
 import type { SchemaState } from '../lib/state/schema.state/types';
@@ -18,11 +18,11 @@ export const createTestSchema = (): FormSchema => ({
     fields: [
       {
         id: 'page-1',
-        type: FormFieldType.PAGE,
+        type: FieldType.PAGE,
         children: [
           {
             id: 'block-1',
-            type: FormFieldType.BLOCK,
+            type: FieldType.BLOCK,
             children: [],
             props: [
               {
@@ -83,15 +83,15 @@ export const createComplexTestSchema = (): FormSchema => ({
     fields: [
       {
         id: 'page-1',
-        type: FormFieldType.PAGE,
+        type: FieldType.PAGE,
         children: [
           {
             id: 'block-1',
-            type: FormFieldType.BLOCK,
+            type: FieldType.BLOCK,
             children: [
               {
                 id: 'field-1',
-                type: FormFieldType.SHORT_TEXT,
+                type: FieldType.SHORT_TEXT,
                 form: {
                   key: 'text-field-1',
                 },
@@ -112,7 +112,7 @@ export const createComplexTestSchema = (): FormSchema => ({
           },
           {
             id: 'block-2',
-            type: FormFieldType.BLOCK,
+            type: FieldType.BLOCK,
             children: [],
             props: [
               {
@@ -140,11 +140,11 @@ export const createPropertyTestSchema = (): FormSchema => ({
     fields: [
       {
         id: 'page-1',
-        type: FormFieldType.PAGE,
+        type: FieldType.PAGE,
         children: [
           {
             id: 'block-1',
-            type: FormFieldType.BLOCK,
+            type: FieldType.BLOCK,
             children: [],
             props: [
               {

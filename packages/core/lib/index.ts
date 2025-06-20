@@ -1,7 +1,13 @@
-export { default as Iframe } from './Iframe';
-export { default as Builder } from './Builder';
+export { default as Iframe } from './iframe';
+export { default as Builder } from './builder';
 export type {
   FormSchema,
+} from './types/form-schema.type';
+export type { RootRule } from './types/root-rule.type';
+export type { CustomInputDef } from './types/builder-custom-input.type';
+export type { PropertyDefinition } from './types/property-definition';
+
+export type {
   FieldCondition,
   FieldConditionGroup,
   FieldConditionValue,
@@ -13,12 +19,7 @@ export type {
   ValidationCondition,
   ValidationCase,
   ValidationSchema,
-  PropertyValue,
-  ContainerStyle,
-} from './types/form-schema.type';
-export type { RootRule } from './types/root-rule.type';
-export type { BuilderCustomInput } from './types/builder-custom-input.type';
-export type { PropertyDefinition } from './types/field-properties.type';
+} from './types/field-conditions.type';
 
 export type {
   BaseFormField,
@@ -44,8 +45,8 @@ export type {
   FormInputField,
 } from './types/form-field.type';
 
-export { FormFieldType } from './input-type';
-export { PropertyType, SizeUnit, SizeType } from './types/form-schema.constant';
+export { FieldType } from './constants/field-type';
+export { PropertyType, SizeUnit, SizeType } from './constants/form-schema.constant';
 
 export {
   marginToStyle,
@@ -58,7 +59,7 @@ export {
   fontSizeToStyle,
   sizeToStyle,
   toSize,
-} from './props-parse';
+} from './utils/props-parse';
 
 export {
   type BgColorProperty,
@@ -84,7 +85,7 @@ export {
   type TextAlignProperty,
   type ContentProperty,
   type PageNameProperty,
-} from './types/field-properties.type';
+} from './types/property-definition';
 
 export type {
   Color,
@@ -102,6 +103,7 @@ export type {
   FontSize,
   SizeAbsolute,
   SizeRelative,
+  BoxShadow,
 } from './types/common.type';
 
 export {
@@ -117,7 +119,7 @@ export {
   isMarginValue,
   isPaddingValue,
   isOptionsValue,
-} from './value-validator';
+} from './utils/value-validator';
 
 export type {
   PropValue,
@@ -133,7 +135,6 @@ export type {
   PropValuePadding,
   PropValueOptions,
   BorderRadius,
-  BoxShadow,
 } from './types/field-property-value.type';
 
-export { getColorObject, hslaToHex, rgbaToHex } from './colors';
+export { getColorObject, hslaToHex, rgbaToHex } from './utils/colors';

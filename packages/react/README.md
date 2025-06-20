@@ -111,7 +111,7 @@ The `FormBuilder` component provides a drag-and-drop interface for creating form
 
 ```tsx
 import React, { useRef } from 'react';
-import { FormBuilder, FormBuilderRef, FormSchema, FormFieldType } from '@efie-form/react';
+import { FormBuilder, FormBuilderRef, FormSchema, FieldType } from '@efie-form/react';
 
 const App = () => {
   const formBuilderRef = useRef<FormBuilderRef>(null);
@@ -138,7 +138,7 @@ const App = () => {
           {
             id: 'custom_field',
             label: 'Custom Field',
-            type: FormFieldType.SHORT_TEXT,
+            type: FieldType.SHORT_TEXT,
           }
         ]}
       />
@@ -151,7 +151,7 @@ const App = () => {
 
 ```tsx
 import React, { useRef, useState } from 'react';
-import { FormBuilder, FormBuilderRef, FormSchema, FormFieldType } from '@efie-form/react';
+import { FormBuilder, FormBuilderRef, FormSchema, FieldType } from '@efie-form/react';
 
 const AdvancedFormBuilder = () => {
   const formBuilderRef = useRef<FormBuilderRef>(null);
@@ -182,17 +182,17 @@ const AdvancedFormBuilder = () => {
     {
       id: 'employee_id',
       label: 'Employee ID',
-      type: FormFieldType.SHORT_TEXT,
+      type: FieldType.SHORT_TEXT,
     },
     {
       id: 'department',
       label: 'Department',
-      type: FormFieldType.SINGLE_CHOICE,
+      type: FieldType.SINGLE_CHOICE,
     },
     {
       id: 'salary_range',
       label: 'Salary Range',
-      type: FormFieldType.NUMBER,
+      type: FieldType.NUMBER,
     },
   ];
 
@@ -623,7 +623,7 @@ A component that renders a form builder interface using an iframe.
 |------|------|----------|---------|-------------|
 | `height` | `number` | Yes | - | Height of the form builder in pixels |
 | `schema` | `FormSchema` | No | `undefined` | Initial form schema to load |
-| `formInputs` | `BuilderCustomInput[]` | No | `[]` | Custom input fields to add to the builder |
+| `formInputs` | `CustomInputDef[]` | No | `[]` | Custom input fields to add to the builder |
 | `formKeyNonEditable` | `boolean` | No | `false` | Prevent editing form keys |
 | `inputNonReusable` | `boolean` | No | `false` | Prevent reusing input fields |
 | `maxHistories` | `number` | No | `50` | Maximum number of undo history entries to keep |
@@ -689,38 +689,38 @@ interface FormSchema {
 }
 ```
 
-#### `BuilderCustomInput`
+#### `CustomInputDef`
 
 Custom input configuration for the FormBuilder:
 
 ```tsx
-interface BuilderCustomInput {
+interface CustomInputDef {
   id: string;
   label: string;
-  type: FormFieldType;
+  type: FieldType;
 }
 
 // Example
-const customInputs: BuilderCustomInput[] = [
+const customInputs: CustomInputDef[] = [
   {
     id: 'employee_id',
     label: 'Employee ID',
-    type: FormFieldType.SHORT_TEXT,
+    type: FieldType.SHORT_TEXT,
   },
   {
     id: 'department',
     label: 'Department',
-    type: FormFieldType.SINGLE_CHOICE,
+    type: FieldType.SINGLE_CHOICE,
   },
 ];
 ```
 
-#### `FormFieldType`
+#### `FieldType`
 
 Enum of all available field types:
 
 ```tsx
-enum FormFieldType {
+enum FieldType {
   SHORT_TEXT = 'short_text',
   LONG_TEXT = 'long_text',
   NUMBER = 'number',
