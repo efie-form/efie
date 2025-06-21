@@ -13,6 +13,7 @@ import PropsSettingsMargin from './property-settings-2/props-settings-margin';
 import PropsSettingsPadding from './property-settings-2/props-settings-padding';
 import PropsSettingsBoxShadow from './property-settings-2/props-settings-box-shadow';
 import PropsSettingsSelect from './property-settings-2/props-settings-select';
+import PropsSettingsButtonAction from './property-settings-2/props-settings-button-action';
 
 interface DynamicSettingsProps {
   settings?: PropSettings[];
@@ -83,6 +84,9 @@ function DynamicSettingsType({ settings, fieldId }: DynamicSettingsTypeProps) {
     }
     case 'select': {
       return <PropsSettingsSelect fieldId={fieldId} {...settings} />;
+    }
+    case 'buttonAction': {
+      return <PropsSettingsButtonAction fieldId={fieldId} {...settings} />;
     }
   }
 }

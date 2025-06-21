@@ -93,6 +93,12 @@ export interface PropSettingsSelect {
   placeholder?: string;
 }
 
+export interface PropSettingsButtonAction {
+  template: 'buttonAction';
+  type: PropertyDefinition['type'];
+  label: string;
+}
+
 export type PropSettings =
   | PropSettingsText
   | PropSettingsNumber
@@ -107,4 +113,5 @@ export type PropSettings =
   | PropSettingsMargin
   | PropSettingsPadding
   | PropSettingsBoxShadow
-  | PropSettingsSelect;
+  | PropSettingsSelect
+  | PropSettingsButtonAction;

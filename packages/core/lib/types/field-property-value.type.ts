@@ -29,9 +29,19 @@ export type PropValueJsonContent = {
   jsonContent: JSONContent;
 };
 
-export type PropValueButtonAction = {
-  type: 'submit' | 'reset' | 'custom';
-};
+interface ButtonActionHyperlink {
+  action: 'hyperlink';
+  url: string;
+  target?: '_blank' | '_self';
+}
+
+interface ButtonActionSubmit {
+  action: 'submit';
+}
+
+export type PropValueButtonAction =
+  | ButtonActionHyperlink
+  | ButtonActionSubmit;
 
 export type PropValue =
   | PropValueString
@@ -45,4 +55,5 @@ export type PropValue =
   | PropValuePadding
   | PropValueBoxShadow
   | PropValueBorderRadius
-  | PropValueJsonContent;
+  | PropValueJsonContent
+  | PropValueButtonAction;

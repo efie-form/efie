@@ -119,6 +119,8 @@ export {
   isMarginValue,
   isPaddingValue,
   isOptionsValue,
+  isButtonActionValue,
+  isSize,
 } from './utils/value-validator';
 
 export type {
@@ -135,6 +137,8 @@ export type {
   PropValuePadding,
   PropValueOptions,
   BorderRadius,
+  PropValueButtonAction,
+  PropValueJsonContent,
 } from './types/field-property-value.type';
 
 export { getColorObject, hslaToHex, rgbaToHex } from './utils/colors';

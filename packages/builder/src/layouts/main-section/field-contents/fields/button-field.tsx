@@ -1,3 +1,4 @@
+import IconExternal from '../../../../components/icons/icon-external';
 import { cn, getFieldProp } from '../../../../lib/utils';
 import {
   type ButtonFormField,
@@ -25,20 +26,40 @@ function ButtonField({ field }: ButtonFieldProps) {
   const align = getFieldProp(field, PropertyType.TEXT_ALIGN);
   const width = getFieldProp(field, PropertyType.WIDTH);
   const label = getFieldProp(field, PropertyType.LABEL);
+  const action = getFieldProp(field, PropertyType.BUTTON_ACTION);
+  const style = {
+    display: 'inline-block',
+    padding: paddingToStyle(padding?.value),
+    backgroundColor: bgColor?.value.hex,
+    borderRadius: borderRadiusToStyle(borderRadius?.value),
+    color: colorToStyle(color?.value),
+    width: widthToStyle(width?.value),
+  };
 
   return (
     <div className={cn('p-2', align ? alignMap[align.value] : '')}>
-      <button
-        style={{
-          padding: paddingToStyle(padding?.value),
-          backgroundColor: bgColor?.value.hex,
-          borderRadius: borderRadiusToStyle(borderRadius?.value),
-          color: colorToStyle(color?.value),
-          width: widthToStyle(width?.value),
-        }}
-      >
-        {label?.value}
-      </button>
+      {action?.value.action === 'hyperlink'
+        ? (
+            <a
+              href={action.value.url}
+              target={action.value.target || '_self'}
+              style={style}
+            >
+              <span className="flex gap-2 items-center">
+                {label?.value}
+                { action.value.target === '_blank' && (
+                  <span aria-hidden="true">
+                    <IconExternal />
+                  </span>
+                )}
+              </span>
+            </a>
+          )
+        : (
+            <button style={style}>
+              {label?.value}
+            </button>
+          )}
     </div>
   );
 }
