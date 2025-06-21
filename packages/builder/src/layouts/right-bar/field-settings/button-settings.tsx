@@ -25,6 +25,7 @@ function ButtonSettings({ field }: ButtonSettingsProps) {
             { value: 'center', label: 'Center' },
             { value: 'right', label: 'Right' },
           ] },
+          { template: 'buttonAction', type: PropertyType.BUTTON_ACTION, label: 'Button Action' },
         ]}
       />
     </div>

@@ -13,6 +13,7 @@ import PropsSettingsMargin from './property-settings-2/props-settings-margin';
 import PropsSettingsPadding from './property-settings-2/props-settings-padding';
 import PropsSettingsBoxShadow from './property-settings-2/props-settings-box-shadow';
 import PropsSettingsSelect from './property-settings-2/props-settings-select';
+import PropsSettingsButtonAction from './property-settings-2/props-settings-button-action';
 
 interface DynamicSettingsProps {
   settings?: PropSettings[];
@@ -41,7 +42,8 @@ interface DynamicSettingsTypeProps {
 }
 
 function DynamicSettingsType({ settings, fieldId }: DynamicSettingsTypeProps) {
-  switch (settings.template) {
+  const template = settings.template;
+  switch (template) {
     case 'text': {
       return <PropsTemplateText fieldId={fieldId} {...settings} />;
     }
@@ -83,6 +85,12 @@ function DynamicSettingsType({ settings, fieldId }: DynamicSettingsTypeProps) {
     }
     case 'select': {
       return <PropsSettingsSelect fieldId={fieldId} {...settings} />;
+    }
+    case 'buttonAction': {
+      return <PropsSettingsButtonAction fieldId={fieldId} {...settings} />;
+    }
+    default: {
+      throw new Error(`Unknown template type: ${template}`);
     }
   }
 }

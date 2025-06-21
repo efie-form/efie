@@ -1,6 +1,6 @@
 import type { Size } from '../types/common.type';
 import type { PropertyDefinition, WidthProperty } from '../types/property-definition';
-import type { PropValue, PropValueAccept, PropValueBoolean, PropValueBorderRadius, PropValueBoxShadow, PropValueColor, PropValueMargin, PropValueNumber, PropValueOptions, PropValueSize, PropValueString } from '../types/field-property-value.type';
+import type { PropValue, PropValueAccept, PropValueBoolean, PropValueBorderRadius, PropValueBoxShadow, PropValueButtonAction, PropValueColor, PropValueMargin, PropValueNumber, PropValueOptions, PropValueSize, PropValueString } from '../types/field-property-value.type';
 import { SizeType } from '../constants/form-schema.constant';
 
 export function isStringValue(value?: PropValue): value is PropValueString {
@@ -155,5 +155,20 @@ export function isPaddingValue(value?: PropValue): value is PropValueMargin {
     && isSize(value.right)
     && isSize(value.bottom)
     && isSize(value.left)
+  );
+}
+
+export function isButtonActionValue(value?: PropValue): value is PropValueButtonAction {
+  return (
+    !!value
+    && typeof value === 'object'
+    && ('action' in value)
+    && (
+      (
+        value.action === 'hyperlink' && 'url' in value && typeof value.url === 'string'
+        && (!('target' in value) || typeof value.target === 'string')
+      )
+      || value.action === 'submit'
+    )
   );
 }

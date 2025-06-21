@@ -4,7 +4,7 @@ import type {
   HeadingTag,
 } from '../constants/form-schema.constant';
 import type { PropertyType } from '../constants/form-schema.constant';
-import type { PropValueAccept, PropValueBoolean, PropValueBorderRadius, PropValueBoxShadow, PropValueColor, PropValueMargin, PropValueNumber, PropValueOptions, PropValuePadding, PropValueSize, PropValueString } from './field-property-value.type';
+import type { PropValueAccept, PropValueBoolean, PropValueBorderRadius, PropValueBoxShadow, PropValueButtonAction, PropValueColor, PropValueMargin, PropValueNumber, PropValueOptions, PropValuePadding, PropValueSize, PropValueString } from './field-property-value.type';
 import type { JSONContent } from '@tiptap/core';
 
 // Label property
@@ -76,7 +76,7 @@ export interface FontWeightProperty {
 
 export interface ButtonActionProperty {
   type: typeof PropertyType.BUTTON_ACTION;
-  value: PropValueString;
+  value: PropValueButtonAction;
 }
 
 // Image properties
