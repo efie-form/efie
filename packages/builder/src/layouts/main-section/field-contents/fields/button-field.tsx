@@ -43,6 +43,7 @@ function ButtonField({ field }: ButtonFieldProps) {
             <a
               href={action.value.url}
               target={action.value.target || '_self'}
+              rel={action.value.target === '_blank' ? 'noopener noreferrer' : undefined}
               style={style}
             >
               <span className="flex gap-2 items-center">
