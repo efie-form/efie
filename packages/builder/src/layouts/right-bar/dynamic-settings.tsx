@@ -91,6 +91,10 @@ function DynamicSettingsType({ settings, fieldId }: DynamicSettingsTypeProps): R
       return <PropsSettingsButtonAction fieldId={fieldId} {...settings} />;
     }
     default: {
+      if (template) {
+        // warn if the template is not recognized, but will still render it
+        console.error(`Unknown template: ${template}`);
+      }
       // type guard hack, if any template is not added here, typescript will show error
       return template;
     }
