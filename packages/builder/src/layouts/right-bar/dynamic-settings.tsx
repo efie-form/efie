@@ -13,6 +13,7 @@ import PropsSettingsMargin from './property-settings-2/props-settings-margin';
 import PropsSettingsPadding from './property-settings-2/props-settings-padding';
 import PropsSettingsBoxShadow from './property-settings-2/props-settings-box-shadow';
 import PropsSettingsSelect from './property-settings-2/props-settings-select';
+import type { ReactElement } from 'react';
 import PropsSettingsButtonAction from './property-settings-2/props-settings-button-action';
 
 interface DynamicSettingsProps {
@@ -41,8 +42,9 @@ interface DynamicSettingsTypeProps {
   fieldId: string;
 }
 
-function DynamicSettingsType({ settings, fieldId }: DynamicSettingsTypeProps) {
-  switch (settings.template) {
+function DynamicSettingsType({ settings, fieldId }: DynamicSettingsTypeProps): ReactElement | never {
+  const template = settings.template;
+  switch (template) {
     case 'text': {
       return <PropsTemplateText fieldId={fieldId} {...settings} />;
     }
@@ -87,6 +89,10 @@ function DynamicSettingsType({ settings, fieldId }: DynamicSettingsTypeProps) {
     }
     case 'buttonAction': {
       return <PropsSettingsButtonAction fieldId={fieldId} {...settings} />;
+    }
+    default: {
+      // type guard hack, if any template is not added here, typescript will show error
+      return template;
     }
   }
 }
