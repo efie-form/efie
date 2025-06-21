@@ -164,8 +164,11 @@ export function isButtonActionValue(value?: PropValue): value is PropValueButton
     && typeof value === 'object'
     && ('action' in value)
     && (
-      value.action === 'hyperlink' && 'url' in value && typeof value.url === 'string'
-      && (!('target' in value) || typeof value.target === 'string')
+      (
+        value.action === 'hyperlink' && 'url' in value && typeof value.url === 'string'
+        && (!('target' in value) || typeof value.target === 'string')
+      )
+      || value.action === 'submit'
     )
   );
 }
