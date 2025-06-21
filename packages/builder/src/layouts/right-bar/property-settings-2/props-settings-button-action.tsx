@@ -20,7 +20,6 @@ export default function PropsSettingsButtonAction({ fieldId, label, type }: Prop
 
   const handleActionTypeChange = (newAction: string) => {
     let newValue: PropValueButtonAction;
-    
 
     switch (newAction) {
       case 'submit': {

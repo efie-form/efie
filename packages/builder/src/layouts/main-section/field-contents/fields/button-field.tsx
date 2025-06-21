@@ -57,7 +57,7 @@ function ButtonField({ field }: ButtonFieldProps) {
             </a>
           )
         : (
-            <button style={style}>
+            <button style={style} type="button">
               {label?.value}
             </button>
           )}
