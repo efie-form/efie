@@ -16,7 +16,7 @@
     "watch:test": "node scripts/test-watch.mjs",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "test": "nx test @efie-form/builder",
+    "test": "nx test @efie-form/builder && nx test @efie-form/core",
     "test:builder": "nx test @efie-form/builder",
     "test:coverage": "nx test @efie-form/builder --coverage",
     "build": "pnpm --filter './packages/*' --filter '!@efie-form/vue' --filter '!@efie-form/iframe' run build",

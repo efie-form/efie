@@ -7,7 +7,8 @@ import { isAcceptValue, isBooleanValue, isBorderRadiusValue, isBoxShadowValue, i
 
 const ROOT_KEYS = ['version', 'form'] as const;
 
-export default function validateSchema(schema: unknown): schema is FormSchema {
+export default function validateSchema(schema?: unknown): schema is FormSchema {
+  if (!schema) return false;
   if (!isObject(schema)) return false;
   if (!(ROOT_KEYS.every(key => key in schema))) return false;
   if (!isCorrectVersion(schema.version)) return false;
@@ -44,7 +45,6 @@ function validateField(field: unknown): field is FormField {
 
   if (!fieldProps.every((prop) => {
     const isValid = validatePropertyDefinition(prop);
-    if (!isValid) console.log(prop, isValid);
     return isValid;
   })) return false;
   if ('children' in field && !Array.isArray(field.children)) return false;
@@ -90,7 +90,6 @@ function validatePropertyDefinition(prop: unknown): prop is PropertyDefinition {
     case PropertyType.FONT_SIZE:
     case PropertyType.BORDER_WIDTH:
     case PropertyType.HEIGHT: {
-      console.log(fieldType, propValue);
       return isSizeValue(propValue);
     }
     case PropertyType.COLOR:
