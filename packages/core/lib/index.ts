@@ -142,3 +142,5 @@ export type {
 } from './types/field-property-value.type';
 
 export { getColorObject, hslaToHex, rgbaToHex } from './utils/colors';
+
+export { default as validateSchema } from './utils/validations';

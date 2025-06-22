@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import { useSettingsStore } from '../../../lib/state/settings.state';
-import checkSchema from '../../../lib/check-schema';
-import { FieldType, type FormSchema } from '@efie-form/core';
+import { FieldType, validateSchema, type FormSchema } from '@efie-form/core';
 import useDebounce from '../../../lib/hooks/use-debounce';
 import { motion } from 'framer-motion';
 import JsonEditor from '../../../components/elements/json-editor';
@@ -21,18 +20,18 @@ export default function FormJson() {
       return;
     }
     setIsUpdating(false);
-    validateSchema(schema);
+    checkSchema(schema);
     setValue(JSON.stringify(schema, undefined, 2));
   }, [currentHistoryIndex, internalIndex, isUpdating]);
 
   const handleChange = (newSchema?: string) => {
     if (!newSchema) return;
     setValue(newSchema);
-    validateSchema(newSchema);
+    checkSchema(newSchema);
   };
 
   const handleSave = () => {
-    const schema = validateSchema(value);
+    const schema = checkSchema(value);
     if (!schema || !isChanged()) return;
     setInternalIndex(prev => prev + 1);
     setIsUpdating(true);
@@ -45,10 +44,10 @@ export default function FormJson() {
 
   useDebounce(handleSave, 250, [value]);
 
-  const validateSchema = (data: string | FormSchema) => {
+  const checkSchema = (data: string | FormSchema) => {
     try {
       const parsedSchema = typeof data === 'string' ? JSON.parse(data) : data;
-      const isValid = checkSchema(parsedSchema);
+      const isValid = validateSchema(parsedSchema);
       setIsValidSchema(isValid);
       if (isValid) return parsedSchema;
     }

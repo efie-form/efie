@@ -172,3 +172,11 @@ export function isButtonActionValue(value?: PropValue): value is PropValueButton
     )
   );
 }
+
+export function isJsonContentValue(value?: PropValue): value is PropValueString {
+  return (
+    !!value
+    && typeof value === 'object'
+    && 'jsonContent' in value
+  );
+}
