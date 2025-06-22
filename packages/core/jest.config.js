@@ -5,7 +5,7 @@ const jestConfig = {
   preset: 'ts-jest/presets/default-esm',
   testEnvironment: 'node',
   extensionsToTreatAsEsm: ['.ts'],
-  moduleNameMapping: {
+  moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/lib/$1',
   },
   transformIgnorePatterns: [
