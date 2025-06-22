@@ -42,10 +42,10 @@ function validateField(field: unknown): field is FormField {
   if (!('props' in field) || !Array.isArray(field.props)) return false;
   const fieldProps = field.props as PropertyDefinition[];
 
-  if (fieldProps.some((prop) => {
+  if (!fieldProps.every((prop) => {
     const isValid = validatePropertyDefinition(prop);
     if (!isValid) console.log(prop, isValid);
-    return !isValid;
+    return isValid;
   })) return false;
   if ('children' in field && !Array.isArray(field.children)) return false;
   if (field.children && Array.isArray(field.children) && field.children.some(child => !validateField(child))) return false;

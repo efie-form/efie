@@ -549,7 +549,9 @@ export function getDefaultField<T extends FieldType>({
           },
           {
             type: PropertyType.BUTTON_ACTION,
-            value: 'submit',
+            value: {
+              action: 'submit',
+            },
           },
           {
             type: PropertyType.TEXT_ALIGN,

@@ -79,6 +79,10 @@ export function isBorderRadiusValue(value?: PropValue): value is PropValueBorder
     && 'topRight' in value
     && 'bottomLeft' in value
     && 'bottomRight' in value
+    && isSize(value.topLeft)
+    && isSize(value.topRight)
+    && isSize(value.bottomLeft)
+    && isSize(value.bottomRight)
   );
 }
 
@@ -89,10 +93,15 @@ export function isBoxShadowValue(value?: PropValue): value is PropValueBoxShadow
     && value.every(
       shadow => typeof shadow === 'object'
         && 'x' in shadow
+        && isSize(shadow.x)
         && 'y' in shadow
+        && isSize(shadow.y)
         && 'blur' in shadow
+        && isSize(shadow.blur)
         && 'spread' in shadow
-        && 'color' in shadow,
+        && isSize(shadow.spread)
+        && 'color' in shadow
+        && isColorValue(shadow.color),
     )
   );
 }

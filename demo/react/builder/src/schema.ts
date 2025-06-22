@@ -5,38 +5,41 @@ export const schema: FormSchema = {
   form: {
     fields: [
       {
-        id: 'YeLBRjSODi',
+        id: 'ZkxlgQECao',
         type: 'page',
         children: [
           {
-            id: 'UPoiuQseYY',
+            id: 'CaEGYYscsC',
             type: 'block',
             children: [
               {
                 type: 'header',
-                id: 'fVNvXQnKCS',
+                id: 'xq5sgm0bgp',
                 props: [
                   {
                     type: 'content',
                     value: {
-                      type: 'doc',
-                      content: [
-                        {
-                          type: 'paragraph',
-                          content: [
-                            {
-                              type: 'text',
-                              text: 'Header',
-                            },
-                          ],
-                        },
-                      ],
+                      jsonContent: {
+                        type: 'doc',
+                        content: [
+                          {
+                            type: 'paragraph',
+                            content: [
+                              {
+                                type: 'text',
+                                text: 'Header',
+                              },
+                            ],
+                          },
+                        ],
+                      },
                     },
                   },
                   {
                     type: 'fontSize',
                     value: {
-                      value: 32,
+                      type: 'length',
+                      value: 24,
                       unit: 'px',
                     },
                   },
@@ -46,7 +49,21 @@ export const schema: FormSchema = {
                   },
                   {
                     type: 'color',
-                    value: '#000000',
+                    value: {
+                      rgba: {
+                        r: 0,
+                        g: 0,
+                        b: 0,
+                        a: 1,
+                      },
+                      hsla: {
+                        h: 0,
+                        s: 0,
+                        l: 0,
+                        a: 1,
+                      },
+                      hex: '#000000',
+                    },
                   },
                   {
                     type: 'textAlign',
@@ -56,35 +73,52 @@ export const schema: FormSchema = {
               },
               {
                 type: 'paragraph',
-                id: 'lALTvFtwVJ',
+                id: '1ffzp7yl6f',
                 props: [
                   {
                     type: 'content',
                     value: {
-                      type: 'doc',
-                      content: [
-                        {
-                          type: 'paragraph',
-                          content: [
-                            {
-                              type: 'text',
-                              text: 'Lorem ipsum dolor sit amet',
-                            },
-                          ],
-                        },
-                      ],
+                      jsonContent: {
+                        type: 'doc',
+                        content: [
+                          {
+                            type: 'paragraph',
+                            content: [
+                              {
+                                type: 'text',
+                                text: 'Lorem ipsum dolor sit amet',
+                              },
+                            ],
+                          },
+                        ],
+                      },
                     },
                   },
                   {
                     type: 'fontSize',
                     value: {
+                      type: 'length',
                       value: 16,
                       unit: 'px',
                     },
                   },
                   {
                     type: 'color',
-                    value: '#000000',
+                    value: {
+                      rgba: {
+                        r: 0,
+                        g: 0,
+                        b: 0,
+                        a: 1,
+                      },
+                      hsla: {
+                        h: 0,
+                        s: 0,
+                        l: 0,
+                        a: 1,
+                      },
+                      hex: '#000000',
+                    },
                   },
                   {
                     type: 'textAlign',
@@ -94,25 +128,24 @@ export const schema: FormSchema = {
               },
               {
                 type: 'row',
-                id: 'gbmAYEjGyS',
+                id: '92n026prit',
                 props: [],
                 children: [
                   {
-                    id: 'uXwBNYlYXg',
+                    id: 'kZvDZRJJSB',
                     type: 'column',
                     props: [
                       {
                         type: 'width',
                         value: {
+                          type: 'percentage',
                           value: 50,
-                          unit: '%',
                         },
-                        autoWidth: false,
                       },
                     ],
                     children: [
                       {
-                        id: 'QGeXsGUtIY',
+                        id: 'h3e05jyhh8',
                         type: 'short_text',
                         form: {
                           key: '',
@@ -120,36 +153,35 @@ export const schema: FormSchema = {
                         props: [
                           {
                             type: 'label',
-                            value: 'First name',
+                            value: 'First Name',
                           },
                           {
                             type: 'placeholder',
-                            value: 'Enter your first name',
+                            value: 'Enter the your first name',
                           },
                           {
                             type: 'required',
-                            value: true,
+                            value: false,
                           },
                         ],
                       },
                     ],
                   },
                   {
-                    id: 'DfopFwvXgG',
+                    id: 'dwZeEJFAky',
                     type: 'column',
                     props: [
                       {
                         type: 'width',
                         value: {
+                          type: 'percentage',
                           value: 50,
-                          unit: '%',
                         },
-                        autoWidth: false,
                       },
                     ],
                     children: [
                       {
-                        id: 'EXYzbnGTZf',
+                        id: 'vpwjq0qccj',
                         type: 'short_text',
                         form: {
                           key: '',
@@ -157,11 +189,11 @@ export const schema: FormSchema = {
                         props: [
                           {
                             type: 'label',
-                            value: 'Last name',
+                            value: 'Last Name',
                           },
                           {
                             type: 'placeholder',
-                            value: 'Enter your last name',
+                            value: 'Enter the last name',
                           },
                           {
                             type: 'required',
@@ -174,7 +206,7 @@ export const schema: FormSchema = {
                 ],
               },
               {
-                id: 'beDGOJDhlJ',
+                id: 'arc822zgbb',
                 type: 'short_text',
                 form: {
                   key: '',
@@ -182,11 +214,11 @@ export const schema: FormSchema = {
                 props: [
                   {
                     type: 'label',
-                    value: 'Address line',
+                    value: 'Address',
                   },
                   {
                     type: 'placeholder',
-                    value: 'Enter your full address',
+                    value: 'Enter the your full address',
                   },
                   {
                     type: 'required',
@@ -196,240 +228,138 @@ export const schema: FormSchema = {
               },
               {
                 type: 'single_choice',
-                id: 'eTfPfJASgT',
+                id: 'oftp1d2jer',
                 form: {
                   key: '',
                 },
                 props: [
                   {
                     type: 'label',
-                    value: 'Coutry',
+                    value: 'Country',
                   },
                   {
                     type: 'options',
                     value: [
                       {
+                        label: 'China',
+                        value: 'Option 1',
+                      },
+                      {
                         label: 'Malaysia',
-                        value: 'Malaysia',
+                        value: 'Option 2',
                       },
                       {
                         label: 'Singapore',
-                        value: 'Singapore',
-                      },
-                      {
-                        label: 'China',
-                        value: 'China',
+                        value: 'Option 3',
                       },
                     ],
                   },
                   {
                     type: 'required',
-                    value: true,
+                    value: false,
+                  },
+                ],
+              },
+              {
+                type: 'divider',
+                id: 'kb8xi4mfad',
+                props: [
+                  {
+                    type: 'color',
+                    value: {
+                      rgba: {
+                        r: 0,
+                        g: 0,
+                        b: 0,
+                        a: 1,
+                      },
+                      hsla: {
+                        h: 0,
+                        s: 0,
+                        l: 0,
+                        a: 1,
+                      },
+                      hex: '#000000',
+                    },
+                  },
+                  {
+                    type: 'borderStyle',
+                    value: 'solid',
+                  },
+                  {
+                    type: 'width',
+                    value: {
+                      type: 'percentage',
+                      value: 100,
+                    },
+                  },
+                  {
+                    type: 'height',
+                    value: {
+                      type: 'length',
+                      value: 1,
+                      unit: 'px',
+                    },
                   },
                 ],
               },
               {
                 type: 'paragraph',
-                id: 'harPFrzhzs',
+                id: '330kamj6v0',
                 props: [
                   {
                     type: 'content',
                     value: {
-                      type: 'doc',
-                      content: [
-                        {
-                          type: 'paragraph',
-                          content: [
-                            {
-                              type: 'text',
-                              text: 'Lorem ipsum dolor sit amet',
-                            },
-                          ],
-                        },
-                      ],
+                      jsonContent: {
+                        type: 'doc',
+                        content: [
+                          {
+                            type: 'paragraph',
+                            content: [
+                              {
+                                type: 'text',
+                                text: 'Lorem ipsum dolor sit amet',
+                              },
+                            ],
+                          },
+                        ],
+                      },
                     },
                   },
                   {
                     type: 'fontSize',
                     value: {
-                      value: 16,
+                      type: 'length',
+                      value: 14,
                       unit: 'px',
                     },
                   },
                   {
                     type: 'color',
-                    value: '#000000',
+                    value: {
+                      rgba: {
+                        r: 0,
+                        g: 0,
+                        b: 0,
+                        a: 1,
+                      },
+                      hsla: {
+                        h: 0,
+                        s: 0,
+                        l: 0,
+                        a: 1,
+                      },
+                      hex: '#000000',
+                    },
                   },
                   {
                     type: 'textAlign',
-                    value: 'center',
+                    value: 'left',
                   },
                 ],
               },
               {
-                type: 'row',
-                id: 'QpFMAWUhoC',
-                props: [],
-                children: [
-                  {
-                    id: 'UWSAoUblZy',
-                    type: 'column',
-                    props: [
-                      {
-                        type: 'width',
-                        value: {
-                          value: 50,
-                          unit: '%',
-                        },
-                        autoWidth: false,
-                      },
-                    ],
-                    children: [
-                      {
-                        id: 'IjPhzMgXYj',
-                        type: 'short_text',
-                        form: {
-                          key: '',
-                        },
-                        props: [
-                          {
-                            type: 'label',
-                            value: 'Name on card',
-                          },
-                          {
-                            type: 'placeholder',
-                            value: '',
-                          },
-                          {
-                            type: 'required',
-                            value: true,
-                          },
-                        ],
-                      },
-                    ],
-                  },
-                  {
-                    id: 'WVFSYgpCGi',
-                    type: 'column',
-                    props: [
-                      {
-                        type: 'width',
-                        value: {
-                          value: 50,
-                          unit: '%',
-                        },
-                        autoWidth: false,
-                      },
-                    ],
-                    children: [
-                      {
-                        id: 'yGYCuVfkLb',
-                        type: 'short_text',
-                        form: {
-                          key: '',
-                        },
-                        props: [
-                          {
-                            type: 'label',
-                            value: 'Card number',
-                          },
-                          {
-                            type: 'placeholder',
-                            value: '',
-                          },
-                          {
-                            type: 'required',
-                            value: true,
-                          },
-                        ],
-                      },
-                    ],
-                  },
-                ],
-              },
-              {
-                type: 'row',
-                id: 'VCMMkfIEfz',
-                props: [],
-                children: [
-                  {
-                    id: 'frTHLgRNTd',
-                    type: 'column',
-                    props: [
-                      {
-                        type: 'width',
-                        value: {
-                          value: 50,
-                          unit: '%',
-                        },
-                        autoWidth: false,
-                      },
-                    ],
-                    children: [
-                      {
-                        id: 'KTJubPiQwC',
-                        type: 'short_text',
-                        form: {
-                          key: '',
-                        },
-                        props: [
-                          {
-                            type: 'label',
-                            value: 'Expire date',
-                          },
-                          {
-                            type: 'placeholder',
-                            value: '',
-                          },
-                          {
-                            type: 'required',
-                            value: false,
-                          },
-                        ],
-                      },
-                    ],
-                  },
-                  {
-                    id: 'ellaKvePBQ',
-                    type: 'column',
-                    props: [
-                      {
-                        type: 'width',
-                        value: {
-                          value: 50,
-                          unit: '%',
-                        },
-                        autoWidth: false,
-                      },
-                    ],
-                    children: [
-                      {
-                        id: 'sKqCtjwSva',
-                        type: 'short_text',
-                        form: {
-                          key: '',
-                        },
-                        props: [
-                          {
-                            type: 'label',
-                            value: 'CVV',
-                          },
-                          {
-                            type: 'placeholder',
-                            value: '',
-                          },
-                          {
-                            type: 'required',
-                            value: false,
-                          },
-                        ],
-                      },
-                    ],
-                  },
-                ],
-              },
-              {
-                id: 'QAwbXUScoP',
+                id: 'cwtzebg5fs',
                 type: 'button',
                 props: [
                   {
@@ -438,15 +368,44 @@ export const schema: FormSchema = {
                   },
                   {
                     type: 'color',
-                    value: '#FFFFFF',
+                    value: {
+                      rgba: {
+                        r: 255,
+                        g: 255,
+                        b: 255,
+                        a: 1,
+                      },
+                      hsla: {
+                        h: 0,
+                        s: 0,
+                        l: 100,
+                        a: 1,
+                      },
+                      hex: '#FFFFFF',
+                    },
                   },
                   {
-                    type: 'bgColor',
-                    value: '#5083a7',
+                    type: 'backgroundColor',
+                    value: {
+                      rgba: {
+                        r: 80,
+                        g: 131,
+                        b: 167,
+                        a: 1,
+                      },
+                      hsla: {
+                        h: 205,
+                        s: 35,
+                        l: 48,
+                        a: 1,
+                      },
+                      hex: '#5083a7',
+                    },
                   },
                   {
                     type: 'fontSize',
                     value: {
+                      type: 'length',
                       value: 16,
                       unit: 'px',
                     },
@@ -454,14 +413,14 @@ export const schema: FormSchema = {
                   {
                     type: 'width',
                     value: {
-                      value: 100,
-                      unit: '%',
+                      type: 'auto',
                     },
-                    autoWidth: true,
                   },
                   {
-                    type: 'btnType',
-                    value: 'submit',
+                    type: 'buttonAction',
+                    value: {
+                      action: 'submit',
+                    },
                   },
                   {
                     type: 'textAlign',
@@ -475,18 +434,22 @@ export const schema: FormSchema = {
                     type: 'borderRadius',
                     value: {
                       topLeft: {
+                        type: 'length',
                         value: 6,
                         unit: 'px',
                       },
                       topRight: {
+                        type: 'length',
                         value: 6,
                         unit: 'px',
                       },
                       bottomLeft: {
+                        type: 'length',
                         value: 6,
                         unit: 'px',
                       },
                       bottomRight: {
+                        type: 'length',
                         value: 6,
                         unit: 'px',
                       },
@@ -496,18 +459,22 @@ export const schema: FormSchema = {
                     type: 'padding',
                     value: {
                       top: {
+                        type: 'length',
                         value: 6,
                         unit: 'px',
                       },
                       right: {
+                        type: 'length',
                         value: 12,
                         unit: 'px',
                       },
                       bottom: {
+                        type: 'length',
                         value: 6,
                         unit: 'px',
                       },
                       left: {
+                        type: 'length',
                         value: 12,
                         unit: 'px',
                       },
@@ -521,18 +488,22 @@ export const schema: FormSchema = {
                 type: 'padding',
                 value: {
                   top: {
+                    type: 'length',
                     value: 16,
                     unit: 'px',
                   },
                   right: {
+                    type: 'length',
                     value: 16,
                     unit: 'px',
                   },
                   bottom: {
+                    type: 'length',
                     value: 16,
                     unit: 'px',
                   },
                   left: {
+                    type: 'length',
                     value: 16,
                     unit: 'px',
                   },
@@ -542,58 +513,109 @@ export const schema: FormSchema = {
                 type: 'margin',
                 value: {
                   top: {
+                    type: 'length',
                     value: 0,
                     unit: 'px',
                   },
                   right: {
+                    type: 'length',
                     value: 0,
                     unit: 'px',
                   },
                   bottom: {
+                    type: 'length',
                     value: 8,
                     unit: 'px',
                   },
                   left: {
+                    type: 'length',
                     value: 0,
                     unit: 'px',
                   },
                 },
               },
               {
-                type: 'bgColor',
-                value: '#FFFFFF',
+                type: 'backgroundColor',
+                value: {
+                  rgba: {
+                    r: 255,
+                    g: 255,
+                    b: 255,
+                    a: 1,
+                  },
+                  hsla: {
+                    h: 0,
+                    s: 0,
+                    l: 100,
+                    a: 1,
+                  },
+                  hex: '#FFFFFF',
+                },
               },
               {
                 type: 'color',
-                value: '#494949',
+                value: {
+                  rgba: {
+                    r: 0,
+                    g: 0,
+                    b: 0,
+                    a: 1,
+                  },
+                  hsla: {
+                    h: 0,
+                    s: 0,
+                    l: 0,
+                    a: 1,
+                  },
+                  hex: '#000000',
+                },
               },
               {
                 type: 'borderWidth',
                 value: {
+                  type: 'length',
                   value: 1,
                   unit: 'px',
                 },
               },
               {
                 type: 'borderColor',
-                value: '#00000019',
+                value: {
+                  rgba: {
+                    r: 0,
+                    g: 0,
+                    b: 0,
+                    a: 0.098_039_215_686_274_51,
+                  },
+                  hsla: {
+                    h: 0,
+                    s: 0,
+                    l: 0,
+                    a: 0.098_039_215_686_274_51,
+                  },
+                  hex: '#00000019',
+                },
               },
               {
                 type: 'borderRadius',
                 value: {
                   topLeft: {
+                    type: 'length',
                     value: 8,
                     unit: 'px',
                   },
                   topRight: {
+                    type: 'length',
                     value: 8,
                     unit: 'px',
                   },
                   bottomLeft: {
+                    type: 'length',
                     value: 8,
                     unit: 'px',
                   },
                   bottomRight: {
+                    type: 'length',
                     value: 8,
                     unit: 'px',
                   },
@@ -604,42 +626,78 @@ export const schema: FormSchema = {
                 value: [
                   {
                     x: {
+                      type: 'length',
                       value: 0,
                       unit: 'px',
                     },
                     y: {
+                      type: 'length',
                       value: 4,
                       unit: 'px',
                     },
                     blur: {
+                      type: 'length',
                       value: 6,
                       unit: 'px',
                     },
                     spread: {
+                      type: 'length',
                       value: 0,
                       unit: 'px',
                     },
-                    color: '#00000019',
+                    color: {
+                      rgba: {
+                        r: 0,
+                        g: 0,
+                        b: 0,
+                        a: 0.098_039_215_686_274_51,
+                      },
+                      hsla: {
+                        h: 0,
+                        s: 0,
+                        l: 0,
+                        a: 0.098_039_215_686_274_51,
+                      },
+                      hex: '#00000019',
+                    },
                     inset: false,
                   },
                   {
                     x: {
+                      type: 'length',
                       value: 0,
                       unit: 'px',
                     },
                     y: {
+                      type: 'length',
                       value: 2,
                       unit: 'px',
                     },
                     blur: {
+                      type: 'length',
                       value: 4,
                       unit: 'px',
                     },
                     spread: {
+                      type: 'length',
                       value: -2,
                       unit: 'px',
                     },
-                    color: '#00000019',
+                    color: {
+                      rgba: {
+                        r: 0,
+                        g: 0,
+                        b: 0,
+                        a: 0.098_039_215_686_274_51,
+                      },
+                      hsla: {
+                        h: 0,
+                        s: 0,
+                        l: 0,
+                        a: 0.098_039_215_686_274_51,
+                      },
+                      hex: '#00000019',
+                    },
                     inset: false,
                   },
                 ],
@@ -649,7 +707,7 @@ export const schema: FormSchema = {
         ],
         props: [
           {
-            type: 'name',
+            type: 'pageName',
             value: 'Page 1',
           },
         ],
