@@ -2,7 +2,7 @@ import type {
   FontSizeProperty,
   TextAlignProperty,
 } from '../types/property-definition';
-import { TextAlign, SizeType } from '../constants/form-schema.constant';
+import { SizeType } from '../constants/form-schema.constant';
 import type { Size, Color } from '../types/common.type';
 import type { PropValueBorderRadius, PropValueBoxShadow, PropValueMargin, PropValuePadding, PropValueSize } from '../types/field-property-value.type';
 
@@ -129,16 +129,10 @@ export const widthToStyle = (width?: PropValueSize) => {
   return toSize(width);
 };
 
-const textAlignMap = {
-  [TextAlign.LEFT]: 'start',
-  [TextAlign.CENTER]: 'center',
-  [TextAlign.RIGHT]: 'end',
-} as const;
-
 export const textAlignToStyle = (textAlign?: TextAlignProperty) => {
   if (!textAlign) return;
 
-  return textAlignMap[textAlign.value];
+  return textAlign.value;
 };
 
 export const colorToStyle = (color?: Color) => {

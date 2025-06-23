@@ -1,10 +1,6 @@
 import type { RefObject } from 'react';
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
-import {
-  type CustomInputDef,
-  type FormSchema,
-  Iframe,
-} from '@efie-form/core';
+import { Iframe, type CustomInputDef, type FormSchema } from '@efie-form/core';
 
 const DIV_ID = 'efie-form-builder';
 

@@ -1,6 +1,4 @@
 import type {
-  TextAlign,
-  ObjectFit,
   HeadingTag,
 } from '../constants/form-schema.constant';
 import type { PropertyType } from '../constants/form-schema.constant';
@@ -56,7 +54,7 @@ export interface TagProperty {
 
 export interface TextAlignProperty {
   type: typeof PropertyType.TEXT_ALIGN;
-  value: TextAlign;
+  value: PropValueString;
 }
 
 export interface ColorProperty {
@@ -92,7 +90,7 @@ export interface AltProperty {
 
 export interface ObjectFitProperty {
   type: typeof PropertyType.OBJECT_FIT;
-  value: ObjectFit;
+  value: PropValueString;
 }
 export interface BgColorProperty {
   type: typeof PropertyType.BACKGROUND_COLOR;

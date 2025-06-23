@@ -29,7 +29,7 @@ function ParagraphField({ field }: ParagraphFieldProps) {
       }}
     >
       <RichTextEditor
-        value={content?.value || {}}
+        value={content?.value.jsonContent || {}}
         onChange={() => {}}
         active={selectedFieldId === field.id}
       />
