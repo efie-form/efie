@@ -34,12 +34,15 @@ function BlockProvider({ field, Component, ...props }: BlockProviderProps) {
 
   return createElement(Component, {
     id: field.id,
-    blockMargin: marginToStyle(margin),
-    blockPadding: paddingToStyle(padding),
+    fieldId: field.id,
+    field,
+    blockMargin: marginToStyle(margin?.value),
+    blockPadding: paddingToStyle(padding?.value),
     blockBorderRadius: borderRadiusToStyle(borderRadius?.value),
-    blockColor: color?.value,
-    blockBackgroundColor: bgColor?.value,
-    blockBoxShadow: boxShadowToStyle(boxShadow),
+    blockColor: color?.value as string | undefined,
+    blockBackgroundColor: bgColor?.value as string | undefined,
+    blockBoxShadow: boxShadowToStyle(boxShadow?.value),
+    style: {},
     children: (
       <>
         {field.children.map(field => (

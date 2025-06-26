@@ -6,11 +6,21 @@ import { PropertyType, type MultipleChoiceFormField } from '@efie-form/core';
 interface MultipleChoicesProviderProps {
   field: MultipleChoiceFormField;
   Component?: ElementType<MultipleChoicesFieldProps>;
+  value?: string[];
+  onChange?: (value: string[]) => void;
+  onBlur?: () => void;
+  onFocus?: () => void;
+  validation?: MultipleChoicesFieldProps['validation'];
 }
 
 function MultipleChoicesProvider({
   field,
   Component,
+  value = [],
+  onChange = () => {},
+  onBlur,
+  onFocus,
+  validation,
 }: MultipleChoicesProviderProps) {
   if (!Component) return <></>;
 
@@ -20,20 +30,24 @@ function MultipleChoicesProvider({
 
   return createElement(Component, {
     id: field.id,
-    name: field.form.key || field.id,
-    errors: {
-      message: '',
-    },
-    fieldLabel: label?.value || '',
+    field,
+    value,
+    onChange,
+    onBlur,
+    onFocus,
+    validation,
+    style: {},
     required: required?.value || false,
     disabled: false,
+    // Field-specific props
+    fieldLabel: label?.value || '',
     options: options?.value
       ? options.value.map(opt => ({
           optionLabel: opt.label,
           value: opt.value,
         }))
       : [],
-  });
+  } satisfies MultipleChoicesFieldProps);
 }
 
 export default MultipleChoicesProvider;

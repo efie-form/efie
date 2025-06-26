@@ -6,9 +6,22 @@ import { PropertyType, type TimeFormField } from '@efie-form/core';
 interface TimeProviderProps {
   field: TimeFormField;
   Component?: ElementType<TimeFieldProps>;
+  value?: string;
+  onChange?: (value: string) => void;
+  onBlur?: () => void;
+  onFocus?: () => void;
+  validation?: TimeFieldProps['validation'];
 }
 
-function TimeProvider({ field, Component }: TimeProviderProps) {
+function TimeProvider({
+  field,
+  Component,
+  value = '',
+  onChange = () => {},
+  onBlur,
+  onFocus,
+  validation,
+}: TimeProviderProps) {
   if (!Component) return <></>;
 
   const label = field.props.find(prop => prop.type === PropertyType.LABEL);
@@ -16,11 +29,18 @@ function TimeProvider({ field, Component }: TimeProviderProps) {
 
   return createElement(Component, {
     id: field.id,
-    name: field.form.key || field.id,
-    fieldLabel: label?.value || '',
+    field,
+    value,
+    onChange,
+    onBlur,
+    onFocus,
+    validation,
+    style: {},
     required: required?.value || false,
     disabled: false,
-  });
+    // Field-specific props
+    fieldLabel: label?.value || '',
+  } satisfies TimeFieldProps);
 }
 
 export default TimeProvider;

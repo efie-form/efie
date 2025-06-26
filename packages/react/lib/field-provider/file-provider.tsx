@@ -6,9 +6,22 @@ import { PropertyType, type FileFormField } from '@efie-form/core';
 interface FileProviderProps {
   field: FileFormField;
   Component?: ElementType<FileFieldProps>;
+  value?: File[] | File | null;
+  onChange?: (value: File[] | File | null) => void;
+  onBlur?: () => void;
+  onFocus?: () => void;
+  validation?: FileFieldProps['validation'];
 }
 
-function FileProvider({ field, Component }: FileProviderProps) {
+function FileProvider({
+  field,
+  Component,
+  value,
+  onChange = () => {},
+  onBlur,
+  onFocus,
+  validation,
+}: FileProviderProps) {
   if (!Component) return <></>;
 
   const label = field.props.find(prop => prop.type === PropertyType.LABEL);
@@ -18,16 +31,21 @@ function FileProvider({ field, Component }: FileProviderProps) {
 
   return createElement(Component, {
     id: field.id,
-    name: field.form.key || field.id,
-    fieldLabel: label?.value || '',
+    field,
+    value,
+    onChange,
+    onBlur,
+    onFocus,
+    validation,
+    style: {},
     required: required?.value || false,
     disabled: false,
-    accept: accept?.formats?.join(',') || '',
+    // Field-specific props
+    fieldLabel: label?.value || '',
+    accept: accept?.value?.formats || [],
     multiple: (maxFiles?.value || 1) > 1,
-    errors: {
-      message: '',
-    },
-  });
+    maxFiles: maxFiles?.value || 1,
+  } satisfies FileFieldProps);
 }
 
 export default FileProvider;

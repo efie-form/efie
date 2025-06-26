@@ -35,7 +35,6 @@ interface ThemeConfig {
 interface BaseFieldProps<T = unknown> {
   // Field identification
   id: string;
-  fieldId: string;
   field: FormField;
 
   // Form state management

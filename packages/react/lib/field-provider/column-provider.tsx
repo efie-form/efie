@@ -12,8 +12,24 @@ interface ColumnProviderProps extends Partial<FieldPropsMap> {
 function ColumnProvider({ field, Component, ...props }: ColumnProviderProps) {
   if (!Component) return <></>;
 
+  const width = field.props.find(prop => prop.type === PropertyType.WIDTH);
+
+  // Extract width value safely
+  let columnWidth = '100%';
+  if (width?.value && typeof width.value === 'object' && 'value' in width.value) {
+    const unit = 'unit' in width.value ? width.value.unit : '%';
+    columnWidth = `${width.value.value || 100}${unit}`;
+  }
+
   return createElement(Component, {
     id: field.id,
+    fieldId: field.id,
+    field,
+    columnWidth,
+    gap: undefined,
+    justifyContent: undefined,
+    alignItems: undefined,
+    style: {},
     children: (
       <>
         {field.children.map(field => (
@@ -23,7 +39,6 @@ function ColumnProvider({ field, Component, ...props }: ColumnProviderProps) {
         ))}
       </>
     ),
-    columnWidth: `${field.props.find(prop => prop.type === PropertyType.WIDTH)?.value?.value || 100}%`,
   });
 }
 

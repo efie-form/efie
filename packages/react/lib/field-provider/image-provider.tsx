@@ -16,16 +16,25 @@ function ImageProvider({ field, Component }: ImageProviderProps) {
   const objectFit = field.props.find(prop => prop.type === PropertyType.OBJECT_FIT);
   const textAlign = field.props.find(prop => prop.type === PropertyType.TEXT_ALIGN);
   const width = field.props.find(prop => prop.type === PropertyType.WIDTH);
-  const autoWidth = field.props.find(prop => prop.type === PropertyType.AUTO_WIDTH);
+
+  // Extract width value safely
+  let imageWidth = 'auto';
+  if (width?.value && typeof width.value === 'object' && 'value' in width.value) {
+    const unit = 'unit' in width.value ? width.value.unit : '%';
+    imageWidth = `${width.value.value || 100}${unit}`;
+  }
 
   return createElement(Component, {
     id: field.id,
+    fieldId: field.id,
+    field,
     src: src?.value || '',
     alt: alt?.value || '',
-    objectFit: objectFit?.value || 'contain',
-    textAlign: textAlign?.value || 'center',
-    imageWidth: autoWidth?.value ? 'auto' : `${width?.value?.value || 100}%`,
+    objectFit: (objectFit?.value as 'fill' | 'contain' | 'cover' | 'none' | 'scale-down') || 'contain',
+    textAlign: (textAlign?.value as 'left' | 'center' | 'right') || 'center',
+    imageWidth,
     imageHeight: 'auto',
+    style: {},
   });
 }
 
