@@ -1,0 +1,51 @@
+name: Type Check Multiple React Versions
+
+on:
+  pull_request:
+    paths:
+      - 'packages/react/**'
+  push:
+    branches:
+      - main
+    paths:
+      - 'packages/react/**'
+
+jobs:
+  type-check:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        react-version: ['18', '19']
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: latest
+          
+      - name: Install dependencies
+        run: pnpm install
+        
+      - name: Install React ${{ matrix.react-version }} types
+        run: |
+          cd packages/react
+          if [ "${{ matrix.react-version }}" = "19" ]; then
+            pnpm add -D @types/react@^19.0.0 @types/react-dom@^19.0.0
+          fi
+          
+      - name: Type check React ${{ matrix.react-version }}
+        run: |
+          cd packages/react
+          pnpm type-check
+          
+      - name: Test types with tsd
+        run: |
+          cd packages/react
+          pnpm test:types

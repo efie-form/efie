@@ -38,7 +38,11 @@
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "type-check:react18": "tsc --project tsconfig.react18.json --noEmit",
+    "type-check:react19": "tsc --project tsconfig.react19.json --noEmit",
+    "type-check:all": "npm run type-check:react18 && npm run type-check:react19",
+    "test:types": "tsd"
   },
   "dependencies": {
     "@efie-form/core": "workspace:*",
@@ -47,7 +51,10 @@
   "devDependencies": {
     "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.1",
+    "@types/react-19": "npm:@types/react@^19.0.0",
+    "@types/react-dom-19": "npm:@types/react-dom@^19.0.0",
     "@vitejs/plugin-react-swc": "^3.5.0",
+    "tsd": "^0.31.0",
     "tsup": "^8.0.0",
     "typescript": "~5.6.2",
     "vite": "^5.4.9",
@@ -55,8 +62,8 @@
     "react-dom": "^18.0.0"
   },
   "peerDependencies": {
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
   },
   "publishConfig": {
     "access": "public"

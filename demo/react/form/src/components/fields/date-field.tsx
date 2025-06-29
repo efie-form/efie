@@ -1,14 +1,10 @@
 import type { DateFieldProps } from '@efie-form/react';
 import { DatePicker } from '@mui/x-date-pickers';
-import { useFormContext } from 'react-hook-form';
 
-function DateField({ fieldLabel, name }: DateFieldProps) {
-  const { register } = useFormContext();
-
+function DateField({ fieldLabel }: DateFieldProps) {
   return (
     <div>
       <DatePicker
-        {...register(name)}
         slotProps={{
           textField: {
             fullWidth: true,

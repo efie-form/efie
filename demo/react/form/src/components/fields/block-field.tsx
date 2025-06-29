@@ -2,22 +2,12 @@ import type { BlockFieldProps } from '@efie-form/react';
 
 function BlockField({
   children,
-  blockMargin,
-  blockBackgroundColor,
-  blockColor,
-  blockPadding,
-  blockBoxShadow,
-  blockBorderRadius,
+  style,
 }: BlockFieldProps) {
   return (
     <div
       style={{
-        margin: blockMargin,
-        padding: blockPadding,
-        backgroundColor: blockBackgroundColor,
-        color: blockColor,
-        boxShadow: blockBoxShadow,
-        borderRadius: blockBorderRadius,
+        ...style?.container,
         overflow: 'hidden',
         display: 'flex',
         flexDirection: 'column',

@@ -1,14 +1,10 @@
 import type { LongTextFieldProps } from '@efie-form/react';
 import { TextField } from '@mui/material';
-import { useFormContext } from 'react-hook-form';
 
-function LongTextField({ id, fieldLabel, placeholder, name }: LongTextFieldProps) {
-  const { register } = useFormContext();
-
+function LongTextField({ id, fieldLabel, placeholder }: LongTextFieldProps) {
   return (
     <TextField
       id={id}
-      {...register(name)}
       size="small"
       placeholder={placeholder}
       fullWidth

@@ -4,6 +4,7 @@ import type { BlockFieldProps, FieldPropsMap } from '../../types/field-props';
 import {
   borderRadiusToStyle,
   boxShadowToStyle,
+  colorToStyle,
   marginToStyle,
   paddingToStyle,
   PropertyType,
@@ -34,15 +35,17 @@ function BlockProvider({ field, Component, ...props }: BlockProviderProps) {
 
   return createElement(Component, {
     id: field.id,
-    fieldId: field.id,
     field,
-    blockMargin: marginToStyle(margin?.value),
-    blockPadding: paddingToStyle(padding?.value),
-    blockBorderRadius: borderRadiusToStyle(borderRadius?.value),
-    blockColor: color?.value as string | undefined,
-    blockBackgroundColor: bgColor?.value as string | undefined,
-    blockBoxShadow: boxShadowToStyle(boxShadow?.value),
-    style: {},
+    style: {
+      container: {
+        margin: marginToStyle(margin?.value),
+        padding: paddingToStyle(padding?.value),
+        backgroundColor: colorToStyle(bgColor?.value),
+        boxShadow: boxShadowToStyle(boxShadow?.value),
+        color: colorToStyle(color?.value),
+        borderRadius: borderRadiusToStyle(borderRadius?.value),
+      },
+    },
     children: (
       <>
         {field.children.map(field => (

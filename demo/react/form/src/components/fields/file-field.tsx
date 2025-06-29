@@ -1,16 +1,12 @@
 import type { FileFieldProps } from '@efie-form/react';
-import { useFormContext } from 'react-hook-form';
 
-function FileField({ id, fieldLabel, name }: FileFieldProps) {
-  const { register } = useFormContext();
-
+function FileField({ id, fieldLabel }: FileFieldProps) {
   return (
     <div>
-      <label htmlFor={id} className="efie-field-label">
+      <label htmlFor={id}>
         {fieldLabel}
       </label>
       <input
-        {...register(name)}
         type="file"
         id={id}
       />

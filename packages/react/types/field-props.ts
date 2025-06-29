@@ -189,17 +189,12 @@ export interface ImageFieldProps extends BaseStaticFieldProps {
   // Field-specific props (processed from schema)
   src: string;
   alt: string;
-  objectFit?: 'fill' | 'contain' | 'cover' | 'none' | 'scale-down';
-  textAlign?: 'left' | 'center' | 'right';
-  imageWidth?: string;
-  imageHeight?: string;
 }
 
 // Layout field interfaces (handle children rendering)
 interface BaseLayoutFieldProps {
   // Field identification
   id: string;
-  fieldId: string;
   field: FormField;
 
   // Children components (automatically rendered by library)
@@ -278,14 +273,14 @@ export interface ComponentRegistryOptions {
 
 // Field props map for component registry
 export interface FieldPropsMap {
-  short_text: ElementType<ShortTextFieldProps>;
-  long_text: ElementType<LongTextFieldProps>;
+  shortText: ElementType<ShortTextFieldProps>;
+  longText: ElementType<LongTextFieldProps>;
   number: ElementType<NumberFieldProps>;
-  single_choice: ElementType<SingleChoiceFieldProps>;
-  multiple_choices: ElementType<MultipleChoicesFieldProps>;
+  singleChoice: ElementType<SingleChoiceFieldProps>;
+  multipleChoices: ElementType<MultipleChoicesFieldProps>;
   date: ElementType<DateFieldProps>;
   time: ElementType<TimeFieldProps>;
-  date_time: ElementType<DateTimeFieldProps>;
+  dateTime: ElementType<DateTimeFieldProps>;
   file: ElementType<FileFieldProps>;
   divider: ElementType<DividerFieldProps>;
   header: ElementType<HeaderFieldProps>;
@@ -301,21 +296,21 @@ export interface FieldPropsMap {
 // Utility types for better developer experience
 export type FieldType = keyof FieldPropsMap;
 
-export type FieldProps<T extends FieldType> = T extends 'short_text'
+export type FieldProps<T extends FieldType> = T extends 'shortText'
   ? ShortTextFieldProps
-  : T extends 'long_text'
+  : T extends 'longText'
     ? LongTextFieldProps
     : T extends 'number'
       ? NumberFieldProps
-      : T extends 'single_choice'
+      : T extends 'singleChoice'
         ? SingleChoiceFieldProps
-        : T extends 'multiple_choices'
+        : T extends 'multipleChoices'
           ? MultipleChoicesFieldProps
           : T extends 'date'
             ? DateFieldProps
             : T extends 'time'
               ? TimeFieldProps
-              : T extends 'date_time'
+              : T extends 'dateTime'
                 ? DateTimeFieldProps
                 : T extends 'file'
                   ? FileFieldProps
@@ -354,3 +349,8 @@ export interface FormEventHandlers {
   onValidationChange?: (fieldId: string, validation: ValidationState) => void;
   onFormStateChange?: (formData: FormData) => void;
 }
+
+/*
+Short text
+
+*/

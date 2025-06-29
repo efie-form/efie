@@ -1,14 +1,10 @@
 import type { TimeFieldProps } from '@efie-form/react';
 import { TimePicker } from '@mui/x-date-pickers';
-import { useFormContext } from 'react-hook-form';
 
-function TimeField({ fieldLabel, name }: TimeFieldProps) {
-  const { register } = useFormContext();
-
+function TimeField({ fieldLabel }: TimeFieldProps) {
   return (
     <div>
       <TimePicker
-        {...register(name)}
         slotProps={{
           textField: {
             fullWidth: true,

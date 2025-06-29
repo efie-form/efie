@@ -28,10 +28,10 @@ interface RenderFieldProps extends Partial<FieldPropsMap> {
 function RenderField({ field, ...props }: RenderFieldProps) {
   switch (field.type) {
     case FieldType.SHORT_TEXT: {
-      return <ShortTextProvider field={field} Component={props.short_text} />;
+      return <ShortTextProvider field={field} Component={props.shortText} />;
     }
     case FieldType.LONG_TEXT: {
-      return <LongTextProvider field={field} Component={props.long_text} />;
+      return <LongTextProvider field={field} Component={props.longText} />;
     }
     case FieldType.DIVIDER: {
       return <DividerProvider field={field} Component={props.divider} />;
@@ -47,14 +47,14 @@ function RenderField({ field, ...props }: RenderFieldProps) {
     }
     case FieldType.SINGLE_CHOICE: {
       return (
-        <SingleChoiceProvider field={field} Component={props.single_choice} />
+        <SingleChoiceProvider field={field} Component={props.singleChoice} />
       );
     }
     case FieldType.MULTIPLE_CHOICES: {
       return (
         <MultipleChoicesProvider
           field={field}
-          Component={props.multiple_choices}
+          Component={props.multipleChoices}
         />
       );
     }
@@ -71,7 +71,7 @@ function RenderField({ field, ...props }: RenderFieldProps) {
       return <TimeProvider field={field} Component={props.time} />;
     }
     case FieldType.DATE_TIME: {
-      return <DateTimeProvider field={field} Component={props.date_time} />;
+      return <DateTimeProvider field={field} Component={props.dateTime} />;
     }
     case FieldType.COLUMN: {
       return (

@@ -13,16 +13,6 @@ function ImageProvider({ field, Component }: ImageProviderProps) {
 
   const src = field.props.find(prop => prop.type === PropertyType.SRC);
   const alt = field.props.find(prop => prop.type === PropertyType.ALT);
-  const objectFit = field.props.find(prop => prop.type === PropertyType.OBJECT_FIT);
-  const textAlign = field.props.find(prop => prop.type === PropertyType.TEXT_ALIGN);
-  const width = field.props.find(prop => prop.type === PropertyType.WIDTH);
-
-  // Extract width value safely
-  let imageWidth = 'auto';
-  if (width?.value && typeof width.value === 'object' && 'value' in width.value) {
-    const unit = 'unit' in width.value ? width.value.unit : '%';
-    imageWidth = `${width.value.value || 100}${unit}`;
-  }
 
   return createElement(Component, {
     id: field.id,
@@ -30,10 +20,6 @@ function ImageProvider({ field, Component }: ImageProviderProps) {
     field,
     src: src?.value || '',
     alt: alt?.value || '',
-    objectFit: (objectFit?.value as 'fill' | 'contain' | 'cover' | 'none' | 'scale-down') || 'contain',
-    textAlign: (textAlign?.value as 'left' | 'center' | 'right') || 'center',
-    imageWidth,
-    imageHeight: 'auto',
     style: {},
   });
 }

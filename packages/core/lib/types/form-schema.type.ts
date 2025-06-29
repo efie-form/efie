@@ -6,6 +6,6 @@ export interface FormSchema {
   version: string;
   form: {
     fields: FormField[];
-    rules: RootRule[];
+    rules?: RootRule[];
   };
 }
