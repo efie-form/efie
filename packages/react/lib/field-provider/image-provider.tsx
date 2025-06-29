@@ -13,19 +13,14 @@ function ImageProvider({ field, Component }: ImageProviderProps) {
 
   const src = field.props.find(prop => prop.type === PropertyType.SRC);
   const alt = field.props.find(prop => prop.type === PropertyType.ALT);
-  const objectFit = field.props.find(prop => prop.type === PropertyType.OBJECT_FIT);
-  const textAlign = field.props.find(prop => prop.type === PropertyType.TEXT_ALIGN);
-  const width = field.props.find(prop => prop.type === PropertyType.WIDTH);
-  const autoWidth = field.props.find(prop => prop.type === PropertyType.AUTO_WIDTH);
 
   return createElement(Component, {
     id: field.id,
+    fieldId: field.id,
+    field,
     src: src?.value || '',
     alt: alt?.value || '',
-    objectFit: objectFit?.value || 'contain',
-    textAlign: textAlign?.value || 'center',
-    imageWidth: autoWidth?.value ? 'auto' : `${width?.value?.value || 100}%`,
-    imageHeight: 'auto',
+    style: {},
   });
 }
 

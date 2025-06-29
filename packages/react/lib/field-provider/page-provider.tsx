@@ -1,19 +1,26 @@
 import type { ElementType } from 'react';
 import { createElement } from 'react';
-import type { FieldPropsMap, PageFieldProps } from '../../types/field-props';
-import { type PageFormField } from '@efie-form/core';
+import type { FieldProps, FieldPropsMap } from '../../types/field-props';
+import { PropertyType, type PageFormField } from '@efie-form/core';
 import RenderField from '../render-field';
+import { useFormContext } from '../form-context';
 
 interface PageProviderProps extends Partial<FieldPropsMap> {
   field: PageFormField;
-  Component?: ElementType<PageFieldProps>;
+  Component?: ElementType<FieldProps<'page'>>;
 }
 
 function PageProvider({ field, Component, ...props }: PageProviderProps) {
-  if (!Component) return <></>;
+  const { page } = useFormContext();
+  if (!Component || page !== field.id) return <></>;
+
+  const pageName = field.props.find(prop => prop.type === PropertyType.PAGE_NAME);
 
   return createElement(Component, {
     id: field.id,
+    field: field,
+    pageName: (typeof pageName?.value === 'string' ? pageName.value : '') || '',
+    style: {},
     children: (
       <>
         {field.children.map(field => (

@@ -1,10 +1,13 @@
 import type { DividerFieldProps } from '@efie-form/react';
 
-function DividerField({ dividerStyle }: DividerFieldProps) {
+function DividerField({ fieldId }: DividerFieldProps) {
   return (
     <div
+      id={fieldId}
       style={{
-        borderStyle: dividerStyle,
+        height: '1px',
+        borderColor: '#AFAFAF',
+        borderWidth: '1px',
       }}
     />
   );

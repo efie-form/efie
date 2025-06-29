@@ -6,9 +6,22 @@ import { PropertyType, type DateFormField } from '@efie-form/core';
 interface DateProviderProps {
   field: DateFormField;
   Component?: ElementType<DateFieldProps>;
+  value?: Date | string;
+  onChange?: (value: Date | string) => void;
+  onBlur?: () => void;
+  onFocus?: () => void;
+  validation?: DateFieldProps['validation'];
 }
 
-function DateProvider({ field, Component }: DateProviderProps) {
+function DateProvider({
+  field,
+  Component,
+  value = '',
+  onChange = () => {},
+  onBlur,
+  onFocus,
+  validation,
+}: DateProviderProps) {
   if (!Component) return <></>;
 
   const label = field.props.find(prop => prop.type === PropertyType.LABEL);
@@ -16,11 +29,18 @@ function DateProvider({ field, Component }: DateProviderProps) {
 
   return createElement(Component, {
     id: field.id,
-    name: field.form.key || field.id,
-    fieldLabel: label?.value || '',
+    field,
+    value,
+    onChange,
+    onBlur,
+    onFocus,
+    validation,
+    style: {},
     required: required?.value || false,
     disabled: false,
-  });
+    // Field-specific props
+    fieldLabel: label?.value || '',
+  } satisfies DateFieldProps);
 }
 
 export default DateProvider;

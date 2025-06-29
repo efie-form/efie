@@ -16,7 +16,7 @@ function BlockSettings({ field }: BlockSettingsProps) {
           { template: 'color', label: 'Background Color', type: PropertyType.BACKGROUND_COLOR },
           { template: 'color', label: 'Text Color', type: PropertyType.COLOR },
           { template: 'borderRadius', label: 'Border Radius', type: PropertyType.BORDER_RADIUS },
-          { template: 'margin', label: 'Marg|in', type: PropertyType.MARGIN },
+          { template: 'margin', label: 'Margin', type: PropertyType.MARGIN },
           { template: 'padding', label: 'Padding', type: PropertyType.PADDING },
           { template: 'boxShadow', label: 'Box Shadow', type: PropertyType.BOX_SHADOW },
         ]}

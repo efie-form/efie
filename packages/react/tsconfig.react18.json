@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "./dist/react18"
+  },
+  "include": ["lib/**/*", "types/**/*"],
+  "exclude": ["**/*.test.*", "**/*.spec.*"]
+}

@@ -14,18 +14,47 @@ function ParagraphProvider({ field, Component }: ParagraphProviderProps) {
   const content = field.props.find(prop => prop.type === PropertyType.CONTENT);
   const textAlign = field.props.find(prop => prop.type === PropertyType.TEXT_ALIGN);
   const fontSize = field.props.find(prop => prop.type === PropertyType.FONT_SIZE);
-  const fontWeight = field.props.find(prop => prop.type === PropertyType.FONT_WEIGHT);
+
+  // Extract content from the rich text format
+  let contentText = 'Paragraph';
+  if (content?.value?.jsonContent) {
+    try {
+      contentText = JSON.stringify(content.value.jsonContent);
+    }
+    catch {
+      contentText = 'Paragraph';
+    }
+  }
+
+  // Extract font size value - simplified approach
+  let fontSizeValue = 16;
+  let fontUnit: 'px' | 'em' | 'rem' = 'px';
+  if (fontSize?.value && typeof fontSize.value === 'object' && 'type' in fontSize.value && fontSize.value.type === 'length' && 'value' in fontSize.value && 'unit' in fontSize.value) {
+    fontSizeValue = typeof fontSize.value.value === 'number' ? fontSize.value.value : 16;
+    fontUnit = fontSize.value.unit === 'em' || fontSize.value.unit === 'rem'
+      ? fontSize.value.unit
+      : 'px';
+  }
+
+  // Ensure textAlign is one of the valid values
+  const validTextAlign = textAlign?.value === 'center' || textAlign?.value === 'right'
+    ? textAlign.value
+    : 'left';
 
   return createElement(Component, {
     id: field.id,
-    text: typeof content?.value?.content === 'string' ? content?.value?.content : 'Paragraph',
-    textAlign: textAlign?.value || 'left',
+    fieldId: field.id,
+    field,
+    style: {},
+    // Field-specific props
+    content: contentText,
+    textAlign: validTextAlign,
     font: {
-      size: fontSize?.value?.value || 16,
-      weight: fontWeight?.value || 400,
-      unit: (fontSize?.value?.unit === 'px' || fontSize?.value?.unit === 'em' || fontSize?.value?.unit === 'rem') ? fontSize?.value?.unit : 'px',
+      size: fontSizeValue,
+      weight: 400,
+      unit: fontUnit,
     },
-  });
+  } satisfies ParagraphFieldProps);
 }
 
 export default ParagraphProvider;
