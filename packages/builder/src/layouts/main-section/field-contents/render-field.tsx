@@ -24,8 +24,6 @@ import ButtonField from './fields/button-field';
 import BlockField from './fields/block-field';
 import { AiOutlineDrag } from 'react-icons/ai';
 import { HiTrash } from 'react-icons/hi2';
-import useDndItem from '../../../components/dnd-kit/use-dnd-item';
-import Droppable from '../../../components/dnd-kit/droppable';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import { usePopper } from 'react-popper';
 import { createPortal } from 'react-dom';
@@ -58,22 +56,15 @@ function RenderField({ field, noSelect }: RenderFieldProps) {
     },
   );
 
-  const { attributes, dragHandlerProps } = useDndItem({
-    id: field.id,
-    type: field.type,
-  });
-
   return (
-    <Droppable id={field.id} type={field.type} className="h-full">
+    <>
       <div
         key={field.id}
         data-field="true"
         id={`field-container-${field.id}`}
-        {...attributes}
         ref={(ref) => {
           if (!ref) return;
           setReferenceElement(ref);
-          attributes.ref(ref);
         }}
         className={cn(
           'transform rounded-md relative h-full outline outline-2 outline-[#00000000] -outline-offset-2',
@@ -105,7 +96,6 @@ function RenderField({ field, noSelect }: RenderFieldProps) {
               {...popperAttributes.popper}
             >
               <div
-                {...dragHandlerProps}
                 className="bg-primary p-1 text-white cursor-grab"
               >
                 <AiOutlineDrag />
@@ -125,7 +115,7 @@ function RenderField({ field, noSelect }: RenderFieldProps) {
         })()}
         <FieldItem field={field} />
       </div>
-    </Droppable>
+    </>
   );
 }
 

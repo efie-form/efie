@@ -1,16 +1,9 @@
-import { fieldIcons } from '../../../lib/fields-tab/fields';
 import { cn } from '../../../lib/utils';
 import { type ElementType } from 'react';
 import type { FieldType } from '@efie-form/core';
-import { useDraggable } from '../../../components/dnd-kit';
-import { DragOverlay } from '@dnd-kit/core';
-import { useDndStore } from '../../../lib/state/dnd.state';
-import { FIELDS_NAME } from '../../../lib/constant';
 import generateFieldItems from '../../../lib/generate-field-items';
 
 function FieldsTab() {
-  const { action, draggedType } = useDndStore();
-
   return (
     <div className="px-4 py-2">
       {generateFieldItems().map(group => (
@@ -30,15 +23,6 @@ function FieldsTab() {
           </div>
         </div>
       ))}
-      {action === 'new' && draggedType && (
-        <DragOverlay>
-          <FieldItem
-            Icon={fieldIcons[draggedType]}
-            type={draggedType}
-            label={FIELDS_NAME[draggedType]}
-          />
-        </DragOverlay>
-      )}
     </div>
   );
 }
@@ -51,22 +35,9 @@ interface FieldItemProps {
   disabled?: boolean;
 }
 
-function FieldItem({ Icon, type, label, formKey, disabled }: FieldItemProps) {
-  const { setNodeRef, attributes, listeners } = useDraggable({
-    id: `new-field-${type}`,
-    data: {
-      action: 'new',
-      type,
-      formKey,
-    },
-    disabled,
-  });
-
+function FieldItem({ Icon, label, disabled }: FieldItemProps) {
   return (
     <div
-      ref={setNodeRef}
-      {...attributes}
-      {...listeners}
       className={cn(
         'flex items-center gap-2 px-4 transform py-1.5 bg-neutral-100/30 border border-neutral-100/30 border-opacity-0 rounded-md text-neutral-800',
         {

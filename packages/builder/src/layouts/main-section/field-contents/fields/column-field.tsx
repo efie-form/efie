@@ -1,6 +1,5 @@
 import type { ColumnFormField } from '@efie-form/core';
 import RenderField from '../render-field';
-import Droppable from '../../../../components/dnd-kit/droppable';
 
 interface ColumnsFieldProps {
   field: ColumnFormField;
@@ -10,7 +9,7 @@ function ColumnsField({ field }: ColumnsFieldProps) {
   const hasChildren = field.children.length > 0;
 
   return (
-    <Droppable id={field.id} type={field.type} className="h-full">
+    <>
       {hasChildren && (
         <div>
           {field.children.map(child => (
@@ -27,7 +26,7 @@ function ColumnsField({ field }: ColumnsFieldProps) {
           )}
         </div>
       )}
-    </Droppable>
+    </>
   );
 }
 
