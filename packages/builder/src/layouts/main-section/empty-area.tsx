@@ -4,18 +4,8 @@ import invariant from 'tiny-invariant';
 import { cn } from '../../lib/utils';
 import { useSchemaStore } from '../../lib/state/schema.state';
 import { useSettingsStore } from '../../lib/state/settings.state';
-import { FieldType } from '@efie-form/core';
 import { getDefaultField } from '../../lib/get-default-field';
-
-const isNewField = (source: unknown): source is { type: FieldType; formKey?: string } => {
-  return typeof source === 'object'
-    && source !== null
-    && 'action' in source
-    && source.action === 'new'
-    && 'type' in source
-    && typeof source.type === 'string'
-    && Object.values(FieldType).includes(source.type as FieldType);
-};
+import isNewField from '../../lib/is-new-field';
 
 export default function EmptyArea() {
   const ref = useRef<HTMLDivElement>(null);

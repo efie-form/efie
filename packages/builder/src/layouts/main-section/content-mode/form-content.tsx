@@ -2,6 +2,7 @@ import RenderField from '../field-contents/render-field';
 import { useSettingsStore } from '../../../lib/state/settings.state';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import EmptyArea from '../empty-area';
+import { useEffect } from 'react';
 
 const SCREEN_SIZES = {
   mobile: 375,
@@ -10,8 +11,21 @@ const SCREEN_SIZES = {
 
 function FormContent() {
   const { getPage } = useSchemaStore();
-  const { previewDevice, page } = useSettingsStore();
+  const { previewDevice, page, clearSelectedFieldId } = useSettingsStore();
   const selectedPage = getPage(page);
+
+  useEffect(() => {
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        clearSelectedFieldId();
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, []);
 
   if (!selectedPage) return <></>;
   const hasChildren = selectedPage.children.length > 0;
@@ -26,8 +40,13 @@ function FormContent() {
               maxWidth: SCREEN_SIZES[previewDevice],
             }}
           >
-            {selectedPage.children.map(field => (
-              <RenderField field={field} key={field.id} />
+            {selectedPage.children.map((field, index) => (
+              <RenderField
+                field={field}
+                key={field.id}
+                childIndex={index}
+                parentId={selectedPage.id}
+              />
             ))}
             {!hasChildren && (
               <EmptyArea />

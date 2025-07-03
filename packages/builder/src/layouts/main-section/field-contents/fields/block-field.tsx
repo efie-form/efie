@@ -34,8 +34,13 @@ function BlockField({ field }: BlockFieldProps) {
         color: colorToStyle(color?.value),
       }}
     >
-      {field.children.map(child => (
-        <RenderField field={child} key={child.id} />
+      {field.children.map((child, index) => (
+        <RenderField
+          field={child}
+          key={child.id}
+          parentId={field.id}
+          childIndex={index}
+        />
       ))}
     </div>
   );
