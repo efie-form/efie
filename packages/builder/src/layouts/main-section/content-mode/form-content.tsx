@@ -1,6 +1,7 @@
 import RenderField from '../field-contents/render-field';
 import { useSettingsStore } from '../../../lib/state/settings.state';
 import { useSchemaStore } from '../../../lib/state/schema.state';
+import EmptyArea from '../empty-area';
 
 const SCREEN_SIZES = {
   mobile: 375,
@@ -13,6 +14,7 @@ function FormContent() {
   const selectedPage = getPage(page);
 
   if (!selectedPage) return <></>;
+  const hasChildren = selectedPage.children.length > 0;
 
   return (
     <div id="form-zone" className="h-full">
@@ -27,6 +29,9 @@ function FormContent() {
             {selectedPage.children.map(field => (
               <RenderField field={field} key={field.id} />
             ))}
+            {!hasChildren && (
+              <EmptyArea />
+            )}
           </div>
         </div>
       </div>
