@@ -1,4 +1,3 @@
-import { DndProvider } from './components/dnd-kit';
 import { cn } from './lib/utils';
 import LeftBar from './layouts/left-bar/left-bar';
 import MainSection from './layouts/main-section/main-section';
@@ -10,7 +9,7 @@ const FormBuilder = () => {
   const { height } = useSettingsStore();
 
   return (
-    <DndProvider>
+    <>
       <div
         className={cn('flex w-full', {
           'h-screen': !height,
@@ -29,7 +28,7 @@ const FormBuilder = () => {
           <RightBar />
         </aside>
       </div>
-    </DndProvider>
+    </>
   );
 };
 

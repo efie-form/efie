@@ -15,14 +15,14 @@ function RowField({ field }: RowFieldProps) {
 
   return (
     <div
-      className={cn('flex relative items-start content-start', {
+      className={cn('flex relative items-start content-start p-2', {
         'flex-col': isMobile,
       })}
     >
       {field.children
         .filter(Boolean)
         .filter(child => child.type === FieldType.COLUMN)
-        .map(child => (
+        .map((child, index) => (
           <div
             key={`${field.id}-${child.id}`}
             style={{
@@ -32,7 +32,12 @@ function RowField({ field }: RowFieldProps) {
             }}
             className="self-stretch"
           >
-            <RenderField field={child} noSelect />
+            <RenderField
+              field={child}
+              noSelect
+              parentId={field.id}
+              childIndex={index}
+            />
           </div>
         ))}
     </div>

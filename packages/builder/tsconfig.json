@@ -15,7 +15,7 @@
     ],
     "paths": {
       "@efie-form/core": [
-        "../core/lib"
+        "../core"
       ],
     }
   },

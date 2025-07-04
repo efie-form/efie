@@ -46,6 +46,7 @@ export interface SchemaState {
     type: T
   ) => Extract<PropertyDefinition, { type: T }> | undefined;
   getFieldProperties: (fieldId: string) => PropertyDefinition[];
+  listChildrenId: (fieldId: string) => string[];
 
   // Legacy methods (maintained for compatibility)
   updateFieldProps: (

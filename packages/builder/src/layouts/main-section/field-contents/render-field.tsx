@@ -1,41 +1,59 @@
 import { type FormField, FieldType } from '@efie-form/core';
 import ColumnsField from './fields/column-field';
-import RowField from './fields/row-field';
 import {
   RIGHT_BAR_TABS,
   useSettingsStore,
 } from '../../../lib/state/settings.state';
-import { type MouseEvent, useState } from 'react';
-import HeaderField from './fields/header-field';
-import ParagraphField from './fields/paragraph-field';
-import ShortTextField from './fields/short-text-field';
-import LongTextField from './fields/long-text-field';
-import NumberField from './fields/number-field';
-import DividerField from './fields/divider-field';
-import ImageField from './fields/image-field';
-import SingleChoiceField from './fields/single-choice-field';
-import MultipleChoicesField from './fields/multiple-choices-field';
-import DateField from './fields/date-field';
-import TimeField from './fields/time-field';
-import DateTimeField from './fields/date-time-field';
-import FileField from './fields/file-field';
+import { type MouseEvent, useEffect, useRef, useState } from 'react';
 import { cn } from '../../../lib/utils';
-import ButtonField from './fields/button-field';
-import BlockField from './fields/block-field';
 import { AiOutlineDrag } from 'react-icons/ai';
 import { HiTrash } from 'react-icons/hi2';
-import useDndItem from '../../../components/dnd-kit/use-dnd-item';
-import Droppable from '../../../components/dnd-kit/droppable';
 import { useSchemaStore } from '../../../lib/state/schema.state';
-import { usePopper } from 'react-popper';
-import { createPortal } from 'react-dom';
+import {
+  draggable,
+  dropTargetForElements,
+  type ElementDropTargetEventBasePayload,
+} from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
+import { combine } from '@atlaskit/pragmatic-drag-and-drop/combine';
+import {
+  attachInstruction,
+  extractInstruction,
+  type Operation,
+} from '@atlaskit/pragmatic-drag-and-drop-hitbox/list-item';
+import invariant from 'tiny-invariant';
+import {
+  DateTimeField,
+  HeaderField,
+  ParagraphField,
+  BlockField,
+  ButtonField,
+  DateField,
+  DividerField,
+  FileField,
+  ImageField,
+  LongTextField,
+  MultipleChoicesField,
+  NumberField,
+  RowField,
+  ShortTextField,
+  SingleChoiceField,
+  TimeField,
+} from './fields';
+import useDropField from '../../../lib/hooks/use-drop-field';
 
 interface RenderFieldProps {
   field: FormField;
   noSelect?: boolean;
+  parentId: string;
+  childIndex: number;
 }
 
-function RenderField({ field, noSelect }: RenderFieldProps) {
+function RenderField({
+  field,
+  noSelect,
+  parentId,
+  childIndex,
+}: RenderFieldProps) {
   const {
     setSelectedFieldId,
     selectedFieldId,
@@ -44,43 +62,97 @@ function RenderField({ field, noSelect }: RenderFieldProps) {
   } = useSettingsStore();
   const isSelected = selectedFieldId === field.id;
   const { deleteField } = useSchemaStore();
-  const [referenceElement, setReferenceElement] = useState<
-    HTMLDivElement | undefined
-  >();
-  const [popperElement, setPopperElement] = useState<
-    HTMLDivElement | undefined
-  >();
-  const { styles, attributes: popperAttributes } = usePopper(
-    referenceElement,
-    popperElement,
-    {
-      placement: 'left-start',
-    },
-  );
-
-  const { attributes, dragHandlerProps } = useDndItem({
-    id: field.id,
-    type: field.type,
+  const fieldRef = useRef<HTMLDivElement>(null);
+  const dragHandlerRef = useRef<HTMLDivElement>(null);
+  const [isDraggedOver, setIsDraggedOver] = useState(false);
+  const [operation, setOperation] = useState<Operation>('reorder-after');
+  const { handleDrop } = useDropField({
+    index: childIndex,
+    parentId,
   });
 
+  const onChange = ({ self, location }: ElementDropTargetEventBasePayload) => {
+    const instruction = extractInstruction(self.data);
+
+    if (location.current.dropTargets[0].element !== self.element) {
+      setIsDraggedOver(false);
+      return;
+    }
+
+    invariant(instruction, 'Instruction data should be defined');
+    setOperation(instruction.operation);
+    setIsDraggedOver(true);
+  };
+
+  useEffect(() => {
+    const el = fieldRef.current;
+    const dragEl = dragHandlerRef.current;
+
+    invariant(el, 'RenderField element is not defined');
+
+    // Add any necessary event listeners or logic here
+    return combine(
+      draggable({
+        element: el,
+        dragHandle: dragEl || undefined,
+        getInitialData: () => ({
+          action: 'move',
+          type: field.type,
+          id: field.id,
+        }),
+      }),
+      dropTargetForElements({
+        getData: ({ element, input }) => {
+          const data = {
+            id: field.id,
+          };
+          return attachInstruction(data, {
+            input,
+            element,
+            operations: {
+              'reorder-before': 'available',
+              'reorder-after': 'available',
+              'combine': 'not-available',
+            },
+          });
+        },
+        element: el,
+        onDragEnter: onChange,
+        onDragLeave: () => {
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              setIsDraggedOver(false);
+            });
+          });
+        },
+        canDrop: () => !['column'].includes(field.type),
+        onDrag: onChange,
+        onDrop: (payload) => {
+          setIsDraggedOver(false);
+          handleDrop(payload);
+        },
+      }),
+    );
+  }, [field.id, field.type, handleDrop, childIndex, parentId]);
+
   return (
-    <Droppable id={field.id} type={field.type} className="h-full">
+    <div
+      className={cn('relative translate-x-0 bg-primary-50', {
+        'z-[100]': isDraggedOver,
+      })}
+      ref={fieldRef}
+    >
       <div
         key={field.id}
         data-field="true"
         id={`field-container-${field.id}`}
-        {...attributes}
-        ref={(ref) => {
-          if (!ref) return;
-          setReferenceElement(ref);
-          attributes.ref(ref);
-        }}
         className={cn(
-          'transform rounded-md relative h-full outline outline-2 outline-[#00000000] -outline-offset-2',
+          'transform rounded-md relative h-full outline outline-2 outline-[#00000000] -outline-offset-2 p-1',
           {
             '!outline-primary relative z-50': isSelected,
             '[&:not(:has(div[data-field=true]:hover))]:hover:outline-neutral-100':
               field.type !== FieldType.COLUMN,
+            'z-[100]': isDraggedOver,
           },
         )}
         {...(!noSelect && {
@@ -91,45 +163,50 @@ function RenderField({ field, noSelect }: RenderFieldProps) {
           },
         })}
       >
-        {isSelected && (() => {
-          const formZone = document.querySelector('#form-zone');
-          if (!formZone) return;
-
-          return createPortal(
-            <div
-              ref={(el) => {
-                if (!el) return;
-                setPopperElement(el);
-              }}
-              style={styles.popper}
-              {...popperAttributes.popper}
-            >
-              <div
-                {...dragHandlerProps}
-                className="bg-primary p-1 text-white cursor-grab"
-              >
-                <AiOutlineDrag />
-              </div>
-              <button
-                className="bg-danger p-1 text-white"
-                onClick={() => {
-                  deleteField(field.id);
-                  clearSelectedFieldId();
-                }}
-              >
-                <HiTrash />
-              </button>
-            </div>,
-            formZone,
-          );
-        })()}
+        {isDraggedOver && (
+          <div
+            className={cn('absolute z-[999] left-0 right-0 h-1 bg-primary-400 rounded-full ', {
+              'top-0 -translate-y-1/2': operation === 'reorder-before',
+              'bottom-0 translate-y-1/2': operation === 'reorder-after',
+            })}
+          >
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-primary-400 rounded-full px-3 py-1">
+              <p className="typography-body3 text-neutral-50">Drop here</p>
+            </div>
+          </div>
+        )}
         <FieldItem field={field} />
       </div>
-    </Droppable>
+      {isSelected && (
+        <div
+          className="absolute top-0 left-0 -translate-x-full"
+        >
+          <div
+            ref={dragHandlerRef}
+            className="bg-primary p-1 text-white cursor-grab"
+          >
+            <AiOutlineDrag />
+          </div>
+          <button
+            className="bg-danger p-1 text-white"
+            onClick={() => {
+              deleteField(field.id);
+              clearSelectedFieldId();
+            }}
+          >
+            <HiTrash />
+          </button>
+        </div>
+      )}
+    </div>
   );
 }
 
-function FieldItem({ field }: RenderFieldProps) {
+interface FieldItemProps {
+  field: FormField;
+}
+
+function FieldItem({ field }: FieldItemProps) {
   switch (field.type) {
     case FieldType.ROW: {
       return <RowField field={field} />;
