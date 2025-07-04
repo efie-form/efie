@@ -812,6 +812,10 @@ video {
   min-height: 24rem;
 }
 
+.min-h-64 {
+  min-height: 16rem;
+}
+
 .w-1\/2 {
   width: 50%;
 }
@@ -1315,6 +1319,16 @@ video {
 .bg-success-50 {
   --tw-bg-opacity: 1;
   background-color: rgb(from var(--color-green-50) r g b / var(--tw-bg-opacity));
+}
+
+.bg-danger-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(from var(--color-red-200) r g b / var(--tw-bg-opacity));
+}
+
+.bg-success-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(from var(--color-green-200) r g b / var(--tw-bg-opacity));
 }
 
 .bg-opacity-0 {

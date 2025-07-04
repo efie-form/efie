@@ -3,6 +3,7 @@ import { useSettingsStore } from '../../../lib/state/settings.state';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import EmptyArea from '../empty-area';
 import { useEffect } from 'react';
+import BottomDropArea from '../bottom-drop-area';
 
 const SCREEN_SIZES = {
   mobile: 375,
@@ -32,10 +33,12 @@ function FormContent() {
 
   return (
     <div id="form-zone" className="h-full">
-      <div className="min-h-full pb-64">
-        <div className="p-4">
+      <div className="min-h-full h-full">
+        <div
+          className="p-4 flex flex-col h-full"
+        >
           <div
-            className="flex flex-col mx-auto transition-all"
+            className="flex flex-col w-full mx-auto transition-all"
             style={{
               maxWidth: SCREEN_SIZES[previewDevice],
             }}
@@ -52,6 +55,19 @@ function FormContent() {
               <EmptyArea parentId={selectedPage.id} />
             )}
           </div>
+          {hasChildren && (
+            <div
+              className="mx-auto h-full flex-1 w-full"
+              style={{
+                maxWidth: SCREEN_SIZES[previewDevice],
+              }}
+            >
+              <BottomDropArea
+                parentId={selectedPage.id}
+                totalChildren={selectedPage.children.length}
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>
