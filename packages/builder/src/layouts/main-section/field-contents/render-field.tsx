@@ -20,8 +20,6 @@ import {
   extractInstruction,
   type Operation,
 } from '@atlaskit/pragmatic-drag-and-drop-hitbox/list-item';
-import { getDefaultField } from '../../../lib/get-default-field';
-import { isMoveField, isNewField } from '../../../lib/field-type-guard';
 import invariant from 'tiny-invariant';
 import {
   DateTimeField,
@@ -41,6 +39,7 @@ import {
   SingleChoiceField,
   TimeField,
 } from './fields';
+import useDropField from '../../../lib/hooks/use-drop-field';
 
 interface RenderFieldProps {
   field: FormField;
@@ -62,45 +61,16 @@ function RenderField({
     setActiveTab,
   } = useSettingsStore();
   const isSelected = selectedFieldId === field.id;
-  const { deleteField, addField, moveField } = useSchemaStore();
+  const { deleteField } = useSchemaStore();
   const fieldRef = useRef<HTMLDivElement>(null);
   const dragHandlerRef = useRef<HTMLDivElement>(null);
   const [isMoving, setIsMoving] = useState(false);
   const [isDraggedOver, setIsDraggedOver] = useState(false);
   const [operation, setOperation] = useState<Operation>('reorder-after');
-
-  const handleAddField = ({
-    self,
-    source,
-  }: ElementDropTargetEventBasePayload) => {
-    const instruction = extractInstruction(self.data);
-
-    invariant(isNewField(source.data), 'Source data should be a new field');
-
-    const index = instruction?.operation === 'reorder-before'
-      ? childIndex
-      : (instruction?.operation === 'reorder-after' ? childIndex + 1 : 0);
-
-    const newField = getDefaultField({
-      type: source.data.type,
-      formKey: source.data.formKey,
-    });
-
-    addField(newField, parentId, index);
-  };
-
-  const handleMoveField = ({ self, source }: ElementDropTargetEventBasePayload) => {
-    const instruction = extractInstruction(self.data);
-
-    invariant(instruction, 'Instruction data should be defined');
-    invariant(isMoveField(source.data), 'Source data should be an existing field');
-
-    const index = instruction.operation === 'reorder-before'
-      ? childIndex
-      : (instruction.operation === 'reorder-after' ? childIndex + 1 : 0);
-
-    moveField(source.data.id, parentId, index);
-  };
+  const { handleDrop } = useDropField({
+    index: childIndex,
+    parentId,
+  });
 
   const onChange = ({ self, location }: ElementDropTargetEventBasePayload) => {
     const instruction = extractInstruction(self.data);
@@ -165,19 +135,8 @@ function RenderField({
         canDrop: () => !['column'].includes(field.type),
         onDrag: onChange,
         onDrop: (payload) => {
-          const { source, location, self } = payload;
           setIsDraggedOver(false);
-
-          if (location.current.dropTargets[0].element !== self.element) {
-            return;
-          }
-
-          if (source.data.action === 'new') {
-            handleAddField(payload);
-          }
-          else if (source.data.action === 'move') {
-            handleMoveField(payload);
-          }
+          handleDrop(payload);
         },
       }),
     );

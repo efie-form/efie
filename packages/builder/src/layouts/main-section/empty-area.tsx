@@ -3,8 +3,8 @@ import { useEffect, useRef, useState } from 'react';
 import invariant from 'tiny-invariant';
 import { cn } from '../../lib/utils';
 import { useSchemaStore } from '../../lib/state/schema.state';
-import { getDefaultField } from '../../lib/get-default-field';
-import { isMoveField, isNewField } from '../../lib/field-type-guard';
+import { isMoveField } from '../../lib/field-type-guard';
+import useDropField from '../../lib/hooks/use-drop-field';
 
 interface EmptyAreaProps {
   parentId: string;
@@ -13,7 +13,11 @@ interface EmptyAreaProps {
 export default function EmptyArea({ parentId }: EmptyAreaProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [isDraggedOver, setIsDraggedOver] = useState(false);
-  const { addField, moveField, listChildrenId } = useSchemaStore();
+  const { listChildrenId } = useSchemaStore();
+  const { handleDrop } = useDropField({
+    index: 0,
+    parentId,
+  });
 
   useEffect(() => {
     const el = ref.current;
@@ -36,25 +40,7 @@ export default function EmptyArea({ parentId }: EmptyAreaProps) {
         }
         return true;
       },
-      onDrop: ({ source }) => {
-        setIsDraggedOver(false);
-        if (isNewField(source.data)) {
-          const defaultField = getDefaultField({
-            type: source.data.type,
-            formKey: source.data.formKey,
-          });
-
-          addField(defaultField, parentId, 0);
-        }
-
-        if (isMoveField(source.data)) {
-          if (!parentId) {
-            console.warn('Parent ID is required for existing fields');
-            return;
-          }
-          moveField(source.data.id, parentId, 0);
-        }
-      },
+      onDrop: handleDrop,
     });
   }, []);
 
