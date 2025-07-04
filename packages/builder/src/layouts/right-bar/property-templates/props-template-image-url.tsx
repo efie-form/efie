@@ -36,6 +36,7 @@ export default function PropsTemplateImageUrl({
     : undefined;
   const [fileInfo, setFileInfo] = useState<{ name: string; size: number }>();
   const [isHovered, setIsHovered] = useState(false);
+  console.log(isHovered, 'isHovered');
 
   // Helper handlers for drag events to allow multiple statements
   const handleDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
@@ -119,7 +120,6 @@ export default function PropsTemplateImageUrl({
   }, [value]);
 
   const hasImage = value && value.trim() && !imageError;
-  console.log(isHovered, dragActive, isDraggedFileValid);
 
   return (
     <SettingsFieldVertical label={label} divider>

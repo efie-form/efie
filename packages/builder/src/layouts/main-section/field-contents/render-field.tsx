@@ -25,13 +25,11 @@ import BlockField from './fields/block-field';
 import { AiOutlineDrag } from 'react-icons/ai';
 import { HiTrash } from 'react-icons/hi2';
 import { useSchemaStore } from '../../../lib/state/schema.state';
-import { usePopper } from 'react-popper';
-import { createPortal } from 'react-dom';
-import { dropTargetForElements, type ElementDropTargetEventBasePayload } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
+import { draggable, dropTargetForElements, type ElementDropTargetEventBasePayload } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
 import { combine } from '@atlaskit/pragmatic-drag-and-drop/combine';
 import { attachInstruction, extractInstruction } from '@atlaskit/pragmatic-drag-and-drop-hitbox/list-item';
 import { getDefaultField } from '../../../lib/get-default-field';
-import isNewField from '../../../lib/is-new-field';
+import { isMoveField, isNewField } from '../../../lib/field-type-guard';
 import invariant from 'tiny-invariant';
 
 interface RenderFieldProps {
@@ -49,21 +47,10 @@ function RenderField({ field, noSelect, parentId, childIndex }: RenderFieldProps
     setActiveTab,
   } = useSettingsStore();
   const isSelected = selectedFieldId === field.id;
-  const { deleteField, addField } = useSchemaStore();
-  const [referenceElement, setReferenceElement] = useState<
-    HTMLDivElement | undefined
-  >();
-  const [popperElement, setPopperElement] = useState<
-    HTMLDivElement | undefined
-  >();
-  const { styles, attributes: popperAttributes } = usePopper(
-    referenceElement,
-    popperElement,
-    {
-      placement: 'left-start',
-    },
-  );
+  const { deleteField, addField, moveField } = useSchemaStore();
   const fieldRef = useRef<HTMLDivElement>(null);
+  const dragHandlerRef = useRef<HTMLDivElement>(null);
+  const [isMoving, setIsMoving] = useState(false);
   const [isDraggedOver, setIsDraggedOver] = useState(false);
   const [operation, setOperation] = useState<'reorder-before' | 'reorder-after' | 'combine'>('reorder-after');
 
@@ -84,6 +71,19 @@ function RenderField({ field, noSelect, parentId, childIndex }: RenderFieldProps
     addField(newField, parentId, index);
   };
 
+  const handleMoveField = ({ self, source }: ElementDropTargetEventBasePayload) => {
+    const instruction = extractInstruction(self.data);
+
+    invariant(instruction, 'Instruction data should be defined');
+    invariant(isMoveField(source.data), 'Source data should be an existing field');
+
+    const index = instruction.operation === 'reorder-before'
+      ? childIndex
+      : (instruction.operation === 'reorder-after' ? childIndex + 1 : 0);
+
+    moveField(source.data.id, parentId, index);
+  };
+
   const onChange = ({ self, location }: ElementDropTargetEventBasePayload) => {
     const instruction = extractInstruction(self.data);
 
@@ -99,11 +99,27 @@ function RenderField({ field, noSelect, parentId, childIndex }: RenderFieldProps
 
   useEffect(() => {
     const el = fieldRef.current;
+    const dragEl = dragHandlerRef.current;
 
-    if (!el) return;
+    invariant(el, 'RenderField element is not defined');
 
     // Add any necessary event listeners or logic here
     return combine(
+      draggable({
+        element: el,
+        dragHandle: dragEl || undefined,
+        getInitialData: () => ({
+          action: 'move',
+          type: field.type,
+          id: field.id,
+        }),
+        onDragStart: () => {
+          setIsMoving(true);
+        },
+        onDrop: () => {
+          setIsMoving(false);
+        },
+      }),
       dropTargetForElements({
         getData: ({ element, input }) => {
           const data = {
@@ -141,28 +157,24 @@ function RenderField({ field, noSelect, parentId, childIndex }: RenderFieldProps
           if (source.data.action === 'new') {
             handleAddField(payload);
           }
-          console.log('render-field', location);
+          else if (source.data.action === 'move') {
+            handleMoveField(payload);
+          }
         },
       }),
     );
   }, [childIndex]);
 
   return (
-    <>
+    <div className="relative translate-x-0 bg-primary-50" ref={fieldRef}>
       <div
         key={field.id}
         data-field="true"
         id={`field-container-${field.id}`}
-        ref={(ref) => {
-          if (!ref) return;
-          // @ts-expect-error assigning ref to fieldRef
-          fieldRef.current = ref;
-          setReferenceElement(ref);
-        }}
         className={cn(
           'transform rounded-md relative h-full outline outline-2 outline-[#00000000] -outline-offset-2',
           {
-            '!outline-primary relative z-50': isSelected,
+            '!outline-primary relative z-50': isSelected && !isMoving,
             '[&:not(:has(div[data-field=true]:hover))]:hover:outline-neutral-100':
               field.type !== FieldType.COLUMN,
             'z-[100]': isDraggedOver,
@@ -188,40 +200,30 @@ function RenderField({ field, noSelect, parentId, childIndex }: RenderFieldProps
             </div>
           </div>
         )}
-        {isSelected && (() => {
-          const formZone = document.querySelector('#form-zone');
-          if (!formZone) return;
-
-          return createPortal(
-            <div
-              ref={(el) => {
-                if (!el) return;
-                setPopperElement(el);
-              }}
-              style={styles.popper}
-              {...popperAttributes.popper}
-            >
-              <div
-                className="bg-primary p-1 text-white cursor-grab"
-              >
-                <AiOutlineDrag />
-              </div>
-              <button
-                className="bg-danger p-1 text-white"
-                onClick={() => {
-                  deleteField(field.id);
-                  clearSelectedFieldId();
-                }}
-              >
-                <HiTrash />
-              </button>
-            </div>,
-            formZone,
-          );
-        })()}
         <FieldItem field={field} />
       </div>
-    </>
+      {isSelected && (
+        <div
+          className="absolute top-0 left-0 -translate-x-full"
+        >
+          <div
+            ref={dragHandlerRef}
+            className="bg-primary p-1 text-white cursor-grab"
+          >
+            <AiOutlineDrag />
+          </div>
+          <button
+            className="bg-danger p-1 text-white"
+            onClick={() => {
+              deleteField(field.id);
+              clearSelectedFieldId();
+            }}
+          >
+            <HiTrash />
+          </button>
+        </div>
+      )}
+    </div>
   );
 }
 
