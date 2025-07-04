@@ -142,5 +142,23 @@ export function createFieldActions({ set, getState }: StateSetters) {
       if (!fieldId) return;
       return getState().fieldParentMap.get(fieldId);
     },
+
+    listChildrenId: (fieldId: string) => {
+      const field = getState().fieldMap.get(fieldId);
+      if (!field || !('children' in field)) return [];
+
+      const getChildrenId = (field: FormField): string[] => {
+        if (!('children' in field) || !field.children || field.children.length === 0) {
+          return [];
+        }
+
+        return field.children.flatMap((child) => {
+          const childIds = getChildrenId(child);
+          return [child.id, ...childIds];
+        });
+      };
+
+      return getChildrenId(field);
+    },
   };
 }

@@ -7,13 +7,13 @@ import { getDefaultField } from '../../lib/get-default-field';
 import { isMoveField, isNewField } from '../../lib/field-type-guard';
 
 interface EmptyAreaProps {
-  parentId?: string;
+  parentId: string;
 }
 
 export default function EmptyArea({ parentId }: EmptyAreaProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [isDraggedOver, setIsDraggedOver] = useState(false);
-  const { addField, moveField } = useSchemaStore();
+  const { addField, moveField, listChildrenId } = useSchemaStore();
 
   useEffect(() => {
     const el = ref.current;
@@ -26,6 +26,16 @@ export default function EmptyArea({ parentId }: EmptyAreaProps) {
         setIsDraggedOver(true);
       },
       onDragLeave: () => setIsDraggedOver(false),
+      canDrop: ({ source }) => {
+        if (isMoveField(source.data)) {
+          const childrenId = listChildrenId(source.data.id);
+          if (childrenId.includes(parentId) || source.data.id === parentId) {
+            console.warn('Cannot drop a field into itself or its descendants');
+            return false;
+          }
+        }
+        return true;
+      },
       onDrop: ({ source }) => {
         setIsDraggedOver(false);
         if (isNewField(source.data)) {
