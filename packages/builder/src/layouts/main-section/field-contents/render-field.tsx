@@ -133,7 +133,7 @@ function RenderField({
         },
       }),
     );
-  }, [childIndex]);
+  }, [field.id, field.type, handleDrop, childIndex, parentId]);
 
   return (
     <div

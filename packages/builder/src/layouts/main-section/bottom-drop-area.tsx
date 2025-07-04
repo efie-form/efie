@@ -1,9 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import invariant from 'tiny-invariant';
-import { dropTargetForElements, type ElementDropTargetEventBasePayload } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
-import { isNewField } from '../../lib/field-type-guard';
-import { useSchemaStore } from '../../lib/state/schema.state';
-import { getDefaultField } from '../../lib/get-default-field';
+import { dropTargetForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
+import useDropField from '../../lib/hooks/use-drop-field';
+import { attachInstruction } from '@atlaskit/pragmatic-drag-and-drop-hitbox/list-item';
 
 interface BottomDropAreaProps {
   parentId: string;
@@ -12,25 +11,11 @@ interface BottomDropAreaProps {
 
 export default function BottomDropArea({ parentId, totalChildren }: BottomDropAreaProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const { addField } = useSchemaStore();
   const [isDraggedOver, setIsDraggedOver] = useState(false);
-
-  const handleDrop = (payload: ElementDropTargetEventBasePayload) => {
-    const { source } = payload;
-    setIsDraggedOver(false);
-
-    if (!isNewField(source.data)) {
-      console.warn('Only new fields can be dropped in the bottom drop area');
-      return;
-    }
-
-    const defaultField = getDefaultField({
-      type: source.data.type,
-      formKey: source.data.formKey,
-    });
-
-    addField(defaultField, parentId, totalChildren);
-  };
+  const { handleDrop } = useDropField({
+    index: totalChildren,
+    parentId,
+  });
 
   useEffect(() => {
     const element = ref.current;
@@ -39,7 +24,21 @@ export default function BottomDropArea({ parentId, totalChildren }: BottomDropAr
 
     return dropTargetForElements({
       element,
-      onDrop: handleDrop,
+      getData: ({ element, input }) => {
+        return attachInstruction({}, {
+          element,
+          input,
+          operations: {
+            'reorder-before': 'available',
+            'reorder-after': 'not-available',
+            'combine': 'not-available',
+          },
+        });
+      },
+      onDrop: (payload) => {
+        setIsDraggedOver(false);
+        handleDrop(payload);
+      },
       onDragEnter: () => {
         setIsDraggedOver(true);
       },
@@ -47,7 +46,7 @@ export default function BottomDropArea({ parentId, totalChildren }: BottomDropAr
         setIsDraggedOver(false);
       },
     });
-  });
+  }, [parentId, totalChildren]);
 
   return (
     <div
