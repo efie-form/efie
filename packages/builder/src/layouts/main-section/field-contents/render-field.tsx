@@ -64,7 +64,6 @@ function RenderField({
   const { deleteField } = useSchemaStore();
   const fieldRef = useRef<HTMLDivElement>(null);
   const dragHandlerRef = useRef<HTMLDivElement>(null);
-  const [isMoving, setIsMoving] = useState(false);
   const [isDraggedOver, setIsDraggedOver] = useState(false);
   const [operation, setOperation] = useState<Operation>('reorder-after');
   const { handleDrop } = useDropField({
@@ -101,12 +100,6 @@ function RenderField({
           type: field.type,
           id: field.id,
         }),
-        onDragStart: () => {
-          setIsMoving(true);
-        },
-        onDrop: () => {
-          setIsMoving(false);
-        },
       }),
       dropTargetForElements({
         getData: ({ element, input }) => {
@@ -154,9 +147,9 @@ function RenderField({
         data-field="true"
         id={`field-container-${field.id}`}
         className={cn(
-          'transform rounded-md relative h-full outline outline-2 outline-[#00000000] -outline-offset-2',
+          'transform rounded-md relative h-full outline outline-2 outline-[#00000000] -outline-offset-2 p-1',
           {
-            '!outline-primary relative z-50': isSelected && !isMoving,
+            '!outline-primary relative z-50': isSelected,
             '[&:not(:has(div[data-field=true]:hover))]:hover:outline-neutral-100':
               field.type !== FieldType.COLUMN,
             'z-[100]': isDraggedOver,

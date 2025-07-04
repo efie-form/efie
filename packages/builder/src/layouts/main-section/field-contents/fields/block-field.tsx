@@ -25,7 +25,7 @@ function BlockField({ field }: BlockFieldProps) {
 
   return (
     <div
-      className="min-h-20 w-full transition-all overflow-hidden relative z-40"
+      className="min-h-20 w-full transition-all relative"
       style={{
         margin: marginToStyle(margin?.value),
         padding: paddingToStyle(padding?.value),
