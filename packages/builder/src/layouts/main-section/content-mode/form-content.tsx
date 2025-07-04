@@ -49,7 +49,7 @@ function FormContent() {
               />
             ))}
             {!hasChildren && (
-              <EmptyArea />
+              <EmptyArea parentId={selectedPage.id} />
             )}
           </div>
         </div>

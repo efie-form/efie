@@ -9,6 +9,7 @@ import {
 } from '@efie-form/core';
 import RenderField from '../render-field';
 import { getFieldProp } from '../../../../lib/utils';
+import EmptyArea from '../../empty-area';
 
 interface BlockFieldProps {
   field: BlockFormField;
@@ -24,7 +25,7 @@ function BlockField({ field }: BlockFieldProps) {
 
   return (
     <div
-      className="min-h-20 w-full transition-all overflow-hidden"
+      className="min-h-20 w-full transition-all overflow-hidden relative z-40"
       style={{
         margin: marginToStyle(margin?.value),
         padding: paddingToStyle(padding?.value),
@@ -42,6 +43,11 @@ function BlockField({ field }: BlockFieldProps) {
           childIndex={index}
         />
       ))}
+      {field.children.length === 0 && (
+        <EmptyArea
+          parentId={field.id}
+        />
+      )}
     </div>
   );
 }

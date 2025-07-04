@@ -65,7 +65,7 @@ function RenderField({ field, noSelect, parentId, childIndex }: RenderFieldProps
   );
   const fieldRef = useRef<HTMLDivElement>(null);
   const [isDraggedOver, setIsDraggedOver] = useState(false);
-  const [operation, setOperation] = useState<'reorder-before' | 'reorder-after' | 'combine'>('reorder-before');
+  const [operation, setOperation] = useState<'reorder-before' | 'reorder-after' | 'combine'>('reorder-after');
 
   const handleAddField = ({ self, source }: ElementDropTargetEventBasePayload) => {
     const instruction = extractInstruction(self.data);
@@ -84,8 +84,14 @@ function RenderField({ field, noSelect, parentId, childIndex }: RenderFieldProps
     addField(newField, parentId, index);
   };
 
-  const onChange = ({ self }: ElementDropTargetEventBasePayload) => {
+  const onChange = ({ self, location }: ElementDropTargetEventBasePayload) => {
     const instruction = extractInstruction(self.data);
+
+    if (location.current.dropTargets[0].element !== self.element) {
+      setIsDraggedOver(false);
+      return;
+    }
+
     invariant(instruction, 'Instruction data should be defined');
     setOperation(instruction.operation);
     setIsDraggedOver(true);
@@ -116,15 +122,26 @@ function RenderField({ field, noSelect, parentId, childIndex }: RenderFieldProps
         element: el,
         onDragEnter: onChange,
         onDragLeave: () => {
-          setIsDraggedOver(false);
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              setIsDraggedOver(false);
+            });
+          });
         },
+        canDrop: () => !['column'].includes(field.type),
         onDrag: onChange,
         onDrop: (payload) => {
-          const { source } = payload;
+          const { source, location, self } = payload;
           setIsDraggedOver(false);
+
+          if (location.current.dropTargets[0].element !== self.element) {
+            return;
+          }
+
           if (source.data.action === 'new') {
             handleAddField(payload);
           }
+          console.log('render-field', location);
         },
       }),
     );
@@ -148,6 +165,7 @@ function RenderField({ field, noSelect, parentId, childIndex }: RenderFieldProps
             '!outline-primary relative z-50': isSelected,
             '[&:not(:has(div[data-field=true]:hover))]:hover:outline-neutral-100':
               field.type !== FieldType.COLUMN,
+            'z-[100]': isDraggedOver,
           },
         )}
         {...(!noSelect && {
@@ -159,11 +177,16 @@ function RenderField({ field, noSelect, parentId, childIndex }: RenderFieldProps
         })}
       >
         {isDraggedOver && (
-          <div className={cn('absolute left-0 right-0 h-1 bg-primary ', {
-            'top-0 -translate-y-1/2': operation === 'reorder-before',
-            'bottom-0 translate-y-1/2': operation === 'reorder-after',
-          })}
-          />
+          <div
+            className={cn('absolute left-0 right-0 h-1 bg-primary-400 rounded-full ', {
+              'top-0 -translate-y-1/2': operation === 'reorder-before',
+              'bottom-0 translate-y-1/2': operation === 'reorder-after',
+            })}
+          >
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-primary-400 rounded-full px-3 py-1">
+              <p className="typography-body3 text-neutral-50">Drop here</p>
+            </div>
+          </div>
         )}
         {isSelected && (() => {
           const formZone = document.querySelector('#form-zone');

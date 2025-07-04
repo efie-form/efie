@@ -3,16 +3,16 @@ import { useEffect, useRef, useState } from 'react';
 import invariant from 'tiny-invariant';
 import { cn } from '../../lib/utils';
 import { useSchemaStore } from '../../lib/state/schema.state';
-import { useSettingsStore } from '../../lib/state/settings.state';
 import { getDefaultField } from '../../lib/get-default-field';
 import isNewField from '../../lib/is-new-field';
 
-export default function EmptyArea() {
+interface EmptyAreaProps {
+  parentId?: string;
+}
+
+export default function EmptyArea({ parentId }: EmptyAreaProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [isDraggedOver, setIsDraggedOver] = useState(false);
-  const getPage = useSchemaStore(state => state.getPage);
-  const { page } = useSettingsStore();
-  const selectedPage = getPage(page);
   const { addField } = useSchemaStore();
 
   useEffect(() => {
@@ -38,7 +38,7 @@ export default function EmptyArea() {
           formKey: source.data.formKey,
         });
 
-        addField(defaultField, selectedPage?.id || '', 0);
+        addField(defaultField, parentId, 0);
       },
     });
   }, []);
