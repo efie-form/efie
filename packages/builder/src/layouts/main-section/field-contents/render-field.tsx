@@ -1,36 +1,46 @@
 import { type FormField, FieldType } from '@efie-form/core';
 import ColumnsField from './fields/column-field';
-import RowField from './fields/row-field';
 import {
   RIGHT_BAR_TABS,
   useSettingsStore,
 } from '../../../lib/state/settings.state';
 import { type MouseEvent, useEffect, useRef, useState } from 'react';
-import HeaderField from './fields/header-field';
-import ParagraphField from './fields/paragraph-field';
-import ShortTextField from './fields/short-text-field';
-import LongTextField from './fields/long-text-field';
-import NumberField from './fields/number-field';
-import DividerField from './fields/divider-field';
-import ImageField from './fields/image-field';
-import SingleChoiceField from './fields/single-choice-field';
-import MultipleChoicesField from './fields/multiple-choices-field';
-import DateField from './fields/date-field';
-import TimeField from './fields/time-field';
-import DateTimeField from './fields/date-time-field';
-import FileField from './fields/file-field';
 import { cn } from '../../../lib/utils';
-import ButtonField from './fields/button-field';
-import BlockField from './fields/block-field';
 import { AiOutlineDrag } from 'react-icons/ai';
 import { HiTrash } from 'react-icons/hi2';
 import { useSchemaStore } from '../../../lib/state/schema.state';
-import { draggable, dropTargetForElements, type ElementDropTargetEventBasePayload } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
+import {
+  draggable,
+  dropTargetForElements,
+  type ElementDropTargetEventBasePayload,
+} from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
 import { combine } from '@atlaskit/pragmatic-drag-and-drop/combine';
-import { attachInstruction, extractInstruction } from '@atlaskit/pragmatic-drag-and-drop-hitbox/list-item';
+import {
+  attachInstruction,
+  extractInstruction,
+  type Operation,
+} from '@atlaskit/pragmatic-drag-and-drop-hitbox/list-item';
 import { getDefaultField } from '../../../lib/get-default-field';
 import { isMoveField, isNewField } from '../../../lib/field-type-guard';
 import invariant from 'tiny-invariant';
+import {
+  DateTimeField,
+  HeaderField,
+  ParagraphField,
+  BlockField,
+  ButtonField,
+  DateField,
+  DividerField,
+  FileField,
+  ImageField,
+  LongTextField,
+  MultipleChoicesField,
+  NumberField,
+  RowField,
+  ShortTextField,
+  SingleChoiceField,
+  TimeField,
+} from './fields';
 
 interface RenderFieldProps {
   field: FormField;
@@ -39,7 +49,12 @@ interface RenderFieldProps {
   childIndex: number;
 }
 
-function RenderField({ field, noSelect, parentId, childIndex }: RenderFieldProps) {
+function RenderField({
+  field,
+  noSelect,
+  parentId,
+  childIndex,
+}: RenderFieldProps) {
   const {
     setSelectedFieldId,
     selectedFieldId,
@@ -52,9 +67,12 @@ function RenderField({ field, noSelect, parentId, childIndex }: RenderFieldProps
   const dragHandlerRef = useRef<HTMLDivElement>(null);
   const [isMoving, setIsMoving] = useState(false);
   const [isDraggedOver, setIsDraggedOver] = useState(false);
-  const [operation, setOperation] = useState<'reorder-before' | 'reorder-after' | 'combine'>('reorder-after');
+  const [operation, setOperation] = useState<Operation>('reorder-after');
 
-  const handleAddField = ({ self, source }: ElementDropTargetEventBasePayload) => {
+  const handleAddField = ({
+    self,
+    source,
+  }: ElementDropTargetEventBasePayload) => {
     const instruction = extractInstruction(self.data);
 
     invariant(isNewField(source.data), 'Source data should be a new field');
@@ -166,7 +184,12 @@ function RenderField({ field, noSelect, parentId, childIndex }: RenderFieldProps
   }, [childIndex]);
 
   return (
-    <div className="relative translate-x-0 bg-primary-50" ref={fieldRef}>
+    <div
+      className={cn('relative translate-x-0 bg-primary-50', {
+        'z-[100]': isDraggedOver,
+      })}
+      ref={fieldRef}
+    >
       <div
         key={field.id}
         data-field="true"
@@ -190,7 +213,7 @@ function RenderField({ field, noSelect, parentId, childIndex }: RenderFieldProps
       >
         {isDraggedOver && (
           <div
-            className={cn('absolute left-0 right-0 h-1 bg-primary-400 rounded-full ', {
+            className={cn('absolute z-[999] left-0 right-0 h-1 bg-primary-400 rounded-full ', {
               'top-0 -translate-y-1/2': operation === 'reorder-before',
               'bottom-0 translate-y-1/2': operation === 'reorder-after',
             })}
