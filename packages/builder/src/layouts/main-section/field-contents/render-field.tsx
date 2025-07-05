@@ -90,17 +90,7 @@ function RenderField({
 
     invariant(el, 'RenderField element is not defined');
 
-    // Add any necessary event listeners or logic here
-    return combine(
-      draggable({
-        element: el,
-        dragHandle: dragEl || undefined,
-        getInitialData: () => ({
-          action: 'move',
-          type: field.type,
-          id: field.id,
-        }),
-      }),
+    const fn = [
       dropTargetForElements({
         getData: ({ element, input }) => {
           const data = {
@@ -131,8 +121,22 @@ function RenderField({
           setIsDraggedOver(false);
           handleDrop(payload);
         },
-      }),
-    );
+      })];
+
+    if (dragEl) {
+      fn.push(draggable({
+        element: el,
+        dragHandle: dragEl,
+        getInitialData: () => ({
+          action: 'drag',
+          type: field.type,
+          id: field.id,
+        }),
+      }));
+    }
+
+    // Add any necessary event listeners or logic here
+    return combine(...fn);
   }, [field.id, field.type, handleDrop, childIndex, parentId]);
 
   return (
