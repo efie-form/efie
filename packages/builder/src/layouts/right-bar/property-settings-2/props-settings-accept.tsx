@@ -110,7 +110,6 @@ function getValue(value?: PropValue): PropValueAccept {
 }
 
 function getInternalValue(value?: PropValueAccept): InternalValue {
-  console.log('getInternalValue', value);
   const extTypes = {} as Record<ExtensionType, boolean>;
   if (!value) {
     for (const ext of FILE_EXTENSIONS) {

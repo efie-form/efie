@@ -129,7 +129,6 @@ export default function SizeInput({ value, onChange, className }: SizeInputProps
             }}
             onWheel={(e) => {
               if (internalValue.type === 'auto' || !isInputFocused) return;
-              e.preventDefault();
               const currentValue = internalValue.value ? Number(internalValue.value.replaceAll(',', '')) : 0;
               const increment = e.shiftKey ? 10 : 1;
               const newValue = e.deltaY < 0 ? currentValue + increment : currentValue - increment;

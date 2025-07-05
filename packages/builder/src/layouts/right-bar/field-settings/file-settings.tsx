@@ -14,7 +14,6 @@ function FileSettings({ field }: FileSettingsProps) {
         settings={[
           { template: 'formKey' },
           { template: 'text', label: 'Label', type: PropertyType.LABEL },
-          { template: 'boolean', label: 'Required', type: PropertyType.REQUIRED },
           { template: 'number', label: 'Max Files', type: PropertyType.MAX_FILES, min: 1 },
           { template: 'accept', label: 'Accepted File Types', type: PropertyType.ACCEPT },
         ]}

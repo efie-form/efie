@@ -13,7 +13,6 @@ function DateSettings({ field }: DateSettingsProps) {
         settings={[
           { template: 'formKey' },
           { template: 'text', label: 'Label', type: PropertyType.LABEL },
-          { template: 'boolean', label: 'Required', type: PropertyType.REQUIRED },
         ]}
         fieldId={field.id}
       />

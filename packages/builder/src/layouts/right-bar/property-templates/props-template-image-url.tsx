@@ -35,20 +35,16 @@ export default function PropsTemplateImageUrl({
     ? `${imageDimensions.width} × ${imageDimensions.height}`
     : undefined;
   const [fileInfo, setFileInfo] = useState<{ name: string; size: number }>();
-  const [isHovered, setIsHovered] = useState(false);
 
   // Helper handlers for drag events to allow multiple statements
   const handleDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
     handleDrag(e);
-    setIsHovered(true);
   };
   const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
     handleDrag(e);
-    setIsHovered(false);
   };
   const handleDropWithHover = (e: React.DragEvent<HTMLDivElement>) => {
     handleDrop(e);
-    setIsHovered(false);
   };
 
   const handleChange = useCallback((newValue: string) => {
@@ -119,7 +115,6 @@ export default function PropsTemplateImageUrl({
   }, [value]);
 
   const hasImage = value && value.trim() && !imageError;
-  console.log(isHovered, dragActive, isDraggedFileValid);
 
   return (
     <SettingsFieldVertical label={label} divider>
@@ -150,8 +145,8 @@ export default function PropsTemplateImageUrl({
           onDragLeave={handleDragLeave}
           onDragOver={handleDrag}
           onDrop={handleDropWithHover}
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
+          // onMouseEnter={() => setIsHovered(true)}
+          // onMouseLeave={() => setIsHovered(false)}
         >
           <input
             ref={fileInputRef}

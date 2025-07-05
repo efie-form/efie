@@ -15,7 +15,6 @@ function LongTextSettings({ field }: LongTextSettingsProps) {
           { template: 'formKey' },
           { template: 'text', label: 'Label', type: PropertyType.LABEL },
           { template: 'text', label: 'Placeholder', type: PropertyType.PLACEHOLDER },
-          { template: 'boolean', label: 'Required', type: PropertyType.REQUIRED },
         ]}
         fieldId={field.id}
       />

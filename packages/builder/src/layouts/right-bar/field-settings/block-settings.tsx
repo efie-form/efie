@@ -1,4 +1,4 @@
-import { PropertyType, type BlockFormField } from '@efie-form/core';
+import { type BlockFormField } from '@efie-form/core';
 import DynamicSettings from '../dynamic-settings';
 import CategoryHeader from '../../../components/elements/category-header';
 
@@ -11,14 +11,7 @@ function BlockSettings({ field }: BlockSettingsProps) {
     <div>
       <CategoryHeader>General</CategoryHeader>
       <DynamicSettings
-        settings={[
-          { template: 'color', label: 'Background Color', type: PropertyType.BACKGROUND_COLOR },
-          { template: 'color', label: 'Text Color', type: PropertyType.COLOR },
-          { template: 'borderRadius', label: 'Border Radius', type: PropertyType.BORDER_RADIUS },
-          { template: 'margin', label: 'Margin', type: PropertyType.MARGIN },
-          { template: 'padding', label: 'Padding', type: PropertyType.PADDING },
-          { template: 'boxShadow', label: 'Box Shadow', type: PropertyType.BOX_SHADOW },
-        ]}
+        settings={[]}
         fieldId={field.id}
       />
     </div>
