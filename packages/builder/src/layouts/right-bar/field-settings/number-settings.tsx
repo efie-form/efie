@@ -1,5 +1,6 @@
 import { PropertyType, type NumberFormField } from '@efie-form/core';
 import DynamicSettings from '../dynamic-settings';
+import CategoryHeader from '../../../components/elements/category-header';
 
 interface NumberSettingsProps {
   field: NumberFormField;
@@ -8,20 +9,16 @@ interface NumberSettingsProps {
 function NumberSettings({ field }: NumberSettingsProps) {
   return (
     <div>
-      <div>
-        <div className="px-4 py-2 bg-neutral-100 text-neutral-800 typography-body2">
-          General
-        </div>
-        <DynamicSettings
-          settings={[
-            { template: 'formKey' },
-            { template: 'text', label: 'Label', type: PropertyType.LABEL },
-            { template: 'text', label: 'Placeholder', type: PropertyType.PLACEHOLDER },
-            { template: 'boolean', label: 'Required', type: PropertyType.REQUIRED },
-          ]}
-          fieldId={field.id}
-        />
-      </div>
+      <CategoryHeader>General</CategoryHeader>
+      <DynamicSettings
+        settings={[
+          { template: 'formKey' },
+          { template: 'text', label: 'Label', type: PropertyType.LABEL },
+          { template: 'text', label: 'Placeholder', type: PropertyType.PLACEHOLDER },
+          { template: 'boolean', label: 'Required', type: PropertyType.REQUIRED },
+        ]}
+        fieldId={field.id}
+      />
     </div>
   );
 }

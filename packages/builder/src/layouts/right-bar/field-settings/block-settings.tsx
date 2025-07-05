@@ -1,5 +1,6 @@
 import { PropertyType, type BlockFormField } from '@efie-form/core';
 import DynamicSettings from '../dynamic-settings';
+import CategoryHeader from '../../../components/elements/category-header';
 
 interface BlockSettingsProps {
   field: BlockFormField;
@@ -8,9 +9,7 @@ interface BlockSettingsProps {
 function BlockSettings({ field }: BlockSettingsProps) {
   return (
     <div>
-      <div className="px-4 py-2 bg-neutral-100 text-neutral-800 typography-body3 uppercase">
-        Spacing
-      </div>
+      <CategoryHeader>General</CategoryHeader>
       <DynamicSettings
         settings={[
           { template: 'color', label: 'Background Color', type: PropertyType.BACKGROUND_COLOR },

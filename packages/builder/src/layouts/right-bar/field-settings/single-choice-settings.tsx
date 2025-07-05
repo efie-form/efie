@@ -1,5 +1,6 @@
 import { PropertyType, type SingleChoiceFormField } from '@efie-form/core';
 import DynamicSettings from '../dynamic-settings';
+import CategoryHeader from '../../../components/elements/category-header';
 
 interface SingleChoiceSettingsProps {
   field: SingleChoiceFormField;
@@ -8,9 +9,7 @@ interface SingleChoiceSettingsProps {
 function SingleChoiceSettings({ field }: SingleChoiceSettingsProps) {
   return (
     <div>
-      <div className="px-4 py-2 bg-neutral-100 text-neutral-800 typography-body3 uppercase">
-        General
-      </div>
+      <CategoryHeader>General</CategoryHeader>
       <DynamicSettings
         settings={[
           { template: 'formKey' },
