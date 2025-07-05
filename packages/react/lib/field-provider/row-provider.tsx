@@ -14,12 +14,7 @@ function RowProvider({ field, Component, ...props }: RowProviderProps) {
 
   return createElement(Component, {
     id: field.id,
-    fieldId: field.id,
     field,
-    gap: undefined,
-    justifyContent: undefined,
-    alignItems: undefined,
-    style: {},
     children: (
       <>
         {field.children.map(field => (

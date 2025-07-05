@@ -9,7 +9,6 @@ export type {
   LongTextFieldProps,
   NumberFieldProps,
   SingleChoiceFieldProps,
-  MultipleChoicesFieldProps,
   DateFieldProps,
   DateTimeFieldProps,
   TimeFieldProps,
@@ -23,5 +22,4 @@ export type {
   HeaderFieldProps,
   ImageFieldProps,
   PageFieldProps,
-  ParagraphFieldProps,
 } from './types/field-props';

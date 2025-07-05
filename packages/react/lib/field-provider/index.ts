@@ -11,7 +11,6 @@ export { default as LongTextProvider } from './long-text-provider';
 export { default as MultipleChoicesProvider } from './multiple-choices-provider';
 export { default as NumberProvider } from './number-provider';
 export { default as PageProvider } from './page-provider';
-export { default as ParagraphProvider } from './paragraph-provider';
 export { default as RowProvider } from './row-provider';
 export { default as ShortTextProvider } from './short-text-provider';
 export { default as SingleChoiceProvider } from './single-choice-provider';

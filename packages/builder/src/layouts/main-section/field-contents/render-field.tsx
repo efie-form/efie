@@ -24,7 +24,6 @@ import invariant from 'tiny-invariant';
 import {
   DateTimeField,
   HeaderField,
-  ParagraphField,
   BlockField,
   ButtonField,
   DateField,
@@ -220,9 +219,6 @@ function FieldItem({ field }: FieldItemProps) {
     }
     case FieldType.HEADER: {
       return <HeaderField field={field} />;
-    }
-    case FieldType.PARAGRAPH: {
-      return <ParagraphField field={field} />;
     }
     case FieldType.SHORT_TEXT: {
       return <ShortTextField field={field} />;

@@ -9,7 +9,6 @@ export { default as ImageField } from './image-field';
 export { default as LongTextField } from './long-text-field';
 export { default as MultipleChoicesField } from './multiple-choices-field';
 export { default as NumberField } from './number-field';
-export { default as ParagraphField } from './paragraph-field';
 export { default as RowField } from './row-field';
 export { default as ShortTextField } from './short-text-field';
 export { default as SingleChoiceField } from './single-choice-field';

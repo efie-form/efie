@@ -175,17 +175,6 @@ export interface HeaderFormField extends BaseFormField {
   )[];
 }
 
-export interface ParagraphFormField extends BaseFormField {
-  type: typeof FieldType.PARAGRAPH;
-  props: (
-    | TagProperty
-    | TextAlignProperty
-    | ColorProperty
-    | FontSizeProperty
-    | ContentProperty
-  )[];
-}
-
 // Image field type
 export interface ImageFormField extends BaseFormField {
   type: typeof FieldType.IMAGE;
@@ -247,7 +236,6 @@ export type FormField =
   | NumberFormField
   | FileFormField
   | HeaderFormField
-  | ParagraphFormField
   | ImageFormField
   | DividerFormField
   | ButtonFormField

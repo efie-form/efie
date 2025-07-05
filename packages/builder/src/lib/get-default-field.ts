@@ -1,4 +1,4 @@
-import type { ShortTextFormField, LongTextFormField, NumberFormField, MultipleChoiceFormField, TimeFormField, DateFormField, SingleChoiceFormField, DateTimeFormField, FileFormField, BlockFormField, RowFormField, ColumnFormField, ImageFormField, ParagraphFormField, HeaderFormField, ButtonFormField, PageFormField, DividerFormField } from '@efie-form/core';
+import type { ShortTextFormField, LongTextFormField, NumberFormField, MultipleChoiceFormField, TimeFormField, DateFormField, SingleChoiceFormField, DateTimeFormField, FileFormField, BlockFormField, RowFormField, ColumnFormField, ImageFormField, HeaderFormField, ButtonFormField, PageFormField, DividerFormField } from '@efie-form/core';
 import { FieldType, getColorObject, PropertyType, SizeType } from '@efie-form/core';
 import { generateId } from './utils';
 
@@ -33,7 +33,6 @@ interface GetDefaultFieldReturn {
   row: RowFormField;
   column: ColumnFormField;
   header: HeaderFormField;
-  paragraph: ParagraphFormField;
   image: ImageFormField;
   button: ButtonFormField;
   page: PageFormField;
@@ -332,36 +331,6 @@ export function getDefaultField<T extends FieldType>({
           },
         ],
       } satisfies GetDefaultFieldReturn[typeof FieldType.HEADER];
-    }
-    case FieldType.PARAGRAPH: {
-      return {
-        type: FieldType.PARAGRAPH,
-        id: generateId(ID_LENGTH),
-        props: [
-          {
-            type: PropertyType.CONTENT,
-            value: {
-              jsonContent: generateJsonContent('Lorem ipsum dolor sit amet'),
-            },
-          },
-          {
-            type: PropertyType.FONT_SIZE,
-            value: {
-              type: SizeType.LENGTH,
-              value: 16,
-              unit: 'px',
-            },
-          },
-          {
-            type: PropertyType.COLOR,
-            value: getColorObject('#000000'),
-          },
-          {
-            type: PropertyType.TEXT_ALIGN,
-            value: 'center',
-          },
-        ],
-      } satisfies GetDefaultFieldReturn[typeof FieldType.PARAGRAPH];
     }
     case FieldType.IMAGE: {
       return {

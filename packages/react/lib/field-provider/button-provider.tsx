@@ -12,26 +12,16 @@ function ButtonProvider({ field, Component }: ButtonProviderProps) {
   if (!Component) return <></>;
 
   const label = field.props.find(prop => prop.type === PropertyType.LABEL);
-  const buttonAction = field.props.find(prop => prop.type === PropertyType.BUTTON_ACTION);
 
   return createElement(Component, {
     id: field.id,
-    fieldId: field.id,
     field,
-    content: label?.value || '',
+    label: label?.value || '',
     buttonType: 'button',
     onClick: () => {
       // Default button click handler - should be overridden by component
     },
-    action: buttonAction?.value
-      ? {
-          type: 'custom',
-          target: undefined,
-          customHandler: undefined,
-        }
-      : undefined,
-    style: {},
-  });
+  } satisfies ButtonFieldProps);
 }
 
 export default ButtonProvider;
