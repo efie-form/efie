@@ -4,7 +4,6 @@ export const FIELDS_NAME = {
   [FieldType.SHORT_TEXT]: 'Short Text',
   [FieldType.TIME]: 'Time',
   [FieldType.SINGLE_CHOICE]: 'Single Choice',
-  [FieldType.PARAGRAPH]: 'Paragraph',
   [FieldType.NUMBER]: 'Number',
   [FieldType.ROW]: 'Row',
   [FieldType.MULTIPLE_CHOICES]: 'Multiple Choices',

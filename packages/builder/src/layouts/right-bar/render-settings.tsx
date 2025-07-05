@@ -10,7 +10,6 @@ import ImageSettings from './field-settings/image-settings';
 import MultipleChoicesSettings from './field-settings/multiple-choices-settings';
 import RowSettings from './field-settings/row-settings';
 import NumberSettings from './field-settings/number-settings';
-import ParagraphSettings from './field-settings/paragraph-settings';
 import ShortTextSettings from './field-settings/short-text-settings';
 import SingleChoiceSettings from './field-settings/single-choice-settings';
 import TimeSettings from './field-settings/time-settings';
@@ -60,9 +59,6 @@ function RenderSettings({ field }: RenderSettingsProps) {
     }
     case FieldType.NUMBER: {
       return <NumberSettings field={field} />;
-    }
-    case FieldType.PARAGRAPH: {
-      return <ParagraphSettings field={field} />;
     }
     case FieldType.SHORT_TEXT: {
       return <ShortTextSettings field={field} />;

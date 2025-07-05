@@ -157,7 +157,7 @@ describe('validateSchema - Specialized property types', () => {
   describe('Content property', () => {
     it('should validate CONTENT with valid JSON content', () => {
       const schema = createValidSchema();
-      const field = createValidField(FieldType.PARAGRAPH, [
+      const field = createValidField(FieldType.HEADER, [
         {
           type: PropertyType.CONTENT,
           value: { jsonContent: { type: 'doc', content: [] } },
@@ -169,7 +169,7 @@ describe('validateSchema - Specialized property types', () => {
 
     it('should reject CONTENT with invalid values', () => {
       const schema = createValidSchema();
-      const field = createValidField(FieldType.PARAGRAPH);
+      const field = createValidField(FieldType.HEADER);
 
       // Non-object value
       field.props = [{ type: PropertyType.CONTENT, value: 'string' }] as unknown as typeof field.props;

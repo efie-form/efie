@@ -1,14 +1,7 @@
 import {
-  borderRadiusToStyle,
-  marginToStyle,
-  paddingToStyle,
-  PropertyType,
-  boxShadowToStyle,
   type BlockFormField,
-  colorToStyle,
 } from '@efie-form/core';
 import RenderField from '../render-field';
-import { getFieldProp } from '../../../../lib/utils';
 import EmptyArea from '../../empty-area';
 
 interface BlockFieldProps {
@@ -16,24 +9,9 @@ interface BlockFieldProps {
 }
 
 function BlockField({ field }: BlockFieldProps) {
-  const margin = getFieldProp(field, PropertyType.MARGIN);
-  const bgColor = getFieldProp(field, PropertyType.BACKGROUND_COLOR);
-  const color = getFieldProp(field, PropertyType.COLOR);
-  const padding = getFieldProp(field, PropertyType.PADDING);
-  const borderRadius = getFieldProp(field, PropertyType.BORDER_RADIUS);
-  const boxShadow = getFieldProp(field, PropertyType.BOX_SHADOW);
-
   return (
     <div
-      className="min-h-20 w-full transition-all relative"
-      style={{
-        margin: marginToStyle(margin?.value),
-        padding: paddingToStyle(padding?.value),
-        borderRadius: borderRadiusToStyle(borderRadius?.value),
-        boxShadow: boxShadowToStyle(boxShadow?.value),
-        backgroundColor: colorToStyle(bgColor?.value),
-        color: colorToStyle(color?.value),
-      }}
+      className="min-h-20 w-full transition-all relative p-4 rounded-lg shadow-md bg-white"
     >
       {field.children.map((child, index) => (
         <RenderField

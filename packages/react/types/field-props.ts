@@ -1,278 +1,96 @@
-import type { ElementType, ReactNode, CSSProperties } from 'react';
 import type { FormField } from '@efie-form/core';
+import type { ElementType, ReactNode } from 'react';
 
-interface ValidationError {
-  code: string;
-  message: string;
-}
-
-interface ValidationState {
-  isValid: boolean;
-  errors: ValidationError[];
-  isRequired: boolean;
-  isDisabled: boolean;
-}
-
-interface ProcessedStyles {
-  container?: CSSProperties;
-  label?: CSSProperties;
-  input?: CSSProperties;
-  error?: CSSProperties;
-  [key: string]: CSSProperties | undefined;
-}
-
-interface LayoutContext {
-  isInRow: boolean;
-  isInColumn: boolean;
-  containerWidth: number;
-}
-
-interface ThemeConfig {
-  spacing: 'tight' | 'normal' | 'loose';
-  colorScheme: 'light' | 'dark';
-}
-
-interface BaseFieldProps<T = unknown> {
-  // Field identification
-  id: string;
-  field: FormField;
-
-  // Form state management
+interface FormFieldProps<T = unknown> {
   value: T;
   onChange: (value: T) => void;
-  onBlur?: () => void;
-  onFocus?: () => void;
-
-  // Validation
-  validation?: ValidationState;
-
-  // Processed styles (all margin, padding, colors converted to CSS)
-  style: ProcessedStyles;
-
-  // Layout context
-  layout?: LayoutContext;
-
-  // Theme context
-  theme?: ThemeConfig;
-
-  // Common field properties
-  required?: boolean;
-  disabled?: boolean;
 }
 
-export interface ShortTextFieldProps extends BaseFieldProps<string> {
-  // Field-specific props (automatically extracted from schema)
-  fieldLabel?: string;
+interface BaseFieldProps {
+  id: string;
+  field: FormField;
+
+}
+
+export interface ShortTextFieldProps extends BaseFieldProps, FormFieldProps<string> {
   placeholder?: string;
-  minLength?: number;
-  maxLength?: number;
-  pattern?: string;
+  fieldLabel?: string;
 }
 
-export interface LongTextFieldProps extends BaseFieldProps<string> {
-  // Field-specific props
-  fieldLabel?: string;
+export interface LongTextFieldProps extends BaseFieldProps, FormFieldProps<string> {
   placeholder?: string;
-  minLength?: number;
-  maxLength?: number;
-  rows?: number;
+  fieldLabel?: string;
 }
 
-export interface NumberFieldProps extends BaseFieldProps<number | string> {
-  // Field-specific props
-  fieldLabel?: string;
+export interface NumberFieldProps extends BaseFieldProps, FormFieldProps<number | string> {
   placeholder?: string;
-  min?: number;
-  max?: number;
-  step?: number;
+  fieldLabel?: string;
 }
 
-export interface SingleChoiceFieldProps extends BaseFieldProps<string> {
-  // Field-specific props
+export interface SingleChoiceFieldProps extends BaseFieldProps, FormFieldProps<string> {
   fieldLabel?: string;
-  options: {
-    optionLabel: string;
-    value: string;
-  }[];
+  options: Array<{ label: string; value: string }>;
 }
 
-export interface MultipleChoicesFieldProps extends BaseFieldProps<string[]> {
-  // Field-specific props
+export interface MultipleChoicesFieldProps extends BaseFieldProps, FormFieldProps<string[]> {
   fieldLabel?: string;
-  options: {
-    optionLabel: string;
-    value: string;
-  }[];
+  options: Array<{ label: string; value: string }>;
 }
 
-export interface DateFieldProps extends BaseFieldProps<Date | string> {
-  // Field-specific props
+export interface DateFieldProps extends BaseFieldProps, FormFieldProps<Date | string> {
   fieldLabel?: string;
-  minDate?: Date | string;
-  maxDate?: Date | string;
-  dateFormat?: string;
 }
 
-export interface TimeFieldProps extends BaseFieldProps<string> {
-  // Field-specific props
+export interface TimeFieldProps extends BaseFieldProps, FormFieldProps<string> {
   fieldLabel?: string;
-  minTime?: string;
-  maxTime?: string;
-  timeFormat?: '12h' | '24h';
 }
 
-export interface DateTimeFieldProps extends BaseFieldProps<Date | string> {
-  // Field-specific props
+export interface DateTimeFieldProps extends BaseFieldProps, FormFieldProps<Date | string> {
   fieldLabel?: string;
-  minDateTime?: Date | string;
-  maxDateTime?: Date | string;
-  dateTimeFormat?: string;
 }
 
-export interface FileFieldProps extends BaseFieldProps<File[] | File | null> {
-  // Field-specific props
+export interface FileFieldProps extends BaseFieldProps, FormFieldProps<File | File[] | undefined> {
   fieldLabel?: string;
-  accept?: string[];
+  accept?: string;
   multiple?: boolean;
   maxFiles?: number;
-  maxFileSize?: number; // in bytes
 }
 
-// Static field interfaces (no form state management needed)
-interface BaseStaticFieldProps {
-  // Field identification
-  id: string;
-  fieldId: string;
-  field: FormField;
-
-  // Processed styles
-  style: ProcessedStyles;
-
-  // Layout context
-  layout?: LayoutContext;
-
-  // Theme context
-  theme?: ThemeConfig;
+export interface ButtonFieldProps extends BaseFieldProps {
+  label: string;
+  buttonType?: 'submit' | 'button';
+  onClick?: () => void;
 }
 
-export interface DividerFieldProps extends BaseStaticFieldProps {
-  // Field-specific props (processed from schema)
-  dividerColor?: string;
-  dividerWidth?: number;
-  dividerStyle?: 'solid' | 'dashed' | 'dotted';
+export type DividerFieldProps = BaseFieldProps;
+
+export interface HeaderFieldProps extends BaseFieldProps {
+  content: string;
 }
 
-export interface HeaderFieldProps extends BaseStaticFieldProps {
-  // Field-specific props (processed from schema)
-  content: string; // Rich text content processed from schema
-  headingTag?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
-  textAlign?: 'left' | 'center' | 'right';
-  font?: {
-    size: number;
-    unit: 'px' | 'em' | 'rem';
-    weight: number;
-  };
-}
-
-export interface ParagraphFieldProps extends BaseStaticFieldProps {
-  // Field-specific props (processed from schema)
-  content: string; // Rich text content processed from schema
-  textAlign?: 'left' | 'center' | 'right';
-  font?: {
-    size: number;
-    unit: 'px' | 'em' | 'rem';
-    weight: number;
-  };
-}
-
-export interface ImageFieldProps extends BaseStaticFieldProps {
-  // Field-specific props (processed from schema)
+export interface ImageFieldProps extends BaseFieldProps {
   src: string;
-  alt: string;
+  alt?: string;
 }
 
-// Layout field interfaces (handle children rendering)
-interface BaseLayoutFieldProps {
-  // Field identification
-  id: string;
-  field: FormField;
-
-  // Children components (automatically rendered by library)
+export interface BlockFieldProps extends BaseFieldProps {
   children: ReactNode;
-
-  // Processed styles
-  style: ProcessedStyles;
-
-  // Layout context
-  layout?: LayoutContext;
-
-  // Theme context
-  theme?: ThemeConfig;
 }
 
-export interface RowFieldProps extends BaseLayoutFieldProps {
-  // Field-specific props (processed from schema)
-  gap?: string | number;
-  justifyContent?: 'flex-start' | 'center' | 'flex-end' | 'space-between' | 'space-around';
-  alignItems?: 'flex-start' | 'center' | 'flex-end' | 'stretch';
+export interface RowFieldProps extends BaseFieldProps {
+  children: ReactNode;
 }
 
-export interface ColumnFieldProps extends BaseLayoutFieldProps {
-  // Field-specific props (processed from schema)
-  columnWidth?: string;
-  gap?: string | number;
-  justifyContent?: 'flex-start' | 'center' | 'flex-end' | 'space-between' | 'space-around';
-  alignItems?: 'flex-start' | 'center' | 'flex-end' | 'stretch';
+export interface ColumnFieldProps extends BaseFieldProps {
+  children: ReactNode;
+  width: string;
 }
 
-export interface BlockFieldProps extends BaseLayoutFieldProps {
-  // Field-specific props (processed from schema, but also available in style.container)
-  blockBorderRadius?: string;
-  blockBoxShadow?: string;
-  blockBackgroundColor?: string;
-  blockColor?: string;
-  blockPadding?: string;
-  blockMargin?: string;
+export interface PageFieldProps extends BaseFieldProps {
+  children: ReactNode;
 }
 
-export interface PageFieldProps extends BaseLayoutFieldProps {
-  // Field-specific props
-  pageName?: string;
-}
-
-// Action field interfaces
-export interface ButtonFieldProps extends BaseStaticFieldProps {
-  // Field-specific props
-  content: string; // Button text/content processed from schema
-  buttonType?: 'button' | 'submit' | 'reset';
-  onClick?: () => void; // Library provides appropriate handler
-
-  // Action configuration (from schema)
-  action?: {
-    type: 'submit' | 'reset' | 'custom';
-    target?: string;
-    customHandler?: string;
-  };
-}
-
-// Component registry types for better type safety
-export interface ComponentRegistryOptions {
-  // Global theme configuration
-  theme?: ThemeConfig;
-
-  // Global style overrides
-  globalStyles?: Partial<ProcessedStyles>;
-
-  // Custom validation message formatters
-  validationMessageFormatter?: (error: ValidationError) => string;
-
-  // Event handlers
-  onFieldChange?: (fieldId: string, value: unknown) => void;
-  onValidationChange?: (fieldId: string, validation: ValidationState) => void;
-}
-
-// Field props map for component registry
-export interface FieldPropsMap {
+export type FieldPropsMap = {
   shortText: ElementType<ShortTextFieldProps>;
   longText: ElementType<LongTextFieldProps>;
   number: ElementType<NumberFieldProps>;
@@ -282,18 +100,16 @@ export interface FieldPropsMap {
   time: ElementType<TimeFieldProps>;
   dateTime: ElementType<DateTimeFieldProps>;
   file: ElementType<FileFieldProps>;
+  button: ElementType<ButtonFieldProps>;
   divider: ElementType<DividerFieldProps>;
   header: ElementType<HeaderFieldProps>;
-  paragraph: ElementType<ParagraphFieldProps>;
   image: ElementType<ImageFieldProps>;
   row: ElementType<RowFieldProps>;
   column: ElementType<ColumnFieldProps>;
   block: ElementType<BlockFieldProps>;
   page: ElementType<PageFieldProps>;
-  button: ElementType<ButtonFieldProps>;
-}
+};
 
-// Utility types for better developer experience
 export type FieldType = keyof FieldPropsMap;
 
 export type FieldProps<T extends FieldType> = T extends 'shortText'
@@ -314,12 +130,12 @@ export type FieldProps<T extends FieldType> = T extends 'shortText'
                 ? DateTimeFieldProps
                 : T extends 'file'
                   ? FileFieldProps
-                  : T extends 'divider'
-                    ? DividerFieldProps
-                    : T extends 'header'
-                      ? HeaderFieldProps
-                      : T extends 'paragraph'
-                        ? ParagraphFieldProps
+                  : T extends 'button'
+                    ? ButtonFieldProps
+                    : T extends 'divider'
+                      ? DividerFieldProps
+                      : T extends 'header'
+                        ? HeaderFieldProps
                         : T extends 'image'
                           ? ImageFieldProps
                           : T extends 'row'
@@ -330,27 +146,8 @@ export type FieldProps<T extends FieldType> = T extends 'shortText'
                                 ? BlockFieldProps
                                 : T extends 'page'
                                   ? PageFieldProps
-                                  : T extends 'button'
-                                    ? ButtonFieldProps
-                                    : never;
+                                  : never;
 
-// Component registry creator type
 export type ComponentRegistry = {
-  [K in FieldType]: ElementType<FieldProps<K>>;
+  [K in FieldType]: React.ComponentType<FieldProps<K>>;
 };
-
-// Form submission data type
-export type FormData = Record<string, unknown>;
-
-// Form event handlers
-export interface FormEventHandlers {
-  onSubmit?: (data: FormData) => void | Promise<void>;
-  onFieldChange?: (fieldId: string, value: unknown) => void;
-  onValidationChange?: (fieldId: string, validation: ValidationState) => void;
-  onFormStateChange?: (formData: FormData) => void;
-}
-
-/*
-Short text
-
-*/

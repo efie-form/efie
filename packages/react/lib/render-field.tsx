@@ -14,7 +14,6 @@ import {
   MultipleChoicesProvider,
   NumberProvider,
   PageProvider,
-  ParagraphProvider,
   RowProvider,
   ShortTextProvider,
   SingleChoiceProvider,
@@ -60,9 +59,6 @@ function RenderField({ field, ...props }: RenderFieldProps) {
     }
     case FieldType.HEADER: {
       return <HeaderProvider field={field} Component={props.header} />;
-    }
-    case FieldType.PARAGRAPH: {
-      return <ParagraphProvider field={field} Component={props.paragraph} />;
     }
     case FieldType.DATE: {
       return <DateProvider field={field} Component={props.date} />;

@@ -13,7 +13,6 @@ export const FormInputType = {
 export const FormStaticType = {
   DIVIDER: 'divider',
   HEADER: 'header',
-  PARAGRAPH: 'paragraph',
   IMAGE: 'image',
 } as const;
 

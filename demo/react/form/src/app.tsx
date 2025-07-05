@@ -9,7 +9,6 @@ import ImageField from './components/fields/image-field';
 import ShortTextField from './components/fields/short-text-field';
 import LongTextField from './components/fields/long-text-field';
 import DateField from './components/fields/date-field';
-import ParagraphField from './components/fields/paragraph-field';
 import TimeField from './components/fields/time-field';
 import DateTimeField from './components/fields/date-time-field';
 import MultipleChoicesField from './components/fields/multiple-choices-field';
@@ -46,7 +45,6 @@ function App() {
             multipleChoices={MultipleChoicesField}
             singleChoice={SingleChoiceField}
             number={NumberField}
-            paragraph={ParagraphField}
             page={PageField}
             button={ButtonField}
           />

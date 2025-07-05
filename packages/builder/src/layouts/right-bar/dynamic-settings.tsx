@@ -32,6 +32,13 @@ export default function DynamicSettings({ settings, fieldId }: DynamicSettingsPr
           />
         );
       })}
+      {settings?.length === 0 && (
+        <div className="flex justify-center mt-4">
+          <p className="typography-body2 text-neutral-600">
+            No settings available for this field.
+          </p>
+        </div>
+      )}
     </>
   );
 }

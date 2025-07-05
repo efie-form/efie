@@ -12,7 +12,6 @@ import { MdCheckBox, MdRadioButtonChecked, MdUpload } from 'react-icons/md';
 import {
   RxButton,
   RxDividerHorizontal,
-  RxTextAlignCenter,
 } from 'react-icons/rx';
 import { FaImage } from 'react-icons/fa6';
 import { HiOutlineViewColumns } from 'react-icons/hi2';
@@ -46,7 +45,6 @@ export const fieldIcons: Record<FieldType, ElementType> = {
   [FieldType.BUTTON]: RxButton,
   [FieldType.DIVIDER]: RxDividerHorizontal,
   [FieldType.HEADER]: RiText,
-  [FieldType.PARAGRAPH]: RxTextAlignCenter,
   [FieldType.IMAGE]: FaImage,
   [FieldType.ROW]: HiOutlineViewColumns,
   [FieldType.BLOCK]: RiPageSeparator,
@@ -124,11 +122,6 @@ const staticGroup: FieldsTabGroup = {
       type: FieldType.HEADER,
       label: FIELDS_NAME[FieldType.HEADER],
       Icon: fieldIcons[FieldType.HEADER],
-    },
-    {
-      type: FieldType.PARAGRAPH,
-      label: FIELDS_NAME[FieldType.PARAGRAPH],
-      Icon: fieldIcons[FieldType.PARAGRAPH],
     },
     {
       type: FieldType.IMAGE,

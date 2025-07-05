@@ -16,11 +16,9 @@ function ImageProvider({ field, Component }: ImageProviderProps) {
 
   return createElement(Component, {
     id: field.id,
-    fieldId: field.id,
     field,
     src: src?.value || '',
     alt: alt?.value || '',
-    style: {},
   });
 }
 

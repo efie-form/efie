@@ -265,7 +265,6 @@ const FormRenderer = ({ schema, onSubmit }: FormRendererProps) => {
           dateTime={MyDateField}
           file={MyFileField}
           header={MyHeaderField}
-          paragraph={MyHeaderField}
           divider={MyDividerField}
           block={MyBlockField}
           // Layout components
@@ -484,7 +483,6 @@ const MyColumnField = ({ id, children, columnWidth }: ColumnFieldProps) => {
 ```tsx
 import type {
   HeaderFieldProps,
-  ParagraphFieldProps,
   ImageFieldProps,
   DividerFieldProps,
   ButtonFieldProps,
@@ -663,7 +661,6 @@ A headless component that renders a form based on a schema. You must provide you
 | `file` | `ElementType<FileFieldProps>` | No | Component for file fields |
 | `divider` | `ElementType<DividerFieldProps>` | No | Component for divider fields |
 | `header` | `ElementType<HeaderFieldProps>` | No | Component for header fields |
-| `paragraph` | `ElementType<ParagraphFieldProps>` | No | Component for paragraph fields |
 | `image` | `ElementType<ImageFieldProps>` | No | Component for image fields |
 | `row` | `ElementType<RowFieldProps>` | No | Component for row layout |
 | `column` | `ElementType<ColumnFieldProps>` | No | Component for column layout |
@@ -731,7 +728,6 @@ enum FieldType {
   DATE_TIME = 'date_time',
   FILE = 'file',
   HEADER = 'header',
-  PARAGRAPH = 'paragraph',
   IMAGE = 'image',
   DIVIDER = 'divider',
   BUTTON = 'button',
