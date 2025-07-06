@@ -2,8 +2,6 @@ import { dropTargetForElements } from '@atlaskit/pragmatic-drag-and-drop/element
 import { useEffect, useRef, useState } from 'react';
 import invariant from 'tiny-invariant';
 import { cn } from '../../lib/utils';
-import { useSchemaStore } from '../../lib/state/schema.state';
-import { isMoveField } from '../../lib/field-type-guard';
 import useDropField from '../../lib/hooks/use-drop-field';
 
 interface EmptyAreaProps {
@@ -13,8 +11,7 @@ interface EmptyAreaProps {
 export default function EmptyArea({ parentId }: EmptyAreaProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [isDraggedOver, setIsDraggedOver] = useState(false);
-  const { listChildrenId } = useSchemaStore();
-  const { handleDrop } = useDropField({
+  const { handleDrop, canDrop } = useDropField({
     index: 0,
     parentId,
   });
@@ -30,16 +27,7 @@ export default function EmptyArea({ parentId }: EmptyAreaProps) {
         setIsDraggedOver(true);
       },
       onDragLeave: () => setIsDraggedOver(false),
-      canDrop: ({ source }) => {
-        if (isMoveField(source.data)) {
-          const childrenId = listChildrenId(source.data.id);
-          if (childrenId.includes(parentId) || source.data.id === parentId) {
-            console.warn('Cannot drop a field into itself or its descendants');
-            return false;
-          }
-        }
-        return true;
-      },
+      canDrop,
       onDrop: handleDrop,
     });
   }, []);

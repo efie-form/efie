@@ -65,9 +65,10 @@ function RenderField({
   const dragHandlerRef = useRef<HTMLDivElement>(null);
   const [isDraggedOver, setIsDraggedOver] = useState(false);
   const [operation, setOperation] = useState<Operation>('reorder-after');
-  const { handleDrop } = useDropField({
+  const { handleDrop, canDrop } = useDropField({
     index: childIndex,
     parentId,
+    fieldType: field.type,
   });
 
   const onChange = ({ self, location }: ElementDropTargetEventBasePayload) => {
@@ -114,7 +115,7 @@ function RenderField({
             });
           });
         },
-        canDrop: () => !['column'].includes(field.type),
+        canDrop,
         onDrag: onChange,
         onDrop: (payload) => {
           setIsDraggedOver(false);
