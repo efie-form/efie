@@ -1,12 +1,12 @@
-import { type HeaderFormField } from '@efie-form/core';
+import { type HeadingFormField } from '@efie-form/core';
 import DynamicSettings from '../dynamic-settings';
 import CategoryHeader from '../../../components/elements/category-header';
 
-interface HeaderSettingsProps {
-  field: HeaderFormField;
+interface HeadingSettingsProps {
+  field: HeadingFormField;
 }
 
-function HeaderSettings({ field }: HeaderSettingsProps) {
+function HeadingSettings({ field }: HeadingSettingsProps) {
   return (
     <div>
       <CategoryHeader>General</CategoryHeader>
@@ -18,4 +18,4 @@ function HeaderSettings({ field }: HeaderSettingsProps) {
   );
 }
 
-export default HeaderSettings;
+export default HeadingSettings;

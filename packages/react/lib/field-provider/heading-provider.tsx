@@ -1,26 +1,26 @@
 import type { ElementType } from 'react';
 import { createElement } from 'react';
-import type { HeaderFieldProps } from '../../types/field-props';
-import { PropertyType, type HeaderFormField } from '@efie-form/core';
+import type { HeadingFieldProps } from '../../types/field-props';
+import { PropertyType, type HeadingFormField } from '@efie-form/core';
 
-interface HeaderProviderProps {
-  field: HeaderFormField;
-  Component?: ElementType<HeaderFieldProps>;
+interface HeadingProviderProps {
+  field: HeadingFormField;
+  Component?: ElementType<HeadingFieldProps>;
 }
 
-function HeaderProvider({ field, Component }: HeaderProviderProps) {
+function HeadingProvider({ field, Component }: HeadingProviderProps) {
   if (!Component) return <></>;
 
   const content = field.props.find(prop => prop.type === PropertyType.CONTENT);
 
   // Extract content from the rich text format
-  let contentText = 'Header';
+  let contentText = 'Heading';
   if (content?.value?.jsonContent) {
     try {
       contentText = JSON.stringify(content.value.jsonContent);
     }
     catch {
-      contentText = 'Header';
+      contentText = 'Heading';
     }
   }
 
@@ -31,4 +31,4 @@ function HeaderProvider({ field, Component }: HeaderProviderProps) {
   });
 }
 
-export default HeaderProvider;
+export default HeadingProvider;

@@ -13,7 +13,7 @@ export const schema: FormSchema = {
             type: 'block',
             children: [
               {
-                type: 'header',
+                type: 'heading',
                 id: 'xq5sgm0bgp',
                 props: [
                   {
@@ -27,7 +27,7 @@ export const schema: FormSchema = {
                             content: [
                               {
                                 type: 'text',
-                                text: 'Header',
+                                text: 'Heading',
                               },
                             ],
                           },

@@ -1,4 +1,4 @@
-import type { ShortTextFormField, LongTextFormField, NumberFormField, MultipleChoiceFormField, TimeFormField, DateFormField, SingleChoiceFormField, DateTimeFormField, FileFormField, BlockFormField, RowFormField, ColumnFormField, ImageFormField, HeaderFormField, ButtonFormField, PageFormField, DividerFormField } from '@efie-form/core';
+import type { ShortTextFormField, LongTextFormField, NumberFormField, MultipleChoiceFormField, TimeFormField, DateFormField, SingleChoiceFormField, DateTimeFormField, FileFormField, BlockFormField, RowFormField, ColumnFormField, ImageFormField, HeadingFormField, ButtonFormField, PageFormField, DividerFormField } from '@efie-form/core';
 import { FieldType, getColorObject, PropertyType, SizeType } from '@efie-form/core';
 import { generateId } from './utils';
 
@@ -32,7 +32,7 @@ interface GetDefaultFieldReturn {
   block: BlockFormField;
   row: RowFormField;
   column: ColumnFormField;
-  header: HeaderFormField;
+  heading: HeadingFormField;
   image: ImageFormField;
   button: ButtonFormField;
   page: PageFormField;
@@ -298,9 +298,9 @@ export function getDefaultField<T extends FieldType>({
         ],
       } satisfies GetDefaultFieldReturn[typeof FieldType.DIVIDER];
     }
-    case FieldType.HEADER: {
+    case FieldType.HEADING: {
       return {
-        type: FieldType.HEADER,
+        type: FieldType.HEADING,
         id: generateId(ID_LENGTH),
         props: [
           {
@@ -330,7 +330,7 @@ export function getDefaultField<T extends FieldType>({
             value: 'center',
           },
         ],
-      } satisfies GetDefaultFieldReturn[typeof FieldType.HEADER];
+      } satisfies GetDefaultFieldReturn[typeof FieldType.HEADING];
     }
     case FieldType.IMAGE: {
       return {

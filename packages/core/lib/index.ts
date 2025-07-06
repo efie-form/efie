@@ -31,7 +31,7 @@ export type {
   RowFormField,
   ColumnFormField,
   BlockFormField,
-  HeaderFormField,
+  HeadingFormField,
   DateFormField,
   TimeFormField,
   DateTimeFormField,

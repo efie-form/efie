@@ -268,8 +268,8 @@ export const sampleSchema: FormSchema = {
             type: 'block',
             children: [
               {
-                id: 'header-1',
-                type: 'header',
+                id: 'heading-1',
+                type: 'heading',
                 props: [
                   {
                     type: 'tag',
@@ -425,8 +425,8 @@ export const sampleSchema: FormSchema = {
                 ],
               },
               {
-                id: 'personal-info-header',
-                type: 'header',
+                id: 'personal-info-heading',
+                type: 'heading',
                 props: [
                   {
                     type: 'tag',
@@ -673,8 +673,8 @@ export const sampleSchema: FormSchema = {
                 ],
               },
               {
-                id: 'preferences-header',
-                type: 'header',
+                id: 'preferences-heading',
+                type: 'heading',
                 props: [
                   {
                     type: 'tag',
@@ -1082,8 +1082,8 @@ export const sampleSchema: FormSchema = {
         type: 'page',
         children: [
           {
-            id: 'schedule-header',
-            type: 'header',
+            id: 'schedule-heading',
+            type: 'heading',
             props: [
               {
                 type: 'tag',
@@ -1145,8 +1145,8 @@ export const sampleSchema: FormSchema = {
             type: 'block',
             children: [
               {
-                id: 'schedule-info-header',
-                type: 'header',
+                id: 'schedule-info-heading',
+                type: 'heading',
                 props: [
                   {
                     type: 'tag',
@@ -1352,8 +1352,8 @@ export const sampleSchema: FormSchema = {
             type: 'block',
             children: [
               {
-                id: 'documents-header',
-                type: 'header',
+                id: 'documents-heading',
+                type: 'heading',
                 props: [
                   {
                     type: 'tag',

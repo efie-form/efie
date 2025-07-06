@@ -3,17 +3,17 @@ import {
   fontSizeToStyle,
   PropertyType,
   textAlignToStyle,
-  type HeaderFormField,
+  type HeadingFormField,
 } from '@efie-form/core';
 import { RichTextEditor } from '../../../../components/rich-text-editor';
 import { useSettingsStore } from '../../../../lib/state/settings.state';
 import { getFieldProp } from '../../../../lib/utils';
 
-interface HeaderFieldProps {
-  field: HeaderFormField;
+interface HeadingFieldProps {
+  field: HeadingFormField;
 }
 
-function HeaderField({ field }: HeaderFieldProps) {
+function HeadingField({ field }: HeadingFieldProps) {
   const { selectedFieldId } = useSettingsStore();
   const fontSize = getFieldProp(field, PropertyType.FONT_SIZE);
   const textAlign = getFieldProp(field, PropertyType.TEXT_ALIGN);
@@ -37,4 +37,4 @@ function HeaderField({ field }: HeaderFieldProps) {
   );
 }
 
-export default HeaderField;
+export default HeadingField;

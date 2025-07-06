@@ -23,7 +23,7 @@ import {
 import invariant from 'tiny-invariant';
 import {
   DateTimeField,
-  HeaderField,
+  HeadingField,
   BlockField,
   ButtonField,
   DateField,
@@ -218,8 +218,8 @@ function FieldItem({ field }: FieldItemProps) {
     case FieldType.COLUMN: {
       return <ColumnsField field={field} />;
     }
-    case FieldType.HEADER: {
-      return <HeaderField field={field} />;
+    case FieldType.HEADING: {
+      return <HeadingField field={field} />;
     }
     case FieldType.SHORT_TEXT: {
       return <ShortTextField field={field} />;

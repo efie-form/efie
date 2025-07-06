@@ -1,9 +1,9 @@
-import type { HeaderFieldProps } from '@efie-form/react';
+import type { HeadingFieldProps } from '@efie-form/react';
 
-function HeaderField({ text, headingTag, font, textAlign }: HeaderFieldProps) {
+function HeadingField({ text, headingTag, font, textAlign }: HeadingFieldProps) {
   const Tag = headingTag || 'h1';
 
   return <Tag style={{ fontSize: `${font.size}${font.unit}`, fontWeight: font.weight, textAlign }}>{text}</Tag>;
 }
 
-export default HeaderField;
+export default HeadingField;

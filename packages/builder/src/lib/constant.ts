@@ -8,7 +8,7 @@ export const FIELDS_NAME = {
   [FieldType.ROW]: 'Row',
   [FieldType.MULTIPLE_CHOICES]: 'Multiple Choices',
   [FieldType.IMAGE]: 'Image',
-  [FieldType.HEADER]: 'Header',
+  [FieldType.HEADING]: 'Heading',
   [FieldType.FILE]: 'File Upload',
   [FieldType.DIVIDER]: 'Divider',
   [FieldType.BLOCK]: 'Block',

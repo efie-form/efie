@@ -19,7 +19,7 @@ export type {
   RowFieldProps,
   ButtonFieldProps,
   FieldPropsMap,
-  HeaderFieldProps,
+  HeadingFieldProps,
   ImageFieldProps,
   PageFieldProps,
 } from './types/field-props';

@@ -8,7 +8,7 @@ import {
   DateTimeProvider,
   DividerProvider,
   FileProvider,
-  HeaderProvider,
+  HeadingProvider,
   ImageProvider,
   LongTextProvider,
   MultipleChoicesProvider,
@@ -57,8 +57,8 @@ function RenderField({ field, ...props }: RenderFieldProps) {
         />
       );
     }
-    case FieldType.HEADER: {
-      return <HeaderProvider field={field} Component={props.header} />;
+    case FieldType.HEADING: {
+      return <HeadingProvider field={field} Component={props.heading} />;
     }
     case FieldType.DATE: {
       return <DateProvider field={field} Component={props.date} />;

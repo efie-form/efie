@@ -5,7 +5,7 @@ import LongTextSettings from './field-settings/long-text-settings';
 import BlockSettings from './field-settings/block-settings';
 import DividerSettings from './field-settings/divider-settings';
 import FileSettings from './field-settings/file-settings';
-import HeaderSettings from './field-settings/header-settings';
+import HeadingSettings from './field-settings/header-settings';
 import ImageSettings from './field-settings/image-settings';
 import MultipleChoicesSettings from './field-settings/multiple-choices-settings';
 import RowSettings from './field-settings/row-settings';
@@ -45,8 +45,8 @@ function RenderSettings({ field }: RenderSettingsProps) {
     case FieldType.FILE: {
       return <FileSettings field={field} />;
     }
-    case FieldType.HEADER: {
-      return <HeaderSettings field={field} />;
+    case FieldType.HEADING: {
+      return <HeadingSettings field={field} />;
     }
     case FieldType.IMAGE: {
       return <ImageSettings field={field} />;

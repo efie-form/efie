@@ -64,7 +64,7 @@ export interface ButtonFieldProps extends BaseFieldProps {
 
 export type DividerFieldProps = BaseFieldProps;
 
-export interface HeaderFieldProps extends BaseFieldProps {
+export interface HeadingFieldProps extends BaseFieldProps {
   content: string;
 }
 
@@ -102,7 +102,7 @@ export type FieldPropsMap = {
   file: ElementType<FileFieldProps>;
   button: ElementType<ButtonFieldProps>;
   divider: ElementType<DividerFieldProps>;
-  header: ElementType<HeaderFieldProps>;
+  heading: ElementType<HeadingFieldProps>;
   image: ElementType<ImageFieldProps>;
   row: ElementType<RowFieldProps>;
   column: ElementType<ColumnFieldProps>;
@@ -134,8 +134,8 @@ export type FieldProps<T extends FieldType> = T extends 'shortText'
                     ? ButtonFieldProps
                     : T extends 'divider'
                       ? DividerFieldProps
-                      : T extends 'header'
-                        ? HeaderFieldProps
+                      : T extends 'heading'
+                        ? HeadingFieldProps
                         : T extends 'image'
                           ? ImageFieldProps
                           : T extends 'row'
