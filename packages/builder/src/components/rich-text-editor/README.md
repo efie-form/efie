@@ -6,12 +6,14 @@ This Rich Text Editor component has been significantly enhanced with better desi
 
 #### ✨ **Enhanced Formatting Options**
 - **Bold, Italic, Underline, Strikethrough** - Classic text formatting
+- **Font Size** - Choose from predefined font sizes (12px to 48px) with visual preview
 - **Superscript & Subscript** - For mathematical expressions and footnotes
 - **Text Alignment** - Left, center, right, and justify alignment
 - **Color Picker** - Change text colors with an intuitive color picker
 
 #### 📝 **Advanced Text Structure**
 - **Headings** - H1, H2, H3 with intuitive dropdown selector
+- **Font Sizes** - Multiple predefined sizes with live preview in dropdown
 - **Lists** - Bullet points and numbered lists
 - **Links** - Add and remove hyperlinks easily
 - **Placeholder Text** - Helpful guidance for empty editors
@@ -82,3 +84,36 @@ Potential additions for even more functionality:
 - Word count
 - Full-screen mode
 - Export options (HTML, Markdown, PDF)
+
+### Font Size Extension
+
+The font size functionality is implemented through a custom TipTap extension located at `./extensions/font-size.ts`.
+
+#### Features:
+- **Predefined Sizes**: 12px, 14px, 16px, 18px, 20px, 24px, 28px, 32px, 36px, 48px
+- **Default Reset**: Option to reset to default font size
+- **Live Preview**: Font sizes are shown in the dropdown using the actual size
+- **Persistence**: Font sizes are properly saved and loaded with the document
+- **Inline Styling**: Uses CSS `font-size` property for maximum compatibility
+
+#### Usage:
+```tsx
+// Set font size
+editor.commands.setFontSize('24px');
+
+// Get current font size
+const fontSize = editor.getAttributes('textStyle').fontSize;
+
+// Remove font size (reset to default)
+editor.commands.unsetFontSize();
+```
+
+#### Custom Sizes:
+You can customize the available font sizes by modifying the extension configuration:
+
+```tsx
+FontSize.configure({
+  types: ['textStyle'],
+  sizes: ['10px', '12px', '14px', '16px', '20px', '24px', '36px'], // Custom sizes
+})
+```

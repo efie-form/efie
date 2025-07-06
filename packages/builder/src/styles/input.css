@@ -231,6 +231,15 @@ div.tiptap:focus-visible {
   vertical-align: sub;
 }
 
+/* Font size support */
+.rich-text-editor .ProseMirror [style*="font-size"] {
+  /* Ensure font-size styles are preserved and rendered correctly */
+}
+
+.rich-text-editor .ProseMirror span[style*="font-size"] {
+  display: inline;
+}
+
 /* Placeholder styling */
 .rich-text-editor .ProseMirror p.is-editor-empty:first-child::before {
   content: attr(data-placeholder);

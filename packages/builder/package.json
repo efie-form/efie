@@ -104,6 +104,7 @@
     "@tiptap/extension-bullet-list": "^2.24.2",
     "@tiptap/extension-color": "^2.10.3",
     "@tiptap/extension-document": "^2.10.3",
+    "@tiptap/extension-font-family": "^2.24.2",
     "@tiptap/extension-heading": "^2.10.3",
     "@tiptap/extension-history": "^2.24.2",
     "@tiptap/extension-italic": "^2.10.3",

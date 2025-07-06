@@ -805,6 +805,10 @@ video {
   height: 100vh;
 }
 
+.max-h-60 {
+  max-height: 15rem;
+}
+
 .max-h-full {
   max-height: 100%;
 }
@@ -901,6 +905,10 @@ video {
   min-width: 0px;
 }
 
+.min-w-\[100px\] {
+  min-width: 100px;
+}
+
 .min-w-\[140px\] {
   min-width: 140px;
 }
@@ -909,8 +917,16 @@ video {
   min-width: 20px;
 }
 
+.min-w-\[30px\] {
+  min-width: 30px;
+}
+
 .max-w-40 {
   max-width: 10rem;
+}
+
+.max-w-4xl {
+  max-width: 56rem;
 }
 
 .max-w-56 {
@@ -1497,6 +1513,16 @@ video {
   text-align: center;
 }
 
+.text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
 .text-sm {
   font-size: 0.875rem;
   line-height: 1.25rem;
@@ -1505,6 +1531,10 @@ video {
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
+}
+
+.font-bold {
+  font-weight: 700;
 }
 
 .font-medium {
@@ -2076,6 +2106,16 @@ div.tiptap:focus-visible {
   vertical-align: sub;
 }
 
+/* Font size support */
+
+.rich-text-editor .ProseMirror [style*="font-size"] {
+  /* Ensure font-size styles are preserved and rendered correctly */
+}
+
+.rich-text-editor .ProseMirror span[style*="font-size"] {
+  display: inline;
+}
+
 /* Placeholder styling */
 
 .rich-text-editor .ProseMirror p.is-editor-empty:first-child::before {
@@ -2320,6 +2360,12 @@ div.tiptap:focus-visible {
 .data-\[state\=active\]\:text-primary[data-state="active"] {
   --tw-text-opacity: 1;
   color: rgb(from var(--color-primary-500) r g b / var(--tw-text-opacity));
+}
+
+@media (min-width: 768px) {
+  .md\:grid-cols-5 {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
 }
 
 .\[\&\:not\(\:has\(div\[data-field\=true\]\:hover\)\)\]\:hover\:outline-neutral-100:hover:not(:has(div[data-field=true]:hover)) {

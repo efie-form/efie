@@ -31,6 +31,7 @@ import {
   FaSuperscript,
   FaSubscript,
   FaHeading,
+  FaTextHeight,
 } from 'react-icons/fa6';
 import { FaUnlink } from 'react-icons/fa';
 import { useState, useCallback, type ElementType } from 'react';
@@ -41,6 +42,7 @@ import { Color } from '@tiptap/extension-color';
 import { createPortal } from 'react-dom';
 import { Placeholder } from '@tiptap/extension-placeholder';
 import { usePopper } from 'react-popper';
+import { FontSize } from './extensions';
 
 interface RichTextEditorProps {
   value: JSONContent;
@@ -65,6 +67,9 @@ function RichTextEditor({ value, onChange, active, placeholder = 'Start typing..
       }),
       TextStyle,
       Color,
+      FontSize.configure({
+        types: ['textStyle'],
+      }),
       BulletList.configure({
         HTMLAttributes: {
           class: 'list-disc list-inside',
@@ -276,6 +281,7 @@ function RichTextEditor({ value, onChange, active, placeholder = 'Start typing..
                 <div className="text-xs font-medium text-neutral-500 mr-2 typography-body4">Style</div>
                 <ToolbarGroup label="Headings">
                   <HeadingDropdown editor={editor} />
+                  <FontSizeDropdown editor={editor} />
                 </ToolbarGroup>
 
                 <div className="w-px h-6 bg-neutral-200 mx-2" />
@@ -408,6 +414,95 @@ function HeadingDropdown({ editor }: HeadingDropdownProps) {
                 }}
               >
                 {option.label}
+              </button>
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
+interface FontSizeDropdownProps {
+  editor: Editor;
+}
+
+function FontSizeDropdown({ editor }: FontSizeDropdownProps) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const fontSizes = [
+    { size: '12px', label: '12px' },
+    { size: '14px', label: '14px' },
+    { size: '16px', label: '16px' },
+    { size: '18px', label: '18px' },
+    { size: '20px', label: '20px' },
+    { size: '24px', label: '24px' },
+    { size: '28px', label: '28px' },
+    { size: '32px', label: '32px' },
+    { size: '36px', label: '36px' },
+    { size: '48px', label: '48px' },
+  ];
+
+  const getCurrentFontSize = () => {
+    const fontSize = editor.getAttributes('textStyle').fontSize;
+    return fontSize || '16px';
+  };
+
+  return (
+    <div className="relative">
+      <button
+        className={cn(
+          'px-3 py-2 text-sm font-medium rounded-md border border-neutral-200 hover:bg-neutral-50 transition-all duration-200 flex items-center gap-2 hover:border-neutral-300',
+          {
+            'bg-primary-100 text-primary-600 border-primary-200': editor.getAttributes('textStyle').fontSize,
+          },
+        )}
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <FaTextHeight size={12} />
+        <span className="typography-body3 min-w-[30px] text-left">{getCurrentFontSize()}</span>
+        <svg
+          className={cn('w-3 h-3 transition-transform duration-200', { 'rotate-180': isOpen })}
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+
+      {isOpen && (
+        <>
+          <div
+            className="fixed inset-0 z-10"
+            onClick={() => setIsOpen(false)}
+          />
+          <div className="absolute top-full left-0 mt-1 bg-white border border-neutral-200 rounded-md shadow-lg z-20 min-w-[100px] max-h-60 overflow-y-auto animate-in fade-in slide-in-from-top-1 duration-200">
+            <button
+              className="w-full px-3 py-2 text-left text-sm hover:bg-neutral-50 transition-all typography-body3 border-b border-neutral-100"
+              onClick={() => {
+                editor.commands.unsetFontSize();
+                setIsOpen(false);
+              }}
+            >
+              Default
+            </button>
+            {fontSizes.map(font => (
+              <button
+                key={font.size}
+                className={cn(
+                  'w-full px-3 py-2 text-left text-sm hover:bg-neutral-50 transition-all typography-body3 last:rounded-b-md',
+                  {
+                    'bg-primary-50 text-primary-600': getCurrentFontSize() === font.size,
+                  },
+                )}
+                onClick={() => {
+                  editor.commands.setFontSize(font.size);
+                  setIsOpen(false);
+                }}
+                style={{ fontSize: font.size }}
+              >
+                {font.label}
               </button>
             ))}
           </div>
