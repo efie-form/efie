@@ -309,26 +309,6 @@ export function getDefaultField<T extends FieldType>({
               jsonContent: generateJsonContent('Header'),
             },
           },
-          {
-            type: PropertyType.FONT_SIZE,
-            value: {
-              type: SizeType.LENGTH,
-              value: 24,
-              unit: 'px',
-            },
-          },
-          {
-            type: PropertyType.TAG,
-            value: 'h1',
-          },
-          {
-            type: PropertyType.COLOR,
-            value: getColorObject('#000000'),
-          },
-          {
-            type: PropertyType.TEXT_ALIGN,
-            value: 'center',
-          },
         ],
       } satisfies GetDefaultFieldReturn[typeof FieldType.HEADING];
     }

@@ -1,8 +1,5 @@
 import {
-  colorToStyle,
-  fontSizeToStyle,
   PropertyType,
-  textAlignToStyle,
   type HeadingFormField,
 } from '@efie-form/core';
 import { RichTextEditor } from '../../../../components/rich-text-editor';
@@ -15,19 +12,10 @@ interface HeadingFieldProps {
 
 function HeadingField({ field }: HeadingFieldProps) {
   const { selectedFieldId } = useSettingsStore();
-  const fontSize = getFieldProp(field, PropertyType.FONT_SIZE);
-  const textAlign = getFieldProp(field, PropertyType.TEXT_ALIGN);
-  const color = getFieldProp(field, PropertyType.COLOR);
   const content = getFieldProp(field, PropertyType.CONTENT);
 
   return (
-    <div
-      style={{
-        fontSize: fontSizeToStyle(fontSize),
-        textAlign: textAlignToStyle(textAlign),
-        color: colorToStyle(color?.value),
-      }}
-    >
+    <div>
       <RichTextEditor
         value={content?.value.jsonContent || {}}
         onChange={() => {}}
