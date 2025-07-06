@@ -1,20 +1,25 @@
 import { extractInstruction } from '@atlaskit/pragmatic-drag-and-drop-hitbox/list-item';
-import type { ElementDropTargetEventBasePayload } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
+import type { ElementDropTargetEventBasePayload, ElementDropTargetGetFeedbackArgs } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
 import { isMoveField, isNewField } from '../field-type-guard';
 import invariant from 'tiny-invariant';
 import { getDefaultField } from '../get-default-field';
 import { useSchemaStore } from '../state/schema.state';
+import { FieldType } from '@efie-form/core';
+
+const NO_DROP_FIELD_TYPES: Set<FieldType> = new Set([FieldType.COLUMN]);
 
 interface UseDropFieldProps {
   index: number;
   parentId: string;
+  fieldType?: FieldType;
 }
 
 export default function useDropField({
   index,
   parentId,
+  fieldType,
 }: UseDropFieldProps) {
-  const { addField, moveField } = useSchemaStore();
+  const { addField, moveField, listChildrenId } = useSchemaStore();
 
   const handleAddField = ({
     self,
@@ -39,12 +44,11 @@ export default function useDropField({
   const handleMoveField = ({ self, source }: ElementDropTargetEventBasePayload) => {
     const instruction = extractInstruction(self.data);
 
-    invariant(instruction, 'Instruction data should be defined');
     invariant(isMoveField(source.data), 'Source data should be an existing field');
 
-    const targetIndex = instruction.operation === 'reorder-before'
+    const targetIndex = instruction?.operation === 'reorder-before'
       ? index
-      : (instruction.operation === 'reorder-after' ? index + 1 : 0);
+      : (instruction?.operation === 'reorder-after' ? index + 1 : 0);
 
     moveField(source.data.id, parentId, targetIndex);
   };
@@ -68,9 +72,21 @@ export default function useDropField({
     }
   };
 
+  const canDrop = ({ source }: ElementDropTargetGetFeedbackArgs) => {
+    if (isMoveField(source.data)) {
+      const childrenId = listChildrenId(source.data.id);
+      if (childrenId.includes(parentId) || source.data.id === parentId) {
+        return false;
+      }
+    }
+    if (fieldType && NO_DROP_FIELD_TYPES.has(fieldType)) return false;
+    return true;
+  };
+
   return {
     handleAddField,
     handleMoveField,
     handleDrop,
+    canDrop,
   };
 }
