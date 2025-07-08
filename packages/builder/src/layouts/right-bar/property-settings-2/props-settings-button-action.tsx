@@ -2,7 +2,7 @@ import { useCallback, useRef } from 'react';
 import { Input, Select, Switch } from '../../../components/form';
 import type { PropSettingsButtonAction } from '../../../types/prop-settings.type';
 import { useSchemaStore } from '../../../lib/state/schema.state';
-import { isButtonActionValue, type PropertyDefinition, type PropValue, type PropValueButtonAction } from '@efie-form/core';
+import { isButtonActionValue, type PropertyDefinition, type PropValue, type PropValueButtonAction, FieldType, PropertyType, isStringValue } from '@efie-form/core';
 
 interface PropsSettingsButtonActionProps extends PropSettingsButtonAction {
   fieldId: string;
@@ -13,7 +13,20 @@ export default function PropsSettingsButtonAction({ fieldId, label, type }: Prop
     useCallback(state => state.getFieldProperty(fieldId, type), [fieldId, type]),
   );
   const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
+  const schema = useSchemaStore(state => state.schema);
   const value = getValue(fieldProperty?.value);
+
+  // Extract pages from schema for dropdown options
+  const pageOptions = schema.form.fields
+    .filter(field => field.type === FieldType.PAGE)
+    .map((page) => {
+      const pageNameProp = page.props?.find(prop => prop.type === PropertyType.PAGE_NAME);
+      const pageName = isStringValue(pageNameProp?.value) ? pageNameProp.value : `Page ${page.id}`;
+      return {
+        value: page.id,
+        label: pageName,
+      };
+    });
   const prevRef = useRef<Record<string, PropValueButtonAction>>({
     [value.action]: value,
   });
@@ -35,6 +48,15 @@ export default function PropsSettingsButtonAction({ fieldId, label, type }: Prop
           action: 'hyperlink',
           url: (isHyperlinkAction ? hyperlinkPrev.url : '') || '',
           target: (isHyperlinkAction ? hyperlinkPrev.target : '_self') || '_self',
+        };
+        break;
+      }
+      case 'navigate': {
+        const navigatePrev = prevRef.current?.navigate;
+        const isNavigateAction = navigatePrev && navigatePrev.action === 'navigate';
+        newValue = {
+          action: 'navigate',
+          pageId: (isNavigateAction ? navigatePrev.pageId : '') || '',
         };
         break;
       }
@@ -73,6 +95,24 @@ export default function PropsSettingsButtonAction({ fieldId, label, type }: Prop
     } as PropertyDefinition);
   };
 
+  const handlePageIdChange = (newPageId: string) => {
+    if (value.action !== 'navigate') return;
+
+    const navigateValue = {
+      action: 'navigate' as const,
+      pageId: newPageId,
+    };
+
+    prevRef.current = {
+      ...prevRef.current,
+      navigate: navigateValue,
+    };
+    updateFieldProperty(fieldId, {
+      type,
+      value: navigateValue,
+    } as PropertyDefinition);
+  };
+
   const handleOpenInNewTabChange = (checked: boolean) => {
     if (value.action !== 'hyperlink') return;
 
@@ -106,6 +146,7 @@ export default function PropsSettingsButtonAction({ fieldId, label, type }: Prop
               options={[
                 { value: 'submit', label: 'Submit' },
                 { value: 'hyperlink', label: 'Hyperlink' },
+                { value: 'navigate', label: 'Navigate' },
               ]}
             />
           </div>
@@ -126,6 +167,15 @@ export default function PropsSettingsButtonAction({ fieldId, label, type }: Prop
                   onChange={handleOpenInNewTabChange}
                 />
               </div>
+            </div>
+          )}
+          {value.action === 'navigate' && (
+            <div className="mt-4">
+              <Select
+                value={value.pageId}
+                onChange={handlePageIdChange}
+                options={pageOptions}
+              />
             </div>
           )}
         </div>
