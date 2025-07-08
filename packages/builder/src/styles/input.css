@@ -248,9 +248,3 @@ div.tiptap:focus-visible {
   pointer-events: none;
   height: 0;
 }
-
-/* Focus styles */
-.rich-text-editor:focus-within {
-  border-color: var(--color-primary-300);
-  box-shadow: 0 0 0 1px var(--color-primary-100);
-}
