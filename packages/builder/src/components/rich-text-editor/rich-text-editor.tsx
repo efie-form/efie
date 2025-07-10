@@ -4,7 +4,7 @@ import { Bold } from '@tiptap/extension-bold';
 import { Italic } from '@tiptap/extension-italic';
 import { Underline } from '@tiptap/extension-underline';
 import { Strike } from '@tiptap/extension-strike';
-import { Heading } from '@tiptap/extension-heading';
+import { Heading, type Level } from '@tiptap/extension-heading';
 import { Document } from '@tiptap/extension-document';
 import { Paragraph } from '@tiptap/extension-paragraph';
 import { BulletList } from '@tiptap/extension-bullet-list';
@@ -15,7 +15,8 @@ import { TextAlign } from '@tiptap/extension-text-align';
 import { Superscript } from '@tiptap/extension-superscript';
 import { Subscript } from '@tiptap/extension-subscript';
 import { History } from '@tiptap/extension-history';
-import { useEffect, useState } from 'react';
+import { Color } from '@tiptap/extension-color';
+import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Placeholder } from '@tiptap/extension-placeholder';
 import { usePopper } from 'react-popper';
@@ -23,6 +24,7 @@ import { FontSize } from './extensions';
 import { EditorToolbar } from './editor-toolbar';
 import Text from '@tiptap/extension-text';
 import type { RichTextEditorOptions } from './type';
+import TextStyle from '@tiptap/extension-text-style';
 
 interface RichTextEditorProps {
   value: JSONContent;
@@ -40,21 +42,8 @@ function RichTextEditor({
   placeholder = 'Start typing...',
   options,
 }: RichTextEditorProps) {
-  const DEFAULT_EXTENSIONS: Extensions = [
-    Document,
-    Paragraph,
-    History.configure({ depth: 100 }),
-    Text,
-    Placeholder.configure({
-      placeholder,
-      emptyEditorClass: 'is-editor-empty',
-    }),
-  ];
-
-  const [extensions, setExtensions] = useState<Extensions>(DEFAULT_EXTENSIONS);
-
   const editor = useEditor({
-    extensions,
+    extensions: getExtensions(options),
     content: value,
     onBlur: ({ editor }) => {
       onChange(editor.getJSON());
@@ -65,51 +54,6 @@ function RichTextEditor({
       },
     },
   });
-
-  useEffect(() => {
-    const _extensions: Extensions = DEFAULT_EXTENSIONS;
-    if (options?.bold) _extensions.push(Bold);
-    if (options?.italic) _extensions.push(Italic);
-    if (options?.underline) _extensions.push(Underline);
-    if (options?.strike) _extensions.push(Strike);
-    if (options?.align) {
-      _extensions.push(
-        TextAlign.configure({
-          types: ['heading', 'paragraph'],
-        }),
-      );
-    }
-    if (options?.list) {
-      _extensions.push(BulletList, OrderedList, ListItem);
-    }
-    if (options?.link) {
-      _extensions.push(
-        Link.configure({
-          openOnClick: false,
-          HTMLAttributes: {
-            class: 'text-primary-500 underline cursor-pointer',
-          },
-        }),
-      );
-    }
-    if (options?.superscript) _extensions.push(Superscript);
-    if (options?.subscript) _extensions.push(Subscript);
-    if (options?.heading) {
-      _extensions.push(
-        Heading.configure({
-          levels: [1, 2, 3],
-        }),
-      );
-    }
-    if (options?.fontSize) {
-      _extensions.push(
-        FontSize.configure({
-          types: ['textStyle'],
-        }),
-      );
-    }
-    setExtensions(_extensions);
-  }, [options]);
 
   const [referenceElement, setReferenceElement] = useState<
     HTMLDivElement | undefined
@@ -125,8 +69,72 @@ function RichTextEditor({
     },
   );
 
+  function getExtensions(options?: RichTextEditorOptions) {
+    const extensions: Extensions = [
+      Document,
+      Paragraph,
+      History.configure({ depth: 100 }),
+      Text,
+      Placeholder.configure({
+        placeholder,
+        emptyEditorClass: 'is-editor-empty',
+      }),
+      Color.configure({
+        types: ['textStyle'],
+      }),
+      TextStyle,
+    ];
+
+    if (options?.bold) extensions.push(Bold);
+    if (options?.italic) extensions.push(Italic);
+    if (options?.underline) extensions.push(Underline);
+    if (options?.strike) extensions.push(Strike);
+    if (options?.align) {
+      extensions.push(
+        TextAlign.configure({
+          types: ['heading', 'paragraph'],
+        }),
+      );
+    }
+    if (options?.list) {
+      extensions.push(BulletList, OrderedList, ListItem);
+    }
+    if (options?.link) {
+      extensions.push(
+        Link.configure({
+          openOnClick: false,
+          HTMLAttributes: {
+            className: 'text-primary-500 underline cursor-pointer',
+          },
+        }),
+      );
+    }
+    if (options?.superscript) extensions.push(Superscript);
+    if (options?.subscript) extensions.push(Subscript);
+    if (options?.heading) {
+      const headingLevels: Level[] = options.heading === true
+        ? [1, 2, 3]
+        : options.heading.options.map(option => option.level).filter(
+            level => level !== 0,
+          );
+      extensions.push(
+        Heading.configure({
+          levels: headingLevels,
+        }),
+      );
+    }
+    if (options?.fontSize) {
+      extensions.push(
+        FontSize.configure({
+          types: ['textStyle'],
+        }),
+      );
+    }
+
+    return extensions;
+  };
+
   if (!editor) return;
-  console.log(editor);
 
   return (
     <div
@@ -149,7 +157,7 @@ function RichTextEditor({
             className="z-[99]"
             {...popperAttributes.popper}
           >
-            <EditorToolbar editor={editor} />
+            <EditorToolbar editor={editor} options={options} />
           </div>,
           formZone,
         );

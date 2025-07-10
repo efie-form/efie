@@ -194,8 +194,12 @@ export function EditorToolbar({ editor, options }: EditorToolbarProps) {
 
         {/* Style Controls */}
         <ToolbarGroup label="Style">
-          <HeadingDropdown editor={editor} />
-          <FontSizeDropdown editor={editor} />
+          <HeadingDropdown editor={editor} options={options?.heading} />
+          <FontSizeDropdown
+            editor={editor}
+            fontSizes={typeof options?.fontSize === 'object' ? options.fontSize.options : undefined}
+            defaultSize={typeof options?.fontSize === 'object' ? options.fontSize.default : undefined}
+          />
           <ColorPicker
             value={editor.getAttributes('textStyle').color || '#000000'}
             onChange={(color) => {

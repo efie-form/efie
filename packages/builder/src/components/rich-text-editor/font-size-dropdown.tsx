@@ -5,27 +5,37 @@ import { cn } from '../../lib/utils';
 
 interface FontSizeDropdownProps {
   editor: Editor;
+  fontSizes?: { size: string; label: string }[];
+  defaultSize?: { size: string; label: string };
 }
+const defaultFontSizes = [
+  { size: '12px', label: '12px' },
+  { size: '14px', label: '14px' },
+  { size: '16px', label: '16px' },
+  { size: '18px', label: '18px' },
+  { size: '20px', label: '20px' },
+  { size: '24px', label: '24px' },
+  { size: '28px', label: '28px' },
+  { size: '32px', label: '32px' },
+  { size: '36px', label: '36px' },
+  { size: '48px', label: '48px' },
+];
 
-export function FontSizeDropdown({ editor }: FontSizeDropdownProps) {
+export function FontSizeDropdown({
+  editor,
+  fontSizes = defaultFontSizes,
+  defaultSize = { size: '16px', label: 'Default' },
+}: FontSizeDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
-
-  const fontSizes = [
-    { size: '12px', label: '12px' },
-    { size: '14px', label: '14px' },
-    { size: '16px', label: '16px' },
-    { size: '18px', label: '18px' },
-    { size: '20px', label: '20px' },
-    { size: '24px', label: '24px' },
-    { size: '28px', label: '28px' },
-    { size: '32px', label: '32px' },
-    { size: '36px', label: '36px' },
-    { size: '48px', label: '48px' },
-  ];
+  const defaultSizeLabel = defaultSize.label;
 
   const getCurrentFontSize = () => {
-    const fontSize = editor.getAttributes('textStyle').fontSize;
-    return fontSize || '16px';
+    const fontSize = editor.getAttributes('textStyle').fontSize as string;
+    if (!fontSize) {
+      return defaultSizeLabel;
+    }
+
+    return fontSizes.find(size => size.size === fontSize)?.label || defaultSizeLabel;
   };
 
   return (
@@ -62,22 +72,26 @@ export function FontSizeDropdown({ editor }: FontSizeDropdownProps) {
               className="w-full px-3 py-2 text-left text-sm hover:bg-neutral-50 transition-all typography-body3 border-b border-neutral-100"
               onClick={() => {
                 editor.commands.unsetFontSize();
+                editor.chain().focus().run();
+                editor.view.focus();
                 setIsOpen(false);
               }}
             >
-              Default
+              {defaultSizeLabel}
             </button>
             {fontSizes.map(font => (
               <button
                 key={font.size}
                 className={cn(
-                  'w-full px-3 py-2 text-left text-sm hover:bg-neutral-50 transition-all typography-body3 last:rounded-b-md',
+                  'w-full px-3 py-2 text-left text-sm hover:bg-neutral-50 transition-all typography-body3 last:rounded-b-md whitespace-nowrap',
                   {
                     'bg-primary-50 text-primary-600': getCurrentFontSize() === font.size,
                   },
                 )}
                 onClick={() => {
                   editor.commands.setFontSize(font.size);
+                  editor.chain().focus().run();
+                  editor.view.focus();
                   setIsOpen(false);
                 }}
                 style={{ fontSize: font.size }}

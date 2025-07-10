@@ -1,27 +1,50 @@
 import type { Editor } from '@tiptap/react';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { FaHeading } from 'react-icons/fa6';
 import { cn } from '../../lib/utils';
+import type { RichTextEditorOptions } from './type';
+import type { Level } from '@tiptap/extension-heading';
 
 interface HeadingDropdownProps {
   editor: Editor;
+  options?: RichTextEditorOptions['heading'];
 }
 
-export function HeadingDropdown({ editor }: HeadingDropdownProps) {
+export function HeadingDropdown({ editor, options }: HeadingDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const headingOptions = [
-    { level: 0, label: 'Paragraph', command: () => editor.chain().focus().setParagraph().run() },
-    { level: 1, label: 'Heading 1', command: () => editor.chain().focus().toggleHeading({ level: 1 }).run() },
-    { level: 2, label: 'Heading 2', command: () => editor.chain().focus().toggleHeading({ level: 2 }).run() },
-    { level: 3, label: 'Heading 3', command: () => editor.chain().focus().toggleHeading({ level: 3 }).run() },
-  ];
+  const headingOptions = useMemo(() => {
+    const defaultOption = [
+      { level: 0, label: 'Paragraph', command: () => editor.chain().focus().setParagraph().run() },
+      { level: 1, label: 'Heading 1', command: () => editor.chain().focus().toggleHeading({ level: 1 }).run() },
+      { level: 2, label: 'Heading 2', command: () => editor.chain().focus().toggleHeading({ level: 2 }).run() },
+      { level: 3, label: 'Heading 3', command: () => editor.chain().focus().toggleHeading({ level: 3 }).run() },
+    ];
+
+    if (!options || options === true) {
+      return defaultOption;
+    }
+
+    const getHeadingCommand = (level: Level) => {
+      return () => editor.chain().focus().toggleHeading({ level }).run();
+    };
+
+    const getParagraphCommand = () => {
+      return () => editor.chain().focus().setParagraph().run();
+    };
+
+    return options.options.map(option => ({
+      level: option.level,
+      label: option.label,
+      command: option.level === 0 ? getParagraphCommand() : getHeadingCommand(option.level),
+    }));
+  }, []);
 
   const getCurrentHeading = () => {
-    if (editor.isActive('heading', { level: 1 })) return 'H1';
-    if (editor.isActive('heading', { level: 2 })) return 'H2';
-    if (editor.isActive('heading', { level: 3 })) return 'H3';
-    return 'P';
+    const activeHeading = editor.getAttributes('heading').level || 0;
+
+    const currentOption = headingOptions.find(option => option.level === activeHeading);
+    return currentOption ? currentOption.label : 'Paragraph';
   };
 
   return (
