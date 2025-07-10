@@ -1,11 +1,44 @@
-import { useCallback, useRef } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 import { Input, Select, Switch } from '../../../components/form';
 import type { PropSettingsButtonAction } from '../../../types/prop-settings.type';
 import { useSchemaStore } from '../../../lib/state/schema.state';
-import { isButtonActionValue, type PropertyDefinition, type PropValue, type PropValueButtonAction } from '@efie-form/core';
+import {
+  isButtonActionValue,
+  type PropertyDefinition,
+  type PropValue,
+  type PropValueButtonAction,
+  FieldType,
+  PropertyType,
+  isStringValue,
+} from '@efie-form/core';
 
 interface PropsSettingsButtonActionProps extends PropSettingsButtonAction {
   fieldId: string;
+}
+
+const ACTION_OPTIONS = [
+  { value: 'submit', label: 'Submit' },
+  { value: 'hyperlink', label: 'Hyperlink' },
+  { value: 'navigate', label: 'Navigate' },
+];
+
+function getDefaultValue(value?: PropValue): PropValueButtonAction {
+  if (value && isButtonActionValue(value)) {
+    return value;
+  }
+  return { action: 'submit' };
+}
+
+function createHyperlinkValue(url: string, target: '_blank' | '_self' = '_self'): PropValueButtonAction {
+  return { action: 'hyperlink', url, target };
+}
+
+function createNavigateValue(pageId: string): PropValueButtonAction {
+  return { action: 'navigate', pageId };
+}
+
+function createSubmitValue(): PropValueButtonAction {
+  return { action: 'submit' };
 }
 
 export default function PropsSettingsButtonAction({ fieldId, label, type }: PropsSettingsButtonActionProps) {
@@ -13,29 +46,57 @@ export default function PropsSettingsButtonAction({ fieldId, label, type }: Prop
     useCallback(state => state.getFieldProperty(fieldId, type), [fieldId, type]),
   );
   const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
-  const value = getValue(fieldProperty?.value);
-  const prevRef = useRef<Record<string, PropValueButtonAction>>({
+  const schema = useSchemaStore(state => state.schema);
+
+  const value = getDefaultValue(fieldProperty?.value);
+
+  // Memoize page options to avoid recalculation on every render
+  const pageOptions = useMemo(() => {
+    return schema.form.fields
+      .filter(field => field.type === FieldType.PAGE)
+      .map((page) => {
+        const pageNameProp = page.props?.find(prop => prop.type === PropertyType.PAGE_NAME);
+        const pageName = isStringValue(pageNameProp?.value) ? pageNameProp.value : `Page ${page.id}`;
+        return { value: page.id, label: pageName };
+      });
+  }, [schema.form.fields]);
+
+  // Store previous values to restore when switching between action types
+  const prevValuesRef = useRef<Record<string, PropValueButtonAction>>({
     [value.action]: value,
   });
 
-  const handleActionTypeChange = (newAction: string) => {
+  const updateProperty = useCallback((newValue: PropValueButtonAction) => {
+    prevValuesRef.current = {
+      ...prevValuesRef.current,
+      [newValue.action]: newValue,
+    };
+
+    updateFieldProperty(fieldId, {
+      type,
+      value: newValue,
+    } as PropertyDefinition);
+  }, [fieldId, type, updateFieldProperty]);
+
+  const handleActionTypeChange = useCallback((newAction: string) => {
     let newValue: PropValueButtonAction;
 
     switch (newAction) {
       case 'submit': {
-        newValue = {
-          action: 'submit',
-        };
+        newValue = createSubmitValue();
         break;
       }
       case 'hyperlink': {
-        const hyperlinkPrev = prevRef.current?.hyperlink;
-        const isHyperlinkAction = hyperlinkPrev && hyperlinkPrev.action === 'hyperlink';
-        newValue = {
-          action: 'hyperlink',
-          url: (isHyperlinkAction ? hyperlinkPrev.url : '') || '',
-          target: (isHyperlinkAction ? hyperlinkPrev.target : '_self') || '_self',
-        };
+        const previousHyperlink = prevValuesRef.current.hyperlink;
+        const url = previousHyperlink?.action === 'hyperlink' ? previousHyperlink.url : '';
+        const target = previousHyperlink?.action === 'hyperlink' ? previousHyperlink.target : '_self';
+        newValue = createHyperlinkValue(url, target);
+        break;
+      }
+      case 'navigate': {
+        const previousNavigate = prevValuesRef.current.navigate;
+        const pageId = previousNavigate?.action === 'navigate' ? previousNavigate.pageId : '';
+        newValue = createNavigateValue(pageId);
         break;
       }
       default: {
@@ -43,92 +104,80 @@ export default function PropsSettingsButtonAction({ fieldId, label, type }: Prop
       }
     }
 
-    prevRef.current = {
-      ...prevRef.current,
-      [newAction]: newValue,
-    };
+    updateProperty(newValue);
+  }, [updateProperty]);
 
-    updateFieldProperty(fieldId, {
-      type,
-      value: newValue,
-    } as PropertyDefinition);
-  };
-
-  const handleUrlChange = (newUrl: string) => {
+  const handleUrlChange = useCallback((newUrl: string) => {
     if (value.action !== 'hyperlink') return;
 
-    const hyperlinkValue = {
-      action: 'hyperlink' as const,
-      url: newUrl,
-      target: value.target || '_self' as const,
-    };
+    const newValue = createHyperlinkValue(newUrl, value.target);
+    updateProperty(newValue);
+  }, [value, updateProperty]);
 
-    prevRef.current = {
-      ...prevRef.current,
-      hyperlink: hyperlinkValue,
-    };
-    updateFieldProperty(fieldId, {
-      type,
-      value: hyperlinkValue,
-    } as PropertyDefinition);
-  };
+  const handlePageIdChange = useCallback((newPageId: string) => {
+    if (value.action !== 'navigate') return;
 
-  const handleOpenInNewTabChange = (checked: boolean) => {
+    const newValue = createNavigateValue(newPageId);
+    updateProperty(newValue);
+  }, [value, updateProperty]);
+
+  const handleOpenInNewTabChange = useCallback((checked: boolean) => {
     if (value.action !== 'hyperlink') return;
 
-    const hyperlinkValue = {
-      action: 'hyperlink' as const,
-      url: value.url,
-      target: checked ? '_blank' as const : '_self' as const,
-    };
-
-    prevRef.current = {
-      ...prevRef.current,
-      hyperlink: hyperlinkValue,
-    };
-    updateFieldProperty(fieldId, {
-      type,
-      value: hyperlinkValue,
-    } as PropertyDefinition);
-  };
+    const target = checked ? '_blank' : '_self';
+    const newValue = createHyperlinkValue(value.url, target);
+    updateProperty(newValue);
+  }, [value, updateProperty]);
 
   return (
     <>
       <div className="px-4 py-3.5">
         <div className="flex justify-between items-center">
+          <p className="typography-body3 text-neutral-800">{label}</p>
           <div>
-            <p className="typography-body3 text-neutral-800">{label}</p>
-          </div>
-          <div className="flex gap-2 items-center">
             <Select
               value={value.action}
               onChange={handleActionTypeChange}
-              options={[
-                { value: 'submit', label: 'Submit' },
-                { value: 'hyperlink', label: 'Hyperlink' },
-              ]}
+              options={ACTION_OPTIONS}
             />
           </div>
         </div>
-        <div>
-          {value.action === 'hyperlink' && (
-            <div className="mt-4">
-              <Input
-                value={value.url}
-                onChange={handleUrlChange}
-                placeholder="Enter URL"
+
+        {value.action === 'hyperlink' && (
+          <div className="mt-4 space-y-4">
+            <Input
+              value={value.url}
+              onChange={handleUrlChange}
+              placeholder="Enter URL"
+            />
+            <div className="flex justify-between items-center">
+              <label
+                htmlFor={`openInNewTab-${fieldId}`}
+                className="typography-body3 text-neutral-800 cursor-pointer"
+              >
+                Open in new tab
+              </label>
+              <Switch
+                id={`openInNewTab-${fieldId}`}
+                checked={value.target === '_blank'}
+                onChange={handleOpenInNewTabChange}
               />
-              <div className="flex gap-3 justify-between items-center w-full mt-4">
-                <label htmlFor={`openInNewTab-${fieldId}`} className="typography-body3 text-neutral-800 cursor-pointer">Open in new tab</label>
-                <Switch
-                  id={`openInNewTab-${fieldId}`}
-                  checked={value.target === '_blank'}
-                  onChange={handleOpenInNewTabChange}
-                />
-              </div>
             </div>
-          )}
-        </div>
+          </div>
+        )}
+
+        {value.action === 'navigate' && (
+          <div className="mt-4 flex gap-2 items-center">
+            <p className="typography-body3 text-neutral-800 whitespace-nowrap">Navigate to: </p>
+            <div>
+              <Select
+                value={value.pageId}
+                onChange={handlePageIdChange}
+                options={pageOptions}
+              />
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="mx-4">
@@ -136,10 +185,4 @@ export default function PropsSettingsButtonAction({ fieldId, label, type }: Prop
       </div>
     </>
   );
-}
-
-function getValue(value?: PropValue): PropValueButtonAction {
-  if (isButtonActionValue(value)) return value;
-
-  return { action: 'submit' };
 }

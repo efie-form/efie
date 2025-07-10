@@ -4,6 +4,9 @@ import { TextField } from '@mui/material';
 function LongTextField({ id, fieldLabel, placeholder }: LongTextFieldProps) {
   return (
     <TextField
+      sx={{
+        marginTop: '1rem',
+      }}
       id={id}
       size="small"
       placeholder={placeholder}

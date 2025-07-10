@@ -1,8 +1,13 @@
 import type { FileFieldProps } from '@efie-form/react';
+import { Box } from '@mui/material';
 
 function FileField({ id, fieldLabel }: FileFieldProps) {
   return (
-    <div>
+    <Box
+      sx={{
+        marginTop: '1rem',
+      }}
+    >
       <label htmlFor={id}>
         {fieldLabel}
       </label>
@@ -10,7 +15,7 @@ function FileField({ id, fieldLabel }: FileFieldProps) {
         type="file"
         id={id}
       />
-    </div>
+    </Box>
   );
 }
 

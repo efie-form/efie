@@ -1,9 +1,9 @@
 import type { DividerFieldProps } from '@efie-form/react';
 
-function DividerField({ fieldId }: DividerFieldProps) {
+function DividerField({ id }: DividerFieldProps) {
   return (
     <div
-      id={fieldId}
+      id={id}
       style={{
         height: '1px',
         borderColor: '#AFAFAF',
