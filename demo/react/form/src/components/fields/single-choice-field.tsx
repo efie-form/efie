@@ -7,7 +7,12 @@ function SingleChoiceField({ fieldLabel, id, options }: SingleChoiceFieldProps) 
   const labelId = `${id}-label`;
 
   return (
-    <FormControl>
+    <FormControl
+      fullWidth
+      sx={{
+        marginTop: '1rem',
+      }}
+    >
       <InputLabel id={labelId} size={size}>
         {fieldLabel}
       </InputLabel>
@@ -22,7 +27,7 @@ function SingleChoiceField({ fieldLabel, id, options }: SingleChoiceFieldProps) 
       >
         {options.map(option => (
           <MenuItem key={option.value} value={option.value}>
-            {option.optionLabel}
+            {option.label}
           </MenuItem>
         ))}
       </Select>

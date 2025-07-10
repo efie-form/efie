@@ -1,10 +1,10 @@
 import type { ColumnFieldProps } from '@efie-form/react';
 
-function ColumnField({ children, columnWidth }: ColumnFieldProps) {
+function ColumnField({ children, width }: ColumnFieldProps) {
   return (
     <div
       style={{
-        width: columnWidth,
+        width,
       }}
     >
       {children}
