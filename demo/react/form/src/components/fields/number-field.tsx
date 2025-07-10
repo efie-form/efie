@@ -6,6 +6,9 @@ function NumberField({ id, fieldLabel, placeholder }: NumberFieldProps) {
     <div>
       <TextField
         id={id}
+        sx={{
+          marginTop: '1rem',
+        }}
         size="small"
         placeholder={placeholder}
         fullWidth

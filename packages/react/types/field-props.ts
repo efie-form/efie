@@ -59,6 +59,10 @@ export interface FileFieldProps extends BaseFieldProps, FormFieldProps<File | Fi
 export interface ButtonFieldProps extends BaseFieldProps {
   label: string;
   buttonType?: 'submit' | 'button';
+  hyperlink?: {
+    href: string;
+    target?: '_self' | '_blank' | '_parent' | '_top';
+  };
   onClick?: () => void;
 }
 

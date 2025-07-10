@@ -5,6 +5,9 @@ function TimeField({ fieldLabel }: TimeFieldProps) {
   return (
     <div>
       <TimePicker
+        sx={{
+          marginTop: '1rem',
+        }}
         slotProps={{
           textField: {
             fullWidth: true,

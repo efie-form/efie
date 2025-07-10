@@ -22,4 +22,5 @@ export type {
   HeaderFieldProps,
   ImageFieldProps,
   PageFieldProps,
+  MultipleChoicesFieldProps,
 } from './types/field-props';

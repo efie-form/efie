@@ -661,6 +661,17 @@ video {
   margin-top: 1.25rem;
 }
 
+.mt-1 {
+  margin-top: 0.25rem;
+}
+
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
 .block {
   display: block;
 }
@@ -675,6 +686,10 @@ video {
 
 .grid {
   display: grid;
+}
+
+.contents {
+  display: contents;
 }
 
 .hidden {
@@ -746,6 +761,14 @@ video {
 
 .h-screen {
   height: 100vh;
+}
+
+.h-3 {
+  height: 0.75rem;
+}
+
+.h-6 {
+  height: 1.5rem;
 }
 
 .max-h-full {
@@ -824,6 +847,18 @@ video {
   width: 100%;
 }
 
+.w-3\/4 {
+  width: 75%;
+}
+
+.w-3 {
+  width: 0.75rem;
+}
+
+.w-6 {
+  width: 1.5rem;
+}
+
 .min-w-0 {
   min-width: 0px;
 }
@@ -842,6 +877,10 @@ video {
 
 .flex-1 {
   flex: 1 1 0%;
+}
+
+.flex-shrink-0 {
+  flex-shrink: 0;
 }
 
 .grow {
@@ -880,6 +919,16 @@ video {
 
 .transform {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+@keyframes pulse {
+  50% {
+    opacity: .5;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 .cursor-default {
@@ -986,6 +1035,18 @@ video {
   margin-bottom: calc(1rem * var(--tw-space-y-reverse));
 }
 
+.space-x-3 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(0.75rem * var(--tw-space-x-reverse));
+  margin-left: calc(0.75rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
+.space-y-2 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
+}
+
 .self-stretch {
   align-self: stretch;
 }
@@ -1006,6 +1067,10 @@ video {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.text-ellipsis {
+  text-overflow: ellipsis;
 }
 
 .whitespace-nowrap {
@@ -1236,9 +1301,9 @@ video {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
-.bg-primary-600 {
+.bg-neutral-300 {
   --tw-bg-opacity: 1;
-  background-color: rgb(from var(--color-primary-600) r g b / var(--tw-bg-opacity));
+  background-color: rgb(from var(--color-neutral-300) r g b / var(--tw-bg-opacity));
 }
 
 .bg-opacity-0 {
@@ -1343,11 +1408,6 @@ video {
   padding-bottom: 1rem;
 }
 
-.py-2\.5 {
-  padding-top: 0.625rem;
-  padding-bottom: 0.625rem;
-}
-
 .pe-1 {
   padding-inline-end: 0.25rem;
 }
@@ -1364,26 +1424,13 @@ video {
   padding-inline-start: 0.5rem;
 }
 
-.text-left {
-  text-align: left;
-}
-
 .text-center {
   text-align: center;
-}
-
-.text-right {
-  text-align: right;
 }
 
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
-}
-
-.text-sm {
-  font-size: 0.875rem;
-  line-height: 1.25rem;
 }
 
 .font-medium {
@@ -1883,6 +1930,11 @@ div.tiptap:focus-visible {
   background-color: rgb(from var(--color-primary-300) r g b / 0.1);
 }
 
+.hover\:bg-neutral-200:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(from var(--color-neutral-200) r g b / var(--tw-bg-opacity));
+}
+
 .hover\:text-danger:hover {
   --tw-text-opacity: 1;
   color: rgb(from var(--color-red-500) r g b / var(--tw-text-opacity));
@@ -1939,6 +1991,11 @@ div.tiptap:focus-visible {
 .group:hover .group-hover\:text-primary-400 {
   --tw-text-opacity: 1;
   color: rgb(from var(--color-primary-400) r g b / var(--tw-text-opacity));
+}
+
+.group:hover .group-hover\:text-neutral-800 {
+  --tw-text-opacity: 1;
+  color: rgb(from var(--color-neutral-800) r g b / var(--tw-text-opacity));
 }
 
 .data-\[state\=checked\]\:translate-x-\[14px\][data-state="checked"] {

@@ -5,6 +5,9 @@ function DateField({ fieldLabel }: DateFieldProps) {
   return (
     <div>
       <DatePicker
+        sx={{
+          marginTop: '1rem',
+        }}
         slotProps={{
           textField: {
             fullWidth: true,

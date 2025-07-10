@@ -39,9 +39,15 @@ interface ButtonActionSubmit {
   action: 'submit';
 }
 
+interface ButtonActionNavigate {
+  action: 'navigate';
+  pageId: string;
+}
+
 export type PropValueButtonAction =
   | ButtonActionHyperlink
-  | ButtonActionSubmit;
+  | ButtonActionSubmit
+  | ButtonActionNavigate;
 
 export type PropValue =
   | PropValueString

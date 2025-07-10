@@ -178,6 +178,9 @@ export function isButtonActionValue(value?: PropValue): value is PropValueButton
         && (!('target' in value) || typeof value.target === 'string')
       )
       || value.action === 'submit'
+      || (
+        value.action === 'navigate' && 'pageId' in value && typeof value.pageId === 'string'
+      )
     )
   );
 }
