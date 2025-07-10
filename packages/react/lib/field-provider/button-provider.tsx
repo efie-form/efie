@@ -25,7 +25,6 @@ function ButtonProvider({ field, Component }: ButtonProviderProps) {
 
   const handleClick = () => {
     if (buttonAction?.value.action !== 'navigate') return;
-    console.log('Button clicked:', buttonAction.value.action);
 
     const pageId = buttonAction.value.pageId;
     if (!pageId) return;
@@ -35,8 +34,10 @@ function ButtonProvider({ field, Component }: ButtonProviderProps) {
   const getButtonAction = () => {
     if (buttonAction?.value.action === 'hyperlink') {
       return {
-        href: buttonAction.value.url || '',
-        target: buttonAction.value.target || '_self',
+        hyperlink: {
+          href: buttonAction.value.url || '',
+          target: buttonAction.value.target || '_self',
+        },
       };
     }
     if (buttonAction?.value.action === 'navigate') {
@@ -53,7 +54,6 @@ function ButtonProvider({ field, Component }: ButtonProviderProps) {
     id: field.id,
     field,
     label: label?.value || '',
-    isHyperlink: buttonAction?.value.action === 'hyperlink',
     buttonType: buttonAction ? buttonType[buttonAction.value.action] : 'button',
     ...getButtonAction(),
   } satisfies ButtonFieldProps);
