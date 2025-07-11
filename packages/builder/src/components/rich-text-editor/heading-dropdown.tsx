@@ -38,7 +38,7 @@ export function HeadingDropdown({ editor, options }: HeadingDropdownProps) {
       label: option.label,
       command: option.level === 0 ? getParagraphCommand() : getHeadingCommand(option.level),
     }));
-  }, []);
+  }, [options, editor]);
 
   const getCurrentHeading = () => {
     const activeHeading = editor.getAttributes('heading').level || 0;

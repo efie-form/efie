@@ -26,8 +26,6 @@ export default function ContentRenderer({
   const orderedList = options?.orderedList || renderOrderedList;
   const listItem = options?.listItem || renderListItem;
 
-  console.log('Rendering content:', content, options);
-
   return (
     <>
       <ContentItem
@@ -150,6 +148,10 @@ function ContentItem({ content, options }: ContentItemProps) {
           </>
         ),
       });
+    }
+    default: {
+      console.warn('Unknown content type:', content.type);
+      return <></>;
     }
   }
 }

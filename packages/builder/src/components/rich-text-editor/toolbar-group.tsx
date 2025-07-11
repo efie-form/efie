@@ -3,6 +3,6 @@ interface ToolbarGroupProps {
   children: React.ReactNode;
 }
 
-export function ToolbarGroup({ children }: ToolbarGroupProps) {
-  return <div className="flex items-center gap-1">{children}</div>;
+export function ToolbarGroup({ children, label }: ToolbarGroupProps) {
+  return <div className="flex items-center gap-1" aria-label={label}>{children}</div>;
 }
