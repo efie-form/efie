@@ -1,5 +1,5 @@
 import type { ShortTextFormField, LongTextFormField, NumberFormField, MultipleChoiceFormField, TimeFormField, DateFormField, SingleChoiceFormField, DateTimeFormField, FileFormField, BlockFormField, RowFormField, ColumnFormField, ImageFormField, HeadingFormField, ButtonFormField, PageFormField, DividerFormField } from '@efie-form/core';
-import { FieldType, getColorObject, PropertyType, SizeType } from '@efie-form/core';
+import { FieldType, PropertyType, SizeType } from '@efie-form/core';
 import { generateId } from './utils';
 
 interface PageProps {
@@ -63,10 +63,6 @@ export function getDefaultField<T extends FieldType>({
             type: PropertyType.PLACEHOLDER,
             value: 'Enter the placeholder',
           },
-          {
-            type: PropertyType.REQUIRED,
-            value: false,
-          },
         ],
       } satisfies GetDefaultFieldReturn[typeof FieldType.SHORT_TEXT];
     }
@@ -86,10 +82,6 @@ export function getDefaultField<T extends FieldType>({
             type: PropertyType.PLACEHOLDER,
             value: 'Enter the placeholder',
           },
-          {
-            type: PropertyType.REQUIRED,
-            value: false,
-          },
         ],
       } satisfies GetDefaultFieldReturn[typeof FieldType.LONG_TEXT];
     }
@@ -108,10 +100,6 @@ export function getDefaultField<T extends FieldType>({
           {
             type: PropertyType.PLACEHOLDER,
             value: 'Enter the placeholder',
-          },
-          {
-            type: PropertyType.REQUIRED,
-            value: false,
           },
         ],
       } satisfies GetDefaultFieldReturn[typeof FieldType.NUMBER];
@@ -136,10 +124,6 @@ export function getDefaultField<T extends FieldType>({
               { label: 'Option 3', value: 'Option 3' },
             ],
           },
-          {
-            type: PropertyType.REQUIRED,
-            value: false,
-          },
         ],
       } satisfies GetDefaultFieldReturn[typeof FieldType.SINGLE_CHOICE];
     }
@@ -162,10 +146,6 @@ export function getDefaultField<T extends FieldType>({
               { label: 'Option 2', value: 'Option 2' },
               { label: 'Option 3', value: 'Option 3' },
             ],
-          },
-          {
-            type: PropertyType.REQUIRED,
-            value: false,
           },
         ],
       } satisfies GetDefaultFieldReturn[typeof FieldType.MULTIPLE_CHOICES];
@@ -195,10 +175,6 @@ export function getDefaultField<T extends FieldType>({
             type: PropertyType.LABEL,
             value: 'Date',
           },
-          {
-            type: PropertyType.REQUIRED,
-            value: false,
-          },
         ],
       } satisfies GetDefaultFieldReturn[typeof FieldType.DATE];
     }
@@ -213,10 +189,6 @@ export function getDefaultField<T extends FieldType>({
           {
             type: PropertyType.LABEL,
             value: 'Time',
-          },
-          {
-            type: PropertyType.REQUIRED,
-            value: false,
           },
         ],
       } satisfies GetDefaultFieldReturn[typeof FieldType.TIME];
@@ -233,10 +205,6 @@ export function getDefaultField<T extends FieldType>({
             type: PropertyType.LABEL,
             value: 'Date & Time',
           },
-          {
-            type: PropertyType.REQUIRED,
-            value: false,
-          },
         ],
       } satisfies GetDefaultFieldReturn[typeof FieldType.DATE_TIME];
     }
@@ -251,10 +219,6 @@ export function getDefaultField<T extends FieldType>({
           {
             type: PropertyType.LABEL,
             value: 'File',
-          },
-          {
-            type: PropertyType.REQUIRED,
-            value: false,
           },
           {
             type: PropertyType.MAX_FILES,
@@ -274,24 +238,7 @@ export function getDefaultField<T extends FieldType>({
       return {
         type: FieldType.DIVIDER,
         id: generateId(ID_LENGTH),
-        props: [
-          {
-            type: PropertyType.COLOR,
-            value: getColorObject('#000000'),
-          },
-          {
-            type: PropertyType.BORDER_STYLE,
-            value: 'solid',
-          },
-          {
-            type: PropertyType.WIDTH,
-            value: { type: SizeType.PERCENTAGE, value: 100 },
-          },
-          {
-            type: PropertyType.HEIGHT,
-            value: { type: SizeType.LENGTH, value: 1, unit: 'px' },
-          },
-        ],
+        props: [],
       } satisfies GetDefaultFieldReturn[typeof FieldType.DIVIDER];
     }
     case FieldType.HEADING: {
@@ -320,21 +267,6 @@ export function getDefaultField<T extends FieldType>({
           {
             type: PropertyType.ALT,
             value: 'Placeholder',
-          },
-          {
-            type: PropertyType.OBJECT_FIT,
-            value: 'contain',
-          },
-          {
-            type: PropertyType.TEXT_ALIGN,
-            value: 'center',
-          },
-          {
-            type: PropertyType.WIDTH,
-            value: {
-              type: SizeType.PERCENTAGE,
-              value: 100,
-            },
           },
         ],
       } satisfies GetDefaultFieldReturn[typeof FieldType.IMAGE];

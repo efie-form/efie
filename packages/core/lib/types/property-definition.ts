@@ -1,6 +1,3 @@
-import type {
-  HeadingTag,
-} from '../constants/form-schema.constant';
 import type { PropertyType } from '../constants/form-schema.constant';
 import type { PropValueAccept, PropValueBoolean, PropValueBorderRadius, PropValueBoxShadow, PropValueButtonAction, PropValueColor, PropValueMargin, PropValueNumber, PropValueOptions, PropValuePadding, PropValueSize, PropValueString } from './field-property-value.type';
 import type { JSONContent } from '@tiptap/core';
@@ -44,12 +41,6 @@ export interface OptionsProperty {
 export interface WidthProperty {
   type: typeof PropertyType.WIDTH;
   value: PropValueSize;
-}
-
-// Content properties
-export interface TagProperty {
-  type: typeof PropertyType.TAG;
-  value: HeadingTag;
 }
 
 export interface TextAlignProperty {
@@ -159,7 +150,6 @@ export type PropertyDefinition =
   | AcceptProperty
   | OptionsProperty
   | WidthProperty
-  | TagProperty
   | TextAlignProperty
   | ColorProperty
   | FontSizeProperty

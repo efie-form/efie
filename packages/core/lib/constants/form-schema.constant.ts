@@ -107,53 +107,6 @@ export const ActionType = {
   WARNING: 'warning',
 } as const;
 
-// Display Positions
-export const DisplayPosition = {
-  INLINE: 'inline',
-  TOAST: 'toast',
-  MODAL: 'modal',
-  BANNER: 'banner',
-} as const;
-
-// Text Alignment
-export const TextAlign = {
-  LEFT: 'left',
-  CENTER: 'center',
-  RIGHT: 'right',
-} as const;
-
-// Object Fit
-export const ObjectFit = {
-  FILL: 'fill',
-  CONTAIN: 'contain',
-  COVER: 'cover',
-  NONE: 'none',
-  SCALE_DOWN: 'scale-down',
-} as const;
-
-// Button Types
-export const ButtonType = {
-  SUBMIT: 'submit',
-  BUTTON: 'button',
-} as const;
-
-// Divider Styles
-export const DividerStyle = {
-  SOLID: 'solid',
-  DASHED: 'dashed',
-  DOTTED: 'dotted',
-} as const;
-
-// Heading Tags
-export const HeadingTag = {
-  H1: 'h1',
-  H2: 'h2',
-  H3: 'h3',
-  H4: 'h4',
-  H5: 'h5',
-  H6: 'h6',
-} as const;
-
 // Property Types
 export const PropertyType = {
   BACKGROUND_COLOR: 'backgroundColor',
@@ -199,14 +152,6 @@ export const SizeUnit = {
   // MM: 'mm',
 } as const;
 
-export const ColorType = {
-  HEX: 'hex',
-  RGB: 'rgb',
-  RGBA: 'rgba',
-  HSL: 'hsl',
-  HSLA: 'hsla',
-} as const;
-
 // Export types for all constants
 export type FieldConditionOperator =
   (typeof FieldConditionOperator)[keyof typeof FieldConditionOperator];
@@ -214,16 +159,8 @@ export type ValidationOperator =
   (typeof ValidationOperator)[keyof typeof ValidationOperator];
 export type RuleType = (typeof RuleType)[keyof typeof RuleType];
 export type ActionType = (typeof ActionType)[keyof typeof ActionType];
-export type DisplayPosition =
-  (typeof DisplayPosition)[keyof typeof DisplayPosition];
-export type TextAlign = (typeof TextAlign)[keyof typeof TextAlign];
-export type ObjectFit = (typeof ObjectFit)[keyof typeof ObjectFit];
-export type ButtonType = (typeof ButtonType)[keyof typeof ButtonType];
-export type DividerStyle = (typeof DividerStyle)[keyof typeof DividerStyle];
-export type HeadingTag = (typeof HeadingTag)[keyof typeof HeadingTag];
 export type PropertyType = (typeof PropertyType)[keyof typeof PropertyType];
 export type SizeUnit = (typeof SizeUnit)[keyof typeof SizeUnit];
-export type ColorType = (typeof ColorType)[keyof typeof ColorType];
 export type SizeType = (typeof SizeType)[keyof typeof SizeType];
 export type AbsoluteSize = (typeof AbsoluteSize)[keyof typeof AbsoluteSize];
 export type RelativeSize = (typeof RelativeSize)[keyof typeof RelativeSize];

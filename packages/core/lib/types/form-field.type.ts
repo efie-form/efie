@@ -5,7 +5,6 @@ import type {
   PlaceholderProperty,
   RequiredProperty,
   OptionsProperty,
-  TagProperty,
   TextAlignProperty,
   ColorProperty,
   FontSizeProperty,
@@ -167,7 +166,6 @@ export interface ColumnFormField extends BaseFormField {
 export interface HeadingFormField extends BaseFormField {
   type: typeof FieldType.HEADING;
   props: (
-    | TagProperty
     | TextAlignProperty
     | ColorProperty
     | FontSizeProperty
