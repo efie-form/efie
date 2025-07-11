@@ -231,6 +231,19 @@ div.tiptap:focus-visible {
   vertical-align: sub;
 }
 
+.rich-text-editor .ProseMirror ol,
+.rich-text-editor .ProseMirror ul {
+  list-style-position: outside;
+}
+
+.rich-text-editor .ProseMirror ol {
+  list-style: decimal;
+}
+
+.rich-text-editor .ProseMirror ul {
+  list-style: disc;
+}
+
 /* Font size support */
 .rich-text-editor .ProseMirror [style*="font-size"] {
   /* Ensure font-size styles are preserved and rendered correctly */

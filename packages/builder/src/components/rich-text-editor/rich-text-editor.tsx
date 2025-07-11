@@ -50,7 +50,7 @@ function RichTextEditor({
     },
     editorProps: {
       attributes: {
-        class: 'min-h-[100px] p-3 rounded-md transition-all ring-0 focus:ring-0 focus:ring-0',
+        class: 'p-3 rounded-md transition-all ring-0 focus:ring-0 focus:ring-0',
       },
     },
   });
@@ -97,7 +97,13 @@ function RichTextEditor({
       );
     }
     if (options?.list) {
-      extensions.push(BulletList, OrderedList, ListItem);
+      if (options.list === true || options.list.ordered) {
+        extensions.push(OrderedList);
+      }
+      if (options.list === true || options.list.unordered) {
+        extensions.push(BulletList);
+      }
+      extensions.push(ListItem);
     }
     if (options?.link) {
       extensions.push(

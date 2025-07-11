@@ -103,9 +103,12 @@ export const useSettingsStore = create<SettingsState>(set => ({
         strikethrough: true,
         link: true,
         superscript: true,
+        align: true,
         subscript: true,
-        orderedList: true,
-        unorderedList: true,
+        list: {
+          ordered: true,
+          unordered: true,
+        },
         heading: {
           options: [
             { level: 0, label: 'Paragraph' },

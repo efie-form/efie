@@ -36,6 +36,10 @@ function HeadingField({ field }: HeadingFieldProps) {
           link: config?.formats.link,
           heading: config?.formats.heading,
           fontSize: config?.formats.fontSize,
+          align: config?.formats.align,
+          list: config?.formats.list,
+          superscript: config?.formats.superscript,
+          subscript: config?.formats.subscript,
         }}
       />
     </div>

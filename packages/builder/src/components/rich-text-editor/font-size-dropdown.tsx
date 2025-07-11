@@ -73,7 +73,6 @@ export function FontSizeDropdown({
               onClick={() => {
                 editor.commands.unsetFontSize();
                 editor.chain().focus().run();
-                editor.view.focus();
                 setIsOpen(false);
               }}
             >

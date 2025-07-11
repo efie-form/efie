@@ -15,8 +15,16 @@ export interface RichTextEditorOptions {
   italic?: boolean;
   underline?: boolean;
   strike?: boolean;
-  align?: boolean;
-  list?: boolean;
+  align?: boolean | {
+    left: boolean;
+    center: boolean;
+    right: boolean;
+    justify: boolean;
+  };
+  list?: boolean | {
+    ordered: boolean;
+    unordered: boolean;
+  };
   link?: boolean;
   superscript?: boolean;
   subscript?: boolean;

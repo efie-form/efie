@@ -88,33 +88,41 @@ export function EditorToolbar({ editor, options }: EditorToolbarProps) {
         )}
 
         {/* Alignment */}
-        { options?.align && (
+        {options?.align && (
           <>
             <ToolbarGroup label="Alignment">
-              <ToolbarButton
-                Icon={FaAlignLeft}
-                active={editor.isActive({ textAlign: 'left' })}
-                onClick={() => editor.chain().focus().setTextAlign('left').run()}
-                tooltip="Align Left"
-              />
-              <ToolbarButton
-                Icon={FaAlignCenter}
-                active={editor.isActive({ textAlign: 'center' })}
-                onClick={() => editor.chain().focus().setTextAlign('center').run()}
-                tooltip="Align Center"
-              />
-              <ToolbarButton
-                Icon={FaAlignRight}
-                active={editor.isActive({ textAlign: 'right' })}
-                onClick={() => editor.chain().focus().setTextAlign('right').run()}
-                tooltip="Align Right"
-              />
-              <ToolbarButton
-                Icon={FaAlignJustify}
-                active={editor.isActive({ textAlign: 'justify' })}
-                onClick={() => editor.chain().focus().setTextAlign('justify').run()}
-                tooltip="Justify"
-              />
+              {hasAlign(options, 'left') && (
+                <ToolbarButton
+                  Icon={FaAlignLeft}
+                  active={editor.isActive({ textAlign: 'left' })}
+                  onClick={() => editor.chain().focus().setTextAlign('left').run()}
+                  tooltip="Align Left"
+                />
+              )}
+              {hasAlign(options, 'center') && (
+                <ToolbarButton
+                  Icon={FaAlignCenter}
+                  active={editor.isActive({ textAlign: 'center' })}
+                  onClick={() => editor.chain().focus().setTextAlign('center').run()}
+                  tooltip="Align Center"
+                />
+              )}
+              {hasAlign(options, 'right') && (
+                <ToolbarButton
+                  Icon={FaAlignRight}
+                  active={editor.isActive({ textAlign: 'right' })}
+                  onClick={() => editor.chain().focus().setTextAlign('right').run()}
+                  tooltip="Align Right"
+                />
+              )}
+              {hasAlign(options, 'justify') && (
+                <ToolbarButton
+                  Icon={FaAlignJustify}
+                  active={editor.isActive({ textAlign: 'justify' })}
+                  onClick={() => editor.chain().focus().setTextAlign('justify').run()}
+                  tooltip="Justify"
+                />
+              )}
             </ToolbarGroup>
 
             <div className="w-px h-5 bg-neutral-200 mx-1" />
@@ -125,18 +133,22 @@ export function EditorToolbar({ editor, options }: EditorToolbarProps) {
         { options?.list && (
           <>
             <ToolbarGroup label="Lists">
-              <ToolbarButton
-                Icon={FaListUl}
-                active={editor.isActive('bulletList')}
-                onClick={() => editor.chain().focus().toggleBulletList().run()}
-                tooltip="Bullet List"
-              />
-              <ToolbarButton
-                Icon={FaListOl}
-                active={editor.isActive('orderedList')}
-                onClick={() => editor.chain().focus().toggleOrderedList().run()}
-                tooltip="Numbered List"
-              />
+              {hasList(options, 'unordered') && (
+                <ToolbarButton
+                  Icon={FaListUl}
+                  active={editor.isActive('bulletList')}
+                  onClick={() => editor.chain().focus().toggleBulletList().run()}
+                  tooltip="Bullet List"
+                />
+              )}
+              {hasList(options, 'ordered') && (
+                <ToolbarButton
+                  Icon={FaListOl}
+                  active={editor.isActive('orderedList')}
+                  onClick={() => editor.chain().focus().toggleOrderedList().run()}
+                  tooltip="Numbered List"
+                />
+              )}
             </ToolbarGroup>
 
             <div className="w-px h-5 bg-neutral-200 mx-1" />
@@ -174,7 +186,13 @@ export function EditorToolbar({ editor, options }: EditorToolbarProps) {
                 <ToolbarButton
                   Icon={FaSuperscript}
                   active={editor.isActive('superscript')}
-                  onClick={() => editor.chain().focus().toggleSuperscript().run()}
+                  onClick={() => {
+                    const chain = editor.chain().focus();
+                    if (editor.isActive('subscript')) {
+                      chain.toggleSubscript();
+                    }
+                    chain.toggleSuperscript().run();
+                  }}
                   tooltip="Superscript"
                 />
               )}
@@ -182,7 +200,13 @@ export function EditorToolbar({ editor, options }: EditorToolbarProps) {
                 <ToolbarButton
                   Icon={FaSubscript}
                   active={editor.isActive('subscript')}
-                  onClick={() => editor.chain().focus().toggleSubscript().run()}
+                  onClick={() => {
+                    const chain = editor.chain().focus();
+                    if (editor.isActive('superscript')) {
+                      chain.toggleSuperscript();
+                    }
+                    chain.toggleSubscript().run();
+                  }}
                   tooltip="Subscript"
                 />
               )}
@@ -212,4 +236,16 @@ export function EditorToolbar({ editor, options }: EditorToolbarProps) {
       </div>
     </div>
   );
+}
+
+function hasAlign(options: RichTextEditorOptions, direction: 'left' | 'center' | 'right' | 'justify') {
+  if (!options.align) return false;
+  if (typeof options.align === 'boolean') return true;
+  return options.align[direction] !== false;
+}
+
+function hasList(options: RichTextEditorOptions, type: 'ordered' | 'unordered') {
+  if (!options.list) return false;
+  if (typeof options.list === 'boolean') return true;
+  return options.list[type] !== false;
 }

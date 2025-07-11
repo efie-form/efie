@@ -5,6 +5,11 @@ interface Heading {
   label: string;
 }
 
+interface FontSize {
+  label: string;
+  size: string;
+}
+
 export interface HeadingFieldConfig {
   formats: {
     bold?: boolean;
@@ -14,26 +19,29 @@ export interface HeadingFieldConfig {
     link?: boolean;
     code?: boolean;
     blockquote?: boolean;
-    bulletList?: boolean;
-    orderedList?: boolean;
-    unorderedList?: boolean;
+    superscript?: boolean;
+    subscript?: boolean;
+    list?: boolean | {
+      ordered: boolean;
+      unordered: boolean;
+    };
     codeBlock?: boolean;
+    align: boolean | {
+      left: boolean;
+      center: boolean;
+      right: boolean;
+      justify: boolean;
+    };
     heading?: boolean | {
       options: Heading[];
       default?: Level;
     };
     fontSize?: boolean | {
-      options: {
-        label: string;
-        size: string;
-      }[];
-      default?: {
-        label: string;
-        size: string;
-      };
+      options: FontSize[];
+      default?: FontSize;
     };
   };
-}
+};
 
 export interface FieldConfig {
   heading?: HeadingFieldConfig;
