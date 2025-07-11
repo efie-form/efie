@@ -1,7 +1,8 @@
 import type { ElementType } from 'react';
 import { createElement } from 'react';
-import type { HeadingFieldProps } from '../../types/field-props';
+import type { HeadingFieldProps, RenderContentOptions } from '../../types/field-props';
 import { PropertyType, type HeadingFormField } from '@efie-form/core';
+import ContentRenderer from '../utils/content-renderer';
 
 interface HeadingProviderProps {
   field: HeadingFormField;
@@ -13,21 +14,21 @@ function HeadingProvider({ field, Component }: HeadingProviderProps) {
 
   const content = field.props.find(prop => prop.type === PropertyType.CONTENT);
 
-  // Extract content from the rich text format
-  let contentText = 'Heading';
-  if (content?.value?.jsonContent) {
-    try {
-      contentText = JSON.stringify(content.value.jsonContent);
-    }
-    catch {
-      contentText = 'Heading';
-    }
-  }
+  const renderContent = (options?: Partial<RenderContentOptions>) => {
+    return (
+      <>
+        <ContentRenderer
+          content={content?.value?.jsonContent || { type: 'doc', content: [] }}
+          options={options}
+        />
+      </>
+    );
+  };
 
   return createElement(Component, {
     id: field.id,
     field,
-    content: contentText,
+    render: renderContent,
   });
 }
 

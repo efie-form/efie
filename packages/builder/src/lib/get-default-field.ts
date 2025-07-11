@@ -174,11 +174,7 @@ export function getDefaultField<T extends FieldType>({
       return {
         type: FieldType.PAGE,
         id: generateId(ID_LENGTH),
-        children: [
-          getDefaultField({
-            type: FieldType.BLOCK,
-          }),
-        ],
+        children: [],
         props: [
           {
             type: PropertyType.PAGE_NAME,
@@ -306,7 +302,7 @@ export function getDefaultField<T extends FieldType>({
           {
             type: PropertyType.CONTENT,
             value: {
-              jsonContent: generateJsonContent('Header'),
+              jsonContent: generateJsonContent(''),
             },
           },
         ],

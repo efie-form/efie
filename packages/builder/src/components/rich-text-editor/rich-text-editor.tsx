@@ -100,7 +100,7 @@ function RichTextEditor({
       if (options.list === true || options.list.ordered) {
         extensions.push(OrderedList);
       }
-      if (options.list === true || options.list.unordered) {
+      if (options.list === true || options.list.bullet) {
         extensions.push(BulletList);
       }
       extensions.push(ListItem);

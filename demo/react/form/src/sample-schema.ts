@@ -38,7 +38,7 @@ export const sampleSchema: FormSchema = {
             ],
           },
           {
-            type: 'header',
+            type: 'heading',
             id: '6qtidns1xq',
             props: [
               {
@@ -48,11 +48,24 @@ export const sampleSchema: FormSchema = {
                     type: 'doc',
                     content: [
                       {
-                        type: 'paragraph',
+                        type: 'heading',
+                        attrs: {
+                          textAlign: 'center',
+                          level: 1,
+                        },
                         content: [
                           {
                             type: 'text',
-                            text: 'Header',
+                            marks: [
+                              {
+                                type: 'textStyle',
+                                attrs: {
+                                  color: undefined,
+                                  fontSize: '2rem',
+                                },
+                              },
+                            ],
+                            text: 'Event Registration Form',
                           },
                         ],
                       },
@@ -93,6 +106,43 @@ export const sampleSchema: FormSchema = {
               {
                 type: 'textAlign',
                 value: 'center',
+              },
+            ],
+          },
+          {
+            type: 'heading',
+            id: '8nnx41u1kt',
+            props: [
+              {
+                type: 'content',
+                value: {
+                  jsonContent: {
+                    type: 'doc',
+                    content: [
+                      {
+                        type: 'paragraph',
+                        attrs: {
+                          textAlign: 'center',
+                        },
+                        content: [
+                          {
+                            type: 'text',
+                            marks: [
+                              {
+                                type: 'textStyle',
+                                attrs: {
+                                  color: 'rgb(0, 0, 0)',
+                                  fontSize: '14px',
+                                },
+                              },
+                            ],
+                            text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id nibh id est tincidunt elementum quis at justo. Proin sed elit facilisis, blandit nisi id, accumsan quam. Nunc at maximus libero. Vestibulum ultrices eleifend urna, sit amet euismod ligula fringilla id. ',
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                },
               },
             ],
           },
@@ -413,7 +463,7 @@ export const sampleSchema: FormSchema = {
         id: 'mmXxQSTjPs',
         children: [
           {
-            type: 'header',
+            type: 'heading',
             id: 'n3s3c5if0y',
             props: [
               {
@@ -424,10 +474,18 @@ export const sampleSchema: FormSchema = {
                     content: [
                       {
                         type: 'paragraph',
+                        attrs: {
+                          textAlign: undefined,
+                        },
                         content: [
                           {
                             type: 'text',
-                            text: 'Header',
+                            marks: [
+                              {
+                                type: 'bold',
+                              },
+                            ],
+                            text: 'Payment Methods',
                           },
                         ],
                       },

@@ -23,7 +23,7 @@ export interface HeadingFieldConfig {
     subscript?: boolean;
     list?: boolean | {
       ordered: boolean;
-      unordered: boolean;
+      bullet: boolean;
     };
     codeBlock?: boolean;
     align: boolean | {

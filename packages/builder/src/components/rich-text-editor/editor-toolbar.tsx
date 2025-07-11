@@ -133,7 +133,7 @@ export function EditorToolbar({ editor, options }: EditorToolbarProps) {
         { options?.list && (
           <>
             <ToolbarGroup label="Lists">
-              {hasList(options, 'unordered') && (
+              {hasList(options, 'bullet') && (
                 <ToolbarButton
                   Icon={FaListUl}
                   active={editor.isActive('bulletList')}
@@ -244,7 +244,7 @@ function hasAlign(options: RichTextEditorOptions, direction: 'left' | 'center' |
   return options.align[direction] !== false;
 }
 
-function hasList(options: RichTextEditorOptions, type: 'ordered' | 'unordered') {
+function hasList(options: RichTextEditorOptions, type: 'ordered' | 'bullet') {
   if (!options.list) return false;
   if (typeof options.list === 'boolean') return true;
   return options.list[type] !== false;

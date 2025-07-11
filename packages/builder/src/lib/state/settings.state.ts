@@ -107,7 +107,7 @@ export const useSettingsStore = create<SettingsState>(set => ({
         subscript: true,
         list: {
           ordered: true,
-          unordered: true,
+          bullet: true,
         },
         heading: {
           options: [

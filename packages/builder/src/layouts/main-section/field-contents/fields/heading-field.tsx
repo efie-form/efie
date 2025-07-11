@@ -2,7 +2,7 @@ import {
   PropertyType,
   type HeadingFormField,
 } from '@efie-form/core';
-import RichTextEditor from '../../../../components/rich-text-editor';
+import { RichTextEditor } from '../../../../components/rich-text-editor';
 import { useSettingsStore } from '../../../../lib/state/settings.state';
 import { useSchemaStore } from '../../../../lib/state/schema.state';
 import { useCallback } from 'react';

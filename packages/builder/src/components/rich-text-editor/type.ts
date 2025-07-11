@@ -23,7 +23,7 @@ export interface RichTextEditorOptions {
   };
   list?: boolean | {
     ordered: boolean;
-    unordered: boolean;
+    bullet: boolean;
   };
   link?: boolean;
   superscript?: boolean;
