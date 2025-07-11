@@ -3,7 +3,7 @@ import type {
   OptionsProperty,
 } from '@efie-form/core';
 import { PropertyType } from '@efie-form/core';
-import { useRef } from 'react';
+import { useRef, useCallback } from 'react';
 import {
   DndContext,
   closestCenter,
@@ -19,9 +19,8 @@ import {
 } from '@dnd-kit/sortable';
 import type { DragEndEvent } from '@dnd-kit/core';
 import ChoiceFieldOption from './choice-field-option';
-import { useFieldLabel } from '../../../../lib/hooks/properties/use-field-label';
-import { useFieldOptions } from '../../../../lib/hooks/properties/use-field-options';
 import { getFieldProp } from '../../../../lib/utils';
+import { useSchemaStore } from '../../../../lib/state/schema.state';
 
 type OptionType = OptionsProperty['value'][number];
 
@@ -31,11 +30,26 @@ interface ChoiceFieldBaseProps {
   inputType: 'radio' | 'checkbox';
 }
 
+const DEFAULT_OPTIONS: OptionType[] = [
+  { label: 'Option 1', value: 'Option 1' },
+  { label: 'Option 2', value: 'Option 2' },
+];
+
 function ChoiceFieldBase({ fieldId, field, inputType }: ChoiceFieldBaseProps) {
   const lastInputRef = useRef<HTMLInputElement>(null);
+  const fieldProperty = useSchemaStore(useCallback(state => state.getFieldProperty(field.id, PropertyType.LABEL), [field.id]));
+  const label = fieldProperty?.value || '';
+  const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
 
-  const { label, updateLabel } = useFieldLabel(field);
-  const { options, updateOptions } = useFieldOptions(field);
+  const optionsProperty = useSchemaStore(useCallback(state => state.getFieldProperty(field.id, PropertyType.OPTIONS), [field.id]));
+  const options = optionsProperty?.value || DEFAULT_OPTIONS;
+
+  const updateOptions = useCallback((newOptions: OptionType[]) => {
+    updateFieldProperty(field.id, {
+      type: PropertyType.OPTIONS,
+      value: newOptions,
+    });
+  }, [field.id, updateFieldProperty]);
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -92,7 +106,10 @@ function ChoiceFieldBase({ fieldId, field, inputType }: ChoiceFieldBaseProps) {
     <div className="p-2">
       <input
         value={label}
-        onChange={e => updateLabel(e.target.value)}
+        onChange={e => updateFieldProperty(field.id, {
+          type: PropertyType.LABEL,
+          value: e.target.value,
+        })}
         className="mb-2 typography-body2 bg-white bg-opacity-0 focus:outline-none cursor-text w-full"
         type="text"
       />
