@@ -1,5 +1,5 @@
 import type { FormField } from '@efie-form/core';
-import type { ElementType, ReactNode } from 'react';
+import type { CSSProperties, ElementType, ReactNode } from 'react';
 
 interface FormFieldProps<T = unknown> {
   value: T;
@@ -68,8 +68,61 @@ export interface ButtonFieldProps extends BaseFieldProps {
 
 export type DividerFieldProps = BaseFieldProps;
 
-export interface HeaderFieldProps extends BaseFieldProps {
-  content: string;
+export interface RenderNodeProps {
+  children?: ReactNode;
+}
+
+export interface RenderTextProps {
+  text: string;
+  style?: CSSProperties;
+}
+
+export interface RenderLinkProps {
+  href: string;
+  target?: string;
+  rel?: string;
+  children: ReactNode;
+}
+
+export interface RenderParagraphProps {
+  style?: CSSProperties;
+  children: ReactNode;
+}
+
+export interface RenderDocProps {
+  children: ReactNode;
+}
+
+export interface RenderHeadingProps {
+  level: number;
+  style?: CSSProperties;
+  children: ReactNode;
+}
+
+export interface RenderMarkProps {
+  children: ReactNode;
+}
+
+export interface RenderContentOptions {
+  text: (props: RenderTextProps) => ReactNode;
+  link: (props: RenderLinkProps) => ReactNode;
+  paragraph: (props: RenderParagraphProps) => ReactNode;
+  heading: (props: RenderHeadingProps) => ReactNode;
+  doc: (props: RenderDocProps) => ReactNode;
+  // marks
+  superscript: (props: RenderMarkProps) => ReactNode;
+  subscript: (props: RenderMarkProps) => ReactNode;
+  bold: (props: RenderMarkProps) => ReactNode;
+  italic: (props: RenderMarkProps) => ReactNode;
+  underline: (props: RenderMarkProps) => ReactNode;
+  strike: (props: RenderMarkProps) => ReactNode;
+  bulletList: (props: RenderNodeProps) => ReactNode;
+  orderedList: (props: RenderNodeProps) => ReactNode;
+  listItem: (props: RenderNodeProps) => ReactNode;
+}
+
+export interface HeadingFieldProps extends BaseFieldProps {
+  render: (options?: Partial<RenderContentOptions>) => ReactNode;
 }
 
 export interface ImageFieldProps extends BaseFieldProps {
@@ -106,7 +159,7 @@ export type FieldPropsMap = {
   file: ElementType<FileFieldProps>;
   button: ElementType<ButtonFieldProps>;
   divider: ElementType<DividerFieldProps>;
-  header: ElementType<HeaderFieldProps>;
+  heading: ElementType<HeadingFieldProps>;
   image: ElementType<ImageFieldProps>;
   row: ElementType<RowFieldProps>;
   column: ElementType<ColumnFieldProps>;
@@ -138,8 +191,8 @@ export type FieldProps<T extends FieldType> = T extends 'shortText'
                     ? ButtonFieldProps
                     : T extends 'divider'
                       ? DividerFieldProps
-                      : T extends 'header'
-                        ? HeaderFieldProps
+                      : T extends 'heading'
+                        ? HeadingFieldProps
                         : T extends 'image'
                           ? ImageFieldProps
                           : T extends 'row'

@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import defaultSchema from '../default-schema';
 import type { CustomInputDef } from '@efie-form/core';
+import type { FieldConfig } from '../../types/field-settings.type';
 
 export const RIGHT_BAR_TABS = {
   PAGE: 'page',
@@ -34,6 +35,8 @@ interface SettingsState {
   ) => void;
   isInputReusable: boolean;
   setIsInputReusable: (inputReusable: SettingsState['isInputReusable']) => void;
+  config: FieldConfig;
+  setConfig: (config: FieldConfig) => void;
 }
 
 export const useSettingsStore = create<SettingsState>(set => ({
@@ -86,5 +89,50 @@ export const useSettingsStore = create<SettingsState>(set => ({
   isInputReusable: true,
   setIsInputReusable: (isInputReusable) => {
     set({ isInputReusable });
+  },
+  config: {
+    heading: {
+      formats: {
+        blockquote: true,
+        bulletList: true,
+        code: true,
+        codeBlock: true,
+        bold: true,
+        italic: true,
+        underline: true,
+        strikethrough: true,
+        link: true,
+        superscript: true,
+        align: true,
+        subscript: true,
+        list: {
+          ordered: true,
+          bullet: true,
+        },
+        heading: {
+          options: [
+            { level: 0, label: 'Paragraph' },
+            { level: 1, label: 'Heading 1' },
+            { level: 2, label: 'Heading 2' },
+            { level: 3, label: 'Heading 3' },
+            { level: 4, label: 'Heading 4' },
+            { level: 5, label: 'Heading 5' },
+            { level: 6, label: 'Heading 6' },
+          ],
+          default: 0,
+        },
+        fontSize: {
+          options: [
+            { label: 'Small', size: '0.875rem' },
+            { label: 'Medium', size: '1rem' },
+            { label: 'Large', size: '2rem' },
+            { label: 'Extra Large', size: '3rem' },
+          ],
+          default: { label: 'Medium', size: '1rem' },
+        },
+      },
+    } },
+  setConfig: (config) => {
+    set({ config });
   },
 }));

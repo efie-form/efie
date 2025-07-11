@@ -727,7 +727,7 @@ enum FieldType {
   TIME = 'time',
   DATE_TIME = 'date_time',
   FILE = 'file',
-  HEADER = 'header',
+  HEADING = 'heading',
   IMAGE = 'image',
   DIVIDER = 'divider',
   BUTTON = 'button',

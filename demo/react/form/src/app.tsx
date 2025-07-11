@@ -19,6 +19,7 @@ import ButtonField from './components/fields/button-field';
 import DividerField from './components/fields/divider-field';
 import RowField from './components/fields/row-field';
 import ColumnField from './components/fields/column-field';
+import HeadingField from './components/fields/heading-field';
 
 function App() {
   const methods = useForm();
@@ -40,7 +41,7 @@ function App() {
             dateTime={DateTimeField}
             divider={DividerField}
             file={FileField}
-            // header={HeaderField}
+            heading={HeadingField}
             image={ImageField}
             multipleChoices={MultipleChoicesField}
             singleChoice={SingleChoiceField}

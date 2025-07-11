@@ -44,7 +44,7 @@ export const fieldIcons: Record<FieldType, ElementType> = {
   [FieldType.FILE]: MdUpload,
   [FieldType.BUTTON]: RxButton,
   [FieldType.DIVIDER]: RxDividerHorizontal,
-  [FieldType.HEADER]: RiText,
+  [FieldType.HEADING]: RiText,
   [FieldType.IMAGE]: FaImage,
   [FieldType.ROW]: HiOutlineViewColumns,
   [FieldType.BLOCK]: RiPageSeparator,
@@ -119,9 +119,9 @@ const staticGroup: FieldsTabGroup = {
       Icon: fieldIcons[FieldType.DIVIDER],
     },
     {
-      type: FieldType.HEADER,
-      label: FIELDS_NAME[FieldType.HEADER],
-      Icon: fieldIcons[FieldType.HEADER],
+      type: FieldType.HEADING,
+      label: FIELDS_NAME[FieldType.HEADING],
+      Icon: fieldIcons[FieldType.HEADING],
     },
     {
       type: FieldType.IMAGE,

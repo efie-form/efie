@@ -5,7 +5,7 @@ export { default as DateProvider } from './date-provider';
 export { default as DateTimeProvider } from './date-time-provider';
 export { default as DividerProvider } from './divider-provider';
 export { default as FileProvider } from './file-provider';
-export { default as HeaderProvider } from './header-provider';
+export { default as HeadingProvider } from './heading-provider';
 export { default as ImageProvider } from './image-provider';
 export { default as LongTextProvider } from './long-text-provider';
 export { default as MultipleChoicesProvider } from './multiple-choices-provider';

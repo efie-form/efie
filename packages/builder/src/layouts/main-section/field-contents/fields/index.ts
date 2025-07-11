@@ -4,7 +4,7 @@ export { default as ColumnField } from './column-field';
 export { default as DateField } from './date-field';
 export { default as DividerField } from './divider-field';
 export { default as FileField } from './file-field';
-export { default as HeaderField } from './header-field';
+export { default as HeadingField } from './heading-field';
 export { default as ImageField } from './image-field';
 export { default as LongTextField } from './long-text-field';
 export { default as MultipleChoicesField } from './multiple-choices-field';

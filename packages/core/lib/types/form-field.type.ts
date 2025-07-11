@@ -164,8 +164,8 @@ export interface ColumnFormField extends BaseFormField {
   props: (WidthProperty | HeightProperty)[];
 }
 
-export interface HeaderFormField extends BaseFormField {
-  type: typeof FieldType.HEADER;
+export interface HeadingFormField extends BaseFormField {
+  type: typeof FieldType.HEADING;
   props: (
     | TagProperty
     | TextAlignProperty
@@ -235,7 +235,7 @@ export type FormField =
   | MultipleChoiceFormField
   | NumberFormField
   | FileFormField
-  | HeaderFormField
+  | HeadingFormField
   | ImageFormField
   | DividerFormField
   | ButtonFormField

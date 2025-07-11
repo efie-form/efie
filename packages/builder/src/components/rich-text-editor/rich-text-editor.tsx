@@ -1,46 +1,60 @@
-import type { Content, JSONContent } from '@tiptap/react';
+import type { Content, Extensions, JSONContent } from '@tiptap/react';
 import { EditorContent, useEditor } from '@tiptap/react';
 import { Bold } from '@tiptap/extension-bold';
 import { Italic } from '@tiptap/extension-italic';
 import { Underline } from '@tiptap/extension-underline';
-import { Heading } from '@tiptap/extension-heading';
+import { Strike } from '@tiptap/extension-strike';
+import { Heading, type Level } from '@tiptap/extension-heading';
 import { Document } from '@tiptap/extension-document';
 import { Paragraph } from '@tiptap/extension-paragraph';
-import { Text } from '@tiptap/extension-text';
-import { FaBold, FaItalic, FaUnderline } from 'react-icons/fa6';
-import { useState, type ElementType } from 'react';
-import { cn } from '../../lib/utils';
-import ColorPicker from '../form/color-picker';
-import { TextStyle } from '@tiptap/extension-text-style';
+import { BulletList } from '@tiptap/extension-bullet-list';
+import { OrderedList } from '@tiptap/extension-ordered-list';
+import { ListItem } from '@tiptap/extension-list-item';
+import { Link } from '@tiptap/extension-link';
+import { TextAlign } from '@tiptap/extension-text-align';
+import { Superscript } from '@tiptap/extension-superscript';
+import { Subscript } from '@tiptap/extension-subscript';
+import { History } from '@tiptap/extension-history';
 import { Color } from '@tiptap/extension-color';
+import { useState } from 'react';
 import { createPortal } from 'react-dom';
+import { Placeholder } from '@tiptap/extension-placeholder';
 import { usePopper } from 'react-popper';
+import { FontSize } from './extensions';
+import { EditorToolbar } from './editor-toolbar';
+import Text from '@tiptap/extension-text';
+import type { RichTextEditorOptions } from './type';
+import TextStyle from '@tiptap/extension-text-style';
 
 interface RichTextEditorProps {
   value: JSONContent;
   onChange: (value: JSONContent) => void;
   defaultValue?: Content;
   active?: boolean;
+  placeholder?: string;
+  options?: RichTextEditorOptions;
 }
 
-function RichTextEditor({ value, onChange, active }: RichTextEditorProps) {
+function RichTextEditor({
+  value,
+  onChange,
+  active,
+  placeholder = 'Start typing...',
+  options,
+}: RichTextEditorProps) {
   const editor = useEditor({
-    extensions: [
-      Document,
-      Paragraph,
-      Text,
-      Bold,
-      Italic,
-      Underline,
-      Heading,
-      TextStyle,
-      Color,
-    ],
+    extensions: getExtensions(options),
     content: value,
     onBlur: ({ editor }) => {
       onChange(editor.getJSON());
     },
+    editorProps: {
+      attributes: {
+        class: 'p-3 rounded-md transition-all ring-0 focus:ring-0 focus:ring-0',
+      },
+    },
   });
+
   const [referenceElement, setReferenceElement] = useState<
     HTMLDivElement | undefined
   >();
@@ -55,18 +69,89 @@ function RichTextEditor({ value, onChange, active }: RichTextEditorProps) {
     },
   );
 
+  function getExtensions(options?: RichTextEditorOptions) {
+    const extensions: Extensions = [
+      Document,
+      Paragraph,
+      History.configure({ depth: 100 }),
+      Text,
+      Placeholder.configure({
+        placeholder,
+        emptyEditorClass: 'is-editor-empty',
+      }),
+      Color.configure({
+        types: ['textStyle'],
+      }),
+      TextStyle,
+    ];
+
+    if (options?.bold) extensions.push(Bold);
+    if (options?.italic) extensions.push(Italic);
+    if (options?.underline) extensions.push(Underline);
+    if (options?.strike) extensions.push(Strike);
+    if (options?.align) {
+      extensions.push(
+        TextAlign.configure({
+          types: ['heading', 'paragraph'],
+        }),
+      );
+    }
+    if (options?.list) {
+      if (options.list === true || options.list.ordered) {
+        extensions.push(OrderedList);
+      }
+      if (options.list === true || options.list.bullet) {
+        extensions.push(BulletList);
+      }
+      extensions.push(ListItem);
+    }
+    if (options?.link) {
+      extensions.push(
+        Link.configure({
+          openOnClick: false,
+          HTMLAttributes: {
+            className: 'text-primary-500 underline cursor-pointer',
+          },
+        }),
+      );
+    }
+    if (options?.superscript) extensions.push(Superscript);
+    if (options?.subscript) extensions.push(Subscript);
+    if (options?.heading) {
+      const headingLevels: Level[] = options.heading === true
+        ? [1, 2, 3]
+        : options.heading.options.map(option => option.level).filter(
+            level => level !== 0,
+          );
+      extensions.push(
+        Heading.configure({
+          levels: headingLevels,
+        }),
+      );
+    }
+    if (options?.fontSize) {
+      extensions.push(
+        FontSize.configure({
+          types: ['textStyle'],
+        }),
+      );
+    }
+
+    return extensions;
+  };
+
   if (!editor) return;
 
   return (
     <div
-      className="relative "
+      className="relative rich-text-editor"
       ref={(el) => {
         if (el) setReferenceElement(el);
       }}
     >
       <EditorContent editor={editor} />
       {active && (() => {
-        const formZone = document.querySelector('#form-zone');
+        const formZone = document.querySelector('body');
         if (!formZone) return;
 
         return createPortal(
@@ -75,61 +160,15 @@ function RichTextEditor({ value, onChange, active }: RichTextEditorProps) {
               if (el) setPopperElement(el);
             }}
             style={styles.popper}
+            className="z-[99]"
             {...popperAttributes.popper}
           >
-            <div className="bg-neutral-50 border border-neutral-200 rounded-md flex typography-body3 shadow-md">
-              <Button
-                Icon={FaBold}
-                active={editor.isActive('bold')}
-                onClick={() => editor.chain().focus().toggleBold().run()}
-              />
-              <Button
-                Icon={FaItalic}
-                active={editor.isActive('italic')}
-                onClick={() => editor.chain().focus().toggleItalic().run()}
-              />
-              <Button
-                Icon={FaUnderline}
-                active={editor.isActive('underline')}
-                onClick={() => editor.chain().focus().toggleUnderline().run()}
-              />
-              <ColorPicker
-                value={editor.getAttributes('textStyle').color}
-                onChange={(color) => {
-                  editor.commands.setColor(color);
-                }}
-                defaultColor="#000000"
-                onClose={() => editor.commands.focus()}
-              />
-            </div>
+            <EditorToolbar editor={editor} options={options} />
           </div>,
           formZone,
         );
       })()}
     </div>
-  );
-}
-
-interface ButtonProps {
-  Icon: ElementType;
-  active?: boolean;
-  onClick: () => void;
-}
-
-function Button({ Icon, active, onClick }: ButtonProps) {
-  return (
-    <button
-      className="p-2 hover:bg-neutral-100/50 transition-all"
-      onClick={onClick}
-    >
-      <Icon
-        size={12}
-        className={cn('transition-all', {
-          'text-neutral-800': active,
-          'text-neutral-300': !active,
-        })}
-      />
-    </button>
   );
 }
 

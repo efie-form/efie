@@ -145,3 +145,119 @@ div.tiptap:focus-visible {
 .hide-input-arrow[type='number'] {
   -moz-appearance: textfield;
 }
+
+/* Rich Text Editor Styles */
+.rich-text-editor {
+  /* Custom styles for TipTap editor content */
+}
+
+.rich-text-editor .ProseMirror {
+  outline: none;
+  line-height: 1.6;
+}
+
+.rich-text-editor .ProseMirror h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0.5rem 0;
+  line-height: 1.2;
+}
+
+.rich-text-editor .ProseMirror h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0.5rem 0;
+  line-height: 1.3;
+}
+
+.rich-text-editor .ProseMirror h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0.5rem 0;
+  line-height: 1.4;
+}
+
+.rich-text-editor .ProseMirror p {
+  margin: 0.25rem 0;
+}
+
+.rich-text-editor .ProseMirror ul {
+  padding-left: 1.5rem;
+  margin: 0.5rem 0;
+}
+
+.rich-text-editor .ProseMirror ol {
+  padding-left: 1.5rem;
+  margin: 0.5rem 0;
+}
+
+.rich-text-editor .ProseMirror li {
+  margin: 0.25rem 0;
+}
+
+.rich-text-editor .ProseMirror a {
+  color: var(--color-primary-500);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.rich-text-editor .ProseMirror a:hover {
+  color: var(--color-primary-600);
+}
+
+.rich-text-editor .ProseMirror strong {
+  font-weight: 700;
+}
+
+.rich-text-editor .ProseMirror em {
+  font-style: italic;
+}
+
+.rich-text-editor .ProseMirror u {
+  text-decoration: underline;
+}
+
+.rich-text-editor .ProseMirror s {
+  text-decoration: line-through;
+}
+
+.rich-text-editor .ProseMirror sup {
+  font-size: 0.75em;
+  vertical-align: super;
+}
+
+.rich-text-editor .ProseMirror sub {
+  font-size: 0.75em;
+  vertical-align: sub;
+}
+
+.rich-text-editor .ProseMirror ol,
+.rich-text-editor .ProseMirror ul {
+  list-style-position: outside;
+}
+
+.rich-text-editor .ProseMirror ol {
+  list-style: decimal;
+}
+
+.rich-text-editor .ProseMirror ul {
+  list-style: disc;
+}
+
+/* Font size support */
+.rich-text-editor .ProseMirror [style*="font-size"] {
+  /* Ensure font-size styles are preserved and rendered correctly */
+}
+
+.rich-text-editor .ProseMirror span[style*="font-size"] {
+  display: inline;
+}
+
+/* Placeholder styling */
+.rich-text-editor .ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: var(--color-neutral-400);
+  pointer-events: none;
+  height: 0;
+}

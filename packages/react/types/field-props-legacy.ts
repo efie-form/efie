@@ -162,7 +162,7 @@ export interface DividerFieldProps extends BaseStaticFieldProps {
   dividerStyle?: 'solid' | 'dashed' | 'dotted';
 }
 
-export interface HeaderFieldProps extends BaseStaticFieldProps {
+export interface HeadingFieldProps extends BaseStaticFieldProps {
   // Field-specific props (processed from schema)
   content: string; // Rich text content processed from schema
   headingTag?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
@@ -272,7 +272,7 @@ export interface FieldPropsMap {
   dateTime: ElementType<DateTimeFieldProps>;
   file: ElementType<FileFieldProps>;
   divider: ElementType<DividerFieldProps>;
-  header: ElementType<HeaderFieldProps>;
+  heading: ElementType<HeadingFieldProps>;
   image: ElementType<ImageFieldProps>;
   row: ElementType<RowFieldProps>;
   column: ElementType<ColumnFieldProps>;
@@ -304,8 +304,8 @@ export type FieldProps<T extends FieldType> = T extends 'shortText'
                   ? FileFieldProps
                   : T extends 'divider'
                     ? DividerFieldProps
-                    : T extends 'header'
-                      ? HeaderFieldProps
+                    : T extends 'heading'
+                      ? HeadingFieldProps
                       : T extends 'image'
                         ? ImageFieldProps
                         : T extends 'row'
