@@ -14,10 +14,9 @@ interface FormProviderProps extends FormContextProps {
  */
 export function FormProvider({ children, ...contextValue }: FormProviderProps): ReactElement {
   if (isReact19OrHigher()) {
-    // React 19+ allows using Context directly
-    // Use createElement with type assertion for React 19 compatibility
+    // React 19+ allows using Context directly as a provider
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return createElement(FormContext as any, { value: contextValue }, children);
+    return createElement(FormContext as any, contextValue, children);
   }
 
   // React 18 requires using .Provider

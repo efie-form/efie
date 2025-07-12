@@ -1,6 +1,7 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
+    "types": ["vitest/globals"],
     "declarationMap": true,
     "allowJs": true,
     "verbatimModuleSyntax": true,

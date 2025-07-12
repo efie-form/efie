@@ -1,15 +1,15 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { FormProvider } from '../lib/components/form-provider';
-import { FormContext } from '../lib/form-context';
+import { FormProvider } from '../form-provider';
+import { FormContext } from '../../form-context';
 import { useContext } from 'react';
 
 // Mock the React version utility
-vi.mock('../lib/utils/react-version', () => ({
+vi.mock('../../utils/react-version', () => ({
   isReact19OrHigher: vi.fn(),
 }));
 
-import { isReact19OrHigher } from '../lib/utils/react-version';
+import { isReact19OrHigher } from '../../utils/react-version';
 
 // Test component that consumes the FormContext
 function TestConsumer() {
@@ -17,19 +17,15 @@ function TestConsumer() {
   return <div data-testid="context-value">{JSON.stringify(context)}</div>;
 }
 
-const mockSchema = {
-  form: {
-    fields: [],
-    settings: {},
-  },
-  validations: {},
-};
-
 describe('FormProvider', () => {
-  it('should use Context.Provider for React 18', () => {
-    (isReact19OrHigher as any).mockReturnValue(false);
+  it('should provide context values to children', () => {
+    vi.mocked(isReact19OrHigher).mockReturnValue(false);
 
-    const testProps = { schema: mockSchema, testProp: 'test-value' };
+    const setPageMock = vi.fn();
+    const testProps = {
+      page: 'test-page',
+      setPage: setPageMock,
+    };
 
     render(
       <FormProvider {...testProps}>
@@ -39,22 +35,39 @@ describe('FormProvider', () => {
 
     const contextValue = screen.getByTestId('context-value');
     expect(contextValue).toBeInTheDocument();
-    expect(contextValue.textContent).toContain('test-value');
+    expect(contextValue.textContent).toContain('test-page');
   });
 
-  it('should use Context directly for React 19+', () => {
-    (isReact19OrHigher as any).mockReturnValue(true);
+  it('should call setPage function correctly', () => {
+    vi.mocked(isReact19OrHigher).mockReturnValue(false);
 
-    const testProps = { schema: mockSchema, testProp: 'test-value-19' };
+    const setPageMock = vi.fn();
+    const testProps = {
+      page: 'initial-page',
+      setPage: setPageMock,
+    };
+
+    function TestWithCallback() {
+      const { setPage } = useContext(FormContext);
+      return (
+        <button
+          data-testid="set-page-button"
+          onClick={() => setPage('new-page')}
+        >
+          Set Page
+        </button>
+      );
+    }
 
     render(
       <FormProvider {...testProps}>
-        <TestConsumer />
+        <TestWithCallback />
       </FormProvider>,
     );
 
-    const contextValue = screen.getByTestId('context-value');
-    expect(contextValue).toBeInTheDocument();
-    expect(contextValue.textContent).toContain('test-value-19');
+    const button = screen.getByTestId('set-page-button');
+    button.click();
+
+    expect(setPageMock).toHaveBeenCalledWith('new-page');
   });
 });

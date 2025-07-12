@@ -38,6 +38,8 @@
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
+    "test": "vitest",
+    "test:coverage": "vitest --coverage",
     "type-check": "tsc --noEmit",
     "type-check:react18": "tsc --project tsconfig.react18.json --noEmit",
     "type-check:react19": "tsc --project tsconfig.react19.json --noEmit",
@@ -50,17 +52,21 @@
     "@tiptap/core": "^2.26.0"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.1.0",
+    "@testing-library/react": "^14.0.0",
     "@types/react": "^18.3.1",
     "@types/react-19": "npm:@types/react@^19.0.0",
     "@types/react-dom": "^18.3.1",
     "@types/react-dom-19": "npm:@types/react-dom@^19.0.0",
     "@vitejs/plugin-react-swc": "^3.5.0",
+    "jsdom": "^23.0.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "tsd": "^0.31.0",
     "tsup": "^8.0.0",
     "typescript": "~5.6.2",
-    "vite": "^5.4.9"
+    "vite": "^5.4.9",
+    "vitest": "^1.6.1"
   },
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0",
