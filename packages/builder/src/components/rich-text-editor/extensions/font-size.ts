@@ -14,8 +14,10 @@ const setFontSizeCommand = (fontSize: string) => ({ chain }: any) => {
 const unsetFontSizeCommand = () => ({ chain }: any) => {
   return chain().setMark('textStyle', { fontSize: undefined }).removeEmptyTextStyle().run();
 };
-/* eslint-enable unicorn/consistent-function-scoping */
-/* eslint-enable @typescript-eslint/no-explicit-any */
+
+export const defaultFontSizes = [
+  '12px', '14px', '16px', '18px', '20px', '24px', '28px', '32px', '36px', '48px',
+];
 
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
@@ -38,7 +40,7 @@ export const FontSize = Extension.create<FontSizeOptions>({
   addOptions() {
     return {
       types: ['textStyle'],
-      sizes: ['8px', '10px', '12px', '14px', '16px', '18px', '20px', '24px', '32px', '48px', '64px'],
+      sizes: defaultFontSizes,
     };
   },
 

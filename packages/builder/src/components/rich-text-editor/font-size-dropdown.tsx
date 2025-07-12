@@ -2,28 +2,24 @@ import type { Editor } from '@tiptap/react';
 import { useState } from 'react';
 import { FaTextHeight } from 'react-icons/fa6';
 import { cn } from '../../lib/utils';
+import { defaultFontSizes } from './extensions/font-size';
 
 interface FontSizeDropdownProps {
   editor: Editor;
   fontSizes?: { size: string; label: string }[];
   defaultSize?: { size: string; label: string };
 }
-const defaultFontSizes = [
-  { size: '12px', label: '12px' },
-  { size: '14px', label: '14px' },
-  { size: '16px', label: '16px' },
-  { size: '18px', label: '18px' },
-  { size: '20px', label: '20px' },
-  { size: '24px', label: '24px' },
-  { size: '28px', label: '28px' },
-  { size: '32px', label: '32px' },
-  { size: '36px', label: '36px' },
-  { size: '48px', label: '48px' },
-];
+
+const getDefaultFontSizes = () => {
+  return defaultFontSizes.map(size => ({
+    size,
+    label: size,
+  }));
+};
 
 export default function FontSizeDropdown({
   editor,
-  fontSizes = defaultFontSizes,
+  fontSizes = getDefaultFontSizes(),
   defaultSize = { size: '16px', label: 'Default' },
 }: FontSizeDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);

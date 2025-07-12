@@ -20,11 +20,12 @@ import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Placeholder } from '@tiptap/extension-placeholder';
 import { usePopper } from 'react-popper';
-import { FontSize } from './extensions';
+import { FontSize, type FontSizeOptions } from './extensions';
 import { EditorToolbar } from './';
 import Text from '@tiptap/extension-text';
 import type { RichTextEditorOptions } from './type';
 import TextStyle from '@tiptap/extension-text-style';
+import { defaultFontSizes } from './extensions/font-size';
 
 interface RichTextEditorProps {
   value: JSONContent;
@@ -130,10 +131,15 @@ function RichTextEditor({
       );
     }
     if (options?.fontSize) {
+      const fontSizeOptions: FontSizeOptions = {
+        types: ['textStyle'],
+        sizes: defaultFontSizes,
+      };
+      if (typeof options.fontSize === 'object' && options.fontSize.options) {
+        fontSizeOptions.sizes = options.fontSize.options.map(option => option.size);
+      }
       extensions.push(
-        FontSize.configure({
-          types: ['textStyle'],
-        }),
+        FontSize.configure(fontSizeOptions),
       );
     }
 
