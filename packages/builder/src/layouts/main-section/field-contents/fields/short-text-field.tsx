@@ -1,6 +1,6 @@
 import { PropertyType, type ShortTextFormField } from '@efie-form/core';
 import { getFieldProp } from '../../../../lib/utils';
-import { useFieldLabel } from '../../../../lib/hooks/properties/use-field-label';
+import { useSchemaStore } from '../../../../lib/state/schema.state';
 
 interface ShortTextFieldProps {
   field: ShortTextFormField;
@@ -8,13 +8,18 @@ interface ShortTextFieldProps {
 
 function ShortTextField({ field }: ShortTextFieldProps) {
   const placeholderProp = getFieldProp(field, PropertyType.PLACEHOLDER);
-  const { label, updateLabel } = useFieldLabel(field);
+  const fieldProperty = useSchemaStore(state => state.getFieldProperty(field.id, PropertyType.LABEL));
+  const label = fieldProperty?.value || '';
+  const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
 
   return (
     <div className="p-2">
       <input
         value={label}
-        onChange={e => updateLabel(e.target.value)}
+        onChange={e => updateFieldProperty(field.id, {
+          type: PropertyType.LABEL,
+          value: e.target.value,
+        })}
         className="mb-2 typography-body2 bg-white bg-opacity-0 focus:outline-none cursor-text w-full"
         type="text"
       />

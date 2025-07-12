@@ -85,7 +85,6 @@ Key packages include:
 
 ### Performance
 - Be mindful of performance, especially in the core library and rendering paths.
-- Use memoization (e.g., `useMemo`, `useCallback` in React) where appropriate.
 - Avoid unnecessary re-renders in UI components.
 - Profile and optimize critical code paths if performance issues are identified.
 

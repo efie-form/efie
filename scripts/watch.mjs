@@ -56,6 +56,8 @@ class WatchManager {
     this.includeVue = options.includeVue || false;
     this.verbose = options.verbose || false;
     this.processes = new Map();
+    this.fileWatchers = new Map(); // Track additional file watchers
+    this.lastBuildTimes = new Map(); // Track last build times to debounce
     this.isShuttingDown = false;
     this.startTime = Date.now();
 
@@ -209,11 +211,104 @@ class WatchManager {
       // Setup process event handlers
       this.setupProcessHandlers(name, watchProcess);
 
+      // Setup supplementary file watching for packages that need it
+      await this.setupSupplementaryFileWatcher(name, config, packagePath);
+
       this.logPackage(name, 'Watch started successfully ✅');
     }
     catch (error) {
       this.logPackage(name, `Failed to start watch: ${error.message}`, true);
       throw error;
+    }
+  }
+
+  async setupSupplementaryFileWatcher(name, config, packagePath) {
+    // Only set up supplementary watching for packages that might have issues
+    if (name !== '@efie-form/react' && name !== '@efie-form/builder') {
+      return;
+    }
+
+    try {
+      // Dynamic import for fs since we only need it conditionally
+      const fs = await import('node:fs');
+
+      // Watch lib directory for changes
+      const libPath = path.join(packagePath, 'lib');
+      const srcPath = path.join(packagePath, 'src');
+
+      const watchPaths = [];
+      if (fs.existsSync(libPath)) watchPaths.push(libPath);
+      if (fs.existsSync(srcPath)) watchPaths.push(srcPath);
+
+      for (const watchPath of watchPaths) {
+        const watcher = fs.watch(watchPath, { recursive: true }, (eventType, filename) => {
+          if (filename && (filename.endsWith('.ts') || filename.endsWith('.tsx'))) {
+            this.handleFileChange(name, packagePath, filename);
+          }
+        });
+
+        this.fileWatchers.set(`${name}-${path.basename(watchPath)}`, watcher);
+        this.logPackage(name, `📁 Supplementary file watcher set up for ${path.basename(watchPath)}/`);
+      }
+    }
+    catch {
+      // Fallback if fs.watch is not available or fails
+      this.logPackage(name, `⚠️  Could not set up supplementary file watcher`);
+    }
+  }
+
+  handleFileChange(name, packagePath, filename) {
+    const now = Date.now();
+    const lastBuild = this.lastBuildTimes.get(name) || 0;
+
+    // Debounce: only trigger rebuild if it's been more than 1 second since last build
+    if (now - lastBuild < 1000) {
+      return;
+    }
+
+    this.lastBuildTimes.set(name, now);
+    this.logPackage(name, `🔄 File changed: ${filename}, triggering rebuild...`);
+
+    // Trigger a rebuild by sending SIGUSR1 to the tsup process
+    const process = this.processes.get(name);
+    if (process && !process.killed) {
+      try {
+        // Send a signal to trigger rebuild (most watchers respond to SIGUSR1 or SIGUSR2)
+        process.kill('SIGUSR1');
+      }
+      catch {
+        // If signal doesn't work, restart the process
+        this.logPackage(name, `🔄 Signal failed, restarting watch process...`);
+        this.restartPackageWatch(name, packagePath);
+      }
+    }
+  }
+
+  async restartPackageWatch(name, packagePath) {
+    try {
+      // Kill the existing process
+      const existingProcess = this.processes.get(name);
+      if (existingProcess && !existingProcess.killed) {
+        existingProcess.kill('SIGTERM');
+      }
+
+      // Wait a moment for cleanup
+      await this.delay(500);
+
+      // Start a new watch process
+      const watchProcess = spawn('pnpm', ['run', 'dev'], {
+        cwd: packagePath,
+        stdio: 'pipe',
+        shell: true,
+      });
+
+      this.processes.set(name, watchProcess);
+      this.setupProcessHandlers(name, watchProcess);
+
+      this.logPackage(name, 'Watch restarted successfully ✅');
+    }
+    catch (error) {
+      this.logPackage(name, `Failed to restart watch: ${error.message}`, true);
     }
   }
 
@@ -249,11 +344,11 @@ class WatchManager {
     const filters = [
       'watching for file changes',
       'Watching for changes',
-      'Built at',
       /^DTS Build start$/,
-      /^DTS ⚡️ Build success/,
-      /^CLI Building entry/,
-      /^CLI ⚡️ Build success/,
+      // Remove 'Built at' and build success filters to see more output
+      // /^DTS ⚡️ Build success/,
+      // /^CLI Building entry/,
+      // /^CLI ⚡️ Build success/,
     ];
 
     return filters.some((filter) => {
@@ -331,6 +426,17 @@ class WatchManager {
     this.isShuttingDown = true;
     console.log(); // Empty line
     this.log('🛑 Shutting down watch processes...', colors.yellow);
+
+    // Close file watchers first
+    for (const [name, watcher] of this.fileWatchers.entries()) {
+      try {
+        this.log(`   Closing file watcher ${name}...`, colors.dim);
+        watcher.close();
+      }
+      catch (error) {
+        this.log(`   Failed to close file watcher ${name}: ${error.message}`, colors.red);
+      }
+    }
 
     // Kill all processes
     const processEntries = [...this.processes.entries()];

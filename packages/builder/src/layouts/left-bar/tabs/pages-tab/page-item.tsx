@@ -1,7 +1,7 @@
 import { isStringValue, PropertyType, type PageFormField, type PropValue, type PropValueString } from '@efie-form/core';
 import { useSchemaStore } from '../../../../lib/state/schema.state';
 import { useSortable } from '@dnd-kit/sortable';
-import { type CSSProperties, useCallback, useEffect, useRef, useState } from 'react';
+import { type CSSProperties, useEffect, useRef, useState } from 'react';
 import { cn } from '../../../../lib/utils';
 import { MdOutlineDragIndicator } from 'react-icons/md';
 import { FaCheck, FaTrash, FaXmark } from 'react-icons/fa6';
@@ -35,13 +35,10 @@ export default function PageItem({
   const [editMode, setEditMode] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const fieldProperty = useSchemaStore(
-    useCallback(state => state.getFieldProperty(page.id, PropertyType.PAGE_NAME), [page.id]),
+    state => state.getFieldProperty(page.id, PropertyType.PAGE_NAME),
   );
   const updateFieldProperty = useSchemaStore(
-    useCallback(
-      state => state.updateFieldProperty,
-      [page.id, PropertyType.PAGE_NAME],
-    ),
+    state => state.updateFieldProperty,
   );
   const name = getValue(fieldProperty?.value);
 

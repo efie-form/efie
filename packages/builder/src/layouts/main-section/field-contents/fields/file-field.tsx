@@ -1,7 +1,7 @@
 import { PropertyType, type FileFormField } from '@efie-form/core';
 import { MdOutlineCloudUpload } from 'react-icons/md';
 import { useRef } from 'react';
-import { useFieldLabel } from '../../../../lib/hooks/properties/use-field-label';
+import { useSchemaStore } from '../../../../lib/state/schema.state';
 import { getFieldProp } from '../../../../lib/utils';
 
 interface FileFieldProps {
@@ -9,7 +9,9 @@ interface FileFieldProps {
 }
 
 function FileField({ field }: FileFieldProps) {
-  const { label, updateLabel } = useFieldLabel(field);
+  const fieldProperty = useSchemaStore(state => state.getFieldProperty(field.id, PropertyType.LABEL));
+  const label = fieldProperty?.value || '';
+  const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
   const acceptProp = getFieldProp(field, PropertyType.ACCEPT);
   const maxFilesProp = getFieldProp(field, PropertyType.MAX_FILES);
 
@@ -19,7 +21,10 @@ function FileField({ field }: FileFieldProps) {
     <div className="p-2">
       <input
         value={label}
-        onChange={e => updateLabel(e.target.value)}
+        onChange={e => updateFieldProperty(field.id, {
+          type: PropertyType.LABEL,
+          value: e.target.value,
+        })}
         className="mb-2 typography-body2 bg-white bg-opacity-0 focus:outline-none cursor-text w-full"
         type="text"
       />

@@ -1,4 +1,3 @@
-import { useCallback } from 'react';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import type { PropSettingsBoolean } from '../../../types/prop-settings.type';
 import { isBooleanValue, type PropertyDefinition, type PropValue } from '@efie-form/core';
@@ -11,21 +10,18 @@ interface PropTemplateBoolean extends PropSettingsBoolean {
 
 export default function PropsTemplateBoolean({ label, fieldId, type }: PropTemplateBoolean) {
   const fieldProperty = useSchemaStore(
-    useCallback(
-      state => state.getFieldProperty(fieldId, type),
-      [fieldId, type],
-    ),
+    state => state.getFieldProperty(fieldId, type),
   );
   const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
 
   const value = getValue(fieldProperty?.value);
 
-  const handleChange = useCallback((newValue: boolean) => {
+  const handleChange = (newValue: boolean) => {
     updateFieldProperty(fieldId, {
       type,
       value: newValue,
     } as PropertyDefinition);
-  }, [fieldId, updateFieldProperty]);
+  };
 
   return (
     <SettingsFieldHorizontal label={label} divider>

@@ -1,8 +1,7 @@
-import { useCallback } from 'react';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import type { PropSettingsColor } from '../../../types/prop-settings.type';
 import SettingsFieldHorizontal from '../property-layouts/settings-field-horizontal';
-import ColorPicker2 from '../../../components/form/color-picker-2';
+import { ColorPicker } from '../../../components/form';
 import { getColorObject, isColorValue, type Color, type PropertyDefinition, type PropValue } from '@efie-form/core';
 
 interface PropsTemplateColorProps extends PropSettingsColor {
@@ -11,7 +10,7 @@ interface PropsTemplateColorProps extends PropSettingsColor {
 
 export default function PropsTemplateColor({ fieldId, label, type }: PropsTemplateColorProps) {
   const fieldProperty = useSchemaStore(
-    useCallback(state => state.getFieldProperty(fieldId, type), [fieldId, type]),
+    state => state.getFieldProperty(fieldId, type),
   );
   const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
   const value = getValue(fieldProperty?.value);
@@ -25,7 +24,7 @@ export default function PropsTemplateColor({ fieldId, label, type }: PropsTempla
 
   return (
     <SettingsFieldHorizontal label={label} divider>
-      <ColorPicker2
+      <ColorPicker
         value={value}
         onChange={handleChange}
       />

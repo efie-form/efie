@@ -1,4 +1,3 @@
-import { useCallback } from 'react';
 import { Input } from '../../../components/form';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import type { PropSettingsNumber } from '../../../types/prop-settings.type';
@@ -10,7 +9,7 @@ interface PropsTemplateNumberProps extends PropSettingsNumber {
 }
 
 export default function PropsTemplateNumber({ fieldId, label, type, placeholder }: PropsTemplateNumberProps) {
-  const fieldProperty = useSchemaStore(useCallback(state => state.getFieldProperty(fieldId, type), [fieldId, type]));
+  const fieldProperty = useSchemaStore(state => state.getFieldProperty(fieldId, type));
   const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
   const value = getValue(fieldProperty?.value);
 

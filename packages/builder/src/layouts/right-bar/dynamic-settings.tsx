@@ -1,19 +1,19 @@
 import type { PropSettings } from '../../types/prop-settings.type';
-import PropsSettingsAccept from './property-settings-2/props-settings-accept';
-import PropsSettingsFormKey from './property-settings-2/props-settings-form-key';
-import PropsSettingsOptions from './property-settings-2/props-settings-options';
+import PropsSettingsAccept from './property-settings/props-settings-accept';
+import PropsSettingsFormKey from './property-settings/props-settings-form-key';
+import PropsSettingsOptions from './property-settings/props-settings-options';
 import PropsTemplateBoolean from './property-templates/props-template-boolean';
 import PropsTemplateColor from './property-templates/props-template-color';
 import PropsTemplateImageUrl from './property-templates/props-template-image-url';
 import PropsTemplateNumber from './property-templates/props-template-number';
 import PropsTemplateText from './property-templates/props-template-text';
 import { PropsTemplateSize } from './property-templates/props-template-size';
-import PropsSettingsBorderRadius from './property-settings-2/props-settings-border-radius';
-import PropsSettingsMargin from './property-settings-2/props-settings-margin';
-import PropsSettingsPadding from './property-settings-2/props-settings-padding';
-import PropsSettingsBoxShadow from './property-settings-2/props-settings-box-shadow';
-import PropsSettingsSelect from './property-settings-2/props-settings-select';
-import PropsSettingsButtonAction from './property-settings-2/props-settings-button-action';
+import PropsSettingsBorderRadius from './property-settings/props-settings-border-radius';
+import PropsSettingsMargin from './property-settings/props-settings-margin';
+import PropsSettingsPadding from './property-settings/props-settings-padding';
+import PropsSettingsBoxShadow from './property-settings/props-settings-box-shadow';
+import PropsSettingsSelect from './property-settings/props-settings-select';
+import PropsSettingsButtonAction from './property-settings/props-settings-button-action';
 
 interface DynamicSettingsProps {
   settings?: PropSettings[];

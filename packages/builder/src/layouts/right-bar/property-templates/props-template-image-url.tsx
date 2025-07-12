@@ -2,7 +2,7 @@ import { Input } from '../../../components/form';
 import SettingsFieldVertical from '../property-layouts/settings-field-vertical';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import type { PropSettingsImageUrl } from '../../../types/prop-settings.type';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { isStringValue, type PropertyDefinition, type PropValue } from '@efie-form/core';
 import { MdOutlineImage } from 'react-icons/md';
 import { useFileDragDrop } from '../../../lib/hooks/use-file-drag-drop';
@@ -20,10 +20,7 @@ export default function PropsTemplateImageUrl({
   fieldId,
 }: PropsTemplateImageUrlProps) {
   const fieldProperty = useSchemaStore(
-    useCallback(
-      state => state.getFieldProperty(fieldId, type),
-      [fieldId, type],
-    ),
+    state => state.getFieldProperty(fieldId, type),
   );
   const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
   const value = getValue(fieldProperty?.value);
@@ -47,16 +44,16 @@ export default function PropsTemplateImageUrl({
     handleDrop(e);
   };
 
-  const handleChange = useCallback((newValue: string) => {
+  const handleChange = (newValue: string) => {
     updateFieldProperty(fieldId, {
       type,
       value: newValue,
     } as PropertyDefinition);
     setImageError(false);
     // setIsLoading(false);
-  }, [fieldId, type, updateFieldProperty]);
+  };
 
-  const handleFileSelect = useCallback((file: File) => {
+  const handleFileSelect = (file: File) => {
     // Store file information
     setFileInfo({
       name: file.name,
@@ -67,16 +64,16 @@ export default function PropsTemplateImageUrl({
     // For now, create a local URL for preview
     const localUrl = URL.createObjectURL(file);
     handleChange(localUrl);
-  }, [handleChange]);
+  };
 
   const { handleDrag, handleDrop, handleFileInputChange, dragActive, isDraggedFileValid } = useFileDragDrop({
     onFileSelect: handleFileSelect,
     acceptedFileTypes: ['image/'], // Only accept image files for this component
   });
 
-  const handleUploadClick = useCallback(() => {
+  const handleUploadClick = () => {
     fileInputRef.current?.click();
-  }, []);
+  };
 
   // Check image size
   const checkImageSize = (url: string) => {

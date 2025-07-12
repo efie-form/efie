@@ -9,7 +9,7 @@ interface ToolbarButtonProps {
   disabled?: boolean;
 }
 
-export function ToolbarButton({ Icon, active, onClick, tooltip, disabled }: ToolbarButtonProps) {
+export default function ToolbarButton({ Icon, active, onClick, tooltip, disabled }: ToolbarButtonProps) {
   return (
     <button
       className={cn(

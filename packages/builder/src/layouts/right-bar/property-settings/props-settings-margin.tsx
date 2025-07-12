@@ -1,34 +1,38 @@
-import { useCallback, useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useSchemaStore } from '../../../lib/state/schema.state';
-import type { PropertyDefinition, PaddingProperty, PropValue, PropValuePadding } from '@efie-form/core';
-import { isPaddingValue, SizeType, type PaddingSize, type Size } from '@efie-form/core';
+import type { PropertyDefinition, MarginProperty, PropValue, PropValueMargin } from '@efie-form/core';
+import { isMarginValue, SizeType, type MarginSize, type Size } from '@efie-form/core';
 import SizeInput from '../../../components/form/size-input';
 import { FaLink, FaUnlink } from 'react-icons/fa';
-import type { PropSettingsPadding } from '../../../types/prop-settings.type';
 
-interface PropsSettingsPaddingProps extends PropSettingsPadding {
+interface PropSettingsMargin {
+  template: 'margin';
+  type: PropertyDefinition['type'];
+  label: string;
+}
+
+interface PropsSettingsMarginProps extends PropSettingsMargin {
   fieldId: string;
 }
 
-export default function PropsSettingsPadding({ fieldId, label, type }: PropsSettingsPaddingProps) {
-  const fieldProperty = useSchemaStore(useCallback(
+// Helper to normalize values for comparison
+const normalizeValue = (val: Size): string => {
+  return JSON.stringify(val);
+};
+
+export default function PropsSettingsMargin({ fieldId, label, type }: PropsSettingsMarginProps) {
+  const fieldProperty = useSchemaStore(
     state => (state.getFieldProperty(fieldId, type)),
-    [fieldId, type],
-  ));
+  );
   const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
   const value = getValue(fieldProperty?.value);
   const [isLinked, setIsLink] = useState(false);
   const [hasUserInteracted, setHasUserInteracted] = useState(false);
-  const previousValuesRef = useRef<PaddingProperty['value'] | null>(null);
+  const previousValuesRef = useRef<MarginProperty['value'] | null>(null);
 
-  // Helper function to check if all padding values are the same
-  const areAllPaddingsSame = useCallback((paddingValue: PaddingProperty['value']): boolean => {
-    const { top, right, bottom, left } = paddingValue;
-
-    // Helper to normalize values for comparison
-    const normalizeValue = (val: Size): string => {
-      return JSON.stringify(val);
-    };
+  // Helper function to check if all margin values are the same
+  const areAllMarginsSame = (marginValue: MarginProperty['value']): boolean => {
+    const { top, right, bottom, left } = marginValue;
 
     const topStr = normalizeValue(top);
     const rightStr = normalizeValue(right);
@@ -38,17 +42,17 @@ export default function PropsSettingsPadding({ fieldId, label, type }: PropsSett
     return topStr === rightStr
       && rightStr === bottomStr
       && bottomStr === leftStr;
-  }, []);
+  };
 
-  // Check if all paddings are the same when component mounts or value changes
+  // Check if all margins are the same when component mounts or value changes
   useEffect(() => {
-    const allSame = areAllPaddingsSame(value);
-    // Only auto-link if currently unlinked, all paddings are the same, AND user hasn't manually interacted
+    const allSame = areAllMarginsSame(value);
+    // Only auto-link if currently unlinked, all margins are the same, AND user hasn't manually interacted
     if (allSame && !isLinked && !hasUserInteracted) {
       setIsLink(true);
     }
     // Don't auto-unlink if values become different - let user control this
-  }, [value, areAllPaddingsSame, isLinked, hasUserInteracted]);
+  }, [value, areAllMarginsSame, isLinked, hasUserInteracted]);
 
   const toggleLink = () => {
     // Mark that user has manually interacted with the link state
@@ -65,10 +69,10 @@ export default function PropsSettingsPadding({ fieldId, label, type }: PropsSett
     }
     else {
       // Store current values before linking (only if they're not already the same)
-      if (!areAllPaddingsSame(value)) {
+      if (!areAllMarginsSame(value)) {
         previousValuesRef.current = { ...value };
       }
-      // Set all paddings to the same value (using top as reference)
+      // Set all margins to the same value (using top as reference)
       const uniformValue = value.top;
       updateFieldProperty(fieldId, {
         type,
@@ -83,17 +87,17 @@ export default function PropsSettingsPadding({ fieldId, label, type }: PropsSett
     setIsLink(!isLinked);
   };
 
-  const handleChange = useCallback((newValue: PaddingSize, paddingSide: keyof PaddingProperty['value']) => {
+  const handleChange = (newValue: MarginSize, marginSide: keyof MarginProperty['value']) => {
     updateFieldProperty(fieldId, {
       type,
       value: {
         ...value,
-        [paddingSide]: newValue,
+        [marginSide]: newValue,
       },
     } as PropertyDefinition);
-  }, [fieldId, updateFieldProperty, type, value]);
+  };
 
-  const handleLinkedChange = useCallback((newValue: Size) => {
+  const handleLinkedChange = (newValue: Size) => {
     updateFieldProperty(fieldId, {
       type,
       value: {
@@ -103,7 +107,7 @@ export default function PropsSettingsPadding({ fieldId, label, type }: PropsSett
         left: newValue,
       },
     } as PropertyDefinition);
-  }, [fieldId, updateFieldProperty, type]);
+  };
 
   return (
     <>
@@ -134,57 +138,57 @@ export default function PropsSettingsPadding({ fieldId, label, type }: PropsSett
                   <div></div>
                   <div>
                     <p className="typography-body4 text-neutral-600 text-center">Top</p>
-                    <PaddingSide
+                    <MarginSide
                       value={value}
                       handleChange={handleChange}
-                      paddingSide="top"
+                      marginSide="top"
                     />
                   </div>
                   <div></div>
                   <div>
                     <p className="typography-body4 text-neutral-600 text-center">Left</p>
-                    <PaddingSide
+                    <MarginSide
                       value={value}
                       handleChange={handleChange}
-                      paddingSide="left"
+                      marginSide="left"
                     />
                   </div>
                   <div className="flex items-center justify-center">
                     <div className="relative w-12 h-12">
                       <div className="absolute inset-0 border-2 border-neutral-400"></div>
                       <div
-                        className="absolute bg-primary-200"
+                        className="absolute bg-neutral-200"
                         style={{
-                          top: '4px',
-                          left: '4px',
-                          right: '4px',
+                          top: 0,
+                          left: 0,
+                          right: 0,
                           height: '4px',
                         }}
                       />
                       <div
-                        className="absolute bg-primary-200"
+                        className="absolute bg-neutral-200"
                         style={{
-                          top: '4px',
-                          right: '4px',
-                          bottom: '4px',
+                          top: 0,
+                          right: 0,
+                          bottom: 0,
                           width: '4px',
                         }}
                       />
                       <div
-                        className="absolute bg-primary-200"
+                        className="absolute bg-neutral-200"
                         style={{
-                          bottom: '4px',
-                          left: '4px',
-                          right: '4px',
+                          bottom: 0,
+                          left: 0,
+                          right: 0,
                           height: '4px',
                         }}
                       />
                       <div
-                        className="absolute bg-primary-200"
+                        className="absolute bg-neutral-200"
                         style={{
-                          top: '4px',
-                          left: '4px',
-                          bottom: '4px',
+                          top: 0,
+                          left: 0,
+                          bottom: 0,
                           width: '4px',
                         }}
                       />
@@ -192,19 +196,19 @@ export default function PropsSettingsPadding({ fieldId, label, type }: PropsSett
                   </div>
                   <div>
                     <p className="typography-body4 text-neutral-600 text-center">Right</p>
-                    <PaddingSide
+                    <MarginSide
                       value={value}
                       handleChange={handleChange}
-                      paddingSide="right"
+                      marginSide="right"
                     />
                   </div>
                   <div></div>
                   <div>
                     <p className="typography-body4 text-neutral-600 text-center">Bottom</p>
-                    <PaddingSide
+                    <MarginSide
                       value={value}
                       handleChange={handleChange}
-                      paddingSide="bottom"
+                      marginSide="bottom"
                     />
                   </div>
                   <div></div>
@@ -219,29 +223,29 @@ export default function PropsSettingsPadding({ fieldId, label, type }: PropsSett
   );
 }
 
-interface PaddingSideProps {
-  value: PaddingProperty['value'];
-  handleChange: (newValue: PaddingSize, paddingSide: keyof PaddingProperty['value']) => void;
-  paddingSide: keyof PaddingProperty['value'];
+interface MarginSideProps {
+  value: MarginProperty['value'];
+  handleChange: (newValue: MarginSize, marginSide: keyof MarginProperty['value']) => void;
+  marginSide: keyof MarginProperty['value'];
 }
 
-function PaddingSide({ value, handleChange, paddingSide }: PaddingSideProps) {
+function MarginSide({ value, handleChange, marginSide }: MarginSideProps) {
   return (
     <SizeInput
       className="w-full"
-      value={value[paddingSide]}
-      onChange={newSize => handleChange(newSize as PaddingSize, paddingSide)}
+      value={value[marginSide]}
+      onChange={newSize => handleChange(newSize as MarginSize, marginSide)}
     />
   );
 }
 
-function getValue(props?: PropValue): PropValuePadding {
-  if (!isPaddingValue(props)) return {
+function getValue(value?: PropValue): PropValueMargin {
+  if (!isMarginValue(value)) return {
     top: { type: SizeType.LENGTH, value: 0, unit: 'px' },
     right: { type: SizeType.LENGTH, value: 0, unit: 'px' },
     bottom: { type: SizeType.LENGTH, value: 0, unit: 'px' },
     left: { type: SizeType.LENGTH, value: 0, unit: 'px' },
   };
 
-  return props;
+  return value;
 }

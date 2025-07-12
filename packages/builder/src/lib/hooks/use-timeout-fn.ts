@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 export type UseTimeoutFnReturn = [() => boolean, () => void, () => void];
 
@@ -10,9 +10,9 @@ export default function useTimeoutFn(
   const timeout = useRef<ReturnType<typeof setTimeout>>();
   const callback = useRef(fn);
 
-  const isReady = useCallback(() => ready.current, []);
+  const isReady = () => ready.current;
 
-  const set = useCallback(() => {
+  const set = () => {
     ready.current = false;
     if (timeout.current) clearTimeout(timeout.current);
 
@@ -20,12 +20,12 @@ export default function useTimeoutFn(
       ready.current = true;
       callback.current();
     }, ms);
-  }, [ms]);
+  };
 
-  const clear = useCallback(() => {
+  const clear = () => {
     ready.current = false;
     if (timeout.current) clearTimeout(timeout.current);
-  }, []);
+  };
 
   // update ref when function changes
   useEffect(() => {

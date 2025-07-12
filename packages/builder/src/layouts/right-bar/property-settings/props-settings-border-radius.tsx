@@ -1,4 +1,4 @@
-import { useCallback, useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import type { PropSettingsBorderRadius } from '../../../types/prop-settings.type';
 import { borderRadiusToStyle, isBorderRadiusValue, SizeType, type BorderRadius, type BorderRadiusProperty, type PropertyDefinition, type PropValue, type PropValueBorderRadius, type Size } from '@efie-form/core';
@@ -9,11 +9,21 @@ interface PropsSettingsBorderRadiusProps extends PropSettingsBorderRadius {
   fieldId: string;
 }
 
+// Helper to normalize values for comparison
+const normalizeValue = (val: BorderRadius): string => {
+  if (Array.isArray(val)) {
+    return JSON.stringify(val);
+  }
+  if (typeof val === 'object' && val !== null) {
+    return JSON.stringify(val);
+  }
+  return String(val);
+};
+
 export default function PropsSettingsBorderRadius({ fieldId, label, type }: PropsSettingsBorderRadiusProps) {
-  const fieldProperty = useSchemaStore(useCallback(
+  const fieldProperty = useSchemaStore(
     state => (state.getFieldProperty(fieldId, type)),
-    [fieldId, type],
-  ));
+  );
   const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
   const value = getValue(fieldProperty?.value);
   const [isLinked, setIsLink] = useState(false);
@@ -21,16 +31,8 @@ export default function PropsSettingsBorderRadius({ fieldId, label, type }: Prop
   const previousValuesRef = useRef<BorderRadiusProperty['value'] | null>(null);
 
   // Helper function to check if all corner values are the same
-  const areAllCornersSame = useCallback((borderValue: BorderRadiusProperty['value']): boolean => {
+  const areAllCornersSame = (borderValue: BorderRadiusProperty['value']): boolean => {
     const { topLeft, topRight, bottomLeft, bottomRight } = borderValue;
-
-    // Helper to normalize values for comparison
-    const normalizeValue = (val: BorderRadius): string => {
-      if (Array.isArray(val)) {
-        return JSON.stringify(val);
-      }
-      return JSON.stringify(val);
-    };
 
     const topLeftStr = normalizeValue(topLeft);
     const topRightStr = normalizeValue(topRight);
@@ -40,7 +42,7 @@ export default function PropsSettingsBorderRadius({ fieldId, label, type }: Prop
     return topLeftStr === topRightStr
       && topRightStr === bottomLeftStr
       && bottomLeftStr === bottomRightStr;
-  }, []);
+  };
 
   // Check if all corners are the same when component mounts or value changes
   useEffect(() => {
@@ -85,7 +87,7 @@ export default function PropsSettingsBorderRadius({ fieldId, label, type }: Prop
     setIsLink(!isLinked);
   };
 
-  const handleChange = useCallback((newValue: BorderRadius, borderType: keyof BorderRadiusProperty['value']) => {
+  const handleChange = (newValue: BorderRadius, borderType: keyof BorderRadiusProperty['value']) => {
     updateFieldProperty(fieldId, {
       type,
       value: {
@@ -93,9 +95,9 @@ export default function PropsSettingsBorderRadius({ fieldId, label, type }: Prop
         [borderType]: newValue,
       },
     } as PropertyDefinition);
-  }, [fieldId, updateFieldProperty, type, value]);
+  };
 
-  const handleLinkedChange = useCallback((newValue: Size) => {
+  const handleLinkedChange = (newValue: Size) => {
     updateFieldProperty(fieldId, {
       type,
       value: {
@@ -105,7 +107,7 @@ export default function PropsSettingsBorderRadius({ fieldId, label, type }: Prop
         bottomRight: newValue,
       },
     } as PropertyDefinition);
-  }, [fieldId, updateFieldProperty, type]);
+  };
 
   // Get the first value for linked mode (assuming all corners have the same value when linked)
   const getLinkedValue = (): Size => {

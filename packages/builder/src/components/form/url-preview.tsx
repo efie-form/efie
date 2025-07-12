@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { cn } from '../../lib/utils';
 
 interface UrlMetadata {
@@ -18,7 +18,7 @@ export default function UrlPreview({ url, className }: UrlPreviewProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | undefined>();
 
-  const fetchMetadata = useCallback(async (targetUrl: string) => {
+  const fetchMetadata = async (targetUrl: string) => {
     if (!targetUrl || !isValidUrl(targetUrl)) {
       setMetadata(undefined);
       setError(undefined);
@@ -84,7 +84,7 @@ export default function UrlPreview({ url, className }: UrlPreviewProps) {
     finally {
       setLoading(false);
     }
-  }, []);
+  };
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {

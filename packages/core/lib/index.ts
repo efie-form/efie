@@ -80,7 +80,6 @@ export {
   type AcceptProperty,
   type OptionsProperty,
   type WidthProperty,
-  type TagProperty,
   type TextAlignProperty,
   type ContentProperty,
   type PageNameProperty,
@@ -120,6 +119,7 @@ export {
   isOptionsValue,
   isButtonActionValue,
   isSize,
+  isColor,
 } from './utils/value-validator';
 
 export type {

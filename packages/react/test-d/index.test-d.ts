@@ -1,14 +1,27 @@
 import { expectType } from 'tsd';
 import React from 'react';
+import {
+  FormProvider,
+  ReactForm,
+  FormBuilder,
+  FieldType,
+} from '../dist/index';
 
-// Example type tests for your React components
-// These will run against whatever version of @types/react is currently installed
+// Test that exports are properly typed components/functions
+expectType<typeof FormProvider>(FormProvider);
+expectType<typeof ReactForm>(ReactForm);
+expectType<typeof FormBuilder>(FormBuilder);
 
-// Test that React components can be typed correctly
-expectType<React.ComponentType<object>>(React.Fragment);
-expectType<React.FC<{ children?: React.ReactNode }>>(
-  ({ children }) => React.createElement('div', undefined, children),
-);
+// Test enum values exist and are correctly typed
+expectType<'short_text'>(FieldType.SHORT_TEXT);
+expectType<'long_text'>(FieldType.LONG_TEXT);
+expectType<'number'>(FieldType.NUMBER);
+
+// Test basic functional component
+const TestComponent: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
+  return React.createElement('div', undefined, children);
+};
+expectType<React.FC<{ children?: React.ReactNode }>>(TestComponent);
 
 // Add specific tests for your components here
 // For example, if you have a FormField component:
