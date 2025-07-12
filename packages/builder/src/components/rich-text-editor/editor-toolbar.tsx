@@ -15,19 +15,17 @@ import {
   FaSubscript,
 } from 'react-icons/fa6';
 import { FaUnlink } from 'react-icons/fa';
-import { ToolbarButton } from './toolbar-button';
-import { ToolbarGroup } from './toolbar-group';
-import { HeadingDropdown } from './heading-dropdown';
-import { FontSizeDropdown } from './font-size-dropdown';
-import ColorPicker from '../form/color-picker';
 import type { RichTextEditorOptions } from './type';
+import { FontSizeDropdown, HeadingDropdown, ToolbarButton, ToolbarGroup } from './';
+import ColorPicker2 from '../form/color-picker';
+import { getColorObject } from '@efie-form/core';
 
 interface EditorToolbarProps {
   editor: Editor;
   options?: RichTextEditorOptions;
 }
 
-export function EditorToolbar({ editor, options }: EditorToolbarProps) {
+export default function EditorToolbar({ editor, options }: EditorToolbarProps) {
   const addLink = () => {
     const url = globalThis.prompt('Enter URL:');
     if (url) {
@@ -44,9 +42,30 @@ export function EditorToolbar({ editor, options }: EditorToolbarProps) {
   return (
     <div className="bg-white border border-neutral-200 rounded-lg shadow-xl p-2 backdrop-blur-sm">
       <div className="flex items-center gap-1 flex-wrap">
+
+        {/* Style Controls */}
+        <ToolbarGroup label="Style">
+          <HeadingDropdown editor={editor} options={options?.heading} />
+          <FontSizeDropdown
+            editor={editor}
+            fontSizes={typeof options?.fontSize === 'object' ? options.fontSize.options : undefined}
+            defaultSize={typeof options?.fontSize === 'object' ? options.fontSize.default : undefined}
+          />
+          <ColorPicker2
+            value={getColorObject(editor.getAttributes('textStyle').color || '#000000')}
+            onChange={(color) => {
+              editor.commands.setColor(color.hex);
+            }}
+            defaultColor={getColorObject('#000000')}
+            onClose={() => editor.commands.focus()}
+          />
+        </ToolbarGroup>
+
         {/* Text Formatting */}
         {hasTextFormatting && (
           <>
+            <div className="w-px h-5 bg-neutral-200 mx-1" />
+
             <ToolbarGroup label="Format">
               {options?.bold && (
                 <ToolbarButton
@@ -82,13 +101,14 @@ export function EditorToolbar({ editor, options }: EditorToolbarProps) {
               )}
             </ToolbarGroup>
 
-            <div className="w-px h-5 bg-neutral-200 mx-1" />
           </>
         )}
 
         {/* Alignment */}
         {options?.align && (
           <>
+            <div className="w-px h-5 bg-neutral-200 mx-1" />
+
             <ToolbarGroup label="Alignment">
               {hasAlign(options, 'left') && (
                 <ToolbarButton
@@ -124,13 +144,14 @@ export function EditorToolbar({ editor, options }: EditorToolbarProps) {
               )}
             </ToolbarGroup>
 
-            <div className="w-px h-5 bg-neutral-200 mx-1" />
           </>
         )}
 
         {/* Lists */}
         { options?.list && (
           <>
+            <div className="w-px h-5 bg-neutral-200 mx-1" />
+
             <ToolbarGroup label="Lists">
               {hasList(options, 'bullet') && (
                 <ToolbarButton
@@ -150,13 +171,14 @@ export function EditorToolbar({ editor, options }: EditorToolbarProps) {
               )}
             </ToolbarGroup>
 
-            <div className="w-px h-5 bg-neutral-200 mx-1" />
           </>
         )}
 
         {/* Links */}
         { options?.link && (
           <>
+            <div className="w-px h-5 bg-neutral-200 mx-1" />
+
             <ToolbarGroup label="Links">
               <ToolbarButton
                 Icon={FaLink}
@@ -173,13 +195,14 @@ export function EditorToolbar({ editor, options }: EditorToolbarProps) {
               />
             </ToolbarGroup>
 
-            <div className="w-px h-5 bg-neutral-200 mx-1" />
           </>
         )}
 
         {/* Script */}
         { (options?.superscript || options?.subscript) && (
           <>
+            <div className="w-px h-5 bg-neutral-200 mx-1" />
+
             <ToolbarGroup label="Script">
               {options?.superscript && (
                 <ToolbarButton
@@ -211,27 +234,9 @@ export function EditorToolbar({ editor, options }: EditorToolbarProps) {
               )}
             </ToolbarGroup>
 
-            <div className="w-px h-5 bg-neutral-200 mx-1" />
           </>
         )}
 
-        {/* Style Controls */}
-        <ToolbarGroup label="Style">
-          <HeadingDropdown editor={editor} options={options?.heading} />
-          <FontSizeDropdown
-            editor={editor}
-            fontSizes={typeof options?.fontSize === 'object' ? options.fontSize.options : undefined}
-            defaultSize={typeof options?.fontSize === 'object' ? options.fontSize.default : undefined}
-          />
-          <ColorPicker
-            value={editor.getAttributes('textStyle').color || '#000000'}
-            onChange={(color) => {
-              editor.commands.setColor(color);
-            }}
-            defaultColor="#000000"
-            onClose={() => editor.commands.focus()}
-          />
-        </ToolbarGroup>
       </div>
     </div>
   );

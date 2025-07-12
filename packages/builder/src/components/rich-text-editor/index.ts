@@ -1,6 +1,6 @@
 export { default as RichTextEditor } from './rich-text-editor';
-export { ToolbarButton } from './toolbar-button';
-export { ToolbarGroup } from './toolbar-group';
-export { HeadingDropdown } from './heading-dropdown';
-export { FontSizeDropdown } from './font-size-dropdown';
-export { EditorToolbar } from './editor-toolbar';
+export { default as ToolbarButton } from './toolbar-button';
+export { default as ToolbarGroup } from './toolbar-group';
+export { default as HeadingDropdown } from './heading-dropdown';
+export { default as FontSizeDropdown } from './font-size-dropdown';
+export { default as EditorToolbar } from './editor-toolbar';

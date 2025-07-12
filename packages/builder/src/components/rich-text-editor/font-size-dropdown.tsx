@@ -21,7 +21,7 @@ const defaultFontSizes = [
   { size: '48px', label: '48px' },
 ];
 
-export function FontSizeDropdown({
+export default function FontSizeDropdown({
   editor,
   fontSizes = defaultFontSizes,
   defaultSize = { size: '16px', label: 'Default' },

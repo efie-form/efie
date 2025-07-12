@@ -8,7 +8,7 @@ import { MdAdd, MdOutlineDelete, MdOutlineDragIndicator } from 'react-icons/md';
 import { cn } from '../../../lib/utils';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import { useState } from 'react';
-import ColorPicker2 from '../../../components/form/color-picker-2';
+import ColorPicker2 from '../../../components/form/color-picker';
 import SizeInput from '../../../components/form/size-input';
 import * as Collapsible from '@radix-ui/react-collapsible';
 

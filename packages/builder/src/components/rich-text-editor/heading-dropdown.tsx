@@ -10,19 +10,8 @@ interface HeadingDropdownProps {
   options?: RichTextEditorOptions['heading'];
 }
 
-export function HeadingDropdown({ editor, options }: HeadingDropdownProps) {
+export default function HeadingDropdown({ editor, options }: HeadingDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
-
-  const defaultOption = [
-    { level: 0, label: 'Paragraph', command: () => editor.chain().focus().setParagraph().run() },
-    { level: 1, label: 'Heading 1', command: () => editor.chain().focus().toggleHeading({ level: 1 }).run() },
-    { level: 2, label: 'Heading 2', command: () => editor.chain().focus().toggleHeading({ level: 2 }).run() },
-    { level: 3, label: 'Heading 3', command: () => editor.chain().focus().toggleHeading({ level: 3 }).run() },
-  ];
-
-  if (!options || options === true) {
-    return defaultOption;
-  }
 
   const getHeadingCommand = (level: Level) => {
     return () => editor.chain().focus().toggleHeading({ level }).run();
@@ -32,11 +21,13 @@ export function HeadingDropdown({ editor, options }: HeadingDropdownProps) {
     return () => editor.chain().focus().setParagraph().run();
   };
 
-  const headingOptions = options.options.map(option => ({
-    level: option.level,
-    label: option.label,
-    command: option.level === 0 ? getParagraphCommand() : getHeadingCommand(option.level),
-  }));
+  const headingOptions = !options || options === true
+    ? getDefaultOptions(editor)
+    : options.options.map(option => ({
+        level: option.level,
+        label: option.label,
+        command: option.level === 0 ? getParagraphCommand() : getHeadingCommand(option.level),
+      }));
 
   const getCurrentHeading = () => {
     const activeHeading = editor.getAttributes('heading').level || 0;
@@ -97,4 +88,13 @@ export function HeadingDropdown({ editor, options }: HeadingDropdownProps) {
       )}
     </div>
   );
+}
+
+function getDefaultOptions(editor: Editor) {
+  return [
+    { level: 0, label: 'Paragraph', command: () => editor.chain().focus().setParagraph().run() },
+    { level: 1, label: 'Heading 1', command: () => editor.chain().focus().toggleHeading({ level: 1 }).run() },
+    { level: 2, label: 'Heading 2', command: () => editor.chain().focus().toggleHeading({ level: 2 }).run() },
+    { level: 3, label: 'Heading 3', command: () => editor.chain().focus().toggleHeading({ level: 3 }).run() },
+  ];
 }

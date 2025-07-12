@@ -21,7 +21,7 @@ import { createPortal } from 'react-dom';
 import { Placeholder } from '@tiptap/extension-placeholder';
 import { usePopper } from 'react-popper';
 import { FontSize } from './extensions';
-import { EditorToolbar } from './editor-toolbar';
+import { EditorToolbar } from './';
 import Text from '@tiptap/extension-text';
 import type { RichTextEditorOptions } from './type';
 import TextStyle from '@tiptap/extension-text-style';
