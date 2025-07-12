@@ -14,6 +14,7 @@ import PropsSettingsPadding from './property-settings/props-settings-padding';
 import PropsSettingsBoxShadow from './property-settings/props-settings-box-shadow';
 import PropsSettingsSelect from './property-settings/props-settings-select';
 import PropsSettingsButtonAction from './property-settings/props-settings-button-action';
+import { PropSettingsTemplate } from '@efie-form/core';
 
 interface DynamicSettingsProps {
   settings?: PropSettings[];
@@ -51,49 +52,49 @@ interface DynamicSettingsTypeProps {
 function DynamicSettingsType({ settings, fieldId }: DynamicSettingsTypeProps) {
   const template = settings.template;
   switch (template) {
-    case 'text': {
+    case PropSettingsTemplate.TEXT: {
       return <PropsTemplateText fieldId={fieldId} {...settings} />;
     }
-    case 'number': {
+    case PropSettingsTemplate.NUMBER: {
       return <PropsTemplateNumber fieldId={fieldId} {...settings} />;
     }
-    case 'boolean': {
+    case PropSettingsTemplate.BOOLEAN: {
       return <PropsTemplateBoolean fieldId={fieldId} {...settings} />;
     }
-    case 'color': {
+    case PropSettingsTemplate.COLOR: {
       return <PropsTemplateColor fieldId={fieldId} {...settings} />;
     }
-    case 'imageUrl': {
+    case PropSettingsTemplate.IMAGE_URL: {
       return <PropsTemplateImageUrl fieldId={fieldId} {...settings} />;
     }
-    case 'accept': {
+    case PropSettingsTemplate.ACCEPT: {
       return <PropsSettingsAccept fieldId={fieldId} {...settings} />;
     }
-    case 'formKey': {
+    case PropSettingsTemplate.FORM_KEY: {
       return <PropsSettingsFormKey fieldId={fieldId} {...settings} />;
     }
-    case 'option': {
+    case PropSettingsTemplate.OPTION: {
       return <PropsSettingsOptions fieldId={fieldId} {...settings} />;
     }
-    case 'size': {
+    case PropSettingsTemplate.SIZE: {
       return <PropsTemplateSize fieldId={fieldId} {...settings} />;
     }
-    case 'borderRadius': {
+    case PropSettingsTemplate.BORDER_RADIUS: {
       return <PropsSettingsBorderRadius fieldId={fieldId} {...settings} />;
     }
-    case 'margin': {
+    case PropSettingsTemplate.MARGIN: {
       return <PropsSettingsMargin fieldId={fieldId} {...settings} />;
     }
-    case 'padding': {
+    case PropSettingsTemplate.PADDING: {
       return <PropsSettingsPadding fieldId={fieldId} {...settings} />;
     }
-    case 'boxShadow': {
+    case PropSettingsTemplate.BOX_SHADOW: {
       return <PropsSettingsBoxShadow fieldId={fieldId} {...settings} />;
     }
-    case 'select': {
+    case PropSettingsTemplate.SELECT: {
       return <PropsSettingsSelect fieldId={fieldId} {...settings} />;
     }
-    case 'buttonAction': {
+    case PropSettingsTemplate.BUTTON_ACTION: {
       return <PropsSettingsButtonAction fieldId={fieldId} {...settings} />;
     }
     default: {

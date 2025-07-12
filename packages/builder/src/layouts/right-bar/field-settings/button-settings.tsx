@@ -1,4 +1,4 @@
-import { PropertyType, type ButtonFormField } from '@efie-form/core';
+import { PropertyType, PropSettingsTemplate, type ButtonFormField } from '@efie-form/core';
 import DynamicSettings from '../dynamic-settings';
 import CategoryHeader from '../../../components/elements/category-header';
 
@@ -13,8 +13,8 @@ function ButtonSettings({ field }: ButtonSettingsProps) {
       <DynamicSettings
         fieldId={field.id}
         settings={[
-          { template: 'text', type: PropertyType.LABEL, label: 'Label', placeholder: 'Enter button label' },
-          { template: 'buttonAction', type: PropertyType.BUTTON_ACTION, label: 'Button Action' },
+          { template: PropSettingsTemplate.TEXT, type: PropertyType.LABEL, label: 'Label', placeholder: 'Enter button label' },
+          { template: PropSettingsTemplate.BUTTON_ACTION, type: PropertyType.BUTTON_ACTION, label: 'Button Action' },
         ]}
       />
     </div>

@@ -1,31 +1,31 @@
-import type { PropertyDefinition } from '@efie-form/core';
+import type { PropertyDefinition, PropSettingsTemplate } from '@efie-form/core';
 
 export interface PropSettingsText {
-  template: 'text';
+  template: typeof PropSettingsTemplate.TEXT;
   type: PropertyDefinition['type'];
   label: string;
   placeholder?: string;
 }
 
 export interface PropSettingsBoolean {
-  template: 'boolean';
+  template: typeof PropSettingsTemplate.BOOLEAN;
   type: PropertyDefinition['type'];
   label: string;
 }
 
 export interface PropSettingsFormKey {
-  template: 'formKey';
+  template: typeof PropSettingsTemplate.FORM_KEY;
 }
 
 export interface PropSettingsOption {
-  template: 'option';
+  template: typeof PropSettingsTemplate.OPTION;
   type: PropertyDefinition['type'];
   label: string;
   defaultOptions: string[];
 }
 
 export interface PropSettingsNumber {
-  template: 'number';
+  template: typeof PropSettingsTemplate.NUMBER;
   type: PropertyDefinition['type'];
   label: string;
   placeholder?: string;
@@ -34,56 +34,56 @@ export interface PropSettingsNumber {
 }
 
 export interface PropSettingsAccept {
-  template: 'accept';
+  template: typeof PropSettingsTemplate.ACCEPT;
   type: PropertyDefinition['type'];
   label: string;
 }
 
 export interface PropSettingsColor {
-  template: 'color';
+  template: typeof PropSettingsTemplate.COLOR;
   type: PropertyDefinition['type'];
   label: string;
 }
 
 export interface PropSettingsImageUrl {
-  template: 'imageUrl';
+  template: typeof PropSettingsTemplate.IMAGE_URL;
   type: PropertyDefinition['type'];
   label: string;
   placeholder?: string;
 }
 
 export interface PropSettingsSize {
-  template: 'size';
+  template: typeof PropSettingsTemplate.SIZE;
   type: PropertyDefinition['type'];
   label: string;
 }
 
 export interface PropSettingsBorderRadius {
-  template: 'borderRadius';
+  template: typeof PropSettingsTemplate.BORDER_RADIUS;
   type: PropertyDefinition['type'];
   label: string;
 }
 
 export interface PropSettingsMargin {
-  template: 'margin';
+  template: typeof PropSettingsTemplate.MARGIN;
   type: PropertyDefinition['type'];
   label: string;
 }
 
 export interface PropSettingsPadding {
-  template: 'padding';
+  template: typeof PropSettingsTemplate.PADDING;
   type: PropertyDefinition['type'];
   label: string;
 }
 
 export interface PropSettingsBoxShadow {
-  template: 'boxShadow';
+  template: typeof PropSettingsTemplate.BOX_SHADOW;
   type: PropertyDefinition['type'];
   label: string;
 }
 
 export interface PropSettingsSelect {
-  template: 'select';
+  template: typeof PropSettingsTemplate.SELECT;
   type: PropertyDefinition['type'];
   label: string;
   options: Array<{
@@ -94,7 +94,7 @@ export interface PropSettingsSelect {
 }
 
 export interface PropSettingsButtonAction {
-  template: 'buttonAction';
+  template: typeof PropSettingsTemplate.BUTTON_ACTION;
   type: PropertyDefinition['type'];
   label: string;
 }

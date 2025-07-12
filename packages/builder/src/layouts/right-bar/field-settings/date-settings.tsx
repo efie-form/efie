@@ -1,4 +1,4 @@
-import { PropertyType, type DateFormField } from '@efie-form/core';
+import { PropertyType, PropSettingsTemplate, type DateFormField } from '@efie-form/core';
 import DynamicSettings from '../dynamic-settings';
 import CategoryHeader from '../../../components/elements/category-header';
 interface DateSettingsProps {
@@ -11,8 +11,8 @@ function DateSettings({ field }: DateSettingsProps) {
       <CategoryHeader>General</CategoryHeader>
       <DynamicSettings
         settings={[
-          { template: 'formKey' },
-          { template: 'text', label: 'Label', type: PropertyType.LABEL },
+          { template: PropSettingsTemplate.FORM_KEY },
+          { template: PropSettingsTemplate.TEXT, label: 'Label', type: PropertyType.LABEL },
         ]}
         fieldId={field.id}
       />

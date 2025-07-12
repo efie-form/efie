@@ -143,3 +143,7 @@ export type {
 export { getColorObject, hslaToHex, rgbaToHex } from './utils/colors';
 
 export { default as validateSchema } from './utils/validations';
+
+export {
+  PropSettingsTemplate,
+} from './constants/prop-settings.constant';
