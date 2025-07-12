@@ -119,6 +119,7 @@ export {
   isOptionsValue,
   isButtonActionValue,
   isSize,
+  isColor,
 } from './utils/value-validator';
 
 export type {

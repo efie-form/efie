@@ -1,4 +1,5 @@
-import { getColorObject, type Color } from '@efie-form/core';
+import type { Color } from '@efie-form/core';
+import { getColorObject, isColor } from '@efie-form/core';
 import * as PopoverPrimitive from '@radix-ui/react-popover';
 import type { IColor } from 'react-color-palette';
 import {
@@ -13,10 +14,12 @@ import { useState } from 'react';
 import Select from './select';
 import { useControllableState } from '../../lib/hooks/use-controllable-state';
 
-interface ColorPicker2Props {
-  value?: Color;
-  onChange?: (value: Color) => void;
-  defaultColor?: Color;
+type ColorValue = Color | Color['hex'] | Color['rgba'] | Color['hsla'];
+
+interface ColorPicker2Props<T extends ColorValue = Color> {
+  value?: T;
+  onChange?: (value: T) => void;
+  defaultColor?: T;
   onClose?: () => void;
 }
 
@@ -75,16 +78,74 @@ function colorToIColor(color?: Color): IColor {
   return ColorService.convert('hex', '#FFFFFF');
 }
 
-export default function ColorPicker({
+type ColorType = 'hex' | 'rgba' | 'hsla' | 'color';
+
+const getColorType = (value?: ColorValue): ColorType => {
+  if (!value) return 'hex';
+  if (typeof value === 'string') {
+    return 'hex';
+  }
+  if (isColor(value)) {
+    return 'color';
+  }
+  if ('r' in value && 'g' in value && 'b' in value && 'a' in value) {
+    return 'rgba';
+  }
+  if ('h' in value && 's' in value && 'l' in value && 'a' in value) {
+    return 'hsla';
+  }
+
+  return 'hex'; // Fallback to hex if type is unknown
+};
+
+function fromColorValue<T extends ColorValue>(value?: T): Color {
+  if (!value) {
+    return getColorObject('#FFFFFF');
+  }
+  if (typeof value === 'string') {
+    return getColorObject(value);
+  }
+  if (isColor(value)) {
+    return value;
+  }
+  return getColorObject('#FFFFFF');
+}
+
+function toColorValue<T extends ColorValue>(color: Color, colorType: ColorType): T {
+  switch (colorType) {
+    case 'hex': {
+      return color.hex as T;
+    }
+    case 'rgba': {
+      return color.rgba as T;
+    }
+    case 'hsla': {
+      return color.hsla as T;
+    }
+    case 'color': {
+      return color as T;
+    }
+    default: {
+      return color.hex as T;
+    } // Fallback
+  }
+}
+
+export default function ColorPicker<T extends ColorValue>({
   value,
   onChange,
-  defaultColor = getColorObject('#FFFFFF'),
+  defaultColor,
   onClose,
-}: ColorPicker2Props) {
-  const [internalColor, setInternalColor] = useControllableState({
-    defaultValue: value || defaultColor,
-    onChange,
-    value,
+}: ColorPicker2Props<T>) {
+  const colorType = getColorType(value);
+  const [internalColor, setInternalColor] = useControllableState<Color>({
+    defaultValue: fromColorValue(value || defaultColor),
+    onChange: (newColor) => {
+      if (onChange) {
+        onChange(toColorValue(newColor, colorType));
+      }
+    },
+    value: value ? fromColorValue(value) : undefined,
   });
 
   const [colorMode, setColorMode] = useState<ColorMode>('hex');

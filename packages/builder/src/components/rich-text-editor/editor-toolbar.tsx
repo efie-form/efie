@@ -17,8 +17,7 @@ import {
 import { FaUnlink } from 'react-icons/fa';
 import type { RichTextEditorOptions } from './type';
 import { FontSizeDropdown, HeadingDropdown, ToolbarButton, ToolbarGroup } from './';
-import ColorPicker2 from '../form/color-picker';
-import { getColorObject } from '@efie-form/core';
+import { ColorPicker } from '../form';
 
 interface EditorToolbarProps {
   editor: Editor;
@@ -51,12 +50,12 @@ export default function EditorToolbar({ editor, options }: EditorToolbarProps) {
             fontSizes={typeof options?.fontSize === 'object' ? options.fontSize.options : undefined}
             defaultSize={typeof options?.fontSize === 'object' ? options.fontSize.default : undefined}
           />
-          <ColorPicker2
-            value={getColorObject(editor.getAttributes('textStyle').color || '#000000')}
+          <ColorPicker
+            value={(editor.getAttributes('textStyle').color as string) || '#000000'}
             onChange={(color) => {
-              editor.commands.setColor(color.hex);
+              editor.commands.setColor(color);
             }}
-            defaultColor={getColorObject('#000000')}
+            defaultColor="#000000"
             onClose={() => editor.commands.focus()}
           />
         </ToolbarGroup>

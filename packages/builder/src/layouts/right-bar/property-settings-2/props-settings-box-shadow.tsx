@@ -8,7 +8,7 @@ import { MdAdd, MdOutlineDelete, MdOutlineDragIndicator } from 'react-icons/md';
 import { cn } from '../../../lib/utils';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import { useState } from 'react';
-import ColorPicker2 from '../../../components/form/color-picker';
+import { ColorPicker } from '../../../components/form';
 import SizeInput from '../../../components/form/size-input';
 import * as Collapsible from '@radix-ui/react-collapsible';
 
@@ -263,7 +263,7 @@ function ShadowItem({ index, shadow, onUpdate, onRemove }: ShadowItemProps) {
           <div className="grid grid-cols-2 gap-3">
             <div>
               <label className="typography-body3 text-neutral-700 mb-1 block">Color</label>
-              <ColorPicker2
+              <ColorPicker
                 value={getColorObject(shadow.color.hex)}
                 onChange={handleColorUpdate}
               />
