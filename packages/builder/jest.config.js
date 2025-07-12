@@ -3,7 +3,7 @@
  */
 const jestConfig = {
   preset: 'ts-jest/presets/default-esm',
-  testEnvironment: 'node',
+  testEnvironment: 'jsdom',
   extensionsToTreatAsEsm: ['.ts', '.tsx'],
   setupFilesAfterEnv: ['<rootDir>/src/__tests__/setup-tests.ts'],
   moduleNameMapper: {
