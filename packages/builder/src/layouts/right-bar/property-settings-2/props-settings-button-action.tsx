@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef } from 'react';
+import { useRef } from 'react';
 import { Input, Select, Switch } from '../../../components/form';
 import type { PropSettingsButtonAction } from '../../../types/prop-settings.type';
 import { useSchemaStore } from '../../../lib/state/schema.state';
@@ -43,30 +43,28 @@ function createSubmitValue(): PropValueButtonAction {
 
 export default function PropsSettingsButtonAction({ fieldId, label, type }: PropsSettingsButtonActionProps) {
   const fieldProperty = useSchemaStore(
-    useCallback(state => state.getFieldProperty(fieldId, type), [fieldId, type]),
+    state => state.getFieldProperty(fieldId, type),
   );
   const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
   const schema = useSchemaStore(state => state.schema);
 
   const value = getDefaultValue(fieldProperty?.value);
 
-  // Memoize page options to avoid recalculation on every render
-  const pageOptions = useMemo(() => {
-    return schema.form.fields
-      .filter(field => field.type === FieldType.PAGE)
-      .map((page) => {
-        const pageNameProp = page.props?.find(prop => prop.type === PropertyType.PAGE_NAME);
-        const pageName = isStringValue(pageNameProp?.value) ? pageNameProp.value : `Page ${page.id}`;
-        return { value: page.id, label: pageName };
-      });
-  }, [schema.form.fields]);
+  // Page options to avoid recalculation on every render
+  const pageOptions = schema.form.fields
+    .filter(field => field.type === FieldType.PAGE)
+    .map((page) => {
+      const pageNameProp = page.props?.find(prop => prop.type === PropertyType.PAGE_NAME);
+      const pageName = isStringValue(pageNameProp?.value) ? pageNameProp.value : `Page ${page.id}`;
+      return { value: page.id, label: pageName };
+    });
 
   // Store previous values to restore when switching between action types
   const prevValuesRef = useRef<Record<string, PropValueButtonAction>>({
     [value.action]: value,
   });
 
-  const updateProperty = useCallback((newValue: PropValueButtonAction) => {
+  const updateProperty = (newValue: PropValueButtonAction) => {
     prevValuesRef.current = {
       ...prevValuesRef.current,
       [newValue.action]: newValue,
@@ -76,9 +74,9 @@ export default function PropsSettingsButtonAction({ fieldId, label, type }: Prop
       type,
       value: newValue,
     } as PropertyDefinition);
-  }, [fieldId, type, updateFieldProperty]);
+  };
 
-  const handleActionTypeChange = useCallback((newAction: string) => {
+  const handleActionTypeChange = (newAction: string) => {
     let newValue: PropValueButtonAction;
 
     switch (newAction) {
@@ -105,29 +103,29 @@ export default function PropsSettingsButtonAction({ fieldId, label, type }: Prop
     }
 
     updateProperty(newValue);
-  }, [updateProperty]);
+  };
 
-  const handleUrlChange = useCallback((newUrl: string) => {
+  const handleUrlChange = (newUrl: string) => {
     if (value.action !== 'hyperlink') return;
 
     const newValue = createHyperlinkValue(newUrl, value.target);
     updateProperty(newValue);
-  }, [value, updateProperty]);
+  };
 
-  const handlePageIdChange = useCallback((newPageId: string) => {
+  const handlePageIdChange = (newPageId: string) => {
     if (value.action !== 'navigate') return;
 
     const newValue = createNavigateValue(newPageId);
     updateProperty(newValue);
-  }, [value, updateProperty]);
+  };
 
-  const handleOpenInNewTabChange = useCallback((checked: boolean) => {
+  const handleOpenInNewTabChange = (checked: boolean) => {
     if (value.action !== 'hyperlink') return;
 
     const target = checked ? '_blank' : '_self';
     const newValue = createHyperlinkValue(value.url, target);
     updateProperty(newValue);
-  }, [value, updateProperty]);
+  };
 
   return (
     <>

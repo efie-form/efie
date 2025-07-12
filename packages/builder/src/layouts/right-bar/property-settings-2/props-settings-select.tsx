@@ -1,4 +1,3 @@
-import { useCallback } from 'react';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import Select from '../../../components/form/select';
 import type { PropSettingsSelect } from '../../../types/prop-settings.type';
@@ -16,21 +15,18 @@ export default function PropsSettingsSelect({
   options,
 }: PropsSettingsSelectProps) {
   const fieldProperty = useSchemaStore(
-    useCallback(state => state.getFieldProperty(fieldId, type), [fieldId, type]),
+    state => state.getFieldProperty(fieldId, type),
   );
   const value = getValue(fieldProperty?.value);
 
   const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
 
-  const handleChange = useCallback(
-    (newValue: string) => {
-      updateFieldProperty(fieldId, {
-        type,
-        value: newValue === '' ? undefined : newValue,
-      } as PropertyDefinition);
-    },
-    [fieldId, type, updateFieldProperty],
-  );
+  const handleChange = (newValue: string) => {
+    updateFieldProperty(fieldId, {
+      type,
+      value: newValue === '' ? undefined : newValue,
+    } as PropertyDefinition);
+  };
 
   // Convert options to string-only format for the Select component
   const stringOptions = options.map(option => ({

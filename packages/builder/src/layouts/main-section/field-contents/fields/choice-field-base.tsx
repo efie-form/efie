@@ -3,7 +3,7 @@ import type {
   OptionsProperty,
 } from '@efie-form/core';
 import { PropertyType } from '@efie-form/core';
-import { useRef, useCallback } from 'react';
+import { useRef } from 'react';
 import {
   DndContext,
   closestCenter,
@@ -37,19 +37,19 @@ const DEFAULT_OPTIONS: OptionType[] = [
 
 function ChoiceFieldBase({ fieldId, field, inputType }: ChoiceFieldBaseProps) {
   const lastInputRef = useRef<HTMLInputElement>(null);
-  const fieldProperty = useSchemaStore(useCallback(state => state.getFieldProperty(field.id, PropertyType.LABEL), [field.id]));
+  const fieldProperty = useSchemaStore(state => state.getFieldProperty(field.id, PropertyType.LABEL));
   const label = fieldProperty?.value || '';
   const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
 
-  const optionsProperty = useSchemaStore(useCallback(state => state.getFieldProperty(field.id, PropertyType.OPTIONS), [field.id]));
+  const optionsProperty = useSchemaStore(state => state.getFieldProperty(field.id, PropertyType.OPTIONS));
   const options = optionsProperty?.value || DEFAULT_OPTIONS;
 
-  const updateOptions = useCallback((newOptions: OptionType[]) => {
+  const updateOptions = (newOptions: OptionType[]) => {
     updateFieldProperty(field.id, {
       type: PropertyType.OPTIONS,
       value: newOptions,
     });
-  }, [field.id, updateFieldProperty]);
+  };
 
   const sensors = useSensors(
     useSensor(PointerSensor),

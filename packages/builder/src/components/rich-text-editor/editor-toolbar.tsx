@@ -1,5 +1,4 @@
 import type { Editor } from '@tiptap/react';
-import { useCallback } from 'react';
 import {
   FaBold,
   FaItalic,
@@ -29,16 +28,16 @@ interface EditorToolbarProps {
 }
 
 export function EditorToolbar({ editor, options }: EditorToolbarProps) {
-  const addLink = useCallback(() => {
+  const addLink = () => {
     const url = globalThis.prompt('Enter URL:');
     if (url) {
       editor.chain().focus().setLink({ href: url }).run();
     }
-  }, [editor]);
+  };
 
-  const removeLink = useCallback(() => {
+  const removeLink = () => {
     editor.chain().focus().unsetLink().run();
-  }, [editor]);
+  };
 
   const hasTextFormatting = options?.bold || options?.italic || options?.underline || options?.strike;
 

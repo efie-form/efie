@@ -1,4 +1,3 @@
-import { useCallback } from 'react';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import { isSizeValue, type PropertyDefinition, type PropValue, type Size } from '@efie-form/core';
 import SizeInput from '../../../components/form/size-input';
@@ -11,20 +10,17 @@ interface PropsTemplateSizeProps extends PropSettingsSize {
 
 export function PropsTemplateSize({ fieldId, label, type }: PropsTemplateSizeProps) {
   const fieldProperty = useSchemaStore(
-    useCallback(
-      state => state.getFieldProperty(fieldId, type),
-      [fieldId, type],
-    ),
+    state => state.getFieldProperty(fieldId, type),
   );
   const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
   const value = getValue(fieldProperty?.value);
 
-  const handleChange = useCallback((newValue: Size) => {
+  const handleChange = (newValue: Size) => {
     updateFieldProperty(fieldId, {
       type,
       value: newValue,
     } as PropertyDefinition);
-  }, [fieldId, type, updateFieldProperty]);
+  };
 
   return (
     <SettingsFieldHorizontal label={label} divider>

@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 
 export interface UseFileDragDropOptions {
   /** Callback function called when a valid file is selected */
@@ -66,7 +66,7 @@ export function useFileDragDrop({
   const [dragActive, setDragActive] = useState(false);
   const [isDraggedFileValid, setIsDraggedFileValid] = useState<boolean>();
 
-  const isValidFileType = useCallback((file: File): boolean => {
+  const isValidFileType = (file: File): boolean => {
     // If no file types specified, accept all files
     if (acceptedFileTypes.length === 0) {
       return true;
@@ -86,9 +86,9 @@ export function useFileDragDrop({
       const extension = type.startsWith('.') ? type : `.${type}`;
       return file.name.toLowerCase().endsWith(extension.toLowerCase());
     });
-  }, [acceptedFileTypes]);
+  };
 
-  const handleDrag = useCallback((e: React.DragEvent) => {
+  const handleDrag = (e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
 
@@ -124,9 +124,9 @@ export function useFileDragDrop({
       setDragActive(false);
       setIsDraggedFileValid(undefined);
     }
-  }, [isValidFileType, acceptedFileTypes]);
+  };
 
-  const handleDrop = useCallback((e: React.DragEvent) => {
+  const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
     setDragActive(false);
@@ -138,16 +138,16 @@ export function useFileDragDrop({
         onFileSelect(file);
       }
     }
-  }, [onFileSelect, isValidFileType]);
+  };
 
-  const handleFileInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
       if (isValidFileType(file)) {
         onFileSelect(file);
       }
     }
-  }, [onFileSelect, isValidFileType]);
+  };
 
   return {
     dragActive,

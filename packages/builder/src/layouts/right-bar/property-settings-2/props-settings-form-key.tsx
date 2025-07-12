@@ -1,4 +1,3 @@
-import { useCallback } from 'react';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import SettingsFieldVertical from '../property-layouts/settings-field-vertical';
 import { Input } from '../../../components/form';
@@ -10,7 +9,7 @@ interface PropsSettingsFormKeyProps extends PropSettingsFormKey {
 
 export default function PropsSettingsFormKey({ fieldId }: PropsSettingsFormKeyProps) {
   const field = useSchemaStore(
-    useCallback(state => state.getFieldById(fieldId), [fieldId]),
+    state => state.getFieldById(fieldId),
   );
   const updateFieldProperty = useSchemaStore(state => state.updateField);
 
@@ -18,17 +17,14 @@ export default function PropsSettingsFormKey({ fieldId }: PropsSettingsFormKeyPr
     return <></>;
   }
 
-  const onChange = useCallback(
-    (newKey: string) => {
-      updateFieldProperty(fieldId, {
-        form: {
-          ...field.form,
-          key: newKey,
-        },
-      });
-    },
-    [fieldId, field.form, updateFieldProperty],
-  );
+  const onChange = (newKey: string) => {
+    updateFieldProperty(fieldId, {
+      form: {
+        ...field.form,
+        key: newKey,
+      },
+    });
+  };
 
   return (
     <SettingsFieldVertical label="Form Key" divider>

@@ -1,4 +1,3 @@
-import { useCallback } from 'react';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import type { PropSettingsColor } from '../../../types/prop-settings.type';
 import SettingsFieldHorizontal from '../property-layouts/settings-field-horizontal';
@@ -11,7 +10,7 @@ interface PropsTemplateColorProps extends PropSettingsColor {
 
 export default function PropsTemplateColor({ fieldId, label, type }: PropsTemplateColorProps) {
   const fieldProperty = useSchemaStore(
-    useCallback(state => state.getFieldProperty(fieldId, type), [fieldId, type]),
+    state => state.getFieldProperty(fieldId, type),
   );
   const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
   const value = getValue(fieldProperty?.value);

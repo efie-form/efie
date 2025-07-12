@@ -1,4 +1,3 @@
-import { useCallback } from 'react';
 import { useSchemaStore } from '../state/schema.state';
 import { useSettingsStore } from '../state/settings.state';
 import { FieldType, validateSchema, type FormSchema } from '@efie-form/core';
@@ -11,13 +10,13 @@ export default function useFormBuilder() {
     setFormKeyEditable,
     setIsInputReusable,
   } = useSettingsStore();
-  const { schema, currentHistoryIndex, setSchema, setMaxHistories } = useSchemaStore();
+  const { schema, setSchema, setMaxHistories } = useSchemaStore();
 
-  const getSchema = useCallback(() => {
+  const getSchema = () => {
     return schema;
-  }, [currentHistoryIndex]);
+  };
 
-  const resetSchema = useCallback((data: FormSchema) => {
+  const resetSchema = (data: FormSchema) => {
     setSchema(data);
     const isValid = validateSchema(data);
     console.log('Schema is valid:', isValid, data);
@@ -25,7 +24,7 @@ export default function useFormBuilder() {
     if (firstPage) {
       setPage(firstPage.id);
     }
-  }, []);
+  };
 
   return {
     getSchema,

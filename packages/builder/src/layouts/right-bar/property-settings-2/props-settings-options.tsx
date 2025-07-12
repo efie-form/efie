@@ -7,15 +7,15 @@ import { closestCenter, DndContext, KeyboardSensor, PointerSensor, useSensor, us
 import { MdAdd, MdOutlineClose, MdOutlineDragIndicator } from 'react-icons/md';
 import { cn } from '../../../lib/utils';
 import { useSchemaStore } from '../../../lib/state/schema.state';
-import { useCallback, useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 
-interface PropSettingsOptionssProps extends PropSettingsOption {
+interface PropSettingsOptionsProps extends PropSettingsOption {
   fieldId: string;
 }
 
-export default function PropsSettingsOptions({ fieldId, defaultOptions, label, type }: PropSettingsOptionssProps) {
+export default function PropsSettingsOptions({ fieldId, label, type }: PropSettingsOptionsProps) {
   const fieldProperty = useSchemaStore(
-    useCallback(state => state.getFieldProperty(fieldId, type), [fieldId, defaultOptions]),
+    state => state.getFieldProperty(fieldId, type),
   );
   const updateOptions = useSchemaStore(state => state.updateFieldProperty);
   const value = getValue(fieldProperty?.value);

@@ -1,4 +1,4 @@
-import { useCallback, useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import type { PropertyDefinition, PaddingProperty, PropValue, PropValuePadding } from '@efie-form/core';
 import { isPaddingValue, SizeType, type PaddingSize, type Size } from '@efie-form/core';
@@ -10,11 +10,15 @@ interface PropsSettingsPaddingProps extends PropSettingsPadding {
   fieldId: string;
 }
 
+// Helper to normalize values for comparison
+const normalizeValue = (val: Size): string => {
+  return JSON.stringify(val);
+};
+
 export default function PropsSettingsPadding({ fieldId, label, type }: PropsSettingsPaddingProps) {
-  const fieldProperty = useSchemaStore(useCallback(
+  const fieldProperty = useSchemaStore(
     state => (state.getFieldProperty(fieldId, type)),
-    [fieldId, type],
-  ));
+  );
   const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
   const value = getValue(fieldProperty?.value);
   const [isLinked, setIsLink] = useState(false);
@@ -22,13 +26,8 @@ export default function PropsSettingsPadding({ fieldId, label, type }: PropsSett
   const previousValuesRef = useRef<PaddingProperty['value'] | null>(null);
 
   // Helper function to check if all padding values are the same
-  const areAllPaddingsSame = useCallback((paddingValue: PaddingProperty['value']): boolean => {
+  const areAllPaddingsSame = (paddingValue: PaddingProperty['value']): boolean => {
     const { top, right, bottom, left } = paddingValue;
-
-    // Helper to normalize values for comparison
-    const normalizeValue = (val: Size): string => {
-      return JSON.stringify(val);
-    };
 
     const topStr = normalizeValue(top);
     const rightStr = normalizeValue(right);
@@ -38,7 +37,7 @@ export default function PropsSettingsPadding({ fieldId, label, type }: PropsSett
     return topStr === rightStr
       && rightStr === bottomStr
       && bottomStr === leftStr;
-  }, []);
+  };
 
   // Check if all paddings are the same when component mounts or value changes
   useEffect(() => {
@@ -83,7 +82,7 @@ export default function PropsSettingsPadding({ fieldId, label, type }: PropsSett
     setIsLink(!isLinked);
   };
 
-  const handleChange = useCallback((newValue: PaddingSize, paddingSide: keyof PaddingProperty['value']) => {
+  const handleChange = (newValue: PaddingSize, paddingSide: keyof PaddingProperty['value']) => {
     updateFieldProperty(fieldId, {
       type,
       value: {
@@ -91,9 +90,9 @@ export default function PropsSettingsPadding({ fieldId, label, type }: PropsSett
         [paddingSide]: newValue,
       },
     } as PropertyDefinition);
-  }, [fieldId, updateFieldProperty, type, value]);
+  };
 
-  const handleLinkedChange = useCallback((newValue: Size) => {
+  const handleLinkedChange = (newValue: Size) => {
     updateFieldProperty(fieldId, {
       type,
       value: {
@@ -103,7 +102,7 @@ export default function PropsSettingsPadding({ fieldId, label, type }: PropsSett
         left: newValue,
       },
     } as PropertyDefinition);
-  }, [fieldId, updateFieldProperty, type]);
+  };
 
   return (
     <>

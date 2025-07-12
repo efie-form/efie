@@ -1,4 +1,3 @@
-import { useCallback } from 'react';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import type { PropSettingsAccept } from '../../../types/prop-settings.type';
 import SettingsFieldSwitchWithDropdown from '../property-layouts/settings-field-switch-with-dropdown';
@@ -30,7 +29,7 @@ interface PropsSettingsAcceptProps extends PropSettingsAccept {
 }
 
 export default function PropsSettingsAccept({ fieldId, label = 'Only allow specific file types', type }: PropsSettingsAcceptProps) {
-  const fieldProperty = useSchemaStore(useCallback(state => state.getFieldProperty(fieldId, type), [fieldId, type]));
+  const fieldProperty = useSchemaStore(state => state.getFieldProperty(fieldId, type));
   const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
   const value = getValue(fieldProperty?.value);
 

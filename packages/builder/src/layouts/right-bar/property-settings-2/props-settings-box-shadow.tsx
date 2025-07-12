@@ -7,7 +7,7 @@ import { closestCenter, DndContext, KeyboardSensor, PointerSensor, useSensor, us
 import { MdAdd, MdOutlineDelete, MdOutlineDragIndicator } from 'react-icons/md';
 import { cn } from '../../../lib/utils';
 import { useSchemaStore } from '../../../lib/state/schema.state';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import ColorPicker2 from '../../../components/form/color-picker-2';
 import SizeInput from '../../../components/form/size-input';
 import * as Collapsible from '@radix-ui/react-collapsible';
@@ -27,7 +27,7 @@ const defaultShadowItem: BoxShadow = {
 
 export default function PropsSettingsBoxShadow({ fieldId, label, type }: PropsSettingsBoxShadowProps) {
   const boxShadowProperty = useSchemaStore(
-    useCallback(state => state.getFieldProperty(fieldId, type), [fieldId, type]),
+    state => state.getFieldProperty(fieldId, type),
   );
   const updateBoxShadowProperty = useSchemaStore(state => state.updateFieldProperty);
   const value = getValue(boxShadowProperty?.value);
