@@ -1,13 +1,13 @@
 import { useState, useRef, useEffect } from 'react';
-import { useSchemaStore } from '../../../lib/state/schema.state';
-import type { PropertyDefinition, PaddingProperty, PropValue, PropValuePadding } from '@efie-form/core';
-import { isPaddingValue, SizeType, type PaddingSize, type Size } from '@efie-form/core';
+import type { PaddingProperty, PropValuePadding } from '@efie-form/core';
+import { type PaddingSize, type Size } from '@efie-form/core';
 import SizeInput from '../../../components/form/size-input';
 import { FaLink, FaUnlink } from 'react-icons/fa';
-import type { PropSettingsPadding } from '../../../types/prop-settings.type';
 
-interface PropsSettingsPaddingProps extends PropSettingsPadding {
-  fieldId: string;
+interface PropsSettingsPaddingProps {
+  label: string;
+  value: PropValuePadding;
+  onChange: (newValue: PropValuePadding) => void;
 }
 
 // Helper to normalize values for comparison
@@ -15,12 +15,11 @@ const normalizeValue = (val: Size): string => {
   return JSON.stringify(val);
 };
 
-export default function PropsSettingsPadding({ fieldId, label, type }: PropsSettingsPaddingProps) {
-  const fieldProperty = useSchemaStore(
-    state => (state.getFieldProperty(fieldId, type)),
-  );
-  const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
-  const value = getValue(fieldProperty?.value);
+export default function PropsSettingsPadding({
+  label,
+  onChange,
+  value,
+}: PropsSettingsPaddingProps) {
   const [isLinked, setIsLink] = useState(false);
   const [hasUserInteracted, setHasUserInteracted] = useState(false);
   const previousValuesRef = useRef<PaddingProperty['value'] | null>(null);
@@ -56,10 +55,7 @@ export default function PropsSettingsPadding({ fieldId, label, type }: PropsSett
     if (isLinked) {
       // Restore previous values when unlinking
       if (previousValuesRef.current) {
-        updateFieldProperty(fieldId, {
-          type,
-          value: previousValuesRef.current,
-        } as PropertyDefinition);
+        onChange(previousValuesRef.current);
       }
     }
     else {
@@ -69,39 +65,30 @@ export default function PropsSettingsPadding({ fieldId, label, type }: PropsSett
       }
       // Set all paddings to the same value (using top as reference)
       const uniformValue = value.top;
-      updateFieldProperty(fieldId, {
-        type,
-        value: {
-          top: uniformValue,
-          right: uniformValue,
-          bottom: uniformValue,
-          left: uniformValue,
-        },
-      } as PropertyDefinition);
+      onChange({
+        top: uniformValue,
+        right: uniformValue,
+        bottom: uniformValue,
+        left: uniformValue,
+      });
     }
     setIsLink(!isLinked);
   };
 
   const handleChange = (newValue: PaddingSize, paddingSide: keyof PaddingProperty['value']) => {
-    updateFieldProperty(fieldId, {
-      type,
-      value: {
-        ...value,
-        [paddingSide]: newValue,
-      },
-    } as PropertyDefinition);
+    onChange({
+      ...value,
+      [paddingSide]: newValue,
+    });
   };
 
   const handleLinkedChange = (newValue: Size) => {
-    updateFieldProperty(fieldId, {
-      type,
-      value: {
-        top: newValue,
-        right: newValue,
-        bottom: newValue,
-        left: newValue,
-      },
-    } as PropertyDefinition);
+    onChange({
+      top: newValue,
+      right: newValue,
+      bottom: newValue,
+      left: newValue,
+    });
   };
 
   return (
@@ -232,15 +219,4 @@ function PaddingSide({ value, handleChange, paddingSide }: PaddingSideProps) {
       onChange={newSize => handleChange(newSize as PaddingSize, paddingSide)}
     />
   );
-}
-
-function getValue(props?: PropValue): PropValuePadding {
-  if (!isPaddingValue(props)) return {
-    top: { type: SizeType.LENGTH, value: 0, unit: 'px' },
-    right: { type: SizeType.LENGTH, value: 0, unit: 'px' },
-    bottom: { type: SizeType.LENGTH, value: 0, unit: 'px' },
-    left: { type: SizeType.LENGTH, value: 0, unit: 'px' },
-  };
-
-  return props;
 }

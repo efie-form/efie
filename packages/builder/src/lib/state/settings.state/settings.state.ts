@@ -1,15 +1,8 @@
 import { create } from 'zustand';
-import defaultSchema from '../default-schema';
+import defaultSchema from '../../default-schema';
 import type { CustomInputDef } from '@efie-form/core';
-import type { FieldConfig } from '../../types/field-settings.type';
-
-export const RIGHT_BAR_TABS = {
-  PAGE: 'page',
-  FORM: 'form',
-  FIELD_SETTINGS: 'field-settings',
-} as const;
-
-export type RightBarTab = (typeof RIGHT_BAR_TABS)[keyof typeof RIGHT_BAR_TABS];
+import type { FieldConfig } from '../../../types/field-settings.type';
+import type { RightBarTab } from '../../constant';
 
 interface SettingsState {
   formInputs: CustomInputDef[];
@@ -89,6 +82,22 @@ export const useSettingsStore = create<SettingsState>(set => ({
     set({ isInputReusable });
   },
   config: {
+    block: {
+      settings: [
+        {
+          id: 'padding',
+          label: 'Padding',
+          type: 'padding',
+          defaultValue: {
+            bottom: { type: 'length', value: 0, unit: 'px' },
+            left: { type: 'length', value: 0, unit: 'px' },
+            right: { type: 'length', value: 0, unit: 'px' },
+            top: { type: 'length', value: 0, unit: 'px',
+            },
+          },
+        },
+      ],
+    },
     heading: {
       formats: {
         blockquote: true,

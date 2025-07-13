@@ -1,8 +1,6 @@
-import { useSchemaStore } from '../../../lib/state/schema.state';
-import type { PropSettingsAccept } from '../../../types/prop-settings.type';
 import SettingsFieldSwitchWithDropdown from '../property-layouts/settings-field-switch-with-dropdown';
 import { Switch } from '../../../components/form';
-import { isAcceptValue, type AcceptProperty, type PropValue, type PropValueAccept } from '@efie-form/core';
+import { type PropValueAccept } from '@efie-form/core';
 import { useControllableState } from '../../../lib/hooks/use-controllable-state';
 
 const FILE_EXTENSIONS = [
@@ -24,15 +22,17 @@ interface InternalValue {
   allowSpecific: boolean;
   extensions: Record<ExtensionType, boolean>;
 }
-interface PropsSettingsAcceptProps extends PropSettingsAccept {
-  fieldId: string;
+interface PropsSettingsAcceptProps {
+  value: PropValueAccept;
+  onChange: (newValue: PropValueAccept) => void;
+  label: string;
 }
 
-export default function PropsSettingsAccept({ fieldId, label = 'Only allow specific file types', type }: PropsSettingsAcceptProps) {
-  const fieldProperty = useSchemaStore(state => state.getFieldProperty(fieldId, type));
-  const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
-  const value = getValue(fieldProperty?.value);
-
+export default function PropsSettingsAccept({
+  label = 'Only allow specific file types',
+  value,
+  onChange,
+}: PropsSettingsAcceptProps) {
   const [internalValue, setInternalValue] = useControllableState({
     defaultValue: getInternalValue(value),
     onChange: (newValue) => {
@@ -45,10 +45,7 @@ export default function PropsSettingsAccept({ fieldId, label = 'Only allow speci
         formats: newValue.allowSpecific ? formats : [],
       };
 
-      updateFieldProperty(fieldId, {
-        type,
-        value: finalValue,
-      } as AcceptProperty);
+      onChange?.(finalValue);
     },
   });
 
@@ -98,14 +95,6 @@ export default function PropsSettingsAccept({ fieldId, label = 'Only allow speci
       </div>
     </SettingsFieldSwitchWithDropdown>
   );
-}
-
-function getValue(value?: PropValue): PropValueAccept {
-  if (!isAcceptValue(value)) {
-    return { formats: [], allowAll: false };
-  }
-
-  return value;
 }
 
 function getInternalValue(value?: PropValueAccept): InternalValue {

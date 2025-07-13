@@ -1,39 +1,28 @@
-import { useSchemaStore } from '../../../lib/state/schema.state';
-import { isSizeValue, type PropertyDefinition, type PropValue, type Size } from '@efie-form/core';
+import { isSizeValue, type Size } from '@efie-form/core';
 import SizeInput from '../../../components/form/size-input';
-import type { PropSettingsSize } from '../../../types/prop-settings.type';
 import SettingsFieldHorizontal from '../property-layouts/settings-field-horizontal';
 
-interface PropsTemplateSizeProps extends PropSettingsSize {
-  fieldId: string;
+interface PropsTemplateSizeProps {
+  label: string;
+  value?: Size;
+  onChange: (newValue: Size) => void;
 }
 
-export function PropsTemplateSize({ fieldId, label, type }: PropsTemplateSizeProps) {
-  const fieldProperty = useSchemaStore(
-    state => state.getFieldProperty(fieldId, type),
-  );
-  const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
-  const value = getValue(fieldProperty?.value);
-
-  const handleChange = (newValue: Size) => {
-    updateFieldProperty(fieldId, {
-      type,
-      value: newValue,
-    } as PropertyDefinition);
-  };
+export function PropsTemplateSize({ label, value, onChange }: PropsTemplateSizeProps) {
+  const sizeValue = getValue(value);
 
   return (
     <SettingsFieldHorizontal label={label} divider>
       <SizeInput
-        value={value}
-        onChange={handleChange}
+        value={sizeValue}
+        onChange={onChange}
       />
     </SettingsFieldHorizontal>
   );
 }
 
-function getValue(value?: PropValue): Size {
-  if (!isSizeValue(value)) return {
+function getValue(value?: Size): Size {
+  if (!value || !isSizeValue(value)) return {
     type: 'auto',
   };
   return value;

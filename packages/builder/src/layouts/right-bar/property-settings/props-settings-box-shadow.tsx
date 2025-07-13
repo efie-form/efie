@@ -1,19 +1,19 @@
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { Switch } from '../../../components/form';
-import type { PropSettingsBoxShadow } from '../../../types/prop-settings.type';
-import { type BoxShadowProperty, type Size, SizeType, isBoxShadowValue, type Color, type PropValue, type PropValueBoxShadow, getColorObject, type BoxShadow } from '@efie-form/core';
+import { type Size, SizeType, type Color, type PropValueBoxShadow, getColorObject, type BoxShadow } from '@efie-form/core';
 import Button from '../../../components/elements/button';
 import { closestCenter, DndContext, KeyboardSensor, PointerSensor, useSensor, useSensors, type DragEndEvent } from '@dnd-kit/core';
 import { MdAdd, MdOutlineDelete, MdOutlineDragIndicator } from 'react-icons/md';
 import { cn } from '../../../lib/utils';
-import { useSchemaStore } from '../../../lib/state/schema.state';
 import { useState } from 'react';
 import { ColorPicker } from '../../../components/form';
 import SizeInput from '../../../components/form/size-input';
 import * as Collapsible from '@radix-ui/react-collapsible';
 
-interface PropsSettingsBoxShadowProps extends PropSettingsBoxShadow {
-  fieldId: string;
+interface PropsSettingsBoxShadowProps {
+  label: string;
+  value: PropValueBoxShadow;
+  onChange: (newValue: PropValueBoxShadow) => void;
 }
 
 const defaultShadowItem: BoxShadow = {
@@ -25,13 +25,11 @@ const defaultShadowItem: BoxShadow = {
   inset: false,
 };
 
-export default function PropsSettingsBoxShadow({ fieldId, label, type }: PropsSettingsBoxShadowProps) {
-  const boxShadowProperty = useSchemaStore(
-    state => state.getFieldProperty(fieldId, type),
-  );
-  const updateBoxShadowProperty = useSchemaStore(state => state.updateFieldProperty);
-  const value = getValue(boxShadowProperty?.value);
-
+export default function PropsSettingsBoxShadow({
+  label,
+  value,
+  onChange,
+}: PropsSettingsBoxShadowProps) {
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -46,24 +44,24 @@ export default function PropsSettingsBoxShadow({ fieldId, label, type }: PropsSe
     const oldIndex = Number.parseInt(active.id as string, 10);
     const newIndex = Number.parseInt(over.id as string, 10);
     const newShadows = arrayMove(value, oldIndex, newIndex);
-    updateBoxShadowProperty(fieldId, { type, value: newShadows } as BoxShadowProperty);
+    onChange(newShadows);
   };
 
   const handleUpdateShadow = (index: number, updates: Partial<BoxShadow>) => {
     const newShadows = [...value];
     newShadows[index] = { ...newShadows[index], ...updates };
-    updateBoxShadowProperty(fieldId, { type, value: newShadows } as BoxShadowProperty);
+    onChange(newShadows);
   };
 
   const handleRemoveShadow = (index: number) => {
     const newShadows = [...value];
     newShadows.splice(index, 1);
-    updateBoxShadowProperty(fieldId, { type, value: newShadows } as BoxShadowProperty);
+    onChange(newShadows);
   };
 
   const handleAddShadow = () => {
     const newShadows = [...value, { ...defaultShadowItem }];
-    updateBoxShadowProperty(fieldId, { type, value: newShadows } as BoxShadowProperty);
+    onChange(newShadows);
   };
 
   return (
@@ -114,14 +112,6 @@ export default function PropsSettingsBoxShadow({ fieldId, label, type }: PropsSe
       </div>
     </>
   );
-}
-
-function getValue(props?: PropValue): PropValueBoxShadow {
-  if (!isBoxShadowValue(props)) {
-    return [];
-  }
-
-  return props;
 }
 
 interface ShadowItemProps {

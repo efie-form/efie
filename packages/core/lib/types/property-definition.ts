@@ -142,6 +142,13 @@ export interface PageNameProperty {
   value: PropValueString;
 }
 
+export interface CustomProperty {
+  type: typeof PropertyType.CUSTOM;
+  value: {
+    id: string;
+  };
+}
+
 // Union type of all property definitions
 export type PropertyDefinition =
   | LabelProperty
@@ -169,4 +176,5 @@ export type PropertyDefinition =
   | ContentProperty
   | PageNameProperty
   | FontWeightProperty
-  | ButtonActionProperty;
+  | ButtonActionProperty
+  | CustomProperty;

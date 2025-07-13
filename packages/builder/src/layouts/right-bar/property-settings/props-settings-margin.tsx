@@ -1,18 +1,13 @@
 import { useState, useRef, useEffect } from 'react';
-import { useSchemaStore } from '../../../lib/state/schema.state';
-import type { PropertyDefinition, MarginProperty, PropValue, PropValueMargin } from '@efie-form/core';
-import { isMarginValue, SizeType, type MarginSize, type Size } from '@efie-form/core';
+import type { MarginProperty, PropValueMargin } from '@efie-form/core';
+import { type MarginSize, type Size } from '@efie-form/core';
 import SizeInput from '../../../components/form/size-input';
 import { FaLink, FaUnlink } from 'react-icons/fa';
 
-interface PropSettingsMargin {
-  template: 'margin';
-  type: PropertyDefinition['type'];
+interface PropsSettingsMarginProps {
+  value: PropValueMargin;
+  onChange: (newValue: PropValueMargin) => void;
   label: string;
-}
-
-interface PropsSettingsMarginProps extends PropSettingsMargin {
-  fieldId: string;
 }
 
 // Helper to normalize values for comparison
@@ -20,12 +15,11 @@ const normalizeValue = (val: Size): string => {
   return JSON.stringify(val);
 };
 
-export default function PropsSettingsMargin({ fieldId, label, type }: PropsSettingsMarginProps) {
-  const fieldProperty = useSchemaStore(
-    state => (state.getFieldProperty(fieldId, type)),
-  );
-  const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
-  const value = getValue(fieldProperty?.value);
+export default function PropsSettingsMargin({
+  label,
+  onChange,
+  value,
+}: PropsSettingsMarginProps) {
   const [isLinked, setIsLink] = useState(false);
   const [hasUserInteracted, setHasUserInteracted] = useState(false);
   const previousValuesRef = useRef<MarginProperty['value'] | null>(null);
@@ -61,10 +55,7 @@ export default function PropsSettingsMargin({ fieldId, label, type }: PropsSetti
     if (isLinked) {
       // Restore previous values when unlinking
       if (previousValuesRef.current) {
-        updateFieldProperty(fieldId, {
-          type,
-          value: previousValuesRef.current,
-        } as PropertyDefinition);
+        onChange(previousValuesRef.current);
       }
     }
     else {
@@ -74,39 +65,30 @@ export default function PropsSettingsMargin({ fieldId, label, type }: PropsSetti
       }
       // Set all margins to the same value (using top as reference)
       const uniformValue = value.top;
-      updateFieldProperty(fieldId, {
-        type,
-        value: {
-          top: uniformValue,
-          right: uniformValue,
-          bottom: uniformValue,
-          left: uniformValue,
-        },
-      } as PropertyDefinition);
+      onChange({
+        top: uniformValue,
+        right: uniformValue,
+        bottom: uniformValue,
+        left: uniformValue,
+      });
     }
     setIsLink(!isLinked);
   };
 
   const handleChange = (newValue: MarginSize, marginSide: keyof MarginProperty['value']) => {
-    updateFieldProperty(fieldId, {
-      type,
-      value: {
-        ...value,
-        [marginSide]: newValue,
-      },
-    } as PropertyDefinition);
+    onChange({
+      ...value,
+      [marginSide]: newValue,
+    });
   };
 
   const handleLinkedChange = (newValue: Size) => {
-    updateFieldProperty(fieldId, {
-      type,
-      value: {
-        top: newValue,
-        right: newValue,
-        bottom: newValue,
-        left: newValue,
-      },
-    } as PropertyDefinition);
+    onChange({
+      top: newValue,
+      right: newValue,
+      bottom: newValue,
+      left: newValue,
+    });
   };
 
   return (
@@ -237,15 +219,4 @@ function MarginSide({ value, handleChange, marginSide }: MarginSideProps) {
       onChange={newSize => handleChange(newSize as MarginSize, marginSide)}
     />
   );
-}
-
-function getValue(value?: PropValue): PropValueMargin {
-  if (!isMarginValue(value)) return {
-    top: { type: SizeType.LENGTH, value: 0, unit: 'px' },
-    right: { type: SizeType.LENGTH, value: 0, unit: 'px' },
-    bottom: { type: SizeType.LENGTH, value: 0, unit: 'px' },
-    left: { type: SizeType.LENGTH, value: 0, unit: 'px' },
-  };
-
-  return value;
 }

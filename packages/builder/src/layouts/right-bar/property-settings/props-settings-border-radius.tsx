@@ -1,12 +1,12 @@
 import { useState, useRef, useEffect } from 'react';
-import { useSchemaStore } from '../../../lib/state/schema.state';
-import type { PropSettingsBorderRadius } from '../../../types/prop-settings.type';
-import { borderRadiusToStyle, isBorderRadiusValue, SizeType, type BorderRadius, type BorderRadiusProperty, type PropertyDefinition, type PropValue, type PropValueBorderRadius, type Size } from '@efie-form/core';
+import { borderRadiusToStyle, SizeType, type BorderRadius, type BorderRadiusProperty, type PropValueBorderRadius, type Size } from '@efie-form/core';
 import SizeInput from '../../../components/form/size-input';
 import { FaLink, FaUnlink } from 'react-icons/fa';
 
-interface PropsSettingsBorderRadiusProps extends PropSettingsBorderRadius {
-  fieldId: string;
+interface PropsSettingsBorderRadiusProps {
+  value: PropValueBorderRadius;
+  onChange: (newValue: PropValueBorderRadius) => void;
+  label: string;
 }
 
 // Helper to normalize values for comparison
@@ -20,12 +20,11 @@ const normalizeValue = (val: BorderRadius): string => {
   return String(val);
 };
 
-export default function PropsSettingsBorderRadius({ fieldId, label, type }: PropsSettingsBorderRadiusProps) {
-  const fieldProperty = useSchemaStore(
-    state => (state.getFieldProperty(fieldId, type)),
-  );
-  const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
-  const value = getValue(fieldProperty?.value);
+export default function PropsSettingsBorderRadius({
+  label,
+  onChange,
+  value,
+}: PropsSettingsBorderRadiusProps) {
   const [isLinked, setIsLink] = useState(false);
   const [hasUserInteracted, setHasUserInteracted] = useState(false);
   const previousValuesRef = useRef<BorderRadiusProperty['value'] | null>(null);
@@ -61,10 +60,7 @@ export default function PropsSettingsBorderRadius({ fieldId, label, type }: Prop
     if (isLinked) {
       // Restore previous values when unlinking
       if (previousValuesRef.current) {
-        updateFieldProperty(fieldId, {
-          type,
-          value: previousValuesRef.current,
-        } as PropertyDefinition);
+        onChange(previousValuesRef.current);
       }
     }
     else {
@@ -74,39 +70,30 @@ export default function PropsSettingsBorderRadius({ fieldId, label, type }: Prop
       }
       // Set all corners to the same value (using topLeft as reference)
       const uniformValue = value.topLeft;
-      updateFieldProperty(fieldId, {
-        type,
-        value: {
-          topLeft: uniformValue,
-          topRight: uniformValue,
-          bottomLeft: uniformValue,
-          bottomRight: uniformValue,
-        },
-      } as PropertyDefinition);
+      onChange({
+        topLeft: uniformValue,
+        topRight: uniformValue,
+        bottomLeft: uniformValue,
+        bottomRight: uniformValue,
+      });
     }
     setIsLink(!isLinked);
   };
 
   const handleChange = (newValue: BorderRadius, borderType: keyof BorderRadiusProperty['value']) => {
-    updateFieldProperty(fieldId, {
-      type,
-      value: {
-        ...value,
-        [borderType]: newValue,
-      },
-    } as PropertyDefinition);
+    onChange({
+      ...value,
+      [borderType]: newValue,
+    });
   };
 
   const handleLinkedChange = (newValue: Size) => {
-    updateFieldProperty(fieldId, {
-      type,
-      value: {
-        topLeft: newValue,
-        topRight: newValue,
-        bottomLeft: newValue,
-        bottomRight: newValue,
-      },
-    } as PropertyDefinition);
+    onChange({
+      topLeft: newValue,
+      topRight: newValue,
+      bottomLeft: newValue,
+      bottomRight: newValue,
+    });
   };
 
   // Get the first value for linked mode (assuming all corners have the same value when linked)
@@ -252,15 +239,4 @@ function BorderCorner({ value, handleChange, borderType }: BorderCornerProps) {
           )}
     </>
   );
-}
-
-function getValue(props?: PropValue): PropValueBorderRadius {
-  if (!isBorderRadiusValue(props)) return {
-    topLeft: { type: SizeType.LENGTH, value: 0, unit: 'px' },
-    topRight: { type: SizeType.LENGTH, value: 0, unit: 'px' },
-    bottomLeft: { type: SizeType.LENGTH, value: 0, unit: 'px' },
-    bottomRight: { type: SizeType.LENGTH, value: 0, unit: 'px' },
-  };
-
-  return props;
 }

@@ -15,10 +15,11 @@ export interface PropSettingsBoolean {
 
 export interface PropSettingsFormKey {
   template: typeof PropSettingsTemplate.FORM_KEY;
+  type: PropertyDefinition['type'];
 }
 
 export interface PropSettingsOption {
-  template: typeof PropSettingsTemplate.OPTION;
+  template: typeof PropSettingsTemplate.OPTIONS;
   type: PropertyDefinition['type'];
   label: string;
   defaultOptions: string[];

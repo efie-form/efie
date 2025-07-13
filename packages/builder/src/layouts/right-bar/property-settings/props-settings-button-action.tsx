@@ -1,19 +1,17 @@
 import { useRef } from 'react';
 import { Input, Select, Switch } from '../../../components/form';
-import type { PropSettingsButtonAction } from '../../../types/prop-settings.type';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import {
-  isButtonActionValue,
-  type PropertyDefinition,
-  type PropValue,
   type PropValueButtonAction,
   FieldType,
   PropertyType,
   isStringValue,
 } from '@efie-form/core';
 
-interface PropsSettingsButtonActionProps extends PropSettingsButtonAction {
-  fieldId: string;
+interface PropsSettingsButtonActionProps {
+  value: PropValueButtonAction;
+  label: string;
+  onChange: (value: PropValueButtonAction) => void;
 }
 
 const ACTION_OPTIONS = [
@@ -21,13 +19,6 @@ const ACTION_OPTIONS = [
   { value: 'hyperlink', label: 'Hyperlink' },
   { value: 'navigate', label: 'Navigate' },
 ];
-
-function getDefaultValue(value?: PropValue): PropValueButtonAction {
-  if (value && isButtonActionValue(value)) {
-    return value;
-  }
-  return { action: 'submit' };
-}
 
 function createHyperlinkValue(url: string, target: '_blank' | '_self' = '_self'): PropValueButtonAction {
   return { action: 'hyperlink', url, target };
@@ -41,14 +32,12 @@ function createSubmitValue(): PropValueButtonAction {
   return { action: 'submit' };
 }
 
-export default function PropsSettingsButtonAction({ fieldId, label, type }: PropsSettingsButtonActionProps) {
-  const fieldProperty = useSchemaStore(
-    state => state.getFieldProperty(fieldId, type),
-  );
-  const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
+export default function PropsSettingsButtonAction({
+  value,
+  label,
+  onChange,
+}: PropsSettingsButtonActionProps) {
   const schema = useSchemaStore(state => state.schema);
-
-  const value = getDefaultValue(fieldProperty?.value);
 
   // Page options to avoid recalculation on every render
   const pageOptions = schema.form.fields
@@ -70,10 +59,7 @@ export default function PropsSettingsButtonAction({ fieldId, label, type }: Prop
       [newValue.action]: newValue,
     };
 
-    updateFieldProperty(fieldId, {
-      type,
-      value: newValue,
-    } as PropertyDefinition);
+    onChange(newValue);
   };
 
   const handleActionTypeChange = (newAction: string) => {
@@ -150,13 +136,11 @@ export default function PropsSettingsButtonAction({ fieldId, label, type }: Prop
             />
             <div className="flex justify-between items-center">
               <label
-                htmlFor={`openInNewTab-${fieldId}`}
                 className="typography-body3 text-neutral-800 cursor-pointer"
               >
                 Open in new tab
               </label>
               <Switch
-                id={`openInNewTab-${fieldId}`}
                 checked={value.target === '_blank'}
                 onChange={handleOpenInNewTabChange}
               />

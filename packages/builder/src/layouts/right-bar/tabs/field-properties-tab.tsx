@@ -1,10 +1,9 @@
 import RenderSettings from '../render-settings';
 import {
-  RIGHT_BAR_TABS,
   useSettingsStore,
 } from '../../../lib/state/settings.state';
 import { useSchemaStore } from '../../../lib/state/schema.state';
-import { FIELDS_NAME } from '../../../lib/constant';
+import { FIELDS_NAME, RIGHT_BAR_TABS } from '../../../lib/constant';
 import { HiX } from 'react-icons/hi';
 import { LuCornerLeftUp } from 'react-icons/lu';
 import Tooltip from '../../../components/elements/tooltip';

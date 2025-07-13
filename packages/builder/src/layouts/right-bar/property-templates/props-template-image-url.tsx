@@ -1,30 +1,24 @@
 import { Input } from '../../../components/form';
 import SettingsFieldVertical from '../property-layouts/settings-field-vertical';
-import { useSchemaStore } from '../../../lib/state/schema.state';
-import type { PropSettingsImageUrl } from '../../../types/prop-settings.type';
 import { useEffect, useRef, useState } from 'react';
-import { isStringValue, type PropertyDefinition, type PropValue } from '@efie-form/core';
 import { MdOutlineImage } from 'react-icons/md';
 import { useFileDragDrop } from '../../../lib/hooks/use-file-drag-drop';
 import { getImageFileInfo } from './utils-image-info';
 import { cn } from '../../../lib/utils';
 
-interface PropsTemplateImageUrlProps extends PropSettingsImageUrl {
-  fieldId: string;
+interface PropsTemplateImageUrlProps {
+  value?: string;
+  onChange: (newValue: string) => void;
+  label: string;
+  placeholder?: string;
 }
 
 export default function PropsTemplateImageUrl({
   label,
   placeholder,
-  type,
-  fieldId,
+  value,
+  onChange,
 }: PropsTemplateImageUrlProps) {
-  const fieldProperty = useSchemaStore(
-    state => state.getFieldProperty(fieldId, type),
-  );
-  const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
-  const value = getValue(fieldProperty?.value);
-
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [imageError, setImageError] = useState(false);
   const [imageDimensions, setImageDimensions] = useState<{ width: number; height: number }>();
@@ -45,10 +39,7 @@ export default function PropsTemplateImageUrl({
   };
 
   const handleChange = (newValue: string) => {
-    updateFieldProperty(fieldId, {
-      type,
-      value: newValue,
-    } as PropertyDefinition);
+    onChange(newValue);
     setImageError(false);
     // setIsLoading(false);
   };
@@ -229,12 +220,6 @@ export default function PropsTemplateImageUrl({
     </SettingsFieldVertical>
   );
 }
-
-const getValue = (props?: PropValue) => {
-  if (!isStringValue(props)) return '';
-
-  return props;
-};
 
 const formatFileSize = (bytes: number): string => {
   if (bytes === 0) return '0 Bytes';

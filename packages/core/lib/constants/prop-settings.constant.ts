@@ -2,7 +2,7 @@ export const PropSettingsTemplate = {
   TEXT: 'text',
   BOOLEAN: 'boolean',
   FORM_KEY: 'formKey',
-  OPTION: 'option',
+  OPTIONS: 'options',
   NUMBER: 'number',
   ACCEPT: 'accept',
   COLOR: 'color',

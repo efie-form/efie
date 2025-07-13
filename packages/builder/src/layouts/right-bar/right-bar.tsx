@@ -4,10 +4,9 @@ import { cn } from '../../lib/utils';
 import PagePropertiesTab from './tabs/page-properties-tab';
 import { AiFillLayout } from 'react-icons/ai';
 import type { ElementType } from 'react';
-import type { RightBarTab } from '../../lib/state/settings.state';
-import { RIGHT_BAR_TABS } from '../../lib/state/settings.state';
 import { useSettingsStore } from '../../lib/state/settings.state';
 import Tooltip from '../../components/elements/tooltip';
+import { RIGHT_BAR_TABS, type RightBarTab } from '../../lib/constant';
 
 interface Tab {
   id: RightBarTab;

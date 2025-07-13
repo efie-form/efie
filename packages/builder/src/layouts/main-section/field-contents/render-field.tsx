@@ -1,7 +1,6 @@
 import { type FormField, FieldType } from '@efie-form/core';
 import ColumnsField from './fields/column-field';
 import {
-  RIGHT_BAR_TABS,
   useSettingsStore,
 } from '../../../lib/state/settings.state';
 import { type MouseEvent, useEffect, useRef, useState } from 'react';
@@ -39,6 +38,7 @@ import {
   TimeField,
 } from './fields';
 import useDropField from '../../../lib/hooks/use-drop-field';
+import { RIGHT_BAR_TABS } from '../../../lib/constant';
 
 interface RenderFieldProps {
   field: FormField;

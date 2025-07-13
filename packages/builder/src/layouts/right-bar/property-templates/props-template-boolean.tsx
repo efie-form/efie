@@ -1,26 +1,15 @@
-import { useSchemaStore } from '../../../lib/state/schema.state';
-import type { PropSettingsBoolean } from '../../../types/prop-settings.type';
-import { isBooleanValue, type PropertyDefinition, type PropValue } from '@efie-form/core';
 import { Switch } from '../../../components/form';
 import SettingsFieldHorizontal from '../property-layouts/settings-field-horizontal';
 
-interface PropTemplateBoolean extends PropSettingsBoolean {
-  fieldId: string;
+interface PropTemplateBoolean {
+  label: string;
+  value: boolean;
+  onChange: (newValue: boolean) => void;
 }
 
-export default function PropsTemplateBoolean({ label, fieldId, type }: PropTemplateBoolean) {
-  const fieldProperty = useSchemaStore(
-    state => state.getFieldProperty(fieldId, type),
-  );
-  const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
-
-  const value = getValue(fieldProperty?.value);
-
+export default function PropsTemplateBoolean({ label, value, onChange }: PropTemplateBoolean) {
   const handleChange = (newValue: boolean) => {
-    updateFieldProperty(fieldId, {
-      type,
-      value: newValue,
-    } as PropertyDefinition);
+    onChange(newValue);
   };
 
   return (
@@ -31,10 +20,4 @@ export default function PropsTemplateBoolean({ label, fieldId, type }: PropTempl
       />
     </SettingsFieldHorizontal>
   );
-}
-
-function getValue(value?: PropValue) {
-  if (!isBooleanValue(value)) return false;
-
-  return value;
 }
