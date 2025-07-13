@@ -1,6 +1,5 @@
 import type { PropertyType } from '../constants/form-schema.constant';
-import type { PropValueAccept, PropValueBoolean, PropValueBorderRadius, PropValueBoxShadow, PropValueButtonAction, PropValueColor, PropValueMargin, PropValueNumber, PropValueOptions, PropValuePadding, PropValueSize, PropValueString } from './field-property-value.type';
-import type { JSONContent } from '@tiptap/core';
+import type { PropValue, PropValueAccept, PropValueBoolean, PropValueBorderRadius, PropValueBoxShadow, PropValueButtonAction, PropValueColor, PropValueJsonContent, PropValueMargin, PropValueNumber, PropValueOptions, PropValuePadding, PropValueSize, PropValueString } from './field-property-value.type';
 
 // Label property
 export interface LabelProperty {
@@ -132,9 +131,7 @@ export interface BorderColorProperty {
 
 export interface ContentProperty {
   type: typeof PropertyType.CONTENT;
-  value: {
-    jsonContent: JSONContent;
-  };
+  value: PropValueJsonContent;
 }
 
 export interface PageNameProperty {
@@ -144,9 +141,8 @@ export interface PageNameProperty {
 
 export interface CustomProperty {
   type: typeof PropertyType.CUSTOM;
-  value: {
-    id: string;
-  };
+  id: string;
+  value: PropValue;
 }
 
 // Union type of all property definitions

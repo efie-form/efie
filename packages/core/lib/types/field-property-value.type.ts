@@ -49,10 +49,6 @@ export type PropValueButtonAction =
   | ButtonActionSubmit
   | ButtonActionNavigate;
 
-export type PropValueCustom = {
-  id: string;
-};
-
 export type PropValue =
   | PropValueString
   | PropValueNumber
@@ -66,5 +62,4 @@ export type PropValue =
   | PropValueBoxShadow
   | PropValueBorderRadius
   | PropValueJsonContent
-  | PropValueButtonAction
-  | PropValueCustom;
+  | PropValueButtonAction;

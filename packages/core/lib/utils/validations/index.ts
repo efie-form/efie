@@ -158,6 +158,11 @@ function validatePropertyDefinition(prop: unknown): prop is PropertyDefinition {
       if (!isButtonActionValue(propValue)) console.warn(`Invalid button action value for property type ${fieldType}:`, propValue);
       return isButtonActionValue(propValue);
     }
+    case PropertyType.CUSTOM: {
+      // Custom properties can have any value, so we don't validate the value
+      // TODO: Implement custom validation logic if needed
+      return true;
+    }
     default: {
       return fieldType;
     }

@@ -154,13 +154,20 @@ export interface BlockFormField extends BaseFormField {
 export interface RowFormField extends BaseFormField {
   type: typeof FieldType.ROW;
   children: ColumnFormField[];
-  props: (WidthProperty | HeightProperty)[];
+  props: (
+    | WidthProperty
+    | HeightProperty
+
+  )[];
 }
 
 export interface ColumnFormField extends BaseFormField {
   type: typeof FieldType.COLUMN;
   children: FormField[];
-  props: (WidthProperty | HeightProperty)[];
+  props: (
+    | WidthProperty
+    | HeightProperty
+  )[];
 }
 
 export interface HeadingFormField extends BaseFormField {
@@ -208,7 +215,10 @@ export interface ButtonFormField extends BaseFormField {
 export interface PageFormField extends BaseFormField {
   type: typeof FieldType.PAGE;
   children: FormField[];
-  props: (WidthProperty | PageNameProperty)[];
+  props: (
+    | WidthProperty
+    | PageNameProperty
+  )[];
 }
 
 // Divider field type

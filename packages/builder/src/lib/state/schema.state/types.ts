@@ -4,6 +4,7 @@ import type {
   FormSchema,
   PageFormField,
   PropertyDefinition,
+  PropertyType,
 } from '@efie-form/core';
 
 export interface SchemaState {
@@ -45,15 +46,14 @@ export interface SchemaState {
     fieldId: string,
     type: T
   ) => Extract<PropertyDefinition, { type: T }> | undefined;
+  getFieldCustomProperty: (
+    fieldId: string,
+    id: string
+  ) => Extract<PropertyDefinition, { type: typeof PropertyType.CUSTOM }> | undefined;
   getFieldProperties: (fieldId: string) => PropertyDefinition[];
   listChildrenId: (fieldId: string) => string[];
 
   // Legacy methods (maintained for compatibility)
-  updateFieldProps: (
-    fieldId: string,
-    type: PropertyDefinition['type'],
-    props: Omit<PropertyDefinition, 'type'>
-  ) => void;
   getPage: (pageId?: string) => PageFormField | undefined;
   updatePages: (pages: FormField[]) => void;
   updateFieldForm: (fieldId: string, form: FormInputField['form']) => void;

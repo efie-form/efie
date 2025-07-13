@@ -1,13 +1,7 @@
 import { PropSettingsTemplate } from '@efie-form/core';
 import type { SettingsConfig } from '../../types/settings-config.type';
-import PropsSettingsAccept from './property-settings/props-settings-accept';
-import PropsSettingsFormKey from './property-settings/props-settings-form-key';
-import PropsSettingsOptions from './property-settings/props-settings-options';
-import PropsTemplateBoolean from './property-templates/props-template-boolean';
-import PropsTemplateColor from './property-templates/props-template-color';
-import PropsTemplateImageUrl from './property-templates/props-template-image-url';
-import PropsTemplateNumber from './property-templates/props-template-number';
-import PropsTemplateText from './property-templates/props-template-text';
+import PropsSettingsPadding from './property-settings/props-settings-padding';
+import { useSchemaStore } from '../../lib/state/schema.state';
 
 interface CustomSettingsProps {
   fieldId: string;
@@ -18,7 +12,7 @@ export default function CustomSettings({ fieldId, settings }: CustomSettingsProp
   return (
     <>
       {settings?.map(settings => (
-        <></>
+        <SettingsType key={settings.id} settings={settings} fieldId={fieldId} />
       ))}
     </>
   );
@@ -31,41 +25,24 @@ interface SettingsProps {
 
 function SettingsType({ settings, fieldId }: SettingsProps) {
   const template = settings.type;
+  const fieldProperty = useSchemaStore(state => state.getFieldCustomProperty(fieldId, settings.id));
   switch (template) {
-    case PropSettingsTemplate.TEXT: {
+    case PropSettingsTemplate.PADDING: {
       return (
-        <PropsTemplateText
-          fieldId={fieldId}
+        <PropsSettingsPadding
           label={settings.label}
-          template={settings.type}
-          placeholder={settings.options?.placeholder}
-          type={PropSettingsTemplate.TEXT}
+          onChange={() => {}}
+          value={{
+            top: { type: 'length', value: 0, unit: 'px' },
+            right: { type: 'length', value: 0, unit: 'px' },
+            bottom: { type: 'length', value: 0, unit: 'px' },
+            left: { type: 'length', value: 0, unit: 'px' },
+          }}
         />
       );
     }
-    case 'number': {
-      return <PropsTemplateNumber fieldId={fieldId} {...settings} />;
-    }
-    case 'boolean': {
-      return <PropsTemplateBoolean fieldId={fieldId} {...settings} />;
-    }
-    case 'color': {
-      return <PropsTemplateColor fieldId={fieldId} {...settings} />;
-    }
-    case 'image_url': {
-      return <PropsTemplateImageUrl fieldId={fieldId} {...settings} />;
-    }
-    case 'accept': {
-      return <PropsSettingsAccept fieldId={fieldId} {...settings} />;
-    }
-    case 'form_key': {
-      return <PropsSettingsFormKey fieldId={fieldId} {...settings} />;
-    }
-    case 'options': {
-      return <PropsSettingsOptions fieldId={fieldId} {...settings} />;
-    }
     default: {
-      return null;
+      return <></>;
     }
   }
 }

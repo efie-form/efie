@@ -1,13 +1,8 @@
-import { FieldType, type FormField, type FormInputField, type PageFormField, type PropertyDefinition } from '@efie-form/core';
+import { FieldType, type FormField, type FormInputField, type PageFormField } from '@efie-form/core';
 import type { StateSetters } from './types';
 
 export function createLegacyActions({ getState }: StateSetters) {
   return {
-    // Legacy methods (maintained for compatibility)
-    updateFieldProps: (fieldId: string, type: PropertyDefinition['type'], props: Omit<PropertyDefinition, 'type'>) => {
-      const property = { type, ...props } as PropertyDefinition;
-      getState().updateFieldProperty(fieldId, property);
-    },
 
     getPage: (pageId?: string): PageFormField | undefined => {
       if (!pageId) return;
