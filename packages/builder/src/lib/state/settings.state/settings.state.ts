@@ -1,8 +1,8 @@
 import { create } from 'zustand';
 import defaultSchema from '../../default-schema';
 import type { CustomInputDef } from '@efie-form/core';
-import type { FieldConfig } from '../../../types/field-settings.type';
 import type { RightBarTab } from '../../constant';
+import type { FieldsConfigs } from '../../../types/settings-config-2';
 
 interface SettingsState {
   formInputs: CustomInputDef[];
@@ -28,8 +28,8 @@ interface SettingsState {
   ) => void;
   isInputReusable: boolean;
   setIsInputReusable: (inputReusable: SettingsState['isInputReusable']) => void;
-  config: FieldConfig;
-  setConfig: (config: FieldConfig) => void;
+  config: FieldsConfigs;
+  setConfig: (config: FieldsConfigs) => void;
 }
 
 export const useSettingsStore = create<SettingsState>(set => ({
@@ -82,23 +82,31 @@ export const useSettingsStore = create<SettingsState>(set => ({
     set({ isInputReusable });
   },
   config: {
-    block: {
-      settings: [
-        {
-          id: 'padding',
-          label: 'Padding',
-          type: 'padding',
-          defaultValue: {
-            bottom: { type: 'length', value: 0, unit: 'px' },
-            left: { type: 'length', value: 0, unit: 'px' },
-            right: { type: 'length', value: 0, unit: 'px' },
-            top: { type: 'length', value: 0, unit: 'px',
-            },
-          },
-        },
+    shortText: {
+      properties: [
+        { system: 'label', label: 'Label' },
+        { system: 'placeholder', label: 'Input Placeholder' },
+        { system: 'required', label: 'Required' },
       ],
     },
+
+    longText: {
+      properties: [
+        { system: 'label', label: 'Label' },
+        { system: 'placeholder', label: 'Input Placeholder' },
+        { system: 'required', label: 'Required' },
+      ],
+    },
+    number: {
+      properties: [
+        { system: 'label', label: 'Label' },
+        { system: 'placeholder', label: 'Input Placeholder' },
+        { system: 'required', label: 'Required' },
+      ],
+
+    },
     heading: {
+      properties: [],
       formats: {
         blockquote: true,
         bulletList: true,

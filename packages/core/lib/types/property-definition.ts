@@ -1,5 +1,5 @@
 import type { PropertyType } from '../constants/form-schema.constant';
-import type { PropValue, PropValueAccept, PropValueBoolean, PropValueBorderRadius, PropValueBoxShadow, PropValueButtonAction, PropValueColor, PropValueJsonContent, PropValueMargin, PropValueNumber, PropValueOptions, PropValuePadding, PropValueSize, PropValueString } from './field-property-value.type';
+import type { PropValueAccept, PropValueBoolean, PropValueBorderRadius, PropValueBoxShadow, PropValueButtonAction, PropValueColor, PropValueJsonContent, PropValueMargin, PropValueNumber, PropValueOptions, PropValuePadding, PropValueSize, PropValueString } from './field-property-value.type';
 
 // Label property
 export interface LabelProperty {
@@ -139,12 +139,6 @@ export interface PageNameProperty {
   value: PropValueString;
 }
 
-export interface CustomProperty {
-  type: typeof PropertyType.CUSTOM;
-  id: string;
-  value: PropValue;
-}
-
 // Union type of all property definitions
 export type PropertyDefinition =
   | LabelProperty
@@ -172,5 +166,4 @@ export type PropertyDefinition =
   | ContentProperty
   | PageNameProperty
   | FontWeightProperty
-  | ButtonActionProperty
-  | CustomProperty;
+  | ButtonActionProperty;

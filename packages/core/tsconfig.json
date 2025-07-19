@@ -16,7 +16,6 @@
     ],
     "baseUrl": ".",
     "rootDir": ".",
-    "paths": {}
   },
   "include": [
     "./lib/**/*"

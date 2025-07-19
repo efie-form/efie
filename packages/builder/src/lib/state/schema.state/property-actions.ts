@@ -1,4 +1,4 @@
-import { PropertyType, type FormField, type PropertyDefinition } from '@efie-form/core';
+import { type FormField, type PropertyDefinition } from '@efie-form/core';
 import type { StateSetters } from './types';
 import { getFieldInfoMap } from './utils';
 
@@ -131,18 +131,6 @@ export function createPropertyActions({ set, getState }: StateSetters) {
 
       const prop = field.props.find(prop => prop.type === type);
       return prop as Extract<PropertyDefinition, { type: T }> | undefined;
-    },
-
-    getFieldCustomProperty: (
-      fieldId: string,
-      id: string,
-    ): Extract<PropertyDefinition, { type: typeof PropertyType.CUSTOM }> | undefined => {
-      const { fieldMap } = getState();
-      const field = fieldMap.get(fieldId);
-      if (!field) return;
-
-      const prop = field.props.find(prop => prop.type === PropertyType.CUSTOM && prop.value.id === id);
-      return prop as Extract<PropertyDefinition, { type: typeof PropertyType.CUSTOM }> | undefined;
     },
 
     getFieldProperties: (fieldId: string): PropertyDefinition[] => {
