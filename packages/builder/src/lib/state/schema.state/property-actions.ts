@@ -1,11 +1,11 @@
 import { type FormField, type PropertyDefinition } from '@efie-form/core';
-import type { StateSetters } from './types';
+import type { SchemaStateFieldProperty, StateSetters } from './types';
 import { getFieldInfoMap } from './utils';
 
-export function createPropertyActions({ set, getState }: StateSetters) {
+export function createPropertyActions({ set, getState }: StateSetters): SchemaStateFieldProperty {
   return {
     // Enhanced property management methods
-    updateFieldProperty: <T extends PropertyDefinition>(fieldId: string, property: T) => {
+    updateFieldProperty: (fieldId, property) => {
       const { schema, addHistory, fieldMap } = getState();
       const field = fieldMap.get(fieldId);
       if (!field) return;
@@ -54,7 +54,7 @@ export function createPropertyActions({ set, getState }: StateSetters) {
       set({ schema: newSchema, fieldMap: newFieldMap });
     },
 
-    addFieldProperty: <T extends PropertyDefinition>(fieldId: string, property: T) => {
+    addFieldProperty: (fieldId, property) => {
       const field = getState().fieldMap.get(fieldId);
       if (!field) return;
 
@@ -64,7 +64,7 @@ export function createPropertyActions({ set, getState }: StateSetters) {
       }
     },
 
-    removeFieldProperty: (fieldId: string, propertyType: PropertyDefinition['type']) => {
+    removeFieldProperty: (fieldId, propertyType) => {
       const { schema, addHistory } = getState();
       const field = getState().fieldMap.get(fieldId);
       if (!field) return;
@@ -93,7 +93,7 @@ export function createPropertyActions({ set, getState }: StateSetters) {
       set({ schema: newSchema, fieldMap, fieldKeyMap, fieldParentMap });
     },
 
-    setFieldProperties: (fieldId: string, properties: PropertyDefinition[]) => {
+    setFieldProperties: (fieldId, properties) => {
       const { schema, addHistory } = getState();
       const field = getState().fieldMap.get(fieldId);
       if (!field) return;
@@ -124,7 +124,7 @@ export function createPropertyActions({ set, getState }: StateSetters) {
     getFieldProperty: <T extends PropertyDefinition['type']>(
       fieldId: string,
       type: T,
-    ): Extract<PropertyDefinition, { type: T }> | undefined => {
+    ) => {
       const { fieldMap } = getState();
       const field = fieldMap.get(fieldId);
       if (!field) return;
@@ -133,10 +133,10 @@ export function createPropertyActions({ set, getState }: StateSetters) {
       return prop as Extract<PropertyDefinition, { type: T }> | undefined;
     },
 
-    getFieldProperties: (fieldId: string): PropertyDefinition[] => {
+    getFieldProps: (fieldId) => {
       const { fieldMap } = getState();
       const field = fieldMap.get(fieldId);
-      return field ? [...field.props] : [];
+      return field ? field.props : undefined;
     },
   };
 }

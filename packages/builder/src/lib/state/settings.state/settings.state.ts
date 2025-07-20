@@ -1,8 +1,8 @@
 import { create } from 'zustand';
 import defaultSchema from '../../default-schema';
-import type { CustomInputDef } from '@efie-form/core';
+import type { CustomInputDef, FieldsConfigsMap } from '@efie-form/core';
 import type { RightBarTab } from '../../constant';
-import type { FieldsConfigs } from '../../../types/settings-config-2';
+import settingsConfig from './settings-config';
 
 interface SettingsState {
   formInputs: CustomInputDef[];
@@ -28,8 +28,8 @@ interface SettingsState {
   ) => void;
   isInputReusable: boolean;
   setIsInputReusable: (inputReusable: SettingsState['isInputReusable']) => void;
-  config: FieldsConfigs;
-  setConfig: (config: FieldsConfigs) => void;
+  config: FieldsConfigsMap;
+  setConfig: (config: FieldsConfigsMap) => void;
 }
 
 export const useSettingsStore = create<SettingsState>(set => ({
@@ -81,72 +81,7 @@ export const useSettingsStore = create<SettingsState>(set => ({
   setIsInputReusable: (isInputReusable) => {
     set({ isInputReusable });
   },
-  config: {
-    shortText: {
-      properties: [
-        { system: 'label', label: 'Label' },
-        { system: 'placeholder', label: 'Input Placeholder' },
-        { system: 'required', label: 'Required' },
-      ],
-    },
-
-    longText: {
-      properties: [
-        { system: 'label', label: 'Label' },
-        { system: 'placeholder', label: 'Input Placeholder' },
-        { system: 'required', label: 'Required' },
-      ],
-    },
-    number: {
-      properties: [
-        { system: 'label', label: 'Label' },
-        { system: 'placeholder', label: 'Input Placeholder' },
-        { system: 'required', label: 'Required' },
-      ],
-
-    },
-    heading: {
-      properties: [],
-      formats: {
-        blockquote: true,
-        bulletList: true,
-        code: true,
-        codeBlock: true,
-        bold: true,
-        italic: true,
-        underline: true,
-        strikethrough: true,
-        link: true,
-        superscript: true,
-        align: true,
-        subscript: true,
-        list: {
-          ordered: true,
-          bullet: true,
-        },
-        heading: {
-          options: [
-            { level: 0, label: 'Paragraph' },
-            { level: 1, label: 'Heading 1' },
-            { level: 2, label: 'Heading 2' },
-            { level: 3, label: 'Heading 3' },
-            { level: 4, label: 'Heading 4' },
-            { level: 5, label: 'Heading 5' },
-            { level: 6, label: 'Heading 6' },
-          ],
-          default: 0,
-        },
-        fontSize: {
-          options: [
-            { label: 'Small', size: '0.875rem' },
-            { label: 'Medium', size: '1rem' },
-            { label: 'Large', size: '2rem' },
-            { label: 'Extra Large', size: '3rem' },
-          ],
-          default: { label: 'Medium', size: '1rem' },
-        },
-      },
-    } },
+  config: settingsConfig,
   setConfig: (config) => {
     set({ config });
   },

@@ -221,10 +221,6 @@ export function getDefaultField<T extends FieldType>({
             value: 'File',
           },
           {
-            type: PropertyType.MAX_FILES,
-            value: 1,
-          },
-          {
             type: PropertyType.ACCEPT,
             value: {
               allowAll: true,
@@ -247,7 +243,7 @@ export function getDefaultField<T extends FieldType>({
         id: generateId(ID_LENGTH),
         props: [
           {
-            type: PropertyType.CONTENT,
+            type: PropertyType.HEADING_CONTENT,
             value: {
               jsonContent: generateJsonContent(''),
             },
@@ -261,12 +257,12 @@ export function getDefaultField<T extends FieldType>({
         id: generateId(ID_LENGTH),
         props: [
           {
-            type: PropertyType.SRC,
+            type: PropertyType.IMAGE_SRC,
             value: '',
           },
           {
-            type: PropertyType.ALT,
-            value: 'Placeholder',
+            type: PropertyType.IMAGE_ALT,
+            value: PropertyType.PLACEHOLDER,
           },
         ],
       } satisfies GetDefaultFieldReturn[typeof FieldType.IMAGE];
@@ -282,7 +278,7 @@ export function getDefaultField<T extends FieldType>({
             type: FieldType.COLUMN,
             props: [
               {
-                type: PropertyType.WIDTH,
+                type: PropertyType.COLUMN_WIDTH,
                 value: {
                   type: SizeType.PERCENTAGE,
                   value: 50,
@@ -296,7 +292,7 @@ export function getDefaultField<T extends FieldType>({
             type: FieldType.COLUMN,
             props: [
               {
-                type: PropertyType.WIDTH,
+                type: PropertyType.COLUMN_WIDTH,
                 value: {
                   type: SizeType.PERCENTAGE,
                   value: 50,
@@ -314,7 +310,7 @@ export function getDefaultField<T extends FieldType>({
         id: generateId(ID_LENGTH),
         props: [
           {
-            type: PropertyType.WIDTH,
+            type: PropertyType.COLUMN_WIDTH,
             value: {
               type: SizeType.PERCENTAGE,
               value: column?.width || 100,

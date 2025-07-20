@@ -1,169 +1,165 @@
-import type { PropertyType } from '../constants/form-schema.constant';
-import type { PropValueAccept, PropValueBoolean, PropValueBorderRadius, PropValueBoxShadow, PropValueButtonAction, PropValueColor, PropValueJsonContent, PropValueMargin, PropValueNumber, PropValueOptions, PropValuePadding, PropValueSize, PropValueString } from './field-property-value.type';
+import type { CustomPropertyType, PropertyType } from '../property-type';
+import type { PropValueAccept, PropValueBoolean, PropValueBoxShadow, PropValueButtonAction, PropValueColor, PropValueJsonContent, PropValueMargin, PropValueNumber, PropValueOptions, PropValuePadding, PropValueSize, PropValueString } from './field-property-value.type';
 
-// Label property
-export interface LabelProperty {
+export type FieldCustomProp =
+  | FieldCustomPropString
+  | FieldCustomPropNumber
+  | FieldCustomPropColor
+  | FieldCustomPropBoolean
+  | FieldCustomPropSize
+  | FieldCustomPropBoxShadow
+  | FieldCustomPropMargin
+  | FieldCustomPropPadding
+  | FieldCustomPropSelect
+  | FieldCustomPropMultiSelect;
+
+export type FieldSystemProp =
+  | FieldSystemPropLabel
+  | FieldSystemPropPlaceholder
+  | FieldSystemPropImageSrc
+  | FieldSystemPropImageAlt
+  | FieldSystemPropInputName
+  | FieldSystemPropRequired
+  | FieldSystemPropOptions
+  | FieldSystemPropAccept
+  | FieldSystemPropColumnWidth
+  | FieldSystemPropHeadingContent
+  | FieldSystemPropButtonAction
+  | FieldSystemPropPageName;
+
+export interface FieldSystemPropLabel {
   type: typeof PropertyType.LABEL;
   value: PropValueString;
 }
 
-// Placeholder property
-export interface PlaceholderProperty {
+export interface FieldSystemPropPlaceholder {
   type: typeof PropertyType.PLACEHOLDER;
   value: PropValueString;
 }
 
-// Required property
-export interface RequiredProperty {
+export interface FieldSystemPropImageSrc {
+  type: typeof PropertyType.IMAGE_SRC;
+  value: PropValueString;
+}
+
+export interface FieldSystemPropImageAlt {
+  type: typeof PropertyType.IMAGE_ALT;
+  value: PropValueString;
+}
+
+export interface FieldSystemPropInputName {
+  type: typeof PropertyType.INPUT_NAME;
+  value: PropValueString;
+}
+
+export interface FieldSystemPropRequired {
   type: typeof PropertyType.REQUIRED;
   value: PropValueBoolean;
 }
 
-// File properties
-export interface AcceptProperty {
-  type: typeof PropertyType.ACCEPT;
-  value: PropValueAccept;
-}
-
-export interface MaxFilesProperty {
-  type: typeof PropertyType.MAX_FILES;
-  value: PropValueNumber;
-}
-
-// Choice properties
-export interface OptionsProperty {
+export interface FieldSystemPropOptions {
   type: typeof PropertyType.OPTIONS;
   value: PropValueOptions;
 }
 
-// Layout properties
-export interface WidthProperty {
-  type: typeof PropertyType.WIDTH;
+export interface FieldSystemPropAccept {
+  type: typeof PropertyType.ACCEPT;
+  value: PropValueAccept;
+}
+
+export interface FieldSystemPropColumnWidth {
+  type: typeof PropertyType.COLUMN_WIDTH;
   value: PropValueSize;
 }
 
-export interface TextAlignProperty {
-  type: typeof PropertyType.TEXT_ALIGN;
-  value: PropValueString;
+export interface FieldSystemPropHeadingContent {
+  type: typeof PropertyType.HEADING_CONTENT;
+  value: PropValueJsonContent;
 }
 
-export interface ColorProperty {
-  type: typeof PropertyType.COLOR;
-  value: PropValueColor;
-}
-
-export interface FontSizeProperty {
-  type: typeof PropertyType.FONT_SIZE;
-  value: PropValueSize;
-}
-
-export interface FontWeightProperty {
-  type: typeof PropertyType.FONT_WEIGHT;
-  value: PropValueNumber;
-}
-
-export interface ButtonActionProperty {
+export interface FieldSystemPropButtonAction {
   type: typeof PropertyType.BUTTON_ACTION;
   value: PropValueButtonAction;
 }
 
-// Image properties
-export interface SrcProperty {
-  type: typeof PropertyType.SRC;
-  value: PropValueString;
-}
-
-export interface AltProperty {
-  type: typeof PropertyType.ALT;
-  value: PropValueString;
-}
-
-export interface ObjectFitProperty {
-  type: typeof PropertyType.OBJECT_FIT;
-  value: PropValueString;
-}
-export interface BgColorProperty {
-  type: typeof PropertyType.BACKGROUND_COLOR;
-  value: PropValueColor;
-}
-
-// Divider properties
-export interface HeightProperty {
-  type: typeof PropertyType.HEIGHT;
-  value: PropValueSize;
-}
-
-// Container properties
-export interface MarginProperty {
-  type: typeof PropertyType.MARGIN;
-  value: PropValueMargin;
-}
-
-export interface PaddingProperty {
-  type: typeof PropertyType.PADDING;
-  value: PropValuePadding;
-}
-
-export interface BoxShadowProperty {
-  type: typeof PropertyType.BOX_SHADOW;
-  value: PropValueBoxShadow;
-}
-
-export interface BorderRadiusProperty {
-  type: typeof PropertyType.BORDER_RADIUS;
-  value: PropValueBorderRadius;
-}
-
-export interface BorderStyleProperty {
-  type: typeof PropertyType.BORDER_STYLE;
-  value: PropValueString;
-}
-
-export interface BorderWidthProperty {
-  type: typeof PropertyType.BORDER_WIDTH;
-  value: PropValueSize;
-}
-
-export interface BorderColorProperty {
-  type: typeof PropertyType.BORDER_COLOR;
-  value: PropValueColor;
-}
-
-export interface ContentProperty {
-  type: typeof PropertyType.CONTENT;
-  value: PropValueJsonContent;
-}
-
-export interface PageNameProperty {
+export interface FieldSystemPropPageName {
   type: typeof PropertyType.PAGE_NAME;
   value: PropValueString;
 }
 
-// Union type of all property definitions
+/**
+ * Custom properties for form fields.
+ */
+export interface FieldCustomPropString {
+  id: string;
+  type: typeof PropertyType.CUSTOM;
+  dataType: typeof CustomPropertyType.TEXT;
+  value: PropValueString;
+}
+
+export interface FieldCustomPropSelect {
+  id: string;
+  type: typeof PropertyType.CUSTOM;
+  dataType: typeof CustomPropertyType.SELECT;
+  value: PropValueString;
+}
+
+export interface FieldCustomPropMultiSelect {
+  id: string;
+  type: typeof PropertyType.CUSTOM;
+  dataType: typeof CustomPropertyType.MULTI_SELECT;
+  value: PropValueString[];
+}
+
+export interface FieldCustomPropNumber {
+  id: string;
+  type: typeof PropertyType.CUSTOM;
+  dataType: typeof CustomPropertyType.NUMBER;
+  value: PropValueNumber;
+}
+
+export interface FieldCustomPropColor {
+  id: string;
+  type: typeof PropertyType.CUSTOM;
+  dataType: typeof CustomPropertyType.COLOR;
+  value: PropValueColor;
+}
+
+export interface FieldCustomPropBoolean {
+  id: string;
+  type: typeof PropertyType.CUSTOM;
+  dataType: typeof CustomPropertyType.BOOLEAN;
+  value: PropValueBoolean;
+}
+
+export interface FieldCustomPropSize {
+  id: string;
+  type: typeof PropertyType.CUSTOM;
+  dataType: typeof CustomPropertyType.SIZE;
+  value: PropValueSize;
+}
+
+export interface FieldCustomPropBoxShadow {
+  id: string;
+  type: typeof PropertyType.CUSTOM;
+  dataType: typeof CustomPropertyType.BOX_SHADOW;
+  value: PropValueBoxShadow;
+}
+
+export interface FieldCustomPropMargin {
+  id: string;
+  type: typeof PropertyType.CUSTOM;
+  dataType: typeof CustomPropertyType.MARGIN;
+  value: PropValueMargin;
+}
+
+export interface FieldCustomPropPadding {
+  id: string;
+  type: typeof PropertyType.CUSTOM;
+  dataType: typeof CustomPropertyType.PADDING;
+  value: PropValuePadding;
+}
+
 export type PropertyDefinition =
-  | LabelProperty
-  | PlaceholderProperty
-  | RequiredProperty
-  | AcceptProperty
-  | OptionsProperty
-  | WidthProperty
-  | TextAlignProperty
-  | ColorProperty
-  | FontSizeProperty
-  | SrcProperty
-  | AltProperty
-  | MaxFilesProperty
-  | ObjectFitProperty
-  | BgColorProperty
-  | HeightProperty
-  | MarginProperty
-  | PaddingProperty
-  | BoxShadowProperty
-  | BorderRadiusProperty
-  | BorderStyleProperty
-  | BorderWidthProperty
-  | BorderColorProperty
-  | ContentProperty
-  | PageNameProperty
-  | FontWeightProperty
-  | ButtonActionProperty;
+  | FieldSystemProp
+  | FieldCustomProp;

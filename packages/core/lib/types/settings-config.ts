@@ -1,176 +1,147 @@
-export const SYSTEM_PROPERTY = {
-  LABEL: 'label',
-  PLACEHOLDER: 'placeholder',
-  REQUIRED: 'required',
-  ACCEPT: 'accept',
-  INPUT_NAME: 'inputName',
-  OPTIONS: 'options',
-  IMAGE_SRC: 'imageSrc',
-  IMAGE_ALT: 'imageAlt',
-  COLUMN_WIDTH: 'columnWidth',
-  HEADING_CONTENT: 'headingContent',
-  BUTTON_ACTION: 'buttonAction',
-  PAGE_NAME: 'pageName',
-} as const;
-
-export type SystemFieldPropType = typeof SYSTEM_PROPERTY[keyof typeof SYSTEM_PROPERTY];
-
-export const CUSTOM_PROPERTY = {
-  TEXT: 'text',
-  NUMBER: 'number',
-  COLOR: 'color',
-  BOOLEAN: 'boolean',
-  SELECT: 'select',
-  MULTI_SELECT: 'multiSelect',
-  SIZE: 'size',
-  BOX_SHADOW: 'boxShadow',
-  MARGIN: 'margin',
-  PADDING: 'padding',
-} as const;
+import type { CustomPropertyType, PropertyType } from '../property-type';
 
 /**
  * System properties for form fields.
  */
 
-export interface SystemFieldPropLabel {
-  system: typeof SYSTEM_PROPERTY.LABEL;
+export interface FieldSystemConfigLabel {
+  type: typeof PropertyType.LABEL;
   label: string;
+  defaultValue?: string;
 }
 
-export interface SystemFieldPropPlaceholder {
-  system: typeof SYSTEM_PROPERTY.PLACEHOLDER;
+export interface FieldSystemConfigPlaceholder {
+  type: typeof PropertyType.PLACEHOLDER;
   label: string;
+  defaultValue?: string;
 }
 
-export interface SystemFieldPropRequired {
-  system: typeof SYSTEM_PROPERTY.REQUIRED;
+export interface FieldSystemConfigRequired {
+  type: typeof PropertyType.REQUIRED;
   label: string;
   defaultValue?: boolean;
 }
 
-export interface SystemFieldPropAccept {
-  system: typeof SYSTEM_PROPERTY.ACCEPT;
+export interface FieldSystemConfigAccept {
+  type: typeof PropertyType.ACCEPT;
   label: string;
 }
 
-export interface SystemFieldPropInputName {
-  system: typeof SYSTEM_PROPERTY.INPUT_NAME;
+export interface FieldSystemConfigInputName {
+  type: typeof PropertyType.INPUT_NAME;
   label: string;
 }
 
-export interface SystemFieldPropOptions {
-  system: typeof SYSTEM_PROPERTY.OPTIONS;
+export interface FieldSystemConfigOptions {
+  type: typeof PropertyType.OPTIONS;
   label: string;
 }
 
-export interface SystemFieldPropImageSrc {
-  system: typeof SYSTEM_PROPERTY.IMAGE_SRC;
+export interface FieldSystemConfigImageSrc {
+  type: typeof PropertyType.IMAGE_SRC;
   label: string;
 }
 
-export interface SystemFieldPropImageAlt {
-  system: typeof SYSTEM_PROPERTY.IMAGE_ALT;
+export interface FieldSystemConfigImageAlt {
+  type: typeof PropertyType.IMAGE_ALT;
   label: string;
 }
 
+interface FieldCustomConfigBase {
+  id: string;
+  type: typeof PropertyType.CUSTOM;
+  label: string;
+}
 /**
  * Custom properties for form fields.
  */
-export interface CustomFieldPropText {
-  custom: typeof CUSTOM_PROPERTY.TEXT;
-  id: string;
-  label: string;
+export interface FieldCustomConfigText extends FieldCustomConfigBase {
+  dataType: typeof CustomPropertyType.TEXT;
+  defaultValue?: string;
+  placeholder?: string;
 }
 
-export interface CustomFieldPropNumber {
-  custom: typeof CUSTOM_PROPERTY.NUMBER;
-  id: string;
-  label: string;
+export interface FieldCustomConfigNumber extends FieldCustomConfigBase {
+  dataType: typeof CustomPropertyType.NUMBER;
+  defaultValue?: number;
+  placeholder?: string;
 }
 
-export interface CustomFieldPropColor {
-  custom: typeof CUSTOM_PROPERTY.COLOR;
-  id: string;
-  label: string;
+export interface FieldCustomConfigColor extends FieldCustomConfigBase {
+  dataType: typeof CustomPropertyType.COLOR;
 }
 
-export interface CustomFieldPropBoolean {
-  custom: typeof CUSTOM_PROPERTY.BOOLEAN;
-  id: string;
-  label: string;
+export interface FieldCustomConfigBoolean extends FieldCustomConfigBase {
+  dataType: typeof CustomPropertyType.BOOLEAN;
+  defaultValue?: boolean;
 }
 
-export interface CustomFieldPropSelect {
-  custom: typeof CUSTOM_PROPERTY.SELECT;
-  id: string;
-  label: string;
+export interface FieldCustomConfigSelect extends FieldCustomConfigBase {
+  dataType: typeof CustomPropertyType.SELECT;
   options: ({ label: string; value: string } | string)[];
 }
 
-export interface CustomFieldPropBoolean {
-  custom: typeof CUSTOM_PROPERTY.BOOLEAN;
-  id: string;
-  label: string;
-}
-export interface CustomFieldPropSize {
-  custom: typeof CUSTOM_PROPERTY.SIZE;
-  id: string;
-  label: string;
+export interface FieldCustomConfigSize extends FieldCustomConfigBase {
+  dataType: typeof CustomPropertyType.SIZE;
 }
 
-export interface CustomFieldPropBoxShadow {
-  custom: typeof CUSTOM_PROPERTY.BOX_SHADOW;
-  id: string;
-  label: string;
+export interface FieldCustomConfigBoxShadow extends FieldCustomConfigBase {
+  dataType: typeof CustomPropertyType.BOX_SHADOW;
 }
 
-export interface CustomFieldPropMargin {
-  custom: typeof CUSTOM_PROPERTY.MARGIN;
-  id: string;
-  label: string;
+export interface FieldCustomConfigMargin extends FieldCustomConfigBase {
+  dataType: typeof CustomPropertyType.MARGIN;
 }
 
-export interface CustomFieldPropPadding {
-  custom: typeof CUSTOM_PROPERTY.PADDING;
-  id: string;
-  label: string;
+export interface FieldCustomConfigPadding extends FieldCustomConfigBase {
+  dataType: typeof CustomPropertyType.PADDING;
 }
 
-export type CustomFieldProp =
-  | CustomFieldPropText
-  | CustomFieldPropNumber
-  | CustomFieldPropColor
-  | CustomFieldPropBoolean
-  | CustomFieldPropSelect
-  | CustomFieldPropSize
-  | CustomFieldPropBoxShadow
-  | CustomFieldPropMargin
-  | CustomFieldPropPadding;
+export type FieldSystemConfig =
+  | FieldSystemConfigLabel
+  | FieldSystemConfigPlaceholder
+  | FieldSystemConfigRequired
+  | FieldSystemConfigAccept
+  | FieldSystemConfigInputName
+  | FieldSystemConfigOptions
+  | FieldSystemConfigImageSrc
+  | FieldSystemConfigImageAlt;
+
+export type FieldCustomConfig =
+  | FieldCustomConfigText
+  | FieldCustomConfigNumber
+  | FieldCustomConfigColor
+  | FieldCustomConfigBoolean
+  | FieldCustomConfigSelect
+  | FieldCustomConfigSize
+  | FieldCustomConfigBoxShadow
+  | FieldCustomConfigMargin
+  | FieldCustomConfigPadding;
 
 export interface FieldConfigShortText {
   properties: Array<
-    | SystemFieldPropLabel
-    | SystemFieldPropPlaceholder
-    | SystemFieldPropRequired
-    | CustomFieldProp
+    | FieldSystemConfigLabel
+    | FieldSystemConfigPlaceholder
+    | FieldSystemConfigRequired
+    | FieldCustomConfig
   >;
 }
 
 export interface FieldConfigLongText {
   properties: Array<
-    | SystemFieldPropLabel
-    | SystemFieldPropPlaceholder
-    | SystemFieldPropRequired
-    | CustomFieldProp
+    | FieldSystemConfigLabel
+    | FieldSystemConfigPlaceholder
+    | FieldSystemConfigRequired
+    | FieldCustomConfig
   >;
 }
 
 export interface FieldConfigNumber {
   properties: Array<
-    | SystemFieldPropLabel
-    | SystemFieldPropPlaceholder
-    | SystemFieldPropRequired
-    | CustomFieldProp
+    | FieldSystemConfigLabel
+    | FieldSystemConfigPlaceholder
+    | FieldSystemConfigRequired
+    | FieldCustomConfig
   >;
 }
 
@@ -188,7 +159,7 @@ interface FontSize {
 
 export interface FieldConfigHeading {
   properties: Array<
-    | CustomFieldProp
+    | FieldCustomConfig
   >;
   formats: {
     bold?: boolean;
@@ -222,9 +193,11 @@ export interface FieldConfigHeading {
   };
 }
 
-export interface FieldsConfigs {
-  shortText: FieldConfigShortText;
-  longText: FieldConfigLongText;
+export interface FieldsConfigsMap {
+  short_text: FieldConfigShortText;
+  long_text: FieldConfigLongText;
   number: FieldConfigNumber;
   heading?: FieldConfigHeading;
 }
+
+export type FieldConfig = FieldSystemConfig | FieldCustomConfig;

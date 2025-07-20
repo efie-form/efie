@@ -55,10 +55,10 @@ function RenderField({
 }: RenderFieldProps) {
   const {
     setSelectedFieldId,
-    selectedFieldId,
     clearSelectedFieldId,
     setActiveTab,
   } = useSettingsStore();
+  const selectedFieldId = useSettingsStore(state => state.selectedFieldId);
   const isSelected = selectedFieldId === field.id;
   const { deleteField } = useSchemaStore();
   const fieldRef = useRef<HTMLDivElement>(null);
@@ -82,6 +82,13 @@ function RenderField({
     invariant(instruction, 'Instruction data should be defined');
     setOperation(instruction.operation);
     setIsDraggedOver(true);
+  };
+
+  const handleSelectField = (e: MouseEvent) => {
+    e.stopPropagation();
+    if (selectedFieldId === field.id) return;
+    setSelectedFieldId(field.id);
+    setActiveTab(RIGHT_BAR_TABS.FIELD_SETTINGS);
   };
 
   useEffect(() => {
@@ -160,11 +167,7 @@ function RenderField({
           },
         )}
         {...(!noSelect && {
-          onClick: (e: MouseEvent) => {
-            e.stopPropagation();
-            setSelectedFieldId(field.id);
-            setActiveTab(RIGHT_BAR_TABS.FIELD_SETTINGS);
-          },
+          onClick: handleSelectField,
         })}
       >
         {isDraggedOver && (

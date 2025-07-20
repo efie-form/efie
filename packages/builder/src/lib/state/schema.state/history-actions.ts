@@ -1,12 +1,17 @@
-import type { FormSchema } from '@efie-form/core';
-import type { StateSetters } from './types';
+import type { SchemaStateHistory, StateSetters } from './types';
 import { debounce, getFieldInfoMap } from './utils';
+import defaultSchema from '../../default-schema';
 
-export function createHistoryActions({ set, getState }: StateSetters) {
+export function createHistoryActions({ set, getState }: StateSetters): SchemaStateHistory {
   return {
+
+    histories: [JSON.stringify(defaultSchema)],
+    totalHistories: 1,
+    currentHistoryIndex: 0,
+
     // History management
     maxHistories: 50,
-    setMaxHistories: (maxHistories: number) => {
+    setMaxHistories: (maxHistories) => {
       const { histories, currentHistoryIndex } = getState();
 
       // If new limit is smaller than current histories, trim them
@@ -27,7 +32,7 @@ export function createHistoryActions({ set, getState }: StateSetters) {
       }
     },
 
-    addHistory: (schema: FormSchema, skipDebounce?: boolean) => {
+    addHistory: (schema, skipDebounce) => {
       // Get state at the time of call to ensure we have the latest values
       const currentState = getState();
       const { maxHistories, histories, currentHistoryIndex } = currentState;

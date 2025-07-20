@@ -5,7 +5,6 @@ export type {
 } from './types/form-schema.type';
 export type { RootRule } from './types/root-rule.type';
 export type { CustomInputDef } from './types/builder-custom-input.type';
-export type { PropertyDefinition } from './types/property-definition';
 
 export type {
   FieldCondition,
@@ -45,7 +44,7 @@ export type {
 } from './types/form-field.type';
 
 export { FieldType } from './constants/field-type';
-export { PropertyType, SizeUnit, SizeType } from './constants/form-schema.constant';
+export { SizeUnit, SizeType } from './constants/form-schema.constant';
 
 export {
   marginToStyle,
@@ -59,31 +58,6 @@ export {
   sizeToStyle,
   toSize,
 } from './utils/props-parse';
-
-export {
-  type BgColorProperty,
-  type ColorProperty,
-  type FontSizeProperty,
-  type SrcProperty,
-  type AltProperty,
-  type ObjectFitProperty,
-  type HeightProperty,
-  type MarginProperty,
-  type PaddingProperty,
-  type MaxFilesProperty,
-  type BoxShadowProperty,
-  type BorderRadiusProperty,
-  type BorderStyleProperty,
-  type LabelProperty,
-  type PlaceholderProperty,
-  type RequiredProperty,
-  type AcceptProperty,
-  type OptionsProperty,
-  type WidthProperty,
-  type TextAlignProperty,
-  type ContentProperty,
-  type PageNameProperty,
-} from './types/property-definition';
 
 export type {
   Color,
@@ -109,7 +83,6 @@ export {
   isColorValue,
   isNumberValue,
   isBooleanValue,
-  isWidthValue,
   isBorderRadiusValue,
   isBoxShadowValue,
   isSizeValue,
@@ -147,3 +120,64 @@ export { default as validateSchema } from './utils/validations';
 export {
   PropSettingsTemplate,
 } from './constants/prop-settings.constant';
+
+export type {
+  FieldsConfigsMap,
+  FieldConfig,
+  FieldConfigHeading,
+  FieldConfigLongText,
+  FieldConfigNumber,
+  FieldConfigShortText,
+  FieldCustomConfig,
+  FieldCustomConfigBoolean,
+  FieldCustomConfigBoxShadow,
+  FieldCustomConfigColor,
+  FieldCustomConfigMargin,
+  FieldCustomConfigNumber,
+  FieldCustomConfigPadding,
+  FieldCustomConfigSelect,
+  FieldCustomConfigSize,
+  FieldCustomConfigText,
+  FieldSystemConfig,
+  FieldSystemConfigAccept,
+  FieldSystemConfigImageAlt,
+  FieldSystemConfigImageSrc,
+  FieldSystemConfigInputName,
+  FieldSystemConfigLabel,
+  FieldSystemConfigOptions,
+  FieldSystemConfigPlaceholder,
+  FieldSystemConfigRequired,
+} from './types/settings-config';
+
+export type {
+  FieldCustomProp,
+  PropertyDefinition,
+  FieldCustomPropBoolean,
+  FieldCustomPropBoxShadow,
+  FieldCustomPropColor,
+  FieldCustomPropMargin,
+  FieldCustomPropNumber,
+  FieldCustomPropPadding,
+  FieldCustomPropSelect,
+  FieldCustomPropSize,
+  FieldCustomPropString,
+  FieldSystemProp,
+  FieldSystemPropAccept,
+  FieldSystemPropImageAlt,
+  FieldSystemPropImageSrc,
+  FieldSystemPropInputName,
+  FieldSystemPropLabel,
+  FieldSystemPropOptions,
+  FieldSystemPropPlaceholder,
+  FieldSystemPropRequired,
+  FieldSystemPropColumnWidth,
+  FieldSystemPropHeadingContent,
+  FieldSystemPropButtonAction,
+  FieldSystemPropPageName,
+  FieldCustomPropMultiSelect,
+} from './types/property-definition';
+
+export {
+  CustomPropertyType,
+  PropertyType,
+} from './property-type';

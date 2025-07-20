@@ -6,10 +6,40 @@ import type {
   PropertyDefinition,
 } from '@efie-form/core';
 
-export interface SchemaState {
-  schema: FormSchema;
-  setSchema: (schema: FormSchema) => void;
-  setFields: (fields: FormField[]) => void;
+export interface SchemaStateHistory {
+  // History management (optimized)
+  maxHistories: number;
+  setMaxHistories: (maxHistories: number) => void;
+  histories: string[];
+  addHistory: (schema: FormSchema, skipDebounce?: boolean) => void;
+  undo: () => void;
+  redo: () => void;
+  clearHistories: () => void;
+  totalHistories: number;
+  currentHistoryIndex: number;
+  canUndo: () => boolean;
+  canRedo: () => boolean;
+}
+
+export interface SchemaStateFieldActions {
+  // Field management methods
+  addField: (field: FormField, parentId?: string, index?: number) => void;
+  updateField: (fieldId: string, updates: Partial<FormField>) => void;
+  duplicateField: (fieldId: string) => FormField | undefined;
+  moveField: (fieldId: string, newParentId: string, newIndex: number) => void;
+  deleteField: (fieldId: string) => void;
+}
+
+export interface SchemaStateAccessMethods {
+  // Core field access methods
+
+  getFieldById: (fieldId?: string) => FormField | undefined;
+  getFieldKeyById: (fieldId?: string) => string | undefined;
+  getFieldParentId: (fieldId?: string) => string | undefined;
+
+  listChildrenId: (fieldId: string) => string[];
+}
+export interface SchemaStateFieldProperty {
 
   // Enhanced property management methods (optimized)
   updateFieldProperty: <T extends PropertyDefinition>(
@@ -28,24 +58,23 @@ export interface SchemaState {
     fieldId: string,
     properties: PropertyDefinition[]
   ) => void;
-
-  // Field management methods
-  addField: (field: FormField, parentId?: string, index?: number) => void;
-  updateField: (fieldId: string, updates: Partial<FormField>) => void;
-  duplicateField: (fieldId: string) => FormField | undefined;
-  moveField: (fieldId: string, newParentId: string, newIndex: number) => void;
-
-  // Core field access methods
-  fieldMap: Map<string, FormField>;
-  fieldKeyMap: Map<string, string>;
-  getFieldById: (fieldId?: string) => FormField | undefined;
-  getFieldKeyById: (fieldId?: string) => string | undefined;
-  getFieldParentId: (fieldId?: string) => string | undefined;
   getFieldProperty: <T extends PropertyDefinition['type']>(
     fieldId: string,
     type: T
   ) => Extract<PropertyDefinition, { type: T }> | undefined;
-  listChildrenId: (fieldId: string) => string[];
+  getFieldProps: (
+    fieldId: string
+  ) => PropertyDefinition[] | undefined;
+  // findFieldProperty: <T extends
+}
+
+export interface SchemaState extends SchemaStateHistory, SchemaStateFieldActions, SchemaStateAccessMethods, SchemaStateFieldProperty {
+  schema: FormSchema;
+  setSchema: (schema: FormSchema) => void;
+  setFields: (fields: FormField[]) => void;
+
+  fieldMap: Map<string, FormField>;
+  fieldKeyMap: Map<string, string>;
 
   // Legacy methods (maintained for compatibility)
   getPage: (pageId?: string) => PageFormField | undefined;
@@ -54,20 +83,6 @@ export interface SchemaState {
   replaceFieldChildren: (fieldId: string, children: FormField[]) => void;
   deleteField: (fieldId: string) => void;
   fieldParentMap: Map<string, string>;
-
-  // History management (optimized)
-  maxHistories: number;
-  setMaxHistories: (maxHistories: number) => void;
-  histories: string[];
-  addHistory: (schema: FormSchema, skipDebounce?: boolean) => void;
-  undo: () => void;
-  redo: () => void;
-  clearHistories: () => void;
-  totalHistories: number;
-  currentHistoryIndex: number;
-  canUndo: () => boolean;
-  canRedo: () => boolean;
-
 }
 
 export interface FieldMaps {

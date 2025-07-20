@@ -1,5 +1,4 @@
 import type { Color, Size } from '../types/common.type';
-import type { PropertyDefinition, WidthProperty } from '../types/property-definition';
 import type { PropValue, PropValueAccept, PropValueBoolean, PropValueBorderRadius, PropValueBoxShadow, PropValueButtonAction, PropValueColor, PropValueMargin, PropValueNumber, PropValueOptions, PropValueSize, PropValueString } from '../types/field-property-value.type';
 import { SizeType } from '../constants/form-schema.constant';
 
@@ -25,13 +24,6 @@ export function isBooleanValue(value?: PropValue): value is PropValueBoolean {
 
 export function isColorValue(value?: PropValue): value is PropValueColor {
   return isColor(value);
-}
-
-export function isWidthValue(props?: PropertyDefinition): props is WidthProperty {
-  if (!props || !('value' in props) || typeof props.value !== 'object') {
-    return false;
-  }
-  return true;
 }
 
 export function isBorderRadiusValue(value?: PropValue): value is PropValueBorderRadius {
