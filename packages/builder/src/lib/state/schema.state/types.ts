@@ -1,4 +1,5 @@
 import type {
+  FieldCustomProp,
   FormField,
   FormInputField,
   FormSchema,
@@ -65,7 +66,17 @@ export interface SchemaStateFieldProperty {
   getFieldProps: (
     fieldId: string
   ) => PropertyDefinition[] | undefined;
-  // findFieldProperty: <T extends
+
+  findFieldCustomProperty: (
+    fieldId: string,
+    id: string
+  ) => FieldCustomProp | undefined;
+
+  updateFieldCustomProperty: (
+    fieldId: string,
+    id: string,
+    property: FieldCustomProp
+  ) => void;
 }
 
 export interface SchemaState extends SchemaStateHistory, SchemaStateFieldActions, SchemaStateAccessMethods, SchemaStateFieldProperty {

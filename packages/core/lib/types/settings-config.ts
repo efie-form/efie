@@ -1,4 +1,5 @@
 import type { CustomPropertyType, PropertyType } from '../property-type';
+import type { Color } from './common.type';
 
 /**
  * System properties for form fields.
@@ -69,6 +70,7 @@ export interface FieldCustomConfigNumber extends FieldCustomConfigBase {
 
 export interface FieldCustomConfigColor extends FieldCustomConfigBase {
   dataType: typeof CustomPropertyType.COLOR;
+  defaultValue?: Color;
 }
 
 export interface FieldCustomConfigBoolean extends FieldCustomConfigBase {
@@ -79,22 +81,11 @@ export interface FieldCustomConfigBoolean extends FieldCustomConfigBase {
 export interface FieldCustomConfigSelect extends FieldCustomConfigBase {
   dataType: typeof CustomPropertyType.SELECT;
   options: ({ label: string; value: string } | string)[];
+  defaultValue?: string;
 }
 
 export interface FieldCustomConfigSize extends FieldCustomConfigBase {
   dataType: typeof CustomPropertyType.SIZE;
-}
-
-export interface FieldCustomConfigBoxShadow extends FieldCustomConfigBase {
-  dataType: typeof CustomPropertyType.BOX_SHADOW;
-}
-
-export interface FieldCustomConfigMargin extends FieldCustomConfigBase {
-  dataType: typeof CustomPropertyType.MARGIN;
-}
-
-export interface FieldCustomConfigPadding extends FieldCustomConfigBase {
-  dataType: typeof CustomPropertyType.PADDING;
 }
 
 export type FieldSystemConfig =
@@ -113,10 +104,7 @@ export type FieldCustomConfig =
   | FieldCustomConfigColor
   | FieldCustomConfigBoolean
   | FieldCustomConfigSelect
-  | FieldCustomConfigSize
-  | FieldCustomConfigBoxShadow
-  | FieldCustomConfigMargin
-  | FieldCustomConfigPadding;
+  | FieldCustomConfigSize;
 
 export interface FieldConfigShortText {
   properties: Array<

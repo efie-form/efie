@@ -22,11 +22,7 @@ export const CustomPropertyType = {
   COLOR: 'color',
   BOOLEAN: 'boolean',
   SELECT: 'select',
-  MULTI_SELECT: 'multi_select',
   SIZE: 'size',
-  BOX_SHADOW: 'box_shadow',
-  MARGIN: 'margin',
-  PADDING: 'padding',
 } as const;
 
 export type CustomPropertyType = typeof CustomPropertyType[keyof typeof CustomPropertyType];

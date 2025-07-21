@@ -1,4 +1,4 @@
-import { FieldType, PropertyType, type FieldsConfigsMap } from '@efie-form/core';
+import { CustomPropertyType, FieldType, PropertyType, type FieldsConfigsMap } from '@efie-form/core';
 
 const settingsConfig: FieldsConfigsMap = {
   [FieldType.SHORT_TEXT]: {
@@ -6,6 +6,11 @@ const settingsConfig: FieldsConfigsMap = {
       { type: PropertyType.LABEL, label: 'Label' },
       { type: PropertyType.PLACEHOLDER, label: 'Input Placeholder' },
       { type: PropertyType.REQUIRED, label: 'Required' },
+      { type: PropertyType.CUSTOM, label: 'Hide Label?', dataType: CustomPropertyType.BOOLEAN, id: 'hideLabel' },
+      { type: PropertyType.CUSTOM, label: 'Hide Placeholder?', dataType: CustomPropertyType.TEXT, id: 'hidePlaceholder' },
+      { type: PropertyType.CUSTOM, label: 'Input Color', dataType: CustomPropertyType.COLOR, id: 'inputName' },
+      { type: PropertyType.CUSTOM, label: 'Input Number', dataType: CustomPropertyType.NUMBER, id: 'inputNumber' },
+      { type: PropertyType.CUSTOM, label: 'Input Select', dataType: CustomPropertyType.SELECT, id: 'inputSelect', options: ['Option 1', 'Option 2', 'Option 3'] },
     ],
   },
 

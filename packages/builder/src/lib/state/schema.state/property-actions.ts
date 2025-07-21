@@ -1,4 +1,4 @@
-import { type FormField, type PropertyDefinition } from '@efie-form/core';
+import { PropertyType, type FormField, type PropertyDefinition } from '@efie-form/core';
 import type { SchemaStateFieldProperty, StateSetters } from './types';
 import { getFieldInfoMap } from './utils';
 
@@ -137,6 +137,57 @@ export function createPropertyActions({ set, getState }: StateSetters): SchemaSt
       const { fieldMap } = getState();
       const field = fieldMap.get(fieldId);
       return field ? field.props : undefined;
+    },
+
+    findFieldCustomProperty: (fieldId, id) => {
+      const { fieldMap } = getState();
+      const field = fieldMap.get(fieldId);
+      if (!field) return;
+
+      return field.props.filter(prop => prop.type === PropertyType.CUSTOM).find(prop => prop.id === id);
+    },
+
+    updateFieldCustomProperty: (fieldId, id, property) => {
+      const { fieldMap, addHistory } = getState();
+      const field = fieldMap.get(fieldId);
+      if (!field) return;
+
+      const newProps = field.props;
+
+      if (newProps.some(prop => prop.type === PropertyType.CUSTOM && prop.id === id)) {
+        const index = newProps.findIndex(prop => prop.type === PropertyType.CUSTOM && prop.id === id);
+        newProps[index] = { ...newProps[index], ...property };
+      }
+      else {
+        newProps.push({ ...property, type: PropertyType.CUSTOM });
+      }
+
+      const updatedField = { ...field, props: newProps } as FormField;
+
+      // Update field in schema using optimized tree traversal
+      const updateFieldInTree = (fields: FormField[]): FormField[] => {
+        return fields.map((f) => {
+          if (f.id === fieldId) {
+            return updatedField;
+          }
+          if ('children' in f && f.children) {
+            const updatedChildren = updateFieldInTree(f.children);
+            if (updatedChildren !== f.children) {
+              return { ...f, children: updatedChildren } as FormField;
+            }
+          }
+          return f;
+        });
+      };
+
+      const newSchema = {
+        ...getState().schema,
+        form: { ...getState().schema.form, fields: updateFieldInTree(getState().schema.form.fields) },
+      };
+
+      const { fieldKeyMap, fieldParentMap } = getFieldInfoMap(newSchema.form.fields);
+      addHistory(newSchema);
+      set({ schema: newSchema, fieldMap: new Map(fieldMap).set(fieldId, updatedField), fieldKeyMap, fieldParentMap });
     },
   };
 }
