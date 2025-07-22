@@ -32,7 +32,8 @@
         "noForEach": "off"
       },
       "correctness": {
-        "useExhaustiveDependencies": "warn"
+        "useExhaustiveDependencies": "warn",
+        "noChildrenProp": "warn"
       },
       "nursery": {
         "useSortedClasses": "warn"

@@ -17,19 +17,20 @@ function ColumnProvider({ field, Component, ...props }: ColumnProviderProps) {
   // Extract width value safely
   const columnWidth = sizeToStyle(width?.value);
 
-  return createElement(
-    Component,
-    {
-      id: field.id,
-      field,
-      width: columnWidth || '100%',
-    },
-    field.children.map((field) => (
-      <div key={field.id}>
-        <RenderField field={field} {...props} />
-      </div>
-    )),
-  );
+  return createElement(Component, {
+    id: field.id,
+    field,
+    width: columnWidth || '100%',
+    children: (
+      <>
+        {field.children.map((field) => (
+          <div key={field.id}>
+            <RenderField field={field} {...props} />
+          </div>
+        ))}
+      </>
+    ),
+  });
 }
 
 export default ColumnProvider;

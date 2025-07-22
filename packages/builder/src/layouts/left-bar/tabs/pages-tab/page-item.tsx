@@ -115,32 +115,38 @@ export default function PageItem({ page, onDelete, isCurrentPage, onSelect }: Pa
         {deleteConfirm ? (
           <>
             <button
+              type="button"
               onClick={(e) => {
                 e.stopPropagation();
 
                 onDelete();
                 setDeleteConfirm(false);
               }}
+              aria-label="Confirm delete"
             >
               <FaCheck className="text-success" size={14} />
             </button>
             <button
+              type="button"
               onClick={(e) => {
                 e.stopPropagation();
 
                 setDeleteConfirm(false);
               }}
+              aria-label="Cancel delete"
             >
               <FaXmark className="text-danger" size={14} />
             </button>
           </>
         ) : (
           <button
+            type="button"
             onClick={(e) => {
               e.stopPropagation();
               setDeleteConfirm(true);
             }}
             disabled={schema.form.fields.length === 1}
+            aria-label="Delete page"
           >
             <FaTrash
               className={cn('text-danger', {

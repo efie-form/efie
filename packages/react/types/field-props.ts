@@ -133,9 +133,12 @@ export interface BlockFieldProps extends BaseFieldProps {
   children: ReactNode;
 }
 
-export interface RowFieldProps extends BaseFieldProps {}
+export interface RowFieldProps extends BaseFieldProps {
+  children: ReactNode;
+}
 
 export interface ColumnFieldProps extends BaseFieldProps {
+  children: ReactNode;
   width: string;
 }
 

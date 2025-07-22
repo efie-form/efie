@@ -12,8 +12,10 @@ export default function ModeSwitcher() {
   return (
     <div className="flex overflow-hidden rounded-lg bg-neutral-50">
       <button
+        type="button"
         className="rounded-lg bg-neutral-50 p-2.5 hover:bg-neutral-100/50"
         onClick={() => setMode('edit')}
+        aria-label="Switch to edit mode"
       >
         <FaRegEdit
           className={cn('transition-all', {
@@ -23,8 +25,10 @@ export default function ModeSwitcher() {
         />
       </button>
       <button
+        type="button"
         className="rounded-lg bg-neutral-50 p-2.5 hover:bg-neutral-100/50"
         onClick={() => setMode('preview')}
+        aria-label="Switch to preview mode"
       >
         <FaEye
           className={cn('transition-all', {
@@ -34,8 +38,10 @@ export default function ModeSwitcher() {
         />
       </button>
       <button
+        type="button"
         className="rounded-lg bg-neutral-50 p-2.5 hover:bg-neutral-100/50"
         onClick={() => setMode('json')}
+        aria-label="Switch to JSON mode"
       >
         <FaCode
           className={cn('transition-all', {

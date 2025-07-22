@@ -178,11 +178,13 @@ function RenderField({ field, noSelect, parentId, childIndex }: RenderFieldProps
             <AiOutlineDrag />
           </div>
           <button
+            type="button"
             className="bg-danger p-1 text-white"
             onClick={() => {
               deleteField(field.id);
               clearSelectedFieldId();
             }}
+            aria-label="Delete field"
           >
             <HiTrash />
           </button>

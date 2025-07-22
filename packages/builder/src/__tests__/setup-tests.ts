@@ -49,7 +49,7 @@ jest.mock('color-convert', () => ({
     rgb: (hsl: number[]): number[] => {
       const [h, s, l] = [hsl[0] / 360, hsl[1] / 100, hsl[2] / 100];
 
-      let r, g, b;
+      let r: number, g: number, b: number;
       if (s === 0) {
         r = g = b = l;
       } else {

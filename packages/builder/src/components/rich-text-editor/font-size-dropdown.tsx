@@ -37,6 +37,7 @@ export default function FontSizeDropdown({
   return (
     <div className="relative">
       <button
+        type="button"
         className={cn(
           'flex items-center gap-1 rounded border border-neutral-200 px-2 py-1.5 font-medium text-sm transition-all duration-200 hover:border-neutral-300 hover:bg-neutral-50',
           {
@@ -55,16 +56,30 @@ export default function FontSizeDropdown({
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
+          aria-label="Chevron down"
         >
+          <title>Chevron down</title>
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
         </svg>
       </button>
 
       {isOpen && (
         <>
-          <div className="fixed inset-0 z-10" onClick={() => setIsOpen(false)} />
+          <div
+            className="fixed inset-0 z-10"
+            onClick={() => setIsOpen(false)}
+            onKeyDown={(e) => {
+              if (e.key === 'Escape') {
+                setIsOpen(false);
+              }
+            }}
+            role="button"
+            tabIndex={0}
+            aria-label="Close dropdown"
+          />
           <div className="fade-in slide-in-from-top-1 absolute top-full left-0 z-20 mt-1 max-h-60 min-w-[80px] animate-in overflow-y-auto rounded-md border border-neutral-200 bg-white shadow-lg duration-200">
             <button
+              type="button"
               className="typography-body3 w-full border-neutral-100 border-b px-3 py-2 text-left text-sm transition-all hover:bg-neutral-50"
               onClick={() => {
                 editor.commands.unsetFontSize();
@@ -77,6 +92,7 @@ export default function FontSizeDropdown({
             {fontSizes.map((font) => (
               <button
                 key={font.size}
+                type="button"
                 className={cn(
                   'typography-body3 w-full whitespace-nowrap px-3 py-2 text-left text-sm transition-all last:rounded-b-md hover:bg-neutral-50',
                   {

@@ -18,6 +18,7 @@ export default function ToolbarButton({
 }: ToolbarButtonProps) {
   return (
     <button
+      type="button"
       className={cn(
         'group relative transform rounded p-1.5 transition-all duration-200 hover:scale-105 hover:bg-neutral-100',
         {

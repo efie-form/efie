@@ -184,7 +184,9 @@ export default function UrlPreview({ url, className }: UrlPreviewProps) {
               stroke="currentColor"
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
+              aria-label="External link icon"
             >
+              <title>External link icon</title>
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"

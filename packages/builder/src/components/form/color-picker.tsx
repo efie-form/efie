@@ -214,6 +214,7 @@ export default function ColorPicker<T extends ColorValue>({
     >
       <PopoverPrimitive.Trigger asChild>
         <button
+          type="button"
           aria-label="Open color picker"
           className="relative inline-block cursor-pointer rounded-sm border border-neutral-200 p-[2px] focus:outline-primary"
         >
