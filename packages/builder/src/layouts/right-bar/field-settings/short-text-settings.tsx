@@ -13,14 +13,6 @@ function ShortTextSettings({ field }: ShortTextSettingsProps) {
   return (
     <div>
       <CategoryHeader>General</CategoryHeader>
-      {/* <DynamicSettings
-        settings={[
-          { template: PropSettingsTemplate.FORM_KEY },
-          { template: PropSettingsTemplate.TEXT, label: 'Label', type: PropertyType.LABEL },
-          { template: PropSettingsTemplate.TEXT, label: 'Placeholder', type: PropertyType.PLACEHOLDER },
-        ]}
-        fieldId={field.id}
-      /> */}
       <FieldSettings config={config.properties} fieldId={field.id} />
     </div>
   );

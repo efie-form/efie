@@ -28,7 +28,7 @@ function RowField({ field }: RowFieldProps) {
             style={{
               width: isMobile
                 ? '100%'
-                : widthToStyle(getFieldProp(child, PropertyType.WIDTH)?.value),
+                : widthToStyle(getFieldProp(child, PropertyType.COLUMN_WIDTH)?.value),
             }}
             className="self-stretch"
           >

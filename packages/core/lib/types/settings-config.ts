@@ -43,8 +43,13 @@ export interface FieldSystemConfigImageSrc {
   label: string;
 }
 
-export interface FieldSystemConfigImageAlt {
-  type: typeof PropertyType.IMAGE_ALT;
+export interface FieldSystemConfigButtonAction {
+  type: typeof PropertyType.BUTTON_ACTION;
+  label: string;
+}
+
+export interface FieldSystemConfigColumnWidth {
+  type: typeof PropertyType.COLUMN_WIDTH;
   label: string;
 }
 
@@ -96,7 +101,8 @@ export type FieldSystemConfig =
   | FieldSystemConfigInputName
   | FieldSystemConfigOptions
   | FieldSystemConfigImageSrc
-  | FieldSystemConfigImageAlt;
+  | FieldSystemConfigButtonAction
+  | FieldSystemConfigColumnWidth;
 
 export type FieldCustomConfig =
   | FieldCustomConfigText
@@ -129,6 +135,98 @@ export interface FieldConfigNumber {
     | FieldSystemConfigLabel
     | FieldSystemConfigPlaceholder
     | FieldSystemConfigRequired
+    | FieldCustomConfig
+  >;
+}
+
+export interface FieldConfigSingleChoice {
+  properties: Array<
+    | FieldSystemConfigLabel
+    | FieldSystemConfigOptions
+    | FieldSystemConfigRequired
+    | FieldCustomConfig
+  >;
+}
+
+export interface FieldConfigMultipleChoices {
+  properties: Array<
+    | FieldSystemConfigLabel
+    | FieldSystemConfigOptions
+    | FieldSystemConfigRequired
+    | FieldCustomConfig
+  >;
+}
+
+export interface FieldConfigDate {
+  properties: Array<
+    | FieldSystemConfigLabel
+    | FieldSystemConfigRequired
+    | FieldCustomConfig
+  >;
+}
+
+export interface FieldConfigTime {
+  properties: Array<
+    | FieldSystemConfigLabel
+    | FieldSystemConfigRequired
+    | FieldCustomConfig
+  >;
+}
+
+export interface FieldConfigDateTime {
+  properties: Array<
+    | FieldSystemConfigLabel
+    | FieldSystemConfigRequired
+    | FieldCustomConfig
+  >;
+}
+
+export interface FieldConfigFile {
+  properties: Array<
+    | FieldSystemConfigLabel
+    | FieldSystemConfigAccept
+    | FieldSystemConfigRequired
+    | FieldCustomConfig
+  >;
+}
+
+export interface FieldConfigImage {
+  properties: Array<
+    | FieldSystemConfigImageSrc
+    | FieldCustomConfig
+  >;
+}
+
+export interface FieldConfigDivider {
+  properties: Array<FieldCustomConfig>;
+}
+
+export interface FieldConfigRow {
+  properties: Array<FieldCustomConfig>;
+}
+
+export interface FieldConfigColumn {
+  properties: Array<
+    | FieldSystemConfigColumnWidth
+    | FieldCustomConfig
+  >;
+}
+
+export interface FieldConfigBlock {
+  properties: Array<
+    | FieldSystemConfigColumnWidth
+    | FieldCustomConfig
+  >;
+}
+
+export interface FieldConfigPage {
+  properties: Array<FieldCustomConfig>;
+}
+
+export interface FieldConfigButton {
+  properties: Array<
+    | FieldSystemConfigLabel
+    | FieldSystemConfigButtonAction
     | FieldCustomConfig
   >;
 }
@@ -185,7 +283,20 @@ export interface FieldsConfigsMap {
   short_text: FieldConfigShortText;
   long_text: FieldConfigLongText;
   number: FieldConfigNumber;
-  heading?: FieldConfigHeading;
+  heading: FieldConfigHeading;
+  single_choice: FieldConfigSingleChoice;
+  multiple_choices: FieldConfigMultipleChoices;
+  date: FieldConfigDate;
+  time: FieldConfigTime;
+  date_time: FieldConfigDateTime;
+  file: FieldConfigFile;
+  image: FieldConfigImage;
+  divider: FieldConfigDivider;
+  row: FieldConfigRow;
+  column: FieldConfigColumn;
+  block: FieldConfigBlock;
+  page: FieldConfigPage;
+  button: FieldConfigButton;
 }
 
 export type FieldConfig = FieldSystemConfig | FieldCustomConfig;

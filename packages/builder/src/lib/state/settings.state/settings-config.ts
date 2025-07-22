@@ -1,4 +1,4 @@
-import { CustomPropertyType, FieldType, PropertyType, type FieldsConfigsMap } from '@efie-form/core';
+import { FieldType, PropertyType, type FieldsConfigsMap } from '@efie-form/core';
 
 const settingsConfig: FieldsConfigsMap = {
   [FieldType.SHORT_TEXT]: {
@@ -6,11 +6,6 @@ const settingsConfig: FieldsConfigsMap = {
       { type: PropertyType.LABEL, label: 'Label' },
       { type: PropertyType.PLACEHOLDER, label: 'Input Placeholder' },
       { type: PropertyType.REQUIRED, label: 'Required' },
-      { type: PropertyType.CUSTOM, label: 'Hide Label?', dataType: CustomPropertyType.BOOLEAN, id: 'hideLabel' },
-      { type: PropertyType.CUSTOM, label: 'Hide Placeholder?', dataType: CustomPropertyType.TEXT, id: 'hidePlaceholder' },
-      { type: PropertyType.CUSTOM, label: 'Input Color', dataType: CustomPropertyType.COLOR, id: 'inputName' },
-      { type: PropertyType.CUSTOM, label: 'Input Number', dataType: CustomPropertyType.NUMBER, id: 'inputNumber' },
-      { type: PropertyType.CUSTOM, label: 'Input Select', dataType: CustomPropertyType.SELECT, id: 'inputSelect', options: ['Option 1', 'Option 2', 'Option 3'] },
     ],
   },
 
@@ -26,6 +21,71 @@ const settingsConfig: FieldsConfigsMap = {
       { type: PropertyType.LABEL, label: 'Label' },
       { type: PropertyType.PLACEHOLDER, label: 'Input Placeholder' },
       { type: PropertyType.REQUIRED, label: 'Required' },
+    ],
+  },
+  [FieldType.SINGLE_CHOICE]: {
+    properties: [
+      { type: PropertyType.LABEL, label: 'Label' },
+      { type: PropertyType.OPTIONS, label: 'Options' },
+      { type: PropertyType.REQUIRED, label: 'Required' },
+    ],
+  },
+  [FieldType.MULTIPLE_CHOICES]: {
+    properties: [
+      { type: PropertyType.LABEL, label: 'Label' },
+      { type: PropertyType.OPTIONS, label: 'Options' },
+      { type: PropertyType.REQUIRED, label: 'Required' },
+    ],
+  },
+  [FieldType.DATE]: {
+    properties: [
+      { type: PropertyType.LABEL, label: 'Label' },
+      { type: PropertyType.REQUIRED, label: 'Required' },
+    ],
+  },
+  [FieldType.TIME]: {
+    properties: [
+      { type: PropertyType.LABEL, label: 'Label' },
+      { type: PropertyType.REQUIRED, label: 'Required' },
+    ],
+  },
+  [FieldType.DATE_TIME]: {
+    properties: [
+      { type: PropertyType.LABEL, label: 'Label' },
+      { type: PropertyType.REQUIRED, label: 'Required' },
+    ],
+  },
+  [FieldType.FILE]: {
+    properties: [
+      { type: PropertyType.LABEL, label: 'Label' },
+      { type: PropertyType.REQUIRED, label: 'Required' },
+      { type: PropertyType.ACCEPT, label: 'Accepted File Types' },
+    ],
+  },
+  [FieldType.DIVIDER]: {
+    properties: [],
+  },
+  [FieldType.IMAGE]: {
+    properties: [
+      { type: PropertyType.IMAGE_SRC, label: 'Image URL' },
+    ],
+  },
+  [FieldType.ROW]: {
+    properties: [],
+  },
+  [FieldType.COLUMN]: {
+    properties: [],
+  },
+  [FieldType.BLOCK]: {
+    properties: [],
+  },
+  [FieldType.PAGE]: {
+    properties: [],
+  },
+  [FieldType.BUTTON]: {
+    properties: [
+      { type: PropertyType.LABEL, label: 'Button Label' },
+      { type: PropertyType.BUTTON_ACTION, label: 'Button Action' },
     ],
   },
   [FieldType.HEADING]: {

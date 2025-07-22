@@ -1,24 +1,19 @@
-import { PropertyType, PropSettingsTemplate, type FileFormField } from '@efie-form/core';
-import DynamicSettings from '../dynamic-settings';
+import { type FileFormField } from '@efie-form/core';
 import CategoryHeader from '../../../components/elements/category-header';
+import FieldSettings from '../field-settings';
+import { useSettingsStore } from '../../../lib/state/settings.state';
 
 interface FileSettingsProps {
   field: FileFormField;
 }
 
 function FileSettings({ field }: FileSettingsProps) {
+  const config = useSettingsStore(state => state.config[field.type]);
+
   return (
     <div>
       <CategoryHeader>General</CategoryHeader>
-      <DynamicSettings
-        settings={[
-          { template: PropSettingsTemplate.FORM_KEY },
-          { template: PropSettingsTemplate.TEXT, label: 'Label', type: PropertyType.LABEL },
-          { template: PropSettingsTemplate.NUMBER, label: 'Max Files', type: PropertyType.MAX_FILES, min: 1 },
-          { template: PropSettingsTemplate.ACCEPT, label: 'Accepted File Types', type: PropertyType.ACCEPT },
-        ]}
-        fieldId={field.id}
-      />
+      <FieldSettings config={config.properties} fieldId={field.id} />
     </div>
   );
 }

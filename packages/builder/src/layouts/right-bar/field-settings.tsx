@@ -7,6 +7,10 @@ import CustomSettingsBoolean from './custom-settings/custom-settings-boolean';
 import CustomSettingsColor from './custom-settings/custom-settings-color';
 import CustomSettingsNumber from './custom-settings/custom-settings-number';
 import CustomSettingsSelect from './custom-settings/custom-settings-select';
+import SystemSettingsImageSrc from './system-settings/system-settings-image-src';
+import SystemSettingsOptions from './system-settings/system-settings-options';
+import { SystemSettingsColumnWidth } from './system-settings/system-settings-column-width';
+import SystemSettingsAccept from './system-settings/system-settings-accept';
 
 interface FieldSettingsProps {
   config: FieldConfig[];
@@ -100,6 +104,50 @@ export default function FieldSettings({ config, fieldId }: FieldSettingsProps) {
             config={item}
           />
         );
+      }
+
+      case PropertyType.OPTIONS: {
+        return (
+          <SystemSettingsOptions
+            key={item.type}
+            fieldId={fieldId}
+            config={item}
+          />
+        );
+      }
+
+      case PropertyType.IMAGE_SRC: {
+        return (
+          <SystemSettingsImageSrc
+            key={item.type}
+            fieldId={fieldId}
+            config={item}
+          />
+        );
+      }
+
+      case PropertyType.COLUMN_WIDTH: {
+        return (
+          <SystemSettingsColumnWidth
+            key={item.type}
+            fieldId={fieldId}
+            config={item}
+          />
+        );
+      }
+
+      case PropertyType.ACCEPT: {
+        return (
+          <SystemSettingsAccept
+            key={item.type}
+            fieldId={fieldId}
+            config={item}
+          />
+        );
+      }
+
+      default: {
+        return <>{item.type}</>;
       }
     }
   });

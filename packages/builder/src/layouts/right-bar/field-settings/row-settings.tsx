@@ -5,9 +5,10 @@ import * as Tabs from '@radix-ui/react-tabs';
 import { useState } from 'react';
 import ColumnSettings from './column-settings';
 import Button from '../../../components/elements/button';
-import { FaPlus } from 'react-icons/fa6';
+import { FaPlus, FaTrash } from 'react-icons/fa6';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import { getFieldProp } from '../../../lib/utils';
+import IconButton from '../../../components/elements/icon-button';
 
 const LAYOUT_PRESETS = [
   [100],
@@ -159,10 +160,17 @@ function RowSettings({ field }: RowSettingsProps) {
             </button>
           ))}
         </div>
-        <div className="flex justify-center mt-4">
+        <div className="flex justify-center mt-4 gap-2">
           <Button onClick={addColumn} startIcon={FaPlus}>
             Add
           </Button>
+          <IconButton
+            Icon={FaTrash}
+            variant="danger"
+            disabled={field.children.length <= 1}
+            onClick={() => removeColumn(field.children.findIndex(col => col.id === currentTab))}
+            className="ml-2"
+          />
         </div>
       </div>
 
@@ -185,11 +193,10 @@ function RowSettings({ field }: RowSettingsProps) {
 
         {field.children
           .filter(column => column.type === FieldType.COLUMN)
-          .map((column, index) => (
+          .map(column => (
             <Tabs.Content key={column.id} value={column.id}>
               <ColumnSettings
                 field={column}
-                onRemove={() => removeColumn(index)}
               />
             </Tabs.Content>
           ))}

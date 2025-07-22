@@ -1,0 +1,128 @@
+import SettingsFieldSwitchWithDropdown from '../property-layouts/settings-field-switch-with-dropdown';
+import { Switch } from '../../../components/form';
+import { type FieldSystemConfigAccept, type PropValueAccept } from '@efie-form/core';
+import { useControllableState } from '../../../lib/hooks/use-controllable-state';
+import { useSchemaStore } from '../../../lib/state/schema.state';
+
+const FILE_EXTENSIONS = [
+  { type: 'pdf', label: 'PDF', value: ['.pdf'] },
+  { type: 'word', label: 'Word', value: ['.doc', '.docx'] },
+  { type: 'excel', label: 'Excel', value: ['.xls', '.xlsx'] },
+  { type: 'powerpoint', label: 'PowerPoint', value: ['.ppt', '.pptx'] },
+  { type: 'images', label: 'Images', value: ['.jpg', '.jpeg', '.png', '.gif'] },
+  { type: 'text', label: 'Text', value: ['.txt'] },
+  { type: 'csv', label: 'CSV', value: ['.csv'] },
+  { type: 'zip', label: 'ZIP', value: ['.zip'] },
+  { type: 'audio', label: 'Audio', value: ['.mp3', '.wav', '.ogg'] },
+  { type: 'video', label: 'Video', value: ['.mp4', '.mov', '.avi'] },
+] as const;
+
+type ExtensionType = typeof FILE_EXTENSIONS[number]['type'];
+
+interface InternalValue {
+  allowSpecific: boolean;
+  extensions: Record<ExtensionType, boolean>;
+}
+interface SystemSettingsAcceptProps {
+  fieldId: string;
+  config: FieldSystemConfigAccept;
+}
+
+export default function SystemSettingsAccept({
+  config,
+  fieldId,
+}: SystemSettingsAcceptProps) {
+  const fieldProperty = useSchemaStore(state => state.getFieldProperty(fieldId, config.type));
+  const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
+  const value = fieldProperty?.value;
+  const [internalValue, setInternalValue] = useControllableState({
+    defaultValue: getInternalValue(value),
+    onChange: (newValue) => {
+      const formats = Object.entries(newValue.extensions)
+        .filter(ext => ext[1])
+        .flatMap(([k]) => FILE_EXTENSIONS.find(ext => ext.type === k)?.value || []);
+
+      const finalValue: PropValueAccept = {
+        allowAll: !newValue.allowSpecific,
+        formats: newValue.allowSpecific ? formats : [],
+      };
+
+      onChange?.(finalValue);
+    },
+  });
+
+  function onChange(newValue: PropValueAccept) {
+    updateFieldProperty(fieldId, {
+      type: config.type,
+      value: newValue,
+    });
+  }
+
+  const handleExtensionChange = (type: ExtensionType, checked: boolean) => {
+    setInternalValue(prev => ({
+      ...prev,
+      extensions: {
+        ...prev.extensions,
+        [type]: checked,
+      },
+    }));
+  };
+
+  const handleAllowAllChange = (checked: boolean) => {
+    setInternalValue(prev => ({
+      ...prev,
+      allowSpecific: checked,
+    }));
+  };
+
+  return (
+    <SettingsFieldSwitchWithDropdown
+      isOpen={internalValue.allowSpecific}
+      onOpenChange={handleAllowAllChange}
+      label={config.label}
+      divider
+    >
+      <div className="grid grid-cols-2">
+        {FILE_EXTENSIONS.map(extension => (
+          <div
+            key={extension.label}
+            className="flex items-center gap-2 p-2 rounded-md hover:bg-neutral-50 transition-colors"
+          >
+            <div>
+              <Switch
+                checked={internalValue.extensions[extension.type]}
+                onChange={(checked: boolean) => {
+                  handleExtensionChange(extension.type, checked);
+                }}
+              />
+            </div>
+            <span className="typography-body3 text-neutral-600">
+              {extension.label}
+            </span>
+          </div>
+        ))}
+      </div>
+    </SettingsFieldSwitchWithDropdown>
+  );
+}
+
+function getInternalValue(value?: PropValueAccept): InternalValue {
+  const extTypes = {} as Record<ExtensionType, boolean>;
+  if (!value) {
+    for (const ext of FILE_EXTENSIONS) {
+      extTypes[ext.type] = false;
+    }
+    return {
+      allowSpecific: false,
+      extensions: extTypes,
+    };
+  }
+
+  for (const ext of FILE_EXTENSIONS) {
+    extTypes[ext.type] = ext.value.every(format => value.formats?.includes(format)) || false;
+  }
+  return {
+    allowSpecific: !value.allowAll,
+    extensions: extTypes,
+  };
+}

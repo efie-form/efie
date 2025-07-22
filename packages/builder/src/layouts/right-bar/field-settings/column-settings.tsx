@@ -1,29 +1,33 @@
-import { PropertyType, PropSettingsTemplate, type ColumnFormField } from '@efie-form/core';
-import { FaTrash } from 'react-icons/fa';
-import Button from '../../../components/elements/button';
-import DynamicSettings from '../dynamic-settings';
+import { FieldType, PropertyType, SizeType, type ColumnFormField, type FieldConfigColumn } from '@efie-form/core';
+import FieldSettings from '../field-settings';
+import { useSettingsStore } from '../../../lib/state/settings.state';
 
 interface ColumnSettingsProps {
   field: ColumnFormField;
-  onRemove: () => void;
 }
 
-function ColumnSettings({ field, onRemove }: ColumnSettingsProps) {
+function ColumnSettings({ field }: ColumnSettingsProps) {
+  const config = useSettingsStore(state => state.config[FieldType.COLUMN]);
+
   return (
     <div className="mb-4">
-      <DynamicSettings
-        fieldId={field.id}
-        settings={[
-          { template: PropSettingsTemplate.SIZE, type: PropertyType.WIDTH, label: 'Width' },
-        ]}
-      />
-      <div className="flex justify-center mt-4 px-2">
-        <Button onClick={onRemove} startIcon={FaTrash} variant="danger">
-          Remove
-        </Button>
-      </div>
+      <FieldSettings config={withColumnWidthSettings(config.properties)} fieldId={field.id} />
     </div>
   );
 }
 
 export default ColumnSettings;
+
+function withColumnWidthSettings(props: FieldConfigColumn['properties']) {
+  if (props.some(prop => prop.type === PropertyType.COLUMN_WIDTH)) {
+    return props;
+  }
+  return [
+    {
+      type: PropertyType.COLUMN_WIDTH,
+      label: 'Column Width',
+      value: { type: SizeType.PERCENTAGE, value: 100 },
+    },
+    ...props,
+  ];
+}

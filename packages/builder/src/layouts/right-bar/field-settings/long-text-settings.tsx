@@ -1,23 +1,19 @@
-import { PropertyType, PropSettingsTemplate, type LongTextFormField } from '@efie-form/core';
-import DynamicSettings from '../dynamic-settings';
+import { type LongTextFormField } from '@efie-form/core';
 import CategoryHeader from '../../../components/elements/category-header';
+import { useSettingsStore } from '../../../lib/state/settings.state';
+import FieldSettings from '../field-settings';
 
 interface LongTextSettingsProps {
   field: LongTextFormField;
 }
 
 function LongTextSettings({ field }: LongTextSettingsProps) {
+  const config = useSettingsStore(state => state.config[field.type]);
+
   return (
     <div>
       <CategoryHeader>General</CategoryHeader>
-      <DynamicSettings
-        settings={[
-          { template: PropSettingsTemplate.FORM_KEY },
-          { template: PropSettingsTemplate.TEXT, label: 'Label', type: PropertyType.LABEL },
-          { template: PropSettingsTemplate.TEXT, label: 'Placeholder', type: PropertyType.PLACEHOLDER },
-        ]}
-        fieldId={field.id}
-      />
+      <FieldSettings config={config.properties} fieldId={field.id} />
     </div>
   );
 }

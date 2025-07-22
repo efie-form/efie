@@ -1,5 +1,5 @@
 import type { CustomPropertyType, PropertyType } from '../property-type';
-import type { PropValueAccept, PropValueBoolean, PropValueBoxShadow, PropValueButtonAction, PropValueColor, PropValueJsonContent, PropValueMargin, PropValueNumber, PropValueOptions, PropValuePadding, PropValueSize, PropValueString } from './field-property-value.type';
+import type { PropValueAccept, PropValueBoolean, PropValueButtonAction, PropValueColor, PropValueJsonContent, PropValueNumber, PropValueOptions, PropValueSize, PropValueString } from './field-property-value.type';
 
 export type FieldCustomProp =
   | FieldCustomPropString
@@ -7,17 +7,12 @@ export type FieldCustomProp =
   | FieldCustomPropColor
   | FieldCustomPropBoolean
   | FieldCustomPropSize
-  | FieldCustomPropBoxShadow
-  | FieldCustomPropMargin
-  | FieldCustomPropPadding
-  | FieldCustomPropSelect
-  | FieldCustomPropMultiSelect;
+  | FieldCustomPropSelect;
 
 export type FieldSystemProp =
   | FieldSystemPropLabel
   | FieldSystemPropPlaceholder
   | FieldSystemPropImageSrc
-  | FieldSystemPropImageAlt
   | FieldSystemPropInputName
   | FieldSystemPropRequired
   | FieldSystemPropOptions
@@ -39,11 +34,6 @@ export interface FieldSystemPropPlaceholder {
 
 export interface FieldSystemPropImageSrc {
   type: typeof PropertyType.IMAGE_SRC;
-  value: PropValueString;
-}
-
-export interface FieldSystemPropImageAlt {
-  type: typeof PropertyType.IMAGE_ALT;
   value: PropValueString;
 }
 
@@ -104,13 +94,6 @@ export interface FieldCustomPropSelect {
   value: PropValueString;
 }
 
-export interface FieldCustomPropMultiSelect {
-  id: string;
-  type: typeof PropertyType.CUSTOM;
-  dataType: typeof CustomPropertyType.MULTI_SELECT;
-  value: PropValueString[];
-}
-
 export interface FieldCustomPropNumber {
   id: string;
   type: typeof PropertyType.CUSTOM;
@@ -137,27 +120,6 @@ export interface FieldCustomPropSize {
   type: typeof PropertyType.CUSTOM;
   dataType: typeof CustomPropertyType.SIZE;
   value: PropValueSize;
-}
-
-export interface FieldCustomPropBoxShadow {
-  id: string;
-  type: typeof PropertyType.CUSTOM;
-  dataType: typeof CustomPropertyType.BOX_SHADOW;
-  value: PropValueBoxShadow;
-}
-
-export interface FieldCustomPropMargin {
-  id: string;
-  type: typeof PropertyType.CUSTOM;
-  dataType: typeof CustomPropertyType.MARGIN;
-  value: PropValueMargin;
-}
-
-export interface FieldCustomPropPadding {
-  id: string;
-  type: typeof PropertyType.CUSTOM;
-  dataType: typeof CustomPropertyType.PADDING;
-  value: PropValuePadding;
 }
 
 export type PropertyDefinition =

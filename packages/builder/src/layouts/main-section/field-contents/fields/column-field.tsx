@@ -1,4 +1,4 @@
-import type { ColumnFormField } from '@efie-form/core';
+import { type ColumnFormField } from '@efie-form/core';
 import RenderField from '../render-field';
 import EmptyArea from '../../empty-area';
 

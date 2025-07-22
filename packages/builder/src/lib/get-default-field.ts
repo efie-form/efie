@@ -260,10 +260,6 @@ export function getDefaultField<T extends FieldType>({
             type: PropertyType.IMAGE_SRC,
             value: '',
           },
-          {
-            type: PropertyType.IMAGE_ALT,
-            value: PropertyType.PLACEHOLDER,
-          },
         ],
       } satisfies GetDefaultFieldReturn[typeof FieldType.IMAGE];
     }

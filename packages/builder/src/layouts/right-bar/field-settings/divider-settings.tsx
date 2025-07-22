@@ -1,19 +1,19 @@
 import { type DividerFormField } from '@efie-form/core';
-import DynamicSettings from '../dynamic-settings';
 import CategoryHeader from '../../../components/elements/category-header';
+import { useSettingsStore } from '../../../lib/state/settings.state';
+import FieldSettings from '../field-settings';
 
 interface DividerSettingsProps {
   field: DividerFormField;
 }
 
 function DividerSettings({ field }: DividerSettingsProps) {
+  const config = useSettingsStore(state => state.config[field.type]);
+
   return (
     <div>
       <CategoryHeader>General</CategoryHeader>
-      <DynamicSettings
-        fieldId={field.id}
-        settings={[]}
-      />
+      <FieldSettings config={config.properties} fieldId={field.id} />
     </div>
   );
 }

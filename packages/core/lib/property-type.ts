@@ -6,7 +6,6 @@ export const PropertyType = {
   INPUT_NAME: 'input_name',
   OPTIONS: 'options',
   IMAGE_SRC: 'image_src',
-  IMAGE_ALT: 'image_alt',
   COLUMN_WIDTH: 'column_width',
   HEADING_CONTENT: 'heading_content',
   BUTTON_ACTION: 'button_action',

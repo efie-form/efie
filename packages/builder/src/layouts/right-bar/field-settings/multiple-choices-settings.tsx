@@ -1,23 +1,19 @@
-import { PropertyType, PropSettingsTemplate, type MultipleChoiceFormField } from '@efie-form/core';
-import DynamicSettings from '../dynamic-settings';
+import { type MultipleChoiceFormField } from '@efie-form/core';
 import CategoryHeader from '../../../components/elements/category-header';
+import { useSettingsStore } from '../../../lib/state/settings.state';
+import FieldSettings from '../field-settings';
 
 interface MultipleChoicesSettingsProps {
   field: MultipleChoiceFormField;
 }
 
 function MultipleChoicesSettings({ field }: MultipleChoicesSettingsProps) {
+  const config = useSettingsStore(state => state.config[field.type]);
+
   return (
     <div>
       <CategoryHeader>General</CategoryHeader>
-      <DynamicSettings
-        settings={[
-          { template: PropSettingsTemplate.FORM_KEY },
-          { template: PropSettingsTemplate.TEXT, label: 'Label', type: PropertyType.LABEL },
-          { template: PropSettingsTemplate.OPTIONS, label: 'Options', type: PropertyType.OPTIONS, defaultOptions: ['Option 1', 'Option 2', 'Option 3'] },
-        ]}
-        fieldId={field.id}
-      />
+      <FieldSettings config={config.properties} fieldId={field.id} />
     </div>
   );
 }
