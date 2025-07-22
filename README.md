@@ -92,7 +92,7 @@ We welcome contributions! Please see our [Contributing Guidelines](./CONTRIBUTIN
 The project uses GitHub Actions for continuous integration:
 
 - **Tests**: Automated testing on Node.js 18 and 20
-- **Linting**: ESLint checks on all pull requests
+- **Linting**: Biome checks on all pull requests for formatting and code quality
 - **Coverage**: Coverage reports uploaded to Codecov
 - **Build**: Automated builds for all packages
 - **Release**: Automated package publishing with changesets
