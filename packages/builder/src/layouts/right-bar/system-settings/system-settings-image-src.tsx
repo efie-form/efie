@@ -6,7 +6,7 @@ import { useFileDragDrop } from '../../../lib/hooks/use-file-drag-drop';
 import { cn } from '../../../lib/utils';
 import type { FieldSystemConfigImageSrc } from '@efie-form/core';
 import { useSchemaStore } from '../../../lib/state/schema.state';
-import { getImageFileInfo } from '../property-templates/utils-image-info';
+import { getImageFileInfo } from '../../../lib/utils-image-info';
 
 interface PropsTemplateImageUrlProps {
   fieldId: string;

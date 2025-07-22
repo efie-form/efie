@@ -11,6 +11,7 @@ import SystemSettingsImageSrc from './system-settings/system-settings-image-src'
 import SystemSettingsOptions from './system-settings/system-settings-options';
 import { SystemSettingsColumnWidth } from './system-settings/system-settings-column-width';
 import SystemSettingsAccept from './system-settings/system-settings-accept';
+import SystemSettingsButtonAction from './system-settings/system-settings-button-action';
 
 interface FieldSettingsProps {
   config: FieldConfig[];
@@ -146,6 +147,15 @@ export default function FieldSettings({ config, fieldId }: FieldSettingsProps) {
         );
       }
 
+      case PropertyType.BUTTON_ACTION: {
+        return (
+          <SystemSettingsButtonAction
+            key={item.type}
+            fieldId={fieldId}
+            config={item}
+          />
+        );
+      }
       default: {
         return <>{item.type}</>;
       }
