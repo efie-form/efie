@@ -15,25 +15,33 @@ export interface RichTextEditorOptions {
   italic?: boolean;
   underline?: boolean;
   strike?: boolean;
-  align?: boolean | {
-    left: boolean;
-    center: boolean;
-    right: boolean;
-    justify: boolean;
-  };
-  list?: boolean | {
-    ordered: boolean;
-    bullet: boolean;
-  };
+  align?:
+    | boolean
+    | {
+        left: boolean;
+        center: boolean;
+        right: boolean;
+        justify: boolean;
+      };
+  list?:
+    | boolean
+    | {
+        ordered: boolean;
+        bullet: boolean;
+      };
   link?: boolean;
   superscript?: boolean;
   subscript?: boolean;
-  heading?: boolean | {
-    options: Heading[];
-    default?: Level;
-  };
-  fontSize?: boolean | {
-    options: FontSize[];
-    default?: FontSize;
-  };
+  heading?:
+    | boolean
+    | {
+        options: Heading[];
+        default?: Level;
+      };
+  fontSize?:
+    | boolean
+    | {
+        options: FontSize[];
+        default?: FontSize;
+      };
 }

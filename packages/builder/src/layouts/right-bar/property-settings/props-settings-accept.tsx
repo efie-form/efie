@@ -1,9 +1,14 @@
+import {
+  type AcceptProperty,
+  isAcceptValue,
+  type PropValue,
+  type PropValueAccept,
+} from '@efie-form/core';
+import { Switch } from '../../../components/form';
+import { useControllableState } from '../../../lib/hooks/use-controllable-state';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import type { PropSettingsAccept } from '../../../types/prop-settings.type';
 import SettingsFieldSwitchWithDropdown from '../property-layouts/settings-field-switch-with-dropdown';
-import { Switch } from '../../../components/form';
-import { isAcceptValue, type AcceptProperty, type PropValue, type PropValueAccept } from '@efie-form/core';
-import { useControllableState } from '../../../lib/hooks/use-controllable-state';
 
 const FILE_EXTENSIONS = [
   { type: 'pdf', label: 'PDF', value: ['.pdf'] },
@@ -18,7 +23,7 @@ const FILE_EXTENSIONS = [
   { type: 'video', label: 'Video', value: ['.mp4', '.mov', '.avi'] },
 ] as const;
 
-type ExtensionType = typeof FILE_EXTENSIONS[number]['type'];
+type ExtensionType = (typeof FILE_EXTENSIONS)[number]['type'];
 
 interface InternalValue {
   allowSpecific: boolean;
@@ -28,17 +33,21 @@ interface PropsSettingsAcceptProps extends PropSettingsAccept {
   fieldId: string;
 }
 
-export default function PropsSettingsAccept({ fieldId, label = 'Only allow specific file types', type }: PropsSettingsAcceptProps) {
-  const fieldProperty = useSchemaStore(state => state.getFieldProperty(fieldId, type));
-  const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
+export default function PropsSettingsAccept({
+  fieldId,
+  label = 'Only allow specific file types',
+  type,
+}: PropsSettingsAcceptProps) {
+  const fieldProperty = useSchemaStore((state) => state.getFieldProperty(fieldId, type));
+  const updateFieldProperty = useSchemaStore((state) => state.updateFieldProperty);
   const value = getValue(fieldProperty?.value);
 
   const [internalValue, setInternalValue] = useControllableState({
     defaultValue: getInternalValue(value),
     onChange: (newValue) => {
       const formats = Object.entries(newValue.extensions)
-        .filter(ext => ext[1])
-        .flatMap(([k]) => FILE_EXTENSIONS.find(ext => ext.type === k)?.value || []);
+        .filter((ext) => ext[1])
+        .flatMap(([k]) => FILE_EXTENSIONS.find((ext) => ext.type === k)?.value || []);
 
       const finalValue: PropValueAccept = {
         allowAll: !newValue.allowSpecific,
@@ -53,7 +62,7 @@ export default function PropsSettingsAccept({ fieldId, label = 'Only allow speci
   });
 
   const handleExtensionChange = (type: ExtensionType, checked: boolean) => {
-    setInternalValue(prev => ({
+    setInternalValue((prev) => ({
       ...prev,
       extensions: {
         ...prev.extensions,
@@ -63,7 +72,7 @@ export default function PropsSettingsAccept({ fieldId, label = 'Only allow speci
   };
 
   const handleAllowAllChange = (checked: boolean) => {
-    setInternalValue(prev => ({
+    setInternalValue((prev) => ({
       ...prev,
       allowSpecific: checked,
     }));
@@ -77,10 +86,10 @@ export default function PropsSettingsAccept({ fieldId, label = 'Only allow speci
       divider
     >
       <div className="grid grid-cols-2">
-        {FILE_EXTENSIONS.map(extension => (
+        {FILE_EXTENSIONS.map((extension) => (
           <div
             key={extension.label}
-            className="flex items-center gap-2 p-2 rounded-md hover:bg-neutral-50 transition-colors"
+            className="flex items-center gap-2 rounded-md p-2 transition-colors hover:bg-neutral-50"
           >
             <div>
               <Switch
@@ -90,9 +99,7 @@ export default function PropsSettingsAccept({ fieldId, label = 'Only allow speci
                 }}
               />
             </div>
-            <span className="typography-body3 text-neutral-600">
-              {extension.label}
-            </span>
+            <span className="typography-body3 text-neutral-600">{extension.label}</span>
           </div>
         ))}
       </div>
@@ -121,7 +128,7 @@ function getInternalValue(value?: PropValueAccept): InternalValue {
   }
 
   for (const ext of FILE_EXTENSIONS) {
-    extTypes[ext.type] = ext.value.every(format => value.formats?.includes(format)) || false;
+    extTypes[ext.type] = ext.value.every((format) => value.formats?.includes(format)) || false;
   }
   return {
     allowSpecific: !value.allowAll,

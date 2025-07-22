@@ -1,18 +1,18 @@
-import { cn } from '../../../lib/utils';
-import { useEffect, useRef, useState, type ElementType } from 'react';
-import type { FieldType } from '@efie-form/core';
-import generateFieldItems from '../../../lib/generate-field-items';
-import invariant from 'tiny-invariant';
 import { draggable } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
+import type { FieldType } from '@efie-form/core';
+import { type ElementType, useEffect, useRef, useState } from 'react';
+import invariant from 'tiny-invariant';
+import generateFieldItems from '../../../lib/generate-field-items';
+import { cn } from '../../../lib/utils';
 
 function FieldsTab() {
   return (
     <div className="px-4 py-2">
-      {generateFieldItems().map(group => (
+      {generateFieldItems().map((group) => (
         <div key={group.id} className="mb-4">
           <p className="text-neutral-700 typography-body2">{group.label}</p>
           <div className="flex flex-col gap-1.5 mt-3">
-            {group.children.map(field => (
+            {group.children.map((field) => (
               <FieldItem
                 key={field.type}
                 label={field.label}

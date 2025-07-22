@@ -9,21 +9,11 @@
     // transpile
     "jsx": "react-jsx",
     // src
-    "lib": [
-      "DOM",
-      "DOM.Iterable",
-      "ESNext"
-    ],
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "baseUrl": ".",
     "paths": {
-      "@efie-form/core": [
-        "../core/lib"
-      ],
+      "@efie-form/core": ["../core/lib"]
     }
   },
-  "include": [
-    "lib/**/*",
-    "types/**/*",
-    "index.ts"
-  ]
+  "include": ["lib/**/*", "types/**/*", "index.ts"]
 }

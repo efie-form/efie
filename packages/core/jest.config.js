@@ -8,12 +8,8 @@ const jestConfig = {
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/lib/$1',
   },
-  transformIgnorePatterns: [
-    'node_modules/(?!(color-convert)/)',
-  ],
-  testMatch: [
-    '<rootDir>/lib/**/*.{test,spec}.{js,ts}',
-  ],
+  transformIgnorePatterns: ['node_modules/(?!(color-convert)/)'],
+  testMatch: ['<rootDir>/lib/**/*.{test,spec}.{js,ts}'],
   collectCoverageFrom: [
     'lib/**/*.{js,ts}',
     '!lib/**/*.d.ts',
@@ -25,12 +21,15 @@ const jestConfig = {
   coverageDirectory: 'coverage',
   coverageReporters: ['text', 'lcov', 'html'],
   transform: {
-    '^.+\\.ts$': ['ts-jest', {
-      useESM: true,
-      tsconfig: {
-        verbatimModuleSyntax: false,
+    '^.+\\.ts$': [
+      'ts-jest',
+      {
+        useESM: true,
+        tsconfig: {
+          verbatimModuleSyntax: false,
+        },
       },
-    }],
+    ],
   },
 };
 

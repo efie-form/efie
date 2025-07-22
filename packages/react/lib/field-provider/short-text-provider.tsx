@@ -1,6 +1,6 @@
+import { PropertyType, type ShortTextFormField } from '@efie-form/core';
 import type { ElementType } from 'react';
 import { createElement } from 'react';
-import { PropertyType, type ShortTextFormField } from '@efie-form/core';
 import type { ShortTextFieldProps } from '../../types/field-props';
 
 interface ShortTextProviderProps {
@@ -18,8 +18,8 @@ function ShortTextProvider({
 }: ShortTextProviderProps) {
   if (!Component) return <></>;
 
-  const label = field.props.find(prop => prop.type === PropertyType.LABEL);
-  const placeholder = field.props.find(prop => prop.type === PropertyType.PLACEHOLDER);
+  const label = field.props.find((prop) => prop.type === PropertyType.LABEL);
+  const placeholder = field.props.find((prop) => prop.type === PropertyType.PLACEHOLDER);
 
   return createElement(Component, {
     id: field.id,

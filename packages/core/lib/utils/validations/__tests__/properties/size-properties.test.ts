@@ -1,7 +1,7 @@
 import { FieldType } from '../../../../constants/field-type';
 import { PropertyType } from '../../../../constants/form-schema.constant';
 import validateSchema from '../../index';
-import { createValidSchema, createValidField, createValidSize } from '../helpers/test-helpers';
+import { createValidField, createValidSchema, createValidSize } from '../helpers/test-helpers';
 
 describe('validateSchema - Size property types', () => {
   const sizeProperties = [
@@ -31,11 +31,15 @@ describe('validateSchema - Size property types', () => {
       expect(validateSchema(schema)).toBe(false);
 
       // Missing type
-      field.props = [{ type: propType, value: { value: 10, unit: 'px' } }] as unknown as typeof field.props;
+      field.props = [
+        { type: propType, value: { value: 10, unit: 'px' } },
+      ] as unknown as typeof field.props;
       expect(validateSchema(schema)).toBe(false);
 
       // Invalid type
-      field.props = [{ type: propType, value: { type: 'invalid', value: 10, unit: 'px' } }] as unknown as typeof field.props;
+      field.props = [
+        { type: propType, value: { type: 'invalid', value: 10, unit: 'px' } },
+      ] as unknown as typeof field.props;
       expect(validateSchema(schema)).toBe(false);
     });
   }

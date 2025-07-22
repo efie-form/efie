@@ -1,6 +1,6 @@
-import { type Size } from '@efie-form/core';
-import { useControllableState } from '../../lib/hooks/use-controllable-state';
+import type { Size } from '@efie-form/core';
 import { useState } from 'react';
+import { useControllableState } from '../../lib/hooks/use-controllable-state';
 import { cn } from '../../lib/utils';
 
 interface SizeInputProps {
@@ -21,16 +21,9 @@ const UNITS = [
   { type: 'initial', label: 'Initial' },
 ] as const;
 
-const requiredValueTypes = new Set([
-  'px',
-  'em',
-  'rem',
-  'vw',
-  'vh',
-  'percentage',
-]);
+const requiredValueTypes = new Set(['px', 'em', 'rem', 'vw', 'vh', 'percentage']);
 
-type ValueType = typeof UNITS[number]['type'];
+type ValueType = (typeof UNITS)[number]['type'];
 
 interface InternalValueType {
   value?: string;
@@ -40,7 +33,11 @@ interface InternalValueType {
 export default function SizeInput({ value, onChange, className }: SizeInputProps) {
   const [internalValue, setInternalValue] = useControllableState({
     onChange: (newValue: InternalValueType) => {
-      if (onChange && (['auto', 'inherit', 'initial'].includes(newValue.type) || checkIsNumberValid(newValue.value))) {
+      if (
+        onChange &&
+        (['auto', 'inherit', 'initial'].includes(newValue.type) ||
+          checkIsNumberValid(newValue.value))
+      ) {
         onChange(transformInternalValueToSize(newValue));
       }
     },
@@ -57,10 +54,9 @@ export default function SizeInput({ value, onChange, className }: SizeInputProps
 
     if (isValidNumber) {
       const valueWithoutCommas = rawValue.replaceAll(',', '');
-      setInternalValue(prev => ({ ...prev, value: Number(valueWithoutCommas).toLocaleString() }));
-    }
-    else {
-      setInternalValue(prev => ({ ...prev, value: rawValue }));
+      setInternalValue((prev) => ({ ...prev, value: Number(valueWithoutCommas).toLocaleString() }));
+    } else {
+      setInternalValue((prev) => ({ ...prev, value: rawValue }));
     }
   };
 
@@ -91,24 +87,23 @@ export default function SizeInput({ value, onChange, className }: SizeInputProps
 
   return (
     <div
-      className={
-        cn(
-          `relative flex w-28 h-7 items-center border border-neutral-200 rounded-md bg-white overflow-hidden focus-within:outline focus-within:outline-primary focus-within:outline-1`,
-          className,
-          {
-            'outline !outline-danger-400 bg-danger-50': valueRequired && !isValidNumber,
-          },
-        )
-      }
+      className={cn(
+        `relative flex h-7 w-28 items-center overflow-hidden rounded-md border border-neutral-200 bg-white focus-within:outline focus-within:outline-1 focus-within:outline-primary`,
+        className,
+        {
+          '!outline-danger-400 bg-danger-50 outline': valueRequired && !isValidNumber,
+        },
+      )}
     >
       {valueRequired && (
-        <div className="flex-1 h-full border-e border-e-neutral-200">
+        <div className="h-full flex-1 border-e border-e-neutral-200">
           <input
             value={internalValue.value ?? ''}
             placeholder="0"
-            className={cn('focus:outline-none w-full h-full typography-body3 text-center px-1 hide-input-arrow',
+            className={cn(
+              'typography-body3 hide-input-arrow h-full w-full px-1 text-center focus:outline-none',
               {
-                'bg-neutral-50 text-neutral-500 cursor-not-allowed': internalValue.type === 'auto',
+                'cursor-not-allowed bg-neutral-50 text-neutral-500': internalValue.type === 'auto',
               },
             )}
             disabled={internalValue.type === 'auto'}
@@ -121,15 +116,20 @@ export default function SizeInput({ value, onChange, className }: SizeInputProps
             onKeyDown={(e) => {
               if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
                 e.preventDefault();
-                const currentValue = internalValue.value ? Number(internalValue.value.replaceAll(',', '')) : 0;
+                const currentValue = internalValue.value
+                  ? Number(internalValue.value.replaceAll(',', ''))
+                  : 0;
                 const increment = e.shiftKey ? 10 : 1;
-                const newValue = e.key === 'ArrowUp' ? currentValue + increment : currentValue - increment;
+                const newValue =
+                  e.key === 'ArrowUp' ? currentValue + increment : currentValue - increment;
                 handleValueChange(newValue.toString());
               }
             }}
             onWheel={(e) => {
               if (internalValue.type === 'auto' || !isInputFocused) return;
-              const currentValue = internalValue.value ? Number(internalValue.value.replaceAll(',', '')) : 0;
+              const currentValue = internalValue.value
+                ? Number(internalValue.value.replaceAll(',', ''))
+                : 0;
               const increment = e.shiftKey ? 10 : 1;
               const newValue = e.deltaY < 0 ? currentValue + increment : currentValue - increment;
               handleValueChange(newValue.toString());
@@ -138,7 +138,8 @@ export default function SizeInput({ value, onChange, className }: SizeInputProps
         </div>
       )}
       <select
-        className={cn('h-full typography-body3 border-none text-center outline-none focus:ring-0 focus:outline-none bg-transparent px-0.5',
+        className={cn(
+          'typography-body3 h-full border-none bg-transparent px-0.5 text-center outline-none focus:outline-none focus:ring-0',
           valueRequired ? 'w-12' : 'w-full',
         )}
         value={internalValue.type}
@@ -146,7 +147,7 @@ export default function SizeInput({ value, onChange, className }: SizeInputProps
           handleUnitChange(e.target.value as ValueType);
         }}
       >
-        {UNITS.map(unit => (
+        {UNITS.map((unit) => (
           <option key={unit.type} value={unit.type}>
             {unit.label}
           </option>
@@ -193,7 +194,10 @@ function transformInternalValueToSize(internalValue: InternalValueType): Size {
     return { type: 'inherit' };
   }
   if (internalValue.type === 'percentage') {
-    return { type: 'percentage', value: internalValue.value ? Number(internalValue.value.replaceAll(',', '')) : 0 };
+    return {
+      type: 'percentage',
+      value: internalValue.value ? Number(internalValue.value.replaceAll(',', '')) : 0,
+    };
   }
   if (internalValue.value === undefined || internalValue.value === '') {
     return { type: 'length', value: 0, unit: internalValue.type };

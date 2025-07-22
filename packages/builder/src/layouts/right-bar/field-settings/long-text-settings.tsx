@@ -1,6 +1,6 @@
-import { PropertyType, type LongTextFormField } from '@efie-form/core';
-import DynamicSettings from '../dynamic-settings';
+import { type LongTextFormField, PropertyType } from '@efie-form/core';
 import CategoryHeader from '../../../components/elements/category-header';
+import DynamicSettings from '../dynamic-settings';
 
 interface LongTextSettingsProps {
   field: LongTextFormField;

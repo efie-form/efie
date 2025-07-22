@@ -4,11 +4,7 @@ import { useState } from 'react';
 
 const size = 'small';
 
-function MultipleChoicesField({
-  id,
-  fieldLabel,
-  options,
-}: MultipleChoicesFieldProps) {
+function MultipleChoicesField({ id, fieldLabel, options }: MultipleChoicesFieldProps) {
   const [value, setValue] = useState<string[]>([]);
   return (
     <FormControl
@@ -23,7 +19,7 @@ function MultipleChoicesField({
       <Select
         id={id}
         value={value}
-        onChange={event => setValue(event.target.value as string[])}
+        onChange={(event) => setValue(event.target.value as string[])}
         labelId={`${id}-label`}
         size={size}
         fullWidth
@@ -31,7 +27,7 @@ function MultipleChoicesField({
         variant="outlined"
         label={fieldLabel}
       >
-        {options.map(option => (
+        {options.map((option) => (
           <MenuItem key={option.value} value={option.value}>
             {option.label}
           </MenuItem>

@@ -1,10 +1,13 @@
+import type {
+  ElementDropTargetEventBasePayload,
+  ElementDropTargetGetFeedbackArgs,
+} from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
 import { extractInstruction } from '@atlaskit/pragmatic-drag-and-drop-hitbox/list-item';
-import type { ElementDropTargetEventBasePayload, ElementDropTargetGetFeedbackArgs } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
-import { isMoveField, isNewField } from '../field-type-guard';
+import { FieldType } from '@efie-form/core';
 import invariant from 'tiny-invariant';
+import { isMoveField, isNewField } from '../field-type-guard';
 import { getDefaultField } from '../get-default-field';
 import { useSchemaStore } from '../state/schema.state';
-import { FieldType } from '@efie-form/core';
 
 const NO_DROP_FIELD_TYPES: Set<FieldType> = new Set([FieldType.COLUMN]);
 
@@ -14,24 +17,20 @@ interface UseDropFieldProps {
   fieldType?: FieldType;
 }
 
-export default function useDropField({
-  index,
-  parentId,
-  fieldType,
-}: UseDropFieldProps) {
+export default function useDropField({ index, parentId, fieldType }: UseDropFieldProps) {
   const { addField, moveField, listChildrenId } = useSchemaStore();
 
-  const handleAddField = ({
-    self,
-    source,
-  }: ElementDropTargetEventBasePayload) => {
+  const handleAddField = ({ self, source }: ElementDropTargetEventBasePayload) => {
     const instruction = extractInstruction(self.data);
 
     invariant(isNewField(source.data), 'Source data should be a new field');
 
-    const targetIndex = instruction?.operation === 'reorder-before'
-      ? index
-      : (instruction?.operation === 'reorder-after' ? index + 1 : 0);
+    const targetIndex =
+      instruction?.operation === 'reorder-before'
+        ? index
+        : instruction?.operation === 'reorder-after'
+          ? index + 1
+          : 0;
 
     const newField = getDefaultField({
       type: source.data.type,
@@ -46,9 +45,12 @@ export default function useDropField({
 
     invariant(isMoveField(source.data), 'Source data should be an existing field');
 
-    const targetIndex = instruction?.operation === 'reorder-before'
-      ? index
-      : (instruction?.operation === 'reorder-after' ? index + 1 : 0);
+    const targetIndex =
+      instruction?.operation === 'reorder-before'
+        ? index
+        : instruction?.operation === 'reorder-after'
+          ? index + 1
+          : 0;
 
     moveField(source.data.id, parentId, targetIndex);
   };
@@ -63,11 +65,9 @@ export default function useDropField({
 
     if (isNewField(source.data)) {
       handleAddField(payload);
-    }
-    else if (isMoveField(source.data)) {
+    } else if (isMoveField(source.data)) {
       handleMoveField(payload);
-    }
-    else {
+    } else {
       console.warn('Unsupported field type for drop operation');
     }
   };

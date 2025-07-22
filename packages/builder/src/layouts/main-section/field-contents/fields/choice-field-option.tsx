@@ -25,14 +25,9 @@ function ChoiceFieldOption({
   onRemove,
   inputRef,
 }: ChoiceFieldOptionProps) {
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-    isDragging,
-  } = useSortable({ id: index.toString() });
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+    id: index.toString(),
+  });
 
   const style = {
     transform: transform ? `translateY(${transform.y}px)` : undefined,
@@ -41,15 +36,11 @@ function ChoiceFieldOption({
   };
 
   return (
-    <div
-      ref={setNodeRef}
-      style={style}
-      className="flex items-center gap-2 group relative"
-    >
+    <div ref={setNodeRef} style={style} className="group relative flex items-center gap-2">
       <div
         {...attributes}
         {...listeners}
-        className="invisible group-hover:visible absolute left-0 top-1/2 -translate-x-full -translate-y-1/2 cursor-grab"
+        className="-translate-x-full -translate-y-1/2 invisible absolute top-1/2 left-0 cursor-grab group-hover:visible"
       >
         <MdOutlineDragIndicator className="text-neutral-500" />
       </div>
@@ -57,7 +48,7 @@ function ChoiceFieldOption({
       <div className="flex-1">
         <input
           type="text"
-          className="typography-body3 focus:outline-none text-neutral-800 w-full"
+          className="typography-body3 w-full text-neutral-800 focus:outline-none"
           value={option.label}
           ref={inputRef}
           onFocus={(e) => {
@@ -76,10 +67,10 @@ function ChoiceFieldOption({
             onUpdate(newValue);
           }}
         />
-        <div className="border-t border-neutral-200 invisible group-hover:visible group-focus-within:visible group-focus-within:border-neutral-500" />
+        <div className="invisible border-neutral-200 border-t group-focus-within:visible group-focus-within:border-neutral-500 group-hover:visible" />
       </div>
-      <button onClick={onRemove} className="invisible group-hover:visible">
-        <MdOutlineClose className="text-neutral-500 cursor-pointer hover:text-neutral-700" />
+      <button type="button" onClick={onRemove} className="invisible group-hover:visible">
+        <MdOutlineClose className="cursor-pointer text-neutral-500 hover:text-neutral-700" />
       </button>
     </div>
   );

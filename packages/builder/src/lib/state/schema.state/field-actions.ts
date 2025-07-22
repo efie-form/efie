@@ -1,11 +1,11 @@
 import type { FormField } from '@efie-form/core';
 import type { StateSetters } from './types';
 import {
+  addFieldToTree,
   deepClone,
+  findFieldInTree,
   generateId,
   getFieldInfoMap,
-  addFieldToTree,
-  findFieldInTree,
   removeFieldFromTree,
 } from './utils';
 
@@ -61,7 +61,7 @@ export function createFieldActions({ set, getState }: StateSetters) {
         newField.id = generateId();
 
         if ('children' in newField && newField.children) {
-          newField.children = newField.children.map(child => duplicateFieldRecursive(child));
+          newField.children = newField.children.map((child) => duplicateFieldRecursive(child));
         }
 
         return newField;
@@ -81,12 +81,14 @@ export function createFieldActions({ set, getState }: StateSetters) {
 
       // Remove from old location
       const removeFromParent = (fields: FormField[]): FormField[] => {
-        return fields.filter(f => f.id !== fieldId).map((f) => {
-          if ('children' in f && f.children) {
-            return { ...f, children: removeFromParent(f.children) } as FormField;
-          }
-          return f;
-        });
+        return fields
+          .filter((f) => f.id !== fieldId)
+          .map((f) => {
+            if ('children' in f && f.children) {
+              return { ...f, children: removeFromParent(f.children) } as FormField;
+            }
+            return f;
+          });
       };
 
       // Add to new location

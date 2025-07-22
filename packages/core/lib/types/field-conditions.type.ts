@@ -1,4 +1,4 @@
-import type { RuleType, ActionType } from '../constants/form-schema.constant';
+import type { ActionType, RuleType } from '../constants/form-schema.constant';
 
 // Field condition types
 export interface FieldCondition {

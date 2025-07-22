@@ -1,9 +1,14 @@
-import { useState, useRef, useEffect } from 'react';
-import { useSchemaStore } from '../../../lib/state/schema.state';
-import type { PropertyDefinition, PaddingProperty, PropValue, PropValuePadding } from '@efie-form/core';
-import { isPaddingValue, SizeType, type PaddingSize, type Size } from '@efie-form/core';
-import SizeInput from '../../../components/form/size-input';
+import type {
+  PaddingProperty,
+  PropertyDefinition,
+  PropValue,
+  PropValuePadding,
+} from '@efie-form/core';
+import { isPaddingValue, type PaddingSize, type Size, SizeType } from '@efie-form/core';
+import { useEffect, useRef, useState } from 'react';
 import { FaLink, FaUnlink } from 'react-icons/fa';
+import SizeInput from '../../../components/form/size-input';
+import { useSchemaStore } from '../../../lib/state/schema.state';
 import type { PropSettingsPadding } from '../../../types/prop-settings.type';
 
 interface PropsSettingsPaddingProps extends PropSettingsPadding {
@@ -16,10 +21,8 @@ const normalizeValue = (val: Size): string => {
 };
 
 export default function PropsSettingsPadding({ fieldId, label, type }: PropsSettingsPaddingProps) {
-  const fieldProperty = useSchemaStore(
-    state => (state.getFieldProperty(fieldId, type)),
-  );
-  const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
+  const fieldProperty = useSchemaStore((state) => state.getFieldProperty(fieldId, type));
+  const updateFieldProperty = useSchemaStore((state) => state.updateFieldProperty);
   const value = getValue(fieldProperty?.value);
   const [isLinked, setIsLink] = useState(false);
   const [hasUserInteracted, setHasUserInteracted] = useState(false);
@@ -34,9 +37,7 @@ export default function PropsSettingsPadding({ fieldId, label, type }: PropsSett
     const bottomStr = normalizeValue(bottom);
     const leftStr = normalizeValue(left);
 
-    return topStr === rightStr
-      && rightStr === bottomStr
-      && bottomStr === leftStr;
+    return topStr === rightStr && rightStr === bottomStr && bottomStr === leftStr;
   };
 
   // Check if all paddings are the same when component mounts or value changes
@@ -61,8 +62,7 @@ export default function PropsSettingsPadding({ fieldId, label, type }: PropsSett
           value: previousValuesRef.current,
         } as PropertyDefinition);
       }
-    }
-    else {
+    } else {
       // Store current values before linking (only if they're not already the same)
       if (!areAllPaddingsSame(value)) {
         previousValuesRef.current = { ...value };
@@ -107,7 +107,7 @@ export default function PropsSettingsPadding({ fieldId, label, type }: PropsSett
   return (
     <>
       <div className="px-4 py-3.5">
-        <div className="mb-2 flex justify-between items-center">
+        <div className="mb-2 flex items-center justify-between">
           <p className="typography-body3 text-neutral-800">{label}</p>
           <div>
             <button onClick={toggleLink} className="flex items-center gap-2 text-neutral-600">
@@ -116,103 +116,82 @@ export default function PropsSettingsPadding({ fieldId, label, type }: PropsSett
           </div>
         </div>
         <div className="flex gap-4">
-          {isLinked
-            ? (
-                <div className="flex gap-4 items-start w-full">
-                  <div className="flex flex-col gap-2">
-                    <p className="typography-body4 text-neutral-600">All sides</p>
-                    <SizeInput
-                      value={value.top}
-                      onChange={handleLinkedChange}
-                    />
-                  </div>
+          {isLinked ? (
+            <div className="flex w-full items-start gap-4">
+              <div className="flex flex-col gap-2">
+                <p className="typography-body4 text-neutral-600">All sides</p>
+                <SizeInput value={value.top} onChange={handleLinkedChange} />
+              </div>
+            </div>
+          ) : (
+            <div className="grid w-full grid-cols-3 gap-2">
+              <div></div>
+              <div>
+                <p className="typography-body4 text-center text-neutral-600">Top</p>
+                <PaddingSide value={value} handleChange={handleChange} paddingSide="top" />
+              </div>
+              <div></div>
+              <div>
+                <p className="typography-body4 text-center text-neutral-600">Left</p>
+                <PaddingSide value={value} handleChange={handleChange} paddingSide="left" />
+              </div>
+              <div className="flex items-center justify-center">
+                <div className="relative h-12 w-12">
+                  <div className="absolute inset-0 border-2 border-neutral-400"></div>
+                  <div
+                    className="absolute bg-primary-200"
+                    style={{
+                      top: '4px',
+                      left: '4px',
+                      right: '4px',
+                      height: '4px',
+                    }}
+                  />
+                  <div
+                    className="absolute bg-primary-200"
+                    style={{
+                      top: '4px',
+                      right: '4px',
+                      bottom: '4px',
+                      width: '4px',
+                    }}
+                  />
+                  <div
+                    className="absolute bg-primary-200"
+                    style={{
+                      bottom: '4px',
+                      left: '4px',
+                      right: '4px',
+                      height: '4px',
+                    }}
+                  />
+                  <div
+                    className="absolute bg-primary-200"
+                    style={{
+                      top: '4px',
+                      left: '4px',
+                      bottom: '4px',
+                      width: '4px',
+                    }}
+                  />
                 </div>
-              )
-            : (
-                <div className="grid grid-cols-3 gap-2 w-full">
-                  <div></div>
-                  <div>
-                    <p className="typography-body4 text-neutral-600 text-center">Top</p>
-                    <PaddingSide
-                      value={value}
-                      handleChange={handleChange}
-                      paddingSide="top"
-                    />
-                  </div>
-                  <div></div>
-                  <div>
-                    <p className="typography-body4 text-neutral-600 text-center">Left</p>
-                    <PaddingSide
-                      value={value}
-                      handleChange={handleChange}
-                      paddingSide="left"
-                    />
-                  </div>
-                  <div className="flex items-center justify-center">
-                    <div className="relative w-12 h-12">
-                      <div className="absolute inset-0 border-2 border-neutral-400"></div>
-                      <div
-                        className="absolute bg-primary-200"
-                        style={{
-                          top: '4px',
-                          left: '4px',
-                          right: '4px',
-                          height: '4px',
-                        }}
-                      />
-                      <div
-                        className="absolute bg-primary-200"
-                        style={{
-                          top: '4px',
-                          right: '4px',
-                          bottom: '4px',
-                          width: '4px',
-                        }}
-                      />
-                      <div
-                        className="absolute bg-primary-200"
-                        style={{
-                          bottom: '4px',
-                          left: '4px',
-                          right: '4px',
-                          height: '4px',
-                        }}
-                      />
-                      <div
-                        className="absolute bg-primary-200"
-                        style={{
-                          top: '4px',
-                          left: '4px',
-                          bottom: '4px',
-                          width: '4px',
-                        }}
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <p className="typography-body4 text-neutral-600 text-center">Right</p>
-                    <PaddingSide
-                      value={value}
-                      handleChange={handleChange}
-                      paddingSide="right"
-                    />
-                  </div>
-                  <div></div>
-                  <div>
-                    <p className="typography-body4 text-neutral-600 text-center">Bottom</p>
-                    <PaddingSide
-                      value={value}
-                      handleChange={handleChange}
-                      paddingSide="bottom"
-                    />
-                  </div>
-                  <div></div>
-                </div>
-              )}
+              </div>
+              <div>
+                <p className="typography-body4 text-center text-neutral-600">Right</p>
+                <PaddingSide value={value} handleChange={handleChange} paddingSide="right" />
+              </div>
+              <div></div>
+              <div>
+                <p className="typography-body4 text-center text-neutral-600">Bottom</p>
+                <PaddingSide value={value} handleChange={handleChange} paddingSide="bottom" />
+              </div>
+              <div></div>
+            </div>
+          )}
         </div>
       </div>
       <div className="mx-4">
-        <div className="w-full border-t-[0.5px] border-neutral-400 h-[1px]" />
+        <div className="h-[1px] w-full border-neutral-400 border-t-[0.5px]" />
       </div>
     </>
   );
@@ -229,18 +208,19 @@ function PaddingSide({ value, handleChange, paddingSide }: PaddingSideProps) {
     <SizeInput
       className="w-full"
       value={value[paddingSide]}
-      onChange={newSize => handleChange(newSize as PaddingSize, paddingSide)}
+      onChange={(newSize) => handleChange(newSize as PaddingSize, paddingSide)}
     />
   );
 }
 
 function getValue(props?: PropValue): PropValuePadding {
-  if (!isPaddingValue(props)) return {
-    top: { type: SizeType.LENGTH, value: 0, unit: 'px' },
-    right: { type: SizeType.LENGTH, value: 0, unit: 'px' },
-    bottom: { type: SizeType.LENGTH, value: 0, unit: 'px' },
-    left: { type: SizeType.LENGTH, value: 0, unit: 'px' },
-  };
+  if (!isPaddingValue(props))
+    return {
+      top: { type: SizeType.LENGTH, value: 0, unit: 'px' },
+      right: { type: SizeType.LENGTH, value: 0, unit: 'px' },
+      bottom: { type: SizeType.LENGTH, value: 0, unit: 'px' },
+      left: { type: SizeType.LENGTH, value: 0, unit: 'px' },
+    };
 
   return props;
 }

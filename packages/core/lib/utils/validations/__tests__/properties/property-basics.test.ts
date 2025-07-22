@@ -2,7 +2,7 @@ import { FieldType } from '../../../../constants/field-type';
 import { PropertyType } from '../../../../constants/form-schema.constant';
 import type { FormField } from '../../../../types/form-field.type';
 import validateSchema from '../../index';
-import { createValidSchema, createValidField } from '../helpers/test-helpers';
+import { createValidField, createValidSchema } from '../helpers/test-helpers';
 
 describe('validateSchema - Property validation basics', () => {
   it('should return false for invalid property definitions', () => {

@@ -99,14 +99,14 @@ export function useFileDragDrop({
       if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
         const file = e.dataTransfer.files[0];
         setIsDraggedFileValid(isValidFileType(file));
-      }
-      else if (e.dataTransfer.items && e.dataTransfer.items.length > 0) {
+      } else if (e.dataTransfer.items && e.dataTransfer.items.length > 0) {
         // During dragover, files might not be available, but we can check items
         const item = e.dataTransfer.items[0];
         if (item.kind === 'file') {
           // We can't fully validate without the actual file, but we can check MIME type
-          const isValid = acceptedFileTypes.length === 0
-            || acceptedFileTypes.some((type) => {
+          const isValid =
+            acceptedFileTypes.length === 0 ||
+            acceptedFileTypes.some((type) => {
               if (type.endsWith('/')) {
                 return item.type.startsWith(type);
               }
@@ -119,8 +119,7 @@ export function useFileDragDrop({
           setIsDraggedFileValid(isValid);
         }
       }
-    }
-    else if (e.type === 'dragleave') {
+    } else if (e.type === 'dragleave') {
       setDragActive(false);
       setIsDraggedFileValid(undefined);
     }
@@ -132,7 +131,7 @@ export function useFileDragDrop({
     setDragActive(false);
     setIsDraggedFileValid(undefined);
 
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+    if (e.dataTransfer.files?.[0]) {
       const file = e.dataTransfer.files[0];
       if (isValidFileType(file)) {
         onFileSelect(file);
@@ -141,7 +140,7 @@ export function useFileDragDrop({
   };
 
   const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
+    if (e.target.files?.[0]) {
       const file = e.target.files[0];
       if (isValidFileType(file)) {
         onFileSelect(file);

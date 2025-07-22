@@ -1,8 +1,8 @@
+import type { FormSchema } from '@efie-form/core';
 import { Fragment, useEffect, useState } from 'react';
-import { type FormSchema } from '@efie-form/core';
-import RenderField from './render-field';
 import type { FieldPropsMap } from '../types/field-props';
 import { FormProvider } from './components/form-provider';
+import RenderField from './render-field';
 
 interface ReactFormProps extends Partial<FieldPropsMap> {
   schema: FormSchema;
@@ -12,7 +12,7 @@ function ReactForm({ schema, ...props }: ReactFormProps) {
   const [page, setPage] = useState('');
 
   useEffect(() => {
-    const firstPage = schema.form.fields.find(field => field.type === 'page');
+    const firstPage = schema.form.fields.find((field) => field.type === 'page');
 
     if (firstPage) {
       setPage(firstPage.id);
@@ -21,7 +21,7 @@ function ReactForm({ schema, ...props }: ReactFormProps) {
 
   return (
     <FormProvider page={page} setPage={setPage}>
-      {schema.form.fields.map(field => (
+      {schema.form.fields.map((field) => (
         <Fragment key={field.id}>
           <RenderField field={field} {...props} />
         </Fragment>

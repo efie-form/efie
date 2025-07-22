@@ -12,22 +12,10 @@ export interface SchemaState {
   setFields: (fields: FormField[]) => void;
 
   // Enhanced property management methods (optimized)
-  updateFieldProperty: <T extends PropertyDefinition>(
-    fieldId: string,
-    property: T
-  ) => void;
-  addFieldProperty: <T extends PropertyDefinition>(
-    fieldId: string,
-    property: T
-  ) => void;
-  removeFieldProperty: (
-    fieldId: string,
-    propertyType: PropertyDefinition['type']
-  ) => void;
-  setFieldProperties: (
-    fieldId: string,
-    properties: PropertyDefinition[]
-  ) => void;
+  updateFieldProperty: <T extends PropertyDefinition>(fieldId: string, property: T) => void;
+  addFieldProperty: <T extends PropertyDefinition>(fieldId: string, property: T) => void;
+  removeFieldProperty: (fieldId: string, propertyType: PropertyDefinition['type']) => void;
+  setFieldProperties: (fieldId: string, properties: PropertyDefinition[]) => void;
 
   // Field management methods
   addField: (field: FormField, parentId?: string, index?: number) => void;
@@ -43,7 +31,7 @@ export interface SchemaState {
   getFieldParentId: (fieldId?: string) => string | undefined;
   getFieldProperty: <T extends PropertyDefinition['type']>(
     fieldId: string,
-    type: T
+    type: T,
   ) => Extract<PropertyDefinition, { type: T }> | undefined;
   getFieldProperties: (fieldId: string) => PropertyDefinition[];
   listChildrenId: (fieldId: string) => string[];
@@ -52,7 +40,7 @@ export interface SchemaState {
   updateFieldProps: (
     fieldId: string,
     type: PropertyDefinition['type'],
-    props: Omit<PropertyDefinition, 'type'>
+    props: Omit<PropertyDefinition, 'type'>,
   ) => void;
   getPage: (pageId?: string) => PageFormField | undefined;
   updatePages: (pages: FormField[]) => void;
@@ -73,7 +61,6 @@ export interface SchemaState {
   currentHistoryIndex: number;
   canUndo: () => boolean;
   canRedo: () => boolean;
-
 }
 
 export interface FieldMaps {

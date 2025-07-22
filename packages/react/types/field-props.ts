@@ -9,7 +9,6 @@ interface FormFieldProps<T = unknown> {
 interface BaseFieldProps {
   id: string;
   field: FormField;
-
 }
 
 export interface ShortTextFieldProps extends BaseFieldProps, FormFieldProps<string> {
@@ -134,12 +133,9 @@ export interface BlockFieldProps extends BaseFieldProps {
   children: ReactNode;
 }
 
-export interface RowFieldProps extends BaseFieldProps {
-  children: ReactNode;
-}
+export interface RowFieldProps extends BaseFieldProps {}
 
 export interface ColumnFieldProps extends BaseFieldProps {
-  children: ReactNode;
   width: string;
 }
 

@@ -1,8 +1,6 @@
 import type { BlockFieldProps } from '@efie-form/react';
 
-function BlockField({
-  children,
-}: BlockFieldProps) {
+function BlockField({ children }: BlockFieldProps) {
   return (
     <div
       style={{

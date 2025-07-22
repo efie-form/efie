@@ -1,22 +1,16 @@
-import { FontSize } from '../font-size';
 import { Editor } from '@tiptap/core';
-import { TextStyle } from '@tiptap/extension-text-style';
 import { Document } from '@tiptap/extension-document';
 import { Paragraph } from '@tiptap/extension-paragraph';
 import { Text } from '@tiptap/extension-text';
+import { TextStyle } from '@tiptap/extension-text-style';
+import { FontSize } from '../font-size';
 
 describe('FontSize Extension', () => {
   let editor: Editor;
 
   beforeEach(() => {
     editor = new Editor({
-      extensions: [
-        Document,
-        Paragraph,
-        Text,
-        TextStyle,
-        FontSize,
-      ],
+      extensions: [Document, Paragraph, Text, TextStyle, FontSize],
     });
   });
 

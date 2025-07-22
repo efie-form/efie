@@ -1,4 +1,9 @@
-import type { FieldCondition, FieldConditionGroup, FieldValue, ValidationRule } from './field-conditions.type';
+import type {
+  FieldCondition,
+  FieldConditionGroup,
+  FieldValue,
+  ValidationRule,
+} from './field-conditions.type';
 
 // Root page rule
 export interface RootPageRule {
@@ -65,8 +70,4 @@ export interface RootGroupRule {
 }
 
 // Union type of all root rules
-export type RootRule =
-  | RootGroupRule
-  | RootPageRule
-  | RootValidationRule
-  | RootErrorRule;
+export type RootRule = RootGroupRule | RootPageRule | RootValidationRule | RootErrorRule;

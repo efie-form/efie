@@ -1,8 +1,8 @@
-import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { FormProvider } from '../form-provider';
-import { FormContext } from '../../form-context';
 import { useContext } from 'react';
+import { describe, expect, it, vi } from 'vitest';
+import { FormContext } from '../../form-context';
+import { FormProvider } from '../form-provider';
 
 // Mock the React version utility
 vi.mock('../../utils/react-version', () => ({
@@ -50,10 +50,7 @@ describe('FormProvider', () => {
     function TestWithCallback() {
       const { setPage } = useContext(FormContext);
       return (
-        <button
-          data-testid="set-page-button"
-          onClick={() => setPage('new-page')}
-        >
+        <button data-testid="set-page-button" onClick={() => setPage('new-page')}>
           Set Page
         </button>
       );

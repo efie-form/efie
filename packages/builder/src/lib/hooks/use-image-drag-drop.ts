@@ -45,8 +45,7 @@ export function useFileDragDrop({
     e.stopPropagation();
     if (e.type === 'dragenter' || e.type === 'dragover') {
       setDragActive(true);
-    }
-    else if (e.type === 'dragleave') {
+    } else if (e.type === 'dragleave') {
       setDragActive(false);
     }
   };
@@ -56,7 +55,7 @@ export function useFileDragDrop({
     e.stopPropagation();
     setDragActive(false);
 
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+    if (e.dataTransfer.files?.[0]) {
       const file = e.dataTransfer.files[0];
       if (isValidFileType(file)) {
         onFileSelect(file);
@@ -65,7 +64,7 @@ export function useFileDragDrop({
   };
 
   const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
+    if (e.target.files?.[0]) {
       const file = e.target.files[0];
       if (isValidFileType(file)) {
         onFileSelect(file);

@@ -1,6 +1,6 @@
+import { FaRegEdit } from 'react-icons/fa';
 import { FaCode, FaEye } from 'react-icons/fa6';
 import { useSettingsStore } from '../../../lib/state/settings.state';
-import { FaRegEdit } from 'react-icons/fa';
 import { cn } from '../../../lib/utils';
 
 export default function ModeSwitcher() {
@@ -10,9 +10,9 @@ export default function ModeSwitcher() {
   const isCode = mode === 'json';
 
   return (
-    <div className="flex bg-neutral-50 rounded-lg overflow-hidden">
+    <div className="flex overflow-hidden rounded-lg bg-neutral-50">
       <button
-        className="p-2.5 bg-neutral-50 rounded-lg hover:bg-neutral-100/50"
+        className="rounded-lg bg-neutral-50 p-2.5 hover:bg-neutral-100/50"
         onClick={() => setMode('edit')}
       >
         <FaRegEdit
@@ -23,7 +23,7 @@ export default function ModeSwitcher() {
         />
       </button>
       <button
-        className="p-2.5 bg-neutral-50 rounded-lg hover:bg-neutral-100/50"
+        className="rounded-lg bg-neutral-50 p-2.5 hover:bg-neutral-100/50"
         onClick={() => setMode('preview')}
       >
         <FaEye
@@ -34,7 +34,7 @@ export default function ModeSwitcher() {
         />
       </button>
       <button
-        className="p-2.5 bg-neutral-50 rounded-lg hover:bg-neutral-100/50"
+        className="rounded-lg bg-neutral-50 p-2.5 hover:bg-neutral-100/50"
         onClick={() => setMode('json')}
       >
         <FaCode

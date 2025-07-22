@@ -1,10 +1,13 @@
-import type {
-  FontSizeProperty,
-  TextAlignProperty,
-} from '../types/property-definition';
 import { SizeType } from '../constants/form-schema.constant';
-import type { Size, Color } from '../types/common.type';
-import type { PropValueBorderRadius, PropValueBoxShadow, PropValueMargin, PropValuePadding, PropValueSize } from '../types/field-property-value.type';
+import type { Color, Size } from '../types/common.type';
+import type {
+  PropValueBorderRadius,
+  PropValueBoxShadow,
+  PropValueMargin,
+  PropValuePadding,
+  PropValueSize,
+} from '../types/field-property-value.type';
+import type { FontSizeProperty, TextAlignProperty } from '../types/property-definition';
 
 export const toSize = (size?: Size) => {
   if (!size) return;
@@ -79,7 +82,7 @@ export const paddingToStyle = (padding?: PropValuePadding) => {
 
 function radiusToSize(radius: Size | Size[]) {
   if (Array.isArray(radius)) {
-    return radius.map(s => toSize(s)).join(' ');
+    return radius.map((s) => toSize(s)).join(' ');
   }
   return toSize(radius);
 }
@@ -92,11 +95,7 @@ export const borderRadiusToStyle = (borderRadius?: PropValueBorderRadius) => {
   const bottomLeft = radiusToSize(borderRadius.bottomLeft);
   const bottomRight = radiusToSize(borderRadius.bottomRight);
 
-  if (
-    topLeft === topRight
-    && topRight === bottomLeft
-    && bottomLeft === bottomRight
-  ) {
+  if (topLeft === topRight && topRight === bottomLeft && bottomLeft === bottomRight) {
     return topLeft;
   }
 

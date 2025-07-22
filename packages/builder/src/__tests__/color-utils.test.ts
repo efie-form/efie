@@ -25,14 +25,15 @@ jest.mock('color-convert', () => ({
   rgb: {
     hsl: (rgb: number[]) => {
       // Simplified RGB to HSL conversion for testing our utility logic
-      const [r, g, b] = rgb.map(v => v / 255);
+      const [r, g, b] = rgb.map((v) => v / 255);
       const max = Math.max(r, g, b);
       const min = Math.min(r, g, b);
       const diff = max - min;
       const sum = max + min;
       const l = sum / 2;
 
-      let h = 0, s = 0;
+      let h = 0,
+        s = 0;
       if (diff !== 0) {
         s = l > 0.5 ? diff / (2 - sum) : diff / sum;
         switch (max) {
@@ -77,7 +78,7 @@ jest.mock('color-convert', () => ({
   },
 }));
 
-import { rgbaToHex, hslaToHex } from '@efie-form/core';
+import { hslaToHex, rgbaToHex } from '@efie-form/core';
 
 describe('Color Utility Functions', () => {
   describe('rgbaToHex', () => {

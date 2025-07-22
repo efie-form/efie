@@ -1,6 +1,7 @@
-import { PropertyType, type DateTimeFormField } from '@efie-form/core';
-import DynamicSettings from '../dynamic-settings';
+import { type DateTimeFormField, PropertyType } from '@efie-form/core';
 import CategoryHeader from '../../../components/elements/category-header';
+import DynamicSettings from '../dynamic-settings';
+
 interface DateTimeSettingsProps {
   field: DateTimeFormField;
 }

@@ -1,21 +1,12 @@
+import { FieldType } from '@efie-form/core';
 import type { ElementType } from 'react';
-import {
-  LuCalendar,
-  LuCalendarClock,
-  LuClock,
-  LuFormInput,
-  LuHash,
-} from 'react-icons/lu';
 import { BsTextareaResize } from 'react-icons/bs';
-import { RiPageSeparator, RiText } from 'react-icons/ri';
-import { MdCheckBox, MdRadioButtonChecked, MdUpload } from 'react-icons/md';
-import {
-  RxButton,
-  RxDividerHorizontal,
-} from 'react-icons/rx';
 import { FaImage } from 'react-icons/fa6';
 import { HiOutlineViewColumns } from 'react-icons/hi2';
-import { FieldType } from '@efie-form/core';
+import { LuCalendar, LuCalendarClock, LuClock, LuFormInput, LuHash } from 'react-icons/lu';
+import { MdCheckBox, MdRadioButtonChecked, MdUpload } from 'react-icons/md';
+import { RiPageSeparator, RiText } from 'react-icons/ri';
+import { RxButton, RxDividerHorizontal } from 'react-icons/rx';
 import { FIELDS_NAME } from '../constant';
 
 interface Field {

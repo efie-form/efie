@@ -1,7 +1,7 @@
+import { type ImageFormField, PropertyType } from '@efie-form/core';
 import type { ElementType } from 'react';
 import { createElement } from 'react';
 import type { ImageFieldProps } from '../../types/field-props';
-import { PropertyType, type ImageFormField } from '@efie-form/core';
 
 interface ImageProviderProps {
   field: ImageFormField;
@@ -11,8 +11,8 @@ interface ImageProviderProps {
 function ImageProvider({ field, Component }: ImageProviderProps) {
   if (!Component) return <></>;
 
-  const src = field.props.find(prop => prop.type === PropertyType.SRC);
-  const alt = field.props.find(prop => prop.type === PropertyType.ALT);
+  const src = field.props.find((prop) => prop.type === PropertyType.SRC);
+  const alt = field.props.find((prop) => prop.type === PropertyType.ALT);
 
   return createElement(Component, {
     id: field.id,

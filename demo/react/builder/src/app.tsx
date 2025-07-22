@@ -1,7 +1,7 @@
 import type { FormBuilderRef } from '@efie-form/react';
-import { FormBuilder, FieldType } from '@efie-form/react';
-import { schema } from './schema';
+import { FieldType, FormBuilder } from '@efie-form/react';
 import { useEffect, useRef, useState } from 'react';
+import { schema } from './schema';
 
 function App() {
   const formBuilderRef = useRef<FormBuilderRef>(null);

@@ -1,5 +1,5 @@
-import type { RootRule } from './root-rule.type';
 import type { FormField } from './form-field.type';
+import type { RootRule } from './root-rule.type';
 
 // Property value
 export interface FormSchema {

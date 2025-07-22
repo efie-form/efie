@@ -1,32 +1,32 @@
 import type { FieldType } from '../constants/field-type';
 import type { ValidationSchema } from './field-conditions.type';
 import type {
-  LabelProperty,
-  PlaceholderProperty,
-  RequiredProperty,
-  OptionsProperty,
-  TextAlignProperty,
-  ColorProperty,
-  FontSizeProperty,
-  SrcProperty,
-  AltProperty,
-  ObjectFitProperty,
-  WidthProperty,
-  HeightProperty,
   AcceptProperty,
+  AltProperty,
   BgColorProperty,
-  MarginProperty,
-  PaddingProperty,
+  BorderColorProperty,
   BorderRadiusProperty,
-  BoxShadowProperty,
   BorderStyleProperty,
   BorderWidthProperty,
-  BorderColorProperty,
-  FontWeightProperty,
+  BoxShadowProperty,
   ButtonActionProperty,
-  MaxFilesProperty,
+  ColorProperty,
   ContentProperty,
+  FontSizeProperty,
+  FontWeightProperty,
+  HeightProperty,
+  LabelProperty,
+  MarginProperty,
+  MaxFilesProperty,
+  ObjectFitProperty,
+  OptionsProperty,
+  PaddingProperty,
   PageNameProperty,
+  PlaceholderProperty,
+  RequiredProperty,
+  SrcProperty,
+  TextAlignProperty,
+  WidthProperty,
 } from './property-definition';
 
 // Base form field interface
@@ -54,82 +54,48 @@ export interface FormInputField {
 
 export interface ShortTextFormField extends BaseFormField, FormInputField {
   type: typeof FieldType.SHORT_TEXT;
-  props: (
-    | LabelProperty
-    | PlaceholderProperty
-    | RequiredProperty
-  )[];
+  props: (LabelProperty | PlaceholderProperty | RequiredProperty)[];
 }
 
 export interface LongTextFormField extends BaseFormField, FormInputField {
   type: typeof FieldType.LONG_TEXT;
-  props: (
-    | LabelProperty
-    | PlaceholderProperty
-    | RequiredProperty
-  )[];
+  props: (LabelProperty | PlaceholderProperty | RequiredProperty)[];
 }
 
 export interface NumberFormField extends BaseFormField, FormInputField {
   type: typeof FieldType.NUMBER;
-  props: (
-    | LabelProperty
-    | PlaceholderProperty
-    | RequiredProperty
-  )[];
+  props: (LabelProperty | PlaceholderProperty | RequiredProperty)[];
 }
 
 export interface SingleChoiceFormField extends BaseFormField, FormInputField {
   type: typeof FieldType.SINGLE_CHOICE;
-  props: (
-    | LabelProperty
-    | OptionsProperty
-    | RequiredProperty
-  )[];
+  props: (LabelProperty | OptionsProperty | RequiredProperty)[];
 }
 
 export interface MultipleChoiceFormField extends BaseFormField, FormInputField {
   type: typeof FieldType.MULTIPLE_CHOICES;
-  props: (
-    | LabelProperty
-    | OptionsProperty
-    | RequiredProperty
-  )[];
+  props: (LabelProperty | OptionsProperty | RequiredProperty)[];
 }
 
 export interface DateFormField extends BaseFormField, FormInputField {
   type: typeof FieldType.DATE;
-  props: (
-    | LabelProperty
-    | RequiredProperty
-  )[];
+  props: (LabelProperty | RequiredProperty)[];
 }
 
 export interface TimeFormField extends BaseFormField, FormInputField {
   type: typeof FieldType.TIME;
-  props: (
-    | LabelProperty
-    | RequiredProperty
-  )[];
+  props: (LabelProperty | RequiredProperty)[];
 }
 
 export interface DateTimeFormField extends BaseFormField, FormInputField {
   type: typeof FieldType.DATE_TIME;
-  props: (
-    | LabelProperty
-    | RequiredProperty
-  )[];
+  props: (LabelProperty | RequiredProperty)[];
 }
 
 // File field type
 export interface FileFormField extends BaseFormField, FormInputField {
   type: typeof FieldType.FILE;
-  props: (
-    | LabelProperty
-    | AcceptProperty
-    | MaxFilesProperty
-    | RequiredProperty
-  )[];
+  props: (LabelProperty | AcceptProperty | MaxFilesProperty | RequiredProperty)[];
 }
 
 // Layout field types
@@ -165,12 +131,7 @@ export interface ColumnFormField extends BaseFormField {
 
 export interface HeadingFormField extends BaseFormField {
   type: typeof FieldType.HEADING;
-  props: (
-    | TextAlignProperty
-    | ColorProperty
-    | FontSizeProperty
-    | ContentProperty
-  )[];
+  props: (TextAlignProperty | ColorProperty | FontSizeProperty | ContentProperty)[];
 }
 
 // Image field type
@@ -214,13 +175,7 @@ export interface PageFormField extends BaseFormField {
 // Divider field type
 export interface DividerFormField extends BaseFormField {
   type: typeof FieldType.DIVIDER;
-  props: (
-    | LabelProperty
-    | ColorProperty
-    | WidthProperty
-    | HeightProperty
-    | BorderStyleProperty
-  )[];
+  props: (LabelProperty | ColorProperty | WidthProperty | HeightProperty | BorderStyleProperty)[];
 }
 
 export type FormField =

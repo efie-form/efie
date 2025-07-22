@@ -6,17 +6,30 @@ export interface FontSizeOptions {
 }
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-const setFontSizeCommand = (fontSize: string) => ({ chain }: any) => {
-  return chain().setMark('textStyle', { fontSize }).run();
-};
+const setFontSizeCommand =
+  (fontSize: string) =>
+  ({ chain }: any) => {
+    return chain().setMark('textStyle', { fontSize }).run();
+  };
 
 /* eslint-disable unicorn/consistent-function-scoping */
-const unsetFontSizeCommand = () => ({ chain }: any) => {
-  return chain().setMark('textStyle', { fontSize: undefined }).removeEmptyTextStyle().run();
-};
+const unsetFontSizeCommand =
+  () =>
+  ({ chain }: any) => {
+    return chain().setMark('textStyle', { fontSize: undefined }).removeEmptyTextStyle().run();
+  };
 
 export const defaultFontSizes = [
-  '12px', '14px', '16px', '18px', '20px', '24px', '28px', '32px', '36px', '48px',
+  '12px',
+  '14px',
+  '16px',
+  '18px',
+  '20px',
+  '24px',
+  '28px',
+  '32px',
+  '36px',
+  '48px',
 ];
 
 declare module '@tiptap/core' {
@@ -51,7 +64,7 @@ export const FontSize = Extension.create<FontSizeOptions>({
         attributes: {
           fontSize: {
             default: undefined,
-            parseHTML: element => element.style.fontSize?.replace(/['"]+/g, ''),
+            parseHTML: (element) => element.style.fontSize?.replace(/['"]+/g, ''),
             renderHTML: (attributes) => {
               if (!attributes.fontSize) {
                 return {};

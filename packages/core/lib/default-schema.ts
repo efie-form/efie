@@ -1,15 +1,12 @@
-import type { FormSchema } from './types/form-schema.type';
 import { FieldType } from './constants/field-type';
 import { PropertyType, SizeType } from './constants/form-schema.constant';
+import type { FormSchema } from './types/form-schema.type';
 import { getColorObject } from './utils/colors';
 
 const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 export function generateId(length: number = 10) {
-  return Array.from(
-    { length },
-    () => chars[Math.floor(Math.random() * chars.length)],
-  ).join('');
+  return Array.from({ length }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
 }
 
 const defaultSchema: FormSchema = {

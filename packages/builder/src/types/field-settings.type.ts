@@ -21,27 +21,35 @@ export interface HeadingFieldConfig {
     blockquote?: boolean;
     superscript?: boolean;
     subscript?: boolean;
-    list?: boolean | {
-      ordered: boolean;
-      bullet: boolean;
-    };
+    list?:
+      | boolean
+      | {
+          ordered: boolean;
+          bullet: boolean;
+        };
     codeBlock?: boolean;
-    align: boolean | {
-      left: boolean;
-      center: boolean;
-      right: boolean;
-      justify: boolean;
-    };
-    heading?: boolean | {
-      options: Heading[];
-      default?: Level;
-    };
-    fontSize?: boolean | {
-      options: FontSize[];
-      default?: FontSize;
-    };
+    align:
+      | boolean
+      | {
+          left: boolean;
+          center: boolean;
+          right: boolean;
+          justify: boolean;
+        };
+    heading?:
+      | boolean
+      | {
+          options: Heading[];
+          default?: Level;
+        };
+    fontSize?:
+      | boolean
+      | {
+          options: FontSize[];
+          default?: FontSize;
+        };
   };
-};
+}
 
 export interface FieldConfig {
   heading?: HeadingFieldConfig;

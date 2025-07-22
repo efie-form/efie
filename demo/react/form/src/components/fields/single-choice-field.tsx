@@ -17,15 +17,8 @@ function SingleChoiceField({ fieldLabel, id, options }: SingleChoiceFieldProps) 
         {fieldLabel}
       </InputLabel>
 
-      <Select
-        id={id}
-        labelId={labelId}
-        size={size}
-        fullWidth
-        variant="outlined"
-        label={fieldLabel}
-      >
-        {options.map(option => (
+      <Select id={id} labelId={labelId} size={size} fullWidth variant="outlined" label={fieldLabel}>
+        {options.map((option) => (
           <MenuItem key={option.value} value={option.value}>
             {option.label}
           </MenuItem>

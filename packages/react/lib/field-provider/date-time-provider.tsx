@@ -1,7 +1,7 @@
+import { type DateTimeFormField, PropertyType } from '@efie-form/core';
 import type { ElementType } from 'react';
 import { createElement } from 'react';
 import type { DateTimeFieldProps } from '../../types/field-props';
-import { PropertyType, type DateTimeFormField } from '@efie-form/core';
 
 interface DateTimeProviderProps {
   field: DateTimeFormField;
@@ -20,7 +20,7 @@ function DateTimeProvider({
 }: DateTimeProviderProps) {
   if (!Component) return <></>;
 
-  const label = field.props.find(prop => prop.type === PropertyType.LABEL);
+  const label = field.props.find((prop) => prop.type === PropertyType.LABEL);
 
   return createElement(Component, {
     id: field.id,

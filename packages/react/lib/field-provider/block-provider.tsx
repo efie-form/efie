@@ -1,9 +1,7 @@
+import type { BlockFormField } from '@efie-form/core';
 import type { ElementType } from 'react';
 import { createElement } from 'react';
 import type { BlockFieldProps, FieldPropsMap } from '../../types/field-props';
-import {
-  type BlockFormField,
-} from '@efie-form/core';
 import RenderField from '../render-field';
 
 interface BlockProviderProps extends Partial<FieldPropsMap> {
@@ -19,12 +17,8 @@ function BlockProvider({ field, Component, ...props }: BlockProviderProps) {
     field,
     children: (
       <>
-        {field.children.map(field => (
-          <RenderField
-            key={field.id}
-            field={field}
-            {...props}
-          />
+        {field.children.map((field) => (
+          <RenderField key={field.id} field={field} {...props} />
         ))}
       </>
     ),

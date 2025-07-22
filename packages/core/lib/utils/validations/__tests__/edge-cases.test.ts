@@ -1,7 +1,7 @@
 import { FieldType } from '../../../constants/field-type';
 import type { BlockFormField, FormField } from '../../../types/form-field.type';
 import validateSchema from '../index';
-import { createValidSchema, createValidField } from './helpers/test-helpers';
+import { createValidField, createValidSchema } from './helpers/test-helpers';
 
 describe('validateSchema - Edge cases', () => {
   // Note: Circular references cause stack overflow - this is expected behavior

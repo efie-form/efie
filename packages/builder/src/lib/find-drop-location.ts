@@ -13,12 +13,19 @@ interface findDropLocation {
 }
 
 // Helper function to find drop location for addField
-const findDropLocation = ({ dropFieldId, dropFieldType, direction, newFieldType, schema, fieldMap, fieldParentMap }: findDropLocation) => {
+const findDropLocation = ({
+  dropFieldId,
+  dropFieldType,
+  direction,
+  newFieldType,
+  schema,
+  fieldMap,
+  fieldParentMap,
+}: findDropLocation) => {
   if (isDropOnChildren(newFieldType, dropFieldType)) {
     // Drop as child - add to the end of children
     return { parentId: dropFieldId, index: undefined };
-  }
-  else {
+  } else {
     // Drop as sibling - find parent and calculate index
     const dropField = fieldMap.get(dropFieldId);
     if (!dropField) return { parentId: undefined, index: undefined };
@@ -36,8 +43,7 @@ const findDropLocation = ({ dropFieldId, dropFieldType, direction, newFieldType,
         parentId,
         index: direction === 'up' ? siblingIndex : siblingIndex + 1,
       };
-    }
-    else {
+    } else {
       // Root level - find index in root fields
       const rootIndex = schema.form.fields.findIndex((f: FormField) => f.id === dropFieldId);
       if (rootIndex === -1) return { parentId: undefined, index: undefined };

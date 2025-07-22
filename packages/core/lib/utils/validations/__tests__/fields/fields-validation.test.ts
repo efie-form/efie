@@ -50,7 +50,9 @@ describe('validateSchema - Field validation', () => {
     const schema = createValidSchema();
 
     // Non-string id
-    schema.form.fields = [{ id: 123, type: FieldType.SHORT_TEXT, props: [] } as unknown as FormField];
+    schema.form.fields = [
+      { id: 123, type: FieldType.SHORT_TEXT, props: [] } as unknown as FormField,
+    ];
     expect(validateSchema(schema)).toBe(false);
 
     // Non-string type
@@ -58,7 +60,9 @@ describe('validateSchema - Field validation', () => {
     expect(validateSchema(schema)).toBe(false);
 
     // Non-array props
-    schema.form.fields = [{ id: 'test', type: FieldType.SHORT_TEXT, props: 'invalid' } as unknown as FormField];
+    schema.form.fields = [
+      { id: 'test', type: FieldType.SHORT_TEXT, props: 'invalid' } as unknown as FormField,
+    ];
     expect(validateSchema(schema)).toBe(false);
   });
 
@@ -72,24 +76,28 @@ describe('validateSchema - Field validation', () => {
     const schema = createValidSchema();
 
     // Non-array children
-    schema.form.fields = [{
-      id: 'test',
-      type: FieldType.BLOCK,
-      props: [],
-      children: 'invalid',
-    } as unknown as FormField];
+    schema.form.fields = [
+      {
+        id: 'test',
+        type: FieldType.BLOCK,
+        props: [],
+        children: 'invalid',
+      } as unknown as FormField,
+    ];
     expect(validateSchema(schema)).toBe(false);
   });
 
   it('should return false for invalid child fields', () => {
     const schema = createValidSchema();
 
-    schema.form.fields = [{
-      id: 'test',
-      type: FieldType.BLOCK,
-      props: [],
-      children: [{ invalid: 'child' }],
-    } as unknown as FormField];
+    schema.form.fields = [
+      {
+        id: 'test',
+        type: FieldType.BLOCK,
+        props: [],
+        children: [{ invalid: 'child' }],
+      } as unknown as FormField,
+    ];
     expect(validateSchema(schema)).toBe(false);
   });
 });
