@@ -1,14 +1,14 @@
-import { type FileFormField } from '@efie-form/core';
+import type { FileFormField } from '@efie-form/core';
 import CategoryHeader from '../../../components/elements/category-header';
-import FieldSettings from '../field-settings';
 import { useSettingsStore } from '../../../lib/state/settings.state';
+import FieldSettings from '../field-settings';
 
 interface FileSettingsProps {
   field: FileFormField;
 }
 
 function FileSettings({ field }: FileSettingsProps) {
-  const config = useSettingsStore(state => state.config[field.type]);
+  const config = useSettingsStore((state) => state.config[field.type]);
 
   return (
     <div>

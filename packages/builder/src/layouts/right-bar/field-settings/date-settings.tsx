@@ -1,13 +1,14 @@
-import { type DateFormField } from '@efie-form/core';
+import type { DateFormField } from '@efie-form/core';
 import CategoryHeader from '../../../components/elements/category-header';
-import FieldSettings from '../field-settings';
 import { useSettingsStore } from '../../../lib/state/settings.state';
+import FieldSettings from '../field-settings';
+
 interface DateSettingsProps {
   field: DateFormField;
 }
 
 function DateSettings({ field }: DateSettingsProps) {
-  const config = useSettingsStore(state => state.config[field.type]);
+  const config = useSettingsStore((state) => state.config[field.type]);
 
   return (
     <div>

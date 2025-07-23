@@ -1,4 +1,4 @@
-import { FieldType, PropertyType, type FieldsConfigsMap } from '@efie-form/core';
+import { type FieldsConfigsMap, FieldType, PropertyType } from '@efie-form/core';
 
 const settingsConfig: FieldsConfigsMap = {
   [FieldType.SHORT_TEXT]: {
@@ -66,9 +66,7 @@ const settingsConfig: FieldsConfigsMap = {
     properties: [],
   },
   [FieldType.IMAGE]: {
-    properties: [
-      { type: PropertyType.IMAGE_SRC, label: 'Image URL' },
-    ],
+    properties: [{ type: PropertyType.IMAGE_SRC, label: 'Image URL' }],
   },
   [FieldType.ROW]: {
     properties: [],
@@ -128,6 +126,7 @@ const settingsConfig: FieldsConfigsMap = {
         default: { label: 'Medium', size: '1rem' },
       },
     },
-  } };
+  },
+};
 
 export default settingsConfig;

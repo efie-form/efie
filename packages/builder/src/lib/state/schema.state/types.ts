@@ -41,45 +41,27 @@ export interface SchemaStateAccessMethods {
   listChildrenId: (fieldId: string) => string[];
 }
 export interface SchemaStateFieldProperty {
-
   // Enhanced property management methods (optimized)
-  updateFieldProperty: <T extends PropertyDefinition>(
-    fieldId: string,
-    property: T
-  ) => void;
-  addFieldProperty: <T extends PropertyDefinition>(
-    fieldId: string,
-    property: T
-  ) => void;
-  removeFieldProperty: (
-    fieldId: string,
-    propertyType: PropertyDefinition['type']
-  ) => void;
-  setFieldProperties: (
-    fieldId: string,
-    properties: PropertyDefinition[]
-  ) => void;
+  updateFieldProperty: <T extends PropertyDefinition>(fieldId: string, property: T) => void;
+  addFieldProperty: <T extends PropertyDefinition>(fieldId: string, property: T) => void;
+  removeFieldProperty: (fieldId: string, propertyType: PropertyDefinition['type']) => void;
+  setFieldProperties: (fieldId: string, properties: PropertyDefinition[]) => void;
   getFieldProperty: <T extends PropertyDefinition['type']>(
     fieldId: string,
-    type: T
+    type: T,
   ) => Extract<PropertyDefinition, { type: T }> | undefined;
-  getFieldProps: (
-    fieldId: string
-  ) => PropertyDefinition[] | undefined;
+  getFieldProps: (fieldId: string) => PropertyDefinition[] | undefined;
 
-  findFieldCustomProperty: (
-    fieldId: string,
-    id: string
-  ) => FieldCustomProp | undefined;
+  findFieldCustomProperty: (fieldId: string, id: string) => FieldCustomProp | undefined;
 
-  updateFieldCustomProperty: (
-    fieldId: string,
-    id: string,
-    property: FieldCustomProp
-  ) => void;
+  updateFieldCustomProperty: (fieldId: string, id: string, property: FieldCustomProp) => void;
 }
 
-export interface SchemaState extends SchemaStateHistory, SchemaStateFieldActions, SchemaStateAccessMethods, SchemaStateFieldProperty {
+export interface SchemaState
+  extends SchemaStateHistory,
+    SchemaStateFieldActions,
+    SchemaStateAccessMethods,
+    SchemaStateFieldProperty {
   schema: FormSchema;
   setSchema: (schema: FormSchema) => void;
   setFields: (fields: FormField[]) => void;

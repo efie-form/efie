@@ -8,18 +8,10 @@
     // transpile
     "jsx": "react-jsx",
     // src
-    "lib": [
-      "DOM",
-      "DOM.Iterable",
-      "ESNext"
-    ],
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "paths": {
-      "@efie-form/core": [
-        "../core/lib"
-      ],
+      "@efie-form/core": ["../core/lib"]
     }
   },
-  "include": [
-    "src/**/*"
-, "../core/lib/types/settings-config.ts"  ]
+  "include": ["src/**/*", "../core/lib/types/settings-config.ts"]
 }

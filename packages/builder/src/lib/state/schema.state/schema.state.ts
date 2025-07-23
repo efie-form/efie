@@ -1,13 +1,13 @@
 import { create } from 'zustand';
-import type { SchemaState } from './types';
-import { createSchemaActions } from './schema-actions';
-import { createFieldActions } from './field-actions';
-import { createPropertyActions } from './property-actions';
-import { createHistoryActions } from './history-actions';
-import { createLegacyActions } from './legacy-actions';
-import { getFieldInfoMap } from './utils';
 import defaultSchema from '../../default-schema';
 import { createAccessMethods } from './access-methods';
+import { createFieldActions } from './field-actions';
+import { createHistoryActions } from './history-actions';
+import { createLegacyActions } from './legacy-actions';
+import { createPropertyActions } from './property-actions';
+import { createSchemaActions } from './schema-actions';
+import type { SchemaState } from './types';
+import { getFieldInfoMap } from './utils';
 
 const fieldInfo = getFieldInfoMap(defaultSchema.form.fields);
 

@@ -1,14 +1,14 @@
 import { FieldType, type ShortTextFormField } from '@efie-form/core';
 import CategoryHeader from '../../../components/elements/category-header';
-import FieldSettings from '../field-settings';
 import { useSettingsStore } from '../../../lib/state/settings.state';
+import FieldSettings from '../field-settings';
 
 interface ShortTextSettingsProps {
   field: ShortTextFormField;
 }
 
 function ShortTextSettings({ field }: ShortTextSettingsProps) {
-  const config = useSettingsStore(state => state.config[FieldType.SHORT_TEXT]);
+  const config = useSettingsStore((state) => state.config[FieldType.SHORT_TEXT]);
 
   return (
     <div>

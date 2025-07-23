@@ -1,25 +1,22 @@
-import { Input } from '../../../components/form';
-import SettingsFieldVertical from '../property-layouts/settings-field-vertical';
+import type { FieldSystemConfigImageSrc } from '@efie-form/core';
 import { useEffect, useRef, useState } from 'react';
 import { MdOutlineImage } from 'react-icons/md';
+import { Input } from '../../../components/form';
 import { useFileDragDrop } from '../../../lib/hooks/use-file-drag-drop';
-import { cn } from '../../../lib/utils';
-import type { FieldSystemConfigImageSrc } from '@efie-form/core';
 import { useSchemaStore } from '../../../lib/state/schema.state';
+import { cn } from '../../../lib/utils';
 import { getImageFileInfo } from '../../../lib/utils-image-info';
+import SettingsFieldVertical from '../property-layouts/settings-field-vertical';
 
 interface PropsTemplateImageUrlProps {
   fieldId: string;
   config: FieldSystemConfigImageSrc;
 }
 
-export default function SystemSettingsImageSrc({
-  config,
-  fieldId,
-}: PropsTemplateImageUrlProps) {
-  const fieldProperty = useSchemaStore(state => state.getFieldProperty(fieldId, config.type));
+export default function SystemSettingsImageSrc({ config, fieldId }: PropsTemplateImageUrlProps) {
+  const fieldProperty = useSchemaStore((state) => state.getFieldProperty(fieldId, config.type));
   const value = fieldProperty?.value || '';
-  const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
+  const updateFieldProperty = useSchemaStore((state) => state.updateFieldProperty);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [imageError, setImageError] = useState(false);
   const [imageDimensions, setImageDimensions] = useState<{ width: number; height: number }>();
@@ -65,10 +62,11 @@ export default function SystemSettingsImageSrc({
     handleChange(localUrl);
   };
 
-  const { handleDrag, handleDrop, handleFileInputChange, dragActive, isDraggedFileValid } = useFileDragDrop({
-    onFileSelect: handleFileSelect,
-    acceptedFileTypes: ['image/'], // Only accept image files for this component
-  });
+  const { handleDrag, handleDrop, handleFileInputChange, dragActive, isDraggedFileValid } =
+    useFileDragDrop({
+      onFileSelect: handleFileSelect,
+      acceptedFileTypes: ['image/'], // Only accept image files for this component
+    });
 
   const handleUploadClick = () => {
     fileInputRef.current?.click();
@@ -96,13 +94,11 @@ export default function SystemSettingsImageSrc({
         if (info) {
           setFileInfo({ name: info.name, size: info.size });
           setImageDimensions(info.dimensions);
-        }
-        else {
+        } else {
           setFileInfo(undefined);
           setImageDimensions(undefined);
         }
-      }
-      catch {
+      } catch {
         setFileInfo(undefined);
         setImageDimensions(undefined);
       }
@@ -154,9 +150,7 @@ export default function SystemSettingsImageSrc({
           {/* Preview */}
           {hasImage && (
             <div className="grid grid-cols-3">
-              <div
-                className="resize flex items-center justify-center bg-neutral-100/30 border border-neutral-200 rounded aspect-square p-1"
-              >
+              <div className="resize flex items-center justify-center bg-neutral-100/30 border border-neutral-200 rounded aspect-square p-1">
                 <img
                   src={value}
                   alt="Preview"
@@ -168,18 +162,24 @@ export default function SystemSettingsImageSrc({
               </div>
               <div className="col-span-2 px-2 flex flex-col justify-center">
                 {fileInfo && (
-                  <p className="truncate text-xs text-neutral-800 font-medium" title={fileInfo.name}>{fileInfo.name}</p>
+                  <p
+                    className="truncate text-xs text-neutral-800 font-medium"
+                    title={fileInfo.name}
+                  >
+                    {fileInfo.name}
+                  </p>
                 )}
                 {!!fileInfo && fileInfo.size > 0 && (
-                  <p className="text-xs text-neutral-500 truncate" title={formatFileSize(fileInfo.size)}>
+                  <p
+                    className="text-xs text-neutral-500 truncate"
+                    title={formatFileSize(fileInfo.size)}
+                  >
                     {formatFileSize(fileInfo.size)}
                   </p>
                 )}
                 {/* Image dimensions (right aligned) */}
                 {hasImage && imageDimensions && (
-                  <p className="text-xs text-neutral-400">
-                    {dimensionString}
-                  </p>
+                  <p className="text-xs text-neutral-400">{dimensionString}</p>
                 )}
               </div>
             </div>
@@ -189,28 +189,26 @@ export default function SystemSettingsImageSrc({
               <div className="flex justify-center">
                 <MdOutlineImage
                   size={64}
-                  className={cn('text-neutral-200 mb-2 group-hover:text-primary-300',
-                    {
-                      'text-danger-400': dragActive && !isDraggedFileValid,
-                      'text-success-200': dragActive && isDraggedFileValid,
-                    },
-                  )}
+                  className={cn('text-neutral-200 mb-2 group-hover:text-primary-300', {
+                    'text-danger-400': dragActive && !isDraggedFileValid,
+                    'text-success-200': dragActive && isDraggedFileValid,
+                  })}
                 />
               </div>
-              <p className={cn(
-                'typography-body3 text-neutral-600 font-medium',
-                'group-hover:text-primary-400',
-                {
-                  'text-danger-600': dragActive && !isDraggedFileValid,
-                  'text-success-600': dragActive && isDraggedFileValid,
-                })}
+              <p
+                className={cn(
+                  'typography-body3 text-neutral-600 font-medium',
+                  'group-hover:text-primary-400',
+                  {
+                    'text-danger-600': dragActive && !isDraggedFileValid,
+                    'text-success-600': dragActive && isDraggedFileValid,
+                  },
+                )}
               >
                 Click or drag to upload
               </p>
-              <p className={cn(
-                'typography-body4 text-neutral-400',
-                'group-hover:text-primary-300',
-                {
+              <p
+                className={cn('typography-body4 text-neutral-400', 'group-hover:text-primary-300', {
                   'text-danger': dragActive && !isDraggedFileValid,
                   'text-success': dragActive && isDraggedFileValid,
                 })}
@@ -220,8 +218,7 @@ export default function SystemSettingsImageSrc({
             </div>
           )}
           {dragActive && !isDraggedFileValid && (
-            <div className="absolute inset-0 bg-danger-100/30 border border-danger-400 rounded-lg flex items-center justify-center">
-            </div>
+            <div className="absolute inset-0 bg-danger-100/30 border border-danger-400 rounded-lg flex items-center justify-center"></div>
           )}
         </div>
       </div>
@@ -234,5 +231,5 @@ const formatFileSize = (bytes: number): string => {
   const k = 1024;
   const sizes = ['Bytes', 'KB', 'MB', 'GB'];
   const i = Math.floor(Math.log(bytes) / Math.log(k));
-  return `${Number.parseFloat((bytes / Math.pow(k, i)).toFixed(2))} ${sizes[i]}`;
+  return `${Number.parseFloat((bytes / k ** i).toFixed(2))} ${sizes[i]}`;
 };

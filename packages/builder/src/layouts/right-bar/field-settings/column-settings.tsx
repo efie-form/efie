@@ -1,13 +1,19 @@
-import { FieldType, PropertyType, SizeType, type ColumnFormField, type FieldConfigColumn } from '@efie-form/core';
-import FieldSettings from '../field-settings';
+import {
+  type ColumnFormField,
+  type FieldConfigColumn,
+  FieldType,
+  PropertyType,
+  SizeType,
+} from '@efie-form/core';
 import { useSettingsStore } from '../../../lib/state/settings.state';
+import FieldSettings from '../field-settings';
 
 interface ColumnSettingsProps {
   field: ColumnFormField;
 }
 
 function ColumnSettings({ field }: ColumnSettingsProps) {
-  const config = useSettingsStore(state => state.config[FieldType.COLUMN]);
+  const config = useSettingsStore((state) => state.config[FieldType.COLUMN]);
 
   return (
     <div className="mb-4">
@@ -19,7 +25,7 @@ function ColumnSettings({ field }: ColumnSettingsProps) {
 export default ColumnSettings;
 
 function withColumnWidthSettings(props: FieldConfigColumn['properties']) {
-  if (props.some(prop => prop.type === PropertyType.COLUMN_WIDTH)) {
+  if (props.some((prop) => prop.type === PropertyType.COLUMN_WIDTH)) {
     return props;
   }
   return [

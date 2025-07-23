@@ -1,17 +1,17 @@
-import { CustomPropertyType, PropertyType, type FieldConfig } from '@efie-form/core';
-import SystemSettingsLabel from './system-settings/system-settings-label';
-import SystemSettingsPlaceholder from './system-settings/system-settings-placeholder';
-import SystemSettingsRequired from './system-settings/system-settings.required';
-import CustomSettingsText from './custom-settings/custom-settings-text';
+import { CustomPropertyType, type FieldConfig, PropertyType } from '@efie-form/core';
 import CustomSettingsBoolean from './custom-settings/custom-settings-boolean';
 import CustomSettingsColor from './custom-settings/custom-settings-color';
 import CustomSettingsNumber from './custom-settings/custom-settings-number';
 import CustomSettingsSelect from './custom-settings/custom-settings-select';
-import SystemSettingsImageSrc from './system-settings/system-settings-image-src';
-import SystemSettingsOptions from './system-settings/system-settings-options';
-import { SystemSettingsColumnWidth } from './system-settings/system-settings-column-width';
+import CustomSettingsText from './custom-settings/custom-settings-text';
+import SystemSettingsRequired from './system-settings/system-settings.required';
 import SystemSettingsAccept from './system-settings/system-settings-accept';
 import SystemSettingsButtonAction from './system-settings/system-settings-button-action';
+import { SystemSettingsColumnWidth } from './system-settings/system-settings-column-width';
+import SystemSettingsImageSrc from './system-settings/system-settings-image-src';
+import SystemSettingsLabel from './system-settings/system-settings-label';
+import SystemSettingsOptions from './system-settings/system-settings-options';
+import SystemSettingsPlaceholder from './system-settings/system-settings-placeholder';
 
 interface FieldSettingsProps {
   config: FieldConfig[];
@@ -23,53 +23,23 @@ export default function FieldSettings({ config, fieldId }: FieldSettingsProps) {
     if (item.type === 'custom') {
       switch (item.dataType) {
         case CustomPropertyType.BOOLEAN: {
-          return (
-            <CustomSettingsBoolean
-              key={item.id}
-              fieldId={fieldId}
-              config={item}
-            />
-          );
+          return <CustomSettingsBoolean key={item.id} fieldId={fieldId} config={item} />;
         }
 
         case CustomPropertyType.TEXT: {
-          return (
-            <CustomSettingsText
-              key={item.id}
-              fieldId={fieldId}
-              config={item}
-            />
-          );
+          return <CustomSettingsText key={item.id} fieldId={fieldId} config={item} />;
         }
 
         case CustomPropertyType.COLOR: {
-          return (
-            <CustomSettingsColor
-              key={item.id}
-              fieldId={fieldId}
-              config={item}
-            />
-          );
+          return <CustomSettingsColor key={item.id} fieldId={fieldId} config={item} />;
         }
 
         case CustomPropertyType.NUMBER: {
-          return (
-            <CustomSettingsNumber
-              key={item.id}
-              fieldId={fieldId}
-              config={item}
-            />
-          );
+          return <CustomSettingsNumber key={item.id} fieldId={fieldId} config={item} />;
         }
 
         case CustomPropertyType.SELECT: {
-          return (
-            <CustomSettingsSelect
-              key={item.id}
-              fieldId={fieldId}
-              config={item}
-            />
-          );
+          return <CustomSettingsSelect key={item.id} fieldId={fieldId} config={item} />;
         }
 
         default: {
@@ -80,81 +50,33 @@ export default function FieldSettings({ config, fieldId }: FieldSettingsProps) {
     }
     switch (item.type) {
       case PropertyType.LABEL: {
-        return (
-          <SystemSettingsLabel
-            key={item.type}
-            fieldId={fieldId}
-            config={item}
-          />
-        );
+        return <SystemSettingsLabel key={item.type} fieldId={fieldId} config={item} />;
       }
       case PropertyType.PLACEHOLDER: {
-        return (
-          <SystemSettingsPlaceholder
-            key={item.type}
-            fieldId={fieldId}
-            config={item}
-          />
-        );
+        return <SystemSettingsPlaceholder key={item.type} fieldId={fieldId} config={item} />;
       }
       case PropertyType.REQUIRED: {
-        return (
-          <SystemSettingsRequired
-            key={item.type}
-            fieldId={fieldId}
-            config={item}
-          />
-        );
+        return <SystemSettingsRequired key={item.type} fieldId={fieldId} config={item} />;
       }
 
       case PropertyType.OPTIONS: {
-        return (
-          <SystemSettingsOptions
-            key={item.type}
-            fieldId={fieldId}
-            config={item}
-          />
-        );
+        return <SystemSettingsOptions key={item.type} fieldId={fieldId} config={item} />;
       }
 
       case PropertyType.IMAGE_SRC: {
-        return (
-          <SystemSettingsImageSrc
-            key={item.type}
-            fieldId={fieldId}
-            config={item}
-          />
-        );
+        return <SystemSettingsImageSrc key={item.type} fieldId={fieldId} config={item} />;
       }
 
       case PropertyType.COLUMN_WIDTH: {
-        return (
-          <SystemSettingsColumnWidth
-            key={item.type}
-            fieldId={fieldId}
-            config={item}
-          />
-        );
+        return <SystemSettingsColumnWidth key={item.type} fieldId={fieldId} config={item} />;
       }
 
       case PropertyType.ACCEPT: {
-        return (
-          <SystemSettingsAccept
-            key={item.type}
-            fieldId={fieldId}
-            config={item}
-          />
-        );
+        return <SystemSettingsAccept key={item.type} fieldId={fieldId} config={item} />;
       }
 
       case PropertyType.BUTTON_ACTION: {
-        return (
-          <SystemSettingsButtonAction
-            key={item.type}
-            fieldId={fieldId}
-            config={item}
-          />
-        );
+        return <SystemSettingsButtonAction key={item.type} fieldId={fieldId} config={item} />;
       }
       default: {
         return <>{item.type}</>;

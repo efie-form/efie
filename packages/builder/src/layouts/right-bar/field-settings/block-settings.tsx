@@ -1,4 +1,4 @@
-import { FieldType, type BlockFormField } from '@efie-form/core';
+import { type BlockFormField, FieldType } from '@efie-form/core';
 import CategoryHeader from '../../../components/elements/category-header';
 import { useSettingsStore } from '../../../lib/state/settings.state';
 import FieldSettings from '../field-settings';
@@ -8,13 +8,12 @@ interface BlockSettingsProps {
 }
 
 function BlockSettings({ field }: BlockSettingsProps) {
-  const config = useSettingsStore(state => state.config[FieldType.BLOCK]);
+  const config = useSettingsStore((state) => state.config[FieldType.BLOCK]);
 
   return (
     <div>
       <CategoryHeader>General</CategoryHeader>
       <FieldSettings config={config.properties} fieldId={field.id} />
-
     </div>
   );
 }

@@ -19,19 +19,14 @@ export default function PropsSettingsSelect({
   };
 
   // Convert options to string-only format for the Select component
-  const stringOptions = options.map(option => ({
+  const stringOptions = options.map((option) => ({
     value: String(option.value),
     label: option.label,
   }));
 
   return (
     <SettingsFieldHorizontal label={label} divider>
-      <Select
-        value={value}
-        onChange={handleChange}
-        options={stringOptions}
-        className="w-full"
-      />
+      <Select value={value} onChange={handleChange} options={stringOptions} className="w-full" />
     </SettingsFieldHorizontal>
   );
 }

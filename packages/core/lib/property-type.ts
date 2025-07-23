@@ -13,7 +13,7 @@ export const PropertyType = {
   CUSTOM: 'custom',
 } as const;
 
-export type PropertyType = typeof PropertyType[keyof typeof PropertyType];
+export type PropertyType = (typeof PropertyType)[keyof typeof PropertyType];
 
 export const CustomPropertyType = {
   TEXT: 'text',
@@ -24,4 +24,4 @@ export const CustomPropertyType = {
   SIZE: 'size',
 } as const;
 
-export type CustomPropertyType = typeof CustomPropertyType[keyof typeof CustomPropertyType];
+export type CustomPropertyType = (typeof CustomPropertyType)[keyof typeof CustomPropertyType];

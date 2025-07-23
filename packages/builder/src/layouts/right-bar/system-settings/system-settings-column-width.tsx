@@ -1,7 +1,7 @@
-import { isSizeValue, type FieldSystemConfigColumnWidth, type Size } from '@efie-form/core';
+import { type FieldSystemConfigColumnWidth, isSizeValue, type Size } from '@efie-form/core';
 import SizeInput from '../../../components/form/size-input';
-import SettingsFieldHorizontal from '../property-layouts/settings-field-horizontal';
 import { useSchemaStore } from '../../../lib/state/schema.state';
+import SettingsFieldHorizontal from '../property-layouts/settings-field-horizontal';
 
 interface SystemSettingsColumnWidthProps {
   fieldId: string;
@@ -9,8 +9,8 @@ interface SystemSettingsColumnWidthProps {
 }
 
 export function SystemSettingsColumnWidth({ fieldId, config }: SystemSettingsColumnWidthProps) {
-  const fieldProperty = useSchemaStore(state => state.getFieldProperty(fieldId, config.type));
-  const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
+  const fieldProperty = useSchemaStore((state) => state.getFieldProperty(fieldId, config.type));
+  const updateFieldProperty = useSchemaStore((state) => state.updateFieldProperty);
 
   return (
     <SettingsFieldHorizontal label={config.label} divider>
@@ -28,8 +28,9 @@ export function SystemSettingsColumnWidth({ fieldId, config }: SystemSettingsCol
 }
 
 function getValue(value?: Size): Size {
-  if (!value || !isSizeValue(value)) return {
-    type: 'auto',
-  };
+  if (!value || !isSizeValue(value))
+    return {
+      type: 'auto',
+    };
   return value;
 }

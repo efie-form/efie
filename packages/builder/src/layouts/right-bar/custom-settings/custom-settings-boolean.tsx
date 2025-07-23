@@ -9,20 +9,24 @@ interface CustomSettingsBooleanProps {
 }
 
 export default function CustomSettingsBoolean({ fieldId, config }: CustomSettingsBooleanProps) {
-  const fieldProperty = useSchemaStore(state => state.findFieldCustomProperty(fieldId, config.id));
-  const updateFieldProperty = useSchemaStore(state => state.updateFieldCustomProperty);
+  const fieldProperty = useSchemaStore((state) =>
+    state.findFieldCustomProperty(fieldId, config.id),
+  );
+  const updateFieldProperty = useSchemaStore((state) => state.updateFieldCustomProperty);
   const value = isCustomBooleanValue(fieldProperty?.value) ? fieldProperty.value : false;
 
   return (
     <SettingsFieldHorizontal label={config.label} divider>
       <Switch
         checked={value}
-        onChange={newValue => updateFieldProperty(fieldId, config.id, {
-          type: config.type,
-          id: config.id,
-          value: newValue,
-          dataType: config.dataType,
-        })}
+        onChange={(newValue) =>
+          updateFieldProperty(fieldId, config.id, {
+            type: config.type,
+            id: config.id,
+            value: newValue,
+            dataType: config.dataType,
+          })
+        }
       />
     </SettingsFieldHorizontal>
   );

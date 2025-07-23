@@ -14,8 +14,7 @@ function NumberInput({ inputProps, value, onChange, ...props }: NumberProps) {
       onChange={(newValue) => {
         if (newValue === undefined || newValue === '') {
           onChange();
-        }
-        else {
+        } else {
           onChange(Number.parseInt(newValue, 10));
         }
       }}

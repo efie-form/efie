@@ -1,14 +1,14 @@
 import type { ColumnFormField, RowFormField } from '@efie-form/core';
 import { FieldType, PropertyType, SizeType } from '@efie-form/core';
-import { getDefaultField } from '../../../lib/get-default-field';
 import * as Tabs from '@radix-ui/react-tabs';
 import { useState } from 'react';
-import ColumnSettings from './column-settings';
-import Button from '../../../components/elements/button';
 import { FaPlus, FaTrash } from 'react-icons/fa6';
+import Button from '../../../components/elements/button';
+import IconButton from '../../../components/elements/icon-button';
+import { getDefaultField } from '../../../lib/get-default-field';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import { getFieldProp } from '../../../lib/utils';
-import IconButton from '../../../components/elements/icon-button';
+import ColumnSettings from './column-settings';
 
 const LAYOUT_PRESETS = [
   [100],
@@ -37,8 +37,7 @@ function RowSettings({ field }: RowSettingsProps) {
         const widthProp = getFieldProp(existingColumn, PropertyType.WIDTH);
         if (widthProp) {
           widthProp.value = { type: SizeType.PERCENTAGE, value: width };
-        }
-        else {
+        } else {
           existingColumn.props.push({
             type: PropertyType.WIDTH,
             value: { type: SizeType.PERCENTAGE, value: width },
@@ -77,8 +76,7 @@ function RowSettings({ field }: RowSettingsProps) {
       const widthProp = getFieldProp(colField, PropertyType.WIDTH);
       if (widthProp) {
         widthProp.value = { type: SizeType.PERCENTAGE, value: avgWidth };
-      }
-      else {
+      } else {
         colField.props.push({
           type: PropertyType.WIDTH,
           value: { type: SizeType.PERCENTAGE, value: avgWidth },
@@ -104,11 +102,7 @@ function RowSettings({ field }: RowSettingsProps) {
 
     for (const col of field.children) {
       const colField = getFieldById(col.id);
-      if (
-        !colField
-        || colField.type !== FieldType.COLUMN
-        || colField.id === removedFieldId
-      ) {
+      if (!colField || colField.type !== FieldType.COLUMN || colField.id === removedFieldId) {
         continue;
       }
 
@@ -119,8 +113,7 @@ function RowSettings({ field }: RowSettingsProps) {
           type: SizeType.PERCENTAGE,
           value: width,
         };
-      }
-      else {
+      } else {
         colField.props.push({
           type: PropertyType.WIDTH,
           value: { type: SizeType.PERCENTAGE, value: width },
@@ -151,8 +144,7 @@ function RowSettings({ field }: RowSettingsProps) {
                     style={{ flex: width }}
                   >
                     <p className="typography-body4 text-neutral-700 invisible group-hover:visible">
-                      {width}
-                      %
+                      {width}%
                     </p>
                   </div>
                 ))}
@@ -168,7 +160,7 @@ function RowSettings({ field }: RowSettingsProps) {
             Icon={FaTrash}
             variant="danger"
             disabled={field.children.length <= 1}
-            onClick={() => removeColumn(field.children.findIndex(col => col.id === currentTab))}
+            onClick={() => removeColumn(field.children.findIndex((col) => col.id === currentTab))}
             className="ml-2"
           />
         </div>
@@ -183,21 +175,17 @@ function RowSettings({ field }: RowSettingsProps) {
                 value={column.id}
                 className="px-4 py-2 whitespace-nowrap border-b-2 border-primary border-opacity-0 transition-colors data-[state=active]:border-opacity-100 typography-body3 text-neutral-700 data-[state=active]:text-primary"
               >
-                Column
-                {' '}
-                {index + 1}
+                Column {index + 1}
               </Tabs.Trigger>
             ))}
           </Tabs.List>
         </div>
 
         {field.children
-          .filter(column => column.type === FieldType.COLUMN)
-          .map(column => (
+          .filter((column) => column.type === FieldType.COLUMN)
+          .map((column) => (
             <Tabs.Content key={column.id} value={column.id}>
-              <ColumnSettings
-                field={column}
-              />
+              <ColumnSettings field={column} />
             </Tabs.Content>
           ))}
       </Tabs.Root>

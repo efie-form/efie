@@ -1,6 +1,6 @@
-import { type ColumnFormField } from '@efie-form/core';
-import RenderField from '../render-field';
+import type { ColumnFormField } from '@efie-form/core';
 import EmptyArea from '../../empty-area';
+import RenderField from '../render-field';
 
 interface ColumnsFieldProps {
   field: ColumnFormField;

@@ -1,30 +1,41 @@
-import { arrayMove, SortableContext, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
-import { Input, Switch } from '../../../components/form';
-import { type FieldSystemConfigOptions, type PropValueOptions } from '@efie-form/core';
-import Button from '../../../components/elements/button';
-import { closestCenter, DndContext, KeyboardSensor, PointerSensor, useSensor, useSensors, type DragEndEvent } from '@dnd-kit/core';
+import {
+  closestCenter,
+  DndContext,
+  type DragEndEvent,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core';
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  useSortable,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
+import type { FieldSystemConfigOptions, PropValueOptions } from '@efie-form/core';
+import { useRef, useState } from 'react';
 import { MdAdd, MdOutlineClose, MdOutlineDragIndicator } from 'react-icons/md';
-import { cn } from '../../../lib/utils';
-import { useState, useRef } from 'react';
+import Button from '../../../components/elements/button';
+import { Input, Switch } from '../../../components/form';
 import { useSchemaStore } from '../../../lib/state/schema.state';
+import { cn } from '../../../lib/utils';
 
 interface PropSettingsOptionsProps {
   config: FieldSystemConfigOptions;
   fieldId: string;
 }
 
-export default function SystemSettingsOptions({
-  config,
-  fieldId,
-}: PropSettingsOptionsProps) {
-  const fieldProperty = useSchemaStore(state => state.getFieldProperty(fieldId, config.type));
+export default function SystemSettingsOptions({ config, fieldId }: PropSettingsOptionsProps) {
+  const fieldProperty = useSchemaStore((state) => state.getFieldProperty(fieldId, config.type));
   const value = fieldProperty?.value || [];
-  const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
+  const updateFieldProperty = useSchemaStore((state) => state.updateFieldProperty);
 
   // Store previous values for restoration
-  const prevValuesRef = useRef(value.map(option => ({ ...option })));
+  const prevValuesRef = useRef(value.map((option) => ({ ...option })));
   const [isValueDifferent, setIsValueDifferent] = useState(
-    value.some(option => option.value !== option.label) || false,
+    value.some((option) => option.value !== option.label) || false,
   );
   // const prevOptionsRef = useRef<OptionsProperty['value']>();
 
@@ -53,12 +64,11 @@ export default function SystemSettingsOptions({
         }));
         onChange(restored);
       }
-    }
-    else {
+    } else {
       // Save current values for restoration
-      prevValuesRef.current = value.map(option => ({ ...option }));
+      prevValuesRef.current = value.map((option) => ({ ...option }));
       // Set value = label for all options
-      const newOptions = value.map(option => ({ ...option, value: option.label }));
+      const newOptions = value.map((option) => ({ ...option, value: option.label }));
       onChange(newOptions);
     }
   };
@@ -90,7 +100,10 @@ export default function SystemSettingsOptions({
 
   const handleAddOption = () => {
     const totalOptions = value.length;
-    const newOptions = [...value, { label: `Option ${totalOptions + 1}`, value: `Option ${totalOptions + 1}` }];
+    const newOptions = [
+      ...value,
+      { label: `Option ${totalOptions + 1}`, value: `Option ${totalOptions + 1}` },
+    ];
     onChange(newOptions);
   };
 
@@ -101,10 +114,7 @@ export default function SystemSettingsOptions({
           <p className="typography-body3 text-neutral-800">{config.label}</p>
           <div className="flex items-center gap-2">
             <p className="typography-body3 text-neutral-800">Different Value</p>
-            <Switch
-              checked={isValueDifferent}
-              onChange={handleChangeDifferentValue}
-            />
+            <Switch checked={isValueDifferent} onChange={handleChangeDifferentValue} />
           </div>
         </div>
         <div>
@@ -169,14 +179,9 @@ function OptionItem({
   handleValueChange,
   onRemove,
 }: OptionItemProps) {
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-    isDragging,
-  } = useSortable({ id: index.toString() });
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+    id: index.toString(),
+  });
 
   const style = {
     transform: transform ? `translateY(${transform.y}px)` : undefined,
@@ -195,15 +200,9 @@ function OptionItem({
       <div {...attributes} {...listeners} className="cursor-grab">
         <MdOutlineDragIndicator className="text-neutral-500" />
       </div>
-      <Input
-        value={option.label}
-        onChange={value => handleLabelChange(index, value)}
-      />
+      <Input value={option.label} onChange={(value) => handleLabelChange(index, value)} />
       {isValueDifferent && (
-        <Input
-          value={option.value}
-          onChange={value => handleValueChange(index, value)}
-        />
+        <Input value={option.value} onChange={(value) => handleValueChange(index, value)} />
       )}
       <div className="invisible group-hover:visible">
         <button onClick={onRemove}>
@@ -222,13 +221,9 @@ function OptionTitle({ isValueDifferent }: OptionTitleProps) {
   return (
     <div className="flex gap-2 items-center w-full mb-1">
       <div className="w-4" />
-      <p className="typography-body3 text-neutral-800 flex-1 text-center font-semibold">
-        Label
-      </p>
+      <p className="typography-body3 text-neutral-800 flex-1 text-center font-semibold">Label</p>
       {isValueDifferent && (
-        <p className="typography-body3 text-neutral-800 flex-1 text-center font-semibold">
-          Value
-        </p>
+        <p className="typography-body3 text-neutral-800 flex-1 text-center font-semibold">Value</p>
       )}
       <div className="w-4" />
     </div>

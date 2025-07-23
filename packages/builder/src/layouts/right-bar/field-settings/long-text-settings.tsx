@@ -1,4 +1,4 @@
-import { type LongTextFormField } from '@efie-form/core';
+import type { LongTextFormField } from '@efie-form/core';
 import CategoryHeader from '../../../components/elements/category-header';
 import { useSettingsStore } from '../../../lib/state/settings.state';
 import FieldSettings from '../field-settings';
@@ -8,7 +8,7 @@ interface LongTextSettingsProps {
 }
 
 function LongTextSettings({ field }: LongTextSettingsProps) {
-  const config = useSettingsStore(state => state.config[field.type]);
+  const config = useSettingsStore((state) => state.config[field.type]);
 
   return (
     <div>

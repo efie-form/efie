@@ -1,13 +1,13 @@
+import {
+  type FieldSystemConfigButtonAction,
+  FieldType,
+  isStringValue,
+  PropertyType,
+  type PropValueButtonAction,
+} from '@efie-form/core';
 import { useRef } from 'react';
 import { Input, Select, Switch } from '../../../components/form';
 import { useSchemaStore } from '../../../lib/state/schema.state';
-import {
-  type FieldSystemConfigButtonAction,
-  type PropValueButtonAction,
-  FieldType,
-  PropertyType,
-  isStringValue,
-} from '@efie-form/core';
 
 interface PropsSettingsButtonActionProps {
   config: FieldSystemConfigButtonAction;
@@ -20,7 +20,10 @@ const ACTION_OPTIONS = [
   { value: 'navigate', label: 'Navigate' },
 ];
 
-function createHyperlinkValue(url: string, target: '_blank' | '_self' = '_self'): PropValueButtonAction {
+function createHyperlinkValue(
+  url: string,
+  target: '_blank' | '_self' = '_self',
+): PropValueButtonAction {
   return { action: 'hyperlink', url, target };
 }
 
@@ -36,16 +39,16 @@ export default function SystemSettingsButtonAction({
   config,
   fieldId,
 }: PropsSettingsButtonActionProps) {
-  const fieldProperty = useSchemaStore(state => state.getFieldProperty(fieldId, config.type));
+  const fieldProperty = useSchemaStore((state) => state.getFieldProperty(fieldId, config.type));
   const value = fieldProperty?.value || { action: 'submit' };
-  const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
-  const schema = useSchemaStore(state => state.schema);
+  const updateFieldProperty = useSchemaStore((state) => state.updateFieldProperty);
+  const schema = useSchemaStore((state) => state.schema);
 
   // Page options to avoid recalculation on every render
   const pageOptions = schema.form.fields
-    .filter(field => field.type === FieldType.PAGE)
+    .filter((field) => field.type === FieldType.PAGE)
     .map((page) => {
-      const pageNameProp = page.props?.find(prop => prop.type === PropertyType.PAGE_NAME);
+      const pageNameProp = page.props?.find((prop) => prop.type === PropertyType.PAGE_NAME);
       const pageName = isStringValue(pageNameProp?.value) ? pageNameProp.value : `Page ${page.id}`;
       return { value: page.id, label: pageName };
     });
@@ -82,7 +85,8 @@ export default function SystemSettingsButtonAction({
       case 'hyperlink': {
         const previousHyperlink = prevValuesRef.current.hyperlink;
         const url = previousHyperlink?.action === 'hyperlink' ? previousHyperlink.url : '';
-        const target = previousHyperlink?.action === 'hyperlink' ? previousHyperlink.target : '_self';
+        const target =
+          previousHyperlink?.action === 'hyperlink' ? previousHyperlink.target : '_self';
         newValue = createHyperlinkValue(url, target);
         break;
       }
@@ -138,21 +142,12 @@ export default function SystemSettingsButtonAction({
 
         {value.action === 'hyperlink' && (
           <div className="mt-4 space-y-4">
-            <Input
-              value={value.url}
-              onChange={handleUrlChange}
-              placeholder="Enter URL"
-            />
+            <Input value={value.url} onChange={handleUrlChange} placeholder="Enter URL" />
             <div className="flex justify-between items-center">
-              <label
-                className="typography-body3 text-neutral-800 cursor-pointer"
-              >
+              <label className="typography-body3 text-neutral-800 cursor-pointer">
                 Open in new tab
               </label>
-              <Switch
-                checked={value.target === '_blank'}
-                onChange={handleOpenInNewTabChange}
-              />
+              <Switch checked={value.target === '_blank'} onChange={handleOpenInNewTabChange} />
             </div>
           </div>
         )}
@@ -161,11 +156,7 @@ export default function SystemSettingsButtonAction({
           <div className="mt-4 flex gap-2 items-center">
             <p className="typography-body3 text-neutral-800 whitespace-nowrap">Navigate to: </p>
             <div>
-              <Select
-                value={value.pageId}
-                onChange={handlePageIdChange}
-                options={pageOptions}
-              />
+              <Select value={value.pageId} onChange={handlePageIdChange} options={pageOptions} />
             </div>
           </div>
         )}

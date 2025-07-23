@@ -2038,11 +2038,11 @@ div.tiptap:focus-visible {
   overflow: hidden;
 }
 
-.accordion-content[data-state='open'] {
+.accordion-content[data-state="open"] {
   animation: slideDown 200ms ease-out;
 }
 
-.accordion-content[data-state='closed'] {
+.accordion-content[data-state="closed"] {
   animation: slideUp 200ms ease-out;
 }
 
@@ -2066,13 +2066,13 @@ div.tiptap:focus-visible {
   }
 }
 
-.hide-input-arrow[type='number']::-webkit-outer-spin-button,
-.hide-input-arrow[type='number']::-webkit-inner-spin-button {
+.hide-input-arrow[type="number"]::-webkit-outer-spin-button,
+.hide-input-arrow[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-.hide-input-arrow[type='number'] {
+.hide-input-arrow[type="number"] {
   -moz-appearance: textfield;
 }
 

@@ -1,33 +1,32 @@
-import { type FormField, FieldType } from '@efie-form/core';
-import ColumnsField from './fields/column-field';
-import {
-  useSettingsStore,
-} from '../../../lib/state/settings.state';
-import { type MouseEvent, useEffect, useRef, useState } from 'react';
-import { cn } from '../../../lib/utils';
-import { AiOutlineDrag } from 'react-icons/ai';
-import { HiTrash } from 'react-icons/hi2';
-import { useSchemaStore } from '../../../lib/state/schema.state';
+import { combine } from '@atlaskit/pragmatic-drag-and-drop/combine';
 import {
   draggable,
   dropTargetForElements,
   type ElementDropTargetEventBasePayload,
 } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
-import { combine } from '@atlaskit/pragmatic-drag-and-drop/combine';
 import {
   attachInstruction,
   extractInstruction,
   type Operation,
 } from '@atlaskit/pragmatic-drag-and-drop-hitbox/list-item';
+import { FieldType, type FormField } from '@efie-form/core';
+import { type MouseEvent, useEffect, useRef, useState } from 'react';
+import { AiOutlineDrag } from 'react-icons/ai';
+import { HiTrash } from 'react-icons/hi2';
 import invariant from 'tiny-invariant';
+import { RIGHT_BAR_TABS } from '../../../lib/constant';
+import useDropField from '../../../lib/hooks/use-drop-field';
+import { useSchemaStore } from '../../../lib/state/schema.state';
+import { useSettingsStore } from '../../../lib/state/settings.state';
+import { cn } from '../../../lib/utils';
 import {
-  DateTimeField,
-  HeadingField,
   BlockField,
   ButtonField,
   DateField,
+  DateTimeField,
   DividerField,
   FileField,
+  HeadingField,
   ImageField,
   LongTextField,
   MultipleChoicesField,
@@ -37,8 +36,7 @@ import {
   SingleChoiceField,
   TimeField,
 } from './fields';
-import useDropField from '../../../lib/hooks/use-drop-field';
-import { RIGHT_BAR_TABS } from '../../../lib/constant';
+import ColumnsField from './fields/column-field';
 
 interface RenderFieldProps {
   field: FormField;
@@ -47,18 +45,9 @@ interface RenderFieldProps {
   childIndex: number;
 }
 
-function RenderField({
-  field,
-  noSelect,
-  parentId,
-  childIndex,
-}: RenderFieldProps) {
-  const {
-    setSelectedFieldId,
-    clearSelectedFieldId,
-    setActiveTab,
-  } = useSettingsStore();
-  const selectedFieldId = useSettingsStore(state => state.selectedFieldId);
+function RenderField({ field, noSelect, parentId, childIndex }: RenderFieldProps) {
+  const { setSelectedFieldId, clearSelectedFieldId, setActiveTab } = useSettingsStore();
+  const selectedFieldId = useSettingsStore((state) => state.selectedFieldId);
   const isSelected = selectedFieldId === field.id;
   const { deleteField } = useSchemaStore();
   const fieldRef = useRef<HTMLDivElement>(null);
@@ -109,7 +98,7 @@ function RenderField({
             operations: {
               'reorder-before': 'available',
               'reorder-after': 'available',
-              'combine': 'not-available',
+              combine: 'not-available',
             },
           });
         },
@@ -128,18 +117,21 @@ function RenderField({
           setIsDraggedOver(false);
           handleDrop(payload);
         },
-      })];
+      }),
+    ];
 
     if (dragEl) {
-      fn.push(draggable({
-        element: el,
-        dragHandle: dragEl,
-        getInitialData: () => ({
-          action: 'drag',
-          type: field.type,
-          id: field.id,
+      fn.push(
+        draggable({
+          element: el,
+          dragHandle: dragEl,
+          getInitialData: () => ({
+            action: 'drag',
+            type: field.type,
+            id: field.id,
+          }),
         }),
-      }));
+      );
     }
 
     // Add any necessary event listeners or logic here
@@ -185,13 +177,8 @@ function RenderField({
         <FieldItem field={field} />
       </div>
       {isSelected && (
-        <div
-          className="absolute top-0 left-0 -translate-x-full"
-        >
-          <div
-            ref={dragHandlerRef}
-            className="bg-primary p-1 text-white cursor-grab"
-          >
+        <div className="absolute top-0 left-0 -translate-x-full">
+          <div ref={dragHandlerRef} className="bg-primary p-1 text-white cursor-grab">
             <AiOutlineDrag />
           </div>
           <button

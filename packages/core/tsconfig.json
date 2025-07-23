@@ -9,21 +9,10 @@
     // transpile
     "jsx": "react-jsx",
     // src
-    "lib": [
-      "DOM",
-      "DOM.Iterable",
-      "ESNext"
-    ],
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "baseUrl": ".",
-    "rootDir": ".",
+    "rootDir": "."
   },
-  "include": [
-    "./lib/**/*",
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "**/*.test.ts",
-    "**/*.spec.ts"
-  ]
+  "include": ["./lib/**/*"],
+  "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.spec.ts"]
 }

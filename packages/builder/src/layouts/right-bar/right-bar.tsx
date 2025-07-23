@@ -1,12 +1,12 @@
-import { HiMiniInformationCircle } from 'react-icons/hi2';
-import FieldPropertiesTab from './tabs/field-properties-tab';
-import { cn } from '../../lib/utils';
-import PagePropertiesTab from './tabs/page-properties-tab';
-import { AiFillLayout } from 'react-icons/ai';
 import type { ElementType } from 'react';
-import { useSettingsStore } from '../../lib/state/settings.state';
+import { AiFillLayout } from 'react-icons/ai';
+import { HiMiniInformationCircle } from 'react-icons/hi2';
 import Tooltip from '../../components/elements/tooltip';
 import { RIGHT_BAR_TABS, type RightBarTab } from '../../lib/constant';
+import { useSettingsStore } from '../../lib/state/settings.state';
+import { cn } from '../../lib/utils';
+import FieldPropertiesTab from './tabs/field-properties-tab';
+import PagePropertiesTab from './tabs/page-properties-tab';
 
 interface Tab {
   id: RightBarTab;
@@ -35,24 +35,16 @@ function RightBar() {
     },
   ];
 
-  const TabContent = tabs.find(tab => tab.id === activeTab)?.tab;
+  const TabContent = tabs.find((tab) => tab.id === activeTab)?.tab;
 
   return (
     <div className="h-full flex w-full">
-      <div className="flex-1 overflow-hidden">
-        {TabContent && <TabContent />}
-      </div>
+      <div className="flex-1 overflow-hidden">{TabContent && <TabContent />}</div>
       <div className="bg-neutral-100/40 h-full">
         {tabs
-          .filter(tab => !tab.hidden)
-          .map(tab => (
-            <Tooltip
-              key={tab.id}
-              content={tab.label}
-              side="right"
-              align="center"
-              sideOffset={4}
-            >
+          .filter((tab) => !tab.hidden)
+          .map((tab) => (
+            <Tooltip key={tab.id} content={tab.label} side="right" align="center" sideOffset={4}>
               <div
                 className={cn(
                   'p-3 hover:bg-neutral-200/30 cursor-pointer transition-all duration-100',

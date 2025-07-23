@@ -1,8 +1,8 @@
-import SettingsFieldSwitchWithDropdown from '../property-layouts/settings-field-switch-with-dropdown';
+import type { FieldSystemConfigAccept, PropValueAccept } from '@efie-form/core';
 import { Switch } from '../../../components/form';
-import { type FieldSystemConfigAccept, type PropValueAccept } from '@efie-form/core';
 import { useControllableState } from '../../../lib/hooks/use-controllable-state';
 import { useSchemaStore } from '../../../lib/state/schema.state';
+import SettingsFieldSwitchWithDropdown from '../property-layouts/settings-field-switch-with-dropdown';
 
 const FILE_EXTENSIONS = [
   { type: 'pdf', label: 'PDF', value: ['.pdf'] },
@@ -17,7 +17,7 @@ const FILE_EXTENSIONS = [
   { type: 'video', label: 'Video', value: ['.mp4', '.mov', '.avi'] },
 ] as const;
 
-type ExtensionType = typeof FILE_EXTENSIONS[number]['type'];
+type ExtensionType = (typeof FILE_EXTENSIONS)[number]['type'];
 
 interface InternalValue {
   allowSpecific: boolean;
@@ -28,19 +28,16 @@ interface SystemSettingsAcceptProps {
   config: FieldSystemConfigAccept;
 }
 
-export default function SystemSettingsAccept({
-  config,
-  fieldId,
-}: SystemSettingsAcceptProps) {
-  const fieldProperty = useSchemaStore(state => state.getFieldProperty(fieldId, config.type));
-  const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
+export default function SystemSettingsAccept({ config, fieldId }: SystemSettingsAcceptProps) {
+  const fieldProperty = useSchemaStore((state) => state.getFieldProperty(fieldId, config.type));
+  const updateFieldProperty = useSchemaStore((state) => state.updateFieldProperty);
   const value = fieldProperty?.value;
   const [internalValue, setInternalValue] = useControllableState({
     defaultValue: getInternalValue(value),
     onChange: (newValue) => {
       const formats = Object.entries(newValue.extensions)
-        .filter(ext => ext[1])
-        .flatMap(([k]) => FILE_EXTENSIONS.find(ext => ext.type === k)?.value || []);
+        .filter((ext) => ext[1])
+        .flatMap(([k]) => FILE_EXTENSIONS.find((ext) => ext.type === k)?.value || []);
 
       const finalValue: PropValueAccept = {
         allowAll: !newValue.allowSpecific,
@@ -59,7 +56,7 @@ export default function SystemSettingsAccept({
   }
 
   const handleExtensionChange = (type: ExtensionType, checked: boolean) => {
-    setInternalValue(prev => ({
+    setInternalValue((prev) => ({
       ...prev,
       extensions: {
         ...prev.extensions,
@@ -69,7 +66,7 @@ export default function SystemSettingsAccept({
   };
 
   const handleAllowAllChange = (checked: boolean) => {
-    setInternalValue(prev => ({
+    setInternalValue((prev) => ({
       ...prev,
       allowSpecific: checked,
     }));
@@ -83,7 +80,7 @@ export default function SystemSettingsAccept({
       divider
     >
       <div className="grid grid-cols-2">
-        {FILE_EXTENSIONS.map(extension => (
+        {FILE_EXTENSIONS.map((extension) => (
           <div
             key={extension.label}
             className="flex items-center gap-2 p-2 rounded-md hover:bg-neutral-50 transition-colors"
@@ -96,9 +93,7 @@ export default function SystemSettingsAccept({
                 }}
               />
             </div>
-            <span className="typography-body3 text-neutral-600">
-              {extension.label}
-            </span>
+            <span className="typography-body3 text-neutral-600">{extension.label}</span>
           </div>
         ))}
       </div>
@@ -119,7 +114,7 @@ function getInternalValue(value?: PropValueAccept): InternalValue {
   }
 
   for (const ext of FILE_EXTENSIONS) {
-    extTypes[ext.type] = ext.value.every(format => value.formats?.includes(format)) || false;
+    extTypes[ext.type] = ext.value.every((format) => value.formats?.includes(format)) || false;
   }
   return {
     allowSpecific: !value.allowAll,

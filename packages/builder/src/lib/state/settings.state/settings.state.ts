@@ -1,7 +1,7 @@
-import { create } from 'zustand';
-import defaultSchema from '../../default-schema';
 import type { CustomInputDef, FieldsConfigsMap } from '@efie-form/core';
+import { create } from 'zustand';
 import type { RightBarTab } from '../../constant';
+import defaultSchema from '../../default-schema';
 import settingsConfig from './settings-config';
 
 interface SettingsState {
@@ -23,16 +23,14 @@ interface SettingsState {
   height?: number;
   setHeight: (height: SettingsState['height']) => void;
   formKeyEditable: boolean;
-  setFormKeyEditable: (
-    formKeyEditable: SettingsState['formKeyEditable']
-  ) => void;
+  setFormKeyEditable: (formKeyEditable: SettingsState['formKeyEditable']) => void;
   isInputReusable: boolean;
   setIsInputReusable: (inputReusable: SettingsState['isInputReusable']) => void;
   config: FieldsConfigsMap;
   setConfig: (config: FieldsConfigsMap) => void;
 }
 
-export const useSettingsStore = create<SettingsState>(set => ({
+export const useSettingsStore = create<SettingsState>((set) => ({
   formInputs: [],
   setFormInputs: (inputs) => {
     set({ formInputs: inputs });

@@ -1,8 +1,7 @@
-import { useState, useRef, useEffect } from 'react';
-import type { PaddingProperty, PropValuePadding } from '@efie-form/core';
-import { type PaddingSize, type Size } from '@efie-form/core';
-import SizeInput from '../../../components/form/size-input';
+import type { PaddingProperty, PaddingSize, PropValuePadding, Size } from '@efie-form/core';
+import { useEffect, useRef, useState } from 'react';
 import { FaLink, FaUnlink } from 'react-icons/fa';
+import SizeInput from '../../../components/form/size-input';
 
 interface PropsSettingsPaddingProps {
   label: string;
@@ -33,9 +32,7 @@ export default function PropsSettingsPadding({
     const bottomStr = normalizeValue(bottom);
     const leftStr = normalizeValue(left);
 
-    return topStr === rightStr
-      && rightStr === bottomStr
-      && bottomStr === leftStr;
+    return topStr === rightStr && rightStr === bottomStr && bottomStr === leftStr;
   };
 
   // Check if all paddings are the same when component mounts or value changes
@@ -57,8 +54,7 @@ export default function PropsSettingsPadding({
       if (previousValuesRef.current) {
         onChange(previousValuesRef.current);
       }
-    }
-    else {
+    } else {
       // Store current values before linking (only if they're not already the same)
       if (!areAllPaddingsSame(value)) {
         previousValuesRef.current = { ...value };
@@ -103,99 +99,78 @@ export default function PropsSettingsPadding({
           </div>
         </div>
         <div className="flex gap-4">
-          {isLinked
-            ? (
-                <div className="flex gap-4 items-start w-full">
-                  <div className="flex flex-col gap-2">
-                    <p className="typography-body4 text-neutral-600">All sides</p>
-                    <SizeInput
-                      value={value.top}
-                      onChange={handleLinkedChange}
-                    />
-                  </div>
+          {isLinked ? (
+            <div className="flex gap-4 items-start w-full">
+              <div className="flex flex-col gap-2">
+                <p className="typography-body4 text-neutral-600">All sides</p>
+                <SizeInput value={value.top} onChange={handleLinkedChange} />
+              </div>
+            </div>
+          ) : (
+            <div className="grid grid-cols-3 gap-2 w-full">
+              <div></div>
+              <div>
+                <p className="typography-body4 text-neutral-600 text-center">Top</p>
+                <PaddingSide value={value} handleChange={handleChange} paddingSide="top" />
+              </div>
+              <div></div>
+              <div>
+                <p className="typography-body4 text-neutral-600 text-center">Left</p>
+                <PaddingSide value={value} handleChange={handleChange} paddingSide="left" />
+              </div>
+              <div className="flex items-center justify-center">
+                <div className="relative w-12 h-12">
+                  <div className="absolute inset-0 border-2 border-neutral-400"></div>
+                  <div
+                    className="absolute bg-primary-200"
+                    style={{
+                      top: '4px',
+                      left: '4px',
+                      right: '4px',
+                      height: '4px',
+                    }}
+                  />
+                  <div
+                    className="absolute bg-primary-200"
+                    style={{
+                      top: '4px',
+                      right: '4px',
+                      bottom: '4px',
+                      width: '4px',
+                    }}
+                  />
+                  <div
+                    className="absolute bg-primary-200"
+                    style={{
+                      bottom: '4px',
+                      left: '4px',
+                      right: '4px',
+                      height: '4px',
+                    }}
+                  />
+                  <div
+                    className="absolute bg-primary-200"
+                    style={{
+                      top: '4px',
+                      left: '4px',
+                      bottom: '4px',
+                      width: '4px',
+                    }}
+                  />
                 </div>
-              )
-            : (
-                <div className="grid grid-cols-3 gap-2 w-full">
-                  <div></div>
-                  <div>
-                    <p className="typography-body4 text-neutral-600 text-center">Top</p>
-                    <PaddingSide
-                      value={value}
-                      handleChange={handleChange}
-                      paddingSide="top"
-                    />
-                  </div>
-                  <div></div>
-                  <div>
-                    <p className="typography-body4 text-neutral-600 text-center">Left</p>
-                    <PaddingSide
-                      value={value}
-                      handleChange={handleChange}
-                      paddingSide="left"
-                    />
-                  </div>
-                  <div className="flex items-center justify-center">
-                    <div className="relative w-12 h-12">
-                      <div className="absolute inset-0 border-2 border-neutral-400"></div>
-                      <div
-                        className="absolute bg-primary-200"
-                        style={{
-                          top: '4px',
-                          left: '4px',
-                          right: '4px',
-                          height: '4px',
-                        }}
-                      />
-                      <div
-                        className="absolute bg-primary-200"
-                        style={{
-                          top: '4px',
-                          right: '4px',
-                          bottom: '4px',
-                          width: '4px',
-                        }}
-                      />
-                      <div
-                        className="absolute bg-primary-200"
-                        style={{
-                          bottom: '4px',
-                          left: '4px',
-                          right: '4px',
-                          height: '4px',
-                        }}
-                      />
-                      <div
-                        className="absolute bg-primary-200"
-                        style={{
-                          top: '4px',
-                          left: '4px',
-                          bottom: '4px',
-                          width: '4px',
-                        }}
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <p className="typography-body4 text-neutral-600 text-center">Right</p>
-                    <PaddingSide
-                      value={value}
-                      handleChange={handleChange}
-                      paddingSide="right"
-                    />
-                  </div>
-                  <div></div>
-                  <div>
-                    <p className="typography-body4 text-neutral-600 text-center">Bottom</p>
-                    <PaddingSide
-                      value={value}
-                      handleChange={handleChange}
-                      paddingSide="bottom"
-                    />
-                  </div>
-                  <div></div>
-                </div>
-              )}
+              </div>
+              <div>
+                <p className="typography-body4 text-neutral-600 text-center">Right</p>
+                <PaddingSide value={value} handleChange={handleChange} paddingSide="right" />
+              </div>
+              <div></div>
+              <div>
+                <p className="typography-body4 text-neutral-600 text-center">Bottom</p>
+                <PaddingSide value={value} handleChange={handleChange} paddingSide="bottom" />
+              </div>
+              <div></div>
+            </div>
+          )}
         </div>
       </div>
       <div className="mx-4">
@@ -216,7 +191,7 @@ function PaddingSide({ value, handleChange, paddingSide }: PaddingSideProps) {
     <SizeInput
       className="w-full"
       value={value[paddingSide]}
-      onChange={newSize => handleChange(newSize as PaddingSize, paddingSide)}
+      onChange={(newSize) => handleChange(newSize as PaddingSize, paddingSide)}
     />
   );
 }

@@ -1,7 +1,20 @@
 import type { FieldType } from '../constants/field-type';
 import type { ValidationSchema } from './field-conditions.type';
 
-import type { FieldCustomProp, FieldSystemPropAccept, FieldSystemPropButtonAction, FieldSystemPropColumnWidth, FieldSystemPropHeadingContent, FieldSystemPropImageAlt, FieldSystemPropImageSrc, FieldSystemPropLabel, FieldSystemPropOptions, FieldSystemPropPageName, FieldSystemPropPlaceholder, FieldSystemPropRequired } from './property-definition';
+import type {
+  FieldCustomProp,
+  FieldSystemPropAccept,
+  FieldSystemPropButtonAction,
+  FieldSystemPropColumnWidth,
+  FieldSystemPropHeadingContent,
+  FieldSystemPropImageAlt,
+  FieldSystemPropImageSrc,
+  FieldSystemPropLabel,
+  FieldSystemPropOptions,
+  FieldSystemPropPageName,
+  FieldSystemPropPlaceholder,
+  FieldSystemPropRequired,
+} from './property-definition';
 
 // Base form field interface
 export interface BaseFormField {
@@ -68,29 +81,17 @@ export interface MultipleChoiceFormField extends BaseFormField, FormInputField {
 
 export interface DateFormField extends BaseFormField, FormInputField {
   type: typeof FieldType.DATE;
-  props: (
-    | FieldSystemPropLabel
-    | FieldSystemPropRequired
-    | FieldCustomProp
-  )[];
+  props: (FieldSystemPropLabel | FieldSystemPropRequired | FieldCustomProp)[];
 }
 
 export interface TimeFormField extends BaseFormField, FormInputField {
   type: typeof FieldType.TIME;
-  props: (
-    | FieldSystemPropLabel
-    | FieldSystemPropRequired
-    | FieldCustomProp
-  )[];
+  props: (FieldSystemPropLabel | FieldSystemPropRequired | FieldCustomProp)[];
 }
 
 export interface DateTimeFormField extends BaseFormField, FormInputField {
   type: typeof FieldType.DATE_TIME;
-  props: (
-    | FieldSystemPropLabel
-    | FieldSystemPropRequired
-    | FieldCustomProp
-  )[];
+  props: (FieldSystemPropLabel | FieldSystemPropRequired | FieldCustomProp)[];
 }
 
 // File field type
@@ -108,72 +109,49 @@ export interface FileFormField extends BaseFormField, FormInputField {
 export interface BlockFormField extends BaseFormField {
   type: typeof FieldType.BLOCK;
   children: FormField[];
-  props: (
-    | FieldCustomProp
-  )[];
+  props: FieldCustomProp[];
 }
 
 export interface RowFormField extends BaseFormField {
   type: typeof FieldType.ROW;
   children: ColumnFormField[];
-  props: (
-    | FieldCustomProp
-  )[];
+  props: FieldCustomProp[];
 }
 
 export interface ColumnFormField extends BaseFormField {
   type: typeof FieldType.COLUMN;
   children: FormField[];
-  props: (
-    | FieldSystemPropColumnWidth
-    | FieldCustomProp
-  )[];
+  props: (FieldSystemPropColumnWidth | FieldCustomProp)[];
 }
 
 export interface HeadingFormField extends BaseFormField {
   type: typeof FieldType.HEADING;
-  props: (
-    | FieldSystemPropHeadingContent
-    | FieldCustomProp
-  )[];
+  props: (FieldSystemPropHeadingContent | FieldCustomProp)[];
 }
 
 // Image field type
 export interface ImageFormField extends BaseFormField {
   type: typeof FieldType.IMAGE;
-  props: (
-    | FieldSystemPropImageSrc
-    | FieldSystemPropImageAlt
-    | FieldCustomProp
-  )[];
+  props: (FieldSystemPropImageSrc | FieldSystemPropImageAlt | FieldCustomProp)[];
 }
 
 // Button field type
 export interface ButtonFormField extends BaseFormField {
   type: typeof FieldType.BUTTON;
-  props: (
-    | FieldSystemPropButtonAction
-    | FieldSystemPropLabel
-    | FieldCustomProp
-  )[];
+  props: (FieldSystemPropButtonAction | FieldSystemPropLabel | FieldCustomProp)[];
 }
 
 // Page field type
 export interface PageFormField extends BaseFormField {
   type: typeof FieldType.PAGE;
   children: FormField[];
-  props: (
-    | FieldSystemPropPageName
-    | FieldCustomProp
-  )[];
+  props: (FieldSystemPropPageName | FieldCustomProp)[];
 }
 
 // Divider field type
 export interface DividerFormField extends BaseFormField {
   type: typeof FieldType.DIVIDER;
-  props: (
-    | FieldCustomProp
-  )[];
+  props: FieldCustomProp[];
 }
 
 export type FormField =

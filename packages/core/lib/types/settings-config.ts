@@ -158,43 +158,25 @@ export interface FieldConfigMultipleChoices {
 }
 
 export interface FieldConfigDate {
-  properties: Array<
-    | FieldSystemConfigLabel
-    | FieldSystemConfigRequired
-    | FieldCustomConfig
-  >;
+  properties: Array<FieldSystemConfigLabel | FieldSystemConfigRequired | FieldCustomConfig>;
 }
 
 export interface FieldConfigTime {
-  properties: Array<
-    | FieldSystemConfigLabel
-    | FieldSystemConfigRequired
-    | FieldCustomConfig
-  >;
+  properties: Array<FieldSystemConfigLabel | FieldSystemConfigRequired | FieldCustomConfig>;
 }
 
 export interface FieldConfigDateTime {
-  properties: Array<
-    | FieldSystemConfigLabel
-    | FieldSystemConfigRequired
-    | FieldCustomConfig
-  >;
+  properties: Array<FieldSystemConfigLabel | FieldSystemConfigRequired | FieldCustomConfig>;
 }
 
 export interface FieldConfigFile {
   properties: Array<
-    | FieldSystemConfigLabel
-    | FieldSystemConfigAccept
-    | FieldSystemConfigRequired
-    | FieldCustomConfig
+    FieldSystemConfigLabel | FieldSystemConfigAccept | FieldSystemConfigRequired | FieldCustomConfig
   >;
 }
 
 export interface FieldConfigImage {
-  properties: Array<
-    | FieldSystemConfigImageSrc
-    | FieldCustomConfig
-  >;
+  properties: Array<FieldSystemConfigImageSrc | FieldCustomConfig>;
 }
 
 export interface FieldConfigDivider {
@@ -206,17 +188,11 @@ export interface FieldConfigRow {
 }
 
 export interface FieldConfigColumn {
-  properties: Array<
-    | FieldSystemConfigColumnWidth
-    | FieldCustomConfig
-  >;
+  properties: Array<FieldSystemConfigColumnWidth | FieldCustomConfig>;
 }
 
 export interface FieldConfigBlock {
-  properties: Array<
-    | FieldSystemConfigColumnWidth
-    | FieldCustomConfig
-  >;
+  properties: Array<FieldSystemConfigColumnWidth | FieldCustomConfig>;
 }
 
 export interface FieldConfigPage {
@@ -224,11 +200,7 @@ export interface FieldConfigPage {
 }
 
 export interface FieldConfigButton {
-  properties: Array<
-    | FieldSystemConfigLabel
-    | FieldSystemConfigButtonAction
-    | FieldCustomConfig
-  >;
+  properties: Array<FieldSystemConfigLabel | FieldSystemConfigButtonAction | FieldCustomConfig>;
 }
 
 type Level = 0 | 1 | 2 | 3 | 4 | 5 | 6;
@@ -244,9 +216,7 @@ interface FontSize {
 }
 
 export interface FieldConfigHeading {
-  properties: Array<
-    | FieldCustomConfig
-  >;
+  properties: Array<FieldCustomConfig>;
   formats: {
     bold?: boolean;
     italic?: boolean;
@@ -257,25 +227,33 @@ export interface FieldConfigHeading {
     blockquote?: boolean;
     superscript?: boolean;
     subscript?: boolean;
-    list?: boolean | {
-      ordered: boolean;
-      bullet: boolean;
-    };
+    list?:
+      | boolean
+      | {
+          ordered: boolean;
+          bullet: boolean;
+        };
     codeBlock?: boolean;
-    align: boolean | {
-      left: boolean;
-      center: boolean;
-      right: boolean;
-      justify: boolean;
-    };
-    heading?: boolean | {
-      options: Heading[];
-      default?: Level;
-    };
-    fontSize?: boolean | {
-      options: FontSize[];
-      default?: FontSize;
-    };
+    align:
+      | boolean
+      | {
+          left: boolean;
+          center: boolean;
+          right: boolean;
+          justify: boolean;
+        };
+    heading?:
+      | boolean
+      | {
+          options: Heading[];
+          default?: Level;
+        };
+    fontSize?:
+      | boolean
+      | {
+          options: FontSize[];
+          default?: FontSize;
+        };
   };
 }
 

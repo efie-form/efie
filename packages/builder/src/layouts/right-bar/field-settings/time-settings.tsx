@@ -1,4 +1,4 @@
-import { type TimeFormField } from '@efie-form/core';
+import type { TimeFormField } from '@efie-form/core';
 import CategoryHeader from '../../../components/elements/category-header';
 import { useSettingsStore } from '../../../lib/state/settings.state';
 import FieldSettings from '../field-settings';
@@ -8,7 +8,7 @@ interface TimeSettingsProps {
 }
 
 function TimeSettings({ field }: TimeSettingsProps) {
-  const config = useSettingsStore(state => state.config[field.type]);
+  const config = useSettingsStore((state) => state.config[field.type]);
 
   return (
     <div>

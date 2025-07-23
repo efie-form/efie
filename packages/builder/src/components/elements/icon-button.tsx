@@ -7,13 +7,7 @@ interface ButtonProps extends ButtonPropsWithoutRef {
   Icon: ElementType;
 }
 
-function IconButton({
-  className,
-  Icon,
-  disabled,
-  variant = 'primary',
-  ...props
-}: ButtonProps) {
+function IconButton({ className, Icon, disabled, variant = 'primary', ...props }: ButtonProps) {
   return (
     <button
       disabled={disabled}

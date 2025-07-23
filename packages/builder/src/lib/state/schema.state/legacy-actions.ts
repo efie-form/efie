@@ -1,15 +1,19 @@
-import { FieldType, type FormField, type FormInputField, type PageFormField } from '@efie-form/core';
+import {
+  FieldType,
+  type FormField,
+  type FormInputField,
+  type PageFormField,
+} from '@efie-form/core';
 import type { StateSetters } from './types';
 
 export function createLegacyActions({ getState }: StateSetters) {
   return {
-
     getPage: (pageId?: string): PageFormField | undefined => {
       if (!pageId) return;
       const { schema } = getState();
       return schema.form.fields
-        .filter(field => field.type === FieldType.PAGE)
-        .find(field => field.id === pageId) as PageFormField | undefined;
+        .filter((field) => field.type === FieldType.PAGE)
+        .find((field) => field.id === pageId) as PageFormField | undefined;
     },
 
     updatePages: (pages: FormField[]) => {

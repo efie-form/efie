@@ -1,5 +1,15 @@
 import type { CustomPropertyType, PropertyType } from '../property-type';
-import type { PropValueAccept, PropValueBoolean, PropValueButtonAction, PropValueColor, PropValueJsonContent, PropValueNumber, PropValueOptions, PropValueSize, PropValueString } from './field-property-value.type';
+import type {
+  PropValueAccept,
+  PropValueBoolean,
+  PropValueButtonAction,
+  PropValueColor,
+  PropValueJsonContent,
+  PropValueNumber,
+  PropValueOptions,
+  PropValueSize,
+  PropValueString,
+} from './field-property-value.type';
 
 export type FieldCustomProp =
   | FieldCustomPropString
@@ -122,6 +132,4 @@ export interface FieldCustomPropSize {
   value: PropValueSize;
 }
 
-export type PropertyDefinition =
-  | FieldSystemProp
-  | FieldCustomProp;
+export type PropertyDefinition = FieldSystemProp | FieldCustomProp;
