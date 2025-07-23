@@ -22,7 +22,6 @@ const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
   ({ height, formInputs, schema, formKeyNonEditable, inputNonReusable, maxHistories }, ref) => {
     const builderRef = useRef<Iframe | undefined>();
     const containerRef = useRef<HTMLDivElement>(null);
-    const _formInputDetectsChanges = formInputs?.map((input) => `${input.id}-${input.type}`);
 
     // Initialize Iframe once
     useEffect(() => {
