@@ -45,7 +45,8 @@ function RightBar() {
           .filter((tab) => !tab.hidden)
           .map((tab) => (
             <Tooltip key={tab.id} content={tab.label} side="right" align="center" sideOffset={4}>
-              <div
+              <button
+                type="button"
                 className={cn(
                   'cursor-pointer p-3 transition-all duration-100 hover:bg-neutral-200/30',
                   {
@@ -55,7 +56,7 @@ function RightBar() {
                 onClick={() => setActiveTab(tab.id)}
               >
                 <tab.Icon size={16} className="text-neutral-800" />
-              </div>
+              </button>
             </Tooltip>
           ))}
       </div>

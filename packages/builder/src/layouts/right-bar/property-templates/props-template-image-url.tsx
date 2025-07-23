@@ -32,13 +32,13 @@ export default function PropsTemplateImageUrl({
   const [fileInfo, setFileInfo] = useState<{ name: string; size: number }>();
 
   // Helper handlers for drag events to allow multiple statements
-  const handleDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
+  const handleDragEnter = (e: React.DragEvent<HTMLElement>) => {
     handleDrag(e);
   };
-  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+  const handleDragLeave = (e: React.DragEvent<HTMLElement>) => {
     handleDrag(e);
   };
-  const handleDropWithHover = (e: React.DragEvent<HTMLDivElement>) => {
+  const handleDropWithHover = (e: React.DragEvent<HTMLElement>) => {
     handleDrop(e);
   };
 
@@ -121,7 +121,8 @@ export default function PropsTemplateImageUrl({
           className="w-full min-w-0"
         />
         {/* Preview, upload, file info, and dimensions in a single box */}
-        <div
+        <button
+          type="button"
           className={cn(
             'group relative flex cursor-pointer items-center gap-3 rounded-lg border border-dashed bg-neutral-50 p-2',
             'transition-colors duration-200 hover:border-primary hover:bg-primary-300/10',
@@ -222,7 +223,7 @@ export default function PropsTemplateImageUrl({
           {dragActive && !isDraggedFileValid && (
             <div className="absolute inset-0 flex items-center justify-center rounded-lg border border-danger-400 bg-danger-100/30"></div>
           )}
-        </div>
+        </button>
       </div>
     </SettingsFieldVertical>
   );

@@ -140,7 +140,11 @@ export default function PropsSettingsBorderRadius({
         <div className="mb-4 flex items-center justify-between">
           <p className="typography-body3 text-neutral-800">{label}</p>
           <div>
-            <button onClick={toggleLink} className="flex items-center gap-2 text-neutral-600">
+            <button
+              type="button"
+              onClick={toggleLink}
+              className="flex items-center gap-2 text-neutral-600"
+            >
               {isLinked ? <FaLink /> : <FaUnlink />}
             </button>
           </div>

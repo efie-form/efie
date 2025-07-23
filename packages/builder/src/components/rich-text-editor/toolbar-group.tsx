@@ -5,8 +5,8 @@ interface ToolbarGroupProps {
 
 export default function ToolbarGroup({ children, label }: ToolbarGroupProps) {
   return (
-    <div className="flex items-center gap-1" role="group" aria-label={label}>
+    <fieldset className="flex items-center gap-1" aria-label={label}>
       {children}
-    </div>
+    </fieldset>
   );
 }

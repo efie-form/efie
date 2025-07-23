@@ -193,14 +193,20 @@ function ShadowItem({ index, shadow, onUpdate, onRemove }: ShadowItemProps) {
       <Collapsible.Trigger asChild>
         <div className="flex cursor-pointer items-center justify-between rounded-t-lg px-2 py-1.5 hover:bg-neutral-50">
           <div className="flex items-center gap-2">
-            <div
+            <button
+              type="button"
               className="cursor-grab rounded p-1 hover:bg-neutral-100"
               {...attributes}
               {...listeners}
               onClick={(e) => e.stopPropagation()}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.stopPropagation();
+                }
+              }}
             >
               <MdOutlineDragIndicator className="text-neutral-500" />
-            </div>
+            </button>
             <div className="typography-body3 flex items-center gap-2 text-neutral-800">
               <span>{sizeToString(shadow.x)}</span>
               <span>{sizeToString(shadow.y)}</span>
@@ -217,6 +223,7 @@ function ShadowItem({ index, shadow, onUpdate, onRemove }: ShadowItemProps) {
           </div>
           <div className="flex items-center gap-2">
             <button
+              type="button"
               onClick={(e) => {
                 e.stopPropagation();
                 onRemove();
@@ -235,32 +242,56 @@ function ShadowItem({ index, shadow, onUpdate, onRemove }: ShadowItemProps) {
           {/* Position and Blur */}
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="typography-body3 mb-1 block text-neutral-700">X Offset</label>
+              <label
+                htmlFor={`shadow-${index}-x`}
+                className="typography-body3 mb-1 block text-neutral-700"
+              >
+                X Offset
+              </label>
               <SizeInput
+                id={`shadow-${index}-x`}
                 value={shadow.x}
                 onChange={(newSize) => handleSizeUpdate('x', newSize)}
                 className="w-full"
               />
             </div>
             <div>
-              <label className="typography-body3 mb-1 block text-neutral-700">Y Offset</label>
+              <label
+                htmlFor={`shadow-${index}-y`}
+                className="typography-body3 mb-1 block text-neutral-700"
+              >
+                Y Offset
+              </label>
               <SizeInput
+                id={`shadow-${index}-y`}
                 value={shadow.y}
                 onChange={(newSize) => handleSizeUpdate('y', newSize)}
                 className="w-full"
               />
             </div>
             <div>
-              <label className="typography-body3 mb-1 block text-neutral-700">Blur</label>
+              <label
+                htmlFor={`shadow-${index}-blur`}
+                className="typography-body3 mb-1 block text-neutral-700"
+              >
+                Blur
+              </label>
               <SizeInput
+                id={`shadow-${index}-blur`}
                 value={shadow.blur}
                 onChange={(newSize) => handleSizeUpdate('blur', newSize)}
                 className="w-full"
               />
             </div>
             <div>
-              <label className="typography-body3 mb-1 block text-neutral-700">Spread</label>
+              <label
+                htmlFor={`shadow-${index}-spread`}
+                className="typography-body3 mb-1 block text-neutral-700"
+              >
+                Spread
+              </label>
               <SizeInput
+                id={`shadow-${index}-spread`}
                 value={shadow.spread}
                 onChange={(newSize) => handleSizeUpdate('spread', newSize)}
                 className="w-full"
@@ -271,11 +302,11 @@ function ShadowItem({ index, shadow, onUpdate, onRemove }: ShadowItemProps) {
           {/* Color and Inset */}
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="typography-body3 mb-1 block text-neutral-700">Color</label>
+              <div className="typography-body3 mb-1 block text-neutral-700">Color</div>
               <ColorPicker value={getColorObject(shadow.color.hex)} onChange={handleColorUpdate} />
             </div>
             <div>
-              <label className="typography-body3 mb-1 block text-neutral-700">Inset</label>
+              <div className="typography-body3 mb-1 block text-neutral-700">Inset</div>
               <div className="flex h-7 items-center">
                 <Switch checked={shadow.inset} onChange={handleInsetToggle} />
               </div>

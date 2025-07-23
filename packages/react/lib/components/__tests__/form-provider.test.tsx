@@ -50,7 +50,7 @@ describe('FormProvider', () => {
     function TestWithCallback() {
       const { setPage } = useContext(FormContext);
       return (
-        <button data-testid="set-page-button" onClick={() => setPage('new-page')}>
+        <button type="button" data-testid="set-page-button" onClick={() => setPage('new-page')}>
           Set Page
         </button>
       );

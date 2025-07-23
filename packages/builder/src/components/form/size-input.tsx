@@ -7,6 +7,7 @@ interface SizeInputProps {
   value?: Size;
   onChange?: (value: Size) => void;
   className?: string;
+  id?: string;
 }
 
 const UNITS = [
@@ -30,7 +31,7 @@ interface InternalValueType {
   type: ValueType;
 }
 
-export default function SizeInput({ value, onChange, className }: SizeInputProps) {
+export default function SizeInput({ value, onChange, className, id }: SizeInputProps) {
   const [internalValue, setInternalValue] = useControllableState({
     onChange: (newValue: InternalValueType) => {
       if (
@@ -98,6 +99,7 @@ export default function SizeInput({ value, onChange, className }: SizeInputProps
       {valueRequired && (
         <div className="h-full flex-1 border-e border-e-neutral-200">
           <input
+            id={id}
             value={internalValue.value ?? ''}
             placeholder="0"
             className={cn(

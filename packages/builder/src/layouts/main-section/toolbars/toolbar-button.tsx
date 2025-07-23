@@ -20,6 +20,7 @@ interface ToolbarButtonProps {
 function ToolbarButton({ Icon, disabled, onClick }: ToolbarButtonProps) {
   return (
     <button
+      type="button"
       className={cn('p-2.5 transition-all', {
         'cursor-pointer hover:bg-neutral-100': !disabled,
         'cursor-default': disabled,

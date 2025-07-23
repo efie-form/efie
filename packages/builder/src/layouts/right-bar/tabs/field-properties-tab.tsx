@@ -36,13 +36,14 @@ function FieldPropertiesTab() {
       <div className="flex items-center justify-between border-neutral-100 border-b">
         <div className="flex items-center gap-1 px-2">
           <Tooltip content="Go to parent">
-            <button className="p-1 text-neutral-700" onClick={handleGoToParent}>
+            <button type="button" className="p-1 text-neutral-700" onClick={handleGoToParent}>
               <LuCornerLeftUp className="size-3.5" />
             </button>
           </Tooltip>
           <p className="typography-body1 font-medium text-neutral-700">{FIELDS_NAME[field.type]}</p>
         </div>
         <button
+          type="button"
           className="border-neutral-100 border-s px-2 py-2 transition-all hover:bg-neutral-100"
           onClick={() => {
             clearSelectedFieldId();
