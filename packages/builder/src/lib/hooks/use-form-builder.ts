@@ -1,15 +1,10 @@
+import { FieldType, type FormSchema, validateSchema } from '@efie-form/core';
 import { useSchemaStore } from '../state/schema.state';
 import { useSettingsStore } from '../state/settings.state';
-import { FieldType, validateSchema, type FormSchema } from '@efie-form/core';
 
 export default function useFormBuilder() {
-  const {
-    setPage,
-    setFormInputs,
-    setHeight,
-    setFormKeyEditable,
-    setIsInputReusable,
-  } = useSettingsStore();
+  const { setPage, setFormInputs, setHeight, setFormKeyEditable, setIsInputReusable } =
+    useSettingsStore();
   const { schema, setSchema, setMaxHistories } = useSchemaStore();
 
   const getSchema = () => {
@@ -20,7 +15,7 @@ export default function useFormBuilder() {
     setSchema(data);
     const isValid = validateSchema(data);
     console.log('Schema is valid:', isValid, data);
-    const firstPage = data.form.fields.find(field => field.type === FieldType.PAGE);
+    const firstPage = data.form.fields.find((field) => field.type === FieldType.PAGE);
     if (firstPage) {
       setPage(firstPage.id);
     }

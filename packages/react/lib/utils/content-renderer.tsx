@@ -1,16 +1,22 @@
-import { type JSONContent } from '@tiptap/core';
-import type { RenderContentOptions, RenderDocProps, RenderHeadingProps, RenderLinkProps, RenderMarkProps, RenderNodeProps, RenderParagraphProps, RenderTextProps } from '../../types/field-props';
+import type { JSONContent } from '@tiptap/core';
 import type { ReactNode } from 'react';
+import type {
+  RenderContentOptions,
+  RenderDocProps,
+  RenderHeadingProps,
+  RenderLinkProps,
+  RenderMarkProps,
+  RenderNodeProps,
+  RenderParagraphProps,
+  RenderTextProps,
+} from '../../types/field-props';
 
 interface RenderContentProps {
   content: JSONContent;
   options?: Partial<RenderContentOptions>;
 }
 
-export default function ContentRenderer({
-  content,
-  options,
-}: RenderContentProps) {
+export default function ContentRenderer({ content, options }: RenderContentProps) {
   const text = options?.text || renderText;
   const link = options?.link || renderLink;
   const superscript = options?.superscript || renderSuperscript;
@@ -27,27 +33,25 @@ export default function ContentRenderer({
   const listItem = options?.listItem || renderListItem;
 
   return (
-    <>
-      <ContentItem
-        content={content}
-        options={{
-          text,
-          link,
-          superscript,
-          subscript,
-          paragraph,
-          heading,
-          doc,
-          bold,
-          italic,
-          underline,
-          strike,
-          bulletList,
-          orderedList,
-          listItem,
-        }}
-      />
-    </>
+    <ContentItem
+      content={content}
+      options={{
+        text,
+        link,
+        superscript,
+        subscript,
+        paragraph,
+        heading,
+        doc,
+        bold,
+        italic,
+        underline,
+        strike,
+        bulletList,
+        orderedList,
+        listItem,
+      }}
+    />
   );
 }
 
@@ -59,14 +63,15 @@ interface ContentItemProps {
 function ContentItem({ content, options }: ContentItemProps) {
   switch (content.type) {
     case 'doc': {
-      return options?.doc(
-        { children: (
+      return options?.doc({
+        children: (
           <>
             {content.content?.map((node, index) => (
               <ContentItem key={index} content={node} options={options} />
             ))}
           </>
-        ) });
+        ),
+      });
     }
     case 'paragraph': {
       return options?.paragraph({
@@ -90,14 +95,12 @@ function ContentItem({ content, options }: ContentItemProps) {
 
       if (restMarks?.length) {
         return (
-          <>
-            <Marks
-              marks={restMarks}
-              remainingMarks={content.marks}
-              textContent={textContent}
-              options={options}
-            />
-          </>
+          <Marks
+            marks={restMarks}
+            remainingMarks={content.marks}
+            textContent={textContent}
+            options={options}
+          />
         );
       }
 
@@ -182,7 +185,12 @@ function Marks({ marks, remainingMarks, textContent, options }: MarksProps) {
     case 'bold': {
       return options?.bold({
         children: (
-          <Marks marks={restMarks} remainingMarks={remainingMarks} textContent={textContent} options={options} />
+          <Marks
+            marks={restMarks}
+            remainingMarks={remainingMarks}
+            textContent={textContent}
+            options={options}
+          />
         ),
       });
     }
@@ -190,7 +198,12 @@ function Marks({ marks, remainingMarks, textContent, options }: MarksProps) {
       return options?.italic({
         children: (
           <em>
-            <Marks marks={restMarks} remainingMarks={remainingMarks} textContent={textContent} options={options} />
+            <Marks
+              marks={restMarks}
+              remainingMarks={remainingMarks}
+              textContent={textContent}
+              options={options}
+            />
           </em>
         ),
       });
@@ -199,7 +212,12 @@ function Marks({ marks, remainingMarks, textContent, options }: MarksProps) {
       return options?.underline({
         children: (
           <u>
-            <Marks marks={restMarks} remainingMarks={remainingMarks} textContent={textContent} options={options} />
+            <Marks
+              marks={restMarks}
+              remainingMarks={remainingMarks}
+              textContent={textContent}
+              options={options}
+            />
           </u>
         ),
       });
@@ -208,7 +226,12 @@ function Marks({ marks, remainingMarks, textContent, options }: MarksProps) {
       return options?.strike({
         children: (
           <s>
-            <Marks marks={restMarks} remainingMarks={remainingMarks} textContent={textContent} options={options} />
+            <Marks
+              marks={restMarks}
+              remainingMarks={remainingMarks}
+              textContent={textContent}
+              options={options}
+            />
           </s>
         ),
       });
@@ -217,7 +240,12 @@ function Marks({ marks, remainingMarks, textContent, options }: MarksProps) {
       return options?.superscript({
         children: (
           <sup>
-            <Marks marks={restMarks} remainingMarks={remainingMarks} textContent={textContent} options={options} />
+            <Marks
+              marks={restMarks}
+              remainingMarks={remainingMarks}
+              textContent={textContent}
+              options={options}
+            />
           </sup>
         ),
       });
@@ -226,7 +254,12 @@ function Marks({ marks, remainingMarks, textContent, options }: MarksProps) {
       return options?.subscript({
         children: (
           <sub>
-            <Marks marks={restMarks} remainingMarks={remainingMarks} textContent={textContent} options={options} />
+            <Marks
+              marks={restMarks}
+              remainingMarks={remainingMarks}
+              textContent={textContent}
+              options={options}
+            />
           </sub>
         ),
       });
@@ -237,7 +270,12 @@ function Marks({ marks, remainingMarks, textContent, options }: MarksProps) {
         target: currentMark.attrs?.target || '_self',
         rel: currentMark.attrs?.rel || 'noopener noreferrer',
         children: (
-          <Marks marks={restMarks} remainingMarks={remainingMarks} textContent={textContent} options={options} />
+          <Marks
+            marks={restMarks}
+            remainingMarks={remainingMarks}
+            textContent={textContent}
+            options={options}
+          />
         ),
       });
     }
@@ -283,32 +321,24 @@ const renderText = ({ text, style }: RenderTextProps) => {
 };
 
 const renderLink = ({ href, target, rel, children }: RenderLinkProps) => {
-  return <a href={href} target={target} rel={rel}>{children}</a>;
+  return (
+    <a href={href} target={target} rel={rel}>
+      {children}
+    </a>
+  );
 };
 
 const renderParagraph = ({ style, children }: RenderParagraphProps) => {
-  return (
-    <p style={style}>
-      {children}
-    </p>
-  );
+  return <p style={style}>{children}</p>;
 };
 
 const renderDoc = ({ children }: RenderDocProps) => {
-  return (
-    <>
-      {children}
-    </>
-  );
+  return <>{children}</>;
 };
 
 const renderHeading = ({ level, style, children }: RenderHeadingProps) => {
   const HeadingTag = `h${level}` as keyof JSX.IntrinsicElements;
-  return (
-    <HeadingTag style={style}>
-      {children}
-    </HeadingTag>
-  );
+  return <HeadingTag style={style}>{children}</HeadingTag>;
 };
 
 const renderSuperscript = ({ children }: RenderMarkProps) => {
@@ -337,10 +367,11 @@ const renderStrike = ({ children }: RenderMarkProps) => {
 
 const renderBulletList = ({ children }: RenderNodeProps) => {
   return (
-    <ul style={{
-      listStyleType: 'disc',
-      paddingLeft: '20px',
-    }}
+    <ul
+      style={{
+        listStyleType: 'disc',
+        paddingLeft: '20px',
+      }}
     >
       {children}
     </ul>
@@ -349,10 +380,11 @@ const renderBulletList = ({ children }: RenderNodeProps) => {
 
 const renderOrderedList = ({ children }: RenderNodeProps) => {
   return (
-    <ol style={{
-      listStyleType: 'decimal',
-      paddingLeft: '20px',
-    }}
+    <ol
+      style={{
+        listStyleType: 'decimal',
+        paddingLeft: '20px',
+      }}
     >
       {children}
     </ol>

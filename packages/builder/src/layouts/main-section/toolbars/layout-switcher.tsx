@@ -8,10 +8,12 @@ function LayoutSwitcher() {
   const isDesktop = previewDevice === 'desktop';
 
   return (
-    <div className="flex bg-neutral-50 rounded-lg overflow-hidden">
+    <div className="flex overflow-hidden rounded-lg bg-neutral-50">
       <button
-        className="p-2.5 hover:bg-neutral-100/50 transition-all"
+        type="button"
+        className="p-2.5 transition-all hover:bg-neutral-100/50"
         onClick={() => setPreviewDevice('desktop')}
+        aria-label="Switch to desktop view"
       >
         <FaDesktop
           size={16}
@@ -22,8 +24,10 @@ function LayoutSwitcher() {
         />
       </button>
       <button
+        type="button"
         className="p-2.5 hover:bg-neutral-100/50"
         onClick={() => setPreviewDevice('mobile')}
+        aria-label="Switch to mobile view"
       >
         <FaMobileScreen
           size={16}

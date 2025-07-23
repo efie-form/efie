@@ -36,12 +36,7 @@ export default defineConfig({
   // Ensure proper dependency tracking
   treeshake: true,
   // Configure watch exclusions
-  ignoreWatch: [
-    '**/node_modules/**',
-    '**/dist/**',
-    '**/*.test.{ts,tsx}',
-    '**/*.spec.{ts,tsx}',
-  ],
+  ignoreWatch: ['**/node_modules/**', '**/dist/**', '**/*.test.{ts,tsx}', '**/*.spec.{ts,tsx}'],
   // Use onSuccess to provide feedback during watch
   onSuccess: async () => {
     console.log('📦 @efie-form/builder: Build completed successfully');

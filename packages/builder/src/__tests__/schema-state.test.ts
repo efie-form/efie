@@ -1,5 +1,5 @@
-import { FieldType, PropertyType, getColorObject } from '@efie-form/core';
 import type { FormField } from '@efie-form/core';
+import { FieldType, getColorObject, PropertyType } from '@efie-form/core';
 import { createTestStore } from './test-utils';
 
 // Helper function to create Color objects from hex strings
@@ -137,7 +137,8 @@ describe('Schema State Store', () => {
       // Get the actual ID of the added field
       const blockField = store.getFieldById('block-1');
       const childrenCount = 'children' in blockField! ? blockField.children.length : 0;
-      const addedFieldId = 'children' in blockField! ? blockField.children[childrenCount - 1]?.id : undefined;
+      const addedFieldId =
+        'children' in blockField! ? blockField.children[childrenCount - 1]?.id : undefined;
 
       expect(addedFieldId).toBeDefined();
 

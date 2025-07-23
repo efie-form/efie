@@ -1,4 +1,9 @@
-import type { AbsoluteSize, RelativeSize, SizeType, SizeUnit } from '../constants/form-schema.constant';
+import type {
+  AbsoluteSize,
+  RelativeSize,
+  SizeType,
+  SizeUnit,
+} from '../constants/form-schema.constant';
 
 export interface ColorRgba {
   r: number;
@@ -56,8 +61,22 @@ export interface SizeRelative {
 export type WidthHeightSize = SizeAuto | SizeLength | SizePercentage | SizeInitial | SizeInherit;
 export type MarginSize = SizeAuto | SizeLength | SizePercentage | SizeInherit;
 export type PaddingSize = SizeLength | SizePercentage | SizeInherit;
-export type FontSize = SizeAbsolute | SizeRelative | SizeAuto | SizeLength | SizePercentage | SizeInitial | SizeInherit;
-export type Size = SizeAuto | SizeLength | SizePercentage | SizeInitial | SizeInherit | SizeAbsolute | SizeRelative;
+export type FontSize =
+  | SizeAbsolute
+  | SizeRelative
+  | SizeAuto
+  | SizeLength
+  | SizePercentage
+  | SizeInitial
+  | SizeInherit;
+export type Size =
+  | SizeAuto
+  | SizeLength
+  | SizePercentage
+  | SizeInitial
+  | SizeInherit
+  | SizeAbsolute
+  | SizeRelative;
 
 export interface BoxShadow {
   x: Size;

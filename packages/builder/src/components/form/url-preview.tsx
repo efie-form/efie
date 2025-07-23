@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { cn } from '../../lib/utils';
 
 interface UrlMetadata {
@@ -44,23 +44,23 @@ export default function UrlPreview({ url, className }: UrlPreviewProps) {
       const parser = new DOMParser();
       const doc = parser.parseFromString(html, 'text/html');
 
-      const title
-        = doc.querySelector('meta[property="og:title"]')?.getAttribute('content')
-          || doc.querySelector('meta[name="twitter:title"]')?.getAttribute('content')
-          || doc.querySelector('title')?.textContent
-          || 'Untitled';
+      const title =
+        doc.querySelector('meta[property="og:title"]')?.getAttribute('content') ||
+        doc.querySelector('meta[name="twitter:title"]')?.getAttribute('content') ||
+        doc.querySelector('title')?.textContent ||
+        'Untitled';
 
-      const description
-        = doc.querySelector('meta[property="og:description"]')?.getAttribute('content')
-          || doc.querySelector('meta[name="twitter:description"]')?.getAttribute('content')
-          || doc.querySelector('meta[name="description"]')?.getAttribute('content')
-          || '';
+      const description =
+        doc.querySelector('meta[property="og:description"]')?.getAttribute('content') ||
+        doc.querySelector('meta[name="twitter:description"]')?.getAttribute('content') ||
+        doc.querySelector('meta[name="description"]')?.getAttribute('content') ||
+        '';
 
-      let favicon
-        = doc.querySelector('link[rel="icon"]')?.getAttribute('href')
-          || doc.querySelector('link[rel="shortcut icon"]')?.getAttribute('href')
-          || doc.querySelector('link[rel="apple-touch-icon"]')?.getAttribute('href')
-          || '/favicon.ico';
+      let favicon =
+        doc.querySelector('link[rel="icon"]')?.getAttribute('href') ||
+        doc.querySelector('link[rel="shortcut icon"]')?.getAttribute('href') ||
+        doc.querySelector('link[rel="apple-touch-icon"]')?.getAttribute('href') ||
+        '/favicon.ico';
 
       // Handle relative favicon URLs
       if (favicon && !favicon.startsWith('http')) {
@@ -76,12 +76,10 @@ export default function UrlPreview({ url, className }: UrlPreviewProps) {
         favicon,
         url: targetUrl,
       });
-    }
-    catch {
+    } catch {
       setError('Failed to load preview');
       setMetadata(undefined);
-    }
-    finally {
+    } finally {
       setLoading(false);
     }
   };
@@ -100,12 +98,12 @@ export default function UrlPreview({ url, className }: UrlPreviewProps) {
 
   if (loading) {
     return (
-      <div className={cn('border border-neutral-300 rounded-lg p-3 bg-neutral-50', className)}>
+      <div className={cn('rounded-lg border border-neutral-300 bg-neutral-50 p-3', className)}>
         <div className="flex items-center space-x-3">
-          <div className="w-4 h-4 bg-neutral-300 rounded animate-pulse" />
+          <div className="h-4 w-4 animate-pulse rounded bg-neutral-300" />
           <div className="flex-1 space-y-2">
-            <div className="h-4 bg-neutral-300 rounded animate-pulse" />
-            <div className="h-3 bg-neutral-300 rounded animate-pulse w-3/4" />
+            <div className="h-4 animate-pulse rounded bg-neutral-300" />
+            <div className="h-3 w-3/4 animate-pulse rounded bg-neutral-300" />
           </div>
         </div>
       </div>
@@ -114,9 +112,9 @@ export default function UrlPreview({ url, className }: UrlPreviewProps) {
 
   if (error) {
     return (
-      <div className={cn('border border-neutral-300 rounded-lg p-3 bg-neutral-50', className)}>
+      <div className={cn('rounded-lg border border-neutral-300 bg-neutral-50 p-3', className)}>
         <div className="flex items-center space-x-3">
-          <div className="w-4 h-4 bg-neutral-400 rounded flex items-center justify-center">
+          <div className="flex h-4 w-4 items-center justify-center rounded bg-neutral-400">
             <span className="text-neutral-600 text-xs">!</span>
           </div>
           <div className="flex-1">
@@ -132,37 +130,43 @@ export default function UrlPreview({ url, className }: UrlPreviewProps) {
   }
 
   return (
-    <div className={cn('border border-neutral-300 rounded-lg p-3 bg-white hover:bg-neutral-50 transition-colors', className)}>
+    <div
+      className={cn(
+        'rounded-lg border border-neutral-300 bg-white p-3 transition-colors hover:bg-neutral-50',
+        className,
+      )}
+    >
       <div className="flex items-start space-x-3">
         <div className="flex-shrink-0">
-          {metadata.favicon
-            ? (
-                <img
-                  src={metadata.favicon}
-                  alt="Favicon"
-                  className="w-4 h-4 rounded"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.style.display = 'none';
-                  }}
-                />
-              )
-            : (
-                <div className="w-4 h-4 bg-neutral-400 rounded flex items-center justify-center">
-                  <span className="text-white text-xs">🌐</span>
-                </div>
-              )}
+          {metadata.favicon ? (
+            <img
+              src={metadata.favicon}
+              alt="Favicon"
+              className="h-4 w-4 rounded"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.style.display = 'none';
+              }}
+            />
+          ) : (
+            <div className="flex h-4 w-4 items-center justify-center rounded bg-neutral-400">
+              <span className="text-white text-xs">🌐</span>
+            </div>
+          )}
         </div>
-        <div className="flex-1 min-w-0">
-          <h4 className="typography-body3 text-neutral-800 truncate font-medium">
+        <div className="min-w-0 flex-1">
+          <h4 className="typography-body3 truncate font-medium text-neutral-800">
             {metadata.title}
           </h4>
           {metadata.description && (
-            <p className="typography-body4 text-neutral-600 mt-1 overflow-hidden text-ellipsis" style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>
+            <p
+              className="typography-body4 mt-1 overflow-hidden text-ellipsis text-neutral-600"
+              style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}
+            >
               {metadata.description}
             </p>
           )}
-          <p className="typography-body4 text-neutral-500 mt-1 truncate">
+          <p className="typography-body4 mt-1 truncate text-neutral-500">
             {formatUrl(metadata.url)}
           </p>
         </div>
@@ -171,16 +175,18 @@ export default function UrlPreview({ url, className }: UrlPreviewProps) {
             type="button"
             href={metadata.url}
             target="_blank"
-            className="w-6 h-6 rounded-md bg-neutral-100 hover:bg-neutral-200 transition-colors flex items-center justify-center group"
+            className="group flex h-6 w-6 items-center justify-center rounded-md bg-neutral-100 transition-colors hover:bg-neutral-200"
             aria-label="Open in new tab"
           >
             <svg
-              className="w-3 h-3 text-neutral-600 group-hover:text-neutral-800"
+              className="h-3 w-3 text-neutral-600 group-hover:text-neutral-800"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
+              aria-label="External link icon"
             >
+              <title>External link icon</title>
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -199,8 +205,7 @@ function isValidUrl(string: string): boolean {
   try {
     new URL(string);
     return true;
-  }
-  catch {
+  } catch {
     return false;
   }
 }
@@ -209,8 +214,7 @@ function formatUrl(url: string): string {
   try {
     const urlObj = new URL(url);
     return urlObj.hostname;
-  }
-  catch {
+  } catch {
     return url;
   }
 }

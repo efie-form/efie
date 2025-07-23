@@ -2,17 +2,12 @@ import type { Color } from '@efie-form/core';
 import { getColorObject, isColor } from '@efie-form/core';
 import * as PopoverPrimitive from '@radix-ui/react-popover';
 import type { IColor } from 'react-color-palette';
-import {
-  Alpha,
-  ColorService,
-  Hue,
-  Saturation,
-} from 'react-color-palette';
+import { Alpha, ColorService, Hue, Saturation } from 'react-color-palette';
 import 'react-color-palette/css';
-import { cn } from '../../lib/utils';
 import { useState } from 'react';
-import Select from './select';
 import { useControllableState } from '../../lib/hooks/use-controllable-state';
+import { cn } from '../../lib/utils';
+import Select from './select';
 
 type ColorValue = Color | Color['hex'] | Color['rgba'] | Color['hsla'];
 
@@ -200,10 +195,7 @@ export default function ColorPicker<T extends ColorValue>({
   const handlehexChange = (newValue: string) => {
     if (!HEX_ALLOWED_CHARS.test(newValue)) return;
 
-    const hex = '#' + newValue
-      .toUpperCase()
-      .replaceAll('#', '')
-      .slice(0, 8);
+    const hex = `#${newValue.toUpperCase().replaceAll('#', '').slice(0, 8)}`;
 
     if (!HEX_REGEX.test(hex)) return;
 
@@ -221,7 +213,11 @@ export default function ColorPicker<T extends ColorValue>({
       }}
     >
       <PopoverPrimitive.Trigger asChild>
-        <button aria-label="Open color picker" className="relative focus:outline-primary inline-block border p-[2px] border-neutral-200 rounded-sm cursor-pointer">
+        <button
+          type="button"
+          aria-label="Open color picker"
+          className="relative inline-block cursor-pointer rounded-sm border border-neutral-200 p-[2px] focus:outline-primary"
+        >
           <div
             className="size-6 rounded-sm"
             style={{
@@ -232,16 +228,12 @@ export default function ColorPicker<T extends ColorValue>({
       </PopoverPrimitive.Trigger>
       <PopoverPrimitive.Portal>
         <PopoverPrimitive.Content side="bottom" align="start" sideOffset={5}>
-          <div className="bg-white shadow-lg w-64 p-3 rounded-lg [&_.rcp-saturation]:rounded-md [&_.rcp-saturation-cursor]:h-4 [&_.rcp-saturation-cursor]:w-4 [&_.rcp-saturation-cursor]:-translate-x-2 [&_.rcp-saturation-cursor]:-translate-y-2">
-            <Saturation
-              height={128}
-              color={colorObject}
-              onChange={handleColorChange}
-            />
-            <div className="mt-5 [&_.rcp-hue]:h-1.5 [&_.rcp-hue-cursor]:h-4 [&_.rcp-hue-cursor]:w-4 [&_.rcp-hue-cursor]:-translate-x-2 [&_.rcp-hue-cursor]:-translate-y-1">
+          <div className="[&_.rcp-saturation-cursor]:-translate-x-2 [&_.rcp-saturation-cursor]:-translate-y-2 w-64 rounded-lg bg-white p-3 shadow-lg [&_.rcp-saturation-cursor]:h-4 [&_.rcp-saturation-cursor]:w-4 [&_.rcp-saturation]:rounded-md">
+            <Saturation height={128} color={colorObject} onChange={handleColorChange} />
+            <div className="[&_.rcp-hue-cursor]:-translate-x-2 [&_.rcp-hue-cursor]:-translate-y-1 mt-5 [&_.rcp-hue-cursor]:h-4 [&_.rcp-hue-cursor]:w-4 [&_.rcp-hue]:h-1.5">
               <Hue color={colorObject} onChange={handleColorChange} />
             </div>
-            <div className="mt-5 [&_.rcp-alpha]:h-1.5 [&_.rcp-alpha-cursor]:h-4 [&_.rcp-alpha-cursor]:w-4 [&_.rcp-alpha-cursor]:-translate-x-2 [&_.rcp-alpha-cursor]:-translate-y-1">
+            <div className="[&_.rcp-alpha-cursor]:-translate-x-2 [&_.rcp-alpha-cursor]:-translate-y-1 mt-5 [&_.rcp-alpha-cursor]:h-4 [&_.rcp-alpha-cursor]:w-4 [&_.rcp-alpha]:h-1.5">
               <Alpha color={colorObject} onChange={handleColorChange} />
             </div>
             {/* Color Mode Selector */}
@@ -257,7 +249,7 @@ export default function ColorPicker<T extends ColorValue>({
             </div>
 
             {/* Input Fields Based on Selected Mode */}
-            <div className="flex gap-2 mt-3">
+            <div className="mt-3 flex gap-2">
               {colorMode === 'hex' && (
                 <div className="flex-1">
                   <input
@@ -274,7 +266,7 @@ export default function ColorPicker<T extends ColorValue>({
               )}
 
               {colorMode === 'rgba' && (
-                <div className="flex gap-1 w-full">
+                <div className="flex w-full gap-1">
                   <div className="flex-1">
                     <input
                       type="text"
@@ -319,12 +311,11 @@ export default function ColorPicker<T extends ColorValue>({
                     />
                     <p className="typography-body4 text-center">a</p>
                   </div>
-
                 </div>
               )}
 
               {colorMode === 'hsla' && (
-                <div className="flex gap-1 w-full">
+                <div className="flex w-full gap-1">
                   <div className="flex-1">
                     <input
                       type="text"

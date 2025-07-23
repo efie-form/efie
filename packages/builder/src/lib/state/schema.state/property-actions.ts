@@ -11,12 +11,11 @@ export function createPropertyActions({ set, getState }: StateSetters) {
       if (!field) return;
 
       const newProps = [...field.props] as PropertyDefinition[];
-      const existingIndex = newProps.findIndex(p => p.type === property.type);
+      const existingIndex = newProps.findIndex((p) => p.type === property.type);
 
       if (existingIndex === -1) {
         newProps.push(property);
-      }
-      else {
+      } else {
         newProps[existingIndex] = property;
       }
 
@@ -58,7 +57,7 @@ export function createPropertyActions({ set, getState }: StateSetters) {
       const field = getState().fieldMap.get(fieldId);
       if (!field) return;
 
-      const existingIndex = field.props.findIndex(p => p.type === property.type);
+      const existingIndex = field.props.findIndex((p) => p.type === property.type);
       if (existingIndex === -1) {
         getState().updateFieldProperty(fieldId, property);
       }
@@ -69,7 +68,7 @@ export function createPropertyActions({ set, getState }: StateSetters) {
       const field = getState().fieldMap.get(fieldId);
       if (!field) return;
 
-      const newProps = field.props.filter(p => p.type !== propertyType);
+      const newProps = field.props.filter((p) => p.type !== propertyType);
 
       const updateFieldInSchema = (fields: FormField[]): FormField[] => {
         return fields.map((f) => {
@@ -129,7 +128,7 @@ export function createPropertyActions({ set, getState }: StateSetters) {
       const field = fieldMap.get(fieldId);
       if (!field) return;
 
-      const prop = field.props.find(prop => prop.type === type);
+      const prop = field.props.find((prop) => prop.type === type);
       return prop as Extract<PropertyDefinition, { type: T }> | undefined;
     },
 

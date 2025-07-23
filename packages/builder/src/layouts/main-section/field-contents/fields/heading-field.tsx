@@ -1,20 +1,17 @@
-import {
-  PropertyType,
-  type HeadingFormField,
-} from '@efie-form/core';
+import { type HeadingFormField, PropertyType } from '@efie-form/core';
 import { RichTextEditor } from '../../../../components/rich-text-editor';
-import { useSettingsStore } from '../../../../lib/state/settings.state';
 import { useSchemaStore } from '../../../../lib/state/schema.state';
+import { useSettingsStore } from '../../../../lib/state/settings.state';
 
 interface HeadingFieldProps {
   field: HeadingFormField;
 }
 
 function HeadingField({ field }: HeadingFieldProps) {
-  const content = useSchemaStore(state => state.getFieldProperty(field.id, PropertyType.CONTENT));
-  const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
+  const content = useSchemaStore((state) => state.getFieldProperty(field.id, PropertyType.CONTENT));
+  const updateFieldProperty = useSchemaStore((state) => state.updateFieldProperty);
   const { selectedFieldId } = useSettingsStore();
-  const config = useSettingsStore(state => state.config.heading);
+  const config = useSettingsStore((state) => state.config.heading);
 
   return (
     <div>

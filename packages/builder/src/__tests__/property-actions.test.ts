@@ -1,6 +1,6 @@
-import { getColorObject, PropertyType, SizeType } from '@efie-form/core';
 import type { PropertyDefinition, Size } from '@efie-form/core';
-import { createTestStore, createPropertyTestSchema } from './test-utils';
+import { getColorObject, PropertyType, SizeType } from '@efie-form/core';
+import { createPropertyTestSchema, createTestStore } from './test-utils';
 
 // Helper function to create Color objects from hex strings
 const createColor = (hex: string) => getColorObject(hex);
@@ -176,8 +176,8 @@ describe('Property Actions', () => {
     it('should return all properties for a field', () => {
       const properties = store.getFieldProperties('block-1');
       expect(properties).toHaveLength(2);
-      expect(properties.map(p => p.type)).toContain(PropertyType.BACKGROUND_COLOR);
-      expect(properties.map(p => p.type)).toContain(PropertyType.COLOR);
+      expect(properties.map((p) => p.type)).toContain(PropertyType.BACKGROUND_COLOR);
+      expect(properties.map((p) => p.type)).toContain(PropertyType.COLOR);
     });
 
     it('should return empty array for non-existent field', () => {

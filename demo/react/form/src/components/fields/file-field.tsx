@@ -8,13 +8,8 @@ function FileField({ id, fieldLabel }: FileFieldProps) {
         marginTop: '1rem',
       }}
     >
-      <label htmlFor={id}>
-        {fieldLabel}
-      </label>
-      <input
-        type="file"
-        id={id}
-      />
+      <label htmlFor={id}>{fieldLabel}</label>
+      <input type="file" id={id} />
     </Box>
   );
 }

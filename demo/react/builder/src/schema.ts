@@ -1,4 +1,4 @@
-import { type FormSchema } from '@efie-form/react';
+import type { FormSchema } from '@efie-form/react';
 
 export const schema: FormSchema = {
   version: 'v1',

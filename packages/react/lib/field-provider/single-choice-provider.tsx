@@ -1,7 +1,7 @@
+import { PropertyType, type SingleChoiceFormField } from '@efie-form/core';
 import type { ElementType } from 'react';
 import { createElement } from 'react';
 import type { SingleChoiceFieldProps } from '../../types/field-props';
-import { PropertyType, type SingleChoiceFormField } from '@efie-form/core';
 
 interface SingleChoiceProviderProps {
   field: SingleChoiceFormField;
@@ -18,8 +18,8 @@ function SingleChoiceProvider({
 }: SingleChoiceProviderProps) {
   if (!Component) return <></>;
 
-  const label = field.props.find(prop => prop.type === PropertyType.LABEL);
-  const options = field.props.find(prop => prop.type === PropertyType.OPTIONS);
+  const label = field.props.find((prop) => prop.type === PropertyType.LABEL);
+  const options = field.props.find((prop) => prop.type === PropertyType.OPTIONS);
 
   return createElement(Component, {
     id: field.id,
@@ -28,7 +28,7 @@ function SingleChoiceProvider({
     onChange,
     fieldLabel: label?.value || '',
     options: options?.value
-      ? options.value.map(opt => ({
+      ? options.value.map((opt) => ({
           label: opt.label,
           value: opt.value,
         }))

@@ -1,4 +1,22 @@
-import type { ShortTextFormField, LongTextFormField, NumberFormField, MultipleChoiceFormField, TimeFormField, DateFormField, SingleChoiceFormField, DateTimeFormField, FileFormField, BlockFormField, RowFormField, ColumnFormField, ImageFormField, HeadingFormField, ButtonFormField, PageFormField, DividerFormField } from '@efie-form/core';
+import type {
+  BlockFormField,
+  ButtonFormField,
+  ColumnFormField,
+  DateFormField,
+  DateTimeFormField,
+  DividerFormField,
+  FileFormField,
+  HeadingFormField,
+  ImageFormField,
+  LongTextFormField,
+  MultipleChoiceFormField,
+  NumberFormField,
+  PageFormField,
+  RowFormField,
+  ShortTextFormField,
+  SingleChoiceFormField,
+  TimeFormField,
+} from '@efie-form/core';
 import { FieldType, PropertyType, SizeType } from '@efie-form/core';
 import { generateId } from './utils';
 
@@ -39,7 +57,9 @@ interface GetDefaultFieldReturn {
   divider: DividerFormField;
 }
 
-export function getDefaultField<T extends FieldType>(props: GetDefaultFieldProps<T>): GetDefaultFieldReturn[T];
+export function getDefaultField<T extends FieldType>(
+  props: GetDefaultFieldProps<T>,
+): GetDefaultFieldReturn[T];
 export function getDefaultField<T extends FieldType>({
   type,
   page,
@@ -354,7 +374,7 @@ export function getDefaultField<T extends FieldType>({
       throw new Error(`Unsupported field type: ${type}`);
     }
   }
-};
+}
 
 function generateJsonContent(label: string) {
   return {

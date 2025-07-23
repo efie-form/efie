@@ -1,6 +1,6 @@
-import { FieldType, PropertyType } from '@efie-form/core';
 import type { FormField } from '@efie-form/core';
-import { createTestStore, createComplexTestSchema } from './test-utils';
+import { FieldType, PropertyType } from '@efie-form/core';
+import { createComplexTestSchema, createTestStore } from './test-utils';
 
 describe('Field Actions', () => {
   let useStore: ReturnType<typeof createTestStore>;

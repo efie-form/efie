@@ -19,12 +19,6 @@
     "declarationDir": "./dist",
     "emitDeclarationOnly": true
   },
-  "include": [
-    "lib/**/*.ts",
-    "lib/**/*.d.ts",
-    "lib/**/*.tsx",
-    "lib/**/*.vue",
-    "index.ts"
-  ],
+  "include": ["lib/**/*.ts", "lib/**/*.d.ts", "lib/**/*.tsx", "lib/**/*.vue", "index.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

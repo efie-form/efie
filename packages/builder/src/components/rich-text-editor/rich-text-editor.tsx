@@ -1,31 +1,31 @@
+import { Bold } from '@tiptap/extension-bold';
+import { BulletList } from '@tiptap/extension-bullet-list';
+import { Color } from '@tiptap/extension-color';
+import { Document } from '@tiptap/extension-document';
+import { Heading, type Level } from '@tiptap/extension-heading';
+import { History } from '@tiptap/extension-history';
+import { Italic } from '@tiptap/extension-italic';
+import { Link } from '@tiptap/extension-link';
+import { ListItem } from '@tiptap/extension-list-item';
+import { OrderedList } from '@tiptap/extension-ordered-list';
+import { Paragraph } from '@tiptap/extension-paragraph';
+import { Placeholder } from '@tiptap/extension-placeholder';
+import { Strike } from '@tiptap/extension-strike';
+import { Subscript } from '@tiptap/extension-subscript';
+import { Superscript } from '@tiptap/extension-superscript';
+import Text from '@tiptap/extension-text';
+import { TextAlign } from '@tiptap/extension-text-align';
+import TextStyle from '@tiptap/extension-text-style';
+import { Underline } from '@tiptap/extension-underline';
 import type { Content, Extensions, JSONContent } from '@tiptap/react';
 import { EditorContent, useEditor } from '@tiptap/react';
-import { Bold } from '@tiptap/extension-bold';
-import { Italic } from '@tiptap/extension-italic';
-import { Underline } from '@tiptap/extension-underline';
-import { Strike } from '@tiptap/extension-strike';
-import { Heading, type Level } from '@tiptap/extension-heading';
-import { Document } from '@tiptap/extension-document';
-import { Paragraph } from '@tiptap/extension-paragraph';
-import { BulletList } from '@tiptap/extension-bullet-list';
-import { OrderedList } from '@tiptap/extension-ordered-list';
-import { ListItem } from '@tiptap/extension-list-item';
-import { Link } from '@tiptap/extension-link';
-import { TextAlign } from '@tiptap/extension-text-align';
-import { Superscript } from '@tiptap/extension-superscript';
-import { Subscript } from '@tiptap/extension-subscript';
-import { History } from '@tiptap/extension-history';
-import { Color } from '@tiptap/extension-color';
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
-import { Placeholder } from '@tiptap/extension-placeholder';
 import { usePopper } from 'react-popper';
-import { FontSize, type FontSizeOptions } from './extensions';
 import { EditorToolbar } from './';
-import Text from '@tiptap/extension-text';
-import type { RichTextEditorOptions } from './type';
-import TextStyle from '@tiptap/extension-text-style';
+import { FontSize, type FontSizeOptions } from './extensions';
 import { defaultFontSizes } from './extensions/font-size';
+import type { RichTextEditorOptions } from './type';
 
 interface RichTextEditorProps {
   value: JSONContent;
@@ -56,19 +56,11 @@ function RichTextEditor({
     },
   });
 
-  const [referenceElement, setReferenceElement] = useState<
-    HTMLDivElement | undefined
-  >();
-  const [popperElement, setPopperElement] = useState<
-    HTMLDivElement | undefined
-  >();
-  const { styles, attributes: popperAttributes } = usePopper(
-    referenceElement,
-    popperElement,
-    {
-      placement: 'top-start',
-    },
-  );
+  const [referenceElement, setReferenceElement] = useState<HTMLDivElement | undefined>();
+  const [popperElement, setPopperElement] = useState<HTMLDivElement | undefined>();
+  const { styles, attributes: popperAttributes } = usePopper(referenceElement, popperElement, {
+    placement: 'top-start',
+  });
 
   function getExtensions(options?: RichTextEditorOptions) {
     const extensions: Extensions = [
@@ -119,11 +111,10 @@ function RichTextEditor({
     if (options?.superscript) extensions.push(Superscript);
     if (options?.subscript) extensions.push(Subscript);
     if (options?.heading) {
-      const headingLevels: Level[] = options.heading === true
-        ? [1, 2, 3]
-        : options.heading.options.map(option => option.level).filter(
-            level => level !== 0,
-          );
+      const headingLevels: Level[] =
+        options.heading === true
+          ? [1, 2, 3]
+          : options.heading.options.map((option) => option.level).filter((level) => level !== 0);
       extensions.push(
         Heading.configure({
           levels: headingLevels,
@@ -136,44 +127,43 @@ function RichTextEditor({
         sizes: defaultFontSizes,
       };
       if (typeof options.fontSize === 'object' && options.fontSize.options) {
-        fontSizeOptions.sizes = options.fontSize.options.map(option => option.size);
+        fontSizeOptions.sizes = options.fontSize.options.map((option) => option.size);
       }
-      extensions.push(
-        FontSize.configure(fontSizeOptions),
-      );
+      extensions.push(FontSize.configure(fontSizeOptions));
     }
 
     return extensions;
-  };
+  }
 
   if (!editor) return;
 
   return (
     <div
-      className="relative rich-text-editor"
+      className="rich-text-editor relative"
       ref={(el) => {
         if (el) setReferenceElement(el);
       }}
     >
       <EditorContent editor={editor} />
-      {active && (() => {
-        const formZone = document.querySelector('body');
-        if (!formZone) return;
+      {active &&
+        (() => {
+          const formZone = document.querySelector('body');
+          if (!formZone) return;
 
-        return createPortal(
-          <div
-            ref={(el) => {
-              if (el) setPopperElement(el);
-            }}
-            style={styles.popper}
-            className="z-[99]"
-            {...popperAttributes.popper}
-          >
-            <EditorToolbar editor={editor} options={options} />
-          </div>,
-          formZone,
-        );
-      })()}
+          return createPortal(
+            <div
+              ref={(el) => {
+                if (el) setPopperElement(el);
+              }}
+              style={styles.popper}
+              className="z-[99]"
+              {...popperAttributes.popper}
+            >
+              <EditorToolbar editor={editor} options={options} />
+            </div>,
+            formZone,
+          );
+        })()}
     </div>
   );
 }

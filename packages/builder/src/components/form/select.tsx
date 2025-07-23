@@ -26,13 +26,13 @@ function Select<T extends string>({
     <select
       disabled={disabled}
       value={inputValue}
-      onChange={e => setInputValue(e.target.value as T)}
+      onChange={(e) => setInputValue(e.target.value as T)}
       className={cn(
-        'w-full border border-neutral-200 text-neutral-800 rounded-md bg-white outline-none typography-body3 py-1 px-1',
+        'typography-body3 w-full rounded-md border border-neutral-200 bg-white px-1 py-1 text-neutral-800 outline-none',
         className,
       )}
     >
-      {options?.map(option => (
+      {options?.map((option) => (
         <option key={option.value} value={option.value}>
           {option.label}
         </option>

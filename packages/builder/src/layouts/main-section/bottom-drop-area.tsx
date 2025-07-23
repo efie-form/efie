@@ -1,8 +1,8 @@
+import { dropTargetForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
+import { attachInstruction } from '@atlaskit/pragmatic-drag-and-drop-hitbox/list-item';
 import { useEffect, useRef, useState } from 'react';
 import invariant from 'tiny-invariant';
-import { dropTargetForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
 import useDropField from '../../lib/hooks/use-drop-field';
-import { attachInstruction } from '@atlaskit/pragmatic-drag-and-drop-hitbox/list-item';
 
 interface BottomDropAreaProps {
   parentId: string;
@@ -25,15 +25,18 @@ export default function BottomDropArea({ parentId, totalChildren }: BottomDropAr
     return dropTargetForElements({
       element,
       getData: ({ element, input }) => {
-        return attachInstruction({}, {
-          element,
-          input,
-          operations: {
-            'reorder-before': 'available',
-            'reorder-after': 'not-available',
-            'combine': 'not-available',
+        return attachInstruction(
+          {},
+          {
+            element,
+            input,
+            operations: {
+              'reorder-before': 'available',
+              'reorder-after': 'not-available',
+              combine: 'not-available',
+            },
           },
-        });
+        );
       },
       onDrop: (payload) => {
         setIsDraggedOver(false);
@@ -46,19 +49,13 @@ export default function BottomDropArea({ parentId, totalChildren }: BottomDropAr
         setIsDraggedOver(false);
       },
     });
-  }, [parentId, totalChildren]);
+  }, [handleDrop]);
 
   return (
-    <div
-      ref={ref}
-      className="min-h-64 w-full h-full relative"
-    >
-
+    <div ref={ref} className="relative h-full min-h-64 w-full">
       {isDraggedOver && (
-        <div
-          className="absolute z-[999] left-0 right-0 h-1 bg-primary-400 rounded-full top-0 -translate-y-1/2"
-        >
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-primary-400 rounded-full px-3 py-1">
+        <div className="-translate-y-1/2 absolute top-0 right-0 left-0 z-[999] h-1 rounded-full bg-primary-400">
+          <div className="-translate-x-1/2 -translate-y-1/2 absolute top-0 left-1/2 rounded-full bg-primary-400 px-3 py-1">
             <p className="typography-body3 text-neutral-50">Drop here</p>
           </div>
         </div>

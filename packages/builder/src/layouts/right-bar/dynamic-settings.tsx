@@ -1,19 +1,19 @@
 import type { PropSettings } from '../../types/prop-settings.type';
 import PropsSettingsAccept from './property-settings/props-settings-accept';
+import PropsSettingsBorderRadius from './property-settings/props-settings-border-radius';
+import PropsSettingsBoxShadow from './property-settings/props-settings-box-shadow';
+import PropsSettingsButtonAction from './property-settings/props-settings-button-action';
 import PropsSettingsFormKey from './property-settings/props-settings-form-key';
+import PropsSettingsMargin from './property-settings/props-settings-margin';
 import PropsSettingsOptions from './property-settings/props-settings-options';
+import PropsSettingsPadding from './property-settings/props-settings-padding';
+import PropsSettingsSelect from './property-settings/props-settings-select';
 import PropsTemplateBoolean from './property-templates/props-template-boolean';
 import PropsTemplateColor from './property-templates/props-template-color';
 import PropsTemplateImageUrl from './property-templates/props-template-image-url';
 import PropsTemplateNumber from './property-templates/props-template-number';
-import PropsTemplateText from './property-templates/props-template-text';
 import { PropsTemplateSize } from './property-templates/props-template-size';
-import PropsSettingsBorderRadius from './property-settings/props-settings-border-radius';
-import PropsSettingsMargin from './property-settings/props-settings-margin';
-import PropsSettingsPadding from './property-settings/props-settings-padding';
-import PropsSettingsBoxShadow from './property-settings/props-settings-box-shadow';
-import PropsSettingsSelect from './property-settings/props-settings-select';
-import PropsSettingsButtonAction from './property-settings/props-settings-button-action';
+import PropsTemplateText from './property-templates/props-template-text';
 
 interface DynamicSettingsProps {
   settings?: PropSettings[];
@@ -24,19 +24,11 @@ export default function DynamicSettings({ settings, fieldId }: DynamicSettingsPr
   return (
     <>
       {settings?.map((setting, index) => {
-        return (
-          <DynamicSettingsType
-            key={index}
-            settings={setting}
-            fieldId={fieldId}
-          />
-        );
+        return <DynamicSettingsType key={index} settings={setting} fieldId={fieldId} />;
       })}
       {settings?.length === 0 && (
-        <div className="flex justify-center mt-4">
-          <p className="typography-body2 text-neutral-600">
-            No settings available for this field.
-          </p>
+        <div className="mt-4 flex justify-center">
+          <p className="typography-body2 text-neutral-600">No settings available for this field.</p>
         </div>
       )}
     </>

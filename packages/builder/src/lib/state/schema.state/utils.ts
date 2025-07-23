@@ -27,11 +27,7 @@ export function getFieldInfoMap(
   fieldMap.clear();
   fieldParentMap.clear();
 
-  const buildMaps = (
-    currentFields: FormField[],
-    currentKey: string,
-    parentId?: string,
-  ) => {
+  const buildMaps = (currentFields: FormField[], currentKey: string, parentId?: string) => {
     for (const [i, field] of currentFields.entries()) {
       const fieldPath = `${currentKey}.${i}`;
 
@@ -75,7 +71,7 @@ export function updateFieldInMaps(
 export function findFieldInTree(
   fields: FormField[],
   fieldId: string,
-  callback: (field: FormField, index: number, parent?: FormField) => FormField | void,
+  callback: (field: FormField, index: number, parent?: FormField) => FormField | undefined,
   parent?: FormField,
 ): FormField[] {
   const newFields = [...fields];
@@ -104,12 +100,9 @@ export function findFieldInTree(
 }
 
 // Helper function to remove field from tree structure efficiently
-export function removeFieldFromTree(
-  fields: FormField[],
-  fieldId: string,
-): FormField[] {
+export function removeFieldFromTree(fields: FormField[], fieldId: string): FormField[] {
   return fields
-    .filter(field => field.id !== fieldId)
+    .filter((field) => field.id !== fieldId)
     .map((field) => {
       if ('children' in field && field.children) {
         field.children = removeFieldFromTree(field.children, fieldId);
@@ -130,8 +123,7 @@ export function addFieldToTree(
     const newFields = [...fields];
     if (index !== undefined && index >= 0 && index <= newFields.length) {
       newFields.splice(index, 0, newField);
-    }
-    else {
+    } else {
       newFields.push(newField);
     }
     return newFields;
@@ -143,8 +135,7 @@ export function addFieldToTree(
       const newChildren = [...field.children];
       if (index !== undefined && index >= 0 && index <= newChildren.length) {
         newChildren.splice(index, 0, newField);
-      }
-      else {
+      } else {
         newChildren.push(newField);
       }
       return { ...field, children: newChildren } as FormField;

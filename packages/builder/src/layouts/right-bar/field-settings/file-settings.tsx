@@ -1,6 +1,6 @@
-import { PropertyType, type FileFormField } from '@efie-form/core';
-import DynamicSettings from '../dynamic-settings';
+import { type FileFormField, PropertyType } from '@efie-form/core';
 import CategoryHeader from '../../../components/elements/category-header';
+import DynamicSettings from '../dynamic-settings';
 
 interface FileSettingsProps {
   field: FileFormField;

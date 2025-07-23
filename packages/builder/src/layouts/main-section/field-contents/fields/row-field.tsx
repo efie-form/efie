@@ -1,8 +1,8 @@
 import type { RowFormField } from '@efie-form/core';
-import RenderField from '../render-field';
+import { FieldType, PropertyType, widthToStyle } from '@efie-form/core';
 import { useSettingsStore } from '../../../../lib/state/settings.state';
 import { cn, getFieldProp } from '../../../../lib/utils';
-import { FieldType, PropertyType, widthToStyle } from '@efie-form/core';
+import RenderField from '../render-field';
 
 interface RowFieldProps {
   field: RowFormField;
@@ -15,13 +15,13 @@ function RowField({ field }: RowFieldProps) {
 
   return (
     <div
-      className={cn('flex relative items-start content-start p-2', {
+      className={cn('relative flex content-start items-start p-2', {
         'flex-col': isMobile,
       })}
     >
       {field.children
         .filter(Boolean)
-        .filter(child => child.type === FieldType.COLUMN)
+        .filter((child) => child.type === FieldType.COLUMN)
         .map((child, index) => (
           <div
             key={`${field.id}-${child.id}`}
@@ -32,12 +32,7 @@ function RowField({ field }: RowFieldProps) {
             }}
             className="self-stretch"
           >
-            <RenderField
-              field={child}
-              noSelect
-              parentId={field.id}
-              childIndex={index}
-            />
+            <RenderField field={child} noSelect parentId={field.id} childIndex={index} />
           </div>
         ))}
     </div>

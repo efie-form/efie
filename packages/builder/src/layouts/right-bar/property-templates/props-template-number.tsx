@@ -1,16 +1,21 @@
+import { isNumberValue, type PropertyDefinition, type PropValue } from '@efie-form/core';
 import { Input } from '../../../components/form';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import type { PropSettingsNumber } from '../../../types/prop-settings.type';
 import SettingsFieldHorizontal from '../property-layouts/settings-field-horizontal';
-import { isNumberValue, type PropertyDefinition, type PropValue } from '@efie-form/core';
 
 interface PropsTemplateNumberProps extends PropSettingsNumber {
   fieldId: string;
 }
 
-export default function PropsTemplateNumber({ fieldId, label, type, placeholder }: PropsTemplateNumberProps) {
-  const fieldProperty = useSchemaStore(state => state.getFieldProperty(fieldId, type));
-  const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
+export default function PropsTemplateNumber({
+  fieldId,
+  label,
+  type,
+  placeholder,
+}: PropsTemplateNumberProps) {
+  const fieldProperty = useSchemaStore((state) => state.getFieldProperty(fieldId, type));
+  const updateFieldProperty = useSchemaStore((state) => state.updateFieldProperty);
   const value = getValue(fieldProperty?.value);
 
   const handleChange = (newValue: string) => {
@@ -18,19 +23,14 @@ export default function PropsTemplateNumber({ fieldId, label, type, placeholder 
     const parsedValue = Number.parseFloat(trimmedValue);
     if (Number.isNaN(parsedValue)) {
       updateFieldProperty(fieldId, { type } as PropertyDefinition);
-    }
-    else {
+    } else {
       updateFieldProperty(fieldId, { type, value: parsedValue } as PropertyDefinition);
     }
   };
 
   return (
     <SettingsFieldHorizontal label={label} divider>
-      <Input
-        placeholder={placeholder}
-        value={value}
-        onChange={handleChange}
-      />
+      <Input placeholder={placeholder} value={value} onChange={handleChange} />
     </SettingsFieldHorizontal>
   );
 }

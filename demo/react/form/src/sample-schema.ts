@@ -1,4 +1,4 @@
-import { type FormSchema } from '@efie-form/react';
+import type { FormSchema } from '@efie-form/react';
 
 export const sampleSchema: FormSchema = {
   version: 'v1',
@@ -14,7 +14,8 @@ export const sampleSchema: FormSchema = {
             props: [
               {
                 type: 'src',
-                value: 'https://fastly.picsum.photos/id/908/1280/320.jpg?hmac=KJYy8NERkpk7Ov7atqyTLOI4xzW2X9Q-8hfS7IG96to',
+                value:
+                  'https://fastly.picsum.photos/id/908/1280/320.jpg?hmac=KJYy8NERkpk7Ov7atqyTLOI4xzW2X9Q-8hfS7IG96to',
               },
               {
                 type: 'alt',
@@ -552,13 +553,7 @@ export const sampleSchema: FormSchema = {
                 type: 'accept',
                 value: {
                   allowAll: false,
-                  formats: [
-                    '.pdf',
-                    '.jpg',
-                    '.jpeg',
-                    '.png',
-                    '.gif',
-                  ],
+                  formats: ['.pdf', '.jpg', '.jpeg', '.png', '.gif'],
                 },
               },
             ],

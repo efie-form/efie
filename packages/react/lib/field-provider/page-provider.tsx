@@ -1,9 +1,9 @@
+import type { PageFormField } from '@efie-form/core';
 import type { ElementType } from 'react';
 import { createElement } from 'react';
 import type { FieldProps, FieldPropsMap } from '../../types/field-props';
-import { type PageFormField } from '@efie-form/core';
-import RenderField from '../render-field';
 import { useFormContext } from '../form-context';
+import RenderField from '../render-field';
 
 interface PageProviderProps extends Partial<FieldPropsMap> {
   field: PageFormField;
@@ -19,7 +19,7 @@ function PageProvider({ field, Component, ...props }: PageProviderProps) {
     field: field,
     children: (
       <>
-        {field.children.map(field => (
+        {field.children.map((field) => (
           <RenderField key={field.id} field={field} {...props} />
         ))}
       </>

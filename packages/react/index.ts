@@ -1,26 +1,26 @@
-export { default as FormBuilder } from './lib/form-builder/form-builder';
 export type { FormSchema } from '@efie-form/core';
-export { default as ReactForm } from './lib/form';
-export { FormProvider } from './lib/components/form-provider';
-export type { FormBuilderRef } from './lib/form-builder/form-builder';
 export { FieldType } from '@efie-form/core';
+export { FormProvider } from './lib/components/form-provider';
+export { default as ReactForm } from './lib/form';
+export type { FormBuilderRef } from './lib/form-builder/form-builder';
+export { default as FormBuilder } from './lib/form-builder/form-builder';
 export type {
-  ShortTextFieldProps,
-  LongTextFieldProps,
-  NumberFieldProps,
-  SingleChoiceFieldProps,
+  BlockFieldProps,
+  ButtonFieldProps,
+  ColumnFieldProps,
   DateFieldProps,
   DateTimeFieldProps,
-  TimeFieldProps,
   DividerFieldProps,
-  FileFieldProps,
-  BlockFieldProps,
-  ColumnFieldProps,
-  RowFieldProps,
-  ButtonFieldProps,
   FieldPropsMap,
+  FileFieldProps,
   HeadingFieldProps,
   ImageFieldProps,
-  PageFieldProps,
+  LongTextFieldProps,
   MultipleChoicesFieldProps,
+  NumberFieldProps,
+  PageFieldProps,
+  RowFieldProps,
+  ShortTextFieldProps,
+  SingleChoiceFieldProps,
+  TimeFieldProps,
 } from './types/field-props';

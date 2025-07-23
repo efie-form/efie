@@ -14,14 +14,15 @@ const hue2rgb = (p: number, q: number, t: number): number => {
 jest.mock('color-convert', () => ({
   rgb: {
     hsl: (rgb: number[]): number[] => {
-      const [r, g, b] = rgb.map(v => v / 255);
+      const [r, g, b] = rgb.map((v) => v / 255);
       const max = Math.max(r, g, b);
       const min = Math.min(r, g, b);
       const diff = max - min;
       const sum = max + min;
       const l = sum / 2;
 
-      let h = 0, s = 0;
+      let h = 0,
+        s = 0;
       if (diff !== 0) {
         s = l > 0.5 ? diff / (2 - sum) : diff / sum;
         switch (max) {
@@ -48,11 +49,10 @@ jest.mock('color-convert', () => ({
     rgb: (hsl: number[]): number[] => {
       const [h, s, l] = [hsl[0] / 360, hsl[1] / 100, hsl[2] / 100];
 
-      let r, g, b;
+      let r: number, g: number, b: number;
       if (s === 0) {
         r = g = b = l;
-      }
-      else {
+      } else {
         const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
         const p = 2 * l - q;
         r = hue2rgb(p, q, h + 1 / 3);

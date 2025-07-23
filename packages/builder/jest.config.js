@@ -10,12 +10,8 @@ const jestConfig = {
     '^@/(.*)$': '<rootDir>/src/$1',
     '^color-convert$': '<rootDir>/src/__mocks__/color-convert.ts',
   },
-  transformIgnorePatterns: [
-    'node_modules/(?!(color-convert)/)',
-  ],
-  testMatch: [
-    '<rootDir>/src/**/*.{test,spec}.{js,jsx,ts,tsx}',
-  ],
+  transformIgnorePatterns: ['node_modules/(?!(color-convert)/)'],
+  testMatch: ['<rootDir>/src/**/*.{test,spec}.{js,jsx,ts,tsx}'],
   collectCoverageFrom: [
     'src/**/*.{js,jsx,ts,tsx}',
     '!src/**/*.d.ts',
@@ -36,12 +32,15 @@ const jestConfig = {
   //   },
   // },
   transform: {
-    '^.+\\.tsx?$': ['ts-jest', {
-      useESM: true,
-      tsconfig: {
-        verbatimModuleSyntax: false,
+    '^.+\\.tsx?$': [
+      'ts-jest',
+      {
+        useESM: true,
+        tsconfig: {
+          verbatimModuleSyntax: false,
+        },
       },
-    }],
+    ],
   },
 };
 

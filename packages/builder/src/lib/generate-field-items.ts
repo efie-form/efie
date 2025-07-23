@@ -1,11 +1,7 @@
-import {
-  fieldGroup,
-  fieldIcons,
-  type FieldsTabGroup,
-} from './fields-tab/fields';
-import { isValidFieldType } from './utils';
+import { type FieldsTabGroup, fieldGroup, fieldIcons } from './fields-tab/fields';
 import { useSchemaStore } from './state/schema.state';
 import { useSettingsStore } from './state/settings.state';
+import { isValidFieldType } from './utils';
 
 const generateFieldItems = () => {
   const { fieldMap } = useSchemaStore.getState();
@@ -17,15 +13,13 @@ const generateFieldItems = () => {
     children: [],
   };
 
-  const validFormInputs = formInputs?.filter(input =>
-    isValidFieldType(input.type),
-  );
+  const validFormInputs = formInputs?.filter((input) => isValidFieldType(input.type));
 
   if (validFormInputs?.length > 0) {
     for (const input of validFormInputs) {
       const isInputUsed = fields
-        .filter(field => 'form' in field)
-        .some(field => field.form.key === input.id);
+        .filter((field) => 'form' in field)
+        .some((field) => field.form.key === input.id);
 
       inputGroups.children.push({
         label: input.label,
@@ -35,8 +29,7 @@ const generateFieldItems = () => {
         disabled: !isInputReusable && isInputUsed,
       });
     }
-  }
-  else {
+  } else {
     inputGroups.children.push(...fieldGroup.inputs.children);
   }
 

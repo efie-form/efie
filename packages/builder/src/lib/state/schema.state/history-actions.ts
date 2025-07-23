@@ -21,8 +21,7 @@ export function createHistoryActions({ set, getState }: StateSetters) {
           totalHistories: newHistories.length,
           currentHistoryIndex: newCurrentIndex,
         });
-      }
-      else {
+      } else {
         set({ maxHistories });
       }
     },
@@ -64,8 +63,7 @@ export function createHistoryActions({ set, getState }: StateSetters) {
 
       if (skipDebounce) {
         addToHistory();
-      }
-      else {
+      } else {
         // Use shorter debounce for better user experience (100ms instead of 250ms)
         debounce(addToHistory, 250, 'addHistory');
       }

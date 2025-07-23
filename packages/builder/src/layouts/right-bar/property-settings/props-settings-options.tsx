@@ -1,28 +1,45 @@
-import { arrayMove, SortableContext, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
-import { Input, Switch } from '../../../components/form';
-import type { PropSettingsOption } from '../../../types/prop-settings.type';
-import { isOptionsValue, type OptionsProperty, type PropValue, type PropValueOptions } from '@efie-form/core';
-import Button from '../../../components/elements/button';
-import { closestCenter, DndContext, KeyboardSensor, PointerSensor, useSensor, useSensors, type DragEndEvent } from '@dnd-kit/core';
+import {
+  closestCenter,
+  DndContext,
+  type DragEndEvent,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core';
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  useSortable,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
+import {
+  isOptionsValue,
+  type OptionsProperty,
+  type PropValue,
+  type PropValueOptions,
+} from '@efie-form/core';
+import { useRef, useState } from 'react';
 import { MdAdd, MdOutlineClose, MdOutlineDragIndicator } from 'react-icons/md';
-import { cn } from '../../../lib/utils';
+import Button from '../../../components/elements/button';
+import { Input, Switch } from '../../../components/form';
 import { useSchemaStore } from '../../../lib/state/schema.state';
-import { useState, useRef } from 'react';
+import { cn } from '../../../lib/utils';
+import type { PropSettingsOption } from '../../../types/prop-settings.type';
 
 interface PropSettingsOptionsProps extends PropSettingsOption {
   fieldId: string;
 }
 
 export default function PropsSettingsOptions({ fieldId, label, type }: PropSettingsOptionsProps) {
-  const fieldProperty = useSchemaStore(
-    state => state.getFieldProperty(fieldId, type),
-  );
-  const updateOptions = useSchemaStore(state => state.updateFieldProperty);
+  const fieldProperty = useSchemaStore((state) => state.getFieldProperty(fieldId, type));
+  const updateOptions = useSchemaStore((state) => state.updateFieldProperty);
   const value = getValue(fieldProperty?.value);
   // Store previous values for restoration
-  const prevValuesRef = useRef<OptionsProperty['value']>(value.map(option => ({ ...option })));
+  const prevValuesRef = useRef<OptionsProperty['value']>(value.map((option) => ({ ...option })));
   const [isValueDifferent, setIsValueDifferent] = useState(
-    value.some(option => option.value !== option.label) || false,
+    value.some((option) => option.value !== option.label) || false,
   );
   // const prevOptionsRef = useRef<OptionsProperty['value']>();
 
@@ -44,12 +61,11 @@ export default function PropsSettingsOptions({ fieldId, label, type }: PropSetti
         }));
         updateOptions(fieldId, { type, value: restored } as OptionsProperty);
       }
-    }
-    else {
+    } else {
       // Save current values for restoration
-      prevValuesRef.current = value.map(option => ({ ...option }));
+      prevValuesRef.current = value.map((option) => ({ ...option }));
       // Set value = label for all options
-      const newOptions = value.map(option => ({ ...option, value: option.label }));
+      const newOptions = value.map((option) => ({ ...option, value: option.label }));
       updateOptions(fieldId, { type, value: newOptions } as OptionsProperty);
     }
   };
@@ -81,21 +97,21 @@ export default function PropsSettingsOptions({ fieldId, label, type }: PropSetti
 
   const handleAddOption = () => {
     const totalOptions = value.length;
-    const newOptions = [...value, { label: `Option ${totalOptions + 1}`, value: `Option ${totalOptions + 1}` }];
+    const newOptions = [
+      ...value,
+      { label: `Option ${totalOptions + 1}`, value: `Option ${totalOptions + 1}` },
+    ];
     updateOptions(fieldId, { type, value: newOptions } as OptionsProperty);
   };
 
   return (
     <>
       <div className="px-4 py-3.5">
-        <div className="mb-2 flex justify-between items-center">
+        <div className="mb-2 flex items-center justify-between">
           <p className="typography-body3 text-neutral-800">{label}</p>
           <div className="flex items-center gap-2">
             <p className="typography-body3 text-neutral-800">Different Value</p>
-            <Switch
-              checked={isValueDifferent}
-              onChange={handleChangeDifferentValue}
-            />
+            <Switch checked={isValueDifferent} onChange={handleChangeDifferentValue} />
           </div>
         </div>
         <div>
@@ -137,7 +153,7 @@ export default function PropsSettingsOptions({ fieldId, label, type }: PropSetti
         </div>
       </div>
       <div className="mx-4">
-        <div className="w-full border-t-[0.5px] border-neutral-400 h-[1px]" />
+        <div className="h-[1px] w-full border-neutral-400 border-t-[0.5px]" />
       </div>
     </>
   );
@@ -149,8 +165,8 @@ function getValue(props?: PropValue): PropValueOptions {
   }
 
   return props
-    .filter(option => option && 'value' in option && 'label' in option)
-    .map(option => ({
+    .filter((option) => option && 'value' in option && 'label' in option)
+    .map((option) => ({
       label: option.label,
       value: option.value || option.label,
     }));
@@ -173,14 +189,9 @@ function OptionItem({
   handleValueChange,
   onRemove,
 }: OptionItemProps) {
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-    isDragging,
-  } = useSortable({ id: index.toString() });
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+    id: index.toString(),
+  });
 
   const style = {
     transform: transform ? `translateY(${transform.y}px)` : undefined,
@@ -190,7 +201,7 @@ function OptionItem({
   return (
     <div
       key={index}
-      className={cn('flex gap-2 items-center group relative', {
+      className={cn('group relative flex items-center gap-2', {
         'z-50': isDragging,
       })}
       ref={setNodeRef}
@@ -199,19 +210,13 @@ function OptionItem({
       <div {...attributes} {...listeners} className="cursor-grab">
         <MdOutlineDragIndicator className="text-neutral-500" />
       </div>
-      <Input
-        value={option.label}
-        onChange={value => handleLabelChange(index, value)}
-      />
+      <Input value={option.label} onChange={(value) => handleLabelChange(index, value)} />
       {isValueDifferent && (
-        <Input
-          value={option.value}
-          onChange={value => handleValueChange(index, value)}
-        />
+        <Input value={option.value} onChange={(value) => handleValueChange(index, value)} />
       )}
       <div className="invisible group-hover:visible">
-        <button onClick={onRemove}>
-          <MdOutlineClose className="text-neutral-500 cursor-pointer hover:text-neutral-700" />
+        <button type="button" onClick={onRemove}>
+          <MdOutlineClose className="cursor-pointer text-neutral-500 hover:text-neutral-700" />
         </button>
       </div>
     </div>
@@ -224,15 +229,11 @@ interface OptionTitleProps {
 
 function OptionTitle({ isValueDifferent }: OptionTitleProps) {
   return (
-    <div className="flex gap-2 items-center w-full mb-1">
+    <div className="mb-1 flex w-full items-center gap-2">
       <div className="w-4" />
-      <p className="typography-body3 text-neutral-800 flex-1 text-center font-semibold">
-        Label
-      </p>
+      <p className="typography-body3 flex-1 text-center font-semibold text-neutral-800">Label</p>
       {isValueDifferent && (
-        <p className="typography-body3 text-neutral-800 flex-1 text-center font-semibold">
-          Value
-        </p>
+        <p className="typography-body3 flex-1 text-center font-semibold text-neutral-800">Value</p>
       )}
       <div className="w-4" />
     </div>

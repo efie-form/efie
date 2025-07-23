@@ -1,13 +1,13 @@
 import type { ColumnFormField, RowFormField } from '@efie-form/core';
 import { FieldType, PropertyType, SizeType } from '@efie-form/core';
-import { getDefaultField } from '../../../lib/get-default-field';
 import * as Tabs from '@radix-ui/react-tabs';
 import { useState } from 'react';
-import ColumnSettings from './column-settings';
-import Button from '../../../components/elements/button';
 import { FaPlus } from 'react-icons/fa6';
+import Button from '../../../components/elements/button';
+import { getDefaultField } from '../../../lib/get-default-field';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import { getFieldProp } from '../../../lib/utils';
+import ColumnSettings from './column-settings';
 
 const LAYOUT_PRESETS = [
   [100],
@@ -36,8 +36,7 @@ function RowSettings({ field }: RowSettingsProps) {
         const widthProp = getFieldProp(existingColumn, PropertyType.WIDTH);
         if (widthProp) {
           widthProp.value = { type: SizeType.PERCENTAGE, value: width };
-        }
-        else {
+        } else {
           existingColumn.props.push({
             type: PropertyType.WIDTH,
             value: { type: SizeType.PERCENTAGE, value: width },
@@ -76,8 +75,7 @@ function RowSettings({ field }: RowSettingsProps) {
       const widthProp = getFieldProp(colField, PropertyType.WIDTH);
       if (widthProp) {
         widthProp.value = { type: SizeType.PERCENTAGE, value: avgWidth };
-      }
-      else {
+      } else {
         colField.props.push({
           type: PropertyType.WIDTH,
           value: { type: SizeType.PERCENTAGE, value: avgWidth },
@@ -103,11 +101,7 @@ function RowSettings({ field }: RowSettingsProps) {
 
     for (const col of field.children) {
       const colField = getFieldById(col.id);
-      if (
-        !colField
-        || colField.type !== FieldType.COLUMN
-        || colField.id === removedFieldId
-      ) {
+      if (!colField || colField.type !== FieldType.COLUMN || colField.id === removedFieldId) {
         continue;
       }
 
@@ -118,8 +112,7 @@ function RowSettings({ field }: RowSettingsProps) {
           type: SizeType.PERCENTAGE,
           value: width,
         };
-      }
-      else {
+      } else {
         colField.props.push({
           type: PropertyType.WIDTH,
           value: { type: SizeType.PERCENTAGE, value: width },
@@ -138,20 +131,19 @@ function RowSettings({ field }: RowSettingsProps) {
 
   return (
     <div>
-      <div className="p-4 border-b border-neutral-100">
+      <div className="border-neutral-100 border-b p-4">
         <div className="grid grid-cols-2 gap-2">
           {LAYOUT_PRESETS.map((preset, index) => (
-            <button key={index} onClick={() => applyLayout(preset)}>
-              <div className="flex h-10 group">
+            <button type="button" key={index} onClick={() => applyLayout(preset)}>
+              <div className="group flex h-10">
                 {preset.map((width, i) => (
                   <div
                     key={i}
-                    className="bg-neutral-100/50 border border-neutral-200 text-center flex items-center justify-center"
+                    className="flex items-center justify-center border border-neutral-200 bg-neutral-100/50 text-center"
                     style={{ flex: width }}
                   >
-                    <p className="typography-body4 text-neutral-700 invisible group-hover:visible">
-                      {width}
-                      %
+                    <p className="typography-body4 invisible text-neutral-700 group-hover:visible">
+                      {width}%
                     </p>
                   </div>
                 ))}
@@ -159,7 +151,7 @@ function RowSettings({ field }: RowSettingsProps) {
             </button>
           ))}
         </div>
-        <div className="flex justify-center mt-4">
+        <div className="mt-4 flex justify-center">
           <Button onClick={addColumn} startIcon={FaPlus}>
             Add
           </Button>
@@ -167,30 +159,25 @@ function RowSettings({ field }: RowSettingsProps) {
       </div>
 
       <Tabs.Root value={currentTab} onValueChange={setCurrentTab}>
-        <div className="w-full flex border-b border-neutral-100">
-          <Tabs.List className="flex-1 flex overflow-x-auto">
+        <div className="flex w-full border-neutral-100 border-b">
+          <Tabs.List className="flex flex-1 overflow-x-auto">
             {field.children.map((column, index) => (
               <Tabs.Trigger
                 key={column.id}
                 value={column.id}
-                className="px-4 py-2 whitespace-nowrap border-b-2 border-primary border-opacity-0 transition-colors data-[state=active]:border-opacity-100 typography-body3 text-neutral-700 data-[state=active]:text-primary"
+                className="typography-body3 whitespace-nowrap border-primary border-b-2 border-opacity-0 px-4 py-2 text-neutral-700 transition-colors data-[state=active]:border-opacity-100 data-[state=active]:text-primary"
               >
-                Column
-                {' '}
-                {index + 1}
+                Column {index + 1}
               </Tabs.Trigger>
             ))}
           </Tabs.List>
         </div>
 
         {field.children
-          .filter(column => column.type === FieldType.COLUMN)
+          .filter((column) => column.type === FieldType.COLUMN)
           .map((column, index) => (
             <Tabs.Content key={column.id} value={column.id}>
-              <ColumnSettings
-                field={column}
-                onRemove={() => removeColumn(index)}
-              />
+              <ColumnSettings field={column} onRemove={() => removeColumn(index)} />
             </Tabs.Content>
           ))}
       </Tabs.Root>

@@ -1,6 +1,6 @@
 import { PropertyType, type TimeFormField } from '@efie-form/core';
-import DynamicSettings from '../dynamic-settings';
 import CategoryHeader from '../../../components/elements/category-header';
+import DynamicSettings from '../dynamic-settings';
 
 interface TimeSettingsProps {
   field: TimeFormField;

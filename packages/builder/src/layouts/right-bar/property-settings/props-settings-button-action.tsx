@@ -1,16 +1,16 @@
-import { useRef } from 'react';
-import { Input, Select, Switch } from '../../../components/form';
-import type { PropSettingsButtonAction } from '../../../types/prop-settings.type';
-import { useSchemaStore } from '../../../lib/state/schema.state';
 import {
+  FieldType,
   isButtonActionValue,
+  isStringValue,
   type PropertyDefinition,
+  PropertyType,
   type PropValue,
   type PropValueButtonAction,
-  FieldType,
-  PropertyType,
-  isStringValue,
 } from '@efie-form/core';
+import { useRef } from 'react';
+import { Input, Select, Switch } from '../../../components/form';
+import { useSchemaStore } from '../../../lib/state/schema.state';
+import type { PropSettingsButtonAction } from '../../../types/prop-settings.type';
 
 interface PropsSettingsButtonActionProps extends PropSettingsButtonAction {
   fieldId: string;
@@ -29,7 +29,10 @@ function getDefaultValue(value?: PropValue): PropValueButtonAction {
   return { action: 'submit' };
 }
 
-function createHyperlinkValue(url: string, target: '_blank' | '_self' = '_self'): PropValueButtonAction {
+function createHyperlinkValue(
+  url: string,
+  target: '_blank' | '_self' = '_self',
+): PropValueButtonAction {
   return { action: 'hyperlink', url, target };
 }
 
@@ -41,20 +44,22 @@ function createSubmitValue(): PropValueButtonAction {
   return { action: 'submit' };
 }
 
-export default function PropsSettingsButtonAction({ fieldId, label, type }: PropsSettingsButtonActionProps) {
-  const fieldProperty = useSchemaStore(
-    state => state.getFieldProperty(fieldId, type),
-  );
-  const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
-  const schema = useSchemaStore(state => state.schema);
+export default function PropsSettingsButtonAction({
+  fieldId,
+  label,
+  type,
+}: PropsSettingsButtonActionProps) {
+  const fieldProperty = useSchemaStore((state) => state.getFieldProperty(fieldId, type));
+  const updateFieldProperty = useSchemaStore((state) => state.updateFieldProperty);
+  const schema = useSchemaStore((state) => state.schema);
 
   const value = getDefaultValue(fieldProperty?.value);
 
   // Page options to avoid recalculation on every render
   const pageOptions = schema.form.fields
-    .filter(field => field.type === FieldType.PAGE)
+    .filter((field) => field.type === FieldType.PAGE)
     .map((page) => {
-      const pageNameProp = page.props?.find(prop => prop.type === PropertyType.PAGE_NAME);
+      const pageNameProp = page.props?.find((prop) => prop.type === PropertyType.PAGE_NAME);
       const pageName = isStringValue(pageNameProp?.value) ? pageNameProp.value : `Page ${page.id}`;
       return { value: page.id, label: pageName };
     });
@@ -87,7 +92,8 @@ export default function PropsSettingsButtonAction({ fieldId, label, type }: Prop
       case 'hyperlink': {
         const previousHyperlink = prevValuesRef.current.hyperlink;
         const url = previousHyperlink?.action === 'hyperlink' ? previousHyperlink.url : '';
-        const target = previousHyperlink?.action === 'hyperlink' ? previousHyperlink.target : '_self';
+        const target =
+          previousHyperlink?.action === 'hyperlink' ? previousHyperlink.target : '_self';
         newValue = createHyperlinkValue(url, target);
         break;
       }
@@ -130,7 +136,7 @@ export default function PropsSettingsButtonAction({ fieldId, label, type }: Prop
   return (
     <>
       <div className="px-4 py-3.5">
-        <div className="flex justify-between items-center">
+        <div className="flex items-center justify-between">
           <p className="typography-body3 text-neutral-800">{label}</p>
           <div>
             <Select
@@ -143,15 +149,11 @@ export default function PropsSettingsButtonAction({ fieldId, label, type }: Prop
 
         {value.action === 'hyperlink' && (
           <div className="mt-4 space-y-4">
-            <Input
-              value={value.url}
-              onChange={handleUrlChange}
-              placeholder="Enter URL"
-            />
-            <div className="flex justify-between items-center">
+            <Input value={value.url} onChange={handleUrlChange} placeholder="Enter URL" />
+            <div className="flex items-center justify-between">
               <label
                 htmlFor={`openInNewTab-${fieldId}`}
-                className="typography-body3 text-neutral-800 cursor-pointer"
+                className="typography-body3 cursor-pointer text-neutral-800"
               >
                 Open in new tab
               </label>
@@ -165,21 +167,17 @@ export default function PropsSettingsButtonAction({ fieldId, label, type }: Prop
         )}
 
         {value.action === 'navigate' && (
-          <div className="mt-4 flex gap-2 items-center">
-            <p className="typography-body3 text-neutral-800 whitespace-nowrap">Navigate to: </p>
+          <div className="mt-4 flex items-center gap-2">
+            <p className="typography-body3 whitespace-nowrap text-neutral-800">Navigate to: </p>
             <div>
-              <Select
-                value={value.pageId}
-                onChange={handlePageIdChange}
-                options={pageOptions}
-              />
+              <Select value={value.pageId} onChange={handlePageIdChange} options={pageOptions} />
             </div>
           </div>
         )}
       </div>
 
       <div className="mx-4">
-        <div className="w-full border-t-[0.5px] border-neutral-400 h-[1px]" />
+        <div className="h-[1px] w-full border-neutral-400 border-t-[0.5px]" />
       </div>
     </>
   );

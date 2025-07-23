@@ -31,7 +31,7 @@ function Slider({ value, onChange, min, max, step, disabled }: SliderProps) {
         <SliderPrimitive.Range className="absolute h-full rounded-full bg-primary data-[disabled]:bg-neutral-400" />
       </SliderPrimitive.Track>
       <SliderPrimitive.Thumb
-        className="block size-4 rounded-[10px] bg-white border-2 border-primary outline-none cursor-pointer data-[disabled]:border-neutral-400 data-[disabled]:cursor-default"
+        className="block size-4 cursor-pointer rounded-[10px] border-2 border-primary bg-white outline-none data-[disabled]:cursor-default data-[disabled]:border-neutral-400"
         aria-label="Volume"
       />
     </SliderPrimitive.Root>

@@ -1,13 +1,13 @@
-import { Input } from '../../../components/form';
-import SettingsFieldVertical from '../property-layouts/settings-field-vertical';
-import { useSchemaStore } from '../../../lib/state/schema.state';
-import type { PropSettingsImageUrl } from '../../../types/prop-settings.type';
-import { useEffect, useRef, useState } from 'react';
 import { isStringValue, type PropertyDefinition, type PropValue } from '@efie-form/core';
+import { useEffect, useRef, useState } from 'react';
 import { MdOutlineImage } from 'react-icons/md';
+import { Input } from '../../../components/form';
 import { useFileDragDrop } from '../../../lib/hooks/use-file-drag-drop';
-import { getImageFileInfo } from './utils-image-info';
+import { useSchemaStore } from '../../../lib/state/schema.state';
 import { cn } from '../../../lib/utils';
+import type { PropSettingsImageUrl } from '../../../types/prop-settings.type';
+import SettingsFieldVertical from '../property-layouts/settings-field-vertical';
+import { getImageFileInfo } from './utils-image-info';
 
 interface PropsTemplateImageUrlProps extends PropSettingsImageUrl {
   fieldId: string;
@@ -19,10 +19,8 @@ export default function PropsTemplateImageUrl({
   type,
   fieldId,
 }: PropsTemplateImageUrlProps) {
-  const fieldProperty = useSchemaStore(
-    state => state.getFieldProperty(fieldId, type),
-  );
-  const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
+  const fieldProperty = useSchemaStore((state) => state.getFieldProperty(fieldId, type));
+  const updateFieldProperty = useSchemaStore((state) => state.updateFieldProperty);
   const value = getValue(fieldProperty?.value);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -34,13 +32,13 @@ export default function PropsTemplateImageUrl({
   const [fileInfo, setFileInfo] = useState<{ name: string; size: number }>();
 
   // Helper handlers for drag events to allow multiple statements
-  const handleDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
+  const handleDragEnter = (e: React.DragEvent<HTMLElement>) => {
     handleDrag(e);
   };
-  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+  const handleDragLeave = (e: React.DragEvent<HTMLElement>) => {
     handleDrag(e);
   };
-  const handleDropWithHover = (e: React.DragEvent<HTMLDivElement>) => {
+  const handleDropWithHover = (e: React.DragEvent<HTMLElement>) => {
     handleDrop(e);
   };
 
@@ -66,10 +64,11 @@ export default function PropsTemplateImageUrl({
     handleChange(localUrl);
   };
 
-  const { handleDrag, handleDrop, handleFileInputChange, dragActive, isDraggedFileValid } = useFileDragDrop({
-    onFileSelect: handleFileSelect,
-    acceptedFileTypes: ['image/'], // Only accept image files for this component
-  });
+  const { handleDrag, handleDrop, handleFileInputChange, dragActive, isDraggedFileValid } =
+    useFileDragDrop({
+      onFileSelect: handleFileSelect,
+      acceptedFileTypes: ['image/'], // Only accept image files for this component
+    });
 
   const handleUploadClick = () => {
     fileInputRef.current?.click();
@@ -97,21 +96,19 @@ export default function PropsTemplateImageUrl({
         if (info) {
           setFileInfo({ name: info.name, size: info.size });
           setImageDimensions(info.dimensions);
-        }
-        else {
+        } else {
           setFileInfo(undefined);
           setImageDimensions(undefined);
         }
-      }
-      catch {
+      } catch {
         setFileInfo(undefined);
         setImageDimensions(undefined);
       }
     };
     fetchInfo();
-  }, [value]);
+  }, [value, fileInfo]);
 
-  const hasImage = value && value.trim() && !imageError;
+  const hasImage = value?.trim() && !imageError;
 
   return (
     <SettingsFieldVertical label={label} divider>
@@ -124,10 +121,11 @@ export default function PropsTemplateImageUrl({
           className="w-full min-w-0"
         />
         {/* Preview, upload, file info, and dimensions in a single box */}
-        <div
+        <button
+          type="button"
           className={cn(
-            'flex items-center group gap-3 border border-dashed rounded-lg p-2 bg-neutral-50 relative cursor-pointer',
-            'hover:border-primary hover:bg-primary-300/10 transition-colors duration-200',
+            'group relative flex cursor-pointer items-center gap-3 rounded-lg border border-dashed bg-neutral-50 p-2',
+            'transition-colors duration-200 hover:border-primary hover:bg-primary-300/10',
             // isHovered && 'border-primary-400',
             // imageError && 'border-danger-400',
             // hasImage && !imageError && 'border-success-400',
@@ -155,63 +153,65 @@ export default function PropsTemplateImageUrl({
           {/* Preview */}
           {hasImage && (
             <div className="grid grid-cols-3">
-              <div
-                className="resize flex items-center justify-center bg-neutral-100/30 border border-neutral-200 rounded aspect-square p-1"
-              >
+              <div className="flex aspect-square resize items-center justify-center rounded border border-neutral-200 bg-neutral-100/30 p-1">
                 <img
                   src={value}
                   alt="Preview"
-                  className="object-contain max-w-full max-h-full"
+                  className="max-h-full max-w-full object-contain"
                   onLoad={() => checkImageSize(value)}
                   onError={() => setImageError(true)}
                   draggable={false}
                 />
               </div>
-              <div className="col-span-2 px-2 flex flex-col justify-center">
+              <div className="col-span-2 flex flex-col justify-center px-2">
                 {fileInfo && (
-                  <p className="truncate text-xs text-neutral-800 font-medium" title={fileInfo.name}>{fileInfo.name}</p>
+                  <p
+                    className="truncate font-medium text-neutral-800 text-xs"
+                    title={fileInfo.name}
+                  >
+                    {fileInfo.name}
+                  </p>
                 )}
                 {!!fileInfo && fileInfo.size > 0 && (
-                  <p className="text-xs text-neutral-500 truncate" title={formatFileSize(fileInfo.size)}>
+                  <p
+                    className="truncate text-neutral-500 text-xs"
+                    title={formatFileSize(fileInfo.size)}
+                  >
                     {formatFileSize(fileInfo.size)}
                   </p>
                 )}
                 {/* Image dimensions (right aligned) */}
                 {hasImage && imageDimensions && (
-                  <p className="text-xs text-neutral-400">
-                    {dimensionString}
-                  </p>
+                  <p className="text-neutral-400 text-xs">{dimensionString}</p>
                 )}
               </div>
             </div>
           )}
           {!hasImage && (
-            <div className="py-2 text-center w-full">
+            <div className="w-full py-2 text-center">
               <div className="flex justify-center">
                 <MdOutlineImage
                   size={64}
-                  className={cn('text-neutral-200 mb-2 group-hover:text-primary-300',
-                    {
-                      'text-danger-400': dragActive && !isDraggedFileValid,
-                      'text-success-200': dragActive && isDraggedFileValid,
-                    },
-                  )}
+                  className={cn('mb-2 text-neutral-200 group-hover:text-primary-300', {
+                    'text-danger-400': dragActive && !isDraggedFileValid,
+                    'text-success-200': dragActive && isDraggedFileValid,
+                  })}
                 />
               </div>
-              <p className={cn(
-                'typography-body3 text-neutral-600 font-medium',
-                'group-hover:text-primary-400',
-                {
-                  'text-danger-600': dragActive && !isDraggedFileValid,
-                  'text-success-600': dragActive && isDraggedFileValid,
-                })}
+              <p
+                className={cn(
+                  'typography-body3 font-medium text-neutral-600',
+                  'group-hover:text-primary-400',
+                  {
+                    'text-danger-600': dragActive && !isDraggedFileValid,
+                    'text-success-600': dragActive && isDraggedFileValid,
+                  },
+                )}
               >
                 Click or drag to upload
               </p>
-              <p className={cn(
-                'typography-body4 text-neutral-400',
-                'group-hover:text-primary-300',
-                {
+              <p
+                className={cn('typography-body4 text-neutral-400', 'group-hover:text-primary-300', {
                   'text-danger': dragActive && !isDraggedFileValid,
                   'text-success': dragActive && isDraggedFileValid,
                 })}
@@ -221,10 +221,9 @@ export default function PropsTemplateImageUrl({
             </div>
           )}
           {dragActive && !isDraggedFileValid && (
-            <div className="absolute inset-0 bg-danger-100/30 border border-danger-400 rounded-lg flex items-center justify-center">
-            </div>
+            <div className="absolute inset-0 flex items-center justify-center rounded-lg border border-danger-400 bg-danger-100/30"></div>
           )}
-        </div>
+        </button>
       </div>
     </SettingsFieldVertical>
   );
@@ -241,5 +240,5 @@ const formatFileSize = (bytes: number): string => {
   const k = 1024;
   const sizes = ['Bytes', 'KB', 'MB', 'GB'];
   const i = Math.floor(Math.log(bytes) / Math.log(k));
-  return `${Number.parseFloat((bytes / Math.pow(k, i)).toFixed(2))} ${sizes[i]}`;
+  return `${Number.parseFloat((bytes / k ** i).toFixed(2))} ${sizes[i]}`;
 };

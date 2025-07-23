@@ -1,6 +1,6 @@
-import { PropertyType, type NumberFormField } from '@efie-form/core';
-import DynamicSettings from '../dynamic-settings';
+import { type NumberFormField, PropertyType } from '@efie-form/core';
 import CategoryHeader from '../../../components/elements/category-header';
+import DynamicSettings from '../dynamic-settings';
 
 interface NumberSettingsProps {
   field: NumberFormField;
