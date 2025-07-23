@@ -90,7 +90,7 @@ export default function PropsSettingsPadding({
   return (
     <>
       <div className="px-4 py-3.5">
-        <div className="mb-2 flex justify-between items-center">
+        <div className="mb-2 flex items-center justify-between">
           <p className="typography-body3 text-neutral-800">{label}</p>
           <div>
             <button
@@ -104,26 +104,26 @@ export default function PropsSettingsPadding({
         </div>
         <div className="flex gap-4">
           {isLinked ? (
-            <div className="flex gap-4 items-start w-full">
+            <div className="flex w-full items-start gap-4">
               <div className="flex flex-col gap-2">
                 <p className="typography-body4 text-neutral-600">All sides</p>
                 <SizeInput value={value.top} onChange={handleLinkedChange} />
               </div>
             </div>
           ) : (
-            <div className="grid grid-cols-3 gap-2 w-full">
+            <div className="grid w-full grid-cols-3 gap-2">
               <div></div>
               <div>
-                <p className="typography-body4 text-neutral-600 text-center">Top</p>
+                <p className="typography-body4 text-center text-neutral-600">Top</p>
                 <PaddingSide value={value} handleChange={handleChange} paddingSide="top" />
               </div>
               <div></div>
               <div>
-                <p className="typography-body4 text-neutral-600 text-center">Left</p>
+                <p className="typography-body4 text-center text-neutral-600">Left</p>
                 <PaddingSide value={value} handleChange={handleChange} paddingSide="left" />
               </div>
               <div className="flex items-center justify-center">
-                <div className="relative w-12 h-12">
+                <div className="relative h-12 w-12">
                   <div className="absolute inset-0 border-2 border-neutral-400"></div>
                   <div
                     className="absolute bg-primary-200"
@@ -164,12 +164,12 @@ export default function PropsSettingsPadding({
                 </div>
               </div>
               <div>
-                <p className="typography-body4 text-neutral-600 text-center">Right</p>
+                <p className="typography-body4 text-center text-neutral-600">Right</p>
                 <PaddingSide value={value} handleChange={handleChange} paddingSide="right" />
               </div>
               <div></div>
               <div>
-                <p className="typography-body4 text-neutral-600 text-center">Bottom</p>
+                <p className="typography-body4 text-center text-neutral-600">Bottom</p>
                 <PaddingSide value={value} handleChange={handleChange} paddingSide="bottom" />
               </div>
               <div></div>
@@ -178,7 +178,7 @@ export default function PropsSettingsPadding({
         </div>
       </div>
       <div className="mx-4">
-        <div className="w-full border-t-[0.5px] border-neutral-400 h-[1px]" />
+        <div className="h-[1px] w-full border-neutral-400 border-t-[0.5px]" />
       </div>
     </>
   );

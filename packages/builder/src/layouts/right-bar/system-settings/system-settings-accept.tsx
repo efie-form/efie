@@ -83,7 +83,7 @@ export default function SystemSettingsAccept({ config, fieldId }: SystemSettings
         {FILE_EXTENSIONS.map((extension) => (
           <div
             key={extension.label}
-            className="flex items-center gap-2 p-2 rounded-md hover:bg-neutral-50 transition-colors"
+            className="flex items-center gap-2 rounded-md p-2 transition-colors hover:bg-neutral-50"
           >
             <div>
               <Switch

@@ -14,7 +14,7 @@ function ImageField({ field }: ImageFieldProps) {
       <img
         src={src?.value || DEFAULT_IMAGE_URL}
         alt=""
-        className="text-neutral-800 inline-block w-full"
+        className="inline-block w-full text-neutral-800"
       />
     </div>
   );

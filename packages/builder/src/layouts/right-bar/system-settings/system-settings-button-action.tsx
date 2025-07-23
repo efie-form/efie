@@ -129,7 +129,7 @@ export default function SystemSettingsButtonAction({
   return (
     <>
       <div className="px-4 py-3.5">
-        <div className="flex justify-between items-center">
+        <div className="flex items-center justify-between">
           <p className="typography-body3 text-neutral-800">{config.label}</p>
           <div>
             <Select
@@ -143,10 +143,10 @@ export default function SystemSettingsButtonAction({
         {value.action === 'hyperlink' && (
           <div className="mt-4 space-y-4">
             <Input value={value.url} onChange={handleUrlChange} placeholder="Enter URL" />
-            <div className="flex justify-between items-center">
+            <div className="flex items-center justify-between">
               <label
                 htmlFor="open-in-new-tab"
-                className="typography-body3 text-neutral-800 cursor-pointer"
+                className="typography-body3 cursor-pointer text-neutral-800"
               >
                 Open in new tab
               </label>
@@ -160,8 +160,8 @@ export default function SystemSettingsButtonAction({
         )}
 
         {value.action === 'navigate' && (
-          <div className="mt-4 flex gap-2 items-center">
-            <p className="typography-body3 text-neutral-800 whitespace-nowrap">Navigate to: </p>
+          <div className="mt-4 flex items-center gap-2">
+            <p className="typography-body3 whitespace-nowrap text-neutral-800">Navigate to: </p>
             <div>
               <Select value={value.pageId} onChange={handlePageIdChange} options={pageOptions} />
             </div>
@@ -170,7 +170,7 @@ export default function SystemSettingsButtonAction({
       </div>
 
       <div className="mx-4">
-        <div className="w-full border-t-[0.5px] border-neutral-400 h-[1px]" />
+        <div className="h-[1px] w-full border-neutral-400 border-t-[0.5px]" />
       </div>
     </>
   );

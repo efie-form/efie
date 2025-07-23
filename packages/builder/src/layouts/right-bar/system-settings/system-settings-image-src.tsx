@@ -104,9 +104,9 @@ export default function SystemSettingsImageSrc({ config, fieldId }: PropsTemplat
       }
     };
     fetchInfo();
-  }, [value]);
+  }, [value, fileInfo]);
 
-  const hasImage = value && value.trim() && !imageError;
+  const hasImage = value?.trim() && !imageError;
 
   return (
     <SettingsFieldVertical label={config.label} divider>
@@ -122,8 +122,8 @@ export default function SystemSettingsImageSrc({ config, fieldId }: PropsTemplat
         <button
           type="button"
           className={cn(
-            'flex items-center group gap-3 border border-dashed rounded-lg p-2 bg-neutral-50 relative cursor-pointer',
-            'hover:border-primary hover:bg-primary-300/10 transition-colors duration-200',
+            'group relative flex cursor-pointer items-center gap-3 rounded-lg border border-dashed bg-neutral-50 p-2',
+            'transition-colors duration-200 hover:border-primary hover:bg-primary-300/10',
             // isHovered && 'border-primary-400',
             // imageError && 'border-danger-400',
             // hasImage && !imageError && 'border-success-400',
@@ -151,20 +151,20 @@ export default function SystemSettingsImageSrc({ config, fieldId }: PropsTemplat
           {/* Preview */}
           {hasImage && (
             <div className="grid grid-cols-3">
-              <div className="resize flex items-center justify-center bg-neutral-100/30 border border-neutral-200 rounded aspect-square p-1">
+              <div className="flex aspect-square resize items-center justify-center rounded border border-neutral-200 bg-neutral-100/30 p-1">
                 <img
                   src={value}
                   alt="Preview"
-                  className="object-contain max-w-full max-h-full"
+                  className="max-h-full max-w-full object-contain"
                   onLoad={() => checkImageSize(value)}
                   onError={() => setImageError(true)}
                   draggable={false}
                 />
               </div>
-              <div className="col-span-2 px-2 flex flex-col justify-center">
+              <div className="col-span-2 flex flex-col justify-center px-2">
                 {fileInfo && (
                   <p
-                    className="truncate text-xs text-neutral-800 font-medium"
+                    className="truncate font-medium text-neutral-800 text-xs"
                     title={fileInfo.name}
                   >
                     {fileInfo.name}
@@ -172,7 +172,7 @@ export default function SystemSettingsImageSrc({ config, fieldId }: PropsTemplat
                 )}
                 {!!fileInfo && fileInfo.size > 0 && (
                   <p
-                    className="text-xs text-neutral-500 truncate"
+                    className="truncate text-neutral-500 text-xs"
                     title={formatFileSize(fileInfo.size)}
                   >
                     {formatFileSize(fileInfo.size)}
@@ -180,17 +180,17 @@ export default function SystemSettingsImageSrc({ config, fieldId }: PropsTemplat
                 )}
                 {/* Image dimensions (right aligned) */}
                 {hasImage && imageDimensions && (
-                  <p className="text-xs text-neutral-400">{dimensionString}</p>
+                  <p className="text-neutral-400 text-xs">{dimensionString}</p>
                 )}
               </div>
             </div>
           )}
           {!hasImage && (
-            <div className="py-2 text-center w-full">
+            <div className="w-full py-2 text-center">
               <div className="flex justify-center">
                 <MdOutlineImage
                   size={64}
-                  className={cn('text-neutral-200 mb-2 group-hover:text-primary-300', {
+                  className={cn('mb-2 text-neutral-200 group-hover:text-primary-300', {
                     'text-danger-400': dragActive && !isDraggedFileValid,
                     'text-success-200': dragActive && isDraggedFileValid,
                   })}
@@ -198,7 +198,7 @@ export default function SystemSettingsImageSrc({ config, fieldId }: PropsTemplat
               </div>
               <p
                 className={cn(
-                  'typography-body3 text-neutral-600 font-medium',
+                  'typography-body3 font-medium text-neutral-600',
                   'group-hover:text-primary-400',
                   {
                     'text-danger-600': dragActive && !isDraggedFileValid,
@@ -219,7 +219,7 @@ export default function SystemSettingsImageSrc({ config, fieldId }: PropsTemplat
             </div>
           )}
           {dragActive && !isDraggedFileValid && (
-            <div className="absolute inset-0 bg-danger-100/30 border border-danger-400 rounded-lg flex items-center justify-center"></div>
+            <div className="absolute inset-0 flex items-center justify-center rounded-lg border border-danger-400 bg-danger-100/30"></div>
           )}
         </button>
       </div>

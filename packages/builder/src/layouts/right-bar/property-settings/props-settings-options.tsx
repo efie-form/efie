@@ -99,7 +99,7 @@ export default function PropsSettingsOptions({ label, onChange, value }: PropSet
   return (
     <>
       <div className="px-4 py-3.5">
-        <div className="mb-2 flex justify-between items-center">
+        <div className="mb-2 flex items-center justify-between">
           <p className="typography-body3 text-neutral-800">{label}</p>
           <div className="flex items-center gap-2">
             <p className="typography-body3 text-neutral-800">Different Value</p>
@@ -145,7 +145,7 @@ export default function PropsSettingsOptions({ label, onChange, value }: PropSet
         </div>
       </div>
       <div className="mx-4">
-        <div className="w-full border-t-[0.5px] border-neutral-400 h-[1px]" />
+        <div className="h-[1px] w-full border-neutral-400 border-t-[0.5px]" />
       </div>
     </>
   );
@@ -180,7 +180,7 @@ function OptionItem({
   return (
     <div
       key={index}
-      className={cn('flex gap-2 items-center group relative', {
+      className={cn('group relative flex items-center gap-2', {
         'z-50': isDragging,
       })}
       ref={setNodeRef}
@@ -195,7 +195,7 @@ function OptionItem({
       )}
       <div className="invisible group-hover:visible">
         <button type="button" onClick={onRemove}>
-          <MdOutlineClose className="text-neutral-500 cursor-pointer hover:text-neutral-700" />
+          <MdOutlineClose className="cursor-pointer text-neutral-500 hover:text-neutral-700" />
         </button>
       </div>
     </div>
@@ -208,11 +208,11 @@ interface OptionTitleProps {
 
 function OptionTitle({ isValueDifferent }: OptionTitleProps) {
   return (
-    <div className="flex gap-2 items-center w-full mb-1">
+    <div className="mb-1 flex w-full items-center gap-2">
       <div className="w-4" />
-      <p className="typography-body3 text-neutral-800 flex-1 text-center font-semibold">Label</p>
+      <p className="typography-body3 flex-1 text-center font-semibold text-neutral-800">Label</p>
       {isValueDifferent && (
-        <p className="typography-body3 text-neutral-800 flex-1 text-center font-semibold">Value</p>
+        <p className="typography-body3 flex-1 text-center font-semibold text-neutral-800">Value</p>
       )}
       <div className="w-4" />
     </div>

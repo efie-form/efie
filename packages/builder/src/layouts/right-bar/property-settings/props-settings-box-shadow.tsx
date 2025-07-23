@@ -87,7 +87,7 @@ export default function PropsSettingsBoxShadow({
   return (
     <>
       <div className="px-4 py-3.5">
-        <div className="mb-2 flex justify-between items-center">
+        <div className="mb-2 flex items-center justify-between">
           <p className="typography-body3 text-neutral-800">{label}</p>
           <Button variant="secondary" startIcon={MdAdd} onClick={handleAddShadow}>
             Add
@@ -117,14 +117,14 @@ export default function PropsSettingsBoxShadow({
             </SortableContext>
           </DndContext>
           {value.length === 0 && (
-            <div className="text-center py-4 text-neutral-500 typography-body3">
+            <div className="typography-body3 py-4 text-center text-neutral-500">
               No shadows added. Click "Add" to create your first shadow.
             </div>
           )}
         </div>
       </div>
       <div className="mx-4">
-        <div className="w-full border-t-[0.5px] border-neutral-400 h-[1px]" />
+        <div className="h-[1px] w-full border-neutral-400 border-t-[0.5px]" />
       </div>
     </>
   );
@@ -166,7 +166,7 @@ function ShadowItem({ index, shadow, onUpdate, onRemove }: ShadowItemProps) {
       open={isExpanded}
       onOpenChange={setIsExpanded}
       className={cn(
-        'border border-neutral-200 rounded-lg bg-white group relative overflow-hidden',
+        'group relative overflow-hidden rounded-lg border border-neutral-200 bg-white',
         {
           'z-50': isDragging,
         },
@@ -176,28 +176,28 @@ function ShadowItem({ index, shadow, onUpdate, onRemove }: ShadowItemProps) {
     >
       {/* Header */}
       <Collapsible.Trigger asChild>
-        <div className="flex items-center justify-between px-2 py-1.5 cursor-pointer hover:bg-neutral-50 rounded-t-lg">
+        <div className="flex cursor-pointer items-center justify-between rounded-t-lg px-2 py-1.5 hover:bg-neutral-50">
           <div className="flex items-center gap-2">
             <button
               type="button"
-              className="cursor-grab p-1 hover:bg-neutral-100 rounded"
+              className="cursor-grab rounded p-1 hover:bg-neutral-100"
               {...attributes}
               {...listeners}
               onClick={(e) => e.stopPropagation()}
             >
               <MdOutlineDragIndicator className="text-neutral-500" />
             </button>
-            <div className="flex items-center gap-2 typography-body3 text-neutral-800">
+            <div className="typography-body3 flex items-center gap-2 text-neutral-800">
               <span>{sizeToString(shadow.x)}</span>
               <span>{sizeToString(shadow.y)}</span>
               <span>{sizeToString(shadow.blur)}</span>
               <span>{sizeToString(shadow.spread)}</span>
               <div
-                className="w-4 h-4 rounded border border-neutral-300"
+                className="h-4 w-4 rounded border border-neutral-300"
                 style={{ backgroundColor: shadow.color.hex }}
               />
               {shadow.inset && (
-                <span className="text-xs px-1 py-0.5 bg-neutral-100 rounded">inset</span>
+                <span className="rounded bg-neutral-100 px-1 py-0.5 text-xs">inset</span>
               )}
             </div>
           </div>
@@ -208,7 +208,7 @@ function ShadowItem({ index, shadow, onUpdate, onRemove }: ShadowItemProps) {
                 e.stopPropagation();
                 onRemove();
               }}
-              className="invisible group-hover:visible p-1 hover:bg-neutral-100 rounded"
+              className="invisible rounded p-1 hover:bg-neutral-100 group-hover:visible"
             >
               <MdOutlineDelete className="text-neutral-500 hover:text-danger" />
             </button>
@@ -217,14 +217,14 @@ function ShadowItem({ index, shadow, onUpdate, onRemove }: ShadowItemProps) {
       </Collapsible.Trigger>
 
       {/* Expanded Content */}
-      <Collapsible.Content className="overflow-hidden data-[state=open]:animate-collapsible-down data-[state=closed]:animate-collapsible-up">
-        <div className="border-t border-neutral-200 p-3 space-y-4">
+      <Collapsible.Content className="overflow-hidden data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
+        <div className="space-y-4 border-neutral-200 border-t p-3">
           {/* Position and Blur */}
           <div className="grid grid-cols-2 gap-3">
             <div>
               <label
                 htmlFor={`x-offset-${index}`}
-                className="mb-1 block typography-body3 text-neutral-700"
+                className="typography-body3 mb-1 block text-neutral-700"
               >
                 X Offset
               </label>
@@ -238,7 +238,7 @@ function ShadowItem({ index, shadow, onUpdate, onRemove }: ShadowItemProps) {
             <div>
               <label
                 htmlFor={`y-offset-${index}`}
-                className="mb-1 block typography-body3 text-neutral-700"
+                className="typography-body3 mb-1 block text-neutral-700"
               >
                 Y Offset
               </label>
@@ -252,7 +252,7 @@ function ShadowItem({ index, shadow, onUpdate, onRemove }: ShadowItemProps) {
             <div>
               <label
                 htmlFor={`blur-${index}`}
-                className="mb-1 block typography-body3 text-neutral-700"
+                className="typography-body3 mb-1 block text-neutral-700"
               >
                 Blur
               </label>
@@ -266,7 +266,7 @@ function ShadowItem({ index, shadow, onUpdate, onRemove }: ShadowItemProps) {
             <div>
               <label
                 htmlFor={`spread-${index}`}
-                className="mb-1 block typography-body3 text-neutral-700"
+                className="typography-body3 mb-1 block text-neutral-700"
               >
                 Spread
               </label>
@@ -282,11 +282,11 @@ function ShadowItem({ index, shadow, onUpdate, onRemove }: ShadowItemProps) {
           {/* Color and Inset */}
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <span className="mb-1 block text-neutral-700 typography-body3">Color</span>
+              <span className="typography-body3 mb-1 block text-neutral-700">Color</span>
               <ColorPicker value={getColorObject(shadow.color.hex)} onChange={handleColorUpdate} />
             </div>
             <div>
-              <span className="mb-1 block text-neutral-700 typography-body3">Inset</span>
+              <span className="typography-body3 mb-1 block text-neutral-700">Inset</span>
               <div className="flex h-7 items-center">
                 <Switch checked={shadow.inset} onChange={handleInsetToggle} />
               </div>

@@ -119,7 +119,7 @@ export default function PropsSettingsBorderRadius({
   return (
     <>
       <div className="px-4 py-3.5">
-        <div className="mb-4 flex justify-between items-center">
+        <div className="mb-4 flex items-center justify-between">
           <p className="typography-body3 text-neutral-800">{label}</p>
           <div>
             <button
@@ -133,14 +133,14 @@ export default function PropsSettingsBorderRadius({
         </div>
         <div className="flex gap-4">
           {isLinked ? (
-            <div className="flex gap-4 items-start justify-between w-full">
+            <div className="flex w-full items-start justify-between gap-4">
               <div className="flex flex-col gap-2">
                 <p className="typography-body4 text-neutral-600">All corners</p>
                 <SizeInput value={getLinkedValue()} onChange={handleLinkedChange} />
               </div>
               <div className="flex items-center justify-center">
                 <div
-                  className="border-2 border-neutral-400 aspect-square w-16 h-16"
+                  className="aspect-square h-16 w-16 border-2 border-neutral-400"
                   style={{
                     borderRadius: borderRadiusToStyle(value),
                   }}
@@ -161,7 +161,7 @@ export default function PropsSettingsBorderRadius({
               <div />
               <div className="flex items-center justify-center">
                 <div
-                  className="border-2 border-neutral-400 aspect-square w-1/2"
+                  className="aspect-square w-1/2 border-2 border-neutral-400"
                   style={{
                     borderRadius: borderRadiusToStyle(value),
                   }}
@@ -182,7 +182,7 @@ export default function PropsSettingsBorderRadius({
         </div>
       </div>
       <div className="mx-4">
-        <div className="w-full border-t-[0.5px] border-neutral-400 h-[1px]" />
+        <div className="h-[1px] w-full border-neutral-400 border-t-[0.5px]" />
       </div>
     </>
   );
@@ -213,16 +213,14 @@ function BorderCorner({ value, handleChange, borderType }: BorderCornerProps) {
   return (
     <>
       {Array.isArray(value[borderType]) ? (
-        <>
-          {value[borderType].map((size, index) => (
-            <SizeInput
-              key={index}
-              className="w-full"
-              value={size}
-              onChange={(newSize) => handleInternalChange(newSize, borderType, index)}
-            />
-          ))}
-        </>
+        value[borderType].map((size, index) => (
+          <SizeInput
+            key={index}
+            className="w-full"
+            value={size}
+            onChange={(newSize) => handleInternalChange(newSize, borderType, index)}
+          />
+        ))
       ) : (
         <SizeInput
           className="w-full"

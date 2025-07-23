@@ -38,9 +38,9 @@ function RightBar() {
   const TabContent = tabs.find((tab) => tab.id === activeTab)?.tab;
 
   return (
-    <div className="h-full flex w-full">
+    <div className="flex h-full w-full">
       <div className="flex-1 overflow-hidden">{TabContent && <TabContent />}</div>
-      <div className="bg-neutral-100/40 h-full">
+      <div className="h-full bg-neutral-100/40">
         {tabs
           .filter((tab) => !tab.hidden)
           .map((tab) => (
@@ -48,7 +48,7 @@ function RightBar() {
               <button
                 type="button"
                 className={cn(
-                  'p-3 hover:bg-neutral-200/30 cursor-pointer transition-all duration-100',
+                  'block cursor-pointer p-3 transition-all duration-100 hover:bg-neutral-200/30',
                   {
                     '!bg-neutral-200/80': tab.id === activeTab,
                   },

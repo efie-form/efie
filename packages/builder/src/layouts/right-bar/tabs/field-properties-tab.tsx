@@ -32,8 +32,8 @@ function FieldPropertiesTab() {
   if (!field) return <></>;
 
   return (
-    <div className="flex flex-col h-full relative">
-      <div className="flex items-center justify-between border-b border-neutral-100">
+    <div className="relative flex h-full flex-col">
+      <div className="flex items-center justify-between border-neutral-100 border-b">
         <div className="flex items-center gap-1 px-2">
           <Tooltip content="Go to parent">
             <button type="button" className="p-1 text-neutral-700" onClick={handleGoToParent}>
@@ -44,7 +44,7 @@ function FieldPropertiesTab() {
         </div>
         <button
           type="button"
-          className="border-s border-neutral-100 px-2 py-2 transition-all hover:bg-neutral-100"
+          className="border-neutral-100 border-s px-2 py-2 transition-all hover:bg-neutral-100"
           onClick={() => {
             clearSelectedFieldId();
             setActiveTab(RIGHT_BAR_TABS.PAGE);
