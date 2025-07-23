@@ -1,11 +1,6 @@
-import { expectType } from 'tsd';
 import React from 'react';
-import {
-  FormProvider,
-  ReactForm,
-  FormBuilder,
-  FieldType,
-} from '../dist/index';
+import { expectType } from 'tsd';
+import { FieldType, FormBuilder, FormProvider, ReactForm } from '../dist/index';
 
 // Test that exports are properly typed components/functions
 expectType<typeof FormProvider>(FormProvider);

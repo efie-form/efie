@@ -1,7 +1,7 @@
 import { FieldType } from '../../../../constants/field-type';
 import { PropertyType } from '../../../../constants/form-schema.constant';
 import validateSchema from '../../index';
-import { createValidSchema, createValidField } from '../helpers/test-helpers';
+import { createValidField, createValidSchema } from '../helpers/test-helpers';
 
 describe('validateSchema - Color property types', () => {
   const colorProperties = [
@@ -48,15 +48,21 @@ describe('validateSchema - Color property types', () => {
       expect(validateSchema(schema)).toBe(false);
 
       // Invalid hex
-      field.props = [{ type: propType, value: { hex: 'invalid' } }] as unknown as typeof field.props;
+      field.props = [
+        { type: propType, value: { hex: 'invalid' } },
+      ] as unknown as typeof field.props;
       expect(validateSchema(schema)).toBe(false);
 
       // Invalid RGBA
-      field.props = [{ type: propType, value: { rgba: { r: 256, g: 255, b: 255, a: 1 } } }] as unknown as typeof field.props;
+      field.props = [
+        { type: propType, value: { rgba: { r: 256, g: 255, b: 255, a: 1 } } },
+      ] as unknown as typeof field.props;
       expect(validateSchema(schema)).toBe(false);
 
       // Invalid HSLA
-      field.props = [{ type: propType, value: { hsla: { h: 361, s: 100, l: 100, a: 1 } } }] as unknown as typeof field.props;
+      field.props = [
+        { type: propType, value: { hsla: { h: 361, s: 100, l: 100, a: 1 } } },
+      ] as unknown as typeof field.props;
       expect(validateSchema(schema)).toBe(false);
     });
   }

@@ -1,7 +1,7 @@
 import { FieldType } from '../../../../constants/field-type';
 import { PropertyType } from '../../../../constants/form-schema.constant';
 import validateSchema from '../../index';
-import { createValidSchema, createValidField } from '../helpers/test-helpers';
+import { createValidField, createValidSchema } from '../helpers/test-helpers';
 
 describe('validateSchema - Specialized property types', () => {
   describe('Accept property', () => {
@@ -25,16 +25,22 @@ describe('validateSchema - Specialized property types', () => {
       const field = createValidField(FieldType.FILE);
 
       // Non-object value
-      field.props = [{ type: PropertyType.ACCEPT, value: 'string' }] as unknown as typeof field.props;
+      field.props = [
+        { type: PropertyType.ACCEPT, value: 'string' },
+      ] as unknown as typeof field.props;
       schema.form.fields = [field];
       expect(validateSchema(schema)).toBe(false);
 
       // Missing properties
-      field.props = [{ type: PropertyType.ACCEPT, value: { allowAll: true } }] as unknown as typeof field.props;
+      field.props = [
+        { type: PropertyType.ACCEPT, value: { allowAll: true } },
+      ] as unknown as typeof field.props;
       expect(validateSchema(schema)).toBe(false);
 
       // Invalid formats type
-      field.props = [{ type: PropertyType.ACCEPT, value: { allowAll: true, formats: 'string' } }] as unknown as typeof field.props;
+      field.props = [
+        { type: PropertyType.ACCEPT, value: { allowAll: true, formats: 'string' } },
+      ] as unknown as typeof field.props;
       expect(validateSchema(schema)).toBe(false);
     });
   });
@@ -69,16 +75,22 @@ describe('validateSchema - Specialized property types', () => {
       const field = createValidField(FieldType.SINGLE_CHOICE);
 
       // Non-array value
-      field.props = [{ type: PropertyType.OPTIONS, value: 'string' }] as unknown as typeof field.props;
+      field.props = [
+        { type: PropertyType.OPTIONS, value: 'string' },
+      ] as unknown as typeof field.props;
       schema.form.fields = [field];
       expect(validateSchema(schema)).toBe(false);
 
       // Invalid option objects
-      field.props = [{ type: PropertyType.OPTIONS, value: ['invalid'] }] as unknown as typeof field.props;
+      field.props = [
+        { type: PropertyType.OPTIONS, value: ['invalid'] },
+      ] as unknown as typeof field.props;
       expect(validateSchema(schema)).toBe(false);
 
       // Missing label or value
-      field.props = [{ type: PropertyType.OPTIONS, value: [{ label: 'Option 1' }] }] as unknown as typeof field.props;
+      field.props = [
+        { type: PropertyType.OPTIONS, value: [{ label: 'Option 1' }] },
+      ] as unknown as typeof field.props;
       expect(validateSchema(schema)).toBe(false);
     });
   });
@@ -132,24 +144,34 @@ describe('validateSchema - Specialized property types', () => {
       const field = createValidField(FieldType.BUTTON);
 
       // Non-object value
-      field.props = [{ type: PropertyType.BUTTON_ACTION, value: 'string' }] as unknown as typeof field.props;
+      field.props = [
+        { type: PropertyType.BUTTON_ACTION, value: 'string' },
+      ] as unknown as typeof field.props;
       schema.form.fields = [field];
       expect(validateSchema(schema)).toBe(false);
 
       // Missing action
-      field.props = [{ type: PropertyType.BUTTON_ACTION, value: {} }] as unknown as typeof field.props;
+      field.props = [
+        { type: PropertyType.BUTTON_ACTION, value: {} },
+      ] as unknown as typeof field.props;
       expect(validateSchema(schema)).toBe(false);
 
       // Invalid action type
-      field.props = [{ type: PropertyType.BUTTON_ACTION, value: { action: 'invalid' } }] as unknown as typeof field.props;
+      field.props = [
+        { type: PropertyType.BUTTON_ACTION, value: { action: 'invalid' } },
+      ] as unknown as typeof field.props;
       expect(validateSchema(schema)).toBe(false);
 
       // Hyperlink without URL
-      field.props = [{ type: PropertyType.BUTTON_ACTION, value: { action: 'hyperlink' } }] as unknown as typeof field.props;
+      field.props = [
+        { type: PropertyType.BUTTON_ACTION, value: { action: 'hyperlink' } },
+      ] as unknown as typeof field.props;
       expect(validateSchema(schema)).toBe(false);
 
       // Hyperlink with invalid URL type
-      field.props = [{ type: PropertyType.BUTTON_ACTION, value: { action: 'hyperlink', url: 123 } }] as unknown as typeof field.props;
+      field.props = [
+        { type: PropertyType.BUTTON_ACTION, value: { action: 'hyperlink', url: 123 } },
+      ] as unknown as typeof field.props;
       expect(validateSchema(schema)).toBe(false);
     });
   });
@@ -172,7 +194,9 @@ describe('validateSchema - Specialized property types', () => {
       const field = createValidField(FieldType.HEADING);
 
       // Non-object value
-      field.props = [{ type: PropertyType.CONTENT, value: 'string' }] as unknown as typeof field.props;
+      field.props = [
+        { type: PropertyType.CONTENT, value: 'string' },
+      ] as unknown as typeof field.props;
       schema.form.fields = [field];
       expect(validateSchema(schema)).toBe(false);
 

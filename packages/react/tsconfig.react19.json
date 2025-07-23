@@ -1,15 +1,9 @@
 {
-    "extends": "./tsconfig.json",
-    "compilerOptions": {
-        "composite": true,
-        "outDir": "./dist/react19"
-    },
-    "include": [
-        "lib/**/*",
-        "types/**/*"
-    ],
-    "exclude": [
-        "**/*.test.*",
-        "**/*.spec.*"
-    ]
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "./dist/react19"
+  },
+  "include": ["lib/**/*", "types/**/*"],
+  "exclude": ["**/*.test.*", "**/*.spec.*"]
 }

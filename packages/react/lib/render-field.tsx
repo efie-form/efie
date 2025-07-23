@@ -45,17 +45,10 @@ function RenderField({ field, ...props }: RenderFieldProps) {
       return <FileProvider field={field} Component={props.file} />;
     }
     case FieldType.SINGLE_CHOICE: {
-      return (
-        <SingleChoiceProvider field={field} Component={props.singleChoice} />
-      );
+      return <SingleChoiceProvider field={field} Component={props.singleChoice} />;
     }
     case FieldType.MULTIPLE_CHOICES: {
-      return (
-        <MultipleChoicesProvider
-          field={field}
-          Component={props.multipleChoices}
-        />
-      );
+      return <MultipleChoicesProvider field={field} Component={props.multipleChoices} />;
     }
     case FieldType.HEADING: {
       return <HeadingProvider field={field} Component={props.heading} />;
@@ -70,9 +63,7 @@ function RenderField({ field, ...props }: RenderFieldProps) {
       return <DateTimeProvider field={field} Component={props.dateTime} />;
     }
     case FieldType.COLUMN: {
-      return (
-        <ColumnProvider field={field} Component={props.column} {...props} />
-      );
+      return <ColumnProvider field={field} Component={props.column} {...props} />;
     }
     case FieldType.ROW: {
       return <RowProvider field={field} Component={props.row} {...props} />;

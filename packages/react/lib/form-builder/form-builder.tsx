@@ -1,6 +1,6 @@
+import { type CustomInputDef, type FormSchema, Iframe } from '@efie-form/core';
 import type { RefObject } from 'react';
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
-import { Iframe, type CustomInputDef, type FormSchema } from '@efie-form/core';
 
 const DIV_ID = 'efie-form-builder';
 
@@ -19,15 +19,9 @@ export interface FormBuilderRef {
 }
 
 const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
-  (
-    { height, formInputs, schema, formKeyNonEditable, inputNonReusable, maxHistories },
-    ref,
-  ) => {
+  ({ height, formInputs, schema, formKeyNonEditable, inputNonReusable, maxHistories }, ref) => {
     const builderRef = useRef<Iframe | undefined>();
     const containerRef = useRef<HTMLDivElement>(null);
-    const formInputDetectsChanges = formInputs?.map(
-      input => `${input.id}-${input.type}`,
-    );
 
     // Initialize Iframe once
     useEffect(() => {
@@ -55,15 +49,7 @@ const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
           builderRef.current = undefined;
         }
       };
-    }, [
-      formInputs,
-      height,
-      formInputDetectsChanges,
-      schema,
-      formKeyNonEditable,
-      inputNonReusable,
-      maxHistories,
-    ]);
+    }, [formInputs, height, schema, formKeyNonEditable, inputNonReusable, maxHistories]);
 
     // Update height when prop changes
     useEffect(() => {
@@ -86,7 +72,7 @@ const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
     useEffect(() => {
       if (!builderRef.current || !formInputs) return;
       builderRef.current.setFormInputs(formInputs);
-    }, [formInputs, formInputDetectsChanges]);
+    }, [formInputs]);
 
     return (
       <div

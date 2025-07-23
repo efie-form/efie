@@ -27,7 +27,7 @@ export default function Tooltip({
           sideOffset={sideOffset}
           alignOffset={alignOffset}
         >
-          <p className="typography-body4 bg-neutral-400 text-white px-2 py-0.5 rounded-md">
+          <p className="typography-body4 rounded-md bg-neutral-400 px-2 py-0.5 text-white">
             {content}
           </p>
           <TooltipPrimitive.Arrow className="fill-neutral-400" />

@@ -1,7 +1,7 @@
 import { FieldType } from '../../../../constants/field-type';
 import { PropertyType } from '../../../../constants/form-schema.constant';
 import validateSchema from '../../index';
-import { createValidSchema, createValidField } from '../helpers/test-helpers';
+import { createValidField, createValidSchema } from '../helpers/test-helpers';
 
 describe('validateSchema - String property types', () => {
   const stringProperties = [

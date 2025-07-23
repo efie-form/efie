@@ -7,12 +7,7 @@ export default defineConfig({
   clean: true,
   sourcemap: true,
   minify: false,
-  external: [
-    'react',
-    'react-dom',
-    '@efie-form/core',
-    '@radix-ui/react-use-controllable-state',
-  ],
+  external: ['react', 'react-dom', '@efie-form/core', '@radix-ui/react-use-controllable-state'],
   banner: {
     js: '"use client";',
   },
@@ -26,12 +21,7 @@ export default defineConfig({
   // Ensure proper dependency tracking and watching
   treeshake: true,
   // Configure watch options to be more inclusive
-  ignoreWatch: [
-    '**/node_modules/**',
-    '**/dist/**',
-    '**/*.test.{ts,tsx}',
-    '**/*.spec.{ts,tsx}',
-  ],
+  ignoreWatch: ['**/node_modules/**', '**/dist/**', '**/*.test.{ts,tsx}', '**/*.spec.{ts,tsx}'],
   // Use onSuccess to provide feedback during watch
   onSuccess: async () => {
     console.log('📦 @efie-form/react: Build completed successfully');

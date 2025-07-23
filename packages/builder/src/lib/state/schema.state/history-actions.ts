@@ -1,10 +1,9 @@
+import defaultSchema from '../../default-schema';
 import type { SchemaStateHistory, StateSetters } from './types';
 import { debounce, getFieldInfoMap } from './utils';
-import defaultSchema from '../../default-schema';
 
 export function createHistoryActions({ set, getState }: StateSetters): SchemaStateHistory {
   return {
-
     histories: [JSON.stringify(defaultSchema)],
     totalHistories: 1,
     currentHistoryIndex: 0,
@@ -26,8 +25,7 @@ export function createHistoryActions({ set, getState }: StateSetters): SchemaSta
           totalHistories: newHistories.length,
           currentHistoryIndex: newCurrentIndex,
         });
-      }
-      else {
+      } else {
         set({ maxHistories });
       }
     },
@@ -69,8 +67,7 @@ export function createHistoryActions({ set, getState }: StateSetters): SchemaSta
 
       if (skipDebounce) {
         addToHistory();
-      }
-      else {
+      } else {
         // Use shorter debounce for better user experience (100ms instead of 250ms)
         debounce(addToHistory, 250, 'addHistory');
       }

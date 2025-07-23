@@ -7,7 +7,7 @@ on:
 
 jobs:
   lint:
-    name: Run ESLint
+    name: Run Biome
     runs-on: ubuntu-latest
 
     steps:
@@ -21,6 +21,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Run linting
+      - name: Run linting and formatting checks
         run: pnpm lint 
         

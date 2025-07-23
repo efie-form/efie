@@ -9,7 +9,6 @@ interface FormFieldProps<T = unknown> {
 interface BaseFieldProps {
   id: string;
   field: FormField;
-
 }
 
 export interface ShortTextFieldProps extends BaseFieldProps, FormFieldProps<string> {

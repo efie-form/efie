@@ -1,7 +1,7 @@
-import type { ReactNode } from 'react';
 import { useControllableState } from '@radix-ui/react-use-controllable-state';
-import { cn } from '../../lib/utils';
+import type { ReactNode } from 'react';
 import type { InputPropsWithoutRef } from 'react-html-props';
+import { cn } from '../../lib/utils';
 
 export interface InputProps {
   value?: string;
@@ -37,7 +37,7 @@ function Input({
   return (
     <div
       className={cn(
-        'relative flex border border-neutral-200 rounded-md bg-white w-full h-7 items-center overflow-hidden focus-within:outline focus-within:outline-primary focus-within:outline-1',
+        'relative flex h-7 w-full items-center overflow-hidden rounded-md border border-neutral-200 bg-white focus-within:outline focus-within:outline-1 focus-within:outline-primary',
         className,
         {
           'bg-neutral-100': disabled,
@@ -49,10 +49,10 @@ function Input({
         {...inputProps}
         disabled={disabled}
         value={inputValue}
-        onChange={e => setInputValue(e.target.value)}
+        onChange={(e) => setInputValue(e.target.value)}
         placeholder={placeholder}
         className={cn(
-          'outline-none w-full flex-1 py-1 placeholder-neutral-400 typography-body3',
+          'typography-body3 w-full flex-1 py-1 placeholder-neutral-400 outline-none',
           prefix ? 'ps-1' : 'ps-2',
           suffix ? 'pe-1' : 'pe-2',
           disabled ? 'text-neutral-600' : 'text-neutral-800',
@@ -74,11 +74,7 @@ function RenderPrefixSuffix({ type, children }: RenderPrefixSuffixProps) {
       return <div className="px-2">{children}</div>;
     }
     case 'text': {
-      return (
-        <div className="px-1.5 typography-body4 text-neutral-500">
-          {children}
-        </div>
-      );
+      return <div className="typography-body4 px-1.5 text-neutral-500">{children}</div>;
     }
     default: {
       return <>{children}</>;

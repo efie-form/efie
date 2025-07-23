@@ -9,9 +9,7 @@ const jestConfig = {
   moduleNameMapper: {
     '^@efie-form/core$': '<rootDir>/../core/lib',
   },
-  testMatch: [
-    '<rootDir>/lib/**/*.{test,spec}.{js,jsx,ts,tsx}',
-  ],
+  testMatch: ['<rootDir>/lib/**/*.{test,spec}.{js,jsx,ts,tsx}'],
   collectCoverageFrom: [
     'lib/**/*.{js,jsx,ts,tsx}',
     '!lib/**/*.d.ts',
@@ -22,12 +20,15 @@ const jestConfig = {
   coverageDirectory: 'coverage',
   coverageReporters: ['text', 'lcov', 'html'],
   transform: {
-    '^.+\\.tsx?$': ['ts-jest', {
-      useESM: true,
-      tsconfig: {
-        verbatimModuleSyntax: false,
+    '^.+\\.tsx?$': [
+      'ts-jest',
+      {
+        useESM: true,
+        tsconfig: {
+          verbatimModuleSyntax: false,
+        },
       },
-    }],
+    ],
   },
 };
 

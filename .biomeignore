@@ -1,0 +1,10 @@
+**/dist/**
+**/node_modules/**
+**/*.d.ts
+**/coverage/**
+**/.nx/**
+**/build/**
+**/public/**
+pnpm-lock.yaml
+**/.pnpm/**
+**/output.css

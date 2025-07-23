@@ -1,7 +1,7 @@
+import { type ButtonFormField, PropertyType } from '@efie-form/core';
 import type { ElementType } from 'react';
 import { createElement } from 'react';
 import type { ButtonFieldProps } from '../../types/field-props';
-import { PropertyType, type ButtonFormField } from '@efie-form/core';
 import { useFormContext } from '../form-context';
 
 interface ButtonProviderProps {
@@ -20,8 +20,8 @@ function ButtonProvider({ field, Component }: ButtonProviderProps) {
 
   if (!Component) return <></>;
 
-  const label = field.props.find(prop => prop.type === PropertyType.LABEL);
-  const buttonAction = field.props.find(prop => prop.type === PropertyType.BUTTON_ACTION);
+  const label = field.props.find((prop) => prop.type === PropertyType.LABEL);
+  const buttonAction = field.props.find((prop) => prop.type === PropertyType.BUTTON_ACTION);
 
   const handleClick = () => {
     if (buttonAction?.value.action !== 'navigate') return;

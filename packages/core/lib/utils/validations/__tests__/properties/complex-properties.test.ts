@@ -1,7 +1,12 @@
 import { FieldType } from '../../../../constants/field-type';
 import { PropertyType } from '../../../../constants/form-schema.constant';
 import validateSchema from '../../index';
-import { createValidSchema, createValidField, createValidSize, createValidColor } from '../helpers/test-helpers';
+import {
+  createValidColor,
+  createValidField,
+  createValidSchema,
+  createValidSize,
+} from '../helpers/test-helpers';
 
 describe('validateSchema - Complex property types', () => {
   describe('Border radius property', () => {
@@ -27,24 +32,30 @@ describe('validateSchema - Complex property types', () => {
       const field = createValidField(FieldType.SHORT_TEXT);
 
       // Non-object value
-      field.props = [{ type: PropertyType.BORDER_RADIUS, value: 'string' }] as unknown as typeof field.props;
+      field.props = [
+        { type: PropertyType.BORDER_RADIUS, value: 'string' },
+      ] as unknown as typeof field.props;
       schema.form.fields = [field];
       expect(validateSchema(schema)).toBe(false);
 
       // Missing properties
-      field.props = [{ type: PropertyType.BORDER_RADIUS, value: { topLeft: createValidSize() } }] as unknown as typeof field.props;
+      field.props = [
+        { type: PropertyType.BORDER_RADIUS, value: { topLeft: createValidSize() } },
+      ] as unknown as typeof field.props;
       expect(validateSchema(schema)).toBe(false);
 
       // Invalid size values
-      field.props = [{
-        type: PropertyType.BORDER_RADIUS,
-        value: {
-          topLeft: 'invalid',
-          topRight: createValidSize(),
-          bottomLeft: createValidSize(),
-          bottomRight: createValidSize(),
+      field.props = [
+        {
+          type: PropertyType.BORDER_RADIUS,
+          value: {
+            topLeft: 'invalid',
+            topRight: createValidSize(),
+            bottomLeft: createValidSize(),
+            bottomRight: createValidSize(),
+          },
         },
-      }] as unknown as typeof field.props;
+      ] as unknown as typeof field.props;
       expect(validateSchema(schema)).toBe(false);
     });
   });
@@ -78,19 +89,23 @@ describe('validateSchema - Complex property types', () => {
         expect(validateSchema(schema)).toBe(false);
 
         // Missing properties
-        field.props = [{ type: propType, value: { top: createValidSize() } }] as unknown as typeof field.props;
+        field.props = [
+          { type: propType, value: { top: createValidSize() } },
+        ] as unknown as typeof field.props;
         expect(validateSchema(schema)).toBe(false);
 
         // Invalid size values
-        field.props = [{
-          type: propType,
-          value: {
-            top: 'invalid',
-            right: createValidSize(),
-            bottom: createValidSize(),
-            left: createValidSize(),
+        field.props = [
+          {
+            type: propType,
+            value: {
+              top: 'invalid',
+              right: createValidSize(),
+              bottom: createValidSize(),
+              left: createValidSize(),
+            },
           },
-        }] as unknown as typeof field.props;
+        ] as unknown as typeof field.props;
         expect(validateSchema(schema)).toBe(false);
       });
     }
@@ -131,16 +146,22 @@ describe('validateSchema - Complex property types', () => {
       const field = createValidField(FieldType.SHORT_TEXT);
 
       // Non-array value
-      field.props = [{ type: PropertyType.BOX_SHADOW, value: 'string' }] as unknown as typeof field.props;
+      field.props = [
+        { type: PropertyType.BOX_SHADOW, value: 'string' },
+      ] as unknown as typeof field.props;
       schema.form.fields = [field];
       expect(validateSchema(schema)).toBe(false);
 
       // Invalid shadow object
-      field.props = [{ type: PropertyType.BOX_SHADOW, value: ['invalid'] }] as unknown as typeof field.props;
+      field.props = [
+        { type: PropertyType.BOX_SHADOW, value: ['invalid'] },
+      ] as unknown as typeof field.props;
       expect(validateSchema(schema)).toBe(false);
 
       // Missing properties in shadow
-      field.props = [{ type: PropertyType.BOX_SHADOW, value: [{ x: createValidSize() }] }] as unknown as typeof field.props;
+      field.props = [
+        { type: PropertyType.BOX_SHADOW, value: [{ x: createValidSize() }] },
+      ] as unknown as typeof field.props;
       expect(validateSchema(schema)).toBe(false);
     });
   });

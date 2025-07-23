@@ -1,12 +1,7 @@
-import type {
-  FormField,
-  OptionsProperty,
-} from '@efie-form/core';
-import { PropertyType } from '@efie-form/core';
-import { useRef } from 'react';
+import type { DragEndEvent } from '@dnd-kit/core';
 import {
-  DndContext,
   closestCenter,
+  DndContext,
   KeyboardSensor,
   PointerSensor,
   useSensor,
@@ -17,10 +12,12 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
-import type { DragEndEvent } from '@dnd-kit/core';
-import ChoiceFieldOption from './choice-field-option';
-import { getFieldProp } from '../../../../lib/utils';
+import type { FormField, OptionsProperty } from '@efie-form/core';
+import { PropertyType } from '@efie-form/core';
+import { useRef } from 'react';
 import { useSchemaStore } from '../../../../lib/state/schema.state';
+import { getFieldProp } from '../../../../lib/utils';
+import ChoiceFieldOption from './choice-field-option';
 
 type OptionType = OptionsProperty['value'][number];
 
@@ -37,11 +34,15 @@ const DEFAULT_OPTIONS: OptionType[] = [
 
 function ChoiceFieldBase({ fieldId, field, inputType }: ChoiceFieldBaseProps) {
   const lastInputRef = useRef<HTMLInputElement>(null);
-  const fieldProperty = useSchemaStore(state => state.getFieldProperty(field.id, PropertyType.LABEL));
+  const fieldProperty = useSchemaStore((state) =>
+    state.getFieldProperty(field.id, PropertyType.LABEL),
+  );
   const label = fieldProperty?.value || '';
-  const updateFieldProperty = useSchemaStore(state => state.updateFieldProperty);
+  const updateFieldProperty = useSchemaStore((state) => state.updateFieldProperty);
 
-  const optionsProperty = useSchemaStore(state => state.getFieldProperty(field.id, PropertyType.OPTIONS));
+  const optionsProperty = useSchemaStore((state) =>
+    state.getFieldProperty(field.id, PropertyType.OPTIONS),
+  );
   const options = optionsProperty?.value || DEFAULT_OPTIONS;
 
   const updateOptions = (newOptions: OptionType[]) => {
@@ -59,8 +60,8 @@ function ChoiceFieldBase({ fieldId, field, inputType }: ChoiceFieldBaseProps) {
   );
 
   const optionsProp = getFieldProp(field, PropertyType.OPTIONS);
-  const isValueDifferent
-    = optionsProp?.value.some(option => option.value !== option.label) || false;
+  const isValueDifferent =
+    optionsProp?.value.some((option) => option.value !== option.label) || false;
 
   const handleNewOption = () => {
     const name = `Option ${options.length + 1}`;
@@ -106,22 +107,17 @@ function ChoiceFieldBase({ fieldId, field, inputType }: ChoiceFieldBaseProps) {
     <div className="p-2">
       <input
         value={label}
-        onChange={e => updateFieldProperty(field.id, {
-          type: PropertyType.LABEL,
-          value: e.target.value,
-        })}
-        className="mb-2 typography-body2 bg-white bg-opacity-0 focus:outline-none cursor-text w-full"
+        onChange={(e) =>
+          updateFieldProperty(field.id, {
+            type: PropertyType.LABEL,
+            value: e.target.value,
+          })
+        }
+        className="typography-body2 mb-2 w-full cursor-text bg-white bg-opacity-0 focus:outline-none"
         type="text"
       />
-      <div
-        id={`${fieldId}-options-container`}
-        className="flex flex-col gap-0.5 px-2"
-      >
-        <DndContext
-          sensors={sensors}
-          collisionDetection={closestCenter}
-          onDragEnd={handleDragEnd}
-        >
+      <div id={`${fieldId}-options-container`} className="flex flex-col gap-0.5 px-2">
+        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
           <SortableContext
             items={options.map((_, index) => index.toString())}
             strategy={verticalListSortingStrategy}
@@ -134,20 +130,18 @@ function ChoiceFieldBase({ fieldId, field, inputType }: ChoiceFieldBaseProps) {
                 inputType={inputType}
                 fieldId={fieldId}
                 isValueDifferent={isValueDifferent}
-                onUpdate={value => handleUpdate(index, value)}
+                onUpdate={(value) => handleUpdate(index, value)}
                 onRemove={() => handleRemove(index)}
-                inputRef={
-                  index === options.length - 1 ? lastInputRef : undefined
-                }
+                inputRef={index === options.length - 1 ? lastInputRef : undefined}
               />
             ))}
           </SortableContext>
         </DndContext>
       </div>
-      <div className="flex items-center gap-2 px-2 mt-2">
+      <div className="mt-2 flex items-center gap-2 px-2">
         <input type={inputType} disabled />
         <p
-          className="typography-body3 text-neutral-400 cursor-text hover:text-neutral-500"
+          className="typography-body3 cursor-text text-neutral-400 hover:text-neutral-500"
           onClick={handleNewOption}
         >
           Add option

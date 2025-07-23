@@ -1,5 +1,5 @@
-import { FieldType, getColorObject, PropertyType } from '@efie-form/core';
 import type { FormField } from '@efie-form/core';
+import { FieldType, getColorObject, PropertyType } from '@efie-form/core';
 import { createTestStore } from './test-utils';
 
 describe('History Actions', () => {
@@ -149,7 +149,9 @@ describe('History Actions', () => {
       };
 
       store.addField(newField, 'block-1');
-      store.updateField('block-1', { props: [{ type: PropertyType.BACKGROUND_COLOR, value: getColorObject('#FF0000') }] });
+      store.updateField('block-1', {
+        props: [{ type: PropertyType.BACKGROUND_COLOR, value: getColorObject('#FF0000') }],
+      });
 
       // Get updated state after changes
       let updatedStore = useStore.getState();

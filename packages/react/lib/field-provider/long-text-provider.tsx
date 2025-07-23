@@ -1,7 +1,7 @@
+import { type LongTextFormField, PropertyType } from '@efie-form/core';
 import type { ElementType } from 'react';
 import { createElement } from 'react';
 import type { LongTextFieldProps } from '../../types/field-props';
-import { PropertyType, type LongTextFormField } from '@efie-form/core';
 
 interface LongTextProviderProps {
   field: LongTextFormField;
@@ -18,8 +18,8 @@ function LongTextProvider({
 }: LongTextProviderProps) {
   if (!Component) return <></>;
 
-  const label = field.props.find(prop => prop.type === PropertyType.LABEL);
-  const placeholder = field.props.find(prop => prop.type === PropertyType.PLACEHOLDER);
+  const label = field.props.find((prop) => prop.type === PropertyType.LABEL);
+  const placeholder = field.props.find((prop) => prop.type === PropertyType.PLACEHOLDER);
 
   return createElement(Component, {
     id: field.id,

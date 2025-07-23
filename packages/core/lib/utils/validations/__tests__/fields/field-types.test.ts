@@ -1,7 +1,7 @@
 import { FieldType } from '../../../../constants/field-type';
 import type { BlockFormField, PageFormField } from '../../../../types/form-field.type';
 import validateSchema from '../../index';
-import { createValidSchema, createValidField } from '../helpers/test-helpers';
+import { createValidField, createValidSchema } from '../helpers/test-helpers';
 
 describe('validateSchema - Field types validation', () => {
   // Test all input field types

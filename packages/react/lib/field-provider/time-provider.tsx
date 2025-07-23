@@ -1,7 +1,7 @@
+import { PropertyType, type TimeFormField } from '@efie-form/core';
 import type { ElementType } from 'react';
 import { createElement } from 'react';
 import type { TimeFieldProps } from '../../types/field-props';
-import { PropertyType, type TimeFormField } from '@efie-form/core';
 
 interface TimeProviderProps {
   field: TimeFormField;
@@ -10,15 +10,10 @@ interface TimeProviderProps {
   onChange?: (value: string) => void;
 }
 
-function TimeProvider({
-  field,
-  Component,
-  value = '',
-  onChange = () => {},
-}: TimeProviderProps) {
+function TimeProvider({ field, Component, value = '', onChange = () => {} }: TimeProviderProps) {
   if (!Component) return <></>;
 
-  const label = field.props.find(prop => prop.type === PropertyType.LABEL);
+  const label = field.props.find((prop) => prop.type === PropertyType.LABEL);
 
   return createElement(Component, {
     id: field.id,

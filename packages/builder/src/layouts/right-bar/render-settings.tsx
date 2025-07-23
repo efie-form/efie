@@ -1,20 +1,19 @@
-import { type FormField } from '@efie-form/core';
-import DateTimeSettings from './field-settings/date-time-settings';
-import DateSettings from './field-settings/date-settings';
-import LongTextSettings from './field-settings/long-text-settings';
+import { FieldType, type FormField } from '@efie-form/core';
 import BlockSettings from './field-settings/block-settings';
+import ButtonSettings from './field-settings/button-settings';
+import DateSettings from './field-settings/date-settings';
+import DateTimeSettings from './field-settings/date-time-settings';
 import DividerSettings from './field-settings/divider-settings';
 import FileSettings from './field-settings/file-settings';
 import HeadingSettings from './field-settings/header-settings';
 import ImageSettings from './field-settings/image-settings';
+import LongTextSettings from './field-settings/long-text-settings';
 import MultipleChoicesSettings from './field-settings/multiple-choices-settings';
-import RowSettings from './field-settings/row-settings';
 import NumberSettings from './field-settings/number-settings';
+import RowSettings from './field-settings/row-settings';
 import ShortTextSettings from './field-settings/short-text-settings';
 import SingleChoiceSettings from './field-settings/single-choice-settings';
 import TimeSettings from './field-settings/time-settings';
-import ButtonSettings from './field-settings/button-settings';
-import { FieldType } from '@efie-form/core';
 
 interface RenderSettingsProps {
   field: FormField;

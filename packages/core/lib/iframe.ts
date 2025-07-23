@@ -52,10 +52,7 @@ export default class Iframe {
   }
 
   private isIframeRendered() {
-    return (
-      this.parentElem?.childElementCount
-      && this.parentElem?.childElementCount >= 1
-    );
+    return this.parentElem?.childElementCount && this.parentElem?.childElementCount >= 1;
   }
 
   public init() {

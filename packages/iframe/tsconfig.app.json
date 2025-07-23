@@ -6,15 +6,9 @@
     "jsx": "react-jsx",
     "moduleResolution": "bundler",
     "paths": {
-      "@efie-form/core": [
-        "../core/lib"
-      ],
-      "@efie-form/builder": [
-        "../builder/src"
-      ],
+      "@efie-form/core": ["../core/lib"],
+      "@efie-form/builder": ["../builder/src"]
     }
   },
-  "include": [
-    "src"
-  ],
+  "include": ["src"]
 }

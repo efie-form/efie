@@ -156,8 +156,7 @@ export const SizeUnit = {
 // Export types for all constants
 export type FieldConditionOperator =
   (typeof FieldConditionOperator)[keyof typeof FieldConditionOperator];
-export type ValidationOperator =
-  (typeof ValidationOperator)[keyof typeof ValidationOperator];
+export type ValidationOperator = (typeof ValidationOperator)[keyof typeof ValidationOperator];
 export type RuleType = (typeof RuleType)[keyof typeof RuleType];
 export type ActionType = (typeof ActionType)[keyof typeof ActionType];
 export type PropertyType = (typeof PropertyType)[keyof typeof PropertyType];

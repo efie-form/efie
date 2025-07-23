@@ -1,12 +1,12 @@
+import type { Color, FormSchema } from '@efie-form/core';
 import { FieldType, getColorObject, PropertyType } from '@efie-form/core';
-import type { FormSchema, Color } from '@efie-form/core';
 import { create } from 'zustand';
-import type { SchemaState } from '../lib/state/schema.state/types';
-import { createSchemaActions } from '../lib/state/schema.state/schema-actions';
 import { createFieldActions } from '../lib/state/schema.state/field-actions';
-import { createPropertyActions } from '../lib/state/schema.state/property-actions';
 import { createHistoryActions } from '../lib/state/schema.state/history-actions';
 import { createLegacyActions } from '../lib/state/schema.state/legacy-actions';
+import { createPropertyActions } from '../lib/state/schema.state/property-actions';
+import { createSchemaActions } from '../lib/state/schema.state/schema-actions';
+import type { SchemaState } from '../lib/state/schema.state/types';
 import { getFieldInfoMap } from '../lib/state/schema.state/utils';
 
 // Helper function to create Color objects from hex strings

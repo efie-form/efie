@@ -1,10 +1,6 @@
-import { useEffect, useRef } from 'react';
-import {
-  FormBuilder,
-  useFormBuilder,
-  useWatchSchema,
-} from '@efie-form/builder';
+import { FormBuilder, useFormBuilder, useWatchSchema } from '@efie-form/builder';
 import { Builder } from '@efie-form/core';
+import { useEffect, useRef } from 'react';
 
 function App() {
   const editorRef = useRef<Builder | undefined>(undefined);
@@ -32,7 +28,7 @@ function App() {
     return () => {
       editorRef.current = undefined;
     };
-  }, []);
+  }, [initializeFormBuilder]);
 
   function initializeFormBuilder() {
     editorRef.current = new Builder({

@@ -1,5 +1,5 @@
-import type { Color, ColorHsla, ColorRgba } from '../types/common.type.js';
 import convert from 'color-convert';
+import type { Color, ColorHsla, ColorRgba } from '../types/common.type.js';
 
 /**
  * Converts any valid color format to a complete Color object with rgba, hsla, and hex properties.
@@ -121,16 +121,14 @@ function fromRgba(rgba: ColorRgba): Color {
 
   // Convert to hex
   const hexWithoutAlpha = convert.rgb.hex([r, g, b]);
-  const hex = a < 1
-    ? `#${hexWithoutAlpha}${numToHex(a * 255)}`
-    : `#${hexWithoutAlpha}`;
+  const hex = a < 1 ? `#${hexWithoutAlpha}${numToHex(a * 255)}` : `#${hexWithoutAlpha}`;
 
   // Convert to HSL
   const hsl = convert.rgb.hsl([r, g, b]);
 
   return toColor({
     rgba: { r, g, b, a },
-    hsla: { h: (hsl[0]), s: (hsl[1]), l: (hsl[2]), a },
+    hsla: { h: hsl[0], s: hsl[1], l: hsl[2], a },
     hex,
   });
 }
@@ -148,9 +146,7 @@ function fromHsla(hsla: ColorHsla): Color {
 
   // Convert to hex
   const hexWithoutAlpha = convert.hsl.hex([h, s, l]);
-  const hex = a < 1
-    ? `#${hexWithoutAlpha}${numToHex(a * 255)}`
-    : `#${hexWithoutAlpha}`;
+  const hex = a < 1 ? `#${hexWithoutAlpha}${numToHex(a * 255)}` : `#${hexWithoutAlpha}`;
 
   return toColor({
     rgba: { r, g, b, a },

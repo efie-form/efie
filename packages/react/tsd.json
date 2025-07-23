@@ -1,4 +1,4 @@
 {
-    "directory": "test-d",
-    "typingsFile": "dist/index.d.ts"
+  "directory": "test-d",
+  "typingsFile": "dist/index.d.ts"
 }

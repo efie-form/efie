@@ -7,10 +7,7 @@ export default defineConfig({
   clean: true,
   sourcemap: true,
   minify: false,
-  external: [
-    'vue',
-    '@efie-form/core',
-  ],
+  external: ['vue', '@efie-form/core'],
   outExtension({ format }: { format: string }) {
     return {
       js: format === 'cjs' ? '.js' : '.mjs',

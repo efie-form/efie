@@ -1,10 +1,10 @@
+import { FieldType, type FormSchema, validateSchema } from '@efie-form/core';
+import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
+import JsonEditor from '../../../components/elements/json-editor';
+import useDebounce from '../../../lib/hooks/use-debounce';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import { useSettingsStore } from '../../../lib/state/settings.state';
-import { FieldType, validateSchema, type FormSchema } from '@efie-form/core';
-import useDebounce from '../../../lib/hooks/use-debounce';
-import { motion } from 'framer-motion';
-import JsonEditor from '../../../components/elements/json-editor';
 
 export default function FormJson() {
   const { schema, currentHistoryIndex, setSchema } = useSchemaStore();
@@ -22,7 +22,7 @@ export default function FormJson() {
     setIsUpdating(false);
     checkSchema(schema);
     setValue(JSON.stringify(schema, undefined, 2));
-  }, [currentHistoryIndex, internalIndex, isUpdating]);
+  }, [currentHistoryIndex, internalIndex, isUpdating, schema]);
 
   const handleChange = (newSchema?: string) => {
     if (!newSchema) return;
@@ -33,28 +33,25 @@ export default function FormJson() {
   const handleSave = () => {
     const schema = checkSchema(value);
     if (!schema || !isChanged()) return;
-    setInternalIndex(prev => prev + 1);
+    setInternalIndex((prev) => prev + 1);
     setIsUpdating(true);
-    const firstPage = schema.form.fields.find(
-      f => f.type === FieldType.PAGE,
-    );
+    const firstPage = schema.form.fields.find((f) => f.type === FieldType.PAGE);
     if (firstPage) setPage(firstPage.id);
     setSchema(schema);
   };
 
   useDebounce(handleSave, 250, [value]);
 
-  const checkSchema = (data: string | FormSchema) => {
+  function checkSchema(data: string | FormSchema) {
     try {
       const parsedSchema = typeof data === 'string' ? JSON.parse(data) : data;
       const isValid = validateSchema(parsedSchema);
       setIsValidSchema(isValid);
       if (isValid) return parsedSchema;
-    }
-    catch {
+    } catch {
       setIsValidSchema(false);
     }
-  };
+  }
 
   const isChanged = () => {
     const prevSchema = JSON.stringify(schema);
@@ -63,12 +60,12 @@ export default function FormJson() {
   };
 
   return (
-    <div className="h-full flex flex-col relative overflow-hidden">
-      <div className="bg-white rounded-md flex-1 w-full h-full">
+    <div className="relative flex h-full flex-col overflow-hidden">
+      <div className="h-full w-full flex-1 rounded-md bg-white">
         <JsonEditor onChange={handleChange} value={value} />
       </div>
       <motion.div
-        className="absolute px-4 py-0.5 left-1/2 -translate-x-1/2 border border-danger bg-danger-50 text-danger-700 rounded-md"
+        className="-translate-x-1/2 absolute left-1/2 rounded-md border border-danger bg-danger-50 px-4 py-0.5 text-danger-700"
         initial={{
           translateY: '100%',
           bottom: -5,

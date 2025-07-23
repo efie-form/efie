@@ -1,29 +1,22 @@
 import { FieldType } from '../../../../constants/field-type';
 import { PropertyType } from '../../../../constants/form-schema.constant';
 import validateSchema from '../../index';
-import { createValidSchema, createValidField } from '../helpers/test-helpers';
+import { createValidField, createValidSchema } from '../helpers/test-helpers';
 
 describe('validateSchema - Number property types', () => {
-  const numberProperties = [
-    PropertyType.FONT_WEIGHT,
-    PropertyType.MAX_FILES,
-  ];
+  const numberProperties = [PropertyType.FONT_WEIGHT, PropertyType.MAX_FILES];
 
   for (const propType of numberProperties) {
     it(`should validate ${propType} with valid number value`, () => {
       const schema = createValidSchema();
-      const field = createValidField(FieldType.SHORT_TEXT, [
-        { type: propType, value: 123 },
-      ]);
+      const field = createValidField(FieldType.SHORT_TEXT, [{ type: propType, value: 123 }]);
       schema.form.fields = [field];
       expect(validateSchema(schema)).toBe(true);
     });
 
     it(`should validate ${propType} with zero`, () => {
       const schema = createValidSchema();
-      const field = createValidField(FieldType.SHORT_TEXT, [
-        { type: propType, value: 0 },
-      ]);
+      const field = createValidField(FieldType.SHORT_TEXT, [{ type: propType, value: 0 }]);
       schema.form.fields = [field];
       expect(validateSchema(schema)).toBe(true);
     });
@@ -55,9 +48,7 @@ describe('validateSchema - Boolean property types', () => {
     expect(validateSchema(schema)).toBe(true);
 
     // Test false
-    field = createValidField(FieldType.SHORT_TEXT, [
-      { type: PropertyType.REQUIRED, value: false },
-    ]);
+    field = createValidField(FieldType.SHORT_TEXT, [{ type: PropertyType.REQUIRED, value: false }]);
     schema.form.fields = [field];
     expect(validateSchema(schema)).toBe(true);
   });
@@ -73,7 +64,9 @@ describe('validateSchema - Boolean property types', () => {
     field.props = [{ type: PropertyType.REQUIRED, value: 1 }] as unknown as typeof field.props;
     expect(validateSchema(schema)).toBe(false);
 
-    field.props = [{ type: PropertyType.REQUIRED, value: undefined }] as unknown as typeof field.props;
+    field.props = [
+      { type: PropertyType.REQUIRED, value: undefined },
+    ] as unknown as typeof field.props;
     expect(validateSchema(schema)).toBe(false);
   });
 });
