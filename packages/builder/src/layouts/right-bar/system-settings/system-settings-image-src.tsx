@@ -26,13 +26,13 @@ export default function SystemSettingsImageSrc({ config, fieldId }: PropsTemplat
   const [fileInfo, setFileInfo] = useState<{ name: string; size: number }>();
 
   // Helper handlers for drag events to allow multiple statements
-  const handleDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
+  const handleDragEnter = (e: React.DragEvent<HTMLButtonElement>) => {
     handleDrag(e);
   };
-  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+  const handleDragLeave = (e: React.DragEvent<HTMLButtonElement>) => {
     handleDrag(e);
   };
-  const handleDropWithHover = (e: React.DragEvent<HTMLDivElement>) => {
+  const handleDropWithHover = (e: React.DragEvent<HTMLButtonElement>) => {
     handleDrop(e);
   };
 
@@ -119,7 +119,8 @@ export default function SystemSettingsImageSrc({ config, fieldId }: PropsTemplat
           className="w-full min-w-0"
         />
         {/* Preview, upload, file info, and dimensions in a single box */}
-        <div
+        <button
+          type="button"
           className={cn(
             'flex items-center group gap-3 border border-dashed rounded-lg p-2 bg-neutral-50 relative cursor-pointer',
             'hover:border-primary hover:bg-primary-300/10 transition-colors duration-200',
@@ -220,7 +221,7 @@ export default function SystemSettingsImageSrc({ config, fieldId }: PropsTemplat
           {dragActive && !isDraggedFileValid && (
             <div className="absolute inset-0 bg-danger-100/30 border border-danger-400 rounded-lg flex items-center justify-center"></div>
           )}
-        </div>
+        </button>
       </div>
     </SettingsFieldVertical>
   );

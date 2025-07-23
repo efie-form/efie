@@ -144,10 +144,17 @@ export default function SystemSettingsButtonAction({
           <div className="mt-4 space-y-4">
             <Input value={value.url} onChange={handleUrlChange} placeholder="Enter URL" />
             <div className="flex justify-between items-center">
-              <label className="typography-body3 text-neutral-800 cursor-pointer">
+              <label
+                htmlFor="open-in-new-tab"
+                className="typography-body3 text-neutral-800 cursor-pointer"
+              >
                 Open in new tab
               </label>
-              <Switch checked={value.target === '_blank'} onChange={handleOpenInNewTabChange} />
+              <Switch
+                id="open-in-new-tab"
+                checked={value.target === '_blank'}
+                onChange={handleOpenInNewTabChange}
+              />
             </div>
           </div>
         )}

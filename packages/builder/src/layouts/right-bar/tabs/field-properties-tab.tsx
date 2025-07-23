@@ -36,14 +36,15 @@ function FieldPropertiesTab() {
       <div className="flex items-center justify-between border-b border-neutral-100">
         <div className="flex items-center gap-1 px-2">
           <Tooltip content="Go to parent">
-            <button className="text-neutral-700 p-1" onClick={handleGoToParent}>
+            <button type="button" className="p-1 text-neutral-700" onClick={handleGoToParent}>
               <LuCornerLeftUp className="size-3.5" />
             </button>
           </Tooltip>
           <p className="typography-body1 font-medium text-neutral-700">{FIELDS_NAME[field.type]}</p>
         </div>
         <button
-          className="border-s border-neutral-100 px-2 py-2 hover:bg-neutral-100 transition-all"
+          type="button"
+          className="border-s border-neutral-100 px-2 py-2 transition-all hover:bg-neutral-100"
           onClick={() => {
             clearSelectedFieldId();
             setActiveTab(RIGHT_BAR_TABS.PAGE);
@@ -52,7 +53,7 @@ function FieldPropertiesTab() {
           <HiX />
         </button>
       </div>
-      <div className="flex-1 min-h-0">
+      <div className="min-h-0 flex-1">
         <div className="h-full overflow-y-auto">
           <RenderSettings field={field} />
         </div>

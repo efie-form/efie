@@ -135,7 +135,7 @@ function RowSettings({ field }: RowSettingsProps) {
       <div className="p-4 border-b border-neutral-100">
         <div className="grid grid-cols-2 gap-2">
           {LAYOUT_PRESETS.map((preset, index) => (
-            <button key={index} onClick={() => applyLayout(preset)}>
+            <button type="button" key={index} onClick={() => applyLayout(preset)}>
               <div className="flex h-10 group">
                 {preset.map((width, i) => (
                   <div

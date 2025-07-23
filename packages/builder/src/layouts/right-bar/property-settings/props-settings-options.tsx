@@ -194,7 +194,7 @@ function OptionItem({
         <Input value={option.value} onChange={(value) => handleValueChange(index, value)} />
       )}
       <div className="invisible group-hover:visible">
-        <button onClick={onRemove}>
+        <button type="button" onClick={onRemove}>
           <MdOutlineClose className="text-neutral-500 cursor-pointer hover:text-neutral-700" />
         </button>
       </div>
