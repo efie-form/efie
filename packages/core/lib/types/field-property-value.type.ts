@@ -2,7 +2,7 @@ import type { JSONContent } from '@tiptap/core';
 import type { BoxShadow, Color, Size } from './common.type';
 
 export type PropValueString = string;
-export type PropValueNumber = number;
+export type PropValueNumber = number | undefined;
 export type PropValueBoolean = boolean;
 export type PropValueColor = Color;
 export type PropValueSize = Size;

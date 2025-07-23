@@ -1,5 +1,5 @@
 import type { FormField } from '@efie-form/core';
-import type { StateSetters } from './types';
+import type { SchemaStateFieldActions, StateSetters } from './types';
 import {
   addFieldToTree,
   deepClone,
@@ -9,7 +9,7 @@ import {
   removeFieldFromTree,
 } from './utils';
 
-export function createFieldActions({ set, getState }: StateSetters) {
+export function createFieldActions({ set, getState }: StateSetters): SchemaStateFieldActions {
   return {
     // Field management methods
     addField: (field: FormField, parentId?: string, index?: number) => {
@@ -127,40 +127,6 @@ export function createFieldActions({ set, getState }: StateSetters) {
       const { fieldKeyMap, fieldMap, fieldParentMap } = getFieldInfoMap(newFields);
       set({ schema: newSchema, fieldMap, fieldKeyMap, fieldParentMap });
       addHistory(newSchema, true); // Skip debounce for field deletions
-    },
-
-    // Core field access methods
-    getFieldById: (fieldId?: string) => {
-      if (!fieldId) return;
-      return getState().fieldMap.get(fieldId);
-    },
-
-    getFieldKeyById: (fieldId?: string) => {
-      if (!fieldId) return;
-      return getState().fieldKeyMap.get(fieldId);
-    },
-
-    getFieldParentId: (fieldId?: string) => {
-      if (!fieldId) return;
-      return getState().fieldParentMap.get(fieldId);
-    },
-
-    listChildrenId: (fieldId: string) => {
-      const field = getState().fieldMap.get(fieldId);
-      if (!field || !('children' in field)) return [];
-
-      const getChildrenId = (field: FormField): string[] => {
-        if (!('children' in field) || !field.children || field.children.length === 0) {
-          return [];
-        }
-
-        return field.children.flatMap((child) => {
-          const childIds = getChildrenId(child);
-          return [child.id, ...childIds];
-        });
-      };
-
-      return getChildrenId(field);
     },
   };
 }

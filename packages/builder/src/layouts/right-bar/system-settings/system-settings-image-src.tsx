@@ -1,28 +1,22 @@
-import { isStringValue, type PropertyDefinition, type PropValue } from '@efie-form/core';
+import type { FieldSystemConfigImageSrc } from '@efie-form/core';
 import { useEffect, useRef, useState } from 'react';
 import { MdOutlineImage } from 'react-icons/md';
 import { Input } from '../../../components/form';
 import { useFileDragDrop } from '../../../lib/hooks/use-file-drag-drop';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import { cn } from '../../../lib/utils';
-import type { PropSettingsImageUrl } from '../../../types/prop-settings.type';
+import { getImageFileInfo } from '../../../lib/utils-image-info';
 import SettingsFieldVertical from '../property-layouts/settings-field-vertical';
-import { getImageFileInfo } from './utils-image-info';
 
-interface PropsTemplateImageUrlProps extends PropSettingsImageUrl {
+interface PropsTemplateImageUrlProps {
   fieldId: string;
+  config: FieldSystemConfigImageSrc;
 }
 
-export default function PropsTemplateImageUrl({
-  label,
-  placeholder,
-  type,
-  fieldId,
-}: PropsTemplateImageUrlProps) {
-  const fieldProperty = useSchemaStore((state) => state.getFieldProperty(fieldId, type));
+export default function SystemSettingsImageSrc({ config, fieldId }: PropsTemplateImageUrlProps) {
+  const fieldProperty = useSchemaStore((state) => state.getFieldProperty(fieldId, config.type));
+  const value = fieldProperty?.value || '';
   const updateFieldProperty = useSchemaStore((state) => state.updateFieldProperty);
-  const value = getValue(fieldProperty?.value);
-
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [imageError, setImageError] = useState(false);
   const [imageDimensions, setImageDimensions] = useState<{ width: number; height: number }>();
@@ -32,21 +26,25 @@ export default function PropsTemplateImageUrl({
   const [fileInfo, setFileInfo] = useState<{ name: string; size: number }>();
 
   // Helper handlers for drag events to allow multiple statements
-  const handleDragEnter = (e: React.DragEvent<HTMLElement>) => {
+  const handleDragEnter = (e: React.DragEvent<HTMLButtonElement>) => {
     handleDrag(e);
   };
-  const handleDragLeave = (e: React.DragEvent<HTMLElement>) => {
+  const handleDragLeave = (e: React.DragEvent<HTMLButtonElement>) => {
     handleDrag(e);
   };
-  const handleDropWithHover = (e: React.DragEvent<HTMLElement>) => {
+  const handleDropWithHover = (e: React.DragEvent<HTMLButtonElement>) => {
     handleDrop(e);
   };
 
-  const handleChange = (newValue: string) => {
+  const onChange = (newValue: string) => {
     updateFieldProperty(fieldId, {
-      type,
+      type: config.type,
       value: newValue,
-    } as PropertyDefinition);
+    });
+  };
+
+  const handleChange = (newValue: string) => {
+    onChange(newValue);
     setImageError(false);
     // setIsLoading(false);
   };
@@ -111,11 +109,11 @@ export default function PropsTemplateImageUrl({
   const hasImage = value?.trim() && !imageError;
 
   return (
-    <SettingsFieldVertical label={label} divider>
+    <SettingsFieldVertical label={config.label} divider>
       <div className="flex flex-col gap-2">
         {/* Input field below preview/info */}
         <Input
-          placeholder={placeholder || 'Enter image URL...'}
+          placeholder="Enter image URL..."
           value={value}
           onChange={handleChange}
           className="w-full min-w-0"
@@ -228,12 +226,6 @@ export default function PropsTemplateImageUrl({
     </SettingsFieldVertical>
   );
 }
-
-const getValue = (props?: PropValue) => {
-  if (!isStringValue(props)) return '';
-
-  return props;
-};
 
 const formatFileSize = (bytes: number): string => {
   if (bytes === 0) return '0 Bytes';

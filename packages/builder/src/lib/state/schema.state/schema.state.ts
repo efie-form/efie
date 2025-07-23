@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import defaultSchema from '../../default-schema';
+import { createAccessMethods } from './access-methods';
 import { createFieldActions } from './field-actions';
 import { createHistoryActions } from './history-actions';
 import { createLegacyActions } from './legacy-actions';
@@ -18,6 +19,7 @@ export const useSchemaStore = create<SchemaState>((set, getState) => {
   const propertyActions = createPropertyActions(stateSetters);
   const historyActions = createHistoryActions(stateSetters);
   const legacyActions = createLegacyActions(stateSetters);
+  const accessMethods = createAccessMethods(stateSetters);
 
   return {
     // Initial state
@@ -25,11 +27,9 @@ export const useSchemaStore = create<SchemaState>((set, getState) => {
     fieldParentMap: fieldInfo.fieldParentMap,
     fieldMap: fieldInfo.fieldMap,
     fieldKeyMap: fieldInfo.fieldKeyMap,
-    histories: [JSON.stringify(defaultSchema)],
-    totalHistories: 1,
-    currentHistoryIndex: 0,
 
     // Combine all actions
+    ...accessMethods,
     ...schemaActions,
     ...fieldActions,
     ...propertyActions,

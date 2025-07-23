@@ -43,7 +43,7 @@ function LeftBar() {
             <button
               type="button"
               className={cn(
-                'cursor-pointer p-3 transition-all duration-100 hover:bg-neutral-200/30',
+                'block cursor-pointer p-3 transition-all duration-100 hover:bg-neutral-200/30',
                 {
                   '!bg-neutral-200/80': tab.id === activeTab,
                 },

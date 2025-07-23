@@ -1,29 +1,21 @@
-import { isStringValue, type PropertyDefinition, type PropValue } from '@efie-form/core';
 import Select from '../../../components/form/select';
-import { useSchemaStore } from '../../../lib/state/schema.state';
-import type { PropSettingsSelect } from '../../../types/prop-settings.type';
 import SettingsFieldHorizontal from '../property-layouts/settings-field-horizontal';
 
-interface PropsSettingsSelectProps extends PropSettingsSelect {
-  fieldId: string;
+interface PropsSettingsSelectProps {
+  label: string;
+  value: string;
+  onChange: (newValue?: string) => void;
+  options: { value: string | number; label: string }[];
 }
 
 export default function PropsSettingsSelect({
-  fieldId,
-  type,
   label,
+  onChange,
+  value,
   options,
 }: PropsSettingsSelectProps) {
-  const fieldProperty = useSchemaStore((state) => state.getFieldProperty(fieldId, type));
-  const value = getValue(fieldProperty?.value);
-
-  const updateFieldProperty = useSchemaStore((state) => state.updateFieldProperty);
-
   const handleChange = (newValue: string) => {
-    updateFieldProperty(fieldId, {
-      type,
-      value: newValue === '' ? undefined : newValue,
-    } as PropertyDefinition);
+    onChange(newValue === '' ? undefined : newValue);
   };
 
   // Convert options to string-only format for the Select component
@@ -37,9 +29,4 @@ export default function PropsSettingsSelect({
       <Select value={value} onChange={handleChange} options={stringOptions} className="w-full" />
     </SettingsFieldHorizontal>
   );
-}
-
-function getValue(value?: PropValue) {
-  if (!isStringValue(value)) return '';
-  return value ? String(value) : '';
 }

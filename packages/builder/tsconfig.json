@@ -10,8 +10,8 @@
     // src
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "paths": {
-      "@efie-form/core": ["../core"]
+      "@efie-form/core": ["../core/lib"]
     }
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "../core/lib/types/settings-config.ts"]
 }

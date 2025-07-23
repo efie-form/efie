@@ -1,13 +1,7 @@
-import {
-  type AcceptProperty,
-  isAcceptValue,
-  type PropValue,
-  type PropValueAccept,
-} from '@efie-form/core';
+import type { FieldSystemConfigAccept, PropValueAccept } from '@efie-form/core';
 import { Switch } from '../../../components/form';
 import { useControllableState } from '../../../lib/hooks/use-controllable-state';
 import { useSchemaStore } from '../../../lib/state/schema.state';
-import type { PropSettingsAccept } from '../../../types/prop-settings.type';
 import SettingsFieldSwitchWithDropdown from '../property-layouts/settings-field-switch-with-dropdown';
 
 const FILE_EXTENSIONS = [
@@ -29,19 +23,15 @@ interface InternalValue {
   allowSpecific: boolean;
   extensions: Record<ExtensionType, boolean>;
 }
-interface PropsSettingsAcceptProps extends PropSettingsAccept {
+interface SystemSettingsAcceptProps {
   fieldId: string;
+  config: FieldSystemConfigAccept;
 }
 
-export default function PropsSettingsAccept({
-  fieldId,
-  label = 'Only allow specific file types',
-  type,
-}: PropsSettingsAcceptProps) {
-  const fieldProperty = useSchemaStore((state) => state.getFieldProperty(fieldId, type));
+export default function SystemSettingsAccept({ config, fieldId }: SystemSettingsAcceptProps) {
+  const fieldProperty = useSchemaStore((state) => state.getFieldProperty(fieldId, config.type));
   const updateFieldProperty = useSchemaStore((state) => state.updateFieldProperty);
-  const value = getValue(fieldProperty?.value);
-
+  const value = fieldProperty?.value;
   const [internalValue, setInternalValue] = useControllableState({
     defaultValue: getInternalValue(value),
     onChange: (newValue) => {
@@ -54,12 +44,16 @@ export default function PropsSettingsAccept({
         formats: newValue.allowSpecific ? formats : [],
       };
 
-      updateFieldProperty(fieldId, {
-        type,
-        value: finalValue,
-      } as AcceptProperty);
+      onChange?.(finalValue);
     },
   });
+
+  function onChange(newValue: PropValueAccept) {
+    updateFieldProperty(fieldId, {
+      type: config.type,
+      value: newValue,
+    });
+  }
 
   const handleExtensionChange = (type: ExtensionType, checked: boolean) => {
     setInternalValue((prev) => ({
@@ -82,7 +76,7 @@ export default function PropsSettingsAccept({
     <SettingsFieldSwitchWithDropdown
       isOpen={internalValue.allowSpecific}
       onOpenChange={handleAllowAllChange}
-      label={label}
+      label={config.label}
       divider
     >
       <div className="grid grid-cols-2">
@@ -105,14 +99,6 @@ export default function PropsSettingsAccept({
       </div>
     </SettingsFieldSwitchWithDropdown>
   );
-}
-
-function getValue(value?: PropValue): PropValueAccept {
-  if (!isAcceptValue(value)) {
-    return { formats: [], allowAll: false };
-  }
-
-  return value;
 }
 
 function getInternalValue(value?: PropValueAccept): InternalValue {

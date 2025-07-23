@@ -14,9 +14,10 @@ import { type MouseEvent, useEffect, useRef, useState } from 'react';
 import { AiOutlineDrag } from 'react-icons/ai';
 import { HiTrash } from 'react-icons/hi2';
 import invariant from 'tiny-invariant';
+import { RIGHT_BAR_TABS } from '../../../lib/constant';
 import useDropField from '../../../lib/hooks/use-drop-field';
 import { useSchemaStore } from '../../../lib/state/schema.state';
-import { RIGHT_BAR_TABS, useSettingsStore } from '../../../lib/state/settings.state';
+import { useSettingsStore } from '../../../lib/state/settings.state';
 import { cn } from '../../../lib/utils';
 import {
   BlockField,
@@ -45,8 +46,8 @@ interface RenderFieldProps {
 }
 
 function RenderField({ field, noSelect, parentId, childIndex }: RenderFieldProps) {
-  const { setSelectedFieldId, selectedFieldId, clearSelectedFieldId, setActiveTab } =
-    useSettingsStore();
+  const { setSelectedFieldId, clearSelectedFieldId, setActiveTab } = useSettingsStore();
+  const selectedFieldId = useSettingsStore((state) => state.selectedFieldId);
   const isSelected = selectedFieldId === field.id;
   const { deleteField } = useSchemaStore();
   const fieldRef = useRef<HTMLDivElement>(null);
@@ -70,6 +71,13 @@ function RenderField({ field, noSelect, parentId, childIndex }: RenderFieldProps
     invariant(instruction, 'Instruction data should be defined');
     setOperation(instruction.operation);
     setIsDraggedOver(true);
+  };
+
+  const handleSelectField = (e: MouseEvent) => {
+    e.stopPropagation();
+    if (selectedFieldId === field.id) return;
+    setSelectedFieldId(field.id);
+    setActiveTab(RIGHT_BAR_TABS.FIELD_SETTINGS);
   };
 
   useEffect(() => {
@@ -151,11 +159,7 @@ function RenderField({ field, noSelect, parentId, childIndex }: RenderFieldProps
           },
         )}
         {...(!noSelect && {
-          onClick: (e: MouseEvent) => {
-            e.stopPropagation();
-            setSelectedFieldId(field.id);
-            setActiveTab(RIGHT_BAR_TABS.FIELD_SETTINGS);
-          },
+          onClick: handleSelectField,
         })}
       >
         {isDraggedOver && (
@@ -184,7 +188,6 @@ function RenderField({ field, noSelect, parentId, childIndex }: RenderFieldProps
               deleteField(field.id);
               clearSelectedFieldId();
             }}
-            aria-label="Delete field"
           >
             <HiTrash />
           </button>

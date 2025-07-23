@@ -2,10 +2,10 @@ import { FieldType } from '@efie-form/core';
 import { HiX } from 'react-icons/hi';
 import { LuCornerLeftUp } from 'react-icons/lu';
 import Tooltip from '../../../components/elements/tooltip';
-import { FIELDS_NAME } from '../../../lib/constant';
+import { FIELDS_NAME, RIGHT_BAR_TABS } from '../../../lib/constant';
 import getSettingsParentField from '../../../lib/get-selectable-parent-field';
 import { useSchemaStore } from '../../../lib/state/schema.state';
-import { RIGHT_BAR_TABS, useSettingsStore } from '../../../lib/state/settings.state';
+import { useSettingsStore } from '../../../lib/state/settings.state';
 import RenderSettings from '../render-settings';
 
 function FieldPropertiesTab() {

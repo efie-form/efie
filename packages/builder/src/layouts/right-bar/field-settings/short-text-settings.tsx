@@ -1,23 +1,19 @@
-import { PropertyType, type ShortTextFormField } from '@efie-form/core';
+import { FieldType, type ShortTextFormField } from '@efie-form/core';
 import CategoryHeader from '../../../components/elements/category-header';
-import DynamicSettings from '../dynamic-settings';
+import { useSettingsStore } from '../../../lib/state/settings.state';
+import FieldSettings from '../field-settings';
 
 interface ShortTextSettingsProps {
   field: ShortTextFormField;
 }
 
 function ShortTextSettings({ field }: ShortTextSettingsProps) {
+  const config = useSettingsStore((state) => state.config[FieldType.SHORT_TEXT]);
+
   return (
     <div>
       <CategoryHeader>General</CategoryHeader>
-      <DynamicSettings
-        settings={[
-          { template: 'formKey' },
-          { template: 'text', label: 'Label', type: PropertyType.LABEL },
-          { template: 'text', label: 'Placeholder', type: PropertyType.PLACEHOLDER },
-        ]}
-        fieldId={field.id}
-      />
+      <FieldSettings config={config.properties} fieldId={field.id} />
     </div>
   );
 }

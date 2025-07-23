@@ -7,14 +7,13 @@ interface ImageFieldProps {
 }
 
 function ImageField({ field }: ImageFieldProps) {
-  const src = getFieldProp(field, PropertyType.SRC);
-  const alt = getFieldProp(field, PropertyType.ALT);
+  const src = getFieldProp(field, PropertyType.IMAGE_SRC);
 
   return (
     <div>
       <img
         src={src?.value || DEFAULT_IMAGE_URL}
-        alt={alt?.value}
+        alt=""
         className="inline-block w-full text-neutral-800"
       />
     </div>

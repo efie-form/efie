@@ -2,8 +2,8 @@ import type { ElementType } from 'react';
 import { AiFillLayout } from 'react-icons/ai';
 import { HiMiniInformationCircle } from 'react-icons/hi2';
 import Tooltip from '../../components/elements/tooltip';
-import type { RightBarTab } from '../../lib/state/settings.state';
-import { RIGHT_BAR_TABS, useSettingsStore } from '../../lib/state/settings.state';
+import { RIGHT_BAR_TABS, type RightBarTab } from '../../lib/constant';
+import { useSettingsStore } from '../../lib/state/settings.state';
 import { cn } from '../../lib/utils';
 import FieldPropertiesTab from './tabs/field-properties-tab';
 import PagePropertiesTab from './tabs/page-properties-tab';
@@ -48,7 +48,7 @@ function RightBar() {
               <button
                 type="button"
                 className={cn(
-                  'cursor-pointer p-3 transition-all duration-100 hover:bg-neutral-200/30',
+                  'block cursor-pointer p-3 transition-all duration-100 hover:bg-neutral-200/30',
                   {
                     '!bg-neutral-200/80': tab.id === activeTab,
                   },

@@ -136,6 +136,7 @@ export const PropertyType = {
   PAGE_NAME: 'pageName',
   BUTTON_ACTION: 'buttonAction',
   CONTENT: 'content',
+  CUSTOM: 'custom',
 } as const;
 
 // Size unit
