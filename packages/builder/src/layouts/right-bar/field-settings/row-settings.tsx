@@ -34,12 +34,12 @@ function RowSettings({ field }: RowSettingsProps) {
       const existingColumn = field.children[i];
 
       if (existingColumn) {
-        const widthProp = getFieldProp(existingColumn, PropertyType.WIDTH);
+        const widthProp = getFieldProp(existingColumn, PropertyType.COLUMN_WIDTH);
         if (widthProp) {
           widthProp.value = { type: SizeType.PERCENTAGE, value: width };
         } else {
           existingColumn.props.push({
-            type: PropertyType.WIDTH,
+            type: PropertyType.COLUMN_WIDTH,
             value: { type: SizeType.PERCENTAGE, value: width },
           });
         }
@@ -73,12 +73,12 @@ function RowSettings({ field }: RowSettingsProps) {
       const colField = getFieldById(col.id);
       if (!colField || colField.type !== FieldType.COLUMN) return col;
 
-      const widthProp = getFieldProp(colField, PropertyType.WIDTH);
+      const widthProp = getFieldProp(colField, PropertyType.COLUMN_WIDTH);
       if (widthProp) {
         widthProp.value = { type: SizeType.PERCENTAGE, value: avgWidth };
       } else {
         colField.props.push({
-          type: PropertyType.WIDTH,
+          type: PropertyType.COLUMN_WIDTH,
           value: { type: SizeType.PERCENTAGE, value: avgWidth },
         });
       }
@@ -106,7 +106,7 @@ function RowSettings({ field }: RowSettingsProps) {
         continue;
       }
 
-      const widthProp = getFieldProp(colField, PropertyType.WIDTH);
+      const widthProp = getFieldProp(colField, PropertyType.COLUMN_WIDTH);
       const width = Math.floor(100 / (field.children.length - 1));
       if (widthProp) {
         widthProp.value = {
@@ -115,7 +115,7 @@ function RowSettings({ field }: RowSettingsProps) {
         };
       } else {
         colField.props.push({
-          type: PropertyType.WIDTH,
+          type: PropertyType.COLUMN_WIDTH,
           value: { type: SizeType.PERCENTAGE, value: width },
         });
       }

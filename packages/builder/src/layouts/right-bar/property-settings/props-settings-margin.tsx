@@ -1,4 +1,4 @@
-import type { MarginProperty, MarginSize, PropValueMargin, Size } from '@efie-form/core';
+import type { MarginSize, PropValueMargin, Size } from '@efie-form/core';
 import { useEffect, useRef, useState } from 'react';
 import { FaLink, FaUnlink } from 'react-icons/fa';
 import SizeInput from '../../../components/form/size-input';
@@ -17,10 +17,10 @@ const normalizeValue = (val: Size): string => {
 export default function PropsSettingsMargin({ label, onChange, value }: PropsSettingsMarginProps) {
   const [isLinked, setIsLink] = useState(false);
   const [hasUserInteracted, setHasUserInteracted] = useState(false);
-  const previousValuesRef = useRef<MarginProperty['value'] | null>(null);
+  const previousValuesRef = useRef<PropValueMargin | null>(null);
 
   // Helper function to check if all margin values are the same
-  const areAllMarginsSame = (marginValue: MarginProperty['value']): boolean => {
+  const areAllMarginsSame = (marginValue: PropValueMargin): boolean => {
     const { top, right, bottom, left } = marginValue;
 
     const topStr = normalizeValue(top);
@@ -67,7 +67,7 @@ export default function PropsSettingsMargin({ label, onChange, value }: PropsSet
     setIsLink(!isLinked);
   };
 
-  const handleChange = (newValue: MarginSize, marginSide: keyof MarginProperty['value']) => {
+  const handleChange = (newValue: MarginSize, marginSide: keyof PropValueMargin) => {
     onChange({
       ...value,
       [marginSide]: newValue,
@@ -181,9 +181,9 @@ export default function PropsSettingsMargin({ label, onChange, value }: PropsSet
 }
 
 interface MarginSideProps {
-  value: MarginProperty['value'];
-  handleChange: (newValue: MarginSize, marginSide: keyof MarginProperty['value']) => void;
-  marginSide: keyof MarginProperty['value'];
+  value: PropValueMargin;
+  handleChange: (newValue: MarginSize, marginSide: keyof PropValueMargin) => void;
+  marginSide: keyof PropValueMargin;
 }
 
 function MarginSide({ value, handleChange, marginSide }: MarginSideProps) {

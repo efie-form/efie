@@ -1,6 +1,5 @@
 import {
   type BorderRadius,
-  type BorderRadiusProperty,
   borderRadiusToStyle,
   type PropValueBorderRadius,
   type Size,
@@ -34,10 +33,10 @@ export default function PropsSettingsBorderRadius({
 }: PropsSettingsBorderRadiusProps) {
   const [isLinked, setIsLink] = useState(false);
   const [hasUserInteracted, setHasUserInteracted] = useState(false);
-  const previousValuesRef = useRef<BorderRadiusProperty['value'] | null>(null);
+  const previousValuesRef = useRef<PropValueBorderRadius | null>(null);
 
   // Helper function to check if all corner values are the same
-  const areAllCornersSame = (borderValue: BorderRadiusProperty['value']): boolean => {
+  const areAllCornersSame = (borderValue: PropValueBorderRadius): boolean => {
     const { topLeft, topRight, bottomLeft, bottomRight } = borderValue;
 
     const topLeftStr = normalizeValue(topLeft);
@@ -88,10 +87,7 @@ export default function PropsSettingsBorderRadius({
     setIsLink(!isLinked);
   };
 
-  const handleChange = (
-    newValue: BorderRadius,
-    borderType: keyof BorderRadiusProperty['value'],
-  ) => {
+  const handleChange = (newValue: BorderRadius, borderType: keyof PropValueBorderRadius) => {
     onChange({
       ...value,
       [borderType]: newValue,
@@ -189,15 +185,15 @@ export default function PropsSettingsBorderRadius({
 }
 
 interface BorderCornerProps {
-  value: BorderRadiusProperty['value'];
-  handleChange: (newValue: BorderRadius, borderType: keyof BorderRadiusProperty['value']) => void;
-  borderType: keyof BorderRadiusProperty['value'];
+  value: PropValueBorderRadius;
+  handleChange: (newValue: BorderRadius, borderType: keyof PropValueBorderRadius) => void;
+  borderType: keyof PropValueBorderRadius;
 }
 
 function BorderCorner({ value, handleChange, borderType }: BorderCornerProps) {
   function handleInternalChange(
     newSize: Size,
-    borderType: keyof BorderRadiusProperty['value'],
+    borderType: keyof PropValueBorderRadius,
     index: number,
   ) {
     const cornerSize = value[borderType];

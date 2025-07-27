@@ -3,12 +3,14 @@ import CustomSettingsBoolean from './custom-settings/custom-settings-boolean';
 import CustomSettingsColor from './custom-settings/custom-settings-color';
 import CustomSettingsNumber from './custom-settings/custom-settings-number';
 import CustomSettingsSelect from './custom-settings/custom-settings-select';
+import CustomSettingsSize from './custom-settings/custom-settings-size';
 import CustomSettingsText from './custom-settings/custom-settings-text';
 import SystemSettingsRequired from './system-settings/system-settings.required';
 import SystemSettingsAccept from './system-settings/system-settings-accept';
 import SystemSettingsButtonAction from './system-settings/system-settings-button-action';
 import { SystemSettingsColumnWidth } from './system-settings/system-settings-column-width';
 import SystemSettingsImageSrc from './system-settings/system-settings-image-src';
+import SystemSettingsInputName from './system-settings/system-settings-input-name';
 import SystemSettingsLabel from './system-settings/system-settings-label';
 import SystemSettingsOptions from './system-settings/system-settings-options';
 import SystemSettingsPlaceholder from './system-settings/system-settings-placeholder';
@@ -18,7 +20,10 @@ interface FieldSettingsProps {
   fieldId: string;
 }
 
-export default function FieldSettings({ config, fieldId }: FieldSettingsProps) {
+export default function FieldSettings({
+  config,
+  fieldId,
+}: FieldSettingsProps): (JSX.Element | never)[] {
   return config.map((item) => {
     if (item.type === 'custom') {
       switch (item.dataType) {
@@ -42,11 +47,13 @@ export default function FieldSettings({ config, fieldId }: FieldSettingsProps) {
           return <CustomSettingsSelect key={item.id} fieldId={fieldId} config={item} />;
         }
 
+        case CustomPropertyType.SIZE: {
+          return <CustomSettingsSize key={item.id} fieldId={fieldId} config={item} />;
+        }
         default: {
-          break;
+          return item;
         }
       }
-      return <>{item.dataType}</>;
     }
     switch (item.type) {
       case PropertyType.LABEL: {
@@ -78,8 +85,11 @@ export default function FieldSettings({ config, fieldId }: FieldSettingsProps) {
       case PropertyType.BUTTON_ACTION: {
         return <SystemSettingsButtonAction key={item.type} fieldId={fieldId} config={item} />;
       }
+      case PropertyType.INPUT_NAME: {
+        return <SystemSettingsInputName key={item.type} fieldId={fieldId} config={item} />;
+      }
       default: {
-        return <>{item.type}</>;
+        return item;
       }
     }
   });

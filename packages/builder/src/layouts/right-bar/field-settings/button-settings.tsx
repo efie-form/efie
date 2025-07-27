@@ -1,5 +1,7 @@
 import type { ButtonFormField } from '@efie-form/core';
 import CategoryHeader from '../../../components/elements/category-header';
+import { useSettingsStore } from '../../../lib/state/settings.state';
+import FieldSettings from '../field-settings';
 
 interface ButtonSettingsProps {
   field: ButtonFormField;

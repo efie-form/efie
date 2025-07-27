@@ -1,4 +1,4 @@
-import type { PaddingProperty, PaddingSize, PropValuePadding, Size } from '@efie-form/core';
+import type { PaddingSize, PropValuePadding, Size } from '@efie-form/core';
 import { useEffect, useRef, useState } from 'react';
 import { FaLink, FaUnlink } from 'react-icons/fa';
 import SizeInput from '../../../components/form/size-input';
@@ -21,10 +21,10 @@ export default function PropsSettingsPadding({
 }: PropsSettingsPaddingProps) {
   const [isLinked, setIsLink] = useState(false);
   const [hasUserInteracted, setHasUserInteracted] = useState(false);
-  const previousValuesRef = useRef<PaddingProperty['value'] | null>(null);
+  const previousValuesRef = useRef<PropValuePadding | null>(null);
 
   // Helper function to check if all padding values are the same
-  const areAllPaddingsSame = (paddingValue: PaddingProperty['value']): boolean => {
+  const areAllPaddingsSame = (paddingValue: PropValuePadding): boolean => {
     const { top, right, bottom, left } = paddingValue;
 
     const topStr = normalizeValue(top);
@@ -71,7 +71,7 @@ export default function PropsSettingsPadding({
     setIsLink(!isLinked);
   };
 
-  const handleChange = (newValue: PaddingSize, paddingSide: keyof PaddingProperty['value']) => {
+  const handleChange = (newValue: PaddingSize, paddingSide: keyof PropValuePadding) => {
     onChange({
       ...value,
       [paddingSide]: newValue,
@@ -185,9 +185,9 @@ export default function PropsSettingsPadding({
 }
 
 interface PaddingSideProps {
-  value: PaddingProperty['value'];
-  handleChange: (newValue: PaddingSize, paddingSide: keyof PaddingProperty['value']) => void;
-  paddingSide: keyof PaddingProperty['value'];
+  value: PropValuePadding;
+  handleChange: (newValue: PaddingSize, paddingSide: keyof PropValuePadding) => void;
+  paddingSide: keyof PropValuePadding;
 }
 
 function PaddingSide({ value, handleChange, paddingSide }: PaddingSideProps) {
