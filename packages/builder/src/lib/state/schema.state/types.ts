@@ -1,63 +1,16 @@
-import type {
-  FieldCustomProp,
-  FormField,
-  FormInputField,
-  FormSchema,
-  PageFormField,
-  PropertyDefinition,
-} from '@efie-form/core';
-
-export interface SchemaStateHistory {
-  // History management (optimized)
-  maxHistories: number;
-  setMaxHistories: (maxHistories: number) => void;
-  histories: string[];
-  addHistory: (schema: FormSchema, skipDebounce?: boolean) => void;
-  undo: () => void;
-  redo: () => void;
-  clearHistories: () => void;
-  totalHistories: number;
-  currentHistoryIndex: number;
-  canUndo: () => boolean;
-  canRedo: () => boolean;
-}
-
-export interface SchemaStateFieldActions {
-  // Field management methods
-  addField: (field: FormField, parentId?: string, index?: number) => void;
-  updateField: (fieldId: string, updates: Partial<FormField>) => void;
-  duplicateField: (fieldId: string) => FormField | undefined;
-  moveField: (fieldId: string, newParentId: string, newIndex: number) => void;
-  deleteField: (fieldId: string) => void;
-}
-
-export interface SchemaStateAccessMethods {
-  // Core field access methods
-
-  getFieldById: (fieldId?: string) => FormField | undefined;
-  getFieldKeyById: (fieldId?: string) => string | undefined;
-  getFieldParentId: (fieldId?: string) => string | undefined;
-
-  listChildrenId: (fieldId: string) => string[];
-}
-export interface SchemaStateFieldProperty {
-  // Enhanced property management methods (optimized)
-  updateFieldProperty: <T extends PropertyDefinition>(fieldId: string, property: T) => void;
-  getFieldProperty: <T extends PropertyDefinition['type']>(
-    fieldId: string,
-    type: T,
-  ) => Extract<PropertyDefinition, { type: T }> | undefined;
-
-  findFieldCustomProperty: (fieldId: string, id: string) => FieldCustomProp | undefined;
-
-  updateFieldCustomProperty: (fieldId: string, id: string, property: FieldCustomProp) => void;
-}
+import type { FormField, FormSchema, PageFormField } from '@efie-form/core';
+import type { SchemaStateAccessMethods } from './access-methods';
+import type { SchemaStateFieldActions } from './field-actions';
+import type { SchemaStateFormDataActions } from './form-data-actions';
+import type { SchemaStateHistory } from './history-actions';
+import type { SchemaStatePropertyActions } from './property-actions';
 
 export interface SchemaState
   extends SchemaStateHistory,
     SchemaStateFieldActions,
     SchemaStateAccessMethods,
-    SchemaStateFieldProperty {
+    SchemaStateFormDataActions,
+    SchemaStatePropertyActions {
   schema: FormSchema;
   setSchema: (schema: FormSchema) => void;
   setFields: (fields: FormField[]) => void;

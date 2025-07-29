@@ -1,6 +1,22 @@
+import type { FormSchema } from '@efie-form/core';
 import defaultSchema from '../../default-schema';
-import type { SchemaStateHistory, StateSetters } from './types';
+import type { StateSetters } from './types';
 import { debounce, getFieldInfoMap } from './utils';
+
+export interface SchemaStateHistory {
+  // History management (optimized)
+  maxHistories: number;
+  setMaxHistories: (maxHistories: number) => void;
+  histories: string[];
+  addHistory: (schema: FormSchema, skipDebounce?: boolean) => void;
+  undo: () => void;
+  redo: () => void;
+  clearHistories: () => void;
+  totalHistories: number;
+  currentHistoryIndex: number;
+  canUndo: () => boolean;
+  canRedo: () => boolean;
+}
 
 export function createHistoryActions({ set, getState }: StateSetters): SchemaStateHistory {
   return {

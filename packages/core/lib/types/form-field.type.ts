@@ -23,7 +23,6 @@ export interface BaseFormField {
 
 export interface FormInputField {
   form: {
-    key: string;
     name: string;
     validation?: ValidationSchema[];
   };

@@ -1,5 +1,15 @@
 import type { FormField } from '@efie-form/core';
-import type { SchemaStateAccessMethods, StateSetters } from './types';
+import type { StateSetters } from './types';
+
+export interface SchemaStateAccessMethods {
+  // Core field access methods
+
+  getFieldById: (fieldId?: string) => FormField | undefined;
+  getFieldKeyById: (fieldId?: string) => string | undefined;
+  getFieldParentId: (fieldId?: string) => string | undefined;
+
+  listChildrenId: (fieldId: string) => string[];
+}
 
 export function createAccessMethods({ getState }: StateSetters): SchemaStateAccessMethods {
   return {

@@ -1,14 +1,21 @@
 import type { FormField } from '@efie-form/core';
-import type { SchemaStateFieldActions, StateSetters } from './types';
+import type { StateSetters } from './types';
 import {
   addFieldToTree,
   deepClone,
-  findFieldInTree,
   generateId,
   getFieldInfoMap,
   removeFieldFromTree,
 } from './utils';
 
+export interface SchemaStateFieldActions {
+  // Field management methods
+  addField: (field: FormField, parentId?: string, index?: number) => void;
+  updateField: (fieldId: string, updates: FormField) => void;
+  duplicateField: (fieldId: string) => FormField | undefined;
+  moveField: (fieldId: string, newParentId: string, newIndex: number) => void;
+  deleteField: (fieldId: string) => void;
+}
 export function createFieldActions({ set, getState }: StateSetters): SchemaStateFieldActions {
   return {
     // Field management methods
@@ -33,23 +40,40 @@ export function createFieldActions({ set, getState }: StateSetters): SchemaState
       addHistory(newSchema, true); // Skip debounce for field additions
     },
 
-    updateField: (fieldId: string, updates: Partial<FormField>) => {
-      const { schema, addHistory, fieldMap } = getState();
-      const field = fieldMap.get(fieldId);
-      if (!field) return;
-
-      const updatedField = deepClone({ ...field, ...updates }) as FormField;
-
-      const newFields = findFieldInTree(schema.form.fields, fieldId, () => updatedField);
-
-      const newSchema = {
-        ...schema,
-        form: { ...schema.form, fields: newFields },
+    updateField: (fieldId, updatedField) => {
+      const { fieldMap, addHistory } = getState();
+      // Update field in schema using optimized tree traversal
+      const updateFieldInTree = (fields: FormField[]): FormField[] => {
+        return fields.map((f) => {
+          if (f.id === fieldId) {
+            return updatedField;
+          }
+          if ('children' in f && f.children) {
+            const updatedChildren = updateFieldInTree(f.children);
+            if (updatedChildren !== f.children) {
+              return { ...f, children: updatedChildren } as FormField;
+            }
+          }
+          return f;
+        });
       };
 
-      const { fieldKeyMap, fieldMap: newFieldMap, fieldParentMap } = getFieldInfoMap(newFields);
-      set({ schema: newSchema, fieldMap: newFieldMap, fieldKeyMap, fieldParentMap });
+      const newSchema = {
+        ...getState().schema,
+        form: {
+          ...getState().schema.form,
+          fields: updateFieldInTree(getState().schema.form.fields),
+        },
+      };
+
+      const { fieldKeyMap, fieldParentMap } = getFieldInfoMap(newSchema.form.fields);
       addHistory(newSchema);
+      set({
+        schema: newSchema,
+        fieldMap: new Map(fieldMap).set(fieldId, updatedField),
+        fieldKeyMap,
+        fieldParentMap,
+      });
     },
 
     duplicateField: (fieldId: string): FormField | undefined => {

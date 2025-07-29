@@ -1,6 +1,7 @@
 import type { MultipleChoiceFormField } from '@efie-form/core';
 import { useSettingsStore } from '../../../lib/state/settings.state';
 import FieldSettings from '../field-settings';
+import FieldNameSettings from '../settings/form-name-settings';
 
 interface MultipleChoicesSettingsProps {
   field: MultipleChoiceFormField;
@@ -11,6 +12,7 @@ function MultipleChoicesSettings({ field }: MultipleChoicesSettingsProps) {
 
   return (
     <div>
+      <FieldNameSettings fieldId={field.id} />
       <FieldSettings config={config.properties} fieldId={field.id} />
     </div>
   );

@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import defaultSchema from '../../default-schema';
 import { createAccessMethods } from './access-methods';
 import { createFieldActions } from './field-actions';
+import { createFormDataActions } from './form-data-actions';
 import { createHistoryActions } from './history-actions';
 import { createLegacyActions } from './legacy-actions';
 import { createPropertyActions } from './property-actions';
@@ -20,6 +21,7 @@ export const useSchemaStore = create<SchemaState>((set, getState) => {
   const historyActions = createHistoryActions(stateSetters);
   const legacyActions = createLegacyActions(stateSetters);
   const accessMethods = createAccessMethods(stateSetters);
+  const formDataActions = createFormDataActions(stateSetters);
 
   return {
     // Initial state
@@ -35,5 +37,6 @@ export const useSchemaStore = create<SchemaState>((set, getState) => {
     ...propertyActions,
     ...historyActions,
     ...legacyActions,
+    ...formDataActions,
   };
 });

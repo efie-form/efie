@@ -32,7 +32,7 @@ interface GetDefaultFieldProps<T extends FieldType> {
   type: T;
   page?: PageProps;
   column?: ColumnProps;
-  formKey?: string;
+  fieldName?: string;
 }
 
 const ID_LENGTH = 10;
@@ -64,7 +64,7 @@ export function getDefaultField<T extends FieldType>({
   type,
   page,
   column,
-  formKey,
+  fieldName,
 }: GetDefaultFieldProps<T>) {
   switch (type) {
     case FieldType.SHORT_TEXT: {
@@ -72,7 +72,7 @@ export function getDefaultField<T extends FieldType>({
         id: generateId(ID_LENGTH),
         type: FieldType.SHORT_TEXT,
         form: {
-          key: formKey || '',
+          name: fieldName || '',
         },
         props: [
           {
@@ -91,7 +91,7 @@ export function getDefaultField<T extends FieldType>({
         type: FieldType.LONG_TEXT,
         id: generateId(ID_LENGTH),
         form: {
-          key: formKey || '',
+          name: fieldName || '',
         },
         props: [
           {
@@ -110,7 +110,7 @@ export function getDefaultField<T extends FieldType>({
         type: FieldType.NUMBER,
         id: generateId(ID_LENGTH),
         form: {
-          key: formKey || '',
+          name: fieldName || '',
         },
         props: [
           {
@@ -129,7 +129,7 @@ export function getDefaultField<T extends FieldType>({
         type: FieldType.SINGLE_CHOICE,
         id: generateId(ID_LENGTH),
         form: {
-          key: formKey || '',
+          name: fieldName || '',
         },
         props: [
           {
@@ -152,7 +152,7 @@ export function getDefaultField<T extends FieldType>({
         type: FieldType.MULTIPLE_CHOICES,
         id: generateId(ID_LENGTH),
         form: {
-          key: formKey || '',
+          name: fieldName || '',
         },
         props: [
           {
@@ -188,7 +188,7 @@ export function getDefaultField<T extends FieldType>({
         type: FieldType.DATE,
         id: generateId(ID_LENGTH),
         form: {
-          key: formKey || '',
+          name: fieldName || '',
         },
         props: [
           {
@@ -203,7 +203,7 @@ export function getDefaultField<T extends FieldType>({
         type: FieldType.TIME,
         id: generateId(ID_LENGTH),
         form: {
-          key: formKey || '',
+          name: fieldName || '',
         },
         props: [
           {
@@ -218,7 +218,7 @@ export function getDefaultField<T extends FieldType>({
         type: FieldType.DATE_TIME,
         id: generateId(ID_LENGTH),
         form: {
-          key: formKey || '',
+          name: fieldName || '',
         },
         props: [
           {
@@ -233,7 +233,7 @@ export function getDefaultField<T extends FieldType>({
         type: FieldType.FILE,
         id: generateId(ID_LENGTH),
         form: {
-          key: formKey || '',
+          name: fieldName || '',
         },
         props: [
           {

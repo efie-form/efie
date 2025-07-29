@@ -1,6 +1,7 @@
 import type { SingleChoiceFormField } from '@efie-form/core';
 import { useSettingsStore } from '../../../lib/state/settings.state';
 import FieldSettings from '../field-settings';
+import FieldNameSettings from '../settings/form-name-settings';
 
 interface SingleChoiceSettingsProps {
   field: SingleChoiceFormField;
@@ -11,6 +12,7 @@ function SingleChoiceSettings({ field }: SingleChoiceSettingsProps) {
 
   return (
     <div>
+      <FieldNameSettings fieldId={field.id} />
       <FieldSettings config={config.properties} fieldId={field.id} />
     </div>
   );
