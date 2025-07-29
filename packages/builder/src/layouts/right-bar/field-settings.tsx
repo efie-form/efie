@@ -9,8 +9,8 @@ import SystemSettingsRequired from './system-settings/system-settings.required';
 import SystemSettingsAccept from './system-settings/system-settings-accept';
 import SystemSettingsButtonAction from './system-settings/system-settings-button-action';
 import { SystemSettingsColumnWidth } from './system-settings/system-settings-column-width';
+import SystemSettingsFieldName from './system-settings/system-settings-field-name';
 import SystemSettingsImageSrc from './system-settings/system-settings-image-src';
-import SystemSettingsInputName from './system-settings/system-settings-input-name';
 import SystemSettingsLabel from './system-settings/system-settings-label';
 import SystemSettingsOptions from './system-settings/system-settings-options';
 import SystemSettingsPlaceholder from './system-settings/system-settings-placeholder';
@@ -85,8 +85,8 @@ export default function FieldSettings({
       case PropertyType.BUTTON_ACTION: {
         return <SystemSettingsButtonAction key={item.type} fieldId={fieldId} config={item} />;
       }
-      case PropertyType.INPUT_NAME: {
-        return <SystemSettingsInputName key={item.type} fieldId={fieldId} config={item} />;
+      case PropertyType.FIELD_NAME: {
+        return <SystemSettingsFieldName key={item.type} fieldId={fieldId} config={item} />;
       }
       default: {
         return item;

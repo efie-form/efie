@@ -53,72 +53,6 @@ export function createPropertyActions({ set, getState }: StateSetters): SchemaSt
       set({ schema: newSchema, fieldMap: newFieldMap });
     },
 
-    addFieldProperty: (fieldId, property) => {
-      const field = getState().fieldMap.get(fieldId);
-      if (!field) return;
-
-      const existingIndex = field.props.findIndex((p) => p.type === property.type);
-      if (existingIndex === -1) {
-        getState().updateFieldProperty(fieldId, property);
-      }
-    },
-
-    removeFieldProperty: (fieldId, propertyType) => {
-      const { schema, addHistory } = getState();
-      const field = getState().fieldMap.get(fieldId);
-      if (!field) return;
-
-      const newProps = field.props.filter((p) => p.type !== propertyType);
-
-      const updateFieldInSchema = (fields: FormField[]): FormField[] => {
-        return fields.map((f) => {
-          if (f.id === fieldId) {
-            return { ...f, props: newProps } as FormField;
-          }
-          if ('children' in f && f.children) {
-            return { ...f, children: updateFieldInSchema(f.children) } as FormField;
-          }
-          return f;
-        });
-      };
-
-      const newSchema = {
-        ...schema,
-        form: { ...schema.form, fields: updateFieldInSchema(schema.form.fields) },
-      };
-
-      const { fieldKeyMap, fieldMap, fieldParentMap } = getFieldInfoMap(newSchema.form.fields);
-      addHistory(newSchema);
-      set({ schema: newSchema, fieldMap, fieldKeyMap, fieldParentMap });
-    },
-
-    setFieldProperties: (fieldId, properties) => {
-      const { schema, addHistory } = getState();
-      const field = getState().fieldMap.get(fieldId);
-      if (!field) return;
-
-      const updateFieldInSchema = (fields: FormField[]): FormField[] => {
-        return fields.map((f) => {
-          if (f.id === fieldId) {
-            return { ...f, props: [...properties] } as FormField;
-          }
-          if ('children' in f && f.children) {
-            return { ...f, children: updateFieldInSchema(f.children) } as FormField;
-          }
-          return f;
-        });
-      };
-
-      const newSchema = {
-        ...schema,
-        form: { ...schema.form, fields: updateFieldInSchema(schema.form.fields) },
-      };
-
-      const { fieldKeyMap, fieldMap, fieldParentMap } = getFieldInfoMap(newSchema.form.fields);
-      addHistory(newSchema);
-      set({ schema: newSchema, fieldMap, fieldKeyMap, fieldParentMap });
-    },
-
     // Core field property access methods
     getFieldProperty: <T extends PropertyDefinition['type']>(fieldId: string, type: T) => {
       const { fieldMap } = getState();
@@ -127,12 +61,6 @@ export function createPropertyActions({ set, getState }: StateSetters): SchemaSt
 
       const prop = field.props.find((prop) => prop.type === type);
       return prop as Extract<PropertyDefinition, { type: T }> | undefined;
-    },
-
-    getFieldProps: (fieldId) => {
-      const { fieldMap } = getState();
-      const field = fieldMap.get(fieldId);
-      return field ? field.props : undefined;
     },
 
     findFieldCustomProperty: (fieldId, id) => {

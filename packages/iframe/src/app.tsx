@@ -9,7 +9,7 @@ function App() {
     setFormInputs,
     resetSchema,
     setHeight,
-    setFormKeyEditable,
+    setFieldNameEditable,
     setIsInputReusable,
     setMaxHistories,
   } = useFormBuilder();
@@ -51,7 +51,7 @@ function App() {
         setFormInputs(formInputs);
         setHeight(height);
         if (schema) resetSchema(schema);
-        if (formKeyNonEditable) setFormKeyEditable(false);
+        if (formKeyNonEditable) setFieldNameEditable(false);
         if (inputNonReusable) setIsInputReusable(false);
         if (maxHistories) setMaxHistories(maxHistories);
       },

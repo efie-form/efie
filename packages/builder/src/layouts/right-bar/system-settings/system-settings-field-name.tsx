@@ -1,14 +1,14 @@
-import type { FieldSystemConfigInputName } from '@efie-form/core';
+import type { FieldSystemConfigFieldName } from '@efie-form/core';
 import { Input } from '../../../components/form';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import SettingsFieldHorizontal from '../property-layouts/settings-field-horizontal';
 
-interface SystemSettingsFormKeyProps {
+interface SystemSettingsFieldNameProps {
   fieldId: string;
-  config: FieldSystemConfigInputName;
+  config: FieldSystemConfigFieldName;
 }
 
-export default function SystemSettingsInputName({ fieldId, config }: SystemSettingsFormKeyProps) {
+export default function SystemSettingsFieldName({ fieldId, config }: SystemSettingsFieldNameProps) {
   const fieldProperty = useSchemaStore((state) => state.getFieldProperty(fieldId, config.type));
   const updateFieldProperty = useSchemaStore((state) => state.updateFieldProperty);
 

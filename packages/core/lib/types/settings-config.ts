@@ -28,8 +28,8 @@ export interface FieldSystemConfigAccept {
   label: string;
 }
 
-export interface FieldSystemConfigInputName {
-  type: typeof PropertyType.INPUT_NAME;
+export interface FieldSystemConfigFieldName {
+  type: typeof PropertyType.FIELD_NAME;
   label: string;
 }
 
@@ -98,7 +98,7 @@ export type FieldSystemConfig =
   | FieldSystemConfigPlaceholder
   | FieldSystemConfigRequired
   | FieldSystemConfigAccept
-  | FieldSystemConfigInputName
+  | FieldSystemConfigFieldName
   | FieldSystemConfigOptions
   | FieldSystemConfigImageSrc
   | FieldSystemConfigButtonAction

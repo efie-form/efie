@@ -22,8 +22,8 @@ interface SettingsState {
   setActiveTab: (tab: RightBarTab) => void;
   height?: number;
   setHeight: (height: SettingsState['height']) => void;
-  formKeyEditable: boolean;
-  setFormKeyEditable: (formKeyEditable: SettingsState['formKeyEditable']) => void;
+  fieldNameEditable: boolean;
+  setFieldNameEditable: (fieldNameEditable: SettingsState['fieldNameEditable']) => void;
   isInputReusable: boolean;
   setIsInputReusable: (inputReusable: SettingsState['isInputReusable']) => void;
   config: FieldsConfigsMap;
@@ -71,9 +71,9 @@ export const useSettingsStore = create<SettingsState>((set) => ({
   setHeight: (height) => {
     set({ height });
   },
-  formKeyEditable: true,
-  setFormKeyEditable: (formKeyEditable) => {
-    set({ formKeyEditable });
+  fieldNameEditable: true,
+  setFieldNameEditable: (fieldNameEditable) => {
+    set({ fieldNameEditable });
   },
   isInputReusable: true,
   setIsInputReusable: (isInputReusable) => {

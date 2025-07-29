@@ -3,7 +3,7 @@ export const PropertyType = {
   PLACEHOLDER: 'placeholder',
   REQUIRED: 'required',
   ACCEPT: 'accept',
-  INPUT_NAME: 'input_name',
+  FIELD_NAME: 'field_name',
   OPTIONS: 'options',
   IMAGE_SRC: 'image_src',
   COLUMN_WIDTH: 'column_width',

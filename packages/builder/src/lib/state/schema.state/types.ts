@@ -43,14 +43,10 @@ export interface SchemaStateAccessMethods {
 export interface SchemaStateFieldProperty {
   // Enhanced property management methods (optimized)
   updateFieldProperty: <T extends PropertyDefinition>(fieldId: string, property: T) => void;
-  addFieldProperty: <T extends PropertyDefinition>(fieldId: string, property: T) => void;
-  removeFieldProperty: (fieldId: string, propertyType: PropertyDefinition['type']) => void;
-  setFieldProperties: (fieldId: string, properties: PropertyDefinition[]) => void;
   getFieldProperty: <T extends PropertyDefinition['type']>(
     fieldId: string,
     type: T,
   ) => Extract<PropertyDefinition, { type: T }> | undefined;
-  getFieldProps: (fieldId: string) => PropertyDefinition[] | undefined;
 
   findFieldCustomProperty: (fieldId: string, id: string) => FieldCustomProp | undefined;
 
@@ -72,7 +68,6 @@ export interface SchemaState
   // Legacy methods (maintained for compatibility)
   getPage: (pageId?: string) => PageFormField | undefined;
   updatePages: (pages: FormField[]) => void;
-  updateFieldForm: (fieldId: string, form: FormInputField['form']) => void;
   replaceFieldChildren: (fieldId: string, children: FormField[]) => void;
   deleteField: (fieldId: string) => void;
   fieldParentMap: Map<string, string>;

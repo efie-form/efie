@@ -7,7 +7,6 @@ import type {
   FieldSystemPropButtonAction,
   FieldSystemPropColumnWidth,
   FieldSystemPropHeadingContent,
-  FieldSystemPropImageAlt,
   FieldSystemPropImageSrc,
   FieldSystemPropLabel,
   FieldSystemPropOptions,
@@ -25,6 +24,7 @@ export interface BaseFormField {
 export interface FormInputField {
   form: {
     key: string;
+    name: string;
     validation?: ValidationSchema[];
   };
 }
@@ -132,7 +132,7 @@ export interface HeadingFormField extends BaseFormField {
 // Image field type
 export interface ImageFormField extends BaseFormField {
   type: typeof FieldType.IMAGE;
-  props: (FieldSystemPropImageSrc | FieldSystemPropImageAlt | FieldCustomProp)[];
+  props: (FieldSystemPropImageSrc | FieldCustomProp)[];
 }
 
 // Button field type

@@ -1,9 +1,4 @@
-import {
-  FieldType,
-  type FormField,
-  type FormInputField,
-  type PageFormField,
-} from '@efie-form/core';
+import { FieldType, type FormField, type PageFormField } from '@efie-form/core';
 import type { StateSetters } from './types';
 
 export function createLegacyActions({ getState }: StateSetters) {
@@ -18,12 +13,6 @@ export function createLegacyActions({ getState }: StateSetters) {
 
     updatePages: (pages: FormField[]) => {
       getState().setFields(pages);
-    },
-
-    updateFieldForm: (fieldId: string, form: FormInputField['form']) => {
-      const field = getState().fieldMap.get(fieldId);
-      if (!field || !('form' in field)) return;
-      getState().updateField(fieldId, { form } as Partial<FormField>);
     },
 
     replaceFieldChildren: (fieldId: string, children: FormField[]) => {

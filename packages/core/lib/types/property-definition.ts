@@ -23,7 +23,7 @@ export type FieldSystemProp =
   | FieldSystemPropLabel
   | FieldSystemPropPlaceholder
   | FieldSystemPropImageSrc
-  | FieldSystemPropInputName
+  | FieldSystemPropFieldName
   | FieldSystemPropRequired
   | FieldSystemPropOptions
   | FieldSystemPropAccept
@@ -47,8 +47,8 @@ export interface FieldSystemPropImageSrc {
   value: PropValueString;
 }
 
-export interface FieldSystemPropInputName {
-  type: typeof PropertyType.INPUT_NAME;
+export interface FieldSystemPropFieldName {
+  type: typeof PropertyType.FIELD_NAME;
   value: PropValueString;
 }
 
