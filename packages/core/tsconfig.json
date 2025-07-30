@@ -11,9 +11,8 @@
     // src
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "baseUrl": ".",
-    "rootDir": ".",
-    "paths": {}
+    "rootDir": "."
   },
   "include": ["./lib/**/*"],
-  "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.spec.ts"]
+  "exclude": ["node_modules", "dist"]
 }

@@ -34,7 +34,7 @@ export default function useDropField({ index, parentId, fieldType }: UseDropFiel
 
     const newField = getDefaultField({
       type: source.data.type,
-      formKey: source.data.formKey,
+      fieldName: source.data.formKey,
     });
 
     addField(newField, parentId, targetIndex);

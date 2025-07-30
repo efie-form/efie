@@ -107,37 +107,6 @@ export const ActionType = {
   WARNING: 'warning',
 } as const;
 
-// Property Types
-export const PropertyType = {
-  BACKGROUND_COLOR: 'backgroundColor',
-  COLOR: 'color',
-  BORDER_RADIUS: 'borderRadius',
-  BORDER_WIDTH: 'borderWidth',
-  BORDER_COLOR: 'borderColor',
-  MARGIN: 'margin',
-  PADDING: 'padding',
-  BOX_SHADOW: 'boxShadow',
-  LABEL: 'label',
-  WIDTH: 'width',
-  HEIGHT: 'height',
-  TEXT_ALIGN: 'textAlign',
-  REQUIRED: 'required',
-  BORDER_STYLE: 'borderStyle',
-  MAX_FILES: 'maxFiles',
-  ACCEPT: 'accept',
-  FONT_SIZE: 'fontSize',
-  FONT_WEIGHT: 'fontWeight',
-  TAG: 'tag',
-  SRC: 'src',
-  ALT: 'alt',
-  OBJECT_FIT: 'objectFit',
-  PLACEHOLDER: 'placeholder',
-  OPTIONS: 'options',
-  PAGE_NAME: 'pageName',
-  BUTTON_ACTION: 'buttonAction',
-  CONTENT: 'content',
-} as const;
-
 // Size unit
 export const SizeUnit = {
   PX: 'px',
@@ -158,7 +127,6 @@ export type FieldConditionOperator =
 export type ValidationOperator = (typeof ValidationOperator)[keyof typeof ValidationOperator];
 export type RuleType = (typeof RuleType)[keyof typeof RuleType];
 export type ActionType = (typeof ActionType)[keyof typeof ActionType];
-export type PropertyType = (typeof PropertyType)[keyof typeof PropertyType];
 export type SizeUnit = (typeof SizeUnit)[keyof typeof SizeUnit];
 export type SizeType = (typeof SizeType)[keyof typeof SizeType];
 export type AbsoluteSize = (typeof AbsoluteSize)[keyof typeof AbsoluteSize];

@@ -19,7 +19,7 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
     "paths": {
-      "@efie-form/react": ["../../../packages/react"]
+      "@efie-form/react": ["../../../packages/react/lib"]
     }
   },
   "include": ["src"]

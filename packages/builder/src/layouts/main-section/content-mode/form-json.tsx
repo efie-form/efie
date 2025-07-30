@@ -22,7 +22,7 @@ export default function FormJson() {
     setIsUpdating(false);
     checkSchema(schema);
     setValue(JSON.stringify(schema, undefined, 2));
-  }, [currentHistoryIndex, internalIndex, isUpdating, schema]);
+  }, [currentHistoryIndex, internalIndex, isUpdating, schema, checkSchema]);
 
   const handleChange = (newSchema?: string) => {
     if (!newSchema) return;

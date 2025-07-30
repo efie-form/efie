@@ -16,11 +16,8 @@ import {
 } from '@dnd-kit/sortable';
 import {
   type BoxShadow,
-  type BoxShadowProperty,
   type Color,
   getColorObject,
-  isBoxShadowValue,
-  type PropValue,
   type PropValueBoxShadow,
   type Size,
   SizeType,
@@ -31,12 +28,12 @@ import { MdAdd, MdOutlineDelete, MdOutlineDragIndicator } from 'react-icons/md';
 import Button from '../../../components/elements/button';
 import { ColorPicker, Switch } from '../../../components/form';
 import SizeInput from '../../../components/form/size-input';
-import { useSchemaStore } from '../../../lib/state/schema.state';
 import { cn } from '../../../lib/utils';
-import type { PropSettingsBoxShadow } from '../../../types/prop-settings.type';
 
-interface PropsSettingsBoxShadowProps extends PropSettingsBoxShadow {
-  fieldId: string;
+interface PropsSettingsBoxShadowProps {
+  label: string;
+  value: PropValueBoxShadow;
+  onChange: (newValue: PropValueBoxShadow) => void;
 }
 
 const defaultShadowItem: BoxShadow = {
@@ -49,14 +46,10 @@ const defaultShadowItem: BoxShadow = {
 };
 
 export default function PropsSettingsBoxShadow({
-  fieldId,
   label,
-  type,
+  value,
+  onChange,
 }: PropsSettingsBoxShadowProps) {
-  const boxShadowProperty = useSchemaStore((state) => state.getFieldProperty(fieldId, type));
-  const updateBoxShadowProperty = useSchemaStore((state) => state.updateFieldProperty);
-  const value = getValue(boxShadowProperty?.value);
-
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -71,24 +64,24 @@ export default function PropsSettingsBoxShadow({
     const oldIndex = Number.parseInt(active.id as string, 10);
     const newIndex = Number.parseInt(over.id as string, 10);
     const newShadows = arrayMove(value, oldIndex, newIndex);
-    updateBoxShadowProperty(fieldId, { type, value: newShadows } as BoxShadowProperty);
+    onChange(newShadows);
   };
 
   const handleUpdateShadow = (index: number, updates: Partial<BoxShadow>) => {
     const newShadows = [...value];
     newShadows[index] = { ...newShadows[index], ...updates };
-    updateBoxShadowProperty(fieldId, { type, value: newShadows } as BoxShadowProperty);
+    onChange(newShadows);
   };
 
   const handleRemoveShadow = (index: number) => {
     const newShadows = [...value];
     newShadows.splice(index, 1);
-    updateBoxShadowProperty(fieldId, { type, value: newShadows } as BoxShadowProperty);
+    onChange(newShadows);
   };
 
   const handleAddShadow = () => {
     const newShadows = [...value, { ...defaultShadowItem }];
-    updateBoxShadowProperty(fieldId, { type, value: newShadows } as BoxShadowProperty);
+    onChange(newShadows);
   };
 
   return (
@@ -135,14 +128,6 @@ export default function PropsSettingsBoxShadow({
       </div>
     </>
   );
-}
-
-function getValue(props?: PropValue): PropValueBoxShadow {
-  if (!isBoxShadowValue(props)) {
-    return [];
-  }
-
-  return props;
 }
 
 interface ShadowItemProps {
@@ -199,11 +184,6 @@ function ShadowItem({ index, shadow, onUpdate, onRemove }: ShadowItemProps) {
               {...attributes}
               {...listeners}
               onClick={(e) => e.stopPropagation()}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.stopPropagation();
-                }
-              }}
             >
               <MdOutlineDragIndicator className="text-neutral-500" />
             </button>
@@ -243,13 +223,13 @@ function ShadowItem({ index, shadow, onUpdate, onRemove }: ShadowItemProps) {
           <div className="grid grid-cols-2 gap-3">
             <div>
               <label
-                htmlFor={`shadow-${index}-x`}
+                htmlFor={`x-offset-${index}`}
                 className="typography-body3 mb-1 block text-neutral-700"
               >
                 X Offset
               </label>
               <SizeInput
-                id={`shadow-${index}-x`}
+                id={`x-offset-${index}`}
                 value={shadow.x}
                 onChange={(newSize) => handleSizeUpdate('x', newSize)}
                 className="w-full"
@@ -257,13 +237,13 @@ function ShadowItem({ index, shadow, onUpdate, onRemove }: ShadowItemProps) {
             </div>
             <div>
               <label
-                htmlFor={`shadow-${index}-y`}
+                htmlFor={`y-offset-${index}`}
                 className="typography-body3 mb-1 block text-neutral-700"
               >
                 Y Offset
               </label>
               <SizeInput
-                id={`shadow-${index}-y`}
+                id={`y-offset-${index}`}
                 value={shadow.y}
                 onChange={(newSize) => handleSizeUpdate('y', newSize)}
                 className="w-full"
@@ -271,13 +251,13 @@ function ShadowItem({ index, shadow, onUpdate, onRemove }: ShadowItemProps) {
             </div>
             <div>
               <label
-                htmlFor={`shadow-${index}-blur`}
+                htmlFor={`blur-${index}`}
                 className="typography-body3 mb-1 block text-neutral-700"
               >
                 Blur
               </label>
               <SizeInput
-                id={`shadow-${index}-blur`}
+                id={`blur-${index}`}
                 value={shadow.blur}
                 onChange={(newSize) => handleSizeUpdate('blur', newSize)}
                 className="w-full"
@@ -285,13 +265,13 @@ function ShadowItem({ index, shadow, onUpdate, onRemove }: ShadowItemProps) {
             </div>
             <div>
               <label
-                htmlFor={`shadow-${index}-spread`}
+                htmlFor={`spread-${index}`}
                 className="typography-body3 mb-1 block text-neutral-700"
               >
                 Spread
               </label>
               <SizeInput
-                id={`shadow-${index}-spread`}
+                id={`spread-${index}`}
                 value={shadow.spread}
                 onChange={(newSize) => handleSizeUpdate('spread', newSize)}
                 className="w-full"
@@ -302,11 +282,11 @@ function ShadowItem({ index, shadow, onUpdate, onRemove }: ShadowItemProps) {
           {/* Color and Inset */}
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <div className="typography-body3 mb-1 block text-neutral-700">Color</div>
+              <span className="typography-body3 mb-1 block text-neutral-700">Color</span>
               <ColorPicker value={getColorObject(shadow.color.hex)} onChange={handleColorUpdate} />
             </div>
             <div>
-              <div className="typography-body3 mb-1 block text-neutral-700">Inset</div>
+              <span className="typography-body3 mb-1 block text-neutral-700">Inset</span>
               <div className="flex h-7 items-center">
                 <Switch checked={shadow.inset} onChange={handleInsetToggle} />
               </div>

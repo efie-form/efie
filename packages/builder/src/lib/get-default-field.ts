@@ -32,7 +32,7 @@ interface GetDefaultFieldProps<T extends FieldType> {
   type: T;
   page?: PageProps;
   column?: ColumnProps;
-  formKey?: string;
+  fieldName?: string;
 }
 
 const ID_LENGTH = 10;
@@ -64,7 +64,7 @@ export function getDefaultField<T extends FieldType>({
   type,
   page,
   column,
-  formKey,
+  fieldName,
 }: GetDefaultFieldProps<T>) {
   switch (type) {
     case FieldType.SHORT_TEXT: {
@@ -72,7 +72,7 @@ export function getDefaultField<T extends FieldType>({
         id: generateId(ID_LENGTH),
         type: FieldType.SHORT_TEXT,
         form: {
-          key: formKey || '',
+          name: fieldName || '',
         },
         props: [
           {
@@ -91,7 +91,7 @@ export function getDefaultField<T extends FieldType>({
         type: FieldType.LONG_TEXT,
         id: generateId(ID_LENGTH),
         form: {
-          key: formKey || '',
+          name: fieldName || '',
         },
         props: [
           {
@@ -110,7 +110,7 @@ export function getDefaultField<T extends FieldType>({
         type: FieldType.NUMBER,
         id: generateId(ID_LENGTH),
         form: {
-          key: formKey || '',
+          name: fieldName || '',
         },
         props: [
           {
@@ -129,7 +129,7 @@ export function getDefaultField<T extends FieldType>({
         type: FieldType.SINGLE_CHOICE,
         id: generateId(ID_LENGTH),
         form: {
-          key: formKey || '',
+          name: fieldName || '',
         },
         props: [
           {
@@ -152,7 +152,7 @@ export function getDefaultField<T extends FieldType>({
         type: FieldType.MULTIPLE_CHOICES,
         id: generateId(ID_LENGTH),
         form: {
-          key: formKey || '',
+          name: fieldName || '',
         },
         props: [
           {
@@ -188,7 +188,7 @@ export function getDefaultField<T extends FieldType>({
         type: FieldType.DATE,
         id: generateId(ID_LENGTH),
         form: {
-          key: formKey || '',
+          name: fieldName || '',
         },
         props: [
           {
@@ -203,7 +203,7 @@ export function getDefaultField<T extends FieldType>({
         type: FieldType.TIME,
         id: generateId(ID_LENGTH),
         form: {
-          key: formKey || '',
+          name: fieldName || '',
         },
         props: [
           {
@@ -218,7 +218,7 @@ export function getDefaultField<T extends FieldType>({
         type: FieldType.DATE_TIME,
         id: generateId(ID_LENGTH),
         form: {
-          key: formKey || '',
+          name: fieldName || '',
         },
         props: [
           {
@@ -233,16 +233,12 @@ export function getDefaultField<T extends FieldType>({
         type: FieldType.FILE,
         id: generateId(ID_LENGTH),
         form: {
-          key: formKey || '',
+          name: fieldName || '',
         },
         props: [
           {
             type: PropertyType.LABEL,
             value: 'File',
-          },
-          {
-            type: PropertyType.MAX_FILES,
-            value: 1,
           },
           {
             type: PropertyType.ACCEPT,
@@ -267,7 +263,7 @@ export function getDefaultField<T extends FieldType>({
         id: generateId(ID_LENGTH),
         props: [
           {
-            type: PropertyType.CONTENT,
+            type: PropertyType.HEADING_CONTENT,
             value: {
               jsonContent: generateJsonContent(''),
             },
@@ -281,12 +277,8 @@ export function getDefaultField<T extends FieldType>({
         id: generateId(ID_LENGTH),
         props: [
           {
-            type: PropertyType.SRC,
+            type: PropertyType.IMAGE_SRC,
             value: '',
-          },
-          {
-            type: PropertyType.ALT,
-            value: 'Placeholder',
           },
         ],
       } satisfies GetDefaultFieldReturn[typeof FieldType.IMAGE];
@@ -302,7 +294,7 @@ export function getDefaultField<T extends FieldType>({
             type: FieldType.COLUMN,
             props: [
               {
-                type: PropertyType.WIDTH,
+                type: PropertyType.COLUMN_WIDTH,
                 value: {
                   type: SizeType.PERCENTAGE,
                   value: 50,
@@ -316,7 +308,7 @@ export function getDefaultField<T extends FieldType>({
             type: FieldType.COLUMN,
             props: [
               {
-                type: PropertyType.WIDTH,
+                type: PropertyType.COLUMN_WIDTH,
                 value: {
                   type: SizeType.PERCENTAGE,
                   value: 50,
@@ -334,7 +326,7 @@ export function getDefaultField<T extends FieldType>({
         id: generateId(ID_LENGTH),
         props: [
           {
-            type: PropertyType.WIDTH,
+            type: PropertyType.COLUMN_WIDTH,
             value: {
               type: SizeType.PERCENTAGE,
               value: column?.width || 100,

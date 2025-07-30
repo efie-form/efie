@@ -3,7 +3,7 @@ import { useSchemaStore } from '../state/schema.state';
 import { useSettingsStore } from '../state/settings.state';
 
 export default function useFormBuilder() {
-  const { setPage, setFormInputs, setHeight, setFormKeyEditable, setIsInputReusable } =
+  const { setPage, setFormInputs, setHeight, setFieldNameEditable, setIsInputReusable } =
     useSettingsStore();
   const { schema, setSchema, setMaxHistories } = useSchemaStore();
 
@@ -26,7 +26,7 @@ export default function useFormBuilder() {
     setFormInputs,
     resetSchema,
     setHeight,
-    setFormKeyEditable,
+    setFieldNameEditable,
     setIsInputReusable,
     setMaxHistories,
   };

@@ -1,3 +1,5 @@
+import type { SettingsConfig } from './settings-config.type';
+
 type Level = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
 interface Heading {
@@ -10,7 +12,11 @@ interface FontSize {
   size: string;
 }
 
-export interface HeadingFieldConfig {
+interface BaseFieldConfig {
+  settings?: SettingsConfig[];
+}
+
+export interface HeadingFieldConfig extends BaseFieldConfig {
   formats: {
     bold?: boolean;
     italic?: boolean;
@@ -53,5 +59,21 @@ export interface HeadingFieldConfig {
 
 export interface FieldConfig {
   heading?: HeadingFieldConfig;
-  // Add other field configurations as needed
+  // Create a individual config if needed for each field type
+  short_text?: BaseFieldConfig;
+  long_text?: BaseFieldConfig;
+  number?: BaseFieldConfig;
+  single_choice?: BaseFieldConfig;
+  multiple_choices?: BaseFieldConfig;
+  date?: BaseFieldConfig;
+  time?: BaseFieldConfig;
+  date_time?: BaseFieldConfig;
+  file?: BaseFieldConfig;
+  divider?: BaseFieldConfig;
+  image?: BaseFieldConfig;
+  row?: BaseFieldConfig;
+  column?: BaseFieldConfig;
+  block?: BaseFieldConfig;
+  page?: BaseFieldConfig;
+  button?: BaseFieldConfig;
 }

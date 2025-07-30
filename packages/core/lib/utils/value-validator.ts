@@ -14,7 +14,6 @@ import type {
   PropValueSize,
   PropValueString,
 } from '../types/field-property-value.type';
-import type { PropertyDefinition, WidthProperty } from '../types/property-definition';
 
 export function isStringValue(value?: PropValue): value is PropValueString {
   return !!value && typeof value === 'string';
@@ -30,13 +29,6 @@ export function isBooleanValue(value?: PropValue): value is PropValueBoolean {
 
 export function isColorValue(value?: PropValue): value is PropValueColor {
   return isColor(value);
-}
-
-export function isWidthValue(props?: PropertyDefinition): props is WidthProperty {
-  if (!props || !('value' in props) || typeof props.value !== 'object') {
-    return false;
-  }
-  return true;
 }
 
 export function isBorderRadiusValue(value?: PropValue): value is PropValueBorderRadius {

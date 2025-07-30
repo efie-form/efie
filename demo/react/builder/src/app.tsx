@@ -1,9 +1,9 @@
 import type { FormBuilderRef } from '@efie-form/react';
 import { FieldType, FormBuilder } from '@efie-form/react';
 import { useEffect, useRef, useState } from 'react';
-import { schema } from './schema';
 
 function App() {
+  const [schema, setSchema] = useState();
   const formBuilderRef = useRef<FormBuilderRef>(null);
   const [height, setHeight] = useState(window.innerHeight);
 
@@ -30,7 +30,6 @@ function App() {
       <FormBuilder
         ref={formBuilderRef}
         height={height}
-        schema={schema}
         inputNonReusable
         maxHistories={25}
         formInputs={[

@@ -2,8 +2,9 @@ import type { ColumnFormField, RowFormField } from '@efie-form/core';
 import { FieldType, PropertyType, SizeType } from '@efie-form/core';
 import * as Tabs from '@radix-ui/react-tabs';
 import { useState } from 'react';
-import { FaPlus } from 'react-icons/fa6';
+import { FaPlus, FaTrash } from 'react-icons/fa6';
 import Button from '../../../components/elements/button';
+import IconButton from '../../../components/elements/icon-button';
 import { getDefaultField } from '../../../lib/get-default-field';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import { getFieldProp } from '../../../lib/utils';
@@ -33,12 +34,12 @@ function RowSettings({ field }: RowSettingsProps) {
       const existingColumn = field.children[i];
 
       if (existingColumn) {
-        const widthProp = getFieldProp(existingColumn, PropertyType.WIDTH);
+        const widthProp = getFieldProp(existingColumn, PropertyType.COLUMN_WIDTH);
         if (widthProp) {
           widthProp.value = { type: SizeType.PERCENTAGE, value: width };
         } else {
           existingColumn.props.push({
-            type: PropertyType.WIDTH,
+            type: PropertyType.COLUMN_WIDTH,
             value: { type: SizeType.PERCENTAGE, value: width },
           });
         }
@@ -72,12 +73,12 @@ function RowSettings({ field }: RowSettingsProps) {
       const colField = getFieldById(col.id);
       if (!colField || colField.type !== FieldType.COLUMN) return col;
 
-      const widthProp = getFieldProp(colField, PropertyType.WIDTH);
+      const widthProp = getFieldProp(colField, PropertyType.COLUMN_WIDTH);
       if (widthProp) {
         widthProp.value = { type: SizeType.PERCENTAGE, value: avgWidth };
       } else {
         colField.props.push({
-          type: PropertyType.WIDTH,
+          type: PropertyType.COLUMN_WIDTH,
           value: { type: SizeType.PERCENTAGE, value: avgWidth },
         });
       }
@@ -105,7 +106,7 @@ function RowSettings({ field }: RowSettingsProps) {
         continue;
       }
 
-      const widthProp = getFieldProp(colField, PropertyType.WIDTH);
+      const widthProp = getFieldProp(colField, PropertyType.COLUMN_WIDTH);
       const width = Math.floor(100 / (field.children.length - 1));
       if (widthProp) {
         widthProp.value = {
@@ -114,7 +115,7 @@ function RowSettings({ field }: RowSettingsProps) {
         };
       } else {
         colField.props.push({
-          type: PropertyType.WIDTH,
+          type: PropertyType.COLUMN_WIDTH,
           value: { type: SizeType.PERCENTAGE, value: width },
         });
       }
@@ -151,10 +152,17 @@ function RowSettings({ field }: RowSettingsProps) {
             </button>
           ))}
         </div>
-        <div className="mt-4 flex justify-center">
+        <div className="mt-4 flex justify-center gap-2">
           <Button onClick={addColumn} startIcon={FaPlus}>
             Add
           </Button>
+          <IconButton
+            Icon={FaTrash}
+            variant="danger"
+            disabled={field.children.length <= 1}
+            onClick={() => removeColumn(field.children.findIndex((col) => col.id === currentTab))}
+            className="ml-2"
+          />
         </div>
       </div>
 
@@ -175,9 +183,9 @@ function RowSettings({ field }: RowSettingsProps) {
 
         {field.children
           .filter((column) => column.type === FieldType.COLUMN)
-          .map((column, index) => (
+          .map((column) => (
             <Tabs.Content key={column.id} value={column.id}>
-              <ColumnSettings field={column} onRemove={() => removeColumn(index)} />
+              <ColumnSettings field={column} />
             </Tabs.Content>
           ))}
       </Tabs.Root>

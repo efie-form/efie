@@ -1,22 +1,19 @@
-import { type DateTimeFormField, PropertyType } from '@efie-form/core';
-import CategoryHeader from '../../../components/elements/category-header';
-import DynamicSettings from '../dynamic-settings';
+import type { DateTimeFormField } from '@efie-form/core';
+import { useSettingsStore } from '../../../lib/state/settings.state';
+import FieldSettings from '../field-settings';
+import FieldNameSettings from '../settings/form-name-settings';
 
 interface DateTimeSettingsProps {
   field: DateTimeFormField;
 }
 
 function DateTimeSettings({ field }: DateTimeSettingsProps) {
+  const config = useSettingsStore((state) => state.config[field.type]);
+
   return (
     <div>
-      <CategoryHeader>General</CategoryHeader>
-      <DynamicSettings
-        settings={[
-          { template: 'formKey' },
-          { template: 'text', label: 'Label', type: PropertyType.LABEL },
-        ]}
-        fieldId={field.id}
-      />
+      <FieldNameSettings fieldId={field.id} />
+      <FieldSettings config={config.properties} fieldId={field.id} />
     </div>
   );
 }

@@ -1,7 +1,12 @@
 export { default as Builder } from './builder';
 export { FieldType } from './constants/field-type';
-export { PropertyType, SizeType, SizeUnit } from './constants/form-schema.constant';
+export { SizeType, SizeUnit } from './constants/form-schema.constant';
+export { PropSettingsTemplate } from './constants/prop-settings.constant';
 export { default as Iframe } from './iframe';
+export {
+  CustomPropertyType,
+  PropertyType,
+} from './property-type';
 export type { CustomInputDef } from './types/builder-custom-input.type';
 export type {
   BoxShadow,
@@ -21,7 +26,6 @@ export type {
   SizeRelative,
   WidthHeightSize,
 } from './types/common.type';
-
 export type {
   FieldCondition,
   FieldConditionGroup,
@@ -76,41 +80,74 @@ export type {
 } from './types/form-field.type';
 export type { FormSchema } from './types/form-schema.type';
 export type {
-  AcceptProperty,
-  AltProperty,
-  BgColorProperty,
-  BorderRadiusProperty,
-  BorderStyleProperty,
-  BoxShadowProperty,
-  ColorProperty,
-  ContentProperty,
-  FontSizeProperty,
-  HeightProperty,
-  LabelProperty,
-  MarginProperty,
-  MaxFilesProperty,
-  ObjectFitProperty,
-  OptionsProperty,
-  PaddingProperty,
-  PageNameProperty,
-  PlaceholderProperty,
+  FieldCustomProp,
+  FieldCustomPropBoolean,
+  FieldCustomPropColor,
+  FieldCustomPropNumber,
+  FieldCustomPropSelect,
+  FieldCustomPropSize,
+  FieldCustomPropString,
+  FieldSystemProp,
+  FieldSystemPropAccept,
+  FieldSystemPropButtonAction,
+  FieldSystemPropColumnWidth,
+  FieldSystemPropFieldName,
+  FieldSystemPropHeadingContent,
+  FieldSystemPropImageSrc,
+  FieldSystemPropLabel,
+  FieldSystemPropOptions,
+  FieldSystemPropPageName,
+  FieldSystemPropPlaceholder,
+  FieldSystemPropRequired,
   PropertyDefinition,
-  RequiredProperty,
-  SrcProperty,
-  TextAlignProperty,
-  WidthProperty,
 } from './types/property-definition';
 export type { RootRule } from './types/root-rule.type';
+export type {
+  FieldConfig,
+  FieldConfigBlock,
+  FieldConfigButton,
+  FieldConfigColumn,
+  FieldConfigDate,
+  FieldConfigDateTime,
+  FieldConfigDivider,
+  FieldConfigFile,
+  FieldConfigHeading,
+  FieldConfigImage,
+  FieldConfigLongText,
+  FieldConfigMultipleChoices,
+  FieldConfigNumber,
+  FieldConfigPage,
+  FieldConfigRow,
+  FieldConfigShortText,
+  FieldConfigSingleChoice,
+  FieldConfigTime,
+  FieldCustomConfig,
+  FieldCustomConfigBoolean,
+  FieldCustomConfigColor,
+  FieldCustomConfigNumber,
+  FieldCustomConfigSelect,
+  FieldCustomConfigSize,
+  FieldCustomConfigText,
+  FieldSystemConfig,
+  FieldSystemConfigAccept,
+  FieldSystemConfigButtonAction,
+  FieldSystemConfigColumnWidth,
+  FieldSystemConfigFieldName,
+  FieldSystemConfigImageSrc,
+  FieldSystemConfigLabel,
+  FieldSystemConfigOptions,
+  FieldSystemConfigPlaceholder,
+  FieldSystemConfigRequired,
+  FieldsConfigsMap,
+} from './types/settings-config';
 export { getColorObject, hslaToHex, rgbaToHex } from './utils/colors';
 export {
   borderRadiusToStyle,
   boxShadowToStyle,
   colorToStyle,
-  fontSizeToStyle,
   marginToStyle,
   paddingToStyle,
   sizeToStyle,
-  textAlignToStyle,
   toSize,
   widthToStyle,
 } from './utils/props-parse';
@@ -130,5 +167,4 @@ export {
   isSize,
   isSizeValue,
   isStringValue,
-  isWidthValue,
 } from './utils/value-validator';

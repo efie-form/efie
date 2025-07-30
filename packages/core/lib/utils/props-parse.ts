@@ -7,7 +7,6 @@ import type {
   PropValuePadding,
   PropValueSize,
 } from '../types/field-property-value.type';
-import type { FontSizeProperty, TextAlignProperty } from '../types/property-definition';
 
 export const toSize = (size?: Size) => {
   if (!size) return;
@@ -128,22 +127,10 @@ export const widthToStyle = (width?: PropValueSize) => {
   return toSize(width);
 };
 
-export const textAlignToStyle = (textAlign?: TextAlignProperty) => {
-  if (!textAlign) return;
-
-  return textAlign.value;
-};
-
 export const colorToStyle = (color?: Color) => {
   if (!color) return;
 
   return color.hex;
-};
-
-export const fontSizeToStyle = (fontSize?: FontSizeProperty) => {
-  if (!fontSize) return;
-
-  return toSize(fontSize.value);
 };
 
 export const sizeToStyle = (size?: Size) => {

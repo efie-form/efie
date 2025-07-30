@@ -14,30 +14,26 @@ import {
   useSortable,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
-import {
-  isOptionsValue,
-  type OptionsProperty,
-  type PropValue,
-  type PropValueOptions,
-} from '@efie-form/core';
+import type { FieldSystemConfigOptions, PropValueOptions } from '@efie-form/core';
 import { useRef, useState } from 'react';
 import { MdAdd, MdOutlineClose, MdOutlineDragIndicator } from 'react-icons/md';
 import Button from '../../../components/elements/button';
 import { Input, Switch } from '../../../components/form';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import { cn } from '../../../lib/utils';
-import type { PropSettingsOption } from '../../../types/prop-settings.type';
 
-interface PropSettingsOptionsProps extends PropSettingsOption {
+interface PropSettingsOptionsProps {
+  config: FieldSystemConfigOptions;
   fieldId: string;
 }
 
-export default function PropsSettingsOptions({ fieldId, label, type }: PropSettingsOptionsProps) {
-  const fieldProperty = useSchemaStore((state) => state.getFieldProperty(fieldId, type));
-  const updateOptions = useSchemaStore((state) => state.updateFieldProperty);
-  const value = getValue(fieldProperty?.value);
+export default function SystemSettingsOptions({ config, fieldId }: PropSettingsOptionsProps) {
+  const fieldProperty = useSchemaStore((state) => state.getFieldProperty(fieldId, config.type));
+  const value = fieldProperty?.value || [];
+  const updateFieldProperty = useSchemaStore((state) => state.updateFieldProperty);
+
   // Store previous values for restoration
-  const prevValuesRef = useRef<OptionsProperty['value']>(value.map((option) => ({ ...option })));
+  const prevValuesRef = useRef(value.map((option) => ({ ...option })));
   const [isValueDifferent, setIsValueDifferent] = useState(
     value.some((option) => option.value !== option.label) || false,
   );
@@ -50,6 +46,13 @@ export default function PropsSettingsOptions({ fieldId, label, type }: PropSetti
     }),
   );
 
+  const onChange = (newValue: PropValueOptions) => {
+    updateFieldProperty(fieldId, {
+      type: config.type,
+      value: newValue,
+    });
+  };
+
   const handleChangeDifferentValue = (different: boolean) => {
     setIsValueDifferent(different);
     if (different) {
@@ -59,14 +62,14 @@ export default function PropsSettingsOptions({ fieldId, label, type }: PropSetti
           ...option,
           value: prevValuesRef.current[i].value,
         }));
-        updateOptions(fieldId, { type, value: restored } as OptionsProperty);
+        onChange(restored);
       }
     } else {
       // Save current values for restoration
       prevValuesRef.current = value.map((option) => ({ ...option }));
       // Set value = label for all options
       const newOptions = value.map((option) => ({ ...option, value: option.label }));
-      updateOptions(fieldId, { type, value: newOptions } as OptionsProperty);
+      onChange(newOptions);
     }
   };
 
@@ -77,7 +80,7 @@ export default function PropsSettingsOptions({ fieldId, label, type }: PropSetti
     const oldIndex = Number.parseInt(active.id as string, 10);
     const newIndex = Number.parseInt(over.id as string, 10);
     const newOptions = arrayMove(value, oldIndex, newIndex);
-    updateOptions(fieldId, { type, value: newOptions } as OptionsProperty);
+    onChange(newOptions);
   };
 
   const handleLabelChange = (index: number, changeType: 'value' | 'label', newValue: string) => {
@@ -86,13 +89,13 @@ export default function PropsSettingsOptions({ fieldId, label, type }: PropSetti
       ...newOptions[index],
       [changeType]: newValue,
     };
-    updateOptions(fieldId, { type, value: newOptions } as OptionsProperty);
+    onChange(newOptions);
   };
 
   const handleRemoveOption = (index: number) => {
     const newOptions = [...value];
     newOptions.splice(index, 1);
-    updateOptions(fieldId, { type, value: newOptions } as OptionsProperty);
+    onChange(newOptions);
   };
 
   const handleAddOption = () => {
@@ -101,14 +104,14 @@ export default function PropsSettingsOptions({ fieldId, label, type }: PropSetti
       ...value,
       { label: `Option ${totalOptions + 1}`, value: `Option ${totalOptions + 1}` },
     ];
-    updateOptions(fieldId, { type, value: newOptions } as OptionsProperty);
+    onChange(newOptions);
   };
 
   return (
     <>
       <div className="px-4 py-3.5">
         <div className="mb-2 flex items-center justify-between">
-          <p className="typography-body3 text-neutral-800">{label}</p>
+          <p className="typography-body3 text-neutral-800">{config.label}</p>
           <div className="flex items-center gap-2">
             <p className="typography-body3 text-neutral-800">Different Value</p>
             <Switch checked={isValueDifferent} onChange={handleChangeDifferentValue} />
@@ -159,22 +162,9 @@ export default function PropsSettingsOptions({ fieldId, label, type }: PropSetti
   );
 }
 
-function getValue(props?: PropValue): PropValueOptions {
-  if (!isOptionsValue(props)) {
-    return [];
-  }
-
-  return props
-    .filter((option) => option && 'value' in option && 'label' in option)
-    .map((option) => ({
-      label: option.label,
-      value: option.value || option.label,
-    }));
-}
-
 interface OptionItemProps {
   index: number;
-  option: OptionsProperty['value'][number];
+  option: { label: string; value: string };
   isValueDifferent: boolean;
   handleLabelChange: (index: number, value: string) => void;
   handleValueChange: (index: number, value: string) => void;

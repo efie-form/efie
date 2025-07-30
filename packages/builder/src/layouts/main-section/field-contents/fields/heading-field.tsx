@@ -16,7 +16,7 @@ function HeadingField({ field }: HeadingFieldProps) {
   return (
     <div>
       <RichTextEditor
-        value={content?.value.jsonContent || {}}
+        value={content?.value?.jsonContent || {}}
         onChange={(newContent) => {
           updateFieldProperty(field.id, {
             type: PropertyType.CONTENT,
