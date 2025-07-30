@@ -7,17 +7,11 @@ const ROOT_KEYS = ['version', 'form'] as const;
 
 export default function validateSchema(schema?: unknown): schema is FormSchema {
   if (!schema) return false;
-  console.log('Validating schema:', schema);
   if (!isObject(schema)) return false;
-  console.log('Schema is an object:', schema);
   if (!ROOT_KEYS.every((key) => key in schema)) return false;
-  console.log('Schema has all required root keys:', schema);
   if (!isCorrectVersion(schema.version)) return false;
-  console.log('Schema has correct version:', schema.version);
   if (!isObject(schema.form)) return false;
-  console.log('Schema form is an object:', schema.form);
   if (!validateFields(schema.form.fields)) return false;
-  console.log('Schema form fields are valid:', schema.form.fields);
 
   return true;
 }
@@ -40,24 +34,19 @@ function validateFields(fields: unknown): boolean {
 
 function validateField(field: unknown): field is FormField {
   if (!isObject(field)) {
-    console.log('Field is not an object:', field);
     return false;
   }
   if (!('id' in field) || typeof field.id !== 'string') {
-    console.log('Field id is not a string:', field);
     return false;
   }
   if (!('type' in field) || typeof field.type !== 'string') {
-    console.log('Field type is not a string:', field);
     return false;
   }
   if (!Object.values(FieldType).includes(field.type as FieldType)) {
-    console.log('Field type is not a valid FieldType:', field);
     return false;
   }
 
   if (!('props' in field) || !Array.isArray(field.props)) {
-    console.log('Field props is not an array:', field);
     return false;
   }
   const fieldProps = field.props as PropertyDefinition[];
@@ -65,15 +54,11 @@ function validateField(field: unknown): field is FormField {
   if (
     !fieldProps.every((prop) => {
       const isValid = validatePropertyDefinition(prop);
-      if (!isValid) {
-        console.warn(`Invalid property definition for field ${field.id}:`, prop);
-      }
       return isValid;
     })
   )
     return false;
   if ('children' in field && !Array.isArray(field.children)) {
-    console.log('Field children is not an array:', field);
     return false;
   }
   if (
@@ -81,7 +66,6 @@ function validateField(field: unknown): field is FormField {
     Array.isArray(field.children) &&
     field.children.some((child) => !validateField(child))
   ) {
-    console.log('Field children is not a valid array of fields:', field);
     return false;
   }
 

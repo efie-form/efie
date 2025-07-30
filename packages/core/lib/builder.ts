@@ -1,129 +1,139 @@
 import { EXTERNAL_MESSAGE_TYPE, INTERNAL_MESSAGE_TYPE } from './constants/message-types';
+import defaultSchema from './default-schema';
 import type { CustomInputDef } from './types/builder-custom-input.type';
 import type { FormSchema } from './types/form-schema.type';
 
-interface InitializedPayload {
-  schema: FormSchema;
-  formInputs: CustomInputDef[];
+interface IframeProps {
+  id: string;
   height: number;
-  formKeyNonEditable: boolean;
-  inputNonReusable: boolean;
+  formInputs?: CustomInputDef[];
+  schema?: FormSchema;
+  formKeyNonEditable?: boolean;
+  inputNonReusable?: boolean;
   maxHistories?: number;
 }
 
-interface BuilderProps {
-  onDataReset: (data: FormSchema) => void;
-  onDataRequest: () => FormSchema;
-  onHeightChange: (height: number) => void;
-  onFormInputsChange: (formInputs: CustomInputDef[]) => void;
-  onInitialized: (data: InitializedPayload) => void;
-}
-
 export default class Builder {
-  isLoaded = false;
-  isInitialized = false;
-  onDataReset: ((data: FormSchema) => void) | undefined = undefined;
-  onDataRequest: (() => FormSchema) | undefined = undefined;
-  onHeightChange: ((height: number) => void) | undefined = undefined;
-  onFormInputsChange: ((formInputs: CustomInputDef[]) => void) | undefined = undefined;
+  private parentElem: HTMLElement | undefined = undefined;
+  private iframeElem: HTMLIFrameElement | undefined = undefined;
+  private schema: FormSchema = defaultSchema;
+  private isIframeReady = false;
+  private formInputs: CustomInputDef[] | undefined = undefined;
+  private formKeyNonEditable = false;
+  private inputNonReusable = true;
+  private height: number = 0;
+  private maxHistories?: number;
 
-  onInitialized: ((data: InitializedPayload) => void) | undefined = undefined;
-  isDataInitialized = false;
+  constructor({
+    id,
+    formInputs,
+    height,
+    schema,
+    formKeyNonEditable,
+    inputNonReusable,
+    maxHistories,
+  }: IframeProps) {
+    const elem = document.querySelector(`#${id}`);
+    if (!elem || !(elem instanceof HTMLElement)) {
+      throw new Error(`Element with id ${id} not found`);
+    }
+    this.parentElem = elem;
+    if (this.isIframeRendered()) return;
 
-  constructor(props: BuilderProps) {
-    this.onDataReset = props.onDataReset;
-    this.onDataRequest = props.onDataRequest;
-    this.onHeightChange = props.onHeightChange;
-    this.onFormInputsChange = props.onFormInputsChange;
-    this.onInitialized = props.onInitialized;
-    this.init();
+    if (formInputs) this.formInputs = formInputs;
+    if (height) this.height = height;
+    if (schema) this.schema = schema;
+    this.formKeyNonEditable = !!formKeyNonEditable;
+    this.inputNonReusable = !!inputNonReusable;
+    if (maxHistories) this.maxHistories = maxHistories;
+
+    this.renderIframe();
+    this.listenMessage();
   }
 
-  private init() {
-    if (globalThis.window === undefined) return;
-    if (this.isInitialized) return;
+  private isIframeRendered() {
+    return this.parentElem?.childElementCount && this.parentElem?.childElementCount >= 1;
+  }
 
-    this.isInitialized = true;
-    window.addEventListener('message', (e) => {
-      this.dataResetHandler(e);
-      this.heightHandler(e);
-      this.formInputsHandler(e);
-      this.initializedHandler(e);
+  public init() {
+    if (this.height) {
+      this.setHeight(this.height);
+    }
+    if (this.formInputs) {
+      this.setFormInputs(this.formInputs);
+    }
+  }
+
+  private renderIframe() {
+    this.iframeElem = document.createElement('iframe');
+    this.iframeElem.src = 'http://localhost:3074';
+    this.iframeElem.style.border = 'none';
+    this.iframeElem.style.width = '100%';
+    this.iframeElem.style.height = '100%';
+    this.parentElem?.append(this.iframeElem);
+  }
+
+  public setHeight(height: number) {
+    if (!this.iframeElem || !this.parentElem) return;
+
+    this.parentElem.style.height = `${height}px`;
+
+    this.postMessage(EXTERNAL_MESSAGE_TYPE.SET_HEIGHT, { height });
+  }
+
+  private listenMessage() {
+    if (!this.iframeElem) return;
+    if (globalThis.window === undefined) return;
+
+    window.addEventListener('message', (event) => {
+      this.iframeLoadedHandler(event);
+      switch (event.data.type) {
+        case INTERNAL_MESSAGE_TYPE.SET_DATA: {
+          this.schema = event.data.data;
+          break;
+        }
+      }
     });
-
-    // Send INIT first to establish connection
-    // wait for the outer window to be ready and send the initialized event
-    this.postMessage(INTERNAL_MESSAGE_TYPE.LOADED);
   }
 
-  public setValue(value: FormSchema) {
-    if (globalThis.window === undefined || !this.isLoaded) return;
-    this.postMessage(INTERNAL_MESSAGE_TYPE.SET_DATA, value);
+  private iframeLoadedHandler(event: MessageEvent) {
+    if (event.data.type !== INTERNAL_MESSAGE_TYPE.LOADED) return;
+    this.postMessage(EXTERNAL_MESSAGE_TYPE.INIT_DATA, {
+      schema: this.schema,
+      formInputs: this.formInputs,
+      height: this.height,
+      formKeyNonEditable: this.formKeyNonEditable,
+      inputNonReusable: this.inputNonReusable,
+      maxHistories: this.maxHistories,
+    });
   }
 
-  private initializedHandler(event: MessageEvent) {
-    if (event.data.type !== EXTERNAL_MESSAGE_TYPE.INIT_DATA || this.isDataInitialized) return;
-    this.isDataInitialized = true;
-    const payload = event.data.data as InitializedPayload;
+  public getValue() {
+    return this.schema;
+  }
 
-    if (payload.schema && this.onDataRequest) {
-      this.onDataRequest();
+  public loadSchema(data: FormSchema) {
+    this.schema = data;
+
+    if (!this.iframeElem) {
+      return;
     }
 
-    if (payload.formInputs && this.onFormInputsChange) {
-      this.onFormInputsChange(payload.formInputs);
+    if (!this.isIframeReady) {
+      return;
     }
 
-    if (payload.height && this.onHeightChange) {
-      this.onHeightChange(payload.height);
-    }
-
-    if (this.onInitialized) this.onInitialized(payload);
+    this.postMessage(EXTERNAL_MESSAGE_TYPE.RESET_DATA, data);
   }
 
-  /**
-   * Handle the data reset event
-   *
-   * @param event - The event
-   * @returns void
-   */
-  private dataResetHandler(event: MessageEvent) {
-    if (event.data.type !== EXTERNAL_MESSAGE_TYPE.RESET_DATA) return;
-    if (this.onDataReset) this.onDataReset(event.data.data);
+  public setFormInputs(formInputs: CustomInputDef[]) {
+    this.formInputs = formInputs;
+    this.postMessage(EXTERNAL_MESSAGE_TYPE.SET_FORM_INPUTS, formInputs);
   }
 
-  /**
-   * Handle the height event
-   *
-   * @param event - The event
-   * @returns void
-   */
-  private heightHandler(event: MessageEvent) {
-    if (event.data.type !== EXTERNAL_MESSAGE_TYPE.SET_HEIGHT) return;
-    if (this.onHeightChange) this.onHeightChange(event.data.data.height);
-  }
-
-  /**
-   * Handle the form inputs event
-   *
-   * @param event - The event
-   * @returns void
-   */
-  private formInputsHandler(event: MessageEvent) {
-    if (event.data.type !== EXTERNAL_MESSAGE_TYPE.SET_FORM_INPUTS) return;
-    if (this.onFormInputsChange) this.onFormInputsChange(event.data.data);
-  }
-
-  /**
-   * Send the message to the caller
-   *
-   * @param type - The type of the message
-   * @param data - The data of the message
-   * @returns void
-   */
-  private postMessage(type: string, data?: unknown) {
-    if (globalThis.window === undefined) return;
-    window.parent.postMessage(
+  private postMessage(type: string, data: unknown) {
+    if (!this.iframeElem) return;
+    this.iframeElem.contentWindow?.postMessage(
       {
         type,
         data,

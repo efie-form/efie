@@ -1,8 +1,8 @@
 export { default as Builder } from './builder';
+export { default as Client } from './client';
 export { FieldType } from './constants/field-type';
 export { SizeType, SizeUnit } from './constants/form-schema.constant';
 export { PropSettingsTemplate } from './constants/prop-settings.constant';
-export { default as Iframe } from './iframe';
 export {
   CustomPropertyType,
   PropertyType,

@@ -1,4 +1,4 @@
-import { type CustomInputDef, type FormSchema, Iframe } from '@efie-form/core';
+import { Builder, type CustomInputDef, type FormSchema } from '@efie-form/core';
 import type { RefObject } from 'react';
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 
@@ -20,14 +20,14 @@ export interface FormBuilderRef {
 
 const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
   ({ height, formInputs, schema, formKeyNonEditable, inputNonReusable, maxHistories }, ref) => {
-    const builderRef = useRef<Iframe | undefined>();
+    const builderRef = useRef<Builder | undefined>();
     const containerRef = useRef<HTMLDivElement>(null);
 
     // Initialize Iframe once
     useEffect(() => {
       // Only create new instance if one doesn't exist
       if (!builderRef.current && containerRef.current) {
-        builderRef.current = new Iframe({
+        builderRef.current = new Builder({
           id: DIV_ID,
           formInputs,
           height,
