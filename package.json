@@ -5,7 +5,6 @@
   "type": "module",
   "scripts": {
     "dev": "nx serve @efie-form/iframe",
-    "dev:react-builder-demo": "nx serve react-builder-demo",
     "tw": "pnpm --filter @efie-form/builder run tw",
     "watch": "node scripts/watch.mjs",
     "watch:all": "node scripts/watch.mjs --all",

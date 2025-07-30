@@ -145,11 +145,9 @@ export {
   borderRadiusToStyle,
   boxShadowToStyle,
   colorToStyle,
-  fontSizeToStyle,
   marginToStyle,
   paddingToStyle,
   sizeToStyle,
-  textAlignToStyle,
   toSize,
   widthToStyle,
 } from './utils/props-parse';

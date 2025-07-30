@@ -15,5 +15,5 @@
       "@efie-form/core": ["../core/lib"]
     }
   },
-  "include": ["lib/**/*", "types/**/*", "index.ts"]
+  "include": ["lib/**/*", "types/**/*", "lib/index.ts"]
 }

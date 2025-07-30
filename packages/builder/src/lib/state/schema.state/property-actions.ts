@@ -24,7 +24,7 @@ export function createPropertyActions({ set, getState }: StateSetters): SchemaSt
   return {
     // Enhanced property management methods
     updateFieldProperty: (fieldId, property) => {
-      const { schema, addHistory, fieldMap } = getState();
+      const { fieldMap, updateField } = getState();
       const field = fieldMap.get(fieldId);
       if (!field) return;
 
@@ -39,36 +39,9 @@ export function createPropertyActions({ set, getState }: StateSetters): SchemaSt
 
       // For property updates, we can optimize by only updating the specific field
       // without rebuilding all maps since the structure doesn't change
-      const updatedField = { ...field, props: newProps } as FormField;
+      const newField = { ...field, props: newProps } as FormField;
 
-      // Update field in schema using optimized tree traversal
-      const updateFieldInTree = (fields: FormField[]): FormField[] => {
-        return fields.map((f) => {
-          if (f.id === fieldId) {
-            return updatedField;
-          }
-          if ('children' in f && f.children) {
-            const updatedChildren = updateFieldInTree(f.children);
-            if (updatedChildren !== f.children) {
-              return { ...f, children: updatedChildren } as FormField;
-            }
-          }
-          return f;
-        });
-      };
-
-      const newFields = updateFieldInTree(schema.form.fields);
-      const newSchema = {
-        ...schema,
-        form: { ...schema.form, fields: newFields },
-      };
-
-      // Only update the specific field in fieldMap for better performance
-      const newFieldMap = new Map(fieldMap);
-      newFieldMap.set(fieldId, updatedField);
-
-      addHistory(newSchema);
-      set({ schema: newSchema, fieldMap: newFieldMap });
+      updateField(fieldId, newField);
     },
 
     // Core field property access methods
