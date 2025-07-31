@@ -1,3 +1,4 @@
+export type { BuilderInterface } from './builder';
 export { default as Builder } from './builder';
 export { default as Client } from './client';
 export { FieldType } from './constants/field-type';
