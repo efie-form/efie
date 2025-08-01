@@ -17,7 +17,6 @@ export default class Client {
   private isConnected = false;
 
   constructor(props: BuilderProps) {
-    console.log('Client: Initializing with props:', props);
     this.onSchemaChange = props.onSchemaChange;
     this.setupMessageListener();
   }
@@ -34,6 +33,7 @@ export default class Client {
           this.processMessageQueue();
           break;
         case 'SCHEMA_CHANGED':
+          console.log('Client: Schema changed:', data.payload);
           if (this.onSchemaChange && data.payload) {
             this.onSchemaChange(data.payload as FormSchema);
           }

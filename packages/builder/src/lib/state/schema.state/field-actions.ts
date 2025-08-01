@@ -20,7 +20,7 @@ export function createFieldActions({ set, getState }: StateSetters): SchemaState
   return {
     // Field management methods
     addField: (field: FormField, parentId?: string, index?: number) => {
-      const { schema, addHistory } = getState();
+      const { schema } = getState();
       const newField = deepClone(field);
       newField.id = generateId();
 
@@ -33,15 +33,33 @@ export function createFieldActions({ set, getState }: StateSetters): SchemaState
 
       const { fieldKeyMap, fieldMap, fieldParentMap } = getFieldInfoMap(newFields);
 
-      // Update state first
-      set({ schema: newSchema, fieldMap, fieldKeyMap, fieldParentMap });
+      // Get current history state
+      const { maxHistories, histories, currentHistoryIndex } = getState();
+      const stringifiedSchema = JSON.stringify(newSchema);
 
-      // Then add to history
-      addHistory(newSchema, true); // Skip debounce for field additions
+      // Prepare new history
+      let newHistories = histories.slice(0, currentHistoryIndex + 1);
+      if (newHistories.length === 0 || newHistories.at(-1) !== stringifiedSchema) {
+        newHistories.push(stringifiedSchema);
+        if (newHistories.length > maxHistories) {
+          newHistories = newHistories.slice(newHistories.length - maxHistories);
+        }
+      }
+
+      // Single atomic state update
+      set({
+        schema: newSchema,
+        fieldMap,
+        fieldKeyMap,
+        fieldParentMap,
+        histories: newHistories,
+        totalHistories: newHistories.length,
+        currentHistoryIndex: newHistories.length - 1,
+      });
     },
 
     updateField: (fieldId, updatedField) => {
-      const { fieldMap, addHistory } = getState();
+      const { fieldMap } = getState();
       // Update field in schema using optimized tree traversal
       const updateFieldInTree = (fields: FormField[]): FormField[] => {
         return fields.map((f) => {
@@ -67,13 +85,46 @@ export function createFieldActions({ set, getState }: StateSetters): SchemaState
       };
 
       const { fieldKeyMap, fieldParentMap } = getFieldInfoMap(newSchema.form.fields);
-      addHistory(newSchema);
-      set({
-        schema: newSchema,
-        fieldMap: new Map(fieldMap).set(fieldId, updatedField),
-        fieldKeyMap,
-        fieldParentMap,
-      });
+
+      // Get current history state
+      const { maxHistories, histories, currentHistoryIndex } = getState();
+      const stringifiedSchema = JSON.stringify(newSchema);
+
+      // Prepare new history (with debounce effect by checking if schema actually changed)
+      let newHistories = histories.slice(0, currentHistoryIndex + 1);
+      let shouldUpdateHistory = true;
+
+      if (newHistories.length > 0 && newHistories.at(-1) === stringifiedSchema) {
+        shouldUpdateHistory = false; // Schema hasn't changed, don't add to history
+      }
+
+      if (shouldUpdateHistory) {
+        newHistories.push(stringifiedSchema);
+        if (newHistories.length > maxHistories) {
+          newHistories = newHistories.slice(newHistories.length - maxHistories);
+        }
+      }
+
+      // Single atomic state update
+      if (shouldUpdateHistory) {
+        set({
+          schema: newSchema,
+          fieldMap: new Map(fieldMap).set(fieldId, updatedField),
+          fieldKeyMap,
+          fieldParentMap,
+          histories: newHistories,
+          totalHistories: newHistories.length,
+          currentHistoryIndex: newHistories.length - 1,
+        });
+      } else {
+        // Update only the essential state without history changes
+        set({
+          schema: newSchema,
+          fieldMap: new Map(fieldMap).set(fieldId, updatedField),
+          fieldKeyMap,
+          fieldParentMap,
+        });
+      }
     },
 
     duplicateField: (fieldId: string): FormField | undefined => {
@@ -95,7 +146,7 @@ export function createFieldActions({ set, getState }: StateSetters): SchemaState
     },
 
     moveField: (fieldId: string, newParentId: string, newIndex: number) => {
-      const { schema, addHistory } = getState();
+      const { schema } = getState();
       const field = getState().fieldMap.get(fieldId);
 
       if (!field) return;
@@ -134,12 +185,34 @@ export function createFieldActions({ set, getState }: StateSetters): SchemaState
       newSchema.form.fields = addToParent(newSchema.form.fields);
 
       const { fieldKeyMap, fieldMap, fieldParentMap } = getFieldInfoMap(newSchema.form.fields);
-      set({ schema: newSchema, fieldMap, fieldKeyMap, fieldParentMap });
-      addHistory(newSchema, true); // Skip debounce for field moves
+
+      // Get current history state
+      const { maxHistories, histories, currentHistoryIndex } = getState();
+      const stringifiedSchema = JSON.stringify(newSchema);
+
+      // Prepare new history
+      let newHistories = histories.slice(0, currentHistoryIndex + 1);
+      if (newHistories.length === 0 || newHistories.at(-1) !== stringifiedSchema) {
+        newHistories.push(stringifiedSchema);
+        if (newHistories.length > maxHistories) {
+          newHistories = newHistories.slice(newHistories.length - maxHistories);
+        }
+      }
+
+      // Single atomic state update
+      set({
+        schema: newSchema,
+        fieldMap,
+        fieldKeyMap,
+        fieldParentMap,
+        histories: newHistories,
+        totalHistories: newHistories.length,
+        currentHistoryIndex: newHistories.length - 1,
+      });
     },
 
     deleteField: (fieldId: string) => {
-      const { schema, addHistory } = getState();
+      const { schema } = getState();
 
       const newFields = removeFieldFromTree(schema.form.fields, fieldId);
 
@@ -149,8 +222,30 @@ export function createFieldActions({ set, getState }: StateSetters): SchemaState
       };
 
       const { fieldKeyMap, fieldMap, fieldParentMap } = getFieldInfoMap(newFields);
-      set({ schema: newSchema, fieldMap, fieldKeyMap, fieldParentMap });
-      addHistory(newSchema, true); // Skip debounce for field deletions
+
+      // Get current history state
+      const { maxHistories, histories, currentHistoryIndex } = getState();
+      const stringifiedSchema = JSON.stringify(newSchema);
+
+      // Prepare new history
+      let newHistories = histories.slice(0, currentHistoryIndex + 1);
+      if (newHistories.length === 0 || newHistories.at(-1) !== stringifiedSchema) {
+        newHistories.push(stringifiedSchema);
+        if (newHistories.length > maxHistories) {
+          newHistories = newHistories.slice(newHistories.length - maxHistories);
+        }
+      }
+
+      // Single atomic state update
+      set({
+        schema: newSchema,
+        fieldMap,
+        fieldKeyMap,
+        fieldParentMap,
+        histories: newHistories,
+        totalHistories: newHistories.length,
+        currentHistoryIndex: newHistories.length - 1,
+      });
     },
   };
 }

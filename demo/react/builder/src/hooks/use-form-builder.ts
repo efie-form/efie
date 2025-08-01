@@ -27,7 +27,6 @@ export function useFormBuilder() {
 
   const handleSchemaChange = (newSchema: FormSchema) => {
     setSchema(newSchema);
-    console.log('Schema changed:', newSchema);
   };
 
   const handleGetSchema = async (formBuilderRef: React.RefObject<FormBuilderRef>) => {
