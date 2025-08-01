@@ -24,12 +24,9 @@ export default class Client {
 
   private setupMessageListener() {
     window.addEventListener('message', (event) => {
-      // Only listen to messages from the iframe
-      if (event.origin !== window.location.origin) return;
-
+      // Check if the message is from our iframe by source property instead of origin
       const data: MessageData = event.data;
       if (data.source !== 'efie-form-builder') return;
-      console.log('Client: Received message:', data);
 
       switch (data.type) {
         case 'IFRAME_READY':
@@ -37,7 +34,6 @@ export default class Client {
           this.processMessageQueue();
           break;
         case 'SCHEMA_CHANGED':
-          console.log('Client: Schema changed:', data.payload);
           if (this.onSchemaChange && data.payload) {
             this.onSchemaChange(data.payload as FormSchema);
           }

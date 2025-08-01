@@ -33,9 +33,7 @@ function App() {
             height={height}
             inputNonReusable={false}
             maxHistories={25}
-            onSchemaChange={(newSchema) => {
-              console.log('11 Schema changed:', newSchema);
-            }}
+            onSchemaChange={handleSchemaChange}
             iframeSrc="http://localhost:3074"
             formInputs={FORM_INPUTS}
           />

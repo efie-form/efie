@@ -39,7 +39,6 @@ export default class Builder {
       if (event.source !== window.parent) return;
 
       const data: MessageData = event.data;
-      console.log('Builder: Received message:', data);
 
       switch (data.type) {
         case 'SET_SCHEMA':
@@ -89,36 +88,27 @@ export default class Builder {
   }
 
   private handleGetSchema() {
-    console.log('Builder: Handling GET_SCHEMA request');
     if (this.builderInterface) {
       const schema = this.builderInterface.getSchema();
-      console.log('Builder: Got schema:', schema);
       this.postMessage({
         type: 'GET_SCHEMA_RESPONSE',
         payload: schema,
       });
-      console.log('Builder: Sent schema response');
-    } else {
-      console.log('Builder: No builderInterface available');
     }
   }
 
   private notifySchemaChange(schema: FormSchema) {
-    console.log('Builder: Notifying schema change:', schema);
     this.postMessage({
       type: 'SCHEMA_CHANGED',
       payload: schema,
     });
 
-    console.log('Builder: Schema change notification sent', this.onSchemaChange);
     if (this.onSchemaChange) {
-      console.log('Builder: Calling onSchemaChange callback');
       this.onSchemaChange(schema);
     }
   }
 
   private postMessage(message: MessageData) {
-    console.log('Builder: Posting message:', message);
     window.parent.postMessage(
       {
         ...message,
@@ -135,7 +125,6 @@ export default class Builder {
 
   // Method to be called when schema changes in the builder
   onBuilderSchemaChange(schema: FormSchema) {
-    console.log('notifySchemaChange called with schema:', schema);
     this.notifySchemaChange(schema);
   }
 
