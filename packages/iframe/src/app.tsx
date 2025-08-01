@@ -8,7 +8,6 @@ function App() {
 
   // Watch for schema changes with useCallback to prevent unnecessary re-renders
   const handleSchemaChange = useCallback((schema: FormSchema) => {
-    console.log('Schema changed in iframe:', schema);
     if (builderRef.current) {
       builderRef.current.onBuilderSchemaChange(schema);
     }

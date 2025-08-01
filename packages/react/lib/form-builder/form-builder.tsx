@@ -52,6 +52,7 @@ const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
 
     useEffect(() => {
       // Initialize the Client for communication with iframe
+      console.log('FormBuilder: Initializing client');
       const client = new Client({
         onSchemaChange,
       });

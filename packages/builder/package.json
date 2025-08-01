@@ -44,8 +44,9 @@
   },
   "scripts": {
     "build": "pnpm tw:build && tsup",
-    "dev": "tsup --watch",
+    "dev": "pnpm tw:dev & tsup --watch",
     "tw": "tailwindcss -i src/styles/input.css -o src/styles/output.css --watch",
+    "tw:dev": "tailwindcss -i src/styles/input.css -o src/styles/output.css --watch",
     "tw:build": "tailwindcss -i src/styles/input.css -o src/styles/output.css --minify",
     "test": "jest",
     "test:watch": "jest --watch",

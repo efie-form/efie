@@ -81,7 +81,7 @@ export default class Builder {
 
   private notifyReady() {
     // Send ready message to parent
-    window.parent.postMessage({ type: 'IFRAME_READY' }, '*');
+    this.postMessage({ type: 'IFRAME_READY' });
 
     if (this.onReady) {
       this.onReady();
@@ -93,13 +93,10 @@ export default class Builder {
     if (this.builderInterface) {
       const schema = this.builderInterface.getSchema();
       console.log('Builder: Got schema:', schema);
-      window.parent.postMessage(
-        {
-          type: 'GET_SCHEMA_RESPONSE',
-          payload: schema,
-        },
-        '*',
-      );
+      this.postMessage({
+        type: 'GET_SCHEMA_RESPONSE',
+        payload: schema,
+      });
       console.log('Builder: Sent schema response');
     } else {
       console.log('Builder: No builderInterface available');
@@ -107,17 +104,28 @@ export default class Builder {
   }
 
   private notifySchemaChange(schema: FormSchema) {
+    console.log('Builder: Notifying schema change:', schema);
+    this.postMessage({
+      type: 'SCHEMA_CHANGED',
+      payload: schema,
+    });
+
+    console.log('Builder: Schema change notification sent', this.onSchemaChange);
+    if (this.onSchemaChange) {
+      console.log('Builder: Calling onSchemaChange callback');
+      this.onSchemaChange(schema);
+    }
+  }
+
+  private postMessage(message: MessageData) {
+    console.log('Builder: Posting message:', message);
     window.parent.postMessage(
       {
-        type: 'SCHEMA_CHANGED',
-        payload: schema,
+        ...message,
+        source: 'efie-form-builder',
       },
       '*',
     );
-
-    if (this.onSchemaChange) {
-      this.onSchemaChange(schema);
-    }
   }
 
   // Method to be called by the form builder when it's initialized
@@ -127,6 +135,7 @@ export default class Builder {
 
   // Method to be called when schema changes in the builder
   onBuilderSchemaChange(schema: FormSchema) {
+    console.log('notifySchemaChange called with schema:', schema);
     this.notifySchemaChange(schema);
   }
 

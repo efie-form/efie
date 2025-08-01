@@ -1,138 +1,47 @@
-import type { FormBuilderRef, FormSchema } from '@efie-form/react';
-import { FieldType, FormBuilder } from '@efie-form/react';
-import { useEffect, useRef, useState } from 'react';
+import type { FormBuilderRef } from '@efie-form/react';
+import { FormBuilder } from '@efie-form/react';
+import { useRef, useState } from 'react';
+
+import { AdminLayout, AdminLayoutMain, MainContent, Sidebar, TopBar } from './components';
+import { FORM_INPUTS, MENU_ITEMS } from './constants/menu-items';
+import { useFormBuilder } from './hooks/use-form-builder';
 
 function App() {
-  const [schema, setSchema] = useState<FormSchema | undefined>();
   const formBuilderRef = useRef<FormBuilderRef>(null);
-  const [height, setHeight] = useState(window.innerHeight); // Leave some space for controls
+  const [activeMenuItem, setActiveMenuItem] = useState('form-builder');
 
-  useEffect(() => {
-    let resizeTimeout: number;
-    const handleResize = () => {
-      clearTimeout(resizeTimeout);
-      resizeTimeout = setTimeout(() => {
-        setHeight(window.innerHeight - 100);
-      }, 100);
-    };
-
-    handleResize();
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      clearTimeout(resizeTimeout);
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
-  const handleSchemaChange = (newSchema: FormSchema) => {
-    setSchema(newSchema);
-    console.log('Schema changed:', newSchema);
-  };
-
-  const handleGetSchema = async () => {
-    if (formBuilderRef.current) {
-      try {
-        const currentSchema = await formBuilderRef.current.getSchema();
-        console.log('Current schema:', currentSchema);
-        alert('Check console for current schema');
-      } catch (error) {
-        console.error('Error getting schema:', error);
-      }
-    }
-  };
-
-  const handleSetSchema = () => {
-    if (formBuilderRef.current) {
-      const sampleSchema: FormSchema = {
-        version: 'v1',
-        form: {
-          fields: [
-            {
-              id: 'page1',
-              type: FieldType.PAGE,
-              children: [
-                {
-                  id: 'field1',
-                  type: FieldType.SHORT_TEXT,
-                  form: {
-                    name: 'sample_field',
-                  },
-                  props: [
-                    {
-                      type: 'label',
-                      value: 'Sample Text Field',
-                    },
-                  ],
-                },
-              ],
-              props: [
-                {
-                  type: 'page_name',
-                  value: 'Sample Page',
-                },
-              ],
-            },
-          ],
-          rules: [],
-        },
-      };
-      formBuilderRef.current.setSchema(sampleSchema);
-    }
-  };
+  const { schema, height, handleSchemaChange, handleGetSchema, handleSetSchema, handleSaveSchema } =
+    useFormBuilder();
 
   return (
-    <div style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
-      {/* Controls */}
-      <div
-        style={{
-          padding: '10px',
-          borderBottom: '1px solid #ccc',
-          display: 'flex',
-          gap: '10px',
-          alignItems: 'center',
-        }}
-      >
-        <button type="button" onClick={handleGetSchema}>
-          Get Schema
-        </button>
-        <button type="button" onClick={handleSetSchema}>
-          Set Sample Schema
-        </button>
-        <span style={{ marginLeft: 'auto', fontSize: '14px', color: '#666' }}>
-          Height: {height}px | Schema loaded: {schema ? 'Yes' : 'No'}
-        </span>
-      </div>
+    <AdminLayout>
+      <TopBar onSave={() => handleSaveSchema(formBuilderRef)} />
 
-      {/* Form Builder */}
-      <div style={{ flex: 1 }}>
-        <FormBuilder
-          ref={formBuilderRef}
-          height={height}
-          inputNonReusable={false}
-          maxHistories={25}
-          onSchemaChange={handleSchemaChange}
-          iframeSrc="http://localhost:3074"
-          formInputs={[
-            {
-              id: 'long_text',
-              label: 'Short Text',
-              type: FieldType.SHORT_TEXT,
-            },
-            {
-              id: 'multiple_choices',
-              label: 'Long Text',
-              type: FieldType.LONG_TEXT,
-            },
-            {
-              id: 'fd123',
-              label: 'Number',
-              type: FieldType.NUMBER,
-            },
-          ]}
+      <AdminLayoutMain>
+        <Sidebar
+          menuItems={MENU_ITEMS}
+          activeMenuItem={activeMenuItem}
+          onMenuItemChange={setActiveMenuItem}
+          onGetSchema={() => handleGetSchema(formBuilderRef)}
+          onSetSchema={() => handleSetSchema(formBuilderRef)}
+          hasSchema={!!schema}
         />
-      </div>
-    </div>
+
+        <MainContent activeMenuItem={activeMenuItem} menuItems={MENU_ITEMS}>
+          <FormBuilder
+            ref={formBuilderRef}
+            height={height}
+            inputNonReusable={false}
+            maxHistories={25}
+            onSchemaChange={(newSchema) => {
+              console.log('11 Schema changed:', newSchema);
+            }}
+            iframeSrc="http://localhost:3074"
+            formInputs={FORM_INPUTS}
+          />
+        </MainContent>
+      </AdminLayoutMain>
+    </AdminLayout>
   );
 }
 

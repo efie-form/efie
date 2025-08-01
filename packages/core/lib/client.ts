@@ -6,6 +6,7 @@ interface BuilderProps {
 }
 
 interface MessageData {
+  source: string;
   type: string;
   payload?: unknown;
 }
@@ -16,6 +17,7 @@ export default class Client {
   private isConnected = false;
 
   constructor(props: BuilderProps) {
+    console.log('Client: Initializing with props:', props);
     this.onSchemaChange = props.onSchemaChange;
     this.setupMessageListener();
   }
@@ -26,6 +28,8 @@ export default class Client {
       if (event.origin !== window.location.origin) return;
 
       const data: MessageData = event.data;
+      if (data.source !== 'efie-form-builder') return;
+      console.log('Client: Received message:', data);
 
       switch (data.type) {
         case 'IFRAME_READY':
@@ -33,6 +37,7 @@ export default class Client {
           this.processMessageQueue();
           break;
         case 'SCHEMA_CHANGED':
+          console.log('Client: Schema changed:', data.payload);
           if (this.onSchemaChange && data.payload) {
             this.onSchemaChange(data.payload as FormSchema);
           }
@@ -58,10 +63,10 @@ export default class Client {
   }
 
   private sendMessage(type: string, payload?: unknown) {
-    const message: MessageData = { type, payload };
-    console.log('Client: Sending message:', message);
+    const message: MessageData = { type, payload, source: 'efie-form-builder' };
 
     if (this.isConnected) {
+      console.log('Client: Sending message:', message);
       this.postMessage(message);
     } else {
       console.log('Client: Not connected, queuing message');
