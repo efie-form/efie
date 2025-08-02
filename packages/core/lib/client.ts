@@ -9,37 +9,67 @@ interface MessageData {
   source: string;
   type: string;
   payload?: unknown;
+  requestId?: string;
 }
 
 export default class Client {
   private onSchemaChange?: (schema: FormSchema) => void;
   private messageQueue: MessageData[] = [];
   private isConnected = false;
+  private messageHandler: (event: MessageEvent) => void;
+  private pendingSchemaRequests = new Map<
+    string,
+    {
+      resolve: (schema: FormSchema) => void;
+      reject: (error: Error) => void;
+      timeout: ReturnType<typeof setTimeout>;
+    }
+  >();
+  private requestCounter = 0;
 
   constructor(props: BuilderProps) {
     this.onSchemaChange = props.onSchemaChange;
+    this.messageHandler = this.handleMessage.bind(this);
     this.setupMessageListener();
   }
 
-  private setupMessageListener() {
-    window.addEventListener('message', (event) => {
-      // Check if the message is from our iframe by source property instead of origin
-      const data: MessageData = event.data;
-      if (data.source !== 'efie-form-builder') return;
+  private handleMessage(event: MessageEvent) {
+    // Check if the message is from our iframe by source property instead of origin
+    const data: MessageData = event.data;
+    if (data.source !== 'efie-form-builder') return;
 
-      switch (data.type) {
-        case 'IFRAME_READY':
-          this.isConnected = true;
-          this.processMessageQueue();
-          break;
-        case 'SCHEMA_CHANGED':
-          console.log('Client: Schema changed:', data.payload);
-          if (this.onSchemaChange && data.payload) {
-            this.onSchemaChange(data.payload as FormSchema);
-          }
-          break;
-      }
-    });
+    switch (data.type) {
+      case 'IFRAME_READY':
+        console.log('Client: Iframe is ready');
+        this.isConnected = true;
+        this.processMessageQueue();
+        break;
+      case 'SCHEMA_CHANGED':
+        console.log('Client: Schema changed:', data.payload);
+        if (this.onSchemaChange && data.payload) {
+          this.onSchemaChange(data.payload as FormSchema);
+        }
+        break;
+      case 'GET_SCHEMA_RESPONSE':
+        this.handleSchemaResponse(data);
+        break;
+    }
+  }
+
+  private handleSchemaResponse(data: MessageData) {
+    const requestId = data.requestId || 'default';
+    const pendingRequest = this.pendingSchemaRequests.get(requestId);
+
+    if (pendingRequest) {
+      console.log('Client: Received schema response:', data.payload);
+      clearTimeout(pendingRequest.timeout);
+      this.pendingSchemaRequests.delete(requestId);
+      pendingRequest.resolve(data.payload as FormSchema);
+    }
+  }
+
+  private setupMessageListener() {
+    window.addEventListener('message', this.messageHandler);
   }
 
   private processMessageQueue() {
@@ -58,8 +88,11 @@ export default class Client {
     }
   }
 
-  private sendMessage(type: string, payload?: unknown) {
+  private sendMessage(type: string, payload?: unknown, requestId?: string) {
     const message: MessageData = { type, payload, source: 'efie-form-builder' };
+    if (requestId) {
+      message.requestId = requestId;
+    }
 
     if (this.isConnected) {
       console.log('Client: Sending message:', message);
@@ -76,23 +109,20 @@ export default class Client {
   getSchema(): Promise<FormSchema> {
     console.log('Client: Requesting schema from iframe');
     return new Promise((resolve, reject) => {
+      const requestId = `schema-request-${++this.requestCounter}`;
+
       const timeout = setTimeout(() => {
-        window.removeEventListener('message', handleMessage);
+        this.pendingSchemaRequests.delete(requestId);
         reject(new Error('Timeout waiting for schema response'));
       }, 5000); // 5 second timeout
 
-      const handleMessage = (event: MessageEvent) => {
-        console.log('Client: Received message:', event.data);
-        if (event.data.type === 'GET_SCHEMA_RESPONSE') {
-          clearTimeout(timeout);
-          window.removeEventListener('message', handleMessage);
-          console.log('Client: Received schema response:', event.data.payload);
-          resolve(event.data.payload);
-        }
-      };
+      this.pendingSchemaRequests.set(requestId, {
+        resolve,
+        reject,
+        timeout,
+      });
 
-      window.addEventListener('message', handleMessage);
-      this.sendMessage('GET_SCHEMA');
+      this.sendMessage('GET_SCHEMA', undefined, requestId);
     });
   }
 
@@ -118,7 +148,16 @@ export default class Client {
 
   destroy() {
     // Clean up any listeners or resources
+    window.removeEventListener('message', this.messageHandler);
+
+    // Clear any pending schema requests
+    for (const [, request] of this.pendingSchemaRequests) {
+      clearTimeout(request.timeout);
+      request.reject(new Error('Client destroyed while request was pending'));
+    }
+
     this.isConnected = false;
     this.messageQueue = [];
+    this.pendingSchemaRequests.clear();
   }
 }
