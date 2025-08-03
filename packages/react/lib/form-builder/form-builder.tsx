@@ -1,4 +1,4 @@
-import { Client, type CustomInputDef, type FormSchema } from '@efie-form/core';
+import { Client, type CustomInputDef, type FormSchema, getDefaultSchema } from '@efie-form/core';
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 
 const DIV_ID = 'efie-form-builder';
@@ -6,18 +6,14 @@ const DIV_ID = 'efie-form-builder';
 interface FormBuilderProps {
   height: number;
   formInputs?: CustomInputDef[];
-  schema?: FormSchema;
   formKeyNonEditable?: boolean;
   inputNonReusable?: boolean;
   maxHistories?: number;
-  onSchemaChange?: (schema: FormSchema) => void;
-  iframeSrc?: string;
 }
 
 export interface FormBuilderRef {
-  getSchema: () => Promise<FormSchema>;
+  getSchema: () => FormSchema;
   setSchema: (schema: FormSchema) => void;
-  isReady: () => boolean;
 }
 
 const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
@@ -25,41 +21,31 @@ const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
     {
       height,
       formInputs = [],
-      schema,
       formKeyNonEditable = false,
       inputNonReusable = false,
       maxHistories = 50,
-      onSchemaChange,
-      iframeSrc = 'http://localhost:3074', // Default iframe src
     },
     ref,
   ) => {
     const clientRef = useRef<Client | null>(null);
+    const [schema, setSchema] = useState<FormSchema>(getDefaultSchema('v1'));
     const [isIframeLoaded, setIsIframeLoaded] = useState(false);
 
     useImperativeHandle(ref, () => ({
-      getSchema: async () => {
-        if (clientRef.current) {
-          return await clientRef.current.getSchema();
-        }
-        throw new Error('Form builder not initialized');
-      },
+      getSchema: () => schema,
       setSchema: (newSchema: FormSchema) => {
-        if (clientRef.current) {
-          clientRef.current.setSchema(newSchema);
-        }
-      },
-      isReady: () => {
-        return clientRef.current?.isReady() ?? false;
+        if (!clientRef.current) return;
+        clientRef.current.setSchema(newSchema);
+        setSchema(newSchema);
       },
     }));
 
     useEffect(() => {
-      // Initialize the Client for communication with iframe
-      console.log('FormBuilder: Initializing client');
       const client = new Client({
-        onSchemaChange,
         onReady,
+        onSchemaChange: (newSchema) => {
+          setSchema(newSchema);
+        },
       });
 
       clientRef.current = client;
@@ -68,7 +54,7 @@ const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
         client.cleanup();
         clientRef.current = null;
       };
-    }, [onSchemaChange]);
+    }, []);
 
     // Update height when it changes
     useEffect(() => {
@@ -121,7 +107,7 @@ const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
       >
         <iframe
           id={DIV_ID}
-          src={iframeSrc}
+          src="http://localhost:3074"
           style={{
             width: '100%',
             height: '100%',

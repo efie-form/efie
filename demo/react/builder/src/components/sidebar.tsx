@@ -12,7 +12,6 @@ interface SidebarProps {
   onMenuItemChange: (itemId: string) => void;
   onGetSchema: () => void;
   onSetSchema: () => void;
-  hasSchema: boolean;
 }
 
 export function Sidebar({
@@ -21,7 +20,6 @@ export function Sidebar({
   onMenuItemChange,
   onGetSchema,
   onSetSchema,
-  hasSchema,
 }: SidebarProps) {
   const sidebarStyle: CSSProperties = {
     width: '240px',
@@ -67,11 +65,6 @@ export function Sidebar({
     border: '1px solid #d1d5db',
     borderRadius: '4px',
     cursor: 'pointer',
-  };
-
-  const statusStyle: CSSProperties = {
-    fontSize: '11px',
-    color: '#6b7280',
   };
 
   return (
@@ -123,7 +116,6 @@ export function Sidebar({
             Set Sample
           </button>
         </div>
-        <div style={statusStyle}>Schema: {hasSchema ? '✅ Loaded' : '❌ Empty'}</div>
       </div>
     </div>
   );

@@ -10,8 +10,7 @@ function App() {
   const formBuilderRef = useRef<FormBuilderRef>(null);
   const [activeMenuItem, setActiveMenuItem] = useState('form-builder');
 
-  const { schema, height, handleSchemaChange, handleGetSchema, handleSetSchema, handleSaveSchema } =
-    useFormBuilder();
+  const { height, handleGetSchema, handleSetSchema, handleSaveSchema } = useFormBuilder();
 
   return (
     <AdminLayout>
@@ -24,7 +23,6 @@ function App() {
           onMenuItemChange={setActiveMenuItem}
           onGetSchema={() => handleGetSchema(formBuilderRef)}
           onSetSchema={() => handleSetSchema(formBuilderRef)}
-          hasSchema={!!schema}
         />
 
         <MainContent activeMenuItem={activeMenuItem} menuItems={MENU_ITEMS}>
@@ -34,8 +32,6 @@ function App() {
             inputNonReusable={false}
             formKeyNonEditable={false}
             maxHistories={25}
-            onSchemaChange={handleSchemaChange}
-            iframeSrc="http://localhost:3074"
             formInputs={FORM_INPUTS}
           />
         </MainContent>

@@ -142,6 +142,7 @@ export type {
   FieldsConfigsMap,
 } from './types/settings-config';
 export { getColorObject, hslaToHex, rgbaToHex } from './utils/colors';
+export { default as getDefaultSchema } from './utils/default-schema/get-default-schema';
 export {
   borderRadiusToStyle,
   boxShadowToStyle,
