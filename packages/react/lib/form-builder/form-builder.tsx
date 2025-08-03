@@ -59,39 +59,16 @@ const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
       console.log('FormBuilder: Initializing client');
       const client = new Client({
         onSchemaChange,
+        onReady,
       });
 
       clientRef.current = client;
 
       return () => {
-        client.destroy();
+        client.cleanup();
         clientRef.current = null;
       };
     }, [onSchemaChange]);
-
-    useEffect(() => {
-      if (isIframeLoaded && clientRef.current) {
-        // Set initial configuration
-        clientRef.current.setHeight(height);
-        clientRef.current.setFormInputs(formInputs);
-        clientRef.current.setFieldNameEditable(!formKeyNonEditable);
-        clientRef.current.setInputReusable(!inputNonReusable);
-        clientRef.current.setMaxHistories(maxHistories);
-
-        // Set initial schema if provided
-        if (schema) {
-          clientRef.current.setSchema(schema);
-        }
-      }
-    }, [
-      isIframeLoaded,
-      height,
-      formInputs,
-      schema,
-      formKeyNonEditable,
-      inputNonReusable,
-      maxHistories,
-    ]);
 
     // Update height when it changes
     useEffect(() => {
@@ -110,6 +87,29 @@ const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
     const handleIframeLoad = () => {
       setIsIframeLoaded(true);
     };
+
+    useEffect(() => {
+      if (isIframeLoaded && clientRef.current) {
+        console.log('FormBuilder: Setting field name editable state');
+        clientRef.current.setFieldNameEditable(!formKeyNonEditable);
+      }
+    }, [formKeyNonEditable]);
+
+    function onReady() {
+      console.log('FormBuilder: Iframe is ready');
+      if (!clientRef.current) return;
+
+      clientRef.current.setHeight(height);
+      clientRef.current.setFormInputs(formInputs);
+      clientRef.current.setFieldNameEditable(!formKeyNonEditable);
+      clientRef.current.setInputReusable(!inputNonReusable);
+      clientRef.current.setMaxHistories(maxHistories);
+
+      // Set initial schema if provided
+      if (schema) {
+        clientRef.current.setSchema(schema);
+      }
+    }
 
     return (
       <div

@@ -33,7 +33,7 @@ function App() {
 
     return () => {
       if (builderRef.current) {
-        builderRef.current.destroy();
+        // builderRef.current.destroy();
         builderRef.current = undefined;
       }
     };

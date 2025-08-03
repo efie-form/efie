@@ -32,6 +32,7 @@ function App() {
             ref={formBuilderRef}
             height={height}
             inputNonReusable={false}
+            formKeyNonEditable={false}
             maxHistories={25}
             onSchemaChange={handleSchemaChange}
             iframeSrc="http://localhost:3074"
