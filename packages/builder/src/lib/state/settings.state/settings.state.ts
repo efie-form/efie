@@ -73,7 +73,6 @@ export const useSettingsStore = create<SettingsState>((set) => ({
   },
   fieldNameEditable: true,
   setFieldNameEditable: (fieldNameEditable) => {
-    console.log('Setting field name editable:', fieldNameEditable);
     set({ fieldNameEditable });
   },
   isInputReusable: true,

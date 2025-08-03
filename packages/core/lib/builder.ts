@@ -35,7 +35,6 @@ export default class Builder {
   }
 
   private setupMessageListener() {
-    console.log('Builder: Setting up message listener');
     window.addEventListener('message', (event) => {
       // Only listen to messages from the parent window
       if (event.source !== window.parent) return;

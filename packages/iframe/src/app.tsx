@@ -21,9 +21,7 @@ function App() {
 
     // Initialize the Builder class for iframe communication
     const builder = new Builder({
-      onReady: () => {
-        console.log('Form builder iframe is ready');
-      },
+      onReady: () => {},
     });
 
     // Connect the builder interface

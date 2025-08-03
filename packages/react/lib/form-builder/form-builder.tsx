@@ -76,13 +76,11 @@ const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
 
     useEffect(() => {
       if (isIframeLoaded && clientRef.current) {
-        console.log('FormBuilder: Setting field name editable state');
         clientRef.current.setFieldNameEditable(!formKeyNonEditable);
       }
     }, [formKeyNonEditable]);
 
     function onReady() {
-      console.log('FormBuilder: Iframe is ready');
       if (!clientRef.current) return;
 
       clientRef.current.setHeight(height);
