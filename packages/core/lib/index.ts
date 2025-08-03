@@ -142,6 +142,8 @@ export type {
   FieldsConfigsMap,
 } from './types/settings-config';
 export { getColorObject, hslaToHex, rgbaToHex } from './utils/colors';
+export type { IframeUrlConfig } from './utils/get-iframe-url';
+export { default as getIframeUrl } from './utils/get-iframe-url';
 export {
   borderRadiusToStyle,
   boxShadowToStyle,

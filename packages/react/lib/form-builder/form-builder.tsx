@@ -17,6 +17,7 @@ interface FormBuilderProps {
 export interface FormBuilderRef {
   getSchema: () => Promise<FormSchema>;
   setSchema: (schema: FormSchema) => void;
+  isReady: () => boolean;
 }
 
 const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
@@ -47,6 +48,9 @@ const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
         if (clientRef.current) {
           clientRef.current.setSchema(newSchema);
         }
+      },
+      isReady: () => {
+        return clientRef.current?.isReady() ?? false;
       },
     }));
 

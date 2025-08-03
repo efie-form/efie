@@ -40,12 +40,10 @@ export default class Client {
 
     switch (data.type) {
       case 'IFRAME_READY':
-        console.log('Client: Iframe is ready');
         this.isConnected = true;
         this.processMessageQueue();
         break;
       case 'SCHEMA_CHANGED':
-        console.log('Client: Schema changed:', data.payload);
         if (this.onSchemaChange && data.payload) {
           this.onSchemaChange(data.payload as FormSchema);
         }
@@ -84,7 +82,8 @@ export default class Client {
   private postMessage(data: MessageData) {
     const iframe = document.getElementById('efie-form-builder') as HTMLIFrameElement;
     if (iframe?.contentWindow) {
-      iframe.contentWindow.postMessage(data, window.location.origin);
+      // TODO: better way to handle origin?
+      iframe.contentWindow.postMessage(data, 'http://localhost:3074');
     }
   }
 
@@ -98,7 +97,6 @@ export default class Client {
       console.log('Client: Sending message:', message);
       this.postMessage(message);
     } else {
-      console.log('Client: Not connected, queuing message');
       this.messageQueue.push(message);
     }
   } // Public API methods
@@ -109,6 +107,16 @@ export default class Client {
   getSchema(): Promise<FormSchema> {
     console.log('Client: Requesting schema from iframe');
     return new Promise((resolve, reject) => {
+      // Check if client is connected, if not, reject immediately with a more specific error
+      if (!this.isConnected) {
+        reject(
+          new Error(
+            'Client not connected to iframe. Please wait for the form builder to fully load.',
+          ),
+        );
+        return;
+      }
+
       const requestId = `schema-request-${++this.requestCounter}`;
 
       const timeout = setTimeout(() => {
@@ -144,6 +152,10 @@ export default class Client {
 
   setMaxHistories(maxHistories: number) {
     this.sendMessage('SET_MAX_HISTORIES', maxHistories);
+  }
+
+  isReady(): boolean {
+    return this.isConnected;
   }
 
   destroy() {
