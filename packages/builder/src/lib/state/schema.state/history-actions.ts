@@ -1,5 +1,4 @@
 import type { FormSchema } from '@efie-form/core';
-import defaultSchema from '../../default-schema';
 import type { StateSetters } from './types';
 import { debounce, getFieldInfoMap } from './utils';
 
@@ -20,7 +19,7 @@ export interface SchemaStateHistory {
 
 export function createHistoryActions({ set, getState }: StateSetters): SchemaStateHistory {
   return {
-    histories: [JSON.stringify(defaultSchema)],
+    histories: [],
     totalHistories: 1,
     currentHistoryIndex: 0,
 

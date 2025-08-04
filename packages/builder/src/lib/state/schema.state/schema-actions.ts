@@ -37,7 +37,7 @@ export function createSchemaActions({ set, getState }: StateSetters) {
       const { fieldKeyMap, fieldMap, fieldParentMap } = getFieldInfoMap(fields);
       const newSchema = {
         ...schema,
-        form: { fields, rules: schema.form.rules },
+        form: { fields, rules: schema?.form.rules },
       };
 
       // Get current history state

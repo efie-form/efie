@@ -6,7 +6,7 @@ export function createLegacyActions({ getState }: StateSetters) {
     getPage: (pageId?: string): PageFormField | undefined => {
       if (!pageId) return;
       const { schema } = getState();
-      return schema.form.fields
+      return schema?.form.fields
         .filter((field) => field.type === FieldType.PAGE)
         .find((field) => field.id === pageId) as PageFormField | undefined;
     },

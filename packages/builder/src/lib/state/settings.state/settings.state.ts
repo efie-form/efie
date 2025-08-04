@@ -1,7 +1,6 @@
 import type { CustomInputDef, FieldsConfigsMap } from '@efie-form/core';
 import { create } from 'zustand';
 import type { RightBarTab } from '../../constant';
-import defaultSchema from '../../default-schema';
 import settingsConfig from './settings-config';
 
 interface SettingsState {
@@ -56,12 +55,12 @@ export const useSettingsStore = create<SettingsState>((set) => ({
   setPreviewDevice: (previewDevice) => {
     set({ previewDevice });
   },
-  page: defaultSchema.form.fields[0].id,
+  page: undefined,
   setPage: (page) => {
     set({ page });
   },
   clearPage: () => {
-    set({ page: defaultSchema.form.fields[0].id });
+    set({ page: undefined });
   },
   activeTab: 'form',
   setActiveTab: (tab) => {

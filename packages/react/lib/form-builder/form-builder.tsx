@@ -80,6 +80,16 @@ const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
       }
     }, [formKeyNonEditable]);
 
+    useEffect(() => {
+      if (!isIframeLoaded || !clientRef.current) return;
+      clientRef.current.setMaxHistories(maxHistories);
+    }, [maxHistories]);
+
+    useEffect(() => {
+      if (!isIframeLoaded || !clientRef.current) return;
+      clientRef.current.setInputReusable(!inputNonReusable);
+    }, [inputNonReusable]);
+
     function onReady() {
       if (!clientRef.current) return;
 

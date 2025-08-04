@@ -1,9 +1,11 @@
 import type { CustomInputDef } from './types/builder-custom-input.type';
 import type { FormSchema } from './types/form-schema.type';
+import getDefaultSchema from './utils/default-schema/get-default-schema';
 
 interface IframeProps {
   onReady?: () => void;
   onSchemaChange?: (schema: FormSchema) => void;
+  builderInterface: BuilderInterface;
 }
 
 interface MessageData {
@@ -13,7 +15,7 @@ interface MessageData {
 }
 
 export interface BuilderInterface {
-  getSchema: () => FormSchema;
+  getSchema: () => FormSchema | undefined;
   resetSchema: (schema: FormSchema) => void;
   setFormInputs: (formInputs: CustomInputDef[]) => void;
   setHeight: (height: number) => void;
@@ -27,9 +29,12 @@ export default class Builder {
   private onSchemaChange?: (schema: FormSchema) => void;
   private builderInterface: BuilderInterface | null = null;
 
-  constructor({ onReady, onSchemaChange }: IframeProps) {
+  constructor(props: IframeProps) {
+    const { onReady, onSchemaChange, builderInterface } = props;
     this.onReady = onReady;
     this.onSchemaChange = onSchemaChange;
+    this.builderInterface = builderInterface;
+    this.loadDefaultSchema();
     this.setupMessageListener();
     this.notifyReady();
   }
@@ -102,13 +107,18 @@ export default class Builder {
     });
   }
 
+  private loadDefaultSchema() {
+    this.builderInterface?.resetSchema(getDefaultSchema('v1'));
+  }
+
   private notifyReady() {
     // Send ready message to parent
-    this.postMessage({ type: 'IFRAME_READY' });
 
     if (this.onReady) {
       this.onReady();
     }
+
+    this.postMessage({ type: 'IFRAME_READY' });
   }
 
   /**
@@ -149,12 +159,12 @@ export default class Builder {
     const errors: string[] = [];
 
     // Basic validation examples
-    if (!schema.form.fields || schema.form.fields.length === 0) {
+    if (!schema?.form.fields || schema.form.fields.length === 0) {
       errors.push('Schema must have at least one field');
     }
 
     // Validate each field has required properties
-    schema.form.fields?.forEach((field, index) => {
+    schema?.form.fields?.forEach((field, index) => {
       if (!field.type) {
         errors.push(`Field at index ${index} is missing type`);
       }
@@ -212,12 +222,12 @@ export default class Builder {
     const schema = this.builderInterface.getSchema();
     const fieldTypes: Record<string, number> = {};
 
-    schema.form.fields?.forEach((field) => {
+    schema?.form.fields?.forEach((field) => {
       fieldTypes[field.type] = (fieldTypes[field.type] || 0) + 1;
     });
 
     return {
-      totalFields: schema.form.fields?.length || 0,
+      totalFields: schema?.form.fields?.length || 0,
       fieldTypes,
     };
   }

@@ -21,11 +21,8 @@ function App() {
 
     // Initialize the Builder class for iframe communication
     const builder = new Builder({
-      onReady: () => {},
+      builderInterface: formBuilderInterface,
     });
-
-    // Connect the builder interface
-    builder.setBuilderInterface(formBuilderInterface);
 
     builderRef.current = builder;
 
