@@ -43,17 +43,18 @@ const packages = {
     watch: true,
     color: colors.magenta,
   },
-  '@efie-form/vue': {
-    path: 'packages/vue',
-    dependencies: ['@efie-form/core'],
-    watch: false, // Disabled by default as per build script
-    color: colors.cyan,
+  '@efie-form/iframe': {
+    path: 'packages/iframe',
+    dependencies: ['@efie-form/core', '@efie-form/builder'],
+    watch: false, // Vite-based, use separate dev script
+    command: 'dev', // Use vite dev instead of tsup watch
+    color: colors.yellow,
   },
 };
 
 class WatchManager {
   constructor(options = {}) {
-    this.includeVue = options.includeVue || false;
+    this.libOnly = options.libOnly || false;
     this.verbose = options.verbose || false;
     this.processes = new Map();
     this.fileWatchers = new Map(); // Track additional file watchers
@@ -81,16 +82,17 @@ class WatchManager {
   async start() {
     this.log('🚀 Starting tsup watch for Efie Form packages...', colors.bright);
 
-    if (this.includeVue) {
-      this.log('🎯 Including Vue package in watch', colors.yellow);
+    if (this.libOnly) {
+      this.log('📚 Watching only packages with lib folders', colors.yellow);
     }
 
     console.log(); // Empty line for better readability
 
     // Determine which packages to watch
     const packagesToWatch = Object.entries(packages).filter(([name, config]) => {
-      if (name === '@efie-form/vue' && !this.includeVue) {
-        return false;
+      if (this.libOnly) {
+        // Only watch packages that have lib folders (exclude iframe)
+        return config.watch && name !== '@efie-form/iframe';
       }
       return config.watch;
     });
@@ -479,13 +481,13 @@ ${colors.bright}Efie Form Watch Script${colors.reset}
 Usage: node scripts/watch.mjs [options]
 
 Options:
-  --all, --vue     Include Vue package in watch
+  --lib-only       Watch only packages with lib folders (excludes iframe)
   --verbose        Show verbose output including build logs
   --help           Show this help message
 
 Examples:
-  node scripts/watch.mjs              # Watch core packages
-  node scripts/watch.mjs --all        # Watch all packages including Vue
+  node scripts/watch.mjs              # Watch all lib packages (core, builder, react)
+  node scripts/watch.mjs --lib-only   # Watch only lib-based packages
   node scripts/watch.mjs --verbose    # Watch with verbose output
 
 Available packages:
@@ -503,11 +505,11 @@ if (args.has('--help') || args.has('-h')) {
   process.exit(0);
 }
 
-const includeVue = args.has('--vue') || args.has('--all');
+const libOnly = args.has('--lib-only');
 const verbose = args.has('--verbose') || args.has('-v');
 
 // Start the watch manager
-const manager = new WatchManager({ includeVue, verbose });
+const manager = new WatchManager({ libOnly, verbose });
 try {
   await manager.start();
 }

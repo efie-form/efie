@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import defaultSchema from '../../default-schema';
 import { createAccessMethods } from './access-methods';
 import { createFieldActions } from './field-actions';
 import { createFormDataActions } from './form-data-actions';
@@ -10,9 +9,8 @@ import { createSchemaActions } from './schema-actions';
 import type { SchemaState } from './types';
 import { getFieldInfoMap } from './utils';
 
-const fieldInfo = getFieldInfoMap(defaultSchema.form.fields);
-
 export const useSchemaStore = create<SchemaState>((set, getState) => {
+  const fieldInfo = getFieldInfoMap([]);
   const stateSetters = { set, getState };
 
   const schemaActions = createSchemaActions(stateSetters);
@@ -25,7 +23,7 @@ export const useSchemaStore = create<SchemaState>((set, getState) => {
 
   return {
     // Initial state
-    schema: defaultSchema,
+    schema: undefined,
     fieldParentMap: fieldInfo.fieldParentMap,
     fieldMap: fieldInfo.fieldMap,
     fieldKeyMap: fieldInfo.fieldKeyMap,

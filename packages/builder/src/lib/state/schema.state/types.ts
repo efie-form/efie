@@ -11,7 +11,7 @@ export interface SchemaState
     SchemaStateAccessMethods,
     SchemaStateFormDataActions,
     SchemaStatePropertyActions {
-  schema: FormSchema;
+  schema?: FormSchema;
   setSchema: (schema: FormSchema) => void;
   setFields: (fields: FormField[]) => void;
 

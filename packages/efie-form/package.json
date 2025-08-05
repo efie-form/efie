@@ -25,8 +25,7 @@
   "dependencies": {
     "@efie-form/core": "workspace:*",
     "@efie-form/builder": "workspace:*",
-    "@efie-form/react": "workspace:*",
-    "@efie-form/vue": "workspace:*"
+    "@efie-form/react": "workspace:*"
   },
   "publishConfig": {
     "access": "public"

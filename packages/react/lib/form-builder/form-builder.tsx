@@ -1,14 +1,11 @@
-import { type CustomInputDef, type FormSchema, Iframe } from '@efie-form/core';
-import type { RefObject } from 'react';
-import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
+import { Client, type CustomInputDef, type FormSchema, getDefaultSchema } from '@efie-form/core';
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 
 const DIV_ID = 'efie-form-builder';
 
 interface FormBuilderProps {
-  ref: RefObject<FormBuilderRef>;
   height: number;
   formInputs?: CustomInputDef[];
-  schema?: FormSchema;
   formKeyNonEditable?: boolean;
   inputNonReusable?: boolean;
   maxHistories?: number;
@@ -16,76 +13,122 @@ interface FormBuilderProps {
 
 export interface FormBuilderRef {
   getSchema: () => FormSchema;
+  setSchema: (schema: FormSchema) => void;
 }
 
 const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
-  ({ height, formInputs, schema, formKeyNonEditable, inputNonReusable, maxHistories }, ref) => {
-    const builderRef = useRef<Iframe | undefined>();
-    const containerRef = useRef<HTMLDivElement>(null);
+  (
+    {
+      height,
+      formInputs = [],
+      formKeyNonEditable = false,
+      inputNonReusable = false,
+      maxHistories = 50,
+    },
+    ref,
+  ) => {
+    const clientRef = useRef<Client | null>(null);
+    const [schema, setSchema] = useState<FormSchema>(getDefaultSchema('v1'));
+    const [isIframeLoaded, setIsIframeLoaded] = useState(false);
 
-    // Initialize Iframe once
+    useImperativeHandle(ref, () => ({
+      getSchema: () => schema,
+      setSchema: (newSchema: FormSchema) => {
+        if (!clientRef.current) return;
+        clientRef.current.setSchema(newSchema);
+        setSchema(newSchema);
+      },
+    }));
+
     useEffect(() => {
-      // Only create new instance if one doesn't exist
-      if (!builderRef.current && containerRef.current) {
-        builderRef.current = new Iframe({
-          id: DIV_ID,
-          formInputs,
-          height,
-          schema,
-          formKeyNonEditable,
-          inputNonReusable,
-          maxHistories,
-        });
-      }
-
-      // Cleanup only when component unmounts
-      return () => {
-        if (builderRef.current) {
-          // Clean up the iframe
-          const container = document.querySelector(`#${DIV_ID}`);
-          if (container) {
-            container.innerHTML = '';
-          }
-          builderRef.current = undefined;
-        }
-      };
-    }, [formInputs, height, schema, formKeyNonEditable, inputNonReusable, maxHistories]);
-
-    // Update height when prop changes
-    useEffect(() => {
-      if (builderRef.current) {
-        builderRef.current.setHeight(height);
-      }
-    }, [height]);
-
-    // Expose methods via ref
-    useImperativeHandle(
-      ref,
-      () => ({
-        getSchema: () => {
-          return builderRef.current?.getValue() as FormSchema;
+      const client = new Client({
+        onReady,
+        onSchemaChange: (newSchema) => {
+          setSchema(newSchema);
         },
-      }),
-      [],
-    );
+      });
+
+      clientRef.current = client;
+
+      return () => {
+        client.cleanup();
+        clientRef.current = null;
+      };
+    }, []);
+
+    // Update height when it changes
+    useEffect(() => {
+      if (isIframeLoaded && clientRef.current) {
+        clientRef.current.setHeight(height);
+      }
+    }, [height, isIframeLoaded]);
+
+    // Update form inputs when they change
+    useEffect(() => {
+      if (isIframeLoaded && clientRef.current) {
+        clientRef.current.setFormInputs(formInputs);
+      }
+    }, [formInputs, isIframeLoaded]);
+
+    const handleIframeLoad = () => {
+      setIsIframeLoaded(true);
+    };
 
     useEffect(() => {
-      if (!builderRef.current || !formInputs) return;
-      builderRef.current.setFormInputs(formInputs);
-    }, [formInputs]);
+      if (isIframeLoaded && clientRef.current) {
+        clientRef.current.setFieldNameEditable(!formKeyNonEditable);
+      }
+    }, [formKeyNonEditable]);
+
+    useEffect(() => {
+      if (!isIframeLoaded || !clientRef.current) return;
+      clientRef.current.setMaxHistories(maxHistories);
+    }, [maxHistories]);
+
+    useEffect(() => {
+      if (!isIframeLoaded || !clientRef.current) return;
+      clientRef.current.setInputReusable(!inputNonReusable);
+    }, [inputNonReusable]);
+
+    function onReady() {
+      if (!clientRef.current) return;
+
+      clientRef.current.setHeight(height);
+      clientRef.current.setFormInputs(formInputs);
+      clientRef.current.setFieldNameEditable(!formKeyNonEditable);
+      clientRef.current.setInputReusable(!inputNonReusable);
+      clientRef.current.setMaxHistories(maxHistories);
+
+      // Set initial schema if provided
+      if (schema) {
+        clientRef.current.setSchema(schema);
+      }
+    }
 
     return (
       <div
-        ref={containerRef}
-        id={DIV_ID}
         style={{
           height: `${height}px`,
           width: '100%',
           overflow: 'hidden',
         }}
-      />
+      >
+        <iframe
+          id={DIV_ID}
+          src="http://localhost:3074"
+          style={{
+            width: '100%',
+            height: '100%',
+            border: 'none',
+          }}
+          onLoad={handleIframeLoad}
+          title="Efie Form Builder"
+        />
+      </div>
     );
   },
 );
+
+FormBuilder.displayName = 'FormBuilder';
 
 export default FormBuilder;

@@ -6,6 +6,6 @@ export default function useWatchSchema(callback: (schema: FormSchema) => void) {
   const { schema } = useSchemaStore();
 
   useEffect(() => {
-    callback(schema);
+    if (schema) callback(schema);
   }, [callback, schema]);
 }

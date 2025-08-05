@@ -1,62 +1,38 @@
 import { FormBuilder, useFormBuilder, useWatchSchema } from '@efie-form/builder';
-import { Builder } from '@efie-form/core';
-import { useEffect, useRef } from 'react';
+import { Builder, type FormSchema } from '@efie-form/core';
+import { useCallback, useEffect, useRef } from 'react';
 
 function App() {
-  const editorRef = useRef<Builder | undefined>(undefined);
-  const {
-    getSchema,
-    setFormInputs,
-    resetSchema,
-    setHeight,
-    setFieldNameEditable,
-    setIsInputReusable,
-    setMaxHistories,
-  } = useFormBuilder();
+  const builderRef = useRef<Builder | undefined>(undefined);
+  const formBuilderInterface = useFormBuilder();
 
-  useWatchSchema((schema) => {
-    if (!editorRef.current) return;
+  // Watch for schema changes with useCallback to prevent unnecessary re-renders
+  const handleSchemaChange = useCallback((schema: FormSchema) => {
+    if (builderRef.current) {
+      builderRef.current.onBuilderSchemaChange(schema);
+    }
+  }, []);
 
-    editorRef.current.setValue(schema);
-  });
+  useWatchSchema(handleSchemaChange);
 
   useEffect(() => {
-    if (!editorRef.current) {
-      initializeFormBuilder();
-    }
+    // Only initialize once
+    if (builderRef.current) return;
+
+    // Initialize the Builder class for iframe communication
+    const builder = new Builder({
+      builderInterface: formBuilderInterface,
+    });
+
+    builderRef.current = builder;
 
     return () => {
-      editorRef.current = undefined;
+      if (builderRef.current) {
+        // builderRef.current.destroy();
+        builderRef.current = undefined;
+      }
     };
-  }, [initializeFormBuilder]);
-
-  function initializeFormBuilder() {
-    editorRef.current = new Builder({
-      onDataRequest: getSchema,
-      onDataReset: resetSchema,
-      onHeightChange: (height) => {
-        setHeight(height);
-      },
-      onFormInputsChange: (formInputs) => {
-        setFormInputs(formInputs);
-      },
-      onInitialized: ({
-        formInputs,
-        height,
-        schema,
-        formKeyNonEditable,
-        inputNonReusable,
-        maxHistories,
-      }) => {
-        setFormInputs(formInputs);
-        setHeight(height);
-        if (schema) resetSchema(schema);
-        if (formKeyNonEditable) setFieldNameEditable(false);
-        if (inputNonReusable) setIsInputReusable(false);
-        if (maxHistories) setMaxHistories(maxHistories);
-      },
-    });
-  }
+  }, []); // Empty dependency array - only run once
 
   return <FormBuilder />;
 }

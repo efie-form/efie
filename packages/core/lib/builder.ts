@@ -1,134 +1,129 @@
-import { EXTERNAL_MESSAGE_TYPE, INTERNAL_MESSAGE_TYPE } from './constants/message-types';
 import type { CustomInputDef } from './types/builder-custom-input.type';
 import type { FormSchema } from './types/form-schema.type';
+import getDefaultSchema from './utils/default-schema/get-default-schema';
 
-interface InitializedPayload {
-  schema: FormSchema;
-  formInputs: CustomInputDef[];
-  height: number;
-  formKeyNonEditable: boolean;
-  inputNonReusable: boolean;
-  maxHistories?: number;
+interface IframeProps {
+  onReady?: () => void;
+  onSchemaChange?: (schema: FormSchema) => void;
+  builderInterface: BuilderInterface;
 }
 
-interface BuilderProps {
-  onDataReset: (data: FormSchema) => void;
-  onDataRequest: () => FormSchema;
-  onHeightChange: (height: number) => void;
-  onFormInputsChange: (formInputs: CustomInputDef[]) => void;
-  onInitialized: (data: InitializedPayload) => void;
+interface MessageData {
+  type: string;
+  payload?: unknown;
+  requestId?: string;
+}
+
+export interface BuilderInterface {
+  getSchema: () => FormSchema | undefined;
+  resetSchema: (schema: FormSchema) => void;
+  setFormInputs: (formInputs: CustomInputDef[]) => void;
+  setHeight: (height: number) => void;
+  setFieldNameEditable: (editable: boolean) => void;
+  setIsInputReusable: (reusable: boolean) => void;
+  setMaxHistories: (maxHistories: number) => void;
 }
 
 export default class Builder {
-  isLoaded = false;
-  isInitialized = false;
-  onDataReset: ((data: FormSchema) => void) | undefined = undefined;
-  onDataRequest: (() => FormSchema) | undefined = undefined;
-  onHeightChange: ((height: number) => void) | undefined = undefined;
-  onFormInputsChange: ((formInputs: CustomInputDef[]) => void) | undefined = undefined;
+  private onReady?: () => void;
+  private onSchemaChange?: (schema: FormSchema) => void;
+  private builderInterface: BuilderInterface | null = null;
 
-  onInitialized: ((data: InitializedPayload) => void) | undefined = undefined;
-  isDataInitialized = false;
-
-  constructor(props: BuilderProps) {
-    this.onDataReset = props.onDataReset;
-    this.onDataRequest = props.onDataRequest;
-    this.onHeightChange = props.onHeightChange;
-    this.onFormInputsChange = props.onFormInputsChange;
-    this.onInitialized = props.onInitialized;
-    this.init();
+  constructor(props: IframeProps) {
+    const { onReady, onSchemaChange, builderInterface } = props;
+    this.onReady = onReady;
+    this.onSchemaChange = onSchemaChange;
+    this.builderInterface = builderInterface;
+    this.loadDefaultSchema();
+    this.setupMessageListener();
+    this.notifyReady();
   }
 
-  private init() {
-    if (globalThis.window === undefined) return;
-    if (this.isInitialized) return;
+  private setupMessageListener() {
+    window.addEventListener('message', (event) => {
+      // Only listen to messages from the parent window
+      if (event.source !== window.parent) return;
 
-    this.isInitialized = true;
-    window.addEventListener('message', (e) => {
-      this.dataResetHandler(e);
-      this.heightHandler(e);
-      this.formInputsHandler(e);
-      this.initializedHandler(e);
+      const data: MessageData = event.data;
+
+      switch (data.type) {
+        case 'SET_SCHEMA':
+          if (data.payload && this.builderInterface) {
+            this.builderInterface.resetSchema(data.payload as FormSchema);
+          }
+          break;
+        case 'SET_FORM_INPUTS':
+          if (data.payload && this.builderInterface) {
+            this.builderInterface.setFormInputs(data.payload as CustomInputDef[]);
+          }
+          break;
+        case 'SET_HEIGHT':
+          if (typeof data.payload === 'number' && this.builderInterface) {
+            this.builderInterface.setHeight(data.payload);
+          }
+          break;
+        case 'SET_FIELD_NAME_EDITABLE':
+          if (typeof data.payload === 'boolean' && this.builderInterface) {
+            this.builderInterface.setFieldNameEditable(data.payload);
+          }
+          break;
+        case 'SET_INPUT_REUSABLE':
+          if (typeof data.payload === 'boolean' && this.builderInterface) {
+            this.builderInterface.setIsInputReusable(data.payload);
+          }
+          break;
+        case 'SET_MAX_HISTORIES':
+          if (typeof data.payload === 'number' && this.builderInterface) {
+            this.builderInterface.setMaxHistories(data.payload);
+          }
+          break;
+      }
+    });
+  }
+
+  private loadDefaultSchema() {
+    this.builderInterface?.resetSchema(getDefaultSchema('v1'));
+  }
+
+  private notifyReady() {
+    // Send ready message to parent
+
+    this.onReady?.();
+
+    this.postMessage({ type: 'IFRAME_READY' });
+  }
+
+  private notifySchemaChange(schema: FormSchema) {
+    this.postMessage({
+      type: 'SCHEMA_CHANGED',
+      payload: schema,
     });
 
-    // Send INIT first to establish connection
-    // wait for the outer window to be ready and send the initialized event
-    this.postMessage(INTERNAL_MESSAGE_TYPE.LOADED);
+    this.onSchemaChange?.(schema);
   }
 
-  public setValue(value: FormSchema) {
-    if (globalThis.window === undefined || !this.isLoaded) return;
-    this.postMessage(INTERNAL_MESSAGE_TYPE.SET_DATA, value);
-  }
-
-  private initializedHandler(event: MessageEvent) {
-    if (event.data.type !== EXTERNAL_MESSAGE_TYPE.INIT_DATA || this.isDataInitialized) return;
-    this.isDataInitialized = true;
-    const payload = event.data.data as InitializedPayload;
-
-    if (payload.schema && this.onDataRequest) {
-      this.onDataRequest();
-    }
-
-    if (payload.formInputs && this.onFormInputsChange) {
-      this.onFormInputsChange(payload.formInputs);
-    }
-
-    if (payload.height && this.onHeightChange) {
-      this.onHeightChange(payload.height);
-    }
-
-    if (this.onInitialized) this.onInitialized(payload);
-  }
-
-  /**
-   * Handle the data reset event
-   *
-   * @param event - The event
-   * @returns void
-   */
-  private dataResetHandler(event: MessageEvent) {
-    if (event.data.type !== EXTERNAL_MESSAGE_TYPE.RESET_DATA) return;
-    if (this.onDataReset) this.onDataReset(event.data.data);
-  }
-
-  /**
-   * Handle the height event
-   *
-   * @param event - The event
-   * @returns void
-   */
-  private heightHandler(event: MessageEvent) {
-    if (event.data.type !== EXTERNAL_MESSAGE_TYPE.SET_HEIGHT) return;
-    if (this.onHeightChange) this.onHeightChange(event.data.data.height);
-  }
-
-  /**
-   * Handle the form inputs event
-   *
-   * @param event - The event
-   * @returns void
-   */
-  private formInputsHandler(event: MessageEvent) {
-    if (event.data.type !== EXTERNAL_MESSAGE_TYPE.SET_FORM_INPUTS) return;
-    if (this.onFormInputsChange) this.onFormInputsChange(event.data.data);
-  }
-
-  /**
-   * Send the message to the caller
-   *
-   * @param type - The type of the message
-   * @param data - The data of the message
-   * @returns void
-   */
-  private postMessage(type: string, data?: unknown) {
-    if (globalThis.window === undefined) return;
+  private postMessage(message: MessageData) {
     window.parent.postMessage(
       {
-        type,
-        data,
+        ...message,
+        source: 'efie-form-builder',
       },
       '*',
     );
+  }
+
+  // Method to be called by the form builder when it's initialized
+  setBuilderInterface(builderInterface: BuilderInterface) {
+    this.builderInterface = builderInterface;
+  }
+
+  // Method to be called when schema changes in the builder
+  onBuilderSchemaChange(schema: FormSchema) {
+    this.notifySchemaChange(schema);
+  }
+
+  destroy() {
+    // Clean up any listeners or resources
+    this.builderInterface = null;
   }
 }

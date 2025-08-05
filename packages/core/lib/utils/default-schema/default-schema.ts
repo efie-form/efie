@@ -1,6 +1,6 @@
-import { FieldType } from './constants/field-type';
-import { PropertyType } from './property-type';
-import type { FormSchema } from './types/form-schema.type';
+import { FieldType } from '../../constants/field-type';
+import { PropertyType } from '../../property-type';
+import type { FormSchema } from '../../types/form-schema.type';
 
 const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 

@@ -1,56 +1,42 @@
 import type { FormBuilderRef } from '@efie-form/react';
-import { FieldType, FormBuilder } from '@efie-form/react';
-import { useEffect, useRef, useState } from 'react';
+import { FormBuilder } from '@efie-form/react';
+import { useRef, useState } from 'react';
+
+import { AdminLayout, AdminLayoutMain, MainContent, Sidebar, TopBar } from './components';
+import { FORM_INPUTS, MENU_ITEMS } from './constants/menu-items';
+import { useFormBuilder } from './hooks/use-form-builder';
 
 function App() {
-  const [schema, setSchema] = useState();
   const formBuilderRef = useRef<FormBuilderRef>(null);
-  const [height, setHeight] = useState(window.innerHeight);
+  const [activeMenuItem, setActiveMenuItem] = useState('form-builder');
 
-  useEffect(() => {
-    let resizeTimeout: number;
-    const handleResize = () => {
-      clearTimeout(resizeTimeout);
-      resizeTimeout = setTimeout(() => {
-        setHeight(window.innerHeight);
-      }, 100);
-    };
-
-    handleResize();
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      clearTimeout(resizeTimeout);
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+  const { height, handleGetSchema, handleSetSchema, handleSaveSchema } = useFormBuilder();
 
   return (
-    <div>
-      <FormBuilder
-        ref={formBuilderRef}
-        height={height}
-        inputNonReusable
-        maxHistories={25}
-        formInputs={[
-          {
-            id: 'long_text',
-            label: 'Short Text',
-            type: FieldType.SHORT_TEXT,
-          },
-          {
-            id: 'multiple_choices',
-            label: 'Long Text',
-            type: FieldType.LONG_TEXT,
-          },
-          {
-            id: 'fd123',
-            label: 'Number',
-            type: FieldType.NUMBER,
-          },
-        ]}
-      />
-    </div>
+    <AdminLayout>
+      <TopBar onSave={() => handleSaveSchema(formBuilderRef)} />
+
+      <AdminLayoutMain>
+        <Sidebar
+          menuItems={MENU_ITEMS}
+          activeMenuItem={activeMenuItem}
+          onMenuItemChange={setActiveMenuItem}
+          onGetSchema={() => handleGetSchema(formBuilderRef)}
+          onSetSchema={() => handleSetSchema(formBuilderRef)}
+        />
+
+        <MainContent activeMenuItem={activeMenuItem} menuItems={MENU_ITEMS}>
+          <FormBuilder
+            ref={formBuilderRef}
+            height={height}
+            inputNonReusable={false}
+            formKeyNonEditable={false}
+            maxHistories={25}
+            formInputs={FORM_INPUTS}
+          />
+        </MainContent>
+      </AdminLayoutMain>
+    </AdminLayout>
   );
 }
 

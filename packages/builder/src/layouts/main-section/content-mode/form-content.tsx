@@ -49,7 +49,7 @@ function FormContent() {
                 parentId={selectedPage.id}
               />
             ))}
-            {!hasChildren && <EmptyArea parentId={selectedPage.id} />}
+            {!hasChildren && <EmptyArea key={selectedPage.id} parentId={selectedPage.id} />}
           </div>
           {hasChildren && (
             <div
