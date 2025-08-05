@@ -2,7 +2,6 @@
 
 export { createFieldActions } from './field-actions';
 export { createHistoryActions } from './history-actions';
-export { createLegacyActions } from './legacy-actions';
 export { createPropertyActions } from './property-actions';
 export { useSchemaStore } from './schema.state';
 // Action creators (for advanced usage)

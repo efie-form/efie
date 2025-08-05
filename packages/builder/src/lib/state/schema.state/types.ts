@@ -1,4 +1,4 @@
-import type { FormField, FormSchema, PageFormField } from '@efie-form/core';
+import type { FormField, FormSchema } from '@efie-form/core';
 import type { SchemaStateAccessMethods } from './access-methods';
 import type { SchemaStateFieldActions } from './field-actions';
 import type { SchemaStateFormDataActions } from './form-data-actions';
@@ -17,12 +17,6 @@ export interface SchemaState
 
   fieldMap: Map<string, FormField>;
   fieldKeyMap: Map<string, string>;
-
-  // Legacy methods (maintained for compatibility)
-  getPage: (pageId?: string) => PageFormField | undefined;
-  updatePages: (pages: FormField[]) => void;
-  replaceFieldChildren: (fieldId: string, children: FormField[]) => void;
-  deleteField: (fieldId: string) => void;
   fieldParentMap: Map<string, string>;
 }
 

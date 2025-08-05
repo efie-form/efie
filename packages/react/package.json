@@ -41,6 +41,7 @@
     "test": "vitest",
     "test:coverage": "vitest --coverage",
     "type-check": "tsc --noEmit",
+    "type-check:watch": "tsc --noEmit --watch",
     "type-check:react18": "tsc --project tsconfig.react18.json --noEmit",
     "type-check:react19": "tsc --project tsconfig.react19.json --noEmit",
     "type-check:all": "npm run type-check:react18 && npm run type-check:react19",

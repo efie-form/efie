@@ -1,3 +1,4 @@
+import { FieldType } from '@efie-form/core';
 import { useEffect } from 'react';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import { useSettingsStore } from '../../../lib/state/settings.state';
@@ -11,9 +12,8 @@ const SCREEN_SIZES = {
 };
 
 function FormContent() {
-  const { getPage } = useSchemaStore();
   const { previewDevice, page, clearSelectedFieldId } = useSettingsStore();
-  const selectedPage = getPage(page);
+  const selectedPage = useSchemaStore((state) => state.getFieldById(page));
 
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
@@ -28,7 +28,7 @@ function FormContent() {
     };
   }, [clearSelectedFieldId]);
 
-  if (!selectedPage) return <></>;
+  if (!selectedPage || selectedPage.type !== FieldType.PAGE) return <></>;
   const hasChildren = selectedPage.children.length > 0;
 
   return (

@@ -17,7 +17,7 @@ import { useSettingsStore } from '../../../../lib/state/settings.state';
 import PageItem from './page-item';
 
 function PagesTab() {
-  const { updatePages, schema } = useSchemaStore();
+  const { schema, addField, movePage, deleteField } = useSchemaStore();
   const { setPage, page } = useSettingsStore();
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -26,7 +26,7 @@ function PagesTab() {
     }),
   );
 
-  const pages = schema.form.fields.filter((field) => field.type === FieldType.PAGE);
+  const pages = schema?.form.fields.filter((field) => field.type === FieldType.PAGE) || [];
 
   const handleAddNewPage = () => {
     const newPage = getDefaultField({
@@ -36,26 +36,21 @@ function PagesTab() {
       },
     });
 
-    const newPages = [...pages, newPage].filter((p) => p.type === FieldType.PAGE);
-
-    updatePages(newPages);
+    addField(newPage);
   };
 
   const handleMovePage = (from: number, to: number) => {
-    const newPages = [...pages];
-    const [page] = newPages.splice(from, 1);
-    newPages.splice(to, 0, page);
-    updatePages(newPages);
+    movePage(from, to);
   };
 
   const handleDeletePage = (deletedPage: PageFormField) => {
     const currentPageIndex = pages.findIndex((p) => p.id === deletedPage.id);
     const newPages = pages.filter((p) => p.id !== deletedPage.id);
 
-    updatePages(newPages);
+    deleteField(deletedPage.id);
 
     if (deletedPage.id === page) {
-      setPage(newPages[currentPageIndex + 1]?.id ?? newPages[currentPageIndex - 1]?.id);
+      setPage(newPages[currentPageIndex]?.id ?? newPages[currentPageIndex - 1]?.id);
     }
   };
 

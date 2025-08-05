@@ -5,7 +5,6 @@ export interface SchemaStateAccessMethods {
   // Core field access methods
 
   getFieldById: (fieldId?: string) => FormField | undefined;
-  getFieldKeyById: (fieldId?: string) => string | undefined;
   getFieldParentId: (fieldId?: string) => string | undefined;
 
   listChildrenId: (fieldId: string) => string[];
@@ -17,11 +16,6 @@ export function createAccessMethods({ getState }: StateSetters): SchemaStateAcce
     getFieldById: (fieldId) => {
       if (!fieldId) return;
       return getState().fieldMap.get(fieldId);
-    },
-
-    getFieldKeyById: (fieldId) => {
-      if (!fieldId) return;
-      return getState().fieldKeyMap.get(fieldId);
     },
 
     getFieldParentId: (fieldId) => {
