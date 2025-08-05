@@ -13,20 +13,12 @@ interface MessageData {
   requestId?: string;
 }
 
-interface PendingRequest<T = unknown> {
-  resolve: (value: T) => void;
-  reject: (error: Error) => void;
-  timeout: ReturnType<typeof setTimeout>;
-}
-
 export default class Client {
   private onSchemaChange?: (schema: FormSchema) => void;
   private onReady?: () => void;
   private messageQueue: MessageData[] = [];
   private isConnected = false;
   private messageHandler: (event: MessageEvent) => void;
-  private pendingRequests = new Map<string, PendingRequest<unknown>>();
-  private requestCounter = 0;
 
   constructor(props: BuilderProps) {
     this.onSchemaChange = props.onSchemaChange;
@@ -36,7 +28,6 @@ export default class Client {
   }
 
   private handleMessage(event: MessageEvent) {
-    // Check if the message is from our iframe by source property instead of origin
     const data: MessageData = event.data;
     if (data.source !== 'efie-form-builder') return;
 
@@ -53,24 +44,6 @@ export default class Client {
           this.onSchemaChange(data.payload as FormSchema);
         }
         break;
-      case 'REQUEST_RESPONSE':
-        this.handleRequestResponse(data);
-        break;
-      case 'GET_SCHEMA_RESPONSE':
-        this.handleRequestResponse(data);
-        break;
-    }
-  }
-
-  private handleRequestResponse(data: MessageData) {
-    const requestId = data.requestId || 'default';
-    const pendingRequest = this.pendingRequests.get(requestId);
-
-    if (pendingRequest) {
-      console.log('Client: Received response:', data.payload);
-      clearTimeout(pendingRequest.timeout);
-      this.pendingRequests.delete(requestId);
-      pendingRequest.resolve(data.payload);
     }
   }
 
@@ -102,82 +75,10 @@ export default class Client {
     }
 
     this.postMessage(message);
-    // if (this.isConnected) {
-    //   this.postMessage(message);
-    // } else {
-    //   console.log('Client: Not connected, queuing message:', message);
-    //   this.messageQueue.push(message);
-    // }
   }
 
-  /**
-   * Generic method to send a request and await a response from the builder
-   * @param requestType The type of request to send
-   * @param payload The payload to send with the request
-   * @param timeout Timeout in milliseconds (default: 5000)
-   * @returns Promise that resolves with the response payload
-   */
-  private sendAwaitableRequest<T>(
-    requestType: string,
-    payload?: unknown,
-    timeout = 5000,
-  ): Promise<T> {
-    console.log(`Client: Sending awaitable request: ${requestType}`);
-    return new Promise((resolve, reject) => {
-      const requestId = `${requestType.toLowerCase()}-request-${++this.requestCounter}`;
-
-      const timeoutHandle = setTimeout(() => {
-        this.pendingRequests.delete(requestId);
-        reject(new Error(`Timeout waiting for ${requestType} response`));
-      }, timeout);
-
-      this.pendingRequests.set(requestId, {
-        resolve: resolve as (value: unknown) => void,
-        reject,
-        timeout: timeoutHandle,
-      });
-
-      this.sendMessage(requestType, payload, requestId);
-    });
-  } // Public API methods
   setSchema(schema: FormSchema) {
     this.sendMessage('SET_SCHEMA', schema);
-  }
-
-  getSchema(): Promise<FormSchema> {
-    return this.sendAwaitableRequest<FormSchema>('GET_SCHEMA');
-  }
-
-  /**
-   * Validates the current schema and returns validation result
-   */
-  validateSchema(): Promise<{ isValid: boolean; errors?: string[] }> {
-    return this.sendAwaitableRequest<{ isValid: boolean; errors?: string[] }>('VALIDATE_SCHEMA');
-  }
-
-  /**
-   * Gets the current builder state (selected field, mode, etc.)
-   */
-  getBuilderState(): Promise<{ selectedFieldId?: string; mode: string }> {
-    return this.sendAwaitableRequest<{ selectedFieldId?: string; mode: string }>(
-      'GET_BUILDER_STATE',
-    );
-  }
-
-  /**
-   * Exports the form configuration in a specific format
-   */
-  exportForm(format: 'json' | 'typescript'): Promise<string> {
-    return this.sendAwaitableRequest<string>('EXPORT_FORM', { format });
-  }
-
-  /**
-   * Gets field statistics (count, types, etc.)
-   */
-  getFieldStatistics(): Promise<{ totalFields: number; fieldTypes: Record<string, number> }> {
-    return this.sendAwaitableRequest<{ totalFields: number; fieldTypes: Record<string, number> }>(
-      'GET_FIELD_STATISTICS',
-    );
   }
 
   setFormInputs(formInputs: CustomInputDef[]) {

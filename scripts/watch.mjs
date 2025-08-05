@@ -43,12 +43,6 @@ const packages = {
     watch: true,
     color: colors.magenta,
   },
-  '@efie-form/vue': {
-    path: 'packages/vue',
-    dependencies: ['@efie-form/core'],
-    watch: true, // Now enabled by default
-    color: colors.cyan,
-  },
   '@efie-form/iframe': {
     path: 'packages/iframe',
     dependencies: ['@efie-form/core', '@efie-form/builder'],
@@ -60,7 +54,6 @@ const packages = {
 
 class WatchManager {
   constructor(options = {}) {
-    this.includeVue = options.includeVue || false;
     this.libOnly = options.libOnly || false;
     this.verbose = options.verbose || false;
     this.processes = new Map();
@@ -89,10 +82,6 @@ class WatchManager {
   async start() {
     this.log('🚀 Starting tsup watch for Efie Form packages...', colors.bright);
 
-    if (this.includeVue) {
-      this.log('🎯 Including Vue package in watch', colors.yellow);
-    }
-
     if (this.libOnly) {
       this.log('📚 Watching only packages with lib folders', colors.yellow);
     }
@@ -101,9 +90,6 @@ class WatchManager {
 
     // Determine which packages to watch
     const packagesToWatch = Object.entries(packages).filter(([name, config]) => {
-      if (name === '@efie-form/vue' && !this.includeVue) {
-        return false;
-      }
       if (this.libOnly) {
         // Only watch packages that have lib folders (exclude iframe)
         return config.watch && name !== '@efie-form/iframe';
@@ -500,7 +486,7 @@ Options:
   --help           Show this help message
 
 Examples:
-  node scripts/watch.mjs              # Watch all lib packages (core, builder, react, vue)
+  node scripts/watch.mjs              # Watch all lib packages (core, builder, react)
   node scripts/watch.mjs --lib-only   # Watch only lib-based packages
   node scripts/watch.mjs --verbose    # Watch with verbose output
 
@@ -519,12 +505,11 @@ if (args.has('--help') || args.has('-h')) {
   process.exit(0);
 }
 
-const includeVue = true; // Always include Vue since it's now enabled by default
 const libOnly = args.has('--lib-only');
 const verbose = args.has('--verbose') || args.has('-v');
 
 // Start the watch manager
-const manager = new WatchManager({ includeVue, libOnly, verbose });
+const manager = new WatchManager({ libOnly, verbose });
 try {
   await manager.start();
 }
