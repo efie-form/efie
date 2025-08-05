@@ -11,14 +11,12 @@ interface ImageProviderProps {
 function ImageProvider({ field, Component }: ImageProviderProps) {
   if (!Component) return <></>;
 
-  const src = field.props.find((prop) => prop.type === PropertyType.SRC);
-  const alt = field.props.find((prop) => prop.type === PropertyType.ALT);
+  const src = field.props.find((prop) => prop.type === PropertyType.IMAGE_SRC);
 
   return createElement(Component, {
     id: field.id,
     field,
     src: src?.value || '',
-    alt: alt?.value || '',
   });
 }
 

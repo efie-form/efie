@@ -46,7 +46,7 @@ export function useFormBuilder() {
       resizeTimeout = setTimeout(() => {
         // Account for topbar height (64px) and some padding
         setHeight(window.innerHeight - 80);
-      }, 100);
+      }, 100) as unknown as number;
     };
 
     handleResize();

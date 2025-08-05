@@ -15,7 +15,6 @@ function FileField({ field }: FileFieldProps) {
   const label = fieldProperty?.value || '';
   const updateFieldProperty = useSchemaStore((state) => state.updateFieldProperty);
   const acceptProp = getFieldProp(field, PropertyType.ACCEPT);
-  const maxFilesProp = getFieldProp(field, PropertyType.MAX_FILES);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -42,12 +41,6 @@ function FileField({ field }: FileFieldProps) {
           <p>
             Supported formats:
             {acceptProp?.value?.formats?.join(', ')}
-          </p>
-        )}
-        {maxFilesProp && maxFilesProp?.value > 1 && (
-          <p>
-            Max files:
-            {maxFilesProp?.value}
           </p>
         )}
       </div>

@@ -45,13 +45,16 @@ export default function SystemSettingsButtonAction({
   const schema = useSchemaStore((state) => state.schema);
 
   // Page options to avoid recalculation on every render
-  const pageOptions = schema.form.fields
-    .filter((field) => field.type === FieldType.PAGE)
-    .map((page) => {
-      const pageNameProp = page.props?.find((prop) => prop.type === PropertyType.PAGE_NAME);
-      const pageName = isStringValue(pageNameProp?.value) ? pageNameProp.value : `Page ${page.id}`;
-      return { value: page.id, label: pageName };
-    });
+  const pageOptions =
+    schema?.form.fields
+      .filter((field) => field.type === FieldType.PAGE)
+      .map((page) => {
+        const pageNameProp = page.props?.find((prop) => prop.type === PropertyType.PAGE_NAME);
+        const pageName = isStringValue(pageNameProp?.value)
+          ? pageNameProp.value
+          : `Page ${page.id}`;
+        return { value: page.id, label: pageName };
+      }) || [];
 
   // Store previous values to restore when switching between action types
   const prevValuesRef = useRef<Record<string, PropValueButtonAction>>({

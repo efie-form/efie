@@ -12,14 +12,12 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
-import type { FormField, OptionsProperty } from '@efie-form/core';
+import type { FormField, PropValueOptions } from '@efie-form/core';
 import { PropertyType } from '@efie-form/core';
 import { useRef } from 'react';
 import { useSchemaStore } from '../../../../lib/state/schema.state';
 import { getFieldProp } from '../../../../lib/utils';
 import ChoiceFieldOption from './choice-field-option';
-
-type OptionType = OptionsProperty['value'][number];
 
 interface ChoiceFieldBaseProps {
   fieldId: string;
@@ -27,7 +25,7 @@ interface ChoiceFieldBaseProps {
   inputType: 'radio' | 'checkbox';
 }
 
-const DEFAULT_OPTIONS: OptionType[] = [
+const DEFAULT_OPTIONS: PropValueOptions = [
   { label: 'Option 1', value: 'Option 1' },
   { label: 'Option 2', value: 'Option 2' },
 ];
@@ -45,7 +43,7 @@ function ChoiceFieldBase({ fieldId, field, inputType }: ChoiceFieldBaseProps) {
   );
   const options = optionsProperty?.value || DEFAULT_OPTIONS;
 
-  const updateOptions = (newOptions: OptionType[]) => {
+  const updateOptions = (newOptions: PropValueOptions) => {
     updateFieldProperty(field.id, {
       type: PropertyType.OPTIONS,
       value: newOptions,
@@ -97,7 +95,7 @@ function ChoiceFieldBase({ fieldId, field, inputType }: ChoiceFieldBaseProps) {
     updateOptions(newOptions);
   };
 
-  const handleUpdate = (index: number, value: OptionType) => {
+  const handleUpdate = (index: number, value: PropValueOptions[number]) => {
     const newOptions = [...options];
     newOptions[index] = value;
     updateOptions(newOptions);

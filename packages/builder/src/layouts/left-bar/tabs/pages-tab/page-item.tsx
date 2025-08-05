@@ -9,7 +9,6 @@ import {
 import { type CSSProperties, useEffect, useRef, useState } from 'react';
 import { FaCheck, FaTrash, FaXmark } from 'react-icons/fa6';
 import { MdOutlineDragIndicator } from 'react-icons/md';
-import type { PageNameProperty } from '../../../../../../core/lib/types/property-definition';
 import { useSchemaStore } from '../../../../lib/state/schema.state';
 import { cn } from '../../../../lib/utils';
 
@@ -51,7 +50,7 @@ export default function PageItem({ page, onDelete, isCurrentPage, onSelect }: Pa
     updateFieldProperty(page.id, {
       type: PropertyType.PAGE_NAME,
       value: inputName,
-    } as PageNameProperty);
+    });
 
     setEditMode(false);
   };
@@ -62,101 +61,103 @@ export default function PageItem({ page, onDelete, isCurrentPage, onSelect }: Pa
   };
 
   return (
-    <li
-      style={style}
-      key={page.id}
-      ref={setNodeRef}
-      {...attributes}
-      className={cn(
-        'group relative flex items-center justify-between px-1 py-2 hover:bg-neutral-100',
-        isDragging ? 'relative z-50 cursor-grabbing' : 'cursor-pointer',
-        {
-          'bg-neutral-200': isDragging,
-          '!bg-neutral-100': isCurrentPage,
-        },
-      )}
-      onClick={() => onSelect()}
-      onDoubleClick={() => {
-        setEditMode(true);
-      }}
-      onMouseLeave={() => setDeleteConfirm(false)}
-    >
-      <div className="flex items-center">
-        <span
-          className={cn('invisible me-2 group-hover:visible', {
-            'cursor-grab': !isDragging,
-          })}
-          {...listeners}
-        >
-          <MdOutlineDragIndicator />
-        </span>
-        {editMode ? (
-          <input
-            ref={inputRef}
-            value={inputName}
-            className="typography-body3 px-1 py-0.5 outline-primary"
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                handleRename();
-              } else if (e.key === 'Escape') {
-                handleCancelRename();
-              }
-            }}
-            onChange={(e) => setInputName(e.target.value)}
-            onBlur={() => {
-              handleRename();
-            }}
-          />
-        ) : (
-          <span className="typography-body3 text-neutral-900">{inputName}</span>
+    <li>
+      <button
+        style={style}
+        key={page.id}
+        ref={setNodeRef}
+        {...attributes}
+        className={cn(
+          'group relative w-full flex items-center justify-between px-1 py-2 hover:bg-neutral-100',
+          isDragging ? 'relative z-50 cursor-grabbing' : 'cursor-pointer',
+          {
+            'bg-neutral-200': isDragging,
+            '!bg-neutral-100': isCurrentPage,
+          },
         )}
-      </div>
-      <span className="invisible flex gap-2 pe-2 group-hover:visible">
-        {deleteConfirm ? (
-          <>
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-
-                onDelete();
-                setDeleteConfirm(false);
-              }}
-              aria-label="Confirm delete"
-            >
-              <FaCheck className="text-success" size={14} />
-            </button>
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-
-                setDeleteConfirm(false);
-              }}
-              aria-label="Cancel delete"
-            >
-              <FaXmark className="text-danger" size={14} />
-            </button>
-          </>
-        ) : (
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              setDeleteConfirm(true);
-            }}
-            disabled={schema.form.fields.length === 1}
-            aria-label="Delete page"
+        onClick={() => onSelect()}
+        onDoubleClick={() => {
+          setEditMode(true);
+        }}
+        onMouseLeave={() => setDeleteConfirm(false)}
+      >
+        <div className="flex items-center">
+          <span
+            className={cn('invisible me-2 group-hover:visible', {
+              'cursor-grab': !isDragging,
+            })}
+            {...listeners}
           >
-            <FaTrash
-              className={cn('text-danger', {
-                'cursor-not-allowed opacity-50': schema.form.fields.length === 1,
-              })}
-              size={12}
+            <MdOutlineDragIndicator />
+          </span>
+          {editMode ? (
+            <input
+              ref={inputRef}
+              value={inputName}
+              className="typography-body3 px-1 py-0.5 outline-primary"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  handleRename();
+                } else if (e.key === 'Escape') {
+                  handleCancelRename();
+                }
+              }}
+              onChange={(e) => setInputName(e.target.value)}
+              onBlur={() => {
+                handleRename();
+              }}
             />
-          </button>
-        )}
-      </span>
+          ) : (
+            <span className="typography-body3 text-neutral-900">{inputName}</span>
+          )}
+        </div>
+        <span className="invisible flex gap-2 pe-2 group-hover:visible">
+          {deleteConfirm ? (
+            <>
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+
+                  onDelete();
+                  setDeleteConfirm(false);
+                }}
+                aria-label="Confirm delete"
+              >
+                <FaCheck className="text-success" size={14} />
+              </button>
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+
+                  setDeleteConfirm(false);
+                }}
+                aria-label="Cancel delete"
+              >
+                <FaXmark className="text-danger" size={14} />
+              </button>
+            </>
+          ) : (
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                setDeleteConfirm(true);
+              }}
+              disabled={schema?.form.fields.length === 1}
+              aria-label="Delete page"
+            >
+              <FaTrash
+                className={cn('text-danger', {
+                  'cursor-not-allowed opacity-50': schema?.form.fields.length === 1,
+                })}
+                size={12}
+              />
+            </button>
+          )}
+        </span>
+      </button>
     </li>
   );
 }

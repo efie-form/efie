@@ -12,7 +12,7 @@ interface HeadingProviderProps {
 function HeadingProvider({ field, Component }: HeadingProviderProps) {
   if (!Component) return <></>;
 
-  const content = field.props.find((prop) => prop.type === PropertyType.CONTENT);
+  const content = field.props.find((prop) => prop.type === PropertyType.HEADING_CONTENT);
 
   const renderContent = (options?: Partial<RenderContentOptions>) => {
     return (

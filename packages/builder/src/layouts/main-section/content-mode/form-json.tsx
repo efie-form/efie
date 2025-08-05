@@ -42,7 +42,7 @@ export default function FormJson() {
 
   useDebounce(handleSave, 250, [value]);
 
-  function checkSchema(data: string | FormSchema) {
+  function checkSchema(data?: string | FormSchema) {
     try {
       const parsedSchema = typeof data === 'string' ? JSON.parse(data) : data;
       const isValid = validateSchema(parsedSchema);

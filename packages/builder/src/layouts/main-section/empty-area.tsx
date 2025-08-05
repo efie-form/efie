@@ -29,7 +29,6 @@ export default function EmptyArea({ parentId }: EmptyAreaProps) {
       onDragLeave: () => setIsDraggedOver(false),
       canDrop,
       onDrop: (payload) => {
-        console.log('Dropped payload:', payload);
         setIsDraggedOver(false);
         handleDrop(payload);
       },
