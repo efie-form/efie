@@ -63,7 +63,8 @@ export default function HeadingDropdown({ editor, options }: HeadingDropdownProp
 
       {isOpen && (
         <>
-          <div
+          <button
+            type="button"
             className="fixed inset-0 z-10"
             onClick={() => setIsOpen(false)}
             onKeyDown={(e) => {
@@ -71,7 +72,6 @@ export default function HeadingDropdown({ editor, options }: HeadingDropdownProp
                 setIsOpen(false);
               }
             }}
-            role="button"
             tabIndex={0}
             aria-label="Close dropdown"
           />
