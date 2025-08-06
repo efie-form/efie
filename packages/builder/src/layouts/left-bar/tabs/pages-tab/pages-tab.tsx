@@ -77,13 +77,14 @@ function PagesTab() {
         <SortableContext items={pages.map((p) => p.id)}>
           <ul>
             {pages.map((p) => (
-              <PageItem
-                key={p.id}
-                page={p}
-                onDelete={() => handleDeletePage(p)}
-                isCurrentPage={p.id === page}
-                onSelect={() => setPage(p.id)}
-              />
+              <li key={p.id}>
+                <PageItem
+                  page={p}
+                  onDelete={() => handleDeletePage(p)}
+                  isCurrentPage={p.id === page}
+                  onSelect={() => setPage(p.id)}
+                />
+              </li>
             ))}
           </ul>
         </SortableContext>

@@ -104,6 +104,66 @@ export interface FileFormField extends BaseFormField, FormInputField {
   )[];
 }
 
+export interface EmailFormField extends BaseFormField, FormInputField {
+  type: typeof FieldType.EMAIL;
+  props: (
+    | FieldSystemPropLabel
+    | FieldSystemPropPlaceholder
+    | FieldSystemPropRequired
+    | FieldCustomProp
+  )[];
+}
+
+export interface PhoneFormField extends BaseFormField, FormInputField {
+  type: typeof FieldType.PHONE;
+  props: (
+    | FieldSystemPropLabel
+    | FieldSystemPropPlaceholder
+    | FieldSystemPropRequired
+    | FieldCustomProp
+  )[];
+}
+
+export interface URLFormField extends BaseFormField, FormInputField {
+  type: typeof FieldType.URL;
+  props: (
+    | FieldSystemPropLabel
+    | FieldSystemPropPlaceholder
+    | FieldSystemPropRequired
+    | FieldCustomProp
+  )[];
+}
+
+export interface CheckboxFormField extends BaseFormField, FormInputField {
+  type: typeof FieldType.CHECKBOX;
+  props: (
+    | FieldSystemPropLabel
+    | FieldSystemPropOptions
+    | FieldSystemPropRequired
+    | FieldCustomProp
+  )[];
+}
+
+export interface AddressFormField extends BaseFormField, FormInputField {
+  type: typeof FieldType.ADDRESS;
+  props: (
+    | FieldSystemPropLabel
+    | FieldSystemPropPlaceholder
+    | FieldSystemPropRequired
+    | FieldCustomProp
+  )[];
+}
+
+export interface PasswordFormField extends BaseFormField, FormInputField {
+  type: typeof FieldType.PASSWORD;
+  props: (
+    | FieldSystemPropLabel
+    | FieldSystemPropPlaceholder
+    | FieldSystemPropRequired
+    | FieldCustomProp
+  )[];
+}
+
 // Layout field types
 export interface BlockFormField extends BaseFormField {
   type: typeof FieldType.BLOCK;
