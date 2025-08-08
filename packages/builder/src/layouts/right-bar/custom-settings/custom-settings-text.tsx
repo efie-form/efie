@@ -1,4 +1,4 @@
-import type { FieldCustomConfigText, FieldCustomProp } from '@efie-form/core';
+import type { FieldCustomConfigText } from '@efie-form/core';
 import { Input } from '../../../components/form';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import SettingsFieldVertical from '../property-layouts/settings-field-vertical';
@@ -32,6 +32,6 @@ export default function CustomSettingsText({ fieldId, config }: CustomSettingsTe
   );
 }
 
-function isCustomTextValue(value: FieldCustomProp['value']): value is string {
+function isCustomTextValue(value: unknown): value is string {
   return typeof value === 'string';
 }

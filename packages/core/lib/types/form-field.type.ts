@@ -4,13 +4,15 @@ import type { ValidationSchema } from './field-conditions.type';
 import type {
   FieldCustomProp,
   FieldSystemPropAccept,
+  FieldSystemPropAddressField,
   FieldSystemPropButtonAction,
   FieldSystemPropColumnWidth,
   FieldSystemPropHeadingContent,
   FieldSystemPropImageSrc,
   FieldSystemPropLabel,
+  FieldSystemPropName, // changed
   FieldSystemPropOptions,
-  FieldSystemPropPageName,
+  FieldSystemPropPasswordRules, // fixed name
   FieldSystemPropPlaceholder,
   FieldSystemPropRequired,
 } from './property-definition';
@@ -104,6 +106,57 @@ export interface FileFormField extends BaseFormField, FormInputField {
   )[];
 }
 
+export interface EmailFormField extends BaseFormField, FormInputField {
+  type: typeof FieldType.EMAIL;
+  props: (
+    | FieldSystemPropLabel
+    | FieldSystemPropPlaceholder
+    | FieldSystemPropRequired
+    | FieldCustomProp
+  )[];
+}
+
+export interface PhoneFormField extends BaseFormField, FormInputField {
+  type: typeof FieldType.PHONE;
+  props: (
+    | FieldSystemPropLabel
+    | FieldSystemPropPlaceholder
+    | FieldSystemPropRequired
+    | FieldCustomProp
+  )[];
+}
+
+export interface CheckboxFormField extends BaseFormField, FormInputField {
+  type: typeof FieldType.CHECKBOX;
+  props: (
+    | FieldSystemPropLabel
+    | FieldSystemPropOptions
+    | FieldSystemPropRequired
+    | FieldCustomProp
+  )[];
+}
+
+export interface AddressFormField extends BaseFormField, FormInputField {
+  type: typeof FieldType.ADDRESS;
+  props: (
+    | FieldSystemPropLabel
+    | FieldSystemPropRequired
+    | FieldSystemPropAddressField
+    | FieldCustomProp
+  )[];
+}
+
+export interface PasswordFormField extends BaseFormField, FormInputField {
+  type: typeof FieldType.PASSWORD;
+  props: (
+    | FieldSystemPropLabel
+    | FieldSystemPropPlaceholder
+    | FieldSystemPropRequired
+    | FieldSystemPropPasswordRules // fixed name
+    | FieldCustomProp
+  )[];
+}
+
 // Layout field types
 export interface BlockFormField extends BaseFormField {
   type: typeof FieldType.BLOCK;
@@ -121,6 +174,12 @@ export interface ColumnFormField extends BaseFormField {
   type: typeof FieldType.COLUMN;
   children: FormField[];
   props: (FieldSystemPropColumnWidth | FieldCustomProp)[];
+}
+
+export interface GroupFormField extends BaseFormField {
+  type: typeof FieldType.GROUP;
+  children: FormField[];
+  props: FieldCustomProp[];
 }
 
 export interface HeadingFormField extends BaseFormField {
@@ -144,7 +203,7 @@ export interface ButtonFormField extends BaseFormField {
 export interface PageFormField extends BaseFormField {
   type: typeof FieldType.PAGE;
   children: FormField[];
-  props: (FieldSystemPropPageName | FieldCustomProp)[];
+  props: (FieldSystemPropName | FieldCustomProp)[];
 }
 
 // Divider field type
@@ -170,4 +229,10 @@ export type FormField =
   | PageFormField
   | ColumnFormField
   | RowFormField
-  | BlockFormField;
+  | BlockFormField
+  | EmailFormField
+  | PhoneFormField
+  | CheckboxFormField
+  | AddressFormField
+  | PasswordFormField
+  | GroupFormField;

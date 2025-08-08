@@ -1,10 +1,4 @@
-import {
-  type FieldCustomConfigSize,
-  type FieldCustomProp,
-  isSize,
-  type Size,
-  SizeType,
-} from '@efie-form/core';
+import { type FieldCustomConfigSize, isSize, type Size, SizeType } from '@efie-form/core';
 import SizeInput from '../../../components/form/size-input';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import SettingsFieldHorizontal from '../property-layouts/settings-field-horizontal';
@@ -40,6 +34,6 @@ export default function CustomSettingsSize({ fieldId, config }: CustomSettingsSi
   );
 }
 
-function isCustomSizeValue(value: FieldCustomProp['value']): value is Size {
+function isCustomSizeValue(value: unknown): value is Size {
   return isSize(value);
 }

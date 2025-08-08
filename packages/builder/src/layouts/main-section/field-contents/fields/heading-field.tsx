@@ -8,7 +8,9 @@ interface HeadingFieldProps {
 }
 
 function HeadingField({ field }: HeadingFieldProps) {
-  const content = useSchemaStore((state) => state.getFieldProperty(field.id, PropertyType.CONTENT));
+  const content = useSchemaStore((state) =>
+    state.getFieldProperty(field.id, PropertyType.HEADING_CONTENT),
+  );
   const updateFieldProperty = useSchemaStore((state) => state.updateFieldProperty);
   const { selectedFieldId } = useSettingsStore();
   const config = useSettingsStore((state) => state.config.heading);
@@ -19,7 +21,7 @@ function HeadingField({ field }: HeadingFieldProps) {
         value={content?.value?.jsonContent || {}}
         onChange={(newContent) => {
           updateFieldProperty(field.id, {
-            type: PropertyType.CONTENT,
+            type: PropertyType.HEADING_CONTENT,
             value: { jsonContent: newContent },
           });
         }}

@@ -1,6 +1,5 @@
 import { type FormField, PropertyType } from '@efie-form/core';
 import { useSchemaStore } from '../../../../lib/state/schema.state';
-import { getFieldProp } from '../../../../lib/utils';
 
 interface LongTextFieldProps {
   field: FormField;
@@ -12,7 +11,9 @@ function LongTextField({ field }: LongTextFieldProps) {
   );
   const label = fieldProperty?.value || '';
   const updateFieldProperty = useSchemaStore((state) => state.updateFieldProperty);
-  const placeholderProp = getFieldProp(field, PropertyType.PLACEHOLDER);
+  const placeholderProp = useSchemaStore((state) =>
+    state.getFieldProperty(field.id, PropertyType.PLACEHOLDER),
+  );
 
   return (
     <div className="p-2">

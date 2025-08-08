@@ -29,7 +29,6 @@ export default function EmptyArea({ parentId }: EmptyAreaProps) {
       onDragLeave: () => setIsDraggedOver(false),
       canDrop,
       onDrop: (payload) => {
-        console.log('Dropped payload:', payload);
         setIsDraggedOver(false);
         handleDrop(payload);
       },
@@ -40,7 +39,7 @@ export default function EmptyArea({ parentId }: EmptyAreaProps) {
     <div
       ref={ref}
       className={cn(
-        'h-full px-4 flex justify-center typography-body3 items-center min-h-32 bg-neutral-50 rounded-md text-center border-2 border-dashed',
+        'typography-body3 flex h-full min-h-32 items-center justify-center rounded-md border-2 border-dashed bg-neutral-50 px-4 text-center',
         {
           'border-neutral-300': !isDraggedOver,
           'border-primary-400 bg-primary-100 text-primary-800': isDraggedOver,

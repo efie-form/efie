@@ -1,4 +1,4 @@
-import type { FieldCustomConfigNumber, FieldCustomProp } from '@efie-form/core';
+import type { FieldCustomConfigNumber } from '@efie-form/core';
 import NumberInput from '../../../components/form/number';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import SettingsFieldVertical from '../property-layouts/settings-field-vertical';
@@ -34,6 +34,6 @@ export default function CustomSettingsNumber({ fieldId, config }: CustomSettings
   );
 }
 
-function isCustomNumberValue(value: FieldCustomProp['value']): value is number {
+function isCustomNumberValue(value: unknown): value is number {
   return typeof value === 'number';
 }

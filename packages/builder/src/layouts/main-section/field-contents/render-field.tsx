@@ -9,7 +9,14 @@ import {
   extractInstruction,
   type Operation,
 } from '@atlaskit/pragmatic-drag-and-drop-hitbox/list-item';
-import { FieldType, type FormField } from '@efie-form/core';
+import {
+  type CheckboxFormField,
+  type EmailFormField,
+  FieldType,
+  type FormField,
+  type PasswordFormField,
+  type PhoneFormField,
+} from '@efie-form/core';
 import { type MouseEvent, useEffect, useRef, useState } from 'react';
 import { AiOutlineDrag } from 'react-icons/ai';
 import { HiTrash } from 'react-icons/hi2';
@@ -20,17 +27,23 @@ import { useSchemaStore } from '../../../lib/state/schema.state';
 import { useSettingsStore } from '../../../lib/state/settings.state';
 import { cn } from '../../../lib/utils';
 import {
+  AddressField,
   BlockField,
   ButtonField,
+  CheckboxField,
   DateField,
   DateTimeField,
   DividerField,
+  EmailField,
   FileField,
+  GroupField,
   HeadingField,
   ImageField,
   LongTextField,
   MultipleChoicesField,
   NumberField,
+  PasswordField,
+  PhoneField,
   RowField,
   ShortTextField,
   SingleChoiceField,
@@ -150,7 +163,7 @@ function RenderField({ field, noSelect, parentId, childIndex }: RenderFieldProps
         data-field="true"
         id={`field-container-${field.id}`}
         className={cn(
-          'transform rounded-md relative h-full outline outline-2 outline-[#00000000] -outline-offset-2 p-1',
+          '-outline-offset-2 relative h-full transform rounded-md p-1 outline outline-2 outline-[#00000000]',
           {
             '!outline-primary relative z-50': isSelected,
             '[&:not(:has(div[data-field=true]:hover))]:hover:outline-neutral-100':
@@ -164,12 +177,12 @@ function RenderField({ field, noSelect, parentId, childIndex }: RenderFieldProps
       >
         {isDraggedOver && (
           <div
-            className={cn('absolute z-[999] left-0 right-0 h-1 bg-primary-400 rounded-full ', {
-              'top-0 -translate-y-1/2': operation === 'reorder-before',
+            className={cn('absolute right-0 left-0 z-[999] h-1 rounded-full bg-primary-400 ', {
+              '-translate-y-1/2 top-0': operation === 'reorder-before',
               'bottom-0 translate-y-1/2': operation === 'reorder-after',
             })}
           >
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-primary-400 rounded-full px-3 py-1">
+            <div className="-translate-x-1/2 -translate-y-1/2 absolute top-0 left-1/2 rounded-full bg-primary-400 px-3 py-1">
               <p className="typography-body3 text-neutral-50">Drop here</p>
             </div>
           </div>
@@ -177,8 +190,8 @@ function RenderField({ field, noSelect, parentId, childIndex }: RenderFieldProps
         <FieldItem field={field} />
       </div>
       {isSelected && (
-        <div className="absolute top-0 left-0 -translate-x-full">
-          <div ref={dragHandlerRef} className="bg-primary p-1 text-white cursor-grab">
+        <div className="-translate-x-full absolute top-0 left-0">
+          <div ref={dragHandlerRef} className="cursor-grab bg-primary p-1 text-white">
             <AiOutlineDrag />
           </div>
           <button
@@ -201,7 +214,7 @@ interface FieldItemProps {
   field: FormField;
 }
 
-function FieldItem({ field }: FieldItemProps) {
+function FieldItem({ field }: FieldItemProps): JSX.Element | never {
   switch (field.type) {
     case FieldType.ROW: {
       return <RowField field={field} />;
@@ -251,8 +264,29 @@ function FieldItem({ field }: FieldItemProps) {
     case FieldType.BLOCK: {
       return <BlockField field={field} />;
     }
+    case FieldType.ADDRESS: {
+      return <AddressField field={field} />;
+    }
+    case FieldType.PASSWORD: {
+      return <PasswordField field={field as PasswordFormField} />;
+    }
+    case FieldType.EMAIL: {
+      return <EmailField field={field as EmailFormField} />;
+    }
+    case FieldType.PHONE: {
+      return <PhoneField field={field as PhoneFormField} />;
+    }
+    case FieldType.CHECKBOX: {
+      return <CheckboxField field={field as CheckboxFormField} />;
+    }
+    case FieldType.GROUP: {
+      return <GroupField field={field} />;
+    }
+    case FieldType.PAGE: {
+      return <span>Page</span>;
+    }
     default: {
-      throw new Error(`Unknown field type: ${field.type}`);
+      return field;
     }
   }
 }

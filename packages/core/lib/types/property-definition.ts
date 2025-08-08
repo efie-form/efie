@@ -1,12 +1,14 @@
 import type { CustomPropertyType, PropertyType } from '../property-type';
 import type {
   PropValueAccept,
+  PropValueAddressField,
   PropValueBoolean,
   PropValueButtonAction,
   PropValueColor,
   PropValueJsonContent,
   PropValueNumber,
   PropValueOptions,
+  PropValuePasswordPolicy, // added
   PropValueSize,
   PropValueString,
 } from './field-property-value.type';
@@ -30,7 +32,9 @@ export type FieldSystemProp =
   | FieldSystemPropColumnWidth
   | FieldSystemPropHeadingContent
   | FieldSystemPropButtonAction
-  | FieldSystemPropPageName;
+  | FieldSystemPropName // renamed from PageName
+  | FieldSystemPropAddressField
+  | FieldSystemPropPasswordRules; // renamed
 
 export interface FieldSystemPropLabel {
   type: typeof PropertyType.LABEL;
@@ -82,9 +86,21 @@ export interface FieldSystemPropButtonAction {
   value: PropValueButtonAction;
 }
 
-export interface FieldSystemPropPageName {
-  type: typeof PropertyType.PAGE_NAME;
+export interface FieldSystemPropName {
+  // renamed from FieldSystemPropPageName
+  type: typeof PropertyType.NAME;
   value: PropValueString;
+}
+
+export interface FieldSystemPropAddressField {
+  type: typeof PropertyType.ADDRESS_FIELD;
+  value: PropValueAddressField;
+}
+
+export interface FieldSystemPropPasswordRules {
+  // renamed
+  type: typeof PropertyType.PASSWORD_RULES; // renamed
+  value: PropValuePasswordPolicy;
 }
 
 /**

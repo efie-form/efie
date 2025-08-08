@@ -24,7 +24,7 @@ interface RowSettingsProps {
 }
 
 function RowSettings({ field }: RowSettingsProps) {
-  const { getFieldById, replaceFieldChildren } = useSchemaStore();
+  const { deleteField, updateField } = useSchemaStore();
   const [currentTab, setCurrentTab] = useState(field.children?.[0]?.id || '');
 
   const applyLayout = (columns: number[]) => {
@@ -55,7 +55,10 @@ function RowSettings({ field }: RowSettingsProps) {
       newColumns.push(newColumn);
     }
 
-    replaceFieldChildren(field.id, newColumns);
+    updateField(field.id, {
+      ...field,
+      children: newColumns,
+    });
     setCurrentTab(newColumns[0]?.id || '');
   };
 
@@ -67,28 +70,12 @@ function RowSettings({ field }: RowSettingsProps) {
       column: { width: avgWidth },
     });
 
-    const newColumns = [];
+    const newColumns = equalColumnWidths([...field.children, newColumn]);
 
-    for (const col of field.children) {
-      const colField = getFieldById(col.id);
-      if (!colField || colField.type !== FieldType.COLUMN) return col;
-
-      const widthProp = getFieldProp(colField, PropertyType.COLUMN_WIDTH);
-      if (widthProp) {
-        widthProp.value = { type: SizeType.PERCENTAGE, value: avgWidth };
-      } else {
-        colField.props.push({
-          type: PropertyType.COLUMN_WIDTH,
-          value: { type: SizeType.PERCENTAGE, value: avgWidth },
-        });
-      }
-
-      newColumns.push(colField);
-    }
-
-    newColumns.push(newColumn);
-
-    replaceFieldChildren(field.id, newColumns);
+    updateField(field.id, {
+      ...field,
+      children: newColumns,
+    });
 
     setCurrentTab(newColumn.id);
   };
@@ -98,37 +85,35 @@ function RowSettings({ field }: RowSettingsProps) {
 
     const removedFieldId = field.children[index].id;
 
-    const newColumns = [];
+    const newColumns = field.children.filter((_, i) => i !== index);
 
-    for (const col of field.children) {
-      const colField = getFieldById(col.id);
-      if (!colField || colField.type !== FieldType.COLUMN || colField.id === removedFieldId) {
-        continue;
-      }
+    deleteField(removedFieldId);
 
-      const widthProp = getFieldProp(colField, PropertyType.COLUMN_WIDTH);
-      const width = Math.floor(100 / (field.children.length - 1));
-      if (widthProp) {
-        widthProp.value = {
-          type: SizeType.PERCENTAGE,
-          value: width,
-        };
-      } else {
-        colField.props.push({
-          type: PropertyType.COLUMN_WIDTH,
-          value: { type: SizeType.PERCENTAGE, value: width },
-        });
-      }
-
-      newColumns.push(colField);
-    }
-
-    replaceFieldChildren(field.id, newColumns);
+    updateField(field.id, {
+      ...field,
+      children: equalColumnWidths(newColumns),
+    });
 
     const prevFieldId = field.children[index - 1]?.id;
 
     setCurrentTab(prevFieldId || newColumns[0]?.id || '');
   };
+
+  function equalColumnWidths(columns: ColumnFormField[]) {
+    const widths = 100 / columns.length;
+    return columns.map((col) => {
+      const widthProp = getFieldProp(col, PropertyType.COLUMN_WIDTH);
+      if (widthProp) {
+        widthProp.value = { type: SizeType.PERCENTAGE, value: widths };
+      } else {
+        col.props.push({
+          type: PropertyType.COLUMN_WIDTH,
+          value: { type: SizeType.PERCENTAGE, value: widths },
+        });
+      }
+      return col;
+    });
+  }
 
   return (
     <div>

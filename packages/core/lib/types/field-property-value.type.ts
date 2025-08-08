@@ -15,6 +15,16 @@ export type PropValueOptions = {
   value: string;
 }[];
 
+// combined password rules + length value
+export interface PropValuePasswordPolicy {
+  min?: number; // total length min
+  max?: number; // total length max
+  digits?: { min?: number; max?: number };
+  uppercase?: { min?: number; max?: number };
+  lowercase?: { min?: number; max?: number };
+  special?: { min?: number; max?: number };
+}
+
 type Direction = 'top' | 'right' | 'bottom' | 'left';
 export type PropValueMargin = Record<Direction, Size>;
 export type PropValuePadding = Record<Direction, Size>;
@@ -49,6 +59,28 @@ export type PropValueButtonAction =
   | ButtonActionSubmit
   | ButtonActionNavigate;
 
+export type PropValueAddressField = {
+  addressLine: {
+    label: string;
+  }[];
+  city: {
+    enabled: boolean;
+    label: string;
+  };
+  state: {
+    enabled: boolean;
+    label: string;
+  };
+  country: {
+    enabled: boolean;
+    label: string;
+  };
+  postalCode: {
+    enabled: boolean;
+    label: string;
+  };
+};
+
 export type PropValue =
   | PropValueString
   | PropValueNumber
@@ -62,4 +94,6 @@ export type PropValue =
   | PropValueBoxShadow
   | PropValueBorderRadius
   | PropValueJsonContent
-  | PropValueButtonAction;
+  | PropValueButtonAction
+  | PropValueAddressField
+  | PropValuePasswordPolicy; // combined

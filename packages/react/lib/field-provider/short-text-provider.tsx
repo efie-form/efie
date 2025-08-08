@@ -16,10 +16,16 @@ function ShortTextProvider({
   value = '',
   onChange = () => {},
 }: ShortTextProviderProps) {
-  if (!Component) return <></>;
+  if (!Component) return null;
 
-  const label = field.props.find((prop) => prop.type === PropertyType.LABEL);
-  const placeholder = field.props.find((prop) => prop.type === PropertyType.PLACEHOLDER);
+  const label = field.props.find(
+    (prop): prop is { type: typeof PropertyType.LABEL; value: string } =>
+      prop.type === PropertyType.LABEL,
+  );
+  const placeholder = field.props.find(
+    (prop): prop is { type: typeof PropertyType.PLACEHOLDER; value: string } =>
+      prop.type === PropertyType.PLACEHOLDER,
+  );
 
   return createElement(Component, {
     id: field.id,

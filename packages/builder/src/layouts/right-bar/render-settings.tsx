@@ -1,4 +1,6 @@
 import { FieldType, type FormField } from '@efie-form/core';
+import { useSettingsStore } from '../../lib/state/settings.state';
+import FieldSettings from './field-settings';
 import BlockSettings from './field-settings/block-settings';
 import ButtonSettings from './field-settings/button-settings';
 import DateSettings from './field-settings/date-settings';
@@ -20,7 +22,7 @@ interface RenderSettingsProps {
 }
 
 function RenderSettings({ field }: RenderSettingsProps) {
-  if (!field) return <></>;
+  if (!field) return null;
 
   switch (field?.type) {
     case FieldType.DATE_TIME: {
@@ -33,7 +35,7 @@ function RenderSettings({ field }: RenderSettingsProps) {
       return <LongTextSettings field={field} />;
     }
     case FieldType.COLUMN: {
-      return <></>;
+      return null;
     }
     case FieldType.BLOCK: {
       return <BlockSettings field={field} />;
@@ -72,9 +74,24 @@ function RenderSettings({ field }: RenderSettingsProps) {
       return <ButtonSettings field={field} />;
     }
     default: {
-      return <></>;
+      return <SharedSettings field={field} fieldType={field.type} />;
     }
   }
 }
 
 export default RenderSettings;
+
+interface SharedSettingsProps {
+  field: FormField;
+  fieldType: (typeof FieldType)[keyof typeof FieldType];
+}
+
+function SharedSettings({ field, fieldType }: SharedSettingsProps) {
+  const config = useSettingsStore((state) => state.config[fieldType]);
+
+  return (
+    <div>
+      <FieldSettings fieldId={field.id} config={config.properties} />
+    </div>
+  );
+}

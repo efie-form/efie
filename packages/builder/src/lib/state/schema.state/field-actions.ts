@@ -1,4 +1,4 @@
-import type { FormField } from '@efie-form/core';
+import { FieldType, type FormField, type FormSchema } from '@efie-form/core';
 import type { StateSetters } from './types';
 import {
   addFieldToTree,
@@ -15,12 +15,14 @@ export interface SchemaStateFieldActions {
   duplicateField: (fieldId: string) => FormField | undefined;
   moveField: (fieldId: string, newParentId: string, newIndex: number) => void;
   deleteField: (fieldId: string) => void;
+  movePage: (from: number, to: number) => void;
 }
 export function createFieldActions({ set, getState }: StateSetters): SchemaStateFieldActions {
   return {
     // Field management methods
     addField: (field: FormField, parentId?: string, index?: number) => {
       const { schema } = getState();
+      if (!schema?.form.fields) return;
       const newField = deepClone(field);
       newField.id = generateId();
 
@@ -59,7 +61,9 @@ export function createFieldActions({ set, getState }: StateSetters): SchemaState
     },
 
     updateField: (fieldId, updatedField) => {
-      const { fieldMap } = getState();
+      const { fieldMap, schema } = getState();
+      if (!schema?.form.fields) return;
+
       // Update field in schema using optimized tree traversal
       const updateFieldInTree = (fields: FormField[]): FormField[] => {
         return fields.map((f) => {
@@ -77,10 +81,10 @@ export function createFieldActions({ set, getState }: StateSetters): SchemaState
       };
 
       const newSchema = {
-        ...getState().schema,
+        ...schema,
         form: {
-          ...getState().schema.form,
-          fields: updateFieldInTree(getState().schema.form.fields),
+          ...schema.form,
+          fields: updateFieldInTree(schema.form.fields),
         },
       };
 
@@ -147,6 +151,7 @@ export function createFieldActions({ set, getState }: StateSetters): SchemaState
 
     moveField: (fieldId: string, newParentId: string, newIndex: number) => {
       const { schema } = getState();
+      if (!schema?.form.fields) return;
       const field = getState().fieldMap.get(fieldId);
 
       if (!field) return;
@@ -213,6 +218,7 @@ export function createFieldActions({ set, getState }: StateSetters): SchemaState
 
     deleteField: (fieldId: string) => {
       const { schema } = getState();
+      if (!schema?.form.fields) return;
 
       const newFields = removeFieldFromTree(schema.form.fields, fieldId);
 
@@ -246,6 +252,30 @@ export function createFieldActions({ set, getState }: StateSetters): SchemaState
         totalHistories: newHistories.length,
         currentHistoryIndex: newHistories.length - 1,
       });
+    },
+
+    movePage: (from: number, to: number) => {
+      const { schema } = getState();
+      if (!schema?.form.fields) return;
+      const pages = schema?.form.fields.filter((field) => field.type === FieldType.PAGE) || [];
+
+      if (from < 0 || from >= pages.length || to < 0 || to >= pages.length || from === to) {
+        return; // Invalid indices or no change needed
+      }
+
+      const newPages = [...pages];
+      const [movedPage] = newPages.splice(from, 1);
+      newPages.splice(to, 0, movedPage);
+
+      const newSchema: FormSchema = {
+        ...schema,
+        form: {
+          ...schema?.form,
+          fields: newPages,
+        },
+      };
+
+      set({ schema: newSchema });
     },
   };
 }

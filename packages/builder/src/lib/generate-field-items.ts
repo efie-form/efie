@@ -19,7 +19,7 @@ const generateFieldItems = () => {
     for (const input of validFormInputs) {
       const isInputUsed = fields
         .filter((field) => 'form' in field)
-        .some((field) => field.form.key === input.id);
+        .some((field) => field.form.name === input.id);
 
       inputGroups.children.push({
         label: input.label,

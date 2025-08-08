@@ -5,7 +5,6 @@ import {
   PropertyType,
 } from '@efie-form/core';
 import type { StateSetters } from './types';
-import { getFieldInfoMap } from './utils';
 
 export interface SchemaStatePropertyActions {
   // Enhanced property management methods (optimized)
@@ -20,7 +19,7 @@ export interface SchemaStatePropertyActions {
   updateFieldCustomProperty: (fieldId: string, id: string, property: FieldCustomProp) => void;
 }
 
-export function createPropertyActions({ set, getState }: StateSetters): SchemaStatePropertyActions {
+export function createPropertyActions({ getState }: StateSetters): SchemaStatePropertyActions {
   return {
     // Enhanced property management methods
     updateFieldProperty: (fieldId, property) => {

@@ -15,7 +15,6 @@ function FileProvider({ field, Component, value, onChange = () => {} }: FileProv
 
   const label = field.props.find((prop) => prop.type === PropertyType.LABEL);
   const accept = field.props.find((prop) => prop.type === PropertyType.ACCEPT);
-  const maxFiles = field.props.find((prop) => prop.type === PropertyType.MAX_FILES);
 
   return createElement(Component, {
     id: field.id,
@@ -24,8 +23,6 @@ function FileProvider({ field, Component, value, onChange = () => {} }: FileProv
     value,
     onChange,
     accept: accept?.value?.formats.join(', ') || '',
-    multiple: (maxFiles?.value || 1) > 1,
-    maxFiles: maxFiles?.value || 1,
   } satisfies FileFieldProps);
 }
 

@@ -34,6 +34,7 @@ export function createSchemaActions({ set, getState }: StateSetters) {
 
     setFields: (fields: FormField[]) => {
       const { schema } = getState();
+      if (!schema?.form.fields) return;
       const { fieldKeyMap, fieldMap, fieldParentMap } = getFieldInfoMap(fields);
       const newSchema = {
         ...schema,

@@ -1,4 +1,4 @@
-import type { FieldCustomConfigSelect, FieldCustomProp } from '@efie-form/core';
+import type { FieldCustomConfigSelect } from '@efie-form/core';
 import { Select } from '../../../components/form';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import SettingsFieldHorizontal from '../property-layouts/settings-field-horizontal';
@@ -36,6 +36,6 @@ export default function CustomSettingsSelect({ fieldId, config }: CustomSettings
   );
 }
 
-function isCustomSelectValue(value: FieldCustomProp['value']): value is string {
+function isCustomSelectValue(value: unknown): value is string {
   return typeof value === 'string';
 }

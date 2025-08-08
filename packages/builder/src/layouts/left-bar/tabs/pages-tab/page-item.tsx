@@ -9,7 +9,6 @@ import {
 import { type CSSProperties, useEffect, useRef, useState } from 'react';
 import { FaCheck, FaTrash, FaXmark } from 'react-icons/fa6';
 import { MdOutlineDragIndicator } from 'react-icons/md';
-import type { PageNameProperty } from '../../../../../../core/lib/types/property-definition';
 import { useSchemaStore } from '../../../../lib/state/schema.state';
 import { cn } from '../../../../lib/utils';
 
@@ -29,7 +28,7 @@ export default function PageItem({ page, onDelete, isCurrentPage, onSelect }: Pa
   const [editMode, setEditMode] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const fieldProperty = useSchemaStore((state) =>
-    state.getFieldProperty(page.id, PropertyType.PAGE_NAME),
+    state.getFieldProperty(page.id, PropertyType.NAME),
   );
   const updateFieldProperty = useSchemaStore((state) => state.updateFieldProperty);
   const name = getValue(fieldProperty?.value);
@@ -49,9 +48,9 @@ export default function PageItem({ page, onDelete, isCurrentPage, onSelect }: Pa
 
   const handleRename = () => {
     updateFieldProperty(page.id, {
-      type: PropertyType.PAGE_NAME,
+      type: PropertyType.NAME,
       value: inputName,
-    } as PageNameProperty);
+    });
 
     setEditMode(false);
   };
@@ -62,13 +61,13 @@ export default function PageItem({ page, onDelete, isCurrentPage, onSelect }: Pa
   };
 
   return (
-    <li
+    <button
       style={style}
       key={page.id}
       ref={setNodeRef}
       {...attributes}
       className={cn(
-        'group relative flex items-center justify-between px-1 py-2 hover:bg-neutral-100',
+        'group relative flex w-full items-center justify-between px-1 py-2 hover:bg-neutral-100',
         isDragging ? 'relative z-50 cursor-grabbing' : 'cursor-pointer',
         {
           'bg-neutral-200': isDragging,
@@ -145,19 +144,19 @@ export default function PageItem({ page, onDelete, isCurrentPage, onSelect }: Pa
               e.stopPropagation();
               setDeleteConfirm(true);
             }}
-            disabled={schema.form.fields.length === 1}
+            disabled={schema?.form.fields.length === 1}
             aria-label="Delete page"
           >
             <FaTrash
               className={cn('text-danger', {
-                'cursor-not-allowed opacity-50': schema.form.fields.length === 1,
+                'cursor-not-allowed opacity-50': schema?.form.fields.length === 1,
               })}
               size={12}
             />
           </button>
         )}
       </span>
-    </li>
+    </button>
   );
 }
 

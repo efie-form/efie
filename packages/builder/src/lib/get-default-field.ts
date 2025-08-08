@@ -1,17 +1,23 @@
 import type {
+  AddressFormField,
   BlockFormField,
   ButtonFormField,
+  CheckboxFormField,
   ColumnFormField,
   DateFormField,
   DateTimeFormField,
   DividerFormField,
+  EmailFormField,
   FileFormField,
+  GroupFormField,
   HeadingFormField,
   ImageFormField,
   LongTextFormField,
   MultipleChoiceFormField,
   NumberFormField,
   PageFormField,
+  PasswordFormField,
+  PhoneFormField,
   RowFormField,
   ShortTextFormField,
   SingleChoiceFormField,
@@ -55,6 +61,12 @@ interface GetDefaultFieldReturn {
   button: ButtonFormField;
   page: PageFormField;
   divider: DividerFormField;
+  address: AddressFormField;
+  checkbox: CheckboxFormField;
+  email: EmailFormField;
+  phone: PhoneFormField;
+  password: PasswordFormField;
+  group: GroupFormField;
 }
 
 export function getDefaultField<T extends FieldType>(
@@ -177,7 +189,7 @@ export function getDefaultField<T extends FieldType>({
         children: [],
         props: [
           {
-            type: PropertyType.PAGE_NAME,
+            type: PropertyType.NAME,
             value: page?.name || 'Page',
           },
         ],
@@ -361,6 +373,122 @@ export function getDefaultField<T extends FieldType>({
           },
         ],
       } satisfies GetDefaultFieldReturn[typeof FieldType.BUTTON];
+    }
+    case FieldType.ADDRESS: {
+      return {
+        id: generateId(ID_LENGTH),
+        type: FieldType.ADDRESS,
+        form: {
+          name: fieldName || '',
+        },
+        props: [
+          {
+            type: PropertyType.LABEL,
+            value: 'Address',
+          },
+          {
+            type: PropertyType.ADDRESS_FIELD,
+            value: {
+              addressLine: [{ label: 'Address Line 1' }, { label: 'Address Line 2' }],
+              city: { enabled: true, label: 'City' },
+              state: { enabled: true, label: 'State' },
+              postalCode: { enabled: true, label: 'Postal Code' },
+              country: { enabled: true, label: 'Country' },
+            },
+          },
+        ],
+      } satisfies GetDefaultFieldReturn[typeof FieldType.ADDRESS];
+    }
+    case FieldType.CHECKBOX: {
+      return {
+        id: generateId(ID_LENGTH),
+        type: FieldType.CHECKBOX,
+        form: {
+          name: fieldName || '',
+        },
+        props: [
+          {
+            type: PropertyType.LABEL,
+            value: 'Checkbox',
+          },
+        ],
+      } satisfies GetDefaultFieldReturn[typeof FieldType.CHECKBOX];
+    }
+    case FieldType.EMAIL: {
+      return {
+        id: generateId(ID_LENGTH),
+        type: FieldType.EMAIL,
+        form: {
+          name: fieldName || '',
+        },
+        props: [
+          {
+            type: PropertyType.LABEL,
+            value: 'Email',
+          },
+          {
+            type: PropertyType.PLACEHOLDER,
+            value: 'Enter your email',
+          },
+        ],
+      } satisfies GetDefaultFieldReturn[typeof FieldType.EMAIL];
+    }
+    case FieldType.PHONE: {
+      return {
+        id: generateId(ID_LENGTH),
+        type: FieldType.PHONE,
+        form: {
+          name: fieldName || '',
+        },
+        props: [
+          {
+            type: PropertyType.LABEL,
+            value: 'Phone',
+          },
+          {
+            type: PropertyType.PLACEHOLDER,
+            value: 'Enter your phone number',
+          },
+        ],
+      } satisfies GetDefaultFieldReturn[typeof FieldType.PHONE];
+    }
+    case FieldType.PASSWORD: {
+      return {
+        id: generateId(ID_LENGTH),
+        type: FieldType.PASSWORD,
+        form: {
+          name: fieldName || '',
+        },
+        props: [
+          {
+            type: PropertyType.LABEL,
+            value: 'Password',
+          },
+          {
+            type: PropertyType.PLACEHOLDER,
+            value: 'Enter your password',
+          },
+          {
+            type: PropertyType.PASSWORD_RULES, // Password Rules (UI label)
+            value: {
+              min: 8,
+              max: 64,
+              digits: { min: 1 },
+              uppercase: { min: 1 },
+              lowercase: { min: 1 },
+              special: { min: 0 },
+            },
+          },
+        ],
+      } satisfies GetDefaultFieldReturn[typeof FieldType.PASSWORD];
+    }
+    case FieldType.GROUP: {
+      return {
+        id: generateId(ID_LENGTH),
+        type: FieldType.GROUP,
+        props: [],
+        children: [],
+      } satisfies GetDefaultFieldReturn[typeof FieldType.GROUP];
     }
     default: {
       throw new Error(`Unsupported field type: ${type}`);

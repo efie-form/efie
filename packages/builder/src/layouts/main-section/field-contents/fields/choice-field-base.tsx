@@ -12,14 +12,12 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
-import type { FormField, OptionsProperty } from '@efie-form/core';
+import type { FormField, PropValueOptions } from '@efie-form/core';
 import { PropertyType } from '@efie-form/core';
 import { useRef } from 'react';
 import { useSchemaStore } from '../../../../lib/state/schema.state';
 import { getFieldProp } from '../../../../lib/utils';
 import ChoiceFieldOption from './choice-field-option';
-
-type OptionType = OptionsProperty['value'][number];
 
 interface ChoiceFieldBaseProps {
   fieldId: string;
@@ -27,7 +25,7 @@ interface ChoiceFieldBaseProps {
   inputType: 'radio' | 'checkbox';
 }
 
-const DEFAULT_OPTIONS: OptionType[] = [
+const DEFAULT_OPTIONS: PropValueOptions = [
   { label: 'Option 1', value: 'Option 1' },
   { label: 'Option 2', value: 'Option 2' },
 ];
@@ -45,7 +43,7 @@ function ChoiceFieldBase({ fieldId, field, inputType }: ChoiceFieldBaseProps) {
   );
   const options = optionsProperty?.value || DEFAULT_OPTIONS;
 
-  const updateOptions = (newOptions: OptionType[]) => {
+  const updateOptions = (newOptions: PropValueOptions) => {
     updateFieldProperty(field.id, {
       type: PropertyType.OPTIONS,
       value: newOptions,
@@ -61,7 +59,9 @@ function ChoiceFieldBase({ fieldId, field, inputType }: ChoiceFieldBaseProps) {
 
   const optionsProp = getFieldProp(field, PropertyType.OPTIONS);
   const isValueDifferent =
-    optionsProp?.value.some((option) => option.value !== option.label) || false;
+    optionsProp?.value.some(
+      (option: { label: string; value: string }) => option.value !== option.label,
+    ) || false;
 
   const handleNewOption = () => {
     const name = `Option ${options.length + 1}`;
@@ -97,7 +97,7 @@ function ChoiceFieldBase({ fieldId, field, inputType }: ChoiceFieldBaseProps) {
     updateOptions(newOptions);
   };
 
-  const handleUpdate = (index: number, value: OptionType) => {
+  const handleUpdate = (index: number, value: PropValueOptions[number]) => {
     const newOptions = [...options];
     newOptions[index] = value;
     updateOptions(newOptions);
@@ -119,10 +119,12 @@ function ChoiceFieldBase({ fieldId, field, inputType }: ChoiceFieldBaseProps) {
       <div id={`${fieldId}-options-container`} className="flex flex-col gap-0.5 px-2">
         <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
           <SortableContext
-            items={options.map((_, index) => index.toString())}
+            items={options.map((_: { label: string; value: string }, index: number) =>
+              index.toString(),
+            )}
             strategy={verticalListSortingStrategy}
           >
-            {options.map((option, index) => (
+            {options.map((option: { label: string; value: string }, index: number) => (
               <ChoiceFieldOption
                 key={index}
                 option={option}
@@ -140,12 +142,19 @@ function ChoiceFieldBase({ fieldId, field, inputType }: ChoiceFieldBaseProps) {
       </div>
       <div className="mt-2 flex items-center gap-2 px-2">
         <input type={inputType} disabled />
-        <p
+        <button
+          type="button"
           className="typography-body3 cursor-text text-neutral-400 hover:text-neutral-500"
           onClick={handleNewOption}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              handleNewOption();
+            }
+          }}
         >
           Add option
-        </p>
+        </button>
       </div>
     </div>
   );

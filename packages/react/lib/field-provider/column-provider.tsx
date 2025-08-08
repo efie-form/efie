@@ -12,7 +12,7 @@ interface ColumnProviderProps extends Partial<FieldPropsMap> {
 function ColumnProvider({ field, Component, ...props }: ColumnProviderProps) {
   if (!Component) return <></>;
 
-  const width = field.props.find((prop) => prop.type === PropertyType.WIDTH);
+  const width = field.props.find((prop) => prop.type === PropertyType.COLUMN_WIDTH);
 
   // Extract width value safely
   const columnWidth = sizeToStyle(width?.value);

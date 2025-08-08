@@ -8,6 +8,11 @@ export const FormInputType = {
   TIME: 'time',
   DATE_TIME: 'date_time',
   FILE: 'file',
+  EMAIL: 'email',
+  PHONE: 'phone',
+  CHECKBOX: 'checkbox',
+  ADDRESS: 'address',
+  PASSWORD: 'password',
 } as const;
 
 export const FormStaticType = {
@@ -18,6 +23,7 @@ export const FormStaticType = {
 
 export const FormLayoutType = {
   ROW: 'row',
+  GROUP: 'group',
   COLUMN: 'column',
   BLOCK: 'block',
   PAGE: 'page',

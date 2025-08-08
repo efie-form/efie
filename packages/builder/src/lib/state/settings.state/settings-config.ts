@@ -77,6 +77,9 @@ const settingsConfig: FieldsConfigsMap = {
   [FieldType.BLOCK]: {
     properties: [],
   },
+  [FieldType.GROUP]: {
+    properties: [],
+  },
   [FieldType.PAGE]: {
     properties: [],
   },
@@ -126,6 +129,41 @@ const settingsConfig: FieldsConfigsMap = {
         default: { label: 'Medium', size: '1rem' },
       },
     },
+  },
+  [FieldType.ADDRESS]: {
+    properties: [
+      { type: PropertyType.LABEL, label: 'Label' },
+      { type: PropertyType.REQUIRED, label: 'Required' },
+      { type: PropertyType.ADDRESS_FIELD, label: 'Address Field' },
+    ],
+  },
+  [FieldType.CHECKBOX]: {
+    properties: [
+      { type: PropertyType.LABEL, label: 'Label' },
+      { type: PropertyType.REQUIRED, label: 'Required' },
+    ],
+  },
+  [FieldType.EMAIL]: {
+    properties: [
+      { type: PropertyType.LABEL, label: 'Label' },
+      { type: PropertyType.PLACEHOLDER, label: 'Input Placeholder' },
+      { type: PropertyType.REQUIRED, label: 'Required' },
+    ],
+  },
+  [FieldType.PHONE]: {
+    properties: [
+      { type: PropertyType.LABEL, label: 'Label' },
+      { type: PropertyType.PLACEHOLDER, label: 'Input Placeholder' },
+      { type: PropertyType.REQUIRED, label: 'Required' },
+    ],
+  },
+  [FieldType.PASSWORD]: {
+    properties: [
+      { type: PropertyType.LABEL, label: 'Label' },
+      { type: PropertyType.PLACEHOLDER, label: 'Input Placeholder' },
+      { type: PropertyType.REQUIRED, label: 'Required' },
+      { type: PropertyType.PASSWORD_RULES, label: 'Password Rules' },
+    ],
   },
 };
 

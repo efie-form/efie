@@ -10,19 +10,16 @@ interface RowProviderProps extends Partial<FieldPropsMap> {
 }
 
 function RowProvider({ field, Component, ...props }: RowProviderProps) {
-  if (!Component) return <></>;
+  if (!Component) return null;
 
-  return createElement(Component, {
-    id: field.id,
-    field,
-    children: (
-      <>
-        {field.children.map((field) => (
-          <RenderField key={field.id} field={field} {...props} />
-        ))}
-      </>
-    ),
-  });
+  return createElement(
+    Component,
+    {
+      id: field.id,
+      field,
+    },
+    field.children.map((child) => <RenderField key={child.id} field={child} {...props} />),
+  );
 }
 
 export default RowProvider;

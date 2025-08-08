@@ -78,7 +78,7 @@ function RenderField({ field, ...props }: RenderFieldProps) {
       return <PageProvider field={field} Component={props.page} {...props} />;
     }
     default: {
-      return <></>;
+      return null;
     }
   }
 }

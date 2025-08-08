@@ -1,4 +1,4 @@
-import type { FieldCustomConfigBoolean, FieldCustomProp } from '@efie-form/core';
+import type { FieldCustomConfigBoolean } from '@efie-form/core';
 import { Switch } from '../../../components/form';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import SettingsFieldHorizontal from '../property-layouts/settings-field-horizontal';
@@ -13,7 +13,8 @@ export default function CustomSettingsBoolean({ fieldId, config }: CustomSetting
     state.findFieldCustomProperty(fieldId, config.id),
   );
   const updateFieldProperty = useSchemaStore((state) => state.updateFieldCustomProperty);
-  const value = isCustomBooleanValue(fieldProperty?.value) ? fieldProperty.value : false;
+  const rawValue = fieldProperty?.value;
+  const value = rawValue !== undefined && isCustomBooleanValue(rawValue) ? rawValue : false;
 
   return (
     <SettingsFieldHorizontal label={config.label} divider>
@@ -32,6 +33,6 @@ export default function CustomSettingsBoolean({ fieldId, config }: CustomSetting
   );
 }
 
-function isCustomBooleanValue(value: FieldCustomProp['value']): value is boolean {
+function isCustomBooleanValue(value: unknown): value is boolean {
   return typeof value === 'boolean';
 }
