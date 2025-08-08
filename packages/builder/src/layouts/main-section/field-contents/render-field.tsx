@@ -20,6 +20,7 @@ import { useSchemaStore } from '../../../lib/state/schema.state';
 import { useSettingsStore } from '../../../lib/state/settings.state';
 import { cn } from '../../../lib/utils';
 import {
+  AddressField,
   BlockField,
   ButtonField,
   DateField,
@@ -252,7 +253,7 @@ function FieldItem({ field }: FieldItemProps): JSX.Element | never {
       return <BlockField field={field} />;
     }
     case FieldType.ADDRESS: {
-      return <div className="">Address field</div>;
+      return <AddressField field={field} />;
     }
     case FieldType.PASSWORD: {
       return <span>Password</span>;

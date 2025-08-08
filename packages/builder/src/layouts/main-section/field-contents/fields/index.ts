@@ -1,3 +1,4 @@
+export { default as AddressField } from './address-field';
 export { default as BlockField } from './block-field';
 export { default as ButtonField } from './button-field';
 export { default as ColumnField } from './column-field';
