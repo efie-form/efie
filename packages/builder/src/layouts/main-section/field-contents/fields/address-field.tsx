@@ -1,6 +1,5 @@
 import { type AddressFormField, PropertyType } from '@efie-form/core';
 import { useSchemaStore } from '../../../../lib/state/schema.state';
-import { getFieldProp } from '../../../../lib/utils';
 
 interface AddressFieldProps {
   field: AddressFormField;
@@ -36,7 +35,7 @@ function AddressField({ field }: AddressFieldProps) {
       {addressConfig && (
         <div className="flex flex-col gap-2">
           {/* Address Lines */}
-          {addressConfig.addressLine.map((line, idx) => (
+          {addressConfig.addressLine.map((line: { label: string }, idx: number) => (
             <input
               key={idx}
               placeholder={line.label}

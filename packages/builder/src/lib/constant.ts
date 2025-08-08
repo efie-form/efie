@@ -21,7 +21,6 @@ export const FIELDS_NAME = {
   [FieldType.ADDRESS]: 'Address',
   [FieldType.CHECKBOX]: 'Checkbox',
   [FieldType.EMAIL]: 'Email',
-  [FieldType.URL]: 'URL',
   [FieldType.PHONE]: 'Phone',
   [FieldType.PASSWORD]: 'Password',
   [FieldType.GROUP]: 'Group',

@@ -22,7 +22,7 @@ interface RenderSettingsProps {
 }
 
 function RenderSettings({ field }: RenderSettingsProps) {
-  if (!field) return <></>;
+  if (!field) return null;
 
   switch (field?.type) {
     case FieldType.DATE_TIME: {
@@ -35,7 +35,7 @@ function RenderSettings({ field }: RenderSettingsProps) {
       return <LongTextSettings field={field} />;
     }
     case FieldType.COLUMN: {
-      return <></>;
+      return null;
     }
     case FieldType.BLOCK: {
       return <BlockSettings field={field} />;
@@ -83,7 +83,7 @@ export default RenderSettings;
 
 interface SharedSettingsProps {
   field: FormField;
-  fieldType: FieldType;
+  fieldType: (typeof FieldType)[keyof typeof FieldType];
 }
 
 function SharedSettings({ field, fieldType }: SharedSettingsProps) {

@@ -97,20 +97,20 @@ export type {
   FieldCustomPropString,
   FieldSystemProp,
   FieldSystemPropAccept,
+  FieldSystemPropAddressField,
   FieldSystemPropButtonAction,
   FieldSystemPropColumnWidth,
   FieldSystemPropFieldName,
   FieldSystemPropHeadingContent,
   FieldSystemPropImageSrc,
   FieldSystemPropLabel,
+  FieldSystemPropName,
   FieldSystemPropOptions,
-  FieldSystemPropPageName,
-  FieldSystemPropPasswordRules, // renamed
+  FieldSystemPropPasswordRules,
   FieldSystemPropPlaceholder,
   FieldSystemPropRequired,
   PropertyDefinition,
 } from './types/property-definition';
-export type { RootRule } from './types/root-rule.type';
 export type {
   FieldConfig,
   FieldConfigAddress,

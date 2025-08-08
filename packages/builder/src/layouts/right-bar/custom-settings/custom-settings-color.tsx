@@ -1,10 +1,4 @@
-import {
-  type Color,
-  type FieldCustomConfigColor,
-  type FieldCustomProp,
-  getColorObject,
-  isColor,
-} from '@efie-form/core';
+import { type Color, type FieldCustomConfigColor, getColorObject, isColor } from '@efie-form/core';
 import { ColorPicker } from '../../../components/form';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import SettingsFieldHorizontal from '../property-layouts/settings-field-horizontal';
@@ -40,6 +34,6 @@ export default function CustomSettingsColor({ fieldId, config }: CustomSettingsC
   );
 }
 
-function isCustomColorValue(value: FieldCustomProp['value']): value is Color {
+function isCustomColorValue(value: unknown): value is Color {
   return isColor(value);
 }

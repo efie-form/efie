@@ -154,17 +154,15 @@ function ContentItem({ content, options }: ContentItemProps) {
     }
     default: {
       console.warn('Unknown content type:', content.type);
-      return <></>;
+      return null;
     }
   }
 }
 
 interface Mark {
   type: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  attrs?: Record<string, any>;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [key: string]: any;
+  attrs?: Record<string, unknown>;
+  [key: string]: unknown;
 }
 
 interface MarksProps {
@@ -266,9 +264,12 @@ function Marks({ marks, remainingMarks, textContent, options }: MarksProps) {
     }
     case 'link': {
       return options?.link({
-        href: currentMark.attrs?.href || '#',
-        target: currentMark.attrs?.target || '_self',
-        rel: currentMark.attrs?.rel || 'noopener noreferrer',
+        href: typeof currentMark.attrs?.href === 'string' ? currentMark.attrs.href : '',
+        target: typeof currentMark.attrs?.target === 'string' ? currentMark.attrs.target : '_blank',
+        rel:
+          typeof currentMark.attrs?.rel === 'string'
+            ? currentMark.attrs.rel
+            : 'noopener noreferrer',
         children: (
           <Marks
             marks={restMarks}
@@ -279,43 +280,58 @@ function Marks({ marks, remainingMarks, textContent, options }: MarksProps) {
         ),
       });
     }
+    default: {
+      return (
+        <Marks
+          marks={restMarks}
+          remainingMarks={remainingMarks}
+          textContent={textContent}
+          options={options}
+        />
+      );
+    }
   }
 }
 
-function getAttributes(marks: JSONContent['marks']) {
-  if (!marks?.length) return {};
+function getStyles(attrs?: Record<string, unknown>) {
+  const style: Record<string, string> = {};
+  if (!attrs) return style;
+  if (typeof attrs.fontSize === 'string') {
+    style.fontSize = attrs.fontSize;
+  }
+  if (typeof attrs.color === 'string') {
+    style.color = attrs.color;
+  }
+  if (typeof attrs.textAlign === 'string') {
+    style.textAlign = attrs.textAlign;
+  }
+  return style;
+}
 
-  let style: React.CSSProperties = {};
-  const restMarks = [];
+function getAttributes(marks?: Mark[]) {
+  if (!marks) return { style: {}, restMarks: [] as Mark[] };
+  const style: Record<string, string> = {};
+  const restMarks: Mark[] = [];
+
   for (const mark of marks) {
-    switch (mark.type) {
-      case 'textStyle': {
-        style = {
-          ...style,
-          ...getStyles(mark.attrs),
-        };
-        break;
+    if (mark.type === 'textStyle') {
+      if (typeof mark.attrs?.fontSize === 'string') {
+        style.fontSize = mark.attrs.fontSize;
       }
-      default: {
-        restMarks.push(mark);
-        break;
+      if (typeof mark.attrs?.color === 'string') {
+        style.color = mark.attrs.color;
       }
+    } else if (mark.type !== 'bold') {
+      restMarks.push(mark);
+    } else {
+      restMarks.push(mark);
     }
   }
 
   return { style, restMarks };
 }
 
-function getStyles(attr: JSONContent['attrs']) {
-  if (!attr) return {};
-  const styles: React.CSSProperties = {};
-  if (attr.textAlign) styles.textAlign = attr.textAlign;
-  if (attr.color) styles.color = attr.color;
-  if (attr.fontSize) styles.fontSize = attr.fontSize;
-  if (attr.fontFamily) styles.fontFamily = attr.fontFamily;
-  return styles;
-}
-
+// Render helpers
 const renderText = ({ text, style }: RenderTextProps) => {
   return <span style={style}>{text}</span>;
 };

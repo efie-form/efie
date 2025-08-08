@@ -59,7 +59,9 @@ function ChoiceFieldBase({ fieldId, field, inputType }: ChoiceFieldBaseProps) {
 
   const optionsProp = getFieldProp(field, PropertyType.OPTIONS);
   const isValueDifferent =
-    optionsProp?.value.some((option) => option.value !== option.label) || false;
+    optionsProp?.value.some(
+      (option: { label: string; value: string }) => option.value !== option.label,
+    ) || false;
 
   const handleNewOption = () => {
     const name = `Option ${options.length + 1}`;
@@ -117,10 +119,12 @@ function ChoiceFieldBase({ fieldId, field, inputType }: ChoiceFieldBaseProps) {
       <div id={`${fieldId}-options-container`} className="flex flex-col gap-0.5 px-2">
         <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
           <SortableContext
-            items={options.map((_, index) => index.toString())}
+            items={options.map((_: { label: string; value: string }, index: number) =>
+              index.toString(),
+            )}
             strategy={verticalListSortingStrategy}
           >
-            {options.map((option, index) => (
+            {options.map((option: { label: string; value: string }, index: number) => (
               <ChoiceFieldOption
                 key={index}
                 option={option}
@@ -138,12 +142,19 @@ function ChoiceFieldBase({ fieldId, field, inputType }: ChoiceFieldBaseProps) {
       </div>
       <div className="mt-2 flex items-center gap-2 px-2">
         <input type={inputType} disabled />
-        <p
+        <button
+          type="button"
           className="typography-body3 cursor-text text-neutral-400 hover:text-neutral-500"
           onClick={handleNewOption}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              handleNewOption();
+            }
+          }}
         >
           Add option
-        </p>
+        </button>
       </div>
     </div>
   );

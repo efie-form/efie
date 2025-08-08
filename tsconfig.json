@@ -15,6 +15,24 @@
     // Linting
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
-  }
+    "noFallthroughCasesInSwitch": true,
+
+    // Added for monorepo type checking with React/JSX
+    "jsx": "react-jsx",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "baseUrl": ".",
+    "paths": {
+      "@efie-form/core": ["packages/core/lib"],
+      "@efie-form/builder": ["packages/builder/src"],
+      "@efie-form/react": ["packages/react/lib"]
+    }
+  },
+  "exclude": ["**/dist", "node_modules"],
+  "include": [
+    "packages/**/*.ts",
+    "packages/**/*.tsx",
+    "scripts/**/*.ts",
+    "demo/**/*.ts",
+    "demo/**/*.tsx"
+  ]
 }

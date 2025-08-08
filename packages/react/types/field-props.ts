@@ -134,16 +134,16 @@ export interface BlockFieldProps extends BaseFieldProps {
 }
 
 export interface RowFieldProps extends BaseFieldProps {
-  children: ReactNode;
+  children?: React.ReactNode;
 }
 
 export interface ColumnFieldProps extends BaseFieldProps {
-  children: ReactNode;
+  children?: React.ReactNode;
   width: string;
 }
 
 export interface PageFieldProps extends BaseFieldProps {
-  children: ReactNode;
+  children?: React.ReactNode;
 }
 
 export type FieldPropsMap = {

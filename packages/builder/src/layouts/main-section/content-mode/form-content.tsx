@@ -28,7 +28,7 @@ function FormContent() {
     };
   }, [clearSelectedFieldId]);
 
-  if (!selectedPage || selectedPage.type !== FieldType.PAGE) return <></>;
+  if (!selectedPage || selectedPage.type !== FieldType.PAGE) return null;
   const hasChildren = selectedPage.children.length > 0;
 
   return (

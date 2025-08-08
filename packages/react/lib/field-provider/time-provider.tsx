@@ -11,9 +11,12 @@ interface TimeProviderProps {
 }
 
 function TimeProvider({ field, Component, value = '', onChange = () => {} }: TimeProviderProps) {
-  if (!Component) return <></>;
+  if (!Component) return null;
 
-  const label = field.props.find((prop) => prop.type === PropertyType.LABEL);
+  const label = field.props.find(
+    (prop): prop is { type: typeof PropertyType.LABEL; value: string } =>
+      prop.type === PropertyType.LABEL,
+  );
 
   return createElement(Component, {
     id: field.id,
