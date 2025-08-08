@@ -77,6 +77,9 @@ const settingsConfig: FieldsConfigsMap = {
   [FieldType.BLOCK]: {
     properties: [],
   },
+  [FieldType.GROUP]: {
+    properties: [],
+  },
   [FieldType.PAGE]: {
     properties: [],
   },

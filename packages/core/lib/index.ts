@@ -123,6 +123,7 @@ export type {
   FieldConfigDivider,
   FieldConfigEmail, // added
   FieldConfigFile,
+  FieldConfigGroup,
   FieldConfigHeading,
   FieldConfigImage,
   FieldConfigLongText,

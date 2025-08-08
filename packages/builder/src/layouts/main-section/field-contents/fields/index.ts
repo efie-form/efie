@@ -8,6 +8,7 @@ export { default as DateTimeField } from './date-time-field';
 export { default as DividerField } from './divider-field';
 export { default as EmailField } from './email-field';
 export { default as FileField } from './file-field';
+export { default as GroupField } from './group-field';
 export { default as HeadingField } from './heading-field';
 export { default as ImageField } from './image-field';
 export { default as LongTextField } from './long-text-field';

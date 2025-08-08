@@ -36,6 +36,7 @@ import {
   DividerField,
   EmailField,
   FileField,
+  GroupField,
   HeadingField,
   ImageField,
   LongTextField,
@@ -279,7 +280,7 @@ function FieldItem({ field }: FieldItemProps): JSX.Element | never {
       return <CheckboxField field={field as CheckboxFormField} />;
     }
     case FieldType.GROUP: {
-      return <span>Group</span>;
+      return <GroupField field={field} />;
     }
     case FieldType.PAGE: {
       return <span>Page</span>;

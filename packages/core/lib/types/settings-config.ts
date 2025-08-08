@@ -209,6 +209,10 @@ export interface FieldConfigBlock {
   properties: Array<FieldSystemConfigColumnWidth | FieldCustomConfig>;
 }
 
+export interface FieldConfigGroup {
+  properties: Array<FieldCustomConfig>;
+}
+
 export interface FieldConfigPage {
   properties: Array<FieldCustomConfig>;
 }
@@ -328,6 +332,7 @@ export interface FieldsConfigsMap {
   row: FieldConfigRow;
   column: FieldConfigColumn;
   block: FieldConfigBlock;
+  group: FieldConfigGroup;
   page: FieldConfigPage;
   button: FieldConfigButton;
   address: FieldConfigAddress;
