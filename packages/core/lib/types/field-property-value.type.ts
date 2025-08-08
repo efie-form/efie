@@ -15,15 +15,14 @@ export type PropValueOptions = {
   value: string;
 }[];
 
-// flattened password policy value (no rules wrapper)
+// combined password rules + length value
 export interface PropValuePasswordPolicy {
+  min?: number; // total length min
+  max?: number; // total length max
   digits?: { min?: number; max?: number };
   uppercase?: { min?: number; max?: number };
   lowercase?: { min?: number; max?: number };
-  special?: {
-    min?: number;
-    max?: number;
-  };
+  special?: { min?: number; max?: number };
 }
 
 type Direction = 'top' | 'right' | 'bottom' | 'left';
@@ -97,4 +96,4 @@ export type PropValue =
   | PropValueJsonContent
   | PropValueButtonAction
   | PropValueAddressField
-  | PropValuePasswordPolicy; // added
+  | PropValuePasswordPolicy; // combined

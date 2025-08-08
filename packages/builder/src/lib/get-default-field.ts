@@ -469,12 +469,14 @@ export function getDefaultField<T extends FieldType>({
             value: 'Enter your password',
           },
           {
-            type: PropertyType.PASSWORD_POLICY,
+            type: PropertyType.PASSWORD_RULES, // Password Rules (UI label)
             value: {
+              min: 8,
+              max: 64,
               digits: { min: 1 },
               uppercase: { min: 1 },
               lowercase: { min: 1 },
-              special: { min: 1 },
+              special: { min: 0 },
             },
           },
         ],

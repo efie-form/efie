@@ -34,7 +34,7 @@ export type FieldSystemProp =
   | FieldSystemPropButtonAction
   | FieldSystemPropPageName
   | FieldSystemPropAddressField
-  | FieldSystemPropPasswordPolicy; // added
+  | FieldSystemPropPasswordRules; // renamed
 
 export interface FieldSystemPropLabel {
   type: typeof PropertyType.LABEL;
@@ -96,9 +96,9 @@ export interface FieldSystemPropAddressField {
   value: PropValueAddressField;
 }
 
-export interface FieldSystemPropPasswordPolicy {
-  // added
-  type: typeof PropertyType.PASSWORD_POLICY;
+export interface FieldSystemPropPasswordRules {
+  // renamed
+  type: typeof PropertyType.PASSWORD_RULES; // renamed
   value: PropValuePasswordPolicy;
 }
 

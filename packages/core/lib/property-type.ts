@@ -11,7 +11,7 @@ export const PropertyType = {
   BUTTON_ACTION: 'button_action',
   PAGE_NAME: 'page_name',
   ADDRESS_FIELD: 'address_field',
-  PASSWORD_POLICY: 'password_policy', // added
+  PASSWORD_RULES: 'password_rules', // renamed
   CUSTOM: 'custom',
 } as const;
 

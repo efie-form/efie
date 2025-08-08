@@ -14,7 +14,7 @@ import SystemSettingsFieldName from './system-settings/system-settings-field-nam
 import SystemSettingsImageSrc from './system-settings/system-settings-image-src';
 import SystemSettingsLabel from './system-settings/system-settings-label';
 import SystemSettingsOptions from './system-settings/system-settings-options';
-import SystemSettingsPasswordPolicy from './system-settings/system-settings-password-policy';
+import SystemSettingsPasswordRules from './system-settings/system-settings-password-policy'; // renamed for label usage
 import SystemSettingsPlaceholder from './system-settings/system-settings-placeholder';
 
 interface FieldSettingsProps {
@@ -93,8 +93,8 @@ export default function FieldSettings({
       case PropertyType.ADDRESS_FIELD: {
         return <SystemSettingsAddressField key={item.type} fieldId={fieldId} config={item} />;
       }
-      case PropertyType.PASSWORD_POLICY: {
-        return <SystemSettingsPasswordPolicy key={item.type} fieldId={fieldId} config={item} />;
+      case PropertyType.PASSWORD_RULES: {
+        return <SystemSettingsPasswordRules key={item.type} fieldId={fieldId} config={item} />;
       }
       default: {
         return item;

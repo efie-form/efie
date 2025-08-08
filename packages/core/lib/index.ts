@@ -54,7 +54,7 @@ export type {
   PropValueNumber,
   PropValueOptions,
   PropValuePadding,
-  PropValuePasswordPolicy, // added
+  PropValuePasswordPolicy, // restored export
   PropValueSize,
   PropValueString,
 } from './types/field-property-value.type';
@@ -105,7 +105,7 @@ export type {
   FieldSystemPropLabel,
   FieldSystemPropOptions,
   FieldSystemPropPageName,
-  FieldSystemPropPasswordPolicy, // added
+  FieldSystemPropPasswordRules, // renamed
   FieldSystemPropPlaceholder,
   FieldSystemPropRequired,
   PropertyDefinition,
@@ -151,7 +151,7 @@ export type {
   FieldSystemConfigImageSrc,
   FieldSystemConfigLabel,
   FieldSystemConfigOptions,
-  FieldSystemConfigPasswordPolicy, // added
+  FieldSystemConfigPasswordRules, // renamed
   FieldSystemConfigPlaceholder,
   FieldSystemConfigRequired,
   FieldsConfigsMap,
