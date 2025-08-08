@@ -159,6 +159,7 @@ const settingsConfig: FieldsConfigsMap = {
       { type: PropertyType.LABEL, label: 'Label' },
       { type: PropertyType.PLACEHOLDER, label: 'Input Placeholder' },
       { type: PropertyType.REQUIRED, label: 'Required' },
+      { type: PropertyType.PASSWORD_POLICY, label: 'Password Policy' },
     ],
   },
 };

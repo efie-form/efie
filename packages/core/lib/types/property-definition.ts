@@ -8,6 +8,7 @@ import type {
   PropValueJsonContent,
   PropValueNumber,
   PropValueOptions,
+  PropValuePasswordPolicy, // added
   PropValueSize,
   PropValueString,
 } from './field-property-value.type';
@@ -32,7 +33,8 @@ export type FieldSystemProp =
   | FieldSystemPropHeadingContent
   | FieldSystemPropButtonAction
   | FieldSystemPropPageName
-  | FieldSystemPropAddressField;
+  | FieldSystemPropAddressField
+  | FieldSystemPropPasswordPolicy; // added
 
 export interface FieldSystemPropLabel {
   type: typeof PropertyType.LABEL;
@@ -92,6 +94,12 @@ export interface FieldSystemPropPageName {
 export interface FieldSystemPropAddressField {
   type: typeof PropertyType.ADDRESS_FIELD;
   value: PropValueAddressField;
+}
+
+export interface FieldSystemPropPasswordPolicy {
+  // added
+  type: typeof PropertyType.PASSWORD_POLICY;
+  value: PropValuePasswordPolicy;
 }
 
 /**

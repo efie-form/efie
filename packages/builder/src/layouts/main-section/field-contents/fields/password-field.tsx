@@ -28,6 +28,7 @@ export default function PasswordField({ field }: PasswordFieldProps) {
       />
       <input
         type="password"
+        autoComplete="new-password"
         placeholder={placeholderProp?.value}
         className="typography-body3 w-full rounded-md border border-neutral-300 px-4 py-2 outline-primary"
       />

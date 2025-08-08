@@ -468,6 +468,15 @@ export function getDefaultField<T extends FieldType>({
             type: PropertyType.PLACEHOLDER,
             value: 'Enter your password',
           },
+          {
+            type: PropertyType.PASSWORD_POLICY,
+            value: {
+              digits: { min: 1 },
+              uppercase: { min: 1 },
+              lowercase: { min: 1 },
+              special: { min: 1 },
+            },
+          },
         ],
       } satisfies GetDefaultFieldReturn[typeof FieldType.PASSWORD];
     }

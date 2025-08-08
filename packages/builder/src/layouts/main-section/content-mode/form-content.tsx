@@ -32,7 +32,7 @@ function FormContent() {
   const hasChildren = selectedPage.children.length > 0;
 
   return (
-    <div id="form-zone" className="h-full">
+    <form id="form-zone" className="h-full">
       <div className="h-full min-h-full">
         <div className="flex h-full flex-col p-4">
           <div
@@ -66,7 +66,7 @@ function FormContent() {
           )}
         </div>
       </div>
-    </div>
+    </form>
   );
 }
 

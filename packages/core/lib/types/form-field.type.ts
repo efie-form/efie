@@ -12,6 +12,7 @@ import type {
   FieldSystemPropLabel,
   FieldSystemPropOptions,
   FieldSystemPropPageName,
+  FieldSystemPropPasswordPolicy, // added
   FieldSystemPropPlaceholder,
   FieldSystemPropRequired,
 } from './property-definition';
@@ -151,6 +152,7 @@ export interface PasswordFormField extends BaseFormField, FormInputField {
     | FieldSystemPropLabel
     | FieldSystemPropPlaceholder
     | FieldSystemPropRequired
+    | FieldSystemPropPasswordPolicy // added
     | FieldCustomProp
   )[];
 }

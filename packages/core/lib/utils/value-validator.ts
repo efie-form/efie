@@ -11,6 +11,7 @@ import type {
   PropValueMargin,
   PropValueNumber,
   PropValueOptions,
+  PropValuePasswordPolicy, // added
   PropValueSize,
   PropValueString,
 } from '../types/field-property-value.type';
@@ -140,6 +141,18 @@ export function isButtonActionValue(value?: PropValue): value is PropValueButton
       value.action === 'submit' ||
       (value.action === 'navigate' && 'pageId' in value && typeof value.pageId === 'string'))
   );
+}
+
+export function isPasswordPolicyValue(value?: PropValue): value is PropValuePasswordPolicy {
+  if (!value || typeof value !== 'object') return false;
+  const v = value as PropValuePasswordPolicy;
+  const checkRule = (r?: { min?: number; max?: number }) =>
+    !r || [r.min, r.max].every((n) => n === undefined || (typeof n === 'number' && n >= 0));
+  if (!checkRule(v.digits)) return false;
+  if (!checkRule(v.uppercase)) return false;
+  if (!checkRule(v.lowercase)) return false;
+  if (v.special && !checkRule(v.special)) return false;
+  return true;
 }
 
 export function isJsonContentValue(value?: PropValue): value is PropValueString {

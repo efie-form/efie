@@ -58,6 +58,11 @@ export interface FieldSystemConfigAddressField {
   label: string;
 }
 
+export interface FieldSystemConfigPasswordPolicy {
+  type: typeof PropertyType.PASSWORD_POLICY;
+  label: string;
+}
+
 interface FieldCustomConfigBase {
   id: string;
   type: typeof PropertyType.CUSTOM;
@@ -109,7 +114,8 @@ export type FieldSystemConfig =
   | FieldSystemConfigOptions
   | FieldSystemConfigImageSrc
   | FieldSystemConfigButtonAction
-  | FieldSystemConfigColumnWidth;
+  | FieldSystemConfigColumnWidth
+  | FieldSystemConfigPasswordPolicy;
 
 export type FieldCustomConfig =
   | FieldCustomConfigText
@@ -246,6 +252,7 @@ export interface FieldConfigPassword {
     | FieldSystemConfigLabel
     | FieldSystemConfigPlaceholder
     | FieldSystemConfigRequired
+    | FieldSystemConfigPasswordPolicy
     | FieldCustomConfig
   >;
 }
