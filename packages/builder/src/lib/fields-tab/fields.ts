@@ -1,10 +1,11 @@
 import { FieldType } from '@efie-form/core';
 import type { ElementType } from 'react';
-import { BsTextareaResize } from 'react-icons/bs';
-import { FaImage } from 'react-icons/fa6';
+import { AiOutlineGroup } from 'react-icons/ai';
+import { BsPhone, BsPhoneFill, BsTextareaResize } from 'react-icons/bs';
+import { FaImage, FaMapLocationDot } from 'react-icons/fa6';
 import { HiOutlineViewColumns } from 'react-icons/hi2';
 import { LuCalendar, LuCalendarClock, LuClock, LuFormInput, LuHash } from 'react-icons/lu';
-import { MdCheckBox, MdRadioButtonChecked, MdUpload } from 'react-icons/md';
+import { MdCheckBox, MdMail, MdPassword, MdRadioButtonChecked, MdUpload } from 'react-icons/md';
 import { RiPageSeparator, RiText } from 'react-icons/ri';
 import { RxButton, RxDividerHorizontal } from 'react-icons/rx';
 import { FIELDS_NAME } from '../constant';
@@ -41,6 +42,12 @@ export const fieldIcons: Record<FieldType, ElementType> = {
   [FieldType.BLOCK]: RiPageSeparator,
   [FieldType.COLUMN]: HiOutlineViewColumns,
   [FieldType.PAGE]: RiPageSeparator,
+  [FieldType.ADDRESS]: FaMapLocationDot,
+  [FieldType.CHECKBOX]: MdCheckBox,
+  [FieldType.EMAIL]: MdMail,
+  [FieldType.PHONE]: BsPhoneFill,
+  [FieldType.PASSWORD]: MdPassword,
+  [FieldType.GROUP]: AiOutlineGroup,
 };
 
 const inputsGroup: FieldsTabGroup = {
@@ -92,6 +99,31 @@ const inputsGroup: FieldsTabGroup = {
       label: FIELDS_NAME[FieldType.FILE],
       Icon: fieldIcons[FieldType.FILE],
     },
+    {
+      type: FieldType.ADDRESS,
+      label: FIELDS_NAME[FieldType.ADDRESS],
+      Icon: fieldIcons[FieldType.ADDRESS],
+    },
+    {
+      type: FieldType.CHECKBOX,
+      label: FIELDS_NAME[FieldType.CHECKBOX],
+      Icon: fieldIcons[FieldType.CHECKBOX],
+    },
+    {
+      type: FieldType.EMAIL,
+      label: FIELDS_NAME[FieldType.EMAIL],
+      Icon: fieldIcons[FieldType.EMAIL],
+    },
+    {
+      type: FieldType.PHONE,
+      label: FIELDS_NAME[FieldType.PHONE],
+      Icon: fieldIcons[FieldType.PHONE],
+    },
+    {
+      type: FieldType.PASSWORD,
+      label: FIELDS_NAME[FieldType.PASSWORD],
+      Icon: fieldIcons[FieldType.PASSWORD],
+    },
   ],
 };
 
@@ -126,6 +158,11 @@ const layoutGroup: FieldsTabGroup = {
   id: 'layout',
   label: 'Layout',
   children: [
+    {
+      type: FieldType.GROUP,
+      label: FIELDS_NAME[FieldType.GROUP],
+      Icon: fieldIcons[FieldType.GROUP],
+    },
     {
       type: FieldType.ROW,
       label: FIELDS_NAME[FieldType.ROW],

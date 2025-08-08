@@ -124,16 +124,6 @@ export interface PhoneFormField extends BaseFormField, FormInputField {
   )[];
 }
 
-export interface URLFormField extends BaseFormField, FormInputField {
-  type: typeof FieldType.URL;
-  props: (
-    | FieldSystemPropLabel
-    | FieldSystemPropPlaceholder
-    | FieldSystemPropRequired
-    | FieldCustomProp
-  )[];
-}
-
 export interface CheckboxFormField extends BaseFormField, FormInputField {
   type: typeof FieldType.CHECKBOX;
   props: (
@@ -183,6 +173,12 @@ export interface ColumnFormField extends BaseFormField {
   props: (FieldSystemPropColumnWidth | FieldCustomProp)[];
 }
 
+export interface GroupFormField extends BaseFormField {
+  type: typeof FieldType.GROUP;
+  children: FormField[];
+  props: FieldCustomProp[];
+}
+
 export interface HeadingFormField extends BaseFormField {
   type: typeof FieldType.HEADING;
   props: (FieldSystemPropHeadingContent | FieldCustomProp)[];
@@ -230,4 +226,10 @@ export type FormField =
   | PageFormField
   | ColumnFormField
   | RowFormField
-  | BlockFormField;
+  | BlockFormField
+  | EmailFormField
+  | PhoneFormField
+  | CheckboxFormField
+  | AddressFormField
+  | PasswordFormField
+  | GroupFormField;

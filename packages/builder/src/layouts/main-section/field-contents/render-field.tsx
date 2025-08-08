@@ -10,7 +10,7 @@ import {
   type Operation,
 } from '@atlaskit/pragmatic-drag-and-drop-hitbox/list-item';
 import { FieldType, type FormField } from '@efie-form/core';
-import { type MouseEvent, useEffect, useRef, useState } from 'react';
+import { type MouseEvent, type ReactNode, useEffect, useRef, useState } from 'react';
 import { AiOutlineDrag } from 'react-icons/ai';
 import { HiTrash } from 'react-icons/hi2';
 import invariant from 'tiny-invariant';
@@ -37,6 +37,7 @@ import {
   TimeField,
 } from './fields';
 import ColumnsField from './fields/column-field';
+import UrlField from './fields/url-field';
 
 interface RenderFieldProps {
   field: FormField;
@@ -201,7 +202,7 @@ interface FieldItemProps {
   field: FormField;
 }
 
-function FieldItem({ field }: FieldItemProps) {
+function FieldItem({ field }: FieldItemProps): JSX.Element | never {
   switch (field.type) {
     case FieldType.ROW: {
       return <RowField field={field} />;
@@ -251,8 +252,37 @@ function FieldItem({ field }: FieldItemProps) {
     case FieldType.BLOCK: {
       return <BlockField field={field} />;
     }
+    case FieldType.URL: {
+      return <UrlField field={field} />;
+    }
+    case FieldType.ADDRESS: {
+      // Placeholder for AddressField component
+      return (
+        <div className="relative min-h-20 w-full rounded-lg bg-white p-4 shadow-md transition-all">
+          Address field
+        </div>
+      );
+    }
+    case FieldType.PASSWORD: {
+      return <>Password</>;
+    }
+    case FieldType.EMAIL: {
+      return <>Email</>;
+    }
+    case FieldType.PHONE: {
+      return <>Phone</>;
+    }
+    case FieldType.CHECKBOX: {
+      return <>Checkbox</>;
+    }
+    case FieldType.GROUP: {
+      return <>group</>;
+    }
+    case FieldType.PAGE: {
+      return <>Page</>;
+    }
     default: {
-      throw new Error(`Unknown field type: ${field.type}`);
+      return field;
     }
   }
 }

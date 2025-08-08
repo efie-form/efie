@@ -10,7 +10,6 @@ export const FormInputType = {
   FILE: 'file',
   EMAIL: 'email',
   PHONE: 'phone',
-  URL: 'url',
   CHECKBOX: 'checkbox',
   ADDRESS: 'address',
   PASSWORD: 'password',

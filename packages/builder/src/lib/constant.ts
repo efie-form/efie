@@ -18,6 +18,13 @@ export const FIELDS_NAME = {
   [FieldType.DATE_TIME]: 'Date & Time',
   [FieldType.BUTTON]: 'Button',
   [FieldType.PAGE]: 'Page',
+  [FieldType.ADDRESS]: 'Address',
+  [FieldType.CHECKBOX]: 'Checkbox',
+  [FieldType.EMAIL]: 'Email',
+  [FieldType.URL]: 'URL',
+  [FieldType.PHONE]: 'Phone',
+  [FieldType.PASSWORD]: 'Password',
+  [FieldType.GROUP]: 'Group',
 } satisfies Record<FieldType, string>;
 
 export const textAlignMap = {
