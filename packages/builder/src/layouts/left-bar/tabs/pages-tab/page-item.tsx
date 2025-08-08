@@ -28,7 +28,7 @@ export default function PageItem({ page, onDelete, isCurrentPage, onSelect }: Pa
   const [editMode, setEditMode] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const fieldProperty = useSchemaStore((state) =>
-    state.getFieldProperty(page.id, PropertyType.PAGE_NAME),
+    state.getFieldProperty(page.id, PropertyType.NAME),
   );
   const updateFieldProperty = useSchemaStore((state) => state.updateFieldProperty);
   const name = getValue(fieldProperty?.value);
@@ -48,7 +48,7 @@ export default function PageItem({ page, onDelete, isCurrentPage, onSelect }: Pa
 
   const handleRename = () => {
     updateFieldProperty(page.id, {
-      type: PropertyType.PAGE_NAME,
+      type: PropertyType.NAME,
       value: inputName,
     });
 

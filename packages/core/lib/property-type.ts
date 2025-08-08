@@ -9,7 +9,7 @@ export const PropertyType = {
   COLUMN_WIDTH: 'column_width',
   HEADING_CONTENT: 'heading_content',
   BUTTON_ACTION: 'button_action',
-  PAGE_NAME: 'page_name',
+  NAME: 'name', // renamed from PAGE_NAME
   ADDRESS_FIELD: 'address_field',
   PASSWORD_RULES: 'password_rules', // renamed
   CUSTOM: 'custom',

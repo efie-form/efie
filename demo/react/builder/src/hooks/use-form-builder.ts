@@ -26,7 +26,7 @@ const sampleSchema: FormSchema = {
         ],
         props: [
           {
-            type: 'page_name',
+            type: 'name',
             value: 'Sample Page',
           },
         ],

@@ -189,7 +189,7 @@ export function getDefaultField<T extends FieldType>({
         children: [],
         props: [
           {
-            type: PropertyType.PAGE_NAME,
+            type: PropertyType.NAME,
             value: page?.name || 'Page',
           },
         ],

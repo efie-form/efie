@@ -18,7 +18,7 @@ const defaultSchema: FormSchema = {
         children: [],
         props: [
           {
-            type: PropertyType.PAGE_NAME,
+            type: PropertyType.NAME,
             value: 'Page 1',
           },
         ],

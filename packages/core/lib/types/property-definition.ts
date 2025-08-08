@@ -32,7 +32,7 @@ export type FieldSystemProp =
   | FieldSystemPropColumnWidth
   | FieldSystemPropHeadingContent
   | FieldSystemPropButtonAction
-  | FieldSystemPropPageName
+  | FieldSystemPropName // renamed from PageName
   | FieldSystemPropAddressField
   | FieldSystemPropPasswordRules; // renamed
 
@@ -86,8 +86,9 @@ export interface FieldSystemPropButtonAction {
   value: PropValueButtonAction;
 }
 
-export interface FieldSystemPropPageName {
-  type: typeof PropertyType.PAGE_NAME;
+export interface FieldSystemPropName {
+  // renamed from FieldSystemPropPageName
+  type: typeof PropertyType.NAME;
   value: PropValueString;
 }
 

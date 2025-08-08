@@ -933,6 +933,10 @@ video {
   width: 33.333333%;
 }
 
+.w-32 {
+  width: 8rem;
+}
+
 .min-w-0 {
   min-width: 0px;
 }

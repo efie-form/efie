@@ -72,7 +72,7 @@ export const sampleSchema: FormSchema = {
         ],
         props: [
           {
-            type: 'page_name',
+            type: 'name',
             value: 'Page 1',
           },
         ],

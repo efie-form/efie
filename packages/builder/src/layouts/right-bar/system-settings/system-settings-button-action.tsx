@@ -49,7 +49,7 @@ export default function SystemSettingsButtonAction({
     schema?.form.fields
       .filter((field) => field.type === FieldType.PAGE)
       .map((page) => {
-        const pageNameProp = page.props?.find((prop) => prop.type === PropertyType.PAGE_NAME);
+        const pageNameProp = page.props?.find((prop) => prop.type === PropertyType.NAME);
         const pageName = isStringValue(pageNameProp?.value)
           ? pageNameProp.value
           : `Page ${page.id}`;

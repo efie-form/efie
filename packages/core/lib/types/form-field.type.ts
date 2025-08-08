@@ -10,9 +10,9 @@ import type {
   FieldSystemPropHeadingContent,
   FieldSystemPropImageSrc,
   FieldSystemPropLabel,
+  FieldSystemPropName, // changed
   FieldSystemPropOptions,
-  FieldSystemPropPageName,
-  FieldSystemPropPasswordPolicy, // added
+  FieldSystemPropPasswordRules, // fixed name
   FieldSystemPropPlaceholder,
   FieldSystemPropRequired,
 } from './property-definition';
@@ -152,7 +152,7 @@ export interface PasswordFormField extends BaseFormField, FormInputField {
     | FieldSystemPropLabel
     | FieldSystemPropPlaceholder
     | FieldSystemPropRequired
-    | FieldSystemPropPasswordPolicy // added
+    | FieldSystemPropPasswordRules // fixed name
     | FieldCustomProp
   )[];
 }
@@ -203,7 +203,7 @@ export interface ButtonFormField extends BaseFormField {
 export interface PageFormField extends BaseFormField {
   type: typeof FieldType.PAGE;
   children: FormField[];
-  props: (FieldSystemPropPageName | FieldCustomProp)[];
+  props: (FieldSystemPropName | FieldCustomProp)[];
 }
 
 // Divider field type
