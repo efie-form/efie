@@ -219,6 +219,37 @@ export interface FieldConfigButton {
   properties: Array<FieldSystemConfigLabel | FieldSystemConfigButtonAction | FieldCustomConfig>;
 }
 
+export interface FieldConfigCheckbox {
+  properties: Array<FieldSystemConfigLabel | FieldSystemConfigRequired | FieldCustomConfig>;
+}
+
+export interface FieldConfigEmail {
+  properties: Array<
+    | FieldSystemConfigLabel
+    | FieldSystemConfigPlaceholder
+    | FieldSystemConfigRequired
+    | FieldCustomConfig
+  >;
+}
+
+export interface FieldConfigPhone {
+  properties: Array<
+    | FieldSystemConfigLabel
+    | FieldSystemConfigPlaceholder
+    | FieldSystemConfigRequired
+    | FieldCustomConfig
+  >;
+}
+
+export interface FieldConfigPassword {
+  properties: Array<
+    | FieldSystemConfigLabel
+    | FieldSystemConfigPlaceholder
+    | FieldSystemConfigRequired
+    | FieldCustomConfig
+  >;
+}
+
 type Level = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
 interface Heading {
@@ -292,6 +323,10 @@ export interface FieldsConfigsMap {
   page: FieldConfigPage;
   button: FieldConfigButton;
   address: FieldConfigAddress;
+  checkbox: FieldConfigCheckbox;
+  email: FieldConfigEmail;
+  phone: FieldConfigPhone;
+  password: FieldConfigPassword;
 }
 
 export type FieldConfig = FieldSystemConfig | FieldCustomConfig;

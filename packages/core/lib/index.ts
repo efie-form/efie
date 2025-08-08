@@ -114,10 +114,12 @@ export type {
   FieldConfigAddress,
   FieldConfigBlock,
   FieldConfigButton,
+  FieldConfigCheckbox, // added
   FieldConfigColumn,
   FieldConfigDate,
   FieldConfigDateTime,
   FieldConfigDivider,
+  FieldConfigEmail, // added
   FieldConfigFile,
   FieldConfigHeading,
   FieldConfigImage,
@@ -125,6 +127,8 @@ export type {
   FieldConfigMultipleChoices,
   FieldConfigNumber,
   FieldConfigPage,
+  FieldConfigPassword, // added
+  FieldConfigPhone, // added
   FieldConfigRow,
   FieldConfigShortText,
   FieldConfigSingleChoice,

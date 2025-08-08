@@ -9,7 +9,14 @@ import {
   extractInstruction,
   type Operation,
 } from '@atlaskit/pragmatic-drag-and-drop-hitbox/list-item';
-import { FieldType, type FormField } from '@efie-form/core';
+import {
+  type CheckboxFormField,
+  type EmailFormField,
+  FieldType,
+  type FormField,
+  type PasswordFormField,
+  type PhoneFormField,
+} from '@efie-form/core';
 import { type MouseEvent, useEffect, useRef, useState } from 'react';
 import { AiOutlineDrag } from 'react-icons/ai';
 import { HiTrash } from 'react-icons/hi2';
@@ -23,15 +30,19 @@ import {
   AddressField,
   BlockField,
   ButtonField,
+  CheckboxField,
   DateField,
   DateTimeField,
   DividerField,
+  EmailField,
   FileField,
   HeadingField,
   ImageField,
   LongTextField,
   MultipleChoicesField,
   NumberField,
+  PasswordField,
+  PhoneField,
   RowField,
   ShortTextField,
   SingleChoiceField,
@@ -256,16 +267,16 @@ function FieldItem({ field }: FieldItemProps): JSX.Element | never {
       return <AddressField field={field} />;
     }
     case FieldType.PASSWORD: {
-      return <span>Password</span>;
+      return <PasswordField field={field as PasswordFormField} />;
     }
     case FieldType.EMAIL: {
-      return <span>Email</span>;
+      return <EmailField field={field as EmailFormField} />;
     }
     case FieldType.PHONE: {
-      return <span>Phone</span>;
+      return <PhoneField field={field as PhoneFormField} />;
     }
     case FieldType.CHECKBOX: {
-      return <span>Checkbox</span>;
+      return <CheckboxField field={field as CheckboxFormField} />;
     }
     case FieldType.GROUP: {
       return <span>Group</span>;

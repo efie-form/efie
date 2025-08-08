@@ -134,6 +134,33 @@ const settingsConfig: FieldsConfigsMap = {
       { type: PropertyType.ADDRESS_FIELD, label: 'Address Field' },
     ],
   },
+  [FieldType.CHECKBOX]: {
+    properties: [
+      { type: PropertyType.LABEL, label: 'Label' },
+      { type: PropertyType.REQUIRED, label: 'Required' },
+    ],
+  },
+  [FieldType.EMAIL]: {
+    properties: [
+      { type: PropertyType.LABEL, label: 'Label' },
+      { type: PropertyType.PLACEHOLDER, label: 'Input Placeholder' },
+      { type: PropertyType.REQUIRED, label: 'Required' },
+    ],
+  },
+  [FieldType.PHONE]: {
+    properties: [
+      { type: PropertyType.LABEL, label: 'Label' },
+      { type: PropertyType.PLACEHOLDER, label: 'Input Placeholder' },
+      { type: PropertyType.REQUIRED, label: 'Required' },
+    ],
+  },
+  [FieldType.PASSWORD]: {
+    properties: [
+      { type: PropertyType.LABEL, label: 'Label' },
+      { type: PropertyType.PLACEHOLDER, label: 'Input Placeholder' },
+      { type: PropertyType.REQUIRED, label: 'Required' },
+    ],
+  },
 };
 
 export default settingsConfig;

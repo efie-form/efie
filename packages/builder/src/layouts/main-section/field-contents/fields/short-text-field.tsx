@@ -1,13 +1,14 @@
 import { PropertyType, type ShortTextFormField } from '@efie-form/core';
 import { useSchemaStore } from '../../../../lib/state/schema.state';
-import { getFieldProp } from '../../../../lib/utils';
 
 interface ShortTextFieldProps {
   field: ShortTextFormField;
 }
 
 function ShortTextField({ field }: ShortTextFieldProps) {
-  const placeholderProp = getFieldProp(field, PropertyType.PLACEHOLDER);
+  const placeholderProp = useSchemaStore((state) =>
+    state.getFieldProperty(field.id, PropertyType.PLACEHOLDER),
+  );
   const fieldProperty = useSchemaStore((state) =>
     state.getFieldProperty(field.id, PropertyType.LABEL),
   );
