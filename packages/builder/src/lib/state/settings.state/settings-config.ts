@@ -127,6 +127,13 @@ const settingsConfig: FieldsConfigsMap = {
       },
     },
   },
+  [FieldType.ADDRESS]: {
+    properties: [
+      { type: PropertyType.LABEL, label: 'Label' },
+      { type: PropertyType.REQUIRED, label: 'Required' },
+      { type: PropertyType.ADDRESS_FIELD, label: 'Address Field' },
+    ],
+  },
 };
 
 export default settingsConfig;

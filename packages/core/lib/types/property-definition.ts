@@ -1,6 +1,7 @@
 import type { CustomPropertyType, PropertyType } from '../property-type';
 import type {
   PropValueAccept,
+  PropValueAddressField,
   PropValueBoolean,
   PropValueButtonAction,
   PropValueColor,
@@ -30,7 +31,8 @@ export type FieldSystemProp =
   | FieldSystemPropColumnWidth
   | FieldSystemPropHeadingContent
   | FieldSystemPropButtonAction
-  | FieldSystemPropPageName;
+  | FieldSystemPropPageName
+  | FieldSystemPropAddressField;
 
 export interface FieldSystemPropLabel {
   type: typeof PropertyType.LABEL;
@@ -85,6 +87,11 @@ export interface FieldSystemPropButtonAction {
 export interface FieldSystemPropPageName {
   type: typeof PropertyType.PAGE_NAME;
   value: PropValueString;
+}
+
+export interface FieldSystemPropAddressField {
+  type: typeof PropertyType.ADDRESS_FIELD;
+  value: PropValueAddressField;
 }
 
 /**

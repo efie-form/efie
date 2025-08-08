@@ -49,6 +49,28 @@ export type PropValueButtonAction =
   | ButtonActionSubmit
   | ButtonActionNavigate;
 
+export type PropValueAddressField = {
+  addressLine: {
+    label: string;
+  }[];
+  city: {
+    enabled: boolean;
+    label: string;
+  };
+  state: {
+    enabled: boolean;
+    label: string;
+  };
+  country: {
+    enabled: boolean;
+    label: string;
+  };
+  postalCode: {
+    enabled: boolean;
+    label: string;
+  };
+};
+
 export type PropValue =
   | PropValueString
   | PropValueNumber
@@ -62,4 +84,5 @@ export type PropValue =
   | PropValueBoxShadow
   | PropValueBorderRadius
   | PropValueJsonContent
-  | PropValueButtonAction;
+  | PropValueButtonAction
+  | PropValueAddressField;

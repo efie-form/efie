@@ -111,6 +111,7 @@ export type {
 export type { RootRule } from './types/root-rule.type';
 export type {
   FieldConfig,
+  FieldConfigAddress,
   FieldConfigBlock,
   FieldConfigButton,
   FieldConfigColumn,
@@ -137,6 +138,7 @@ export type {
   FieldCustomConfigText,
   FieldSystemConfig,
   FieldSystemConfigAccept,
+  FieldSystemConfigAddressField,
   FieldSystemConfigButtonAction,
   FieldSystemConfigColumnWidth,
   FieldSystemConfigFieldName,

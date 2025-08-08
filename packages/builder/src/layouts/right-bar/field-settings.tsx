@@ -7,6 +7,7 @@ import CustomSettingsSize from './custom-settings/custom-settings-size';
 import CustomSettingsText from './custom-settings/custom-settings-text';
 import SystemSettingsRequired from './system-settings/system-settings.required';
 import SystemSettingsAccept from './system-settings/system-settings-accept';
+import SystemSettingsAddressField from './system-settings/system-settings-address-field';
 import SystemSettingsButtonAction from './system-settings/system-settings-button-action';
 import { SystemSettingsColumnWidth } from './system-settings/system-settings-column-width';
 import SystemSettingsFieldName from './system-settings/system-settings-field-name';
@@ -87,6 +88,9 @@ export default function FieldSettings({
       }
       case PropertyType.FIELD_NAME: {
         return <SystemSettingsFieldName key={item.type} fieldId={fieldId} config={item} />;
+      }
+      case PropertyType.ADDRESS_FIELD: {
+        return <SystemSettingsAddressField key={item.type} fieldId={fieldId} config={item} />;
       }
       default: {
         return item;

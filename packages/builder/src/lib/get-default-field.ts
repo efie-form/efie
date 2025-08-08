@@ -381,7 +381,22 @@ export function getDefaultField<T extends FieldType>({
         form: {
           name: fieldName || '',
         },
-        props: [],
+        props: [
+          {
+            type: PropertyType.LABEL,
+            value: 'Address',
+          },
+          {
+            type: PropertyType.ADDRESS_FIELD,
+            value: {
+              addressLine: [{ label: 'Address Line 1' }, { label: 'Address Line 2' }],
+              city: { enabled: true, label: 'City' },
+              state: { enabled: true, label: 'State' },
+              postalCode: { enabled: true, label: 'Postal Code' },
+              country: { enabled: true, label: 'Country' },
+            },
+          },
+        ],
       } satisfies GetDefaultFieldReturn[typeof FieldType.ADDRESS];
     }
     case FieldType.CHECKBOX: {

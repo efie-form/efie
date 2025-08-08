@@ -4,6 +4,7 @@ import type { ValidationSchema } from './field-conditions.type';
 import type {
   FieldCustomProp,
   FieldSystemPropAccept,
+  FieldSystemPropAddressField,
   FieldSystemPropButtonAction,
   FieldSystemPropColumnWidth,
   FieldSystemPropHeadingContent,
@@ -138,8 +139,8 @@ export interface AddressFormField extends BaseFormField, FormInputField {
   type: typeof FieldType.ADDRESS;
   props: (
     | FieldSystemPropLabel
-    | FieldSystemPropPlaceholder
     | FieldSystemPropRequired
+    | FieldSystemPropAddressField
     | FieldCustomProp
   )[];
 }

@@ -10,6 +10,7 @@ export const PropertyType = {
   HEADING_CONTENT: 'heading_content',
   BUTTON_ACTION: 'button_action',
   PAGE_NAME: 'page_name',
+  ADDRESS_FIELD: 'address_field',
   CUSTOM: 'custom',
 } as const;
 

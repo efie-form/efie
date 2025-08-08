@@ -53,11 +53,17 @@ export interface FieldSystemConfigColumnWidth {
   label: string;
 }
 
+export interface FieldSystemConfigAddressField {
+  type: typeof PropertyType.ADDRESS_FIELD;
+  label: string;
+}
+
 interface FieldCustomConfigBase {
   id: string;
   type: typeof PropertyType.CUSTOM;
   label: string;
 }
+
 /**
  * Custom properties for form fields.
  */
@@ -99,6 +105,7 @@ export type FieldSystemConfig =
   | FieldSystemConfigRequired
   | FieldSystemConfigAccept
   | FieldSystemConfigFieldName
+  | FieldSystemConfigAddressField
   | FieldSystemConfigOptions
   | FieldSystemConfigImageSrc
   | FieldSystemConfigButtonAction
@@ -199,6 +206,15 @@ export interface FieldConfigPage {
   properties: Array<FieldCustomConfig>;
 }
 
+export interface FieldConfigAddress {
+  properties: Array<
+    | FieldSystemConfigLabel
+    | FieldSystemConfigRequired
+    | FieldSystemConfigAddressField
+    | FieldCustomConfig
+  >;
+}
+
 export interface FieldConfigButton {
   properties: Array<FieldSystemConfigLabel | FieldSystemConfigButtonAction | FieldCustomConfig>;
 }
@@ -275,6 +291,7 @@ export interface FieldsConfigsMap {
   block: FieldConfigBlock;
   page: FieldConfigPage;
   button: FieldConfigButton;
+  address: FieldConfigAddress;
 }
 
 export type FieldConfig = FieldSystemConfig | FieldCustomConfig;

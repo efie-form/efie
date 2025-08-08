@@ -252,15 +252,10 @@ function FieldItem({ field }: FieldItemProps): JSX.Element | never {
       return <BlockField field={field} />;
     }
     case FieldType.ADDRESS: {
-      // Placeholder for AddressField component
-      return (
-        <div className="relative min-h-20 w-full rounded-lg bg-white p-4 shadow-md transition-all">
-          Address field
-        </div>
-      );
+      return <div className="">Address field</div>;
     }
     case FieldType.PASSWORD: {
-      return <span> Password</span>;
+      return <span>Password</span>;
     }
     case FieldType.EMAIL: {
       return <span>Email</span>;
