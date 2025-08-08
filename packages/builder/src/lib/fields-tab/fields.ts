@@ -1,7 +1,7 @@
 import { FieldType } from '@efie-form/core';
 import type { ElementType } from 'react';
 import { AiOutlineGroup } from 'react-icons/ai';
-import { BsPhone, BsPhoneFill, BsTextareaResize } from 'react-icons/bs';
+import { BsPhoneFill, BsTextareaResize } from 'react-icons/bs';
 import { FaImage, FaMapLocationDot } from 'react-icons/fa6';
 import { HiOutlineViewColumns } from 'react-icons/hi2';
 import { LuCalendar, LuCalendarClock, LuClock, LuFormInput, LuHash } from 'react-icons/lu';

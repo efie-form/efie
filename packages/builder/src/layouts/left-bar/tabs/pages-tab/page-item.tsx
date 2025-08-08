@@ -67,7 +67,7 @@ export default function PageItem({ page, onDelete, isCurrentPage, onSelect }: Pa
       ref={setNodeRef}
       {...attributes}
       className={cn(
-        'group relative w-full flex items-center justify-between px-1 py-2 hover:bg-neutral-100',
+        'group relative flex w-full items-center justify-between px-1 py-2 hover:bg-neutral-100',
         isDragging ? 'relative z-50 cursor-grabbing' : 'cursor-pointer',
         {
           'bg-neutral-200': isDragging,

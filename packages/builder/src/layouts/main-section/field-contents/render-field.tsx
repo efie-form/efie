@@ -10,7 +10,7 @@ import {
   type Operation,
 } from '@atlaskit/pragmatic-drag-and-drop-hitbox/list-item';
 import { FieldType, type FormField } from '@efie-form/core';
-import { type MouseEvent, type ReactNode, useEffect, useRef, useState } from 'react';
+import { type MouseEvent, useEffect, useRef, useState } from 'react';
 import { AiOutlineDrag } from 'react-icons/ai';
 import { HiTrash } from 'react-icons/hi2';
 import invariant from 'tiny-invariant';
@@ -37,7 +37,6 @@ import {
   TimeField,
 } from './fields';
 import ColumnsField from './fields/column-field';
-import UrlField from './fields/url-field';
 
 interface RenderFieldProps {
   field: FormField;
@@ -151,7 +150,7 @@ function RenderField({ field, noSelect, parentId, childIndex }: RenderFieldProps
         data-field="true"
         id={`field-container-${field.id}`}
         className={cn(
-          'transform rounded-md relative h-full outline outline-2 outline-[#00000000] -outline-offset-2 p-1',
+          '-outline-offset-2 relative h-full transform rounded-md p-1 outline outline-2 outline-[#00000000]',
           {
             '!outline-primary relative z-50': isSelected,
             '[&:not(:has(div[data-field=true]:hover))]:hover:outline-neutral-100':
@@ -165,12 +164,12 @@ function RenderField({ field, noSelect, parentId, childIndex }: RenderFieldProps
       >
         {isDraggedOver && (
           <div
-            className={cn('absolute z-[999] left-0 right-0 h-1 bg-primary-400 rounded-full ', {
-              'top-0 -translate-y-1/2': operation === 'reorder-before',
+            className={cn('absolute right-0 left-0 z-[999] h-1 rounded-full bg-primary-400 ', {
+              '-translate-y-1/2 top-0': operation === 'reorder-before',
               'bottom-0 translate-y-1/2': operation === 'reorder-after',
             })}
           >
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-primary-400 rounded-full px-3 py-1">
+            <div className="-translate-x-1/2 -translate-y-1/2 absolute top-0 left-1/2 rounded-full bg-primary-400 px-3 py-1">
               <p className="typography-body3 text-neutral-50">Drop here</p>
             </div>
           </div>
@@ -178,8 +177,8 @@ function RenderField({ field, noSelect, parentId, childIndex }: RenderFieldProps
         <FieldItem field={field} />
       </div>
       {isSelected && (
-        <div className="absolute top-0 left-0 -translate-x-full">
-          <div ref={dragHandlerRef} className="bg-primary p-1 text-white cursor-grab">
+        <div className="-translate-x-full absolute top-0 left-0">
+          <div ref={dragHandlerRef} className="cursor-grab bg-primary p-1 text-white">
             <AiOutlineDrag />
           </div>
           <button
@@ -252,9 +251,6 @@ function FieldItem({ field }: FieldItemProps): JSX.Element | never {
     case FieldType.BLOCK: {
       return <BlockField field={field} />;
     }
-    case FieldType.URL: {
-      return <UrlField field={field} />;
-    }
     case FieldType.ADDRESS: {
       // Placeholder for AddressField component
       return (
@@ -264,22 +260,22 @@ function FieldItem({ field }: FieldItemProps): JSX.Element | never {
       );
     }
     case FieldType.PASSWORD: {
-      return <>Password</>;
+      return <span> Password</span>;
     }
     case FieldType.EMAIL: {
-      return <>Email</>;
+      return <span>Email</span>;
     }
     case FieldType.PHONE: {
-      return <>Phone</>;
+      return <span>Phone</span>;
     }
     case FieldType.CHECKBOX: {
-      return <>Checkbox</>;
+      return <span>Checkbox</span>;
     }
     case FieldType.GROUP: {
-      return <>group</>;
+      return <span>Group</span>;
     }
     case FieldType.PAGE: {
-      return <>Page</>;
+      return <span>Page</span>;
     }
     default: {
       return field;
