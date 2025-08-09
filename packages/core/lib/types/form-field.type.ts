@@ -1,5 +1,4 @@
 import type { FieldType } from '../constants/field-type';
-import type { ValidationSchema } from './field-conditions.type';
 
 import type {
   FieldCustomProp,
@@ -26,7 +25,6 @@ export interface BaseFormField {
 export interface FormInputField {
   form: {
     name: string;
-    validation?: ValidationSchema[];
   };
 }
 

@@ -28,19 +28,6 @@ export type {
   WidthHeightSize,
 } from './types/common.type';
 export type {
-  FieldCondition,
-  FieldConditionGroup,
-  FieldConditionOperator,
-  FieldConditionValue,
-  FieldValue,
-  ValidationCase,
-  ValidationCondition,
-  ValidationGroup,
-  ValidationOperator,
-  ValidationRule,
-  ValidationSchema,
-} from './types/field-conditions.type';
-export type {
   BorderRadius,
   PropValue,
   PropValueAccept,
@@ -112,6 +99,40 @@ export type {
   PropertyDefinition,
 } from './types/property-definition';
 export type {
+  Action,
+  AddFieldErrorAction,
+  ClearFieldErrorAction,
+  ClearValueAction,
+  ConditionNode,
+  ConditionOptions,
+  ConditionTree,
+  CopyValueAction,
+  CustomAction,
+  CustomActionDefinition,
+  DisplayMessageAction,
+  ErrorItem,
+  FocusFieldAction,
+  HideFieldsAction,
+  HidePagesAction,
+  JsonPrimitive,
+  JsonValue,
+  Operand,
+  Operator,
+  RecoverAction,
+  ReorderFieldsAction,
+  ReorderPagesAction,
+  Rule,
+  RuleBranch,
+  ScrollIntoViewAction,
+  SetEnabledAction,
+  SetOptionsAction,
+  SetRequiredAction,
+  SetValueAction,
+  ShowFieldsAction,
+  ShowPagesAction,
+  SkipToPageAction,
+} from './types/root-rule.type';
+export type {
   FieldConfig,
   FieldConfigAddress,
   FieldConfigBlock,
@@ -157,6 +178,7 @@ export type {
   FieldSystemConfigRequired,
   FieldsConfigsMap,
 } from './types/settings-config';
+export type { ValueSpec } from './types/value-spec.type';
 export { getColorObject, hslaToHex, rgbaToHex } from './utils/colors';
 export { default as getDefaultSchema } from './utils/default-schema/get-default-schema';
 export {
