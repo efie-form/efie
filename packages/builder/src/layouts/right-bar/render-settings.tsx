@@ -1,21 +1,8 @@
 import { FieldType, type FormField } from '@efie-form/core';
 import { useSettingsStore } from '../../lib/state/settings.state';
 import FieldSettings from './field-settings';
-import BlockSettings from './field-settings/block-settings';
-import ButtonSettings from './field-settings/button-settings';
-import DateSettings from './field-settings/date-settings';
-import DateTimeSettings from './field-settings/date-time-settings';
-import DividerSettings from './field-settings/divider-settings';
-import FileSettings from './field-settings/file-settings';
-import HeadingSettings from './field-settings/header-settings';
-import ImageSettings from './field-settings/image-settings';
-import LongTextSettings from './field-settings/long-text-settings';
-import MultipleChoicesSettings from './field-settings/multiple-choices-settings';
-import NumberSettings from './field-settings/number-settings';
 import RowSettings from './field-settings/row-settings';
-import ShortTextSettings from './field-settings/short-text-settings';
-import SingleChoiceSettings from './field-settings/single-choice-settings';
-import TimeSettings from './field-settings/time-settings';
+import FieldNameSettings from './settings/form-name-settings';
 
 interface RenderSettingsProps {
   field: FormField;
@@ -25,53 +12,20 @@ function RenderSettings({ field }: RenderSettingsProps) {
   if (!field) return null;
 
   switch (field?.type) {
-    case FieldType.DATE_TIME: {
-      return <DateTimeSettings field={field} />;
-    }
+    case FieldType.NUMBER:
+    case FieldType.SHORT_TEXT:
+    case FieldType.SINGLE_CHOICE:
+    case FieldType.TIME:
+    case FieldType.MULTIPLE_CHOICES:
+    case FieldType.DATE_TIME:
+    case FieldType.LONG_TEXT:
+    case FieldType.FILE:
+    case FieldType.CHECKBOX:
     case FieldType.DATE: {
-      return <DateSettings field={field} />;
-    }
-    case FieldType.LONG_TEXT: {
-      return <LongTextSettings field={field} />;
-    }
-    case FieldType.COLUMN: {
-      return null;
-    }
-    case FieldType.BLOCK: {
-      return <BlockSettings field={field} />;
-    }
-    case FieldType.DIVIDER: {
-      return <DividerSettings field={field} />;
-    }
-    case FieldType.FILE: {
-      return <FileSettings field={field} />;
-    }
-    case FieldType.HEADING: {
-      return <HeadingSettings field={field} />;
-    }
-    case FieldType.IMAGE: {
-      return <ImageSettings field={field} />;
-    }
-    case FieldType.MULTIPLE_CHOICES: {
-      return <MultipleChoicesSettings field={field} />;
+      return <InputSettings field={field} />;
     }
     case FieldType.ROW: {
       return <RowSettings field={field} />;
-    }
-    case FieldType.NUMBER: {
-      return <NumberSettings field={field} />;
-    }
-    case FieldType.SHORT_TEXT: {
-      return <ShortTextSettings field={field} />;
-    }
-    case FieldType.SINGLE_CHOICE: {
-      return <SingleChoiceSettings field={field} />;
-    }
-    case FieldType.TIME: {
-      return <TimeSettings field={field} />;
-    }
-    case FieldType.BUTTON: {
-      return <ButtonSettings field={field} />;
     }
     default: {
       return <SharedSettings field={field} fieldType={field.type} />;
@@ -91,6 +45,17 @@ function SharedSettings({ field, fieldType }: SharedSettingsProps) {
 
   return (
     <div>
+      <FieldSettings fieldId={field.id} config={config.properties} />
+    </div>
+  );
+}
+
+function InputSettings({ field }: { field: FormField }) {
+  const config = useSettingsStore((state) => state.config[field.type]);
+
+  return (
+    <div>
+      <FieldNameSettings fieldId={field.id} />
       <FieldSettings fieldId={field.id} config={config.properties} />
     </div>
   );
