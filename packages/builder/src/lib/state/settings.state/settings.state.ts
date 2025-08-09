@@ -10,7 +10,7 @@ interface SettingsState {
   selectedFieldId?: string;
   setSelectedFieldId: (id: string) => void;
   clearSelectedFieldId: () => void;
-  mode: 'edit' | 'preview' | 'json';
+  mode: 'edit' | 'preview' | 'json' | 'rules-conditions';
   setMode: (mode: SettingsState['mode']) => void;
   previewDevice: 'desktop' | 'mobile';
   setPreviewDevice: (previewDevice: SettingsState['previewDevice']) => void;

@@ -1195,6 +1195,10 @@ video {
   align-self: stretch;
 }
 
+.overflow-auto {
+  overflow: auto;
+}
+
 .overflow-hidden {
   overflow: hidden;
 }
@@ -1354,6 +1358,11 @@ video {
 .border-success-400 {
   --tw-border-opacity: 1;
   border-color: rgb(from var(--color-green-400) r g b / var(--tw-border-opacity));
+}
+
+.border-primary-300 {
+  --tw-border-opacity: 1;
+  border-color: rgb(from var(--color-primary-300) r g b / var(--tw-border-opacity));
 }
 
 .border-e-neutral-200 {
