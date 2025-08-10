@@ -61,10 +61,11 @@ export default function PageItem({ page, onDelete, isCurrentPage, onSelect }: Pa
   };
 
   return (
-    <button
+    <div
       style={style}
       ref={setNodeRef}
       {...attributes}
+      role="button"
       className={cn(
         'group relative flex w-full items-center justify-between px-1 py-2 hover:bg-neutral-100',
         isDragging ? 'z-50 cursor-grabbing' : 'cursor-pointer',
@@ -74,6 +75,8 @@ export default function PageItem({ page, onDelete, isCurrentPage, onSelect }: Pa
         },
       )}
       onClick={onSelect}
+      onKeyDown={onSelect}
+      tabIndex={0}
       onDoubleClick={() => {
         setEditMode(true);
       }}
@@ -155,7 +158,7 @@ export default function PageItem({ page, onDelete, isCurrentPage, onSelect }: Pa
           </button>
         )}
       </span>
-    </button>
+    </div>
   );
 }
 

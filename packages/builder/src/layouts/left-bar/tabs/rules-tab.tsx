@@ -78,6 +78,7 @@ interface RuleItemProps {
 
 function RuleItem({ rule }: RuleItemProps) {
   const { setSelectedConditionId, setMode } = useSettingsStore();
+  const selectedConditionId = useSettingsStore((state) => state.selectedConditionId);
   const { attributes, listeners, setNodeRef, transition, transform, isDragging } = useSortable({
     id: rule.id,
   });
@@ -88,15 +89,20 @@ function RuleItem({ rule }: RuleItemProps) {
   };
 
   return (
-    <div
+    <button
       style={style}
       ref={setNodeRef}
       {...attributes}
+      onClick={() => {
+        setMode('conditions');
+        setSelectedConditionId(rule.id);
+      }}
       className={cn(
         'group relative flex w-full items-center px-1 py-2 hover:bg-neutral-100',
         isDragging ? 'z-50' : 'cursor-pointer',
         {
           'bg-neutral-200': isDragging,
+          '!bg-neutral-100': selectedConditionId === rule.id,
         },
       )}
     >
@@ -108,20 +114,9 @@ function RuleItem({ rule }: RuleItemProps) {
       >
         <MdOutlineDragIndicator />
       </span>
-      <div className="flex-1">
+      <div className="flex-1 text-start">
         <span className="typography-body2">{rule.id}</span>
       </div>
-      <div>
-        <button
-          type="button"
-          onClick={() => {
-            setMode('conditions');
-            setSelectedConditionId(rule.id);
-          }}
-        >
-          Edit
-        </button>
-      </div>
-    </div>
+    </button>
   );
 }

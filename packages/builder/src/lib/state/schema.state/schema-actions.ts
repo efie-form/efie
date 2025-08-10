@@ -10,7 +10,7 @@ export interface SchemaStateSchemaActions {
 export function createSchemaActions({ set, getState }: StateSetters): SchemaStateSchemaActions {
   return {
     setSchema: (schema: FormSchema) => {
-      const { fieldKeyMap, fieldMap, fieldParentMap } = getFieldInfoMap(schema.form.fields);
+      const { fieldMap, fieldParentMap } = getFieldInfoMap(schema.form.fields);
 
       // Get current history state
       const { maxHistories, histories, currentHistoryIndex } = getState();
@@ -28,7 +28,6 @@ export function createSchemaActions({ set, getState }: StateSetters): SchemaStat
       // Single atomic state update
       set({
         schema,
-        fieldKeyMap,
         fieldMap,
         fieldParentMap,
         histories: newHistories,
@@ -40,7 +39,7 @@ export function createSchemaActions({ set, getState }: StateSetters): SchemaStat
     setFields: (fields: FormField[]) => {
       const { schema } = getState();
       if (!schema?.form.fields) return;
-      const { fieldKeyMap, fieldMap, fieldParentMap } = getFieldInfoMap(fields);
+      const { fieldMap, fieldParentMap } = getFieldInfoMap(fields);
       const newSchema = {
         ...schema,
         form: { fields, rules: schema?.form.rules },
@@ -62,7 +61,6 @@ export function createSchemaActions({ set, getState }: StateSetters): SchemaStat
       // Single atomic state update
       set({
         schema: newSchema,
-        fieldKeyMap,
         fieldMap,
         fieldParentMap,
         histories: newHistories,

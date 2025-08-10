@@ -95,11 +95,10 @@ export function createHistoryActions({ set, getState }: StateSetters): SchemaSta
       const previousHistory = histories[previousHistoryIndex];
       const newSchema = JSON.parse(previousHistory);
 
-      const { fieldMap, fieldKeyMap, fieldParentMap } = getFieldInfoMap(newSchema.form.fields);
+      const { fieldMap, fieldParentMap } = getFieldInfoMap(newSchema.form.fields);
 
       set({
         fieldMap,
-        fieldKeyMap,
         fieldParentMap,
         schema: newSchema,
         currentHistoryIndex: previousHistoryIndex,
@@ -113,11 +112,10 @@ export function createHistoryActions({ set, getState }: StateSetters): SchemaSta
       const nextHistory = histories[nextHistoryIndex];
       const newSchema = JSON.parse(nextHistory);
 
-      const { fieldMap, fieldKeyMap, fieldParentMap } = getFieldInfoMap(newSchema.form.fields);
+      const { fieldMap, fieldParentMap } = getFieldInfoMap(newSchema.form.fields);
 
       set({
         fieldMap,
-        fieldKeyMap,
         fieldParentMap,
         schema: newSchema,
         currentHistoryIndex: nextHistoryIndex,

@@ -1,23 +1,20 @@
-import Divider from '../../../components/elements/divider';
-import { Input, Select, Switch } from '../../../components/form';
-import { useSchemaStore } from '../../../lib/state/schema.state';
-import { useSettingsStore } from '../../../lib/state/settings.state';
-import { cn } from '../../../lib/utils';
+import { useState } from 'react';
+import Divider from '../../../../components/elements/divider';
+import { Input, Select, StyledSelect, Switch } from '../../../../components/form';
+import { useSchemaStore } from '../../../../lib/state/schema.state';
+import { useSettingsStore } from '../../../../lib/state/settings.state';
+import { cn } from '../../../../lib/utils';
+import FieldsSelect from './fields-select';
 
 export default function FormConditions() {
   const selectedConditionId = useSettingsStore((state) => state.selectedConditionId);
   const rule = useSchemaStore((state) => state.findRuleById(selectedConditionId));
   const updateRule = useSchemaStore((state) => state.updateRule);
+  const fieldMap = useSchemaStore((state) => state.fieldMap);
+  console.log(fieldMap);
+  const [fieldId, setFieldId] = useState();
 
-  if (!rule) {
-    return (
-      <div className="flex h-full items-center justify-center p-6">
-        <div className="rounded-md border border-neutral-200 bg-white px-6 py-10 text-center">
-          <p className="typography-body2 text-neutral-600">Select a rule from the left to edit.</p>
-        </div>
-      </div>
-    );
-  }
+  if (!rule) return;
 
   return (
     <div className="px-4 py-6">
@@ -42,11 +39,11 @@ export default function FormConditions() {
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
           <div className="sm:col-span-1">
             <p className="typography-body3 mb-1 text-neutral-600">If</p>
-            <Input placeholder="Select field or enter expression" />
+            <FieldsSelect />
           </div>
           <div className="sm:col-span-1">
             <p className="typography-body3 mb-1 text-neutral-600">Operator</p>
-            <Select
+            <StyledSelect
               options={[
                 { value: 'equal', label: 'Equals' },
                 { value: 'not_equal', label: 'Does Not Equal' },

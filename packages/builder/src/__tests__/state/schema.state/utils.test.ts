@@ -52,13 +52,11 @@ describe('schema.state utils', () => {
     const page = makePage('p1');
     const s1 = makeShort('s1');
     (page as any).children = [s1];
-    const { fieldKeyMap, fieldMap, fieldParentMap } = getFieldInfoMap([page]);
+    const { fieldMap, fieldParentMap } = getFieldInfoMap([page]);
 
     expect(fieldMap.get('p1')).toBe(page);
     expect(fieldMap.get('s1')).toBe(s1);
     expect(fieldParentMap.get('s1')).toBe('p1');
-    expect(fieldKeyMap.get('p1')).toBe('form.fields.0');
-    expect(fieldKeyMap.get('s1')).toBe('form.fields.0.children.0');
   });
 
   test('updateFieldInMaps updates only target id', () => {
@@ -68,8 +66,6 @@ describe('schema.state utils', () => {
     const newMaps = updateFieldInMaps('p1', updated, maps);
 
     expect(newMaps.fieldMap.get('p1')).toBe(updated);
-    // other maps copied
-    expect(newMaps.fieldKeyMap.get('p1')).toBe('form.fields.0');
   });
 
   test('findFieldInTree applies callback and returns new tree when updated', () => {

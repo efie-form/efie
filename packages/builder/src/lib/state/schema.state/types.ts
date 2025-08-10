@@ -18,12 +18,10 @@ export interface SchemaState
   schema?: FormSchema;
 
   fieldMap: Map<string, FormField>;
-  fieldKeyMap: Map<string, string>;
   fieldParentMap: Map<string, string>;
 }
 
 export interface FieldMaps {
-  fieldKeyMap: Map<string, string>;
   fieldMap: Map<string, FormField>;
   fieldParentMap: Map<string, string>;
 }

@@ -15,23 +15,13 @@ export const deepClone = <T>(obj: T): T => {
 };
 
 // Helper function to rebuild field maps (optimized)
-export function getFieldInfoMap(
-  fields: FormField[],
-  fieldKeyMap: Map<string, string> = new Map(),
-  fieldMap: Map<string, FormField> = new Map(),
-  fieldParentMap: Map<string, string> = new Map(),
-  fieldKey: string = 'form.fields',
-): FieldMaps {
+export function getFieldInfoMap(fields: FormField[]): FieldMaps {
   // Clear existing maps to ensure fresh state
-  fieldKeyMap.clear();
-  fieldMap.clear();
-  fieldParentMap.clear();
+  const fieldMap = new Map<string, FormField>();
+  const fieldParentMap = new Map<string, string>();
 
-  const buildMaps = (currentFields: FormField[], currentKey: string, parentId?: string) => {
-    for (const [i, field] of currentFields.entries()) {
-      const fieldPath = `${currentKey}.${i}`;
-
-      fieldKeyMap.set(field.id, fieldPath);
+  const buildMaps = (currentFields: FormField[], parentId?: string) => {
+    for (const field of currentFields.values()) {
       fieldMap.set(field.id, field);
 
       if (parentId) {
@@ -39,13 +29,13 @@ export function getFieldInfoMap(
       }
 
       if ('children' in field && field.children) {
-        buildMaps(field.children, `${fieldPath}.children`, field.id);
+        buildMaps(field.children, field.id);
       }
     }
   };
 
-  buildMaps(fields, fieldKey);
-  return { fieldKeyMap, fieldMap, fieldParentMap };
+  buildMaps(fields);
+  return { fieldMap, fieldParentMap };
 }
 
 // Helper function to update a single field in maps
@@ -54,14 +44,13 @@ export function updateFieldInMaps(
   updatedField: FormField,
   fieldMaps: FieldMaps,
 ): FieldMaps {
-  const { fieldKeyMap, fieldMap, fieldParentMap } = fieldMaps;
+  const { fieldMap, fieldParentMap } = fieldMaps;
 
   // Create new maps with updated field
   const newFieldMap = new Map(fieldMap);
   newFieldMap.set(fieldId, updatedField);
 
   return {
-    fieldKeyMap: new Map(fieldKeyMap),
     fieldMap: newFieldMap,
     fieldParentMap: new Map(fieldParentMap),
   };
@@ -190,4 +179,16 @@ export function clearAllDebounceTimers() {
     clearTimeout(timer);
   }
   debounceTimers.clear();
+}
+
+export function getAllFields(fields: FormField[]): FormField[] {
+  const _fields = [];
+  console.log('field', fields);
+  for (const field of fields) {
+    _fields.push(field);
+    if ('children' in field && field.children) {
+      _fields.push(...getAllFields(field.children));
+    }
+  }
+  return _fields;
 }

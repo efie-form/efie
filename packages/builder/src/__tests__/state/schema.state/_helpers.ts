@@ -34,7 +34,6 @@ export const resetStore = () => {
   useSchemaStore.setState({
     schema: undefined,
     fieldMap: new Map(),
-    fieldKeyMap: new Map(),
     fieldParentMap: new Map(),
     histories: [],
     totalHistories: 1,

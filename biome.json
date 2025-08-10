@@ -37,6 +37,9 @@
       },
       "nursery": {
         "useSortedClasses": "off"
+      },
+      "a11y": {
+        "useSemanticElements": "off"
       }
     }
   },

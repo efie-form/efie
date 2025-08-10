@@ -26,7 +26,6 @@ export const useSchemaStore = create<SchemaState>((set, getState) => {
     schema: undefined,
     fieldParentMap: fieldInfo.fieldParentMap,
     fieldMap: fieldInfo.fieldMap,
-    fieldKeyMap: fieldInfo.fieldKeyMap,
 
     // Combine all actions
     ...accessMethods,

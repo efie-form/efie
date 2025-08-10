@@ -33,7 +33,7 @@ export function createFieldActions({ set, getState }: StateSetters): SchemaState
         form: { ...schema.form, fields: newFields },
       };
 
-      const { fieldKeyMap, fieldMap, fieldParentMap } = getFieldInfoMap(newFields);
+      const { fieldMap, fieldParentMap } = getFieldInfoMap(newFields);
 
       // Get current history state
       const { maxHistories, histories, currentHistoryIndex } = getState();
@@ -52,7 +52,6 @@ export function createFieldActions({ set, getState }: StateSetters): SchemaState
       set({
         schema: newSchema,
         fieldMap,
-        fieldKeyMap,
         fieldParentMap,
         histories: newHistories,
         totalHistories: newHistories.length,
@@ -88,7 +87,7 @@ export function createFieldActions({ set, getState }: StateSetters): SchemaState
         },
       };
 
-      const { fieldKeyMap, fieldParentMap } = getFieldInfoMap(newSchema.form.fields);
+      const { fieldParentMap } = getFieldInfoMap(newSchema.form.fields);
 
       // Get current history state
       const { maxHistories, histories, currentHistoryIndex } = getState();
@@ -114,7 +113,6 @@ export function createFieldActions({ set, getState }: StateSetters): SchemaState
         set({
           schema: newSchema,
           fieldMap: new Map(fieldMap).set(fieldId, updatedField),
-          fieldKeyMap,
           fieldParentMap,
           histories: newHistories,
           totalHistories: newHistories.length,
@@ -125,7 +123,6 @@ export function createFieldActions({ set, getState }: StateSetters): SchemaState
         set({
           schema: newSchema,
           fieldMap: new Map(fieldMap).set(fieldId, updatedField),
-          fieldKeyMap,
           fieldParentMap,
         });
       }
@@ -189,7 +186,7 @@ export function createFieldActions({ set, getState }: StateSetters): SchemaState
       newSchema.form.fields = removeFromParent(newSchema.form.fields);
       newSchema.form.fields = addToParent(newSchema.form.fields);
 
-      const { fieldKeyMap, fieldMap, fieldParentMap } = getFieldInfoMap(newSchema.form.fields);
+      const { fieldMap, fieldParentMap } = getFieldInfoMap(newSchema.form.fields);
 
       // Get current history state
       const { maxHistories, histories, currentHistoryIndex } = getState();
@@ -208,7 +205,6 @@ export function createFieldActions({ set, getState }: StateSetters): SchemaState
       set({
         schema: newSchema,
         fieldMap,
-        fieldKeyMap,
         fieldParentMap,
         histories: newHistories,
         totalHistories: newHistories.length,
@@ -227,7 +223,7 @@ export function createFieldActions({ set, getState }: StateSetters): SchemaState
         form: { ...schema.form, fields: newFields },
       };
 
-      const { fieldKeyMap, fieldMap, fieldParentMap } = getFieldInfoMap(newFields);
+      const { fieldMap, fieldParentMap } = getFieldInfoMap(newFields);
 
       // Get current history state
       const { maxHistories, histories, currentHistoryIndex } = getState();
@@ -246,7 +242,6 @@ export function createFieldActions({ set, getState }: StateSetters): SchemaState
       set({
         schema: newSchema,
         fieldMap,
-        fieldKeyMap,
         fieldParentMap,
         histories: newHistories,
         totalHistories: newHistories.length,

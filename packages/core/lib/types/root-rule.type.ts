@@ -43,7 +43,6 @@ export interface ConditionOptions {
 // Operands
 export type Operand =
   | { kind: 'fieldValue'; field: string }
-  | { kind: 'fieldOptionSelected'; field: string }
   | {
       kind: 'fieldState';
       field: string;
@@ -83,8 +82,6 @@ export type Operator =
   | 'length_gte'
   | 'length_lt'
   | 'length_lte'
-  | 'selected_is'
-  | 'selected_in'
   | 'date_before'
   | 'date_after'
   | 'date_between'
