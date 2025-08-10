@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import Divider from '../../../../components/elements/divider';
 import { Input, Select, StyledSelect, Switch } from '../../../../components/form';
 import { useSchemaStore } from '../../../../lib/state/schema.state';
@@ -11,8 +10,6 @@ export default function FormConditions() {
   const rule = useSchemaStore((state) => state.findRuleById(selectedConditionId));
   const updateRule = useSchemaStore((state) => state.updateRule);
   const fieldMap = useSchemaStore((state) => state.fieldMap);
-  console.log(fieldMap);
-  const [fieldId, setFieldId] = useState();
 
   if (!rule) return;
 
@@ -45,7 +42,7 @@ export default function FormConditions() {
             <p className="typography-body3 mb-1 text-neutral-600">Operator</p>
             <StyledSelect
               options={[
-                { value: 'equal', label: 'Equals' },
+                { value: 'equal', label: 'Equals ab jf klsajfk lasdjf klsadfjklfj skfj ' },
                 { value: 'not_equal', label: 'Does Not Equal' },
                 { value: 'contains', label: 'Contains' },
                 { value: 'not_contains', label: 'Does Not Contain' },

@@ -1,10 +1,10 @@
 import * as PopoverPrimitive from '@radix-ui/react-popover';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { type ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import { useControllableState } from '../../lib/hooks/use-controllable-state';
 import { cn } from '../../lib/utils';
 
 interface StyledSelectProps<T extends string> {
-  options: { value: T; label: string }[];
+  options: { value: T; label: string | ReactNode }[];
   value?: T;
   onChange?: (value: T) => void;
   disabled?: boolean;
@@ -23,7 +23,7 @@ export default function StyledSelect<T extends string>({
 
   const [selected, setSelected] = useControllableState<T>({
     value,
-    defaultValue: options?.[0]?.value as T,
+    defaultValue: undefined,
     onChange,
   });
 
@@ -93,7 +93,7 @@ export default function StyledSelect<T extends string>({
           aria-haspopup="listbox"
           aria-expanded={open}
           className={cn(
-            'typography-body3 inline-flex w-full items-center justify-between rounded-md border border-neutral-200 bg-white px-2 py-1 text-neutral-800 outline-none',
+            'typography-body3 inline-flex w-full items-center text-left justify-between rounded-md border border-neutral-200 bg-white px-2 py-1 text-neutral-800 outline-none',
             'focus-visible:ring-2 focus-visible:ring-primary-500/50',
             disabled && 'cursor-not-allowed opacity-60',
           )}
@@ -115,7 +115,7 @@ export default function StyledSelect<T extends string>({
             }
           }}
         >
-          <span className="truncate text-left">{selectedLabel}</span>
+          <span className="truncate flex-1">{selectedLabel}</span>
           <svg
             className={cn('size-4 shrink-0 transition-transform', open && 'rotate-180')}
             viewBox="0 0 20 20"

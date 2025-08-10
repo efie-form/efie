@@ -183,7 +183,6 @@ export function clearAllDebounceTimers() {
 
 export function getAllFields(fields: FormField[]): FormField[] {
   const _fields = [];
-  console.log('field', fields);
   for (const field of fields) {
     _fields.push(field);
     if ('children' in field && field.children) {
