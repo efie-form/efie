@@ -4,6 +4,7 @@ import { deepClone, generateId } from './utils';
 
 export interface SchemaStateRuleActions {
   getAllRules: () => Rule[];
+  findRuleById: (ruleId?: string) => Rule | undefined;
   addRule: (rule: Rule, index?: number) => void;
   removeRule: (ruleId: string) => void;
   moveRule: (from: number, to: number) => void;
@@ -35,6 +36,10 @@ export function createRuleActions({ getState, set }: StateSetters): SchemaStateR
     getAllRules: () => {
       const { schema } = getState();
       return schema?.form.rules ?? [];
+    },
+    findRuleById: (ruleId) => {
+      const { schema } = getState();
+      return schema?.form.rules?.find((r) => r.id === ruleId);
     },
     addRule: (rule, index) => {
       const { schema } = getState();

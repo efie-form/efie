@@ -63,7 +63,6 @@ export default function PageItem({ page, onDelete, isCurrentPage, onSelect }: Pa
   return (
     <button
       style={style}
-      key={page.id}
       ref={setNodeRef}
       {...attributes}
       className={cn(

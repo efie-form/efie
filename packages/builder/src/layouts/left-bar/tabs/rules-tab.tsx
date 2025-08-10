@@ -14,6 +14,7 @@ import { FaPlus } from 'react-icons/fa6';
 import { MdOutlineDragIndicator } from 'react-icons/md';
 import Button from '../../../components/elements/button';
 import { useSchemaStore } from '../../../lib/state/schema.state';
+import { useSettingsStore } from '../../../lib/state/settings.state';
 import { cn } from '../../../lib/utils';
 
 export default function RulesTab() {
@@ -76,6 +77,7 @@ interface RuleItemProps {
 }
 
 function RuleItem({ rule }: RuleItemProps) {
+  const { setSelectedConditionId, setMode } = useSettingsStore();
   const { attributes, listeners, setNodeRef, transition, transform, isDragging } = useSortable({
     id: rule.id,
   });
@@ -108,6 +110,17 @@ function RuleItem({ rule }: RuleItemProps) {
       </span>
       <div className="flex-1">
         <span className="typography-body2">{rule.id}</span>
+      </div>
+      <div>
+        <button
+          type="button"
+          onClick={() => {
+            setMode('conditions');
+            setSelectedConditionId(rule.id);
+          }}
+        >
+          Edit
+        </button>
       </div>
     </div>
   );

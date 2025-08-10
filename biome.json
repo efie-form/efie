@@ -36,7 +36,7 @@
         "noChildrenProp": "warn"
       },
       "nursery": {
-        "useSortedClasses": "warn"
+        "useSortedClasses": "off"
       }
     }
   },
