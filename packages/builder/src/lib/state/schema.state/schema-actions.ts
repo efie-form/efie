@@ -2,7 +2,12 @@ import type { FormField, FormSchema } from '@efie-form/core';
 import type { StateSetters } from './types';
 import { getFieldInfoMap } from './utils';
 
-export function createSchemaActions({ set, getState }: StateSetters) {
+export interface SchemaStateSchemaActions {
+  setSchema: (schema: FormSchema) => void;
+  setFields: (fields: FormField[]) => void;
+}
+
+export function createSchemaActions({ set, getState }: StateSetters): SchemaStateSchemaActions {
   return {
     setSchema: (schema: FormSchema) => {
       const { fieldKeyMap, fieldMap, fieldParentMap } = getFieldInfoMap(schema.form.fields);

@@ -1,4 +1,3 @@
-import { CgListTree } from 'react-icons/cg';
 import { FaRegEdit } from 'react-icons/fa';
 import { FaCode, FaEye } from 'react-icons/fa6';
 import { useSettingsStore } from '../../../lib/state/settings.state';
@@ -6,7 +5,6 @@ import { cn } from '../../../lib/utils';
 
 const MODES = [
   { mode: 'edit', Icon: FaRegEdit },
-  { mode: 'rules-conditions', Icon: CgListTree },
   { mode: 'preview', Icon: FaEye },
   { mode: 'json', Icon: FaCode },
 ] as const;

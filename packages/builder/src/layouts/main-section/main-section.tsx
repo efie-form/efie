@@ -8,7 +8,6 @@ import FormPreview from './content-mode/form-preview';
 import LayoutSwitcher from './toolbars/layout-switcher';
 import LeftToolbar from './toolbars/left-toolbar';
 import ModeSwitcher from './toolbars/mode-switcher';
-import RuleConditions from './toolbars/rule-conditions';
 
 export default function MainSection() {
   const { mode } = useSettingsStore();
@@ -34,7 +33,6 @@ export default function MainSection() {
         </div>
       </header>
       <div className="flex-1 overflow-y-auto" ref={ref}>
-        {mode === 'rules-conditions' && <RuleConditions />}
         {mode === 'edit' && <FormContent />}
         {mode === 'json' && <FormJson />}
         {mode === 'preview' && <FormPreview />}

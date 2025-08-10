@@ -1,10 +1,12 @@
 import { useState } from 'react';
+import { CgListTree } from 'react-icons/cg';
 import { FaRegCopy } from 'react-icons/fa';
 import { HiMiniSquaresPlus } from 'react-icons/hi2';
 import Tooltip from '../../components/elements/tooltip';
 import { cn } from '../../lib/utils';
 import FieldsTab from './tabs/fields-tab';
 import { PagesTab } from './tabs/pages-tab';
+import RulesTab from './tabs/rules-tab';
 
 const tabs = [
   {
@@ -19,11 +21,12 @@ const tabs = [
     label: 'Pages',
     tab: PagesTab,
   },
-  // {
-  //   id: 'rules-conditions',
-  //   Icon: LuListTree,
-  //   label: 'Rules & Conditions',
-  // },
+  {
+    id: 'rules-conditions',
+    Icon: CgListTree,
+    label: 'Rules & Conditions',
+    tab: RulesTab,
+  },
   // {
   //   id: 'page-flow',
   //   Icon: TiFlowMerge,

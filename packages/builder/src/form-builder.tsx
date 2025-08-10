@@ -17,7 +17,7 @@ const FormBuilder = () => {
         height: height ? `${height}px` : undefined,
       }}
     >
-      <aside className="w-64 overflow-y-auto bg-neutral-50">
+      <aside className="w-80 overflow-y-auto bg-neutral-50">
         <LeftBar />
       </aside>
       <main className="flex w-[40rem] flex-1 flex-col bg-primary-50">

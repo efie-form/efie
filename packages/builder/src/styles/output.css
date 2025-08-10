@@ -558,6 +558,10 @@ video {
   pointer-events: none;
 }
 
+.visible {
+  visibility: visible;
+}
+
 .invisible {
   visibility: hidden;
 }
@@ -620,6 +624,18 @@ video {
 
 .left-2 {
   left: 0.5rem;
+}
+
+.left-\[-32px\] {
+  left: -32px;
+}
+
+.right-\[-44px\] {
+  right: -44px;
+}
+
+.top-3 {
+  top: 0.75rem;
 }
 
 .z-10 {
@@ -718,6 +734,14 @@ video {
   margin-bottom: 1.25rem;
 }
 
+.ml-4 {
+  margin-left: 1rem;
+}
+
+.ml-auto {
+  margin-left: auto;
+}
+
 .block {
   display: block;
 }
@@ -732,6 +756,10 @@ video {
 
 .flex {
   display: flex;
+}
+
+.inline-flex {
+  display: inline-flex;
 }
 
 .grid {
@@ -939,6 +967,14 @@ video {
 
 .w-32 {
   width: 8rem;
+}
+
+.w-36 {
+  width: 9rem;
+}
+
+.w-80 {
+  width: 20rem;
 }
 
 .min-w-0 {
@@ -1180,6 +1216,18 @@ video {
   margin-bottom: calc(1rem * var(--tw-space-y-reverse));
 }
 
+.space-y-1 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.25rem * var(--tw-space-y-reverse));
+}
+
+.space-y-6 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(1.5rem * var(--tw-space-y-reverse));
+}
+
 .divide-y > :not([hidden]) ~ :not([hidden]) {
   --tw-divide-y-reverse: 0;
   border-top-width: calc(1px * calc(1 - var(--tw-divide-y-reverse)));
@@ -1298,6 +1346,10 @@ video {
   border-top-width: 0.5px;
 }
 
+.border-r {
+  border-right-width: 1px;
+}
+
 .border-dashed {
   border-style: dashed;
 }
@@ -1363,6 +1415,11 @@ video {
 .border-primary-300 {
   --tw-border-opacity: 1;
   border-color: rgb(from var(--color-primary-300) r g b / var(--tw-border-opacity));
+}
+
+.border-success-300 {
+  --tw-border-opacity: 1;
+  border-color: rgb(from var(--color-green-300) r g b / var(--tw-border-opacity));
 }
 
 .border-e-neutral-200 {
@@ -1495,6 +1552,30 @@ video {
   background-color: rgb(255 255 255 / 0.5);
 }
 
+.bg-primary-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(from var(--color-primary-600) r g b / var(--tw-bg-opacity));
+}
+
+.bg-danger-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(from var(--color-red-600) r g b / var(--tw-bg-opacity));
+}
+
+.bg-neutral-700 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(from var(--color-neutral-700) r g b / var(--tw-bg-opacity));
+}
+
+.bg-success-100\/30 {
+  background-color: rgb(from var(--color-green-100) r g b / 0.3);
+}
+
+.bg-success-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(from var(--color-green-600) r g b / var(--tw-bg-opacity));
+}
+
 .bg-opacity-0 {
   --tw-bg-opacity: 0;
 }
@@ -1534,6 +1615,10 @@ video {
 
 .p-\[2px\] {
   padding: 2px;
+}
+
+.p-6 {
+  padding: 1.5rem;
 }
 
 .px-0\.5 {
@@ -1617,6 +1702,10 @@ video {
   padding-inline-start: 0.5rem;
 }
 
+.pr-3 {
+  padding-right: 0.75rem;
+}
+
 .text-left {
   text-align: left;
 }
@@ -1668,6 +1757,10 @@ video {
 
 .lowercase {
   text-transform: lowercase;
+}
+
+.capitalize {
+  text-transform: capitalize;
 }
 
 .italic {
@@ -1772,6 +1865,11 @@ video {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.text-neutral-100 {
+  --tw-text-opacity: 1;
+  color: rgb(from var(--color-neutral-100) r g b / var(--tw-text-opacity));
 }
 
 .underline {
@@ -2386,6 +2484,16 @@ div.tiptap:focus-visible {
   background-color: rgb(from var(--color-primary-50) r g b / var(--tw-bg-opacity));
 }
 
+.hover\:bg-danger-50:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(from var(--color-red-50) r g b / var(--tw-bg-opacity));
+}
+
+.hover\:bg-success-700:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(from var(--color-green-700) r g b / var(--tw-bg-opacity));
+}
+
 .hover\:text-danger:hover {
   --tw-text-opacity: 1;
   color: rgb(from var(--color-red-500) r g b / var(--tw-text-opacity));
@@ -2435,6 +2543,10 @@ div.tiptap:focus-visible {
   --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
   --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
   box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+
+.disabled\:opacity-40:disabled {
+  opacity: 0.4;
 }
 
 .group:focus-within .group-focus-within\:visible {
@@ -2543,6 +2655,14 @@ div.tiptap:focus-visible {
 @media (min-width: 768px) {
   .md\:grid-cols-5 {
     grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .md\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .md\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 

@@ -68,13 +68,13 @@ export default function PageItem({ page, onDelete, isCurrentPage, onSelect }: Pa
       {...attributes}
       className={cn(
         'group relative flex w-full items-center justify-between px-1 py-2 hover:bg-neutral-100',
-        isDragging ? 'relative z-50 cursor-grabbing' : 'cursor-pointer',
+        isDragging ? 'z-50 cursor-grabbing' : 'cursor-pointer',
         {
           'bg-neutral-200': isDragging,
           '!bg-neutral-100': isCurrentPage,
         },
       )}
-      onClick={() => onSelect()}
+      onClick={onSelect}
       onDoubleClick={() => {
         setEditMode(true);
       }}
