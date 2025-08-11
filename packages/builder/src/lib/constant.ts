@@ -42,3 +42,7 @@ export const RIGHT_BAR_TABS = {
 } as const;
 
 export type RightBarTab = (typeof RIGHT_BAR_TABS)[keyof typeof RIGHT_BAR_TABS];
+
+export const fieldTypeAvailableOperators = {
+  // []
+};

@@ -1,4 +1,4 @@
-export const FormInputType = {
+export const FieldInputType = {
   SHORT_TEXT: 'short_text',
   LONG_TEXT: 'long_text',
   NUMBER: 'number',
@@ -15,13 +15,13 @@ export const FormInputType = {
   PASSWORD: 'password',
 } as const;
 
-export const FormStaticType = {
+export const FieldStaticType = {
   DIVIDER: 'divider',
   HEADING: 'heading',
   IMAGE: 'image',
 } as const;
 
-export const FormLayoutType = {
+export const FieldLayoutType = {
   ROW: 'row',
   GROUP: 'group',
   COLUMN: 'column',
@@ -29,15 +29,15 @@ export const FormLayoutType = {
   PAGE: 'page',
 } as const;
 
-export const FormActionType = {
+export const FieldActionType = {
   BUTTON: 'button',
 } as const;
 
 export const FieldType = {
-  ...FormInputType,
-  ...FormStaticType,
-  ...FormLayoutType,
-  ...FormActionType,
+  ...FieldInputType,
+  ...FieldStaticType,
+  ...FieldLayoutType,
+  ...FieldActionType,
 } as const;
 
 export type FieldType = (typeof FieldType)[keyof typeof FieldType];

@@ -1,10 +1,11 @@
 import * as PopoverPrimitive from '@radix-ui/react-popover';
-import { type ReactNode, useEffect, useMemo, useRef, useState } from 'react';
+import { type ElementType, useEffect, useMemo, useRef, useState } from 'react';
 import { useControllableState } from '../../lib/hooks/use-controllable-state';
 import { cn } from '../../lib/utils';
+import Tooltip from '../elements/tooltip';
 
 interface StyledSelectProps<T extends string> {
-  options: { value: T; label: string | ReactNode }[];
+  options: { value: T; label: string; Icon?: ElementType }[];
   value?: T;
   onChange?: (value: T) => void;
   disabled?: boolean;
@@ -141,7 +142,7 @@ export default function StyledSelect<T extends string>({
         >
           <div
             className={cn(
-              'max-h-56 overflow-auto rounded-md border border-neutral-200 bg-white p-1 shadow-lg outline-none',
+              'max-h-56 min-w-48 overflow-auto rounded-md border border-neutral-200 bg-white p-1 shadow-lg outline-none',
               'focus-visible:ring-2 focus-visible:ring-primary-500/50',
             )}
             style={{ width: menuWidth }}
@@ -152,8 +153,8 @@ export default function StyledSelect<T extends string>({
                 const isHighlighted = highlightedIndex === idx;
                 return (
                   <button
-                    key={opt.value}
                     id={opt.value}
+                    key={opt.value}
                     type="button"
                     ref={(el) => {
                       optionRefs.current[idx] = el;
@@ -199,6 +200,11 @@ export default function StyledSelect<T extends string>({
                       }
                     }}
                   >
+                    {opt.Icon && (
+                      <div>
+                        <opt.Icon className="size-4 text-neutral-600" />
+                      </div>
+                    )}
                     <span className="flex-1 truncate">{opt.label}</span>
                     {isSelected && (
                       <svg

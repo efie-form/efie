@@ -7,6 +7,7 @@ interface TooltipProps {
   align?: TooltipPrimitive.TooltipContentProps['align'];
   sideOffset?: TooltipPrimitive.TooltipContentProps['sideOffset'];
   alignOffset?: TooltipPrimitive.TooltipContentProps['alignOffset'];
+  delayDuration?: number;
 }
 
 export default function Tooltip({
@@ -16,9 +17,10 @@ export default function Tooltip({
   align = 'start',
   sideOffset = 0,
   alignOffset = 0,
+  delayDuration,
 }: TooltipProps) {
   return (
-    <TooltipPrimitive.Provider delayDuration={100}>
+    <TooltipPrimitive.Provider delayDuration={delayDuration}>
       <TooltipPrimitive.Root>
         <TooltipPrimitive.Trigger asChild>{children}</TooltipPrimitive.Trigger>
         <TooltipPrimitive.Content

@@ -1,7 +1,13 @@
 export type { BuilderInterface } from './builder';
 export { default as Builder } from './builder';
 export { default as Client } from './client';
-export { FieldType } from './constants/field-type';
+export {
+  FieldActionType,
+  FieldInputType,
+  FieldLayoutType,
+  FieldStaticType,
+  FieldType,
+} from './constants/field-type';
 export { SizeType, SizeUnit } from './constants/form-schema.constant';
 export { PropSettingsTemplate } from './constants/prop-settings.constant';
 export {

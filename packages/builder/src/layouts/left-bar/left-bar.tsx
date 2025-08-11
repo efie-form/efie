@@ -3,6 +3,7 @@ import { CgListTree } from 'react-icons/cg';
 import { FaRegCopy } from 'react-icons/fa';
 import { HiMiniSquaresPlus } from 'react-icons/hi2';
 import Tooltip from '../../components/elements/tooltip';
+import { useSettingsStore } from '../../lib/state/settings.state';
 import { cn } from '../../lib/utils';
 import FieldsTab from './tabs/fields-tab';
 import { PagesTab } from './tabs/pages-tab';
@@ -36,13 +37,21 @@ const tabs = [
 
 function LeftBar() {
   const [activeTab, setActiveTab] = useState(tabs[0].id);
+  const { setMode } = useSettingsStore();
   const currentTab = tabs.find((tab) => tab.id === activeTab);
 
   return (
     <div className="flex h-full">
       <div className="h-full bg-neutral-100/40">
         {tabs.map((tab) => (
-          <Tooltip key={tab.id} content={tab.label} side="right" align="center" sideOffset={4}>
+          <Tooltip
+            key={tab.id}
+            delayDuration={100}
+            content={tab.label}
+            side="right"
+            align="center"
+            sideOffset={4}
+          >
             <button
               type="button"
               className={cn(
@@ -51,7 +60,10 @@ function LeftBar() {
                   '!bg-neutral-200/80': tab.id === activeTab,
                 },
               )}
-              onClick={() => setActiveTab(tab.id)}
+              onClick={() => {
+                setActiveTab(tab.id);
+                if (tab.id === 'fields') setMode('edit');
+              }}
               aria-label={tab.label}
             >
               <tab.Icon size={16} className="text-neutral-800" />

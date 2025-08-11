@@ -42,7 +42,7 @@ export default function FormConditions() {
             <p className="typography-body3 mb-1 text-neutral-600">Operator</p>
             <StyledSelect
               options={[
-                { value: 'equal', label: 'Equals ab jf klsajfk lasdjf klsadfjklfj skfj ' },
+                { value: 'equal', label: 'Equals' },
                 { value: 'not_equal', label: 'Does Not Equal' },
                 { value: 'contains', label: 'Contains' },
                 { value: 'not_contains', label: 'Does Not Contain' },
