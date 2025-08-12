@@ -1,4 +1,4 @@
-import type { FormInputField, PropertyDefinition } from '@efie-form/core';
+import type { PropertyDefinition } from '@efie-form/core';
 import { FieldInputType, FieldType, type FormField, type PropertyType } from '@efie-form/core';
 import classNames from 'classnames';
 import { twMerge } from 'tailwind-merge';
