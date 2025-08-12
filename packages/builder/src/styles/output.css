@@ -1013,6 +1013,10 @@ video {
   width: 20rem;
 }
 
+.w-48 {
+  width: 12rem;
+}
+
 .min-w-0 {
   min-width: 0px;
 }
@@ -1035,6 +1039,10 @@ video {
 
 .min-w-48 {
   min-width: 12rem;
+}
+
+.min-w-40 {
+  min-width: 10rem;
 }
 
 .max-w-40 {
@@ -1209,6 +1217,10 @@ video {
 
 .items-center {
   align-items: center;
+}
+
+.items-stretch {
+  align-items: stretch;
 }
 
 .justify-end {

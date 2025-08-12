@@ -1,6 +1,7 @@
 import { type FormField, type Operator, SharedOperator } from '@efie-form/core';
 import { useEffect, useState } from 'react';
 import Divider from '../../../../components/elements/divider';
+import { CountrySelect, PhoneInput } from '../../../../components/form';
 import { FieldTypeOperators, OPERATORS_NAME } from '../../../../lib/constant';
 import { useSchemaStore } from '../../../../lib/state/schema.state';
 import { useSettingsStore } from '../../../../lib/state/settings.state';
@@ -60,6 +61,8 @@ export default function FormConditions() {
         onToggleEnabled={(v) => updateRule(rule.id, { enabled: v })}
       />
 
+      <CountrySelect />
+      <PhoneInput />
       {/* When (Conditions) */}
       <div className={cn('rounded-md border border-neutral-200 bg-white p-4 shadow-sm')}>
         <p className="typography-body1 mb-3">When</p>
