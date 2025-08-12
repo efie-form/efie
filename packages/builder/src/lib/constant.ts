@@ -1,4 +1,4 @@
-import { FieldType } from '@efie-form/core';
+import { FieldInputType, FieldType, Operator } from '@efie-form/core';
 
 export const FIELDS_NAME = {
   [FieldType.SHORT_TEXT]: 'Short Text',
@@ -43,6 +43,48 @@ export const RIGHT_BAR_TABS = {
 
 export type RightBarTab = (typeof RIGHT_BAR_TABS)[keyof typeof RIGHT_BAR_TABS];
 
-export const fieldTypeAvailableOperators = {
-  // []
+export const OPERATOR_LABEL: Record<Operator, string> = {
+  equal: 'Equals',
+  not_equal: 'Does Not Equal',
+  contains: 'Contains',
+  not_contains: 'Does Not Contain',
+  starts_with: 'Starts With',
+  ends_with: 'Ends With',
+  is_empty: 'Is Empty',
+  is_filled: 'Is Filled',
+  is_invalid: 'Is Invalid',
+  is_valid: 'Is Valid',
+  not_ends_with: 'Does Not End With',
+  not_starts_with: 'Does Not Start With',
+};
+
+export const fieldTypeAvailableOperators: Record<FieldInputType, Operator[]> = {
+  [FieldInputType.SHORT_TEXT]: [
+    Operator.CONTAINS,
+    Operator.NOT_EQUAL,
+    Operator.NOT_CONTAINS,
+    Operator.STARTS_WITH,
+    Operator.NOT_STARTS_WITH,
+    Operator.ENDS_WITH,
+    Operator.NOT_ENDS_WITH,
+    Operator.IS_EMPTY,
+    Operator.IS_FILLED,
+  ],
+  [FieldInputType.LONG_TEXT]: [
+    Operator.CONTAINS,
+    Operator.NOT_EQUAL,
+    Operator.NOT_CONTAINS,
+    Operator.STARTS_WITH,
+    Operator.NOT_STARTS_WITH,
+    Operator.ENDS_WITH,
+    Operator.NOT_ENDS_WITH,
+    Operator.IS_EMPTY,
+    Operator.IS_FILLED,
+  ],
+  [FieldInputType.DATE]: [
+    Operator.IS_EMPTY,
+    Operator.IS_FILLED,
+    Operator.IS_INVALID,
+    Operator.IS_VALID,
+  ],
 };

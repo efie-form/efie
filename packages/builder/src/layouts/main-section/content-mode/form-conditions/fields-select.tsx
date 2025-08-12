@@ -1,4 +1,4 @@
-import { PropertyType } from '@efie-form/core';
+import { type FormField, PropertyType } from '@efie-form/core';
 import { useMemo } from 'react';
 import { StyledSelect } from '../../../../components/form';
 import { fieldIcons } from '../../../../lib/fields-tab/fields';
@@ -7,8 +7,8 @@ import { getAllFields } from '../../../../lib/state/schema.state/utils';
 import { getFieldProp, isInputField } from '../../../../lib/utils';
 
 interface FieldsSelectProps {
-  value?: string;
-  onChange?: (value: string) => void;
+  value?: FormField;
+  onChange?: (value: FormField) => void;
 }
 
 export default function FieldsSelect({ value, onChange }: FieldsSelectProps) {
@@ -27,8 +27,12 @@ export default function FieldsSelect({ value, onChange }: FieldsSelectProps) {
           Icon: Icon,
         };
       })}
-      value={value}
-      onChange={onChange}
+      value={value?.id}
+      onChange={(id) => {
+        const field = allFields.find((f) => f.id === id);
+
+        if (field) onChange?.(field);
+      }}
     />
   );
 }

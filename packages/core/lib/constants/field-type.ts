@@ -41,3 +41,7 @@ export const FieldType = {
 } as const;
 
 export type FieldType = (typeof FieldType)[keyof typeof FieldType];
+export type FieldInputType = (typeof FieldInputType)[keyof typeof FieldInputType];
+export type FieldStaticType = (typeof FieldStaticType)[keyof typeof FieldStaticType];
+export type FieldLayoutType = (typeof FieldLayoutType)[keyof typeof FieldLayoutType];
+export type FieldActionType = (typeof FieldActionType)[keyof typeof FieldActionType];

@@ -66,7 +66,9 @@ export type Operator =
   | 'contains'
   | 'not_contains'
   | 'starts_with'
+  | 'not_starts_with'
   | 'ends_with'
+  | 'not_ends_with'
   | 'matches' // regex pattern in right (string), flags via options.flags
   | 'has_value'
   | 'not_has_value'

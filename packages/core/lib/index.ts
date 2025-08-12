@@ -8,7 +8,7 @@ export {
   FieldStaticType,
   FieldType,
 } from './constants/field-type';
-export { SizeType, SizeUnit } from './constants/form-schema.constant';
+export { Operator, SizeType, SizeUnit } from './constants/form-schema.constant';
 export { PropSettingsTemplate } from './constants/prop-settings.constant';
 export {
   CustomPropertyType,
@@ -123,7 +123,6 @@ export type {
   JsonPrimitive,
   JsonValue,
   Operand,
-  Operator,
   RecoverAction,
   ReorderFieldsAction,
   ReorderPagesAction,

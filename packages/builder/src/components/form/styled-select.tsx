@@ -2,7 +2,6 @@ import * as PopoverPrimitive from '@radix-ui/react-popover';
 import { type ElementType, useEffect, useMemo, useRef, useState } from 'react';
 import { useControllableState } from '../../lib/hooks/use-controllable-state';
 import { cn } from '../../lib/utils';
-import Tooltip from '../elements/tooltip';
 
 interface StyledSelectProps<T extends string> {
   options: { value: T; label: string; Icon?: ElementType }[];
@@ -82,8 +81,6 @@ export default function StyledSelect<T extends string>({
     });
   };
 
-  // no-op helper removed (handled inline for clarity)
-
   return (
     <PopoverPrimitive.Root open={open} onOpenChange={(o) => !disabled && setOpen(o)}>
       <PopoverPrimitive.Trigger asChild>
@@ -159,6 +156,7 @@ export default function StyledSelect<T extends string>({
                     ref={(el) => {
                       optionRefs.current[idx] = el;
                     }}
+                    title={opt.label}
                     data-index={idx}
                     className={cn(
                       'typography-body3 flex w-full items-center gap-2 rounded-sm px-2 py-1 text-left outline-none',

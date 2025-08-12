@@ -1,3 +1,5 @@
+import type { FormField } from '@efie-form/core';
+import { useState } from 'react';
 import Divider from '../../../../components/elements/divider';
 import { Input, Select, StyledSelect, Switch } from '../../../../components/form';
 import { useSchemaStore } from '../../../../lib/state/schema.state';
@@ -9,6 +11,7 @@ export default function FormConditions() {
   const selectedConditionId = useSettingsStore((state) => state.selectedConditionId);
   const rule = useSchemaStore((state) => state.findRuleById(selectedConditionId));
   const updateRule = useSchemaStore((state) => state.updateRule);
+  const [selectedField, setSelectedField] = useState<FormField>();
   const fieldMap = useSchemaStore((state) => state.fieldMap);
 
   if (!rule) return;
@@ -36,7 +39,7 @@ export default function FormConditions() {
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
           <div className="sm:col-span-1">
             <p className="typography-body3 mb-1 text-neutral-600">If</p>
-            <FieldsSelect />
+            <FieldsSelect value={selectedField} onChange={setSelectedField} />
           </div>
           <div className="sm:col-span-1">
             <p className="typography-body3 mb-1 text-neutral-600">Operator</p>
