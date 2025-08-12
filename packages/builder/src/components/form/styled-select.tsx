@@ -14,6 +14,8 @@ interface BaseProps<T extends string> {
   searchable?: boolean;
   searchPlaceholder?: string;
   filterFn?: (option: { value: T; label: string }, query: string) => boolean;
+  // Trigger presentation variant
+  triggerVariant?: 'default' | 'icon-only' | 'label-only';
 }
 
 interface SingleProps<T extends string> extends BaseProps<T> {
@@ -31,7 +33,14 @@ interface MultiProps<T extends string> extends BaseProps<T> {
 type StyledSelectProps<T extends string> = SingleProps<T> | MultiProps<T>;
 
 export default function StyledSelect<T extends string>(props: StyledSelectProps<T>) {
-  const { options, disabled, searchable = false, searchPlaceholder = 'Search…', filterFn } = props;
+  const {
+    options,
+    disabled,
+    searchable = false,
+    searchPlaceholder = 'Search…',
+    filterFn,
+    triggerVariant = 'default',
+  } = props;
   const isMultiple = (props as MultiProps<T>).multiple === true;
   type Selected = T | T[] | undefined;
   const [open, setOpen] = useState(false);
@@ -162,6 +171,9 @@ export default function StyledSelect<T extends string>(props: StyledSelectProps<
 
   const triggerText = useMemo(() => truncateMiddle(selectedItem.label, 60), [selectedItem.label]);
 
+  const triggerShowIcon = triggerVariant === 'icon-only' || triggerVariant === 'default';
+  const triggerShowLabel = triggerVariant === 'label-only' || triggerVariant === 'default';
+
   return (
     <PopoverPrimitive.Root open={open} onOpenChange={(o) => !disabled && setOpen(o)}>
       <PopoverPrimitive.Trigger asChild>
@@ -172,7 +184,9 @@ export default function StyledSelect<T extends string>(props: StyledSelectProps<
           aria-haspopup="listbox"
           aria-expanded={open}
           className={cn(
-            'group typography-body3 inline-flex gap-2 w-full items-center text-left justify-between rounded-md border border-neutral-200 bg-white px-2 py-1 text-neutral-800 outline-none',
+            'group typography-body3 inline-flex w-full items-center rounded-md border border-neutral-200 bg-white text-neutral-800 outline-none',
+            triggerVariant === 'default' && 'gap-2 text-left justify-between px-2 py-1',
+            triggerVariant === 'icon-only' && 'justify-between ps-2 pe-1 py-0.5',
             'focus-visible:ring-2 focus-visible:ring-primary-500/50',
             disabled && 'cursor-not-allowed opacity-60',
           )}
@@ -194,14 +208,16 @@ export default function StyledSelect<T extends string>(props: StyledSelectProps<
             }
           }}
         >
-          {selectedItem.Icon && !isMultiple && (
+          {triggerShowIcon && selectedItem.Icon && !isMultiple && (
             <div>
               <selectedItem.Icon className="size-4 text-neutral-600" />
             </div>
           )}
-          <span className="truncate flex-1" title={selectedItem.label}>
-            {triggerText}
-          </span>
+          {triggerShowLabel && (
+            <span className="truncate flex-1" title={selectedItem.label}>
+              {triggerText}
+            </span>
+          )}
           <HiChevronDown className="group-data-[state=open]:-rotate-180 text-neutral-800 transition-transform" />
         </button>
       </PopoverPrimitive.Trigger>

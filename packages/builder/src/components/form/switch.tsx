@@ -3,8 +3,8 @@ import { useControllableState } from '@radix-ui/react-use-controllable-state';
 
 interface SwitchProps {
   id?: string;
-  checked: boolean;
-  onChange: (value: boolean) => void;
+  checked?: boolean;
+  onChange?: (value: boolean) => void;
 }
 
 function Switch({ id, checked, onChange }: SwitchProps) {

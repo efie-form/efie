@@ -7,6 +7,7 @@ import {
   getCountryByCode,
   getDialByCode,
 } from '../../lib/data/countries';
+import { applyGrouping, getPhoneFormatForCountry } from '../../lib/data/phone-formats';
 import Input from './input';
 import StyledSelect from './styled-select';
 
@@ -20,6 +21,32 @@ interface PhoneInputProps {
 function normalizePlus(v: string): string {
   const digits = v.replace(/[^\d+]/g, '');
   return digits.startsWith('+') ? digits : `+${digits.replace(/^\+/, '')}`;
+}
+
+function unmask(raw: string): string {
+  // Keep only + and digits, ensure leading +
+  const cleaned = raw.replace(/[^\d+]/g, '');
+  return cleaned.startsWith('+') ? cleaned : `+${cleaned.replace(/^\+/, '')}`;
+}
+function formatRestForCountry(countryCode: string | undefined, rest: string): string {
+  if (!rest) return '';
+  const fmt = getPhoneFormatForCountry(countryCode);
+  if (fmt) return applyGrouping(rest, fmt.groups);
+  // Fallback: group by 3
+  const parts: string[] = [];
+  for (let i = 0; i < rest.length; i += 3) parts.push(rest.slice(i, i + 3));
+  return parts.join(' ');
+}
+
+function maskPhone(rawWithPlus: string): string {
+  const normalized = normalizePlus(rawWithPlus);
+  const digits = normalized.replace(/[^\d]/g, '');
+  const det = detectCountryFromPhone(normalized);
+  const dial = det?.dialCode || '';
+  if (!dial) return `+${digits}`; // Fallback
+  const rest = digits.slice(dial.length);
+  const restFmt = formatRestForCountry(det?.code, rest);
+  return restFmt ? `+${dial} ${restFmt}` : `+${dial}`;
 }
 
 export default function PhoneInput({
@@ -59,7 +86,7 @@ export default function PhoneInput({
     () =>
       countries.map((c) => ({
         value: c.code as string,
-        label: `${c.code} — ${c.name} (+${c.dialCode})`,
+        label: `${c.name} (+${c.dialCode})`,
         Icon: (({ className }: { className?: string }) => (
           <span className={className} aria-hidden>
             {c.flag}
@@ -71,7 +98,7 @@ export default function PhoneInput({
 
   return (
     <div className="flex w-full items-stretch gap-2">
-      <div className="w-48">
+      <div className="w-12">
         <StyledSelect
           options={countryOptions}
           value={countryCode}
@@ -85,14 +112,18 @@ export default function PhoneInput({
           searchable
           searchPlaceholder="Search country or code…"
           disabled={_disabled}
+          triggerVariant="icon-only"
         />
       </div>
       <div className="flex-1">
         <Input
-          value={phone}
+          value={maskPhone(phone || '')}
           onChange={(v) => {
             // User typed full number; auto-detect country and update left
-            const withPlus = normalizePlus(v);
+            let withPlus = unmask(v);
+            // Enforce max 15 digits for E.164
+            const onlyDigits = withPlus.replace(/[^\d]/g, '');
+            withPlus = `+${onlyDigits.slice(0, 15)}`;
             const det = detectCountryFromPhone(withPlus);
             if (det && det.code !== countryCode) {
               setCountryCode(det.code);
