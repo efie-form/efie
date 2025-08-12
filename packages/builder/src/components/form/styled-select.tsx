@@ -6,26 +6,34 @@ import { useControllableState } from '../../lib/hooks/use-controllable-state';
 import { cn } from '../../lib/utils';
 import Input from './input';
 
-interface StyledSelectProps<T extends string> {
+// Types: single vs multiple selection
+interface BaseProps<T extends string> {
   options: { value: T; label: string; Icon?: ElementType }[];
-  value?: T;
-  onChange?: (value: T) => void;
   disabled?: boolean;
-  // New optional search props
+  // Search props
   searchable?: boolean;
   searchPlaceholder?: string;
   filterFn?: (option: { value: T; label: string }, query: string) => boolean;
 }
 
-export default function StyledSelect<T extends string>({
-  options,
-  value,
-  onChange,
-  disabled,
-  searchable = false,
-  searchPlaceholder = 'Search…',
-  filterFn,
-}: StyledSelectProps<T>) {
+interface SingleProps<T extends string> extends BaseProps<T> {
+  multiple?: false;
+  value?: T;
+  onChange?: (value: T) => void;
+}
+
+interface MultiProps<T extends string> extends BaseProps<T> {
+  multiple: true;
+  value?: T[];
+  onChange?: (value: T[]) => void;
+}
+
+type StyledSelectProps<T extends string> = SingleProps<T> | MultiProps<T>;
+
+export default function StyledSelect<T extends string>(props: StyledSelectProps<T>) {
+  const { options, disabled, searchable = false, searchPlaceholder = 'Search…', filterFn } = props;
+  const isMultiple = (props as MultiProps<T>).multiple === true;
+  type Selected = T | T[] | undefined;
   const [open, setOpen] = useState(false);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
   const optionRefs = useRef<Array<HTMLButtonElement | null>>([]);
@@ -33,10 +41,16 @@ export default function StyledSelect<T extends string>({
   const searchInputRef = useRef<HTMLInputElement | null>(null);
   const [query, setQuery] = useState('');
 
-  const [selected, setSelected] = useControllableState<T>({
-    value,
-    defaultValue: undefined,
-    onChange,
+  const [selected, setSelected] = useControllableState<Selected>({
+    value: props.value as Selected,
+    defaultValue: (isMultiple ? [] : undefined) as Selected,
+    onChange: (v) => {
+      if (isMultiple) {
+        (props as MultiProps<T>).onChange?.((Array.isArray(v) ? v : []) as T[]);
+      } else {
+        (props as SingleProps<T>).onChange?.((Array.isArray(v) ? undefined : v) as T);
+      }
+    },
   });
 
   // Filtered options based on query
@@ -49,16 +63,24 @@ export default function StyledSelect<T extends string>({
     return options.filter((o) => (filterFn ? filterFn(o, query) : defaultFilter(o)));
   }, [options, query, searchable, filterFn]);
 
-  const selectedIndex = useMemo(
-    () => options.findIndex((o) => o.value === selected),
-    [options, selected],
-  );
+  const selectedIndex = useMemo(() => {
+    if (Array.isArray(selected)) {
+      if (!selected.length) return -1;
+      const first = selected[0];
+      return options.findIndex((o) => o.value === first);
+    }
+    return options.findIndex((o) => o.value === selected);
+  }, [options, selected]);
 
   // Index within filtered list for highlight logic
-  const selectedIndexFiltered = useMemo(
-    () => filteredOptions.findIndex((o) => o.value === selected),
-    [filteredOptions, selected],
-  );
+  const selectedIndexFiltered = useMemo(() => {
+    if (Array.isArray(selected)) {
+      if (!selected.length) return -1;
+      const first = selected[0];
+      return filteredOptions.findIndex((o) => o.value === first);
+    }
+    return filteredOptions.findIndex((o) => o.value === selected);
+  }, [filteredOptions, selected]);
 
   const [highlightedIndex, setHighlightedIndex] = useState<number>(
     selectedIndex >= 0 ? selectedIndex : 0,
@@ -106,6 +128,16 @@ export default function StyledSelect<T extends string>({
   }, [open, searchable, highlightedIndex]);
 
   const selectedItem = useMemo(() => {
+    if (Array.isArray(selected)) {
+      if (!selected.length) return { label: 'Select…', Icon: undefined as ElementType | undefined };
+      // Keep order as in options list for consistency
+      const byValue = new Map(options.map((o) => [o.value, o.label] as const));
+      const orderedSelected = options.map((o) => o.value).filter((v) => selected.includes(v));
+      const labels = orderedSelected.map((v) => byValue.get(v) ?? String(v));
+      // Show full list; rely on CSS + middle truncation on the trigger to shorten as needed
+      const text = labels.join(', ');
+      return { label: text, Icon: undefined as ElementType | undefined };
+    }
     const found = options.find((o) => o.value === selected);
     return { label: found?.label ?? 'Select…', Icon: found?.Icon };
   }, [options, selected]);
@@ -121,6 +153,14 @@ export default function StyledSelect<T extends string>({
       return next;
     });
   };
+
+  const truncateMiddle = (str: string, max = 60) => {
+    if (str.length <= max) return str;
+    const half = Math.max(1, Math.floor((max - 1) / 2));
+    return `${str.slice(0, half)}…${str.slice(-half)}`;
+  };
+
+  const triggerText = useMemo(() => truncateMiddle(selectedItem.label, 60), [selectedItem.label]);
 
   return (
     <PopoverPrimitive.Root open={open} onOpenChange={(o) => !disabled && setOpen(o)}>
@@ -154,12 +194,14 @@ export default function StyledSelect<T extends string>({
             }
           }}
         >
-          {selectedItem.Icon && (
+          {selectedItem.Icon && !isMultiple && (
             <div>
               <selectedItem.Icon className="size-4 text-neutral-600" />
             </div>
           )}
-          <span className="truncate flex-1">{selectedItem.label}</span>
+          <span className="truncate flex-1" title={selectedItem.label}>
+            {triggerText}
+          </span>
           <HiChevronDown className="group-data-[state=open]:-rotate-180 text-neutral-800 transition-transform" />
         </button>
       </PopoverPrimitive.Trigger>
@@ -212,7 +254,9 @@ export default function StyledSelect<T extends string>({
               {/* Options */}
               {filteredOptions?.length ? (
                 filteredOptions.map((opt, idx) => {
-                  const isSelected = selected === opt.value;
+                  const isSelected = Array.isArray(selected)
+                    ? selected.includes(opt.value)
+                    : selected === opt.value;
                   const isHighlighted = highlightedIndex === idx;
                   return (
                     <button
@@ -232,9 +276,18 @@ export default function StyledSelect<T extends string>({
                       )}
                       onMouseEnter={() => setHighlightedIndex(idx)}
                       onClick={() => {
-                        setSelected(opt.value);
-                        setOpen(false);
-                        triggerRef.current?.focus();
+                        if (Array.isArray(selected)) {
+                          const exists = selected.includes(opt.value);
+                          const next = exists
+                            ? (selected.filter((v) => v !== opt.value) as T[])
+                            : ([...selected, opt.value] as T[]);
+                          setSelected(next as Selected);
+                          // keep menu open for multi-select
+                        } else {
+                          setSelected(opt.value as Selected);
+                          setOpen(false);
+                          triggerRef.current?.focus();
+                        }
                       }}
                       onKeyDown={(e) => {
                         if (e.key === 'ArrowDown') {
@@ -256,9 +309,18 @@ export default function StyledSelect<T extends string>({
                           optionRefs.current[last]?.focus();
                         } else if (e.key === 'Enter' || e.key === ' ') {
                           e.preventDefault();
-                          setSelected(opt.value);
-                          setOpen(false);
-                          triggerRef.current?.focus();
+                          if (Array.isArray(selected)) {
+                            const exists = selected.includes(opt.value);
+                            const next = exists
+                              ? (selected.filter((v) => v !== opt.value) as T[])
+                              : ([...selected, opt.value] as T[]);
+                            setSelected(next as Selected);
+                            // keep open in multi
+                          } else {
+                            setSelected(opt.value as Selected);
+                            setOpen(false);
+                            triggerRef.current?.focus();
+                          }
                         } else if (e.key === 'Escape') {
                           e.preventDefault();
                           setOpen(false);
