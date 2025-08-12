@@ -121,26 +121,6 @@ export const SizeUnit = {
   // MM: 'mm',
 } as const;
 
-export const Operator = {
-  EQUAL: 'equal',
-  NOT_EQUAL: 'not_equal',
-  CONTAINS: 'contains',
-  NOT_CONTAINS: 'not_contains',
-  STARTS_WITH: 'starts_with',
-  NOT_STARTS_WITH: 'not_starts_with',
-  ENDS_WITH: 'ends_with',
-  NOT_ENDS_WITH: 'not_ends_with',
-  IS_FILLED: 'is_filled',
-  IS_EMPTY: 'is_empty',
-  IS_VALID: 'is_valid',
-  IS_INVALID: 'is_invalid',
-  DATE_BEFORE: 'date_before',
-  DATE_AFTER: 'date_after',
-  DATE_ON_OR_BEFORE: 'date_on_or_before',
-  DATE_ON_OR_AFTER: 'date_on_or_after',
-  DATE_BETWEEN: 'date_between',
-} as const;
-
 // Export types for all constants
 export type FieldConditionOperator =
   (typeof FieldConditionOperator)[keyof typeof FieldConditionOperator];
@@ -151,4 +131,3 @@ export type SizeUnit = (typeof SizeUnit)[keyof typeof SizeUnit];
 export type SizeType = (typeof SizeType)[keyof typeof SizeType];
 export type AbsoluteSize = (typeof AbsoluteSize)[keyof typeof AbsoluteSize];
 export type RelativeSize = (typeof RelativeSize)[keyof typeof RelativeSize];
-export type Operator = (typeof Operator)[keyof typeof Operator];

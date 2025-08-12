@@ -8,7 +8,19 @@ export {
   FieldStaticType,
   FieldType,
 } from './constants/field-type';
-export { Operator, SizeType, SizeUnit } from './constants/form-schema.constant';
+export { SizeType, SizeUnit } from './constants/form-schema.constant';
+export {
+  AddressOperator,
+  BooleanOperator,
+  DateTimeOperator,
+  EmailOperator,
+  NumberOperator,
+  Operator,
+  OptionsOperator,
+  PhoneOperator,
+  SharedOperator,
+  StringOperator,
+} from './constants/operator.constant';
 export { PropSettingsTemplate } from './constants/prop-settings.constant';
 export {
   CustomPropertyType,

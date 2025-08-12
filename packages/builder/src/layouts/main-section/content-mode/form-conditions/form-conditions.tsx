@@ -1,10 +1,11 @@
-import type { FormField } from '@efie-form/core';
+import { type FormField, SharedOperator } from '@efie-form/core';
 import { useState } from 'react';
 import Divider from '../../../../components/elements/divider';
 import { Input, Select, StyledSelect, Switch } from '../../../../components/form';
+import { FieldTypeOperators, OPERATORS_NAME } from '../../../../lib/constant';
 import { useSchemaStore } from '../../../../lib/state/schema.state';
 import { useSettingsStore } from '../../../../lib/state/settings.state';
-import { cn } from '../../../../lib/utils';
+import { cn, isInputField } from '../../../../lib/utils';
 import FieldsSelect from './fields-select';
 
 export default function FormConditions() {
@@ -12,7 +13,29 @@ export default function FormConditions() {
   const rule = useSchemaStore((state) => state.findRuleById(selectedConditionId));
   const updateRule = useSchemaStore((state) => state.updateRule);
   const [selectedField, setSelectedField] = useState<FormField>();
-  const fieldMap = useSchemaStore((state) => state.fieldMap);
+
+  const operators = [];
+
+  if (selectedField?.type) {
+    if (isInputField(selectedField)) {
+      console.log(selectedField);
+      operators.push(
+        ...Object.values(FieldTypeOperators[selectedField.type]).map((op) => ({
+          value: op,
+          label: OPERATORS_NAME[op],
+        })),
+      );
+    }
+  }
+
+  if (selectedField) {
+    operators.push(
+      ...Object.values(SharedOperator).map((op) => ({
+        value: op,
+        label: OPERATORS_NAME[op],
+      })),
+    );
+  }
 
   if (!rule) return;
 
@@ -43,18 +66,7 @@ export default function FormConditions() {
           </div>
           <div className="sm:col-span-1">
             <p className="typography-body3 mb-1 text-neutral-600">Operator</p>
-            <StyledSelect
-              options={[
-                { value: 'equal', label: 'Equals' },
-                { value: 'not_equal', label: 'Does Not Equal' },
-                { value: 'contains', label: 'Contains' },
-                { value: 'not_contains', label: 'Does Not Contain' },
-                { value: 'gt', label: 'Greater Than' },
-                { value: 'lt', label: 'Less Than' },
-                { value: 'gte', label: '≥ Greater or Equal' },
-                { value: 'lte', label: '≤ Less or Equal' },
-              ]}
-            />
+            <StyledSelect options={operators} />
           </div>
           <div className="sm:col-span-1">
             <p className="typography-body3 mb-1 text-neutral-600">Value</p>

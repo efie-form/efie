@@ -16,12 +16,12 @@ export const StringOperator = {
   NOT_ENDS_WITH: 'not_ends_with',
 } as const;
 
-export const DateOperator = {
-  BEFORE: 'date_before',
-  AFTER: 'date_after',
-  ON_OR_BEFORE: 'date_on_or_before',
-  ON_OR_AFTER: 'date_on_or_after',
-  BETWEEN: 'date_between',
+export const DateTimeOperator = {
+  BEFORE: 'before',
+  AFTER: 'after',
+  ON_OR_BEFORE: 'on_or_before',
+  ON_OR_AFTER: 'on_or_after',
+  BETWEEN: 'between',
 } as const;
 
 export const NumberOperator = {
@@ -41,8 +41,41 @@ export const BooleanOperator = {
 } as const;
 
 export const OptionsOperator = {
-  EQUAL: 'equal',
-  NOT_EQUAL: 'not_equal',
   IN: 'in',
   NOT_IN: 'not_in',
 } as const;
+
+export const PhoneOperator = {
+  PHONE_COUNTRY_IN: 'phone_country_in',
+  PHONE_COUNTRY_NOT_IN: 'phone_country_not_in',
+} as const;
+
+export const EmailOperator = {
+  EMAIL_DOMAIN_IN: 'email_domain_in',
+  EMAIL_DOMAIN_NOT_IN: 'email_domain_not_in',
+} as const;
+
+export const AddressOperator = {
+  ADDRESS_COUNTRY_IN: 'address_country_in',
+  ADDRESS_COUNTRY_NOT_IN: 'address_country_not_in',
+  ADDRESS_CITY_IN: 'address_city_in',
+  ADDRESS_CITY_NOT_IN: 'address_city_not_in',
+  ADDRESS_STATE_IN: 'address_state_in',
+  ADDRESS_STATE_NOT_IN: 'address_state_not_in',
+  ADDRESS_POSTAL_CODE_IN: 'address_postal_code_in',
+  ADDRESS_POSTAL_CODE_NOT_IN: 'address_postal_code_not_in',
+} as const;
+
+export const Operator = {
+  ...SharedOperator,
+  ...StringOperator,
+  ...DateTimeOperator,
+  ...NumberOperator,
+  ...BooleanOperator,
+  ...OptionsOperator,
+  ...PhoneOperator,
+  ...EmailOperator,
+  ...AddressOperator,
+} as const;
+
+export type Operator = (typeof Operator)[keyof typeof Operator];
