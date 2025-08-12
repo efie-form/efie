@@ -27,6 +27,7 @@ export default function FieldsSelect({ value, onChange }: FieldsSelectProps) {
           Icon: Icon,
         };
       })}
+      searchable
       value={value?.id}
       onChange={(id) => {
         const field = allFields.find((f) => f.id === id);

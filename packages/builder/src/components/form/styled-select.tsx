@@ -1,13 +1,20 @@
 import * as PopoverPrimitive from '@radix-ui/react-popover';
 import { type ElementType, useEffect, useMemo, useRef, useState } from 'react';
+import { FaMagnifyingGlass } from 'react-icons/fa6';
+import { HiChevronDown } from 'react-icons/hi2';
 import { useControllableState } from '../../lib/hooks/use-controllable-state';
 import { cn } from '../../lib/utils';
+import Input from './input';
 
 interface StyledSelectProps<T extends string> {
   options: { value: T; label: string; Icon?: ElementType }[];
   value?: T;
   onChange?: (value: T) => void;
   disabled?: boolean;
+  // New optional search props
+  searchable?: boolean;
+  searchPlaceholder?: string;
+  filterFn?: (option: { value: T; label: string }, query: string) => boolean;
 }
 
 export default function StyledSelect<T extends string>({
@@ -15,11 +22,16 @@ export default function StyledSelect<T extends string>({
   value,
   onChange,
   disabled,
+  searchable = false,
+  searchPlaceholder = 'Search…',
+  filterFn,
 }: StyledSelectProps<T>) {
   const [open, setOpen] = useState(false);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
   const optionRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const [menuWidth, setMenuWidth] = useState<number | undefined>(undefined);
+  const searchInputRef = useRef<HTMLInputElement | null>(null);
+  const [query, setQuery] = useState('');
 
   const [selected, setSelected] = useControllableState<T>({
     value,
@@ -27,22 +39,47 @@ export default function StyledSelect<T extends string>({
     onChange,
   });
 
+  // Filtered options based on query
+  const filteredOptions = useMemo(() => {
+    if (!searchable) return options;
+    const q = query.trim().toLowerCase();
+    if (!q) return options;
+    const defaultFilter = (opt: { value: T; label: string }) =>
+      opt.label.toLowerCase().includes(q) || String(opt.value).toLowerCase().includes(q);
+    return options.filter((o) => (filterFn ? filterFn(o, query) : defaultFilter(o)));
+  }, [options, query, searchable, filterFn]);
+
   const selectedIndex = useMemo(
     () => options.findIndex((o) => o.value === selected),
     [options, selected],
   );
+
+  // Index within filtered list for highlight logic
+  const selectedIndexFiltered = useMemo(
+    () => filteredOptions.findIndex((o) => o.value === selected),
+    [filteredOptions, selected],
+  );
+
   const [highlightedIndex, setHighlightedIndex] = useState<number>(
     selectedIndex >= 0 ? selectedIndex : 0,
   );
 
-  // Keep highlighted in sync with selection when options/value change
+  // Keep highlighted in sync with selection when options/value/filter change
   useEffect(() => {
-    setHighlightedIndex(selectedIndex >= 0 ? selectedIndex : 0);
-  }, [selectedIndex]);
+    if (filteredOptions.length === 0) {
+      setHighlightedIndex(-1);
+      return;
+    }
+    setHighlightedIndex(selectedIndexFiltered >= 0 ? selectedIndexFiltered : 0);
+  }, [selectedIndexFiltered, filteredOptions.length]);
 
-  // Measure trigger width to match popover content width
+  // Reset/prepare when opening
   useEffect(() => {
     if (!open) return;
+    // Reset query when opening for a fresh search session
+    if (searchable) {
+      setQuery('');
+    }
     const el = triggerRef.current;
     if (!el) return;
     setMenuWidth(el.offsetWidth);
@@ -50,30 +87,34 @@ export default function StyledSelect<T extends string>({
     const ro = new ResizeObserver(() => setMenuWidth(el.offsetWidth));
     ro.observe(el);
     return () => ro.disconnect();
-  }, [open]);
+  }, [open, searchable]);
 
-  // Focus selected option on open
+  // Focus input or selected option on open
   useEffect(() => {
-    if (open) {
-      // slight delay to ensure content is in the DOM
-      const id = setTimeout(() => {
+    if (!open) return;
+    const id = setTimeout(() => {
+      if (searchable && searchInputRef.current) {
+        searchInputRef.current.focus();
+        return;
+      }
+      if (highlightedIndex >= 0) {
         optionRefs.current[highlightedIndex]?.focus();
         optionRefs.current[highlightedIndex]?.scrollIntoView({ block: 'nearest' });
-      }, 0);
-      return () => clearTimeout(id);
-    }
-  }, [open]);
+      }
+    }, 0);
+    return () => clearTimeout(id);
+  }, [open, searchable, highlightedIndex]);
 
-  const selectedLabel = useMemo(() => {
+  const selectedItem = useMemo(() => {
     const found = options.find((o) => o.value === selected);
-    return found?.label ?? 'Select…';
+    return { label: found?.label ?? 'Select…', Icon: found?.Icon };
   }, [options, selected]);
 
   const moveHighlight = (delta: number) => {
-    if (!options?.length) return;
+    if (!filteredOptions?.length) return;
     setHighlightedIndex((idx) => {
-      const next = (idx + delta + options.length) % options.length;
-      // ensure focus & visibility
+      const base = idx < 0 ? 0 : idx;
+      const next = (base + delta + filteredOptions.length) % Math.max(1, filteredOptions.length);
       const btn = optionRefs.current[next];
       btn?.focus();
       btn?.scrollIntoView({ block: 'nearest' });
@@ -91,7 +132,7 @@ export default function StyledSelect<T extends string>({
           aria-haspopup="listbox"
           aria-expanded={open}
           className={cn(
-            'typography-body3 inline-flex w-full items-center text-left justify-between rounded-md border border-neutral-200 bg-white px-2 py-1 text-neutral-800 outline-none',
+            'group typography-body3 inline-flex gap-2 w-full items-center text-left justify-between rounded-md border border-neutral-200 bg-white px-2 py-1 text-neutral-800 outline-none',
             'focus-visible:ring-2 focus-visible:ring-primary-500/50',
             disabled && 'cursor-not-allowed opacity-60',
           )}
@@ -101,11 +142,11 @@ export default function StyledSelect<T extends string>({
               e.preventDefault();
               setOpen(true);
               setHighlightedIndex(
-                selectedIndex >= 0
-                  ? selectedIndex
+                selectedIndexFiltered >= 0
+                  ? selectedIndexFiltered
                   : e.key === 'ArrowDown'
                     ? 0
-                    : Math.max(0, options.length - 1),
+                    : Math.max(0, filteredOptions.length - 1),
               );
             } else if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault();
@@ -113,20 +154,13 @@ export default function StyledSelect<T extends string>({
             }
           }}
         >
-          <span className="truncate flex-1">{selectedLabel}</span>
-          <svg
-            className={cn('size-4 shrink-0 transition-transform', open && 'rotate-180')}
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            aria-hidden
-          >
-            <title>Toggle options</title>
-            <path
-              fillRule="evenodd"
-              d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z"
-              clipRule="evenodd"
-            />
-          </svg>
+          {selectedItem.Icon && (
+            <div>
+              <selectedItem.Icon className="size-4 text-neutral-600" />
+            </div>
+          )}
+          <span className="truncate flex-1">{selectedItem.label}</span>
+          <HiChevronDown className="group-data-[state=open]:-rotate-180 text-neutral-800 transition-transform" />
         </button>
       </PopoverPrimitive.Trigger>
       <PopoverPrimitive.Portal>
@@ -139,92 +173,132 @@ export default function StyledSelect<T extends string>({
         >
           <div
             className={cn(
-              'max-h-56 min-w-48 overflow-auto rounded-md border border-neutral-200 bg-white p-1 shadow-lg outline-none',
+              'min-w-48 rounded-md border border-neutral-200 bg-white p-1 shadow-lg outline-none',
               'focus-visible:ring-2 focus-visible:ring-primary-500/50',
             )}
             style={{ width: menuWidth }}
           >
-            {options?.length ? (
-              options.map((opt, idx) => {
-                const isSelected = selected === opt.value;
-                const isHighlighted = highlightedIndex === idx;
-                return (
-                  <button
-                    id={opt.value}
-                    key={opt.value}
-                    type="button"
-                    ref={(el) => {
-                      optionRefs.current[idx] = el;
-                    }}
-                    title={opt.label}
-                    data-index={idx}
-                    className={cn(
-                      'typography-body3 flex w-full items-center gap-2 rounded-sm px-2 py-1 text-left outline-none',
-                      isHighlighted && 'bg-neutral-100',
-                      isSelected && 'font-medium text-primary-700',
-                      'hover:bg-neutral-100 focus:bg-neutral-100',
-                    )}
-                    onMouseEnter={() => setHighlightedIndex(idx)}
-                    onClick={() => {
-                      setSelected(opt.value);
-                      setOpen(false);
-                      triggerRef.current?.focus();
-                    }}
-                    onKeyDown={(e) => {
+            {/* Search bar (fixed at top) */}
+            {searchable && (
+              <div className="sticky top-0 z-10 bg-white p-1">
+                <Input
+                  value={query}
+                  onChange={setQuery}
+                  placeholder={searchPlaceholder}
+                  prefix={<FaMagnifyingGlass className="size-4 text-neutral-500" />}
+                  prefixType="icon"
+                  inputRef={searchInputRef}
+                  inputProps={{
+                    'aria-label': 'Search options',
+                    onKeyDown: (e) => {
                       if (e.key === 'ArrowDown') {
                         e.preventDefault();
-                        moveHighlight(1);
-                      } else if (e.key === 'ArrowUp') {
-                        e.preventDefault();
-                        moveHighlight(-1);
-                      } else if (e.key === 'Home') {
-                        e.preventDefault();
-                        setHighlightedIndex(0);
-                        optionRefs.current[0]?.focus();
-                      } else if (e.key === 'End') {
-                        e.preventDefault();
-                        const last = Math.max(0, options.length - 1);
-                        setHighlightedIndex(last);
-                        optionRefs.current[last]?.focus();
-                      } else if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        setSelected(opt.value);
-                        setOpen(false);
-                        triggerRef.current?.focus();
+                        if (filteredOptions.length > 0) {
+                          setHighlightedIndex(0);
+                          optionRefs.current[0]?.focus();
+                        }
                       } else if (e.key === 'Escape') {
                         e.preventDefault();
                         setOpen(false);
                         triggerRef.current?.focus();
                       }
-                    }}
-                  >
-                    {opt.Icon && (
-                      <div>
-                        <opt.Icon className="size-4 text-neutral-600" />
-                      </div>
-                    )}
-                    <span className="flex-1 truncate">{opt.label}</span>
-                    {isSelected && (
-                      <svg
-                        className="size-4 text-primary-600"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                        aria-hidden
-                      >
-                        <title>Selected</title>
-                        <path
-                          fillRule="evenodd"
-                          d="M16.704 5.29a1 1 0 010 1.42l-7.25 7.25a1 1 0 01-1.42 0l-3.25-3.25a1 1 0 111.42-1.42l2.54 2.54 6.54-6.54a1 1 0 011.42 0z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    )}
-                  </button>
-                );
-              })
-            ) : (
-              <div className="typography-body3 px-2 py-1 text-neutral-500">No options</div>
+                    },
+                  }}
+                />
+              </div>
             )}
+
+            <div className="max-h-56 overflow-y-auto">
+              {/* Options */}
+              {filteredOptions?.length ? (
+                filteredOptions.map((opt, idx) => {
+                  const isSelected = selected === opt.value;
+                  const isHighlighted = highlightedIndex === idx;
+                  return (
+                    <button
+                      id={opt.value}
+                      key={opt.value}
+                      type="button"
+                      ref={(el) => {
+                        optionRefs.current[idx] = el;
+                      }}
+                      title={opt.label}
+                      data-index={idx}
+                      className={cn(
+                        'typography-body3 flex w-full items-center gap-2 rounded-sm px-2 py-1 text-left outline-none',
+                        isHighlighted && 'bg-neutral-100',
+                        isSelected && 'font-medium text-primary-700',
+                        'hover:bg-neutral-100 focus:bg-neutral-100',
+                      )}
+                      onMouseEnter={() => setHighlightedIndex(idx)}
+                      onClick={() => {
+                        setSelected(opt.value);
+                        setOpen(false);
+                        triggerRef.current?.focus();
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.key === 'ArrowDown') {
+                          e.preventDefault();
+                          moveHighlight(1);
+                        } else if (e.key === 'ArrowUp') {
+                          e.preventDefault();
+                          moveHighlight(-1);
+                        } else if (e.key === 'Home') {
+                          e.preventDefault();
+                          if (filteredOptions.length > 0) {
+                            setHighlightedIndex(0);
+                            optionRefs.current[0]?.focus();
+                          }
+                        } else if (e.key === 'End') {
+                          e.preventDefault();
+                          const last = Math.max(0, filteredOptions.length - 1);
+                          setHighlightedIndex(last);
+                          optionRefs.current[last]?.focus();
+                        } else if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
+                          setSelected(opt.value);
+                          setOpen(false);
+                          triggerRef.current?.focus();
+                        } else if (e.key === 'Escape') {
+                          e.preventDefault();
+                          setOpen(false);
+                          triggerRef.current?.focus();
+                        } else if (e.key === 'Tab') {
+                          // Allow tabbing out closes the menu
+                          setOpen(false);
+                        }
+                      }}
+                    >
+                      {opt.Icon && (
+                        <div>
+                          <opt.Icon className="size-4 text-neutral-600" />
+                        </div>
+                      )}
+                      <span className="flex-1 truncate">{opt.label}</span>
+                      {isSelected && (
+                        <svg
+                          className="size-4 text-primary-600"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                          aria-hidden
+                        >
+                          <title>Selected</title>
+                          <path
+                            fillRule="evenodd"
+                            d="M16.704 5.29a1 1 0 010 1.42l-7.25 7.25a1 1 0 01-1.42 0l-3.25-3.25a1 1 0 111.42-1.42l2.54 2.54 6.54-6.54a1 1 0 011.42 0z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                      )}
+                    </button>
+                  );
+                })
+              ) : options?.length ? (
+                <div className="typography-body3 px-2 py-1 text-neutral-500">No matches</div>
+              ) : (
+                <div className="typography-body3 px-2 py-1 text-neutral-500">No options</div>
+              )}
+            </div>
           </div>
         </PopoverPrimitive.Content>
       </PopoverPrimitive.Portal>

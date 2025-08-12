@@ -1,5 +1,5 @@
 import { type FormField, SharedOperator } from '@efie-form/core';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Divider from '../../../../components/elements/divider';
 import { Input, Select, StyledSelect, Switch } from '../../../../components/form';
 import { FieldTypeOperators, OPERATORS_NAME } from '../../../../lib/constant';
@@ -13,29 +13,32 @@ export default function FormConditions() {
   const rule = useSchemaStore((state) => state.findRuleById(selectedConditionId));
   const updateRule = useSchemaStore((state) => state.updateRule);
   const [selectedField, setSelectedField] = useState<FormField>();
+  const [operators, setOperators] = useState<{ value: string; label: string }[]>([]);
 
-  const operators = [];
+  useEffect(() => {
+    const newOperators = [];
+    if (selectedField?.type) {
+      if (isInputField(selectedField)) {
+        newOperators.push(
+          ...Object.values(FieldTypeOperators[selectedField.type]).map((op) => ({
+            value: op,
+            label: OPERATORS_NAME[op],
+          })),
+        );
+      }
+    }
 
-  if (selectedField?.type) {
-    if (isInputField(selectedField)) {
-      console.log(selectedField);
-      operators.push(
-        ...Object.values(FieldTypeOperators[selectedField.type]).map((op) => ({
+    if (selectedField) {
+      newOperators.push(
+        ...Object.values(SharedOperator).map((op) => ({
           value: op,
           label: OPERATORS_NAME[op],
         })),
       );
     }
-  }
-
-  if (selectedField) {
-    operators.push(
-      ...Object.values(SharedOperator).map((op) => ({
-        value: op,
-        label: OPERATORS_NAME[op],
-      })),
-    );
-  }
+    console.log(newOperators, OPERATORS_NAME);
+    setOperators(newOperators);
+  }, [selectedField]);
 
   if (!rule) return;
 
