@@ -19,8 +19,31 @@ export default function FormConditions() {
   if (!rule) return;
   const branches = rule.branches ?? [];
 
+  const handleAddBranch = () => {
+    addRuleBranch(rule.id, {
+      when: {
+        logic: 'and',
+        children: [
+          {
+            logic: 'and',
+            children: [
+              {
+                left: {
+                  kind: 'fieldValue',
+                  field: '',
+                },
+                operator: 'equal',
+              },
+            ],
+          },
+        ],
+      },
+      actions: [],
+    });
+  };
+
   return (
-    <div className="px-4 py-6">
+    <div className="px-3 py-4 sm:px-4 sm:py-6">
       {/* Header */}
       <RuleHeader
         id={rule.id}
@@ -29,28 +52,32 @@ export default function FormConditions() {
       />
 
       {/* Branches (If / Else-if) with nested groups */}
-      <div className={cn('space-y-4')}>
-        {branches.length === 0 ? (
-          <div className={cn('rounded-md border border-dashed border-neutral-300 p-4 text-center')}>
+      <div className={cn('space-y-3 sm:space-y-4')}>
+        {branches.length === 0 && (
+          <div
+            className={cn(
+              'rounded-md border border-dashed border-neutral-300 p-3 text-center sm:p-4',
+            )}
+          >
             <p className="typography-body2 mb-2 text-neutral-600">No branches yet</p>
             <button
               type="button"
               className="typography-button2 text-primary-600"
-              onClick={() => addRuleBranch(rule.id, { when: { all: [] }, actions: [] })}
+              onClick={handleAddBranch}
             >
               + Add If branch
             </button>
           </div>
-        ) : null}
+        )}
 
         {branches.map((b, idx) => (
           <div
             key={idx}
-            className={cn('rounded-md border border-neutral-200 bg-white p-4 shadow-sm')}
+            className={cn('rounded-md border border-neutral-200 bg-white p-3 shadow-sm sm:p-4')}
           >
-            <div className="mb-3 flex items-center justify-between">
-              <p className="typography-body1">{idx === 0 ? 'If' : 'Else if'}</p>
-              <div className="space-x-2">
+            <div className="mb-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+              <p className="typography-body1 flex-1">{idx === 0 ? 'If' : 'Else if'}</p>
+              <div className="flex flex-wrap gap-2">
                 <button
                   type="button"
                   className="typography-button2 text-danger-600"
@@ -60,11 +87,14 @@ export default function FormConditions() {
                 </button>
               </div>
             </div>
-            <ConditionGroup
-              tree={toUi(b.when as ConditionTree)}
-              mode={(b.when as unknown as { any?: unknown }).any !== undefined ? 'any' : 'all'}
-              onChange={(next) => updateRuleBranch(rule.id, idx, { when: toEngine(next) })}
-            />
+            <div className="overflow-x-auto">
+              <ConditionGroup
+                tree={toUi(b.when as ConditionTree)}
+                mode={(b.when as ConditionTree).logic === 'or' ? 'any' : 'all'}
+                onChange={(next) => updateRuleBranch(rule.id, idx, { when: toEngine(next) })}
+                onRemove={() => removeRuleBranch(rule.id, idx)}
+              />
+            </div>
             <div className="mt-3">
               <ActionsPanel />
             </div>
@@ -72,17 +102,19 @@ export default function FormConditions() {
         ))}
 
         {branches.length > 0 ? (
-          <div className="flex items-center gap-3">
-            <button
-              type="button"
-              className="typography-button2 text-primary-600"
-              onClick={() => addRuleBranch(rule.id, { when: { all: [] }, actions: [] })}
-            >
-              + Add Else-if
-            </button>
-            <button type="button" className="typography-button2 text-neutral-600" disabled>
-              Else actions (coming soon)
-            </button>
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
+            <div className="flex flex-wrap gap-2">
+              <button
+                type="button"
+                className="typography-button2 text-primary-600"
+                onClick={handleAddBranch}
+              >
+                + Add Else-if
+              </button>
+              <button type="button" className="typography-button2 text-neutral-600" disabled>
+                Else actions (coming soon)
+              </button>
+            </div>
           </div>
         ) : null}
       </div>

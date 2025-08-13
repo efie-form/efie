@@ -5,17 +5,14 @@ import type { ConditionNodeUI } from './condition-node';
 
 function isGroupEngine(node: ConditionTree | ConditionNode): node is ConditionTree {
   return (
-    (node as ConditionTree).all !== undefined ||
-    (node as ConditionTree).any !== undefined ||
-    (node as ConditionTree).not !== undefined
+    (node as ConditionTree).logic !== undefined && Array.isArray((node as ConditionTree).children)
   );
 }
 
 function isGroupUI(node: ConditionTreeUI | ConditionNodeUI): node is ConditionTreeUI {
   return (
-    !!(node as ConditionTreeUI).all ||
-    !!(node as ConditionTreeUI).any ||
-    !!(node as ConditionTreeUI).not
+    (node as ConditionTreeUI).logic !== undefined &&
+    Array.isArray((node as ConditionTreeUI).children)
   );
 }
 
@@ -25,15 +22,15 @@ function toConstantOperand(value: unknown): Operand {
 }
 
 export function toUi(tree: ConditionTree | undefined): ConditionTreeUI {
-  if (!tree) return { all: [] };
+  if (!tree) return { logic: 'all', children: [] };
   if (isGroupEngine(tree)) {
-    if (tree.all) return { all: tree.all.map(mapEngineNodeToUi) };
-    if (tree.any) return { any: tree.any.map(mapEngineNodeToUi) };
-    if (tree.not) return { not: toUi(tree.not) };
-    return { all: [] };
+    return {
+      logic: tree.logic === 'and' ? 'all' : 'any',
+      children: tree.children.map(mapEngineNodeToUi),
+    };
   }
   // if accidentally a node passed, wrap into an AND group
-  return { all: [mapEngineNodeToUi(tree)] };
+  return { logic: 'all', children: [mapEngineNodeToUi(tree)] };
 }
 
 function mapEngineNodeToUi(node: ConditionTree | ConditionNode): ConditionTreeUI | ConditionNodeUI {
@@ -63,12 +60,13 @@ function mapEngineNodeToUi(node: ConditionTree | ConditionNode): ConditionTreeUI
 
 export function toEngine(ui: ConditionTreeUI): ConditionTree {
   if (isGroupUI(ui)) {
-    if (ui.all) return { all: ui.all.map(mapUiNodeToEngine) } as ConditionTree;
-    if (ui.any) return { any: ui.any.map(mapUiNodeToEngine) } as ConditionTree;
-    if (ui.not) return { not: toEngine(ui.not) } as ConditionTree;
+    return {
+      logic: ui.logic === 'all' ? 'and' : 'or',
+      children: ui.children.map(mapUiNodeToEngine),
+    };
   }
-  // fallback
-  return { all: [] };
+  // fallback empty group
+  return { logic: 'and', children: [] };
 }
 
 function mapUiNodeToEngine(node: ConditionTreeUI | ConditionNodeUI): ConditionTree | ConditionNode {

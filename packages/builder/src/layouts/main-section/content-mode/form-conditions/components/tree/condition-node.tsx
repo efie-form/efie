@@ -23,7 +23,7 @@ interface ConditionNodeProps {
   onRemove?: () => void;
 }
 
-export default function ConditionNodeEditor({ node, onChange, onRemove }: ConditionNodeProps) {
+export default function ConditionNodeEditor({ node, onChange }: ConditionNodeProps) {
   const fieldMap = useSchemaStore((s) => s.fieldMap);
   const field = useMemo<FormField | undefined>(
     () => fieldMap.get(node.left.field),
@@ -93,11 +93,9 @@ export default function ConditionNodeEditor({ node, onChange, onRemove }: Condit
   return (
     <div className={cn('grid grid-cols-1 gap-3 sm:grid-cols-3')}>
       <div className="sm:col-span-1">
-        <p className="typography-body3 mb-1 text-neutral-600">If</p>
         <FieldsSelect value={field} onChange={handleFieldChange} />
       </div>
       <div className="sm:col-span-1">
-        <p className="typography-body3 mb-1 text-neutral-600">Operator</p>
         <OperatorSelect
           options={operatorOptions}
           value={operator}
@@ -105,16 +103,8 @@ export default function ConditionNodeEditor({ node, onChange, onRemove }: Condit
         />
       </div>
       <div className="sm:col-span-1">
-        <p className="typography-body3 mb-1 text-neutral-600">Value</p>
         <ValueEditor field={field} operator={operator} value={value} onChange={handleValueChange} />
       </div>
-      {onRemove ? (
-        <div className="sm:col-span-3">
-          <button type="button" className="typography-button2 text-danger-600" onClick={onRemove}>
-            Remove condition
-          </button>
-        </div>
-      ) : null}
     </div>
   );
 }

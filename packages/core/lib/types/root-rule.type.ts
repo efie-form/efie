@@ -19,11 +19,14 @@ export interface RuleBranch {
 }
 
 // Conditions
-export type ConditionTree = {
-  all?: (ConditionTree | ConditionNode)[];
-  any?: (ConditionTree | ConditionNode)[];
-  not?: ConditionTree;
-};
+// A condition tree is a recursive logical grouping of condition nodes.
+// We normalize the previous { all | any | not } shape into a single discriminated
+// object: { logic: 'and' | 'or'; children: (ConditionTree | ConditionNode)[] }
+// "not" groups are modeled instead via operators at the node level (e.g. not_equal, not_contains, etc.).
+export interface ConditionTree {
+  logic: 'and' | 'or';
+  children: Array<ConditionTree | ConditionNode>;
+}
 
 export interface ConditionNode {
   left: Operand;
