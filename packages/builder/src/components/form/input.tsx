@@ -1,6 +1,6 @@
-import { useControllableState } from '@radix-ui/react-use-controllable-state';
 import type { ReactNode, Ref } from 'react';
 import type { InputPropsWithoutRef } from 'react-html-props';
+import { useControllableState } from '../../lib/hooks/use-controllable-state';
 import { cn } from '../../lib/utils';
 
 export interface InputProps {
@@ -31,9 +31,9 @@ function Input({
   inputRef,
 }: InputProps) {
   const [inputValue, setInputValue] = useControllableState({
-    prop: value,
+    value,
     onChange,
-    defaultProp: '',
+    defaultValue: '',
   });
 
   return (

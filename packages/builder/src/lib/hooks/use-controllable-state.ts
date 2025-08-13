@@ -7,11 +7,6 @@ export interface UseControllableStateProps<T> {
   shouldUpdate?: (prev: T, next: T) => boolean;
 }
 
-/**
- * The `useControllableState` hook returns the state and function that updates the state, just like React.useState does.
- *
- * @see Docs https://chakra-ui.com/docs/hooks/use-controllable#usecontrollablestate
- */
 export function useControllableState<T>(props: UseControllableStateProps<T>) {
   const {
     value: valueProp,

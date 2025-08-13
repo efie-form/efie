@@ -1,4 +1,3 @@
-import { useControllableState } from '@radix-ui/react-use-controllable-state';
 import type { ElementType } from 'react';
 import { useEffect, useMemo, useState } from 'react';
 import {
@@ -8,6 +7,7 @@ import {
   getDialByCode,
 } from '../../lib/data/countries';
 import { applyGrouping, getPhoneFormatForCountry } from '../../lib/data/phone-formats';
+import { useControllableState } from '../../lib/hooks/use-controllable-state';
 import Input from './input';
 import StyledSelect from './styled-select';
 
@@ -67,9 +67,9 @@ export default function PhoneInput({
 
   // Controlled/uncontrolled phone value (includes leading '+')
   const [phone, setPhone] = useControllableState<string>({
-    prop: value ? normalizePlus(value) : undefined,
+    value: value ? normalizePlus(value) : undefined,
     onChange: (v) => onChange?.(normalizePlus(v)),
-    defaultProp: `+${dial}`,
+    defaultValue: `+${dial}`,
   });
 
   // Keep country in sync with current phone

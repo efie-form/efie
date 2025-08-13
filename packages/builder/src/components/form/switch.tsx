@@ -1,5 +1,5 @@
 import * as SwitchPrimitive from '@radix-ui/react-switch';
-import { useControllableState } from '@radix-ui/react-use-controllable-state';
+import { useControllableState } from '../../lib/hooks/use-controllable-state';
 
 interface SwitchProps {
   id?: string;
@@ -9,9 +9,9 @@ interface SwitchProps {
 
 function Switch({ id, checked, onChange }: SwitchProps) {
   const [inputChecked, setInputChecked] = useControllableState({
-    prop: checked,
+    value: checked,
     onChange,
-    defaultProp: false,
+    defaultValue: false,
   });
 
   return (

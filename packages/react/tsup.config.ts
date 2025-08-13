@@ -7,7 +7,7 @@ export default defineConfig({
   clean: true,
   sourcemap: true,
   minify: false,
-  external: ['react', 'react-dom', '@efie-form/core', '@radix-ui/react-use-controllable-state'],
+  external: ['react', 'react-dom', '@efie-form/core'],
   banner: {
     js: '"use client";',
   },

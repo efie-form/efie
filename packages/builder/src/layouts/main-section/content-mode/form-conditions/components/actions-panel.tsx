@@ -1,4 +1,4 @@
-import { Input, Select } from '../../../../../components/form';
+import { Input, StyledSelect } from '../../../../../components/form';
 import { cn } from '../../../../../lib/utils';
 
 const ActionsPanel = () => {
@@ -8,7 +8,7 @@ const ActionsPanel = () => {
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
         <div className="sm:col-span-1">
           <p className="typography-body3 mb-1 text-neutral-600">Action</p>
-          <Select
+          <StyledSelect
             options={[
               { value: 'show_fields', label: 'Show fields' },
               { value: 'hide_fields', label: 'Hide fields' },
