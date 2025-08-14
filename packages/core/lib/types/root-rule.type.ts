@@ -10,7 +10,7 @@ export interface Rule {
   enabled?: boolean;
   triggers?: ('onChange' | 'onPageEnter' | 'onSubmit')[];
   // Single branch (previously an array of branches with optional else actions)
-  branch?: RuleBranch;
+  branch: RuleBranch;
 }
 
 export interface RuleBranch {

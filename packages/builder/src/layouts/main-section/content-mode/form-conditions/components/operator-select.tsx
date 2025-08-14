@@ -5,10 +5,19 @@ interface OperatorSelectProps {
   value?: Operator;
   options: { value: Operator; label: string }[];
   onChange: (op: Operator) => void;
+  disabled?: boolean;
 }
 
-const OperatorSelect = ({ value, options, onChange }: OperatorSelectProps) => {
-  return <StyledSelect options={options} value={value} onChange={onChange} searchable />;
+const OperatorSelect = ({ value, options, onChange, disabled }: OperatorSelectProps) => {
+  return (
+    <StyledSelect
+      options={options}
+      value={value}
+      onChange={onChange}
+      searchable
+      disabled={disabled}
+    />
+  );
 };
 
 export default OperatorSelect;

@@ -100,6 +100,7 @@ export default function ConditionNodeEditor({ node, onChange }: ConditionNodePro
           options={operatorOptions}
           value={operator}
           onChange={handleOperatorChange}
+          disabled={!field}
         />
       </div>
       <div className="sm:col-span-1">

@@ -33,7 +33,18 @@ export default function RulesTab() {
       id: '',
       enabled: true,
       triggers: [],
-      branch: undefined,
+      branch: {
+        actions: [],
+        when: {
+          logic: 'and',
+          children: [
+            {
+              left: { kind: 'fieldValue', field: '' },
+              operator: '',
+            },
+          ],
+        },
+      },
     });
   };
 

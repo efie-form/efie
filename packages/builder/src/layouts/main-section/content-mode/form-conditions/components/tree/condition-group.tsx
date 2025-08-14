@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { HiDotsHorizontal } from 'react-icons/hi';
 import { SimpleMenu } from '../../../../../../components/elements/dropdown-menu';
+import { StyledSelect } from '../../../../../../components/form';
 import { cn } from '../../../../../../lib/utils';
 import ConditionNodeEditor, { type ConditionNodeUI } from './condition-node';
 
@@ -74,6 +75,15 @@ export default function ConditionGroup({ tree, mode, onChange, onRemove }: Condi
     }
   };
 
+  const handleDuplicateInlineNode = (idx: number) => {
+    const newItems = [...items];
+    const node = newItems[idx];
+    const clone = (n: ConditionTreeUI | ConditionNodeUI): typeof n =>
+      isGroup(n) ? { logic: n.logic, children: n.children.map(clone) } : { ...n };
+    newItems.splice(idx + 1, 0, clone(node));
+    updateItems(newItems);
+  };
+
   return (
     <div
       className={cn(
@@ -88,14 +98,15 @@ export default function ConditionGroup({ tree, mode, onChange, onRemove }: Condi
                 {idx === 0 && <p className="text-end typography-body2">When</p>}
                 {idx === 1 && (
                   <div className="flex">
-                    <select
-                      className="typography-body2 rounded border border-neutral-300 bg-white px-2 py-1 text-neutral-700 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    <StyledSelect
+                      options={[
+                        { value: 'all', label: 'AND' },
+                        { value: 'any', label: 'OR' },
+                      ]}
                       value={mode}
-                      onChange={(e) => handleInlineModeChange(e.target.value as GroupMode)}
-                    >
-                      <option value="all">AND</option>
-                      <option value="any">OR</option>
-                    </select>
+                      onChange={(newValue) => handleInlineModeChange(newValue)}
+                      dropdownMinWidth={74}
+                    />
                   </div>
                 )}
                 {idx >= 2 && (
@@ -126,6 +137,11 @@ export default function ConditionGroup({ tree, mode, onChange, onRemove }: Condi
                     </button>
                   }
                   items={[
+                    {
+                      key: 'duplicate',
+                      label: 'Duplicate',
+                      onSelect: () => handleDuplicateInlineNode(idx),
+                    },
                     { key: 'remove', label: 'Remove', onSelect: () => handleRemoveInlineNode(idx) },
                   ]}
                   align="end"

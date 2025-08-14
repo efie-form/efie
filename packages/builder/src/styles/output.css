@@ -654,8 +654,20 @@ video {
   z-index: 99;
 }
 
+.col-span-1 {
+  grid-column: span 1 / span 1;
+}
+
 .col-span-2 {
   grid-column: span 2 / span 2;
+}
+
+.col-span-9 {
+  grid-column: span 9 / span 9;
+}
+
+.col-span-10 {
+  grid-column: span 10 / span 10;
 }
 
 .mx-1 {
@@ -834,12 +846,12 @@ video {
   height: 100%;
 }
 
-.h-px {
-  height: 1px;
-}
-
 .h-screen {
   height: 100vh;
+}
+
+.h-px {
+  height: 1px;
 }
 
 .max-h-56 {
@@ -990,6 +1002,14 @@ video {
   min-width: 8rem;
 }
 
+.min-w-16 {
+  min-width: 4rem;
+}
+
+.min-w-32 {
+  min-width: 8rem;
+}
+
 .max-w-40 {
   max-width: 10rem;
 }
@@ -1119,6 +1139,10 @@ video {
   grid-template-columns: repeat(1, minmax(0, 1fr));
 }
 
+.grid-cols-12 {
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+
 .grid-cols-2 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
@@ -1185,6 +1209,12 @@ video {
 
 .gap-4 {
   gap: 1rem;
+}
+
+.space-x-2 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(0.5rem * var(--tw-space-x-reverse));
+  margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
 .space-x-3 > :not([hidden]) ~ :not([hidden]) {
@@ -1606,6 +1636,11 @@ video {
 .py-4 {
   padding-top: 1rem;
   padding-bottom: 1rem;
+}
+
+.py-6 {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
 }
 
 .pe-1 {
@@ -2344,11 +2379,6 @@ div.tiptap:focus-visible {
   border-color: rgb(from var(--color-primary-400) r g b / var(--tw-border-opacity));
 }
 
-.hover\:bg-danger-50:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(from var(--color-red-50) r g b / var(--tw-bg-opacity));
-}
-
 .hover\:bg-neutral-100:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(from var(--color-neutral-100) r g b / var(--tw-bg-opacity));
@@ -2383,6 +2413,11 @@ div.tiptap:focus-visible {
 
 .hover\:bg-primary-300\/10:hover {
   background-color: rgb(from var(--color-primary-300) r g b / 0.1);
+}
+
+.hover\:bg-danger-50:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(from var(--color-red-50) r g b / var(--tw-bg-opacity));
 }
 
 .hover\:text-danger:hover {
@@ -2550,6 +2585,10 @@ div.tiptap:focus-visible {
     grid-column: span 1 / span 1;
   }
 
+  .sm\:col-span-3 {
+    grid-column: span 3 / span 3;
+  }
+
   .sm\:grid-cols-3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -2564,6 +2603,10 @@ div.tiptap:focus-visible {
 
   .sm\:justify-between {
     justify-content: space-between;
+  }
+
+  .sm\:gap-3 {
+    gap: 0.75rem;
   }
 
   .sm\:space-y-4 > :not([hidden]) ~ :not([hidden]) {

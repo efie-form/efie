@@ -16,6 +16,16 @@ interface BaseProps<T extends string> {
   filterFn?: (option: { value: T; label: string }, query: string) => boolean;
   // Trigger presentation variant
   triggerVariant?: 'default' | 'icon-only' | 'label-only';
+  /**
+   * Controls the dropdown panel minimum width.
+   * - true (default): applies Tailwind class 'min-w-48'.
+   * - false: no enforced minimum width (shrinks to trigger width / content).
+   * - number: treated as pixel value (e.g. 180 => min-width: 180px).
+   * - string:
+   *    - If starts with 'min-w-' it's assumed to be a Tailwind utility class and is appended to className.
+   *    - Otherwise it's treated as a raw CSS length value (e.g. '12rem', '240px', '50%').
+   */
+  dropdownMinWidth?: boolean | number | string;
 }
 
 interface SingleProps<T extends string> extends BaseProps<T> {
@@ -40,6 +50,7 @@ export default function StyledSelect<T extends string>(props: StyledSelectProps<
     searchPlaceholder = 'Search…',
     filterFn,
     triggerVariant = 'default',
+    dropdownMinWidth = true,
   } = props;
   const isMultiple = (props as MultiProps<T>).multiple === true;
   type Selected = T | T[] | undefined;
@@ -231,10 +242,23 @@ export default function StyledSelect<T extends string>(props: StyledSelectProps<
         >
           <div
             className={cn(
-              'min-w-48 rounded-md border border-neutral-200 bg-white p-1 shadow-lg outline-none',
+              // boolean true => default class
+              dropdownMinWidth === true && 'min-w-48',
+              // string starting with min-w- => pass through as class
+              typeof dropdownMinWidth === 'string' &&
+                dropdownMinWidth.startsWith('min-w-') &&
+                dropdownMinWidth,
+              'rounded-md border border-neutral-200 bg-white p-1 shadow-lg outline-none',
               'focus-visible:ring-2 focus-visible:ring-primary-500/50',
             )}
-            style={{ width: menuWidth }}
+            style={{
+              width: menuWidth,
+              ...(typeof dropdownMinWidth === 'number'
+                ? { minWidth: dropdownMinWidth }
+                : typeof dropdownMinWidth === 'string' && !dropdownMinWidth.startsWith('min-w-')
+                  ? { minWidth: dropdownMinWidth }
+                  : {}),
+            }}
           >
             {/* Search bar (fixed at top) */}
             {searchable && (
@@ -285,7 +309,7 @@ export default function StyledSelect<T extends string>(props: StyledSelectProps<
                       title={opt.label}
                       data-index={idx}
                       className={cn(
-                        'typography-body3 flex w-full items-center gap-2 rounded-sm px-2 py-1 text-left outline-none',
+                        'typography-body3 flex w-full items-center gap-1 rounded-sm px-2 py-1 text-left outline-none',
                         isHighlighted && 'bg-neutral-100',
                         isSelected && 'font-medium text-primary-700',
                         'hover:bg-neutral-100 focus:bg-neutral-100',
