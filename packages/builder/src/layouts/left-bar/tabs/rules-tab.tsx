@@ -33,8 +33,7 @@ export default function RulesTab() {
       id: '',
       enabled: true,
       triggers: [],
-      elseActions: [],
-      branches: [],
+      branch: undefined,
     });
   };
 

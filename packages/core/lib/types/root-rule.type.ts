@@ -9,8 +9,8 @@ export interface Rule {
   id: string;
   enabled?: boolean;
   triggers?: ('onChange' | 'onPageEnter' | 'onSubmit')[];
-  branches: RuleBranch[]; // if / else-if ...
-  elseActions?: Action[]; // else
+  // Single branch (previously an array of branches with optional else actions)
+  branch?: RuleBranch;
 }
 
 export interface RuleBranch {
