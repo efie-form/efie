@@ -9,8 +9,9 @@ import SystemSettingsRequired from './system-settings/system-settings.required';
 import SystemSettingsAccept from './system-settings/system-settings-accept';
 import SystemSettingsAddressField from './system-settings/system-settings-address-field';
 import SystemSettingsButtonAction from './system-settings/system-settings-button-action';
-import { SystemSettingsColumnWidth } from './system-settings/system-settings-column-width';
+import SystemSettingsColumnWidth from './system-settings/system-settings-column-width';
 import SystemSettingsFieldName from './system-settings/system-settings-field-name';
+import SystemSettingsHidden from './system-settings/system-settings-hidden';
 import SystemSettingsImageSrc from './system-settings/system-settings-image-src';
 import SystemSettingsLabel from './system-settings/system-settings-label';
 import SystemSettingsOptions from './system-settings/system-settings-options';
@@ -66,6 +67,9 @@ export default function FieldSettings({
       }
       case PropertyType.REQUIRED: {
         return <SystemSettingsRequired key={item.type} fieldId={fieldId} config={item} />;
+      }
+      case PropertyType.HIDDEN: {
+        return <SystemSettingsHidden key={item.type} fieldId={fieldId} config={item} />;
       }
 
       case PropertyType.OPTIONS: {

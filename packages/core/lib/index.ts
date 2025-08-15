@@ -107,6 +107,7 @@ export type {
   FieldSystemPropColumnWidth,
   FieldSystemPropFieldName,
   FieldSystemPropHeadingContent,
+  FieldSystemPropHidden,
   FieldSystemPropImageSrc,
   FieldSystemPropLabel,
   FieldSystemPropName,
@@ -187,6 +188,7 @@ export type {
   FieldSystemConfigButtonAction,
   FieldSystemConfigColumnWidth,
   FieldSystemConfigFieldName,
+  FieldSystemConfigHidden,
   FieldSystemConfigImageSrc,
   FieldSystemConfigLabel,
   FieldSystemConfigOptions,
@@ -196,6 +198,19 @@ export type {
   FieldsConfigsMap,
 } from './types/settings-config';
 export type { ValueSpec } from './types/value-spec.type';
+
+import type { Action, Rule, RuleBranch } from './types/root-rule.type';
+// Runtime no-op to keep rule-related types from being tree-shaken in d.ts bundling
+// Accepts optional generic referencing Action/Rule/RuleBranch so they remain exported
+export function __keepRuleTypes<
+  T extends {
+    action?: Action;
+    rule?: Rule;
+    branch?: RuleBranch;
+  },
+>(_: T | undefined): void {
+  // noop
+}
 export { getColorObject, hslaToHex, rgbaToHex } from './utils/colors';
 export { default as getDefaultSchema } from './utils/default-schema/get-default-schema';
 export {

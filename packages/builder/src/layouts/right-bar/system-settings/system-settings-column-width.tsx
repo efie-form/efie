@@ -8,7 +8,10 @@ interface SystemSettingsColumnWidthProps {
   config: FieldSystemConfigColumnWidth;
 }
 
-export function SystemSettingsColumnWidth({ fieldId, config }: SystemSettingsColumnWidthProps) {
+export default function SystemSettingsColumnWidth({
+  fieldId,
+  config,
+}: SystemSettingsColumnWidthProps) {
   const fieldProperty = useSchemaStore((state) => state.getFieldProperty(fieldId, config.type));
   const updateFieldProperty = useSchemaStore((state) => state.updateFieldProperty);
 

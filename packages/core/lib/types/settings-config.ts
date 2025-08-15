@@ -23,6 +23,12 @@ export interface FieldSystemConfigRequired {
   defaultValue?: boolean;
 }
 
+export interface FieldSystemConfigHidden {
+  type: typeof PropertyType.HIDDEN;
+  label: string;
+  defaultValue?: boolean; // default false (visible)
+}
+
 export interface FieldSystemConfigAccept {
   type: typeof PropertyType.ACCEPT;
   label: string;
@@ -109,6 +115,7 @@ export type FieldSystemConfig =
   | FieldSystemConfigLabel
   | FieldSystemConfigPlaceholder
   | FieldSystemConfigRequired
+  | FieldSystemConfigHidden
   | FieldSystemConfigAccept
   | FieldSystemConfigFieldName
   | FieldSystemConfigAddressField
@@ -131,6 +138,7 @@ export interface FieldConfigShortText {
     | FieldSystemConfigLabel
     | FieldSystemConfigPlaceholder
     | FieldSystemConfigRequired
+    | FieldSystemConfigHidden
     | FieldCustomConfig
   >;
 }
@@ -140,6 +148,7 @@ export interface FieldConfigLongText {
     | FieldSystemConfigLabel
     | FieldSystemConfigPlaceholder
     | FieldSystemConfigRequired
+    | FieldSystemConfigHidden
     | FieldCustomConfig
   >;
 }
@@ -149,6 +158,7 @@ export interface FieldConfigNumber {
     | FieldSystemConfigLabel
     | FieldSystemConfigPlaceholder
     | FieldSystemConfigRequired
+    | FieldSystemConfigHidden
     | FieldCustomConfig
   >;
 }
@@ -158,6 +168,7 @@ export interface FieldConfigSingleChoice {
     | FieldSystemConfigLabel
     | FieldSystemConfigOptions
     | FieldSystemConfigRequired
+    | FieldSystemConfigHidden
     | FieldCustomConfig
   >;
 }
@@ -167,54 +178,66 @@ export interface FieldConfigMultipleChoices {
     | FieldSystemConfigLabel
     | FieldSystemConfigOptions
     | FieldSystemConfigRequired
+    | FieldSystemConfigHidden
     | FieldCustomConfig
   >;
 }
 
 export interface FieldConfigDate {
-  properties: Array<FieldSystemConfigLabel | FieldSystemConfigRequired | FieldCustomConfig>;
+  properties: Array<
+    FieldSystemConfigLabel | FieldSystemConfigRequired | FieldSystemConfigHidden | FieldCustomConfig
+  >;
 }
 
 export interface FieldConfigTime {
-  properties: Array<FieldSystemConfigLabel | FieldSystemConfigRequired | FieldCustomConfig>;
+  properties: Array<
+    FieldSystemConfigLabel | FieldSystemConfigRequired | FieldSystemConfigHidden | FieldCustomConfig
+  >;
 }
 
 export interface FieldConfigDateTime {
-  properties: Array<FieldSystemConfigLabel | FieldSystemConfigRequired | FieldCustomConfig>;
+  properties: Array<
+    FieldSystemConfigLabel | FieldSystemConfigRequired | FieldSystemConfigHidden | FieldCustomConfig
+  >;
 }
 
 export interface FieldConfigFile {
   properties: Array<
-    FieldSystemConfigLabel | FieldSystemConfigAccept | FieldSystemConfigRequired | FieldCustomConfig
+    | FieldSystemConfigLabel
+    | FieldSystemConfigAccept
+    | FieldSystemConfigRequired
+    | FieldSystemConfigHidden
+    | FieldSystemConfigHidden
+    | FieldCustomConfig
   >;
 }
 
 export interface FieldConfigImage {
-  properties: Array<FieldSystemConfigImageSrc | FieldCustomConfig>;
+  properties: Array<FieldSystemConfigImageSrc | FieldSystemConfigHidden | FieldCustomConfig>;
 }
 
 export interface FieldConfigDivider {
-  properties: Array<FieldCustomConfig>;
+  properties: Array<FieldSystemConfigHidden | FieldCustomConfig>;
 }
 
 export interface FieldConfigRow {
-  properties: Array<FieldCustomConfig>;
+  properties: Array<FieldSystemConfigHidden | FieldCustomConfig>;
 }
 
 export interface FieldConfigColumn {
-  properties: Array<FieldSystemConfigColumnWidth | FieldCustomConfig>;
+  properties: Array<FieldSystemConfigColumnWidth | FieldSystemConfigHidden | FieldCustomConfig>;
 }
 
 export interface FieldConfigBlock {
-  properties: Array<FieldSystemConfigColumnWidth | FieldCustomConfig>;
+  properties: Array<FieldSystemConfigColumnWidth | FieldSystemConfigHidden | FieldCustomConfig>;
 }
 
 export interface FieldConfigGroup {
-  properties: Array<FieldCustomConfig>;
+  properties: Array<FieldSystemConfigHidden | FieldCustomConfig>;
 }
 
 export interface FieldConfigPage {
-  properties: Array<FieldCustomConfig>;
+  properties: Array<FieldSystemConfigHidden | FieldCustomConfig>;
 }
 
 export interface FieldConfigAddress {
@@ -222,16 +245,24 @@ export interface FieldConfigAddress {
     | FieldSystemConfigLabel
     | FieldSystemConfigRequired
     | FieldSystemConfigAddressField
+    | FieldSystemConfigHidden
     | FieldCustomConfig
   >;
 }
 
 export interface FieldConfigButton {
-  properties: Array<FieldSystemConfigLabel | FieldSystemConfigButtonAction | FieldCustomConfig>;
+  properties: Array<
+    | FieldSystemConfigLabel
+    | FieldSystemConfigButtonAction
+    | FieldSystemConfigHidden
+    | FieldCustomConfig
+  >;
 }
 
 export interface FieldConfigCheckbox {
-  properties: Array<FieldSystemConfigLabel | FieldSystemConfigRequired | FieldCustomConfig>;
+  properties: Array<
+    FieldSystemConfigLabel | FieldSystemConfigRequired | FieldSystemConfigHidden | FieldCustomConfig
+  >;
 }
 
 export interface FieldConfigEmail {
@@ -239,6 +270,7 @@ export interface FieldConfigEmail {
     | FieldSystemConfigLabel
     | FieldSystemConfigPlaceholder
     | FieldSystemConfigRequired
+    | FieldSystemConfigHidden
     | FieldCustomConfig
   >;
 }
@@ -248,6 +280,7 @@ export interface FieldConfigPhone {
     | FieldSystemConfigLabel
     | FieldSystemConfigPlaceholder
     | FieldSystemConfigRequired
+    | FieldSystemConfigHidden
     | FieldCustomConfig
   >;
 }
@@ -258,6 +291,7 @@ export interface FieldConfigPassword {
     | FieldSystemConfigPlaceholder
     | FieldSystemConfigRequired
     | FieldSystemConfigPasswordRules // renamed
+    | FieldSystemConfigHidden
     | FieldCustomConfig
   >;
 }
