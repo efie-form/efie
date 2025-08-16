@@ -1,4 +1,4 @@
-import type { Action, FormSchema, Rule, RuleBranch } from '@efie-form/core';
+import type { FormSchema, Rule, RuleBranch } from '@efie-form/core';
 import type { StateSetters } from './types';
 import { deepClone, generateId } from './utils';
 
@@ -157,7 +157,10 @@ export function createRuleActions({ getState, set }: StateSetters): SchemaStateR
       const idx = rules.findIndex((r) => r.id === ruleId);
       if (idx === -1) return;
       const newRules = [...rules];
-      newRules[idx] = { ...rules[idx], branch: undefined };
+      newRules[idx] = {
+        ...rules[idx],
+        branch: { when: { logic: 'all', children: [] }, actions: [] },
+      };
       const newSchema: FormSchema = {
         ...schema,
         form: { ...schema.form, rules: newRules },

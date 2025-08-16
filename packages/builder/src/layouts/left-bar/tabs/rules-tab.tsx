@@ -36,11 +36,11 @@ export default function RulesTab() {
       branch: {
         actions: [],
         when: {
-          logic: 'and',
+          logic: 'all',
           children: [
             {
               left: { kind: 'fieldValue', field: '' },
-              operator: '',
+              operator: 'equal',
             },
           ],
         },

@@ -31,7 +31,7 @@ export default function FormConditions() {
         <div className="overflow-x-auto">
           <ConditionGroup
             tree={toUi(rule.branch.when as ConditionTree)}
-            mode={(rule.branch.when as ConditionTree).logic === 'or' ? 'any' : 'all'}
+            mode={(rule.branch.when as ConditionTree).logic}
             onChange={(next) => updateRuleBranch(rule.id, { when: toEngine(next) })}
             onRemove={() => clearRuleBranch(rule.id)}
           />

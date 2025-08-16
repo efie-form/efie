@@ -25,7 +25,7 @@ export function toUi(tree: ConditionTree | undefined): ConditionTreeUI {
   if (!tree) return { logic: 'all', children: [] };
   if (isGroupEngine(tree)) {
     return {
-      logic: tree.logic === 'and' ? 'all' : 'any',
+      logic: tree.logic,
       children: tree.children.map(mapEngineNodeToUi),
     };
   }
@@ -61,12 +61,12 @@ function mapEngineNodeToUi(node: ConditionTree | ConditionNode): ConditionTreeUI
 export function toEngine(ui: ConditionTreeUI): ConditionTree {
   if (isGroupUI(ui)) {
     return {
-      logic: ui.logic === 'all' ? 'and' : 'or',
+      logic: ui.logic,
       children: ui.children.map(mapUiNodeToEngine),
     };
   }
   // fallback empty group
-  return { logic: 'and', children: [] };
+  return { logic: 'all', children: [] };
 }
 
 function mapUiNodeToEngine(node: ConditionTreeUI | ConditionNodeUI): ConditionTree | ConditionNode {

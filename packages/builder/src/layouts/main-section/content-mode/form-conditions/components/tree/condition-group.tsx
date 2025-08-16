@@ -1,14 +1,16 @@
+import type { ConditionTree } from '@efie-form/core';
 import { useMemo } from 'react';
 import { HiDotsHorizontal } from 'react-icons/hi';
 import { SimpleMenu } from '../../../../../../components/elements/dropdown-menu';
 import { StyledSelect } from '../../../../../../components/form';
 import { cn } from '../../../../../../lib/utils';
-import ConditionNodeEditor, { type ConditionNodeUI } from './condition-node';
+import type { ConditionNodeUI } from './condition-node';
+import ConditionNodeEditor from './condition-node';
 
-export type GroupMode = 'all' | 'any';
+export type GroupMode = ConditionTree['logic'];
 
 export interface ConditionTreeUI {
-  logic: GroupMode; // 'all' -> and, 'any' -> or
+  logic: GroupMode;
   children: Array<ConditionTreeUI | ConditionNodeUI>;
 }
 
@@ -20,18 +22,15 @@ interface ConditionGroupProps {
 }
 
 function isGroup(node: ConditionTreeUI | ConditionNodeUI): node is ConditionTreeUI {
-  return (
-    (node as ConditionTreeUI).logic !== undefined &&
-    Array.isArray((node as ConditionTreeUI).children)
-  );
+  const maybe = node as Partial<ConditionTreeUI> & { children?: unknown };
+  return typeof maybe.logic === 'string' && Array.isArray(maybe.children);
 }
 
 export default function ConditionGroup({ tree, mode, onChange, onRemove }: ConditionGroupProps) {
   const items = useMemo(() => tree.children ?? [], [tree]);
 
   const updateItems = (next: Array<ConditionTreeUI | ConditionNodeUI>) => {
-    const updated: ConditionTreeUI = { ...tree, children: next };
-    onChange(updated);
+    onChange({ ...tree, children: next });
   };
 
   const addCondition = () => {

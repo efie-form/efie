@@ -1,4 +1,4 @@
-import type { FormField, Operator } from '@efie-form/core';
+import type { FormField, Operator as RuleOperator } from '@efie-form/core';
 import { SharedOperator } from '@efie-form/core';
 import { useEffect, useMemo, useState } from 'react';
 import { FieldTypeOperators, OPERATORS_NAME } from '../../../../../../lib/constant';
@@ -11,9 +11,8 @@ import ValueEditor from '../value-editor';
 
 export interface ConditionNodeUI {
   left: { kind: 'fieldValue'; field: string };
-  operator: Operator;
+  operator: RuleOperator;
   right?: unknown;
-  // options reserved; not yet surfaced in UI
   options?: Record<string, unknown>;
 }
 
@@ -29,19 +28,18 @@ export default function ConditionNodeEditor({ node, onChange }: ConditionNodePro
     () => fieldMap.get(node.left.field),
     [fieldMap, node.left.field],
   );
-  const [operator, setOperator] = useState<Operator>(node.operator);
+  const [operator, setOperator] = useState<RuleOperator>(node.operator as RuleOperator);
   const [value, setValue] = useState<unknown>(node.right);
 
-  // keep local state synced if parent props change
   useEffect(() => {
-    setOperator(node.operator);
+    setOperator(node.operator as RuleOperator);
   }, [node.operator]);
   useEffect(() => {
     setValue(node.right);
   }, [node.right]);
 
   const operatorOptions = useMemo(() => {
-    const opts: { value: Operator; label: string }[] = [];
+    const opts: { value: RuleOperator; label: string }[] = [];
     if (field && isInputField(field)) {
       const list = FieldTypeOperators[field.type] ?? [];
       for (const op of list) {
@@ -49,8 +47,8 @@ export default function ConditionNodeEditor({ node, onChange }: ConditionNodePro
       }
       // shared operators
       for (const op of Object.values(SharedOperator)) {
-        const key = op as Operator;
-        opts.push({ value: key, label: OPERATORS_NAME[key] });
+        const key = op as RuleOperator;
+        opts.push({ value: key, label: OPERATORS_NAME[key as keyof typeof OPERATORS_NAME] });
       }
     }
     return opts;
@@ -62,8 +60,8 @@ export default function ConditionNodeEditor({ node, onChange }: ConditionNodePro
     const opts = [
       ...list.map((op) => ({ value: op, label: OPERATORS_NAME[op] })),
       ...Object.values(SharedOperator).map((op) => ({
-        value: op as Operator,
-        label: OPERATORS_NAME[op as Operator],
+        value: op as RuleOperator,
+        label: OPERATORS_NAME[op as keyof typeof OPERATORS_NAME],
       })),
     ];
     const nextOp = opts.find((o) => o.value === operator)?.value ?? opts[0]?.value ?? operator;
@@ -78,7 +76,7 @@ export default function ConditionNodeEditor({ node, onChange }: ConditionNodePro
     });
   };
 
-  const handleOperatorChange = (op: Operator) => {
+  const handleOperatorChange = (op: RuleOperator) => {
     const nextValue = operatorNeedsNoValue(op) ? undefined : value;
     setOperator(op);
     setValue(nextValue);

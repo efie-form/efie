@@ -1,3 +1,4 @@
+import type { Operator } from '../constants/operator.constant';
 import type { ValueSpec } from './value-spec.type';
 
 // JSON-safe scalar and composite value
@@ -18,13 +19,8 @@ export interface RuleBranch {
   actions: Action[];
 }
 
-// Conditions
-// A condition tree is a recursive logical grouping of condition nodes.
-// We normalize the previous { all | any | not } shape into a single discriminated
-// object: { logic: 'and' | 'or'; children: (ConditionTree | ConditionNode)[] }
-// "not" groups are modeled instead via operators at the node level (e.g. not_equal, not_contains, etc.).
 export interface ConditionTree {
-  logic: 'and' | 'or';
+  logic: 'all' | 'any';
   children: Array<ConditionTree | ConditionNode>;
 }
 
@@ -56,48 +52,6 @@ export type Operand =
   | { kind: 'now' }
   | { kind: 'today' }
   | { kind: 'env'; name: string };
-
-// Operators
-export type Operator =
-  | 'equal'
-  | 'not_equal'
-  | 'gt'
-  | 'gte'
-  | 'lt'
-  | 'lte'
-  | 'between'
-  | 'contains'
-  | 'not_contains'
-  | 'starts_with'
-  | 'not_starts_with'
-  | 'ends_with'
-  | 'not_ends_with'
-  | 'matches' // regex pattern in right (string), flags via options.flags
-  | 'has_value'
-  | 'not_has_value'
-  | 'is_empty'
-  | 'is_not_empty'
-  | 'exists'
-  | 'not_exists'
-  | 'includes'
-  | 'not_includes'
-  | 'includes_all'
-  | 'includes_any'
-  | 'length_gt'
-  | 'length_gte'
-  | 'length_lt'
-  | 'length_lte'
-  | 'date_before'
-  | 'date_after'
-  | 'date_between'
-  | 'is_valid'
-  | 'is_invalid'
-  | 'is_visible'
-  | 'is_hidden'
-  | 'is_enabled'
-  | 'is_disabled'
-  | 'is_required'
-  | 'is_optional';
 
 // Actions (discriminated)
 export type Action =
