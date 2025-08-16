@@ -67,13 +67,17 @@ const ValueEditor = ({ field, operator, value, onChange }: ValueEditorProps) => 
   if (type === FieldInputType.SINGLE_CHOICE || type === FieldInputType.MULTIPLE_CHOICES) {
     const optsProp = getFieldProp(field, PropertyType.OPTIONS);
     const opts = (optsProp?.value ?? []) as Array<{ value: string; label: string }>;
-    const multiple = type === FieldInputType.MULTIPLE_CHOICES;
+    const opStr = operator as string | undefined;
+    const operatorAllowsList =
+      !!opStr &&
+      (opStr === 'in' || opStr === 'not_in' || opStr.endsWith('_in') || opStr.endsWith('_not_in'));
+    const useMulti = type === FieldInputType.MULTIPLE_CHOICES || operatorAllowsList;
     return (
       <ChoiceValueEditor
         value={value}
         onChange={onChange}
         options={opts.map((o) => ({ value: o.value, label: o.label }))}
-        multiple={multiple}
+        multiple={useMulti}
       />
     );
   }

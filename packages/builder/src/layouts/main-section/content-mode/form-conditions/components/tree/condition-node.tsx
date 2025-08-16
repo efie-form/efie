@@ -64,8 +64,9 @@ export default function ConditionNodeEditor({ node, onChange }: ConditionNodePro
         label: OPERATORS_NAME[op as keyof typeof OPERATORS_NAME],
       })),
     ];
-    const nextOp = opts.find((o) => o.value === operator)?.value ?? opts[0]?.value ?? operator;
-    const nextValue = operatorNeedsNoValue(nextOp) ? undefined : value;
+    // Always reset operator to first available for the new field and clear the value
+    const nextOp = opts[0]?.value ?? operator;
+    const nextValue = undefined;
     setOperator(nextOp);
     setValue(nextValue);
     onChange({
