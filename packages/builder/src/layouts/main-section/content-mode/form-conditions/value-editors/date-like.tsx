@@ -1,5 +1,5 @@
 import type { Operator } from '@efie-form/core';
-import { Input } from '../../../../../components/form';
+import { DateRangeInput, Input } from '../../../../../components/form';
 
 export type DateInputType = 'date' | 'time' | 'datetime-local';
 
@@ -12,23 +12,20 @@ interface Props {
 
 const DateLikeValueEditor = ({ value, onChange, operator, htmlInputType }: Props) => {
   if ((operator as string) === 'between') {
-    const v = Array.isArray(value) ? (value as string[]) : ['', ''];
+    const v = Array.isArray(value) && value.length === 2 ? (value as [string, string]) : undefined;
     return (
-      <div className="flex items-center gap-2">
-        <Input
-          value={v[0]}
-          onChange={(nv) => onChange([nv, v[1]])}
-          inputProps={{ type: htmlInputType }}
-          placeholder="Start"
-        />
-        <span className="typography-body3 text-neutral-500">to</span>
-        <Input
-          value={v[1]}
-          onChange={(nv) => onChange([v[0], nv])}
-          inputProps={{ type: htmlInputType }}
-          placeholder="End"
-        />
-      </div>
+      <DateRangeInput
+        value={v}
+        onChange={(nv) => onChange(nv ?? ['', ''])}
+        htmlInputType={htmlInputType}
+        placeholder={
+          htmlInputType === 'time'
+            ? 'Select time range'
+            : htmlInputType === 'datetime-local'
+              ? 'Select date & time range'
+              : 'Select date range'
+        }
+      />
     );
   }
 

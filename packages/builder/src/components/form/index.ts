@@ -1,5 +1,6 @@
 export { default as ColorPicker } from './color-picker';
 export { default as CountrySelect } from './country-select';
+export { default as DateRangeInput } from './date-range-input';
 export { default as Input } from './input';
 export { default as Number } from './number';
 export { default as PhoneInput } from './phone-input';
