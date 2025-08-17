@@ -201,3 +201,97 @@ The project utilizes Tailwind CSS for styling. Key aspects of its configuration 
 
 This new section should be placed after the "Specific Project Knowledge" section and before any "Contribution Process" or similar sections if they exist. If a "Styling" or "Frontend Development" section exists, these details could also be integrated there.
 
+
+## Complex Conditional Rendering & Rule Logic (AI Authoring Guidance)
+
+When implementing UI for complex logical structures (e.g. rule / condition trees) follow a recursive, self-descriptive component pattern similar to `rule-if-summary.tsx` and avoid the heavy pre-processing / segment-building pattern seen in `rule-summary-conditions.tsx`.
+
+### Core Principles
+- Keep transformation logic colocated with the JSX that renders it. Prefer small focused components (`TreeChild`, `NodeItem`, `NodeValueItem`) over constructing large intermediate data arrays (`segments`, `lines`) purely to loop again.
+- Use recursion for tree-shaped data instead of flattening then re-inflating it.
+- Prefer explicit `switch` / if-return blocks over deeply nested ternary (`cond ? a : b ? c : d ? e : ...`). Limit ternary usage to *at most one* level inside a given expression.
+- Centralize constant label / operator maps in a shared module to avoid duplication (e.g. operator → phrase). Do **not** redefine similar maps (`OPERATOR_PHRASES_INLINE`, `OPERATOR_LABEL`) in multiple files.
+- Minimize `useMemo` unless a computation is demonstrably expensive or prevents prop churn. Do **not** wrap trivial string / array literals just by default.
+- Render-time decisions should be obvious from reading the component—avoid opaque builder functions returning shape-tagged objects that are later diff-used in JSX.
+
+### Preferred Pattern (DO)
+```tsx
+function RuleIfSummary({ tree }: { tree: ConditionTree }) {
+    return <TreeNode node={tree} />;
+}
+
+function TreeNode({ node }: { node: ConditionTree | ConditionNode }) {
+    if ('children' in node) {
+        return (
+            <div>
+                <Header logic={node.logic} />
+                {node.children.map((c, i) => (
+                    <div key={i} className="ms-2 mt-1">
+                        <TreeNode node={c} />
+                    </div>
+                ))}
+            </div>
+        );
+    }
+    return <Leaf node={node} />;
+}
+```
+
+Characteristics:
+- Each concern (header, field label, value formatting) is in its own tiny component.
+- No intermediate segment arrays; JSX directly expresses structure.
+- Easy to extend (add new operand kinds by updating one switch statement).
+
+### Anti-Pattern (DON'T)
+Signs the implementation is drifting:
+- Large generic builder like `buildSegmentsInline(node, ctx)` producing arrays of `{text, kind}` just to map over immediately.
+- Multiple parallel constant maps (e.g. `OPERATOR_PHRASES_INLINE` vs `OPERATOR_LABEL`).
+- Repetition of operand rendering logic in both array and single-value branches.
+- Deeply nested ternaries for inline styling / content selection.
+- Excessive micro components whose only job is to wrap a `<span>` with conditional classes derived from preprocessed metadata.
+
+### Refactoring Guidance
+When you encounter (or the AI attempts to generate) code that:
+1. Flattens a tree into lines / segments before rendering, OR
+2. Uses >2 nested ternaries in any statement, OR
+3. Duplicates operator / operand resolution logic,
+
+Then refactor to:
+- Replace preprocessing with recursive rendering.
+- Extract a single `formatOperand(operand, ctx)` pure helper (or inline a `switch`) instead of branching in multiple places.
+- Consolidate operator label mapping in `packages/core` (e.g. `constants/operators.ts`) and import it.
+- Replace chained ternaries with early `if` returns or a `switch`.
+
+### Ternary Usage Rule
+- Allow: `condition ? <A/> : <B/>` (single level)
+- Avoid: `a ? b : c ? d : e` → rewrite as:
+```ts
+if (a) return b;
+if (c) return d;
+return e;
+```
+
+### Memoization & Micro-Optimization
+- Only memoize when profiling or dependency volatility justifies it.
+- Do not memoize static label strings or trivial className fragments.
+
+### Operator & Operand Mapping
+- Store operator → label map *once*. Reuse across summary components.
+- Add new operator labels centrally; never inline fallbacks like `opRaw.replaceAll('_', ' ')` in multiple places—encapsulate this in `getOperatorLabel(op)`.
+
+### When Adding New Logic
+Checklist for PR / AI output:
+- [ ] No duplicated operator maps.
+- [ ] No preprocessing arrays solely for rendering pass.
+- [ ] No nested ternary chains beyond one level.
+- [ ] Recursion used for hierarchical condition trees.
+- [ ] Operand rendering done via single switch / helper.
+- [ ] Minimal, purposeful `useMemo` usage.
+
+If any box is unchecked, address before merging.
+
+### AI Generation Enforcement
+Automated / AI generated components must adhere to this section. If a generated file violates these principles, regenerate with explicit instruction: "Use recursive component pattern (see RuleIfSummary) and avoid preprocessing segments."
+
+---
+
