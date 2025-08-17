@@ -1,7 +1,6 @@
 import {
   type ConditionNode,
   type ConditionTree,
-  type JsonValue,
   type Operand,
   Operator,
   PropertyType,

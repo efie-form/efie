@@ -4,14 +4,14 @@ import type { CSSProperties } from 'react';
 import { MdOutlineDragIndicator } from 'react-icons/md';
 import { useSettingsStore } from '../../../../lib/state/settings.state';
 import { cn } from '../../../../lib/utils';
-import { RuleSummaryPanel } from './rule-summary-panel';
+import RuleActionSummary from './rule-action-summary';
+import RuleIfSummary from './rule-if-summary';
 
 export interface RuleItemProps {
   rule: Rule;
-  fieldLabelMap: Map<string, string>;
 }
 
-export function RuleItem({ rule, fieldLabelMap }: RuleItemProps) {
+export function RuleItem({ rule }: RuleItemProps) {
   const { setSelectedConditionId, setMode } = useSettingsStore();
   const selectedConditionId = useSettingsStore((state) => state.selectedConditionId);
   const { attributes, listeners, setNodeRef, transition, transform, isDragging } = useSortable({
@@ -49,7 +49,11 @@ export function RuleItem({ rule, fieldLabelMap }: RuleItemProps) {
       >
         <MdOutlineDragIndicator />
       </span>
-      <RuleSummaryPanel rule={rule} fieldLabelMap={fieldLabelMap} />
+
+      <div className="flex flex-1 flex-col gap-1 text-start">
+        <RuleIfSummary tree={rule.when} />
+        <RuleActionSummary actions={rule.actions || []} />
+      </div>
     </button>
   );
 }
