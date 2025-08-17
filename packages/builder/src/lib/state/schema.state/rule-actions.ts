@@ -1,4 +1,4 @@
-import type { FormSchema, Rule, RuleBranch } from '@efie-form/core';
+import type { Action, FormSchema, Rule } from '@efie-form/core';
 import type { StateSetters } from './types';
 import { deepClone, generateId } from './utils';
 
@@ -9,9 +9,13 @@ export interface SchemaStateRuleActions {
   removeRule: (ruleId: string) => void;
   moveRule: (from: number, to: number) => void;
   updateRule: (ruleId: string, patch: Partial<Rule>) => void;
-  setRuleBranch: (ruleId: string, branch: RuleBranch) => void;
-  updateRuleBranch: (ruleId: string, patch: Partial<RuleBranch>) => void;
-  clearRuleBranch: (ruleId: string) => void;
+  setRuleConditions: (ruleId: string, when: Rule['when'], actions: Rule['actions']) => void;
+  updateRuleConditions: (ruleId: string, patch: Partial<Pick<Rule, 'when' | 'actions'>>) => void;
+  clearRuleConditions: (ruleId: string) => void;
+  // Action level helpers (id based)
+  addAction: (ruleId: string, action: Omit<Action, 'id'>, index?: number) => Action | undefined;
+  updateAction: (ruleId: string, actionId: string, next: Omit<Action, 'id'>) => void;
+  removeAction: (ruleId: string, actionId: string) => void;
 }
 
 export function createRuleActions({ getState, set }: StateSetters): SchemaStateRuleActions {
@@ -118,14 +122,14 @@ export function createRuleActions({ getState, set }: StateSetters): SchemaStateR
       commit(newSchema);
     },
 
-    setRuleBranch: (ruleId, branch) => {
+    setRuleConditions: (ruleId, when, actions) => {
       const { schema } = getState();
       if (!schema) return;
       const rules = schema.form.rules ?? [];
       const idx = rules.findIndex((r) => r.id === ruleId);
       if (idx === -1) return;
       const newRules = [...rules];
-      newRules[idx] = { ...rules[idx], branch: deepClone(branch) };
+      newRules[idx] = { ...rules[idx], when: deepClone(when), actions: deepClone(actions) } as Rule;
       const newSchema: FormSchema = {
         ...schema,
         form: { ...schema.form, rules: newRules },
@@ -133,16 +137,19 @@ export function createRuleActions({ getState, set }: StateSetters): SchemaStateR
       commit(newSchema);
     },
 
-    updateRuleBranch: (ruleId, patch) => {
+    updateRuleConditions: (ruleId, patch) => {
       const { schema } = getState();
       if (!schema) return;
       const rules = schema.form.rules ?? [];
       const idx = rules.findIndex((r) => r.id === ruleId);
       if (idx === -1) return;
       const target = rules[idx];
-      if (!target.branch) return;
       const newRules = [...rules];
-      newRules[idx] = { ...target, branch: { ...target.branch, ...patch } };
+      newRules[idx] = {
+        ...target,
+        when: patch.when ? patch.when : target.when,
+        actions: patch.actions ? patch.actions : target.actions,
+      } as Rule;
       const newSchema: FormSchema = {
         ...schema,
         form: { ...schema.form, rules: newRules },
@@ -150,7 +157,7 @@ export function createRuleActions({ getState, set }: StateSetters): SchemaStateR
       commit(newSchema);
     },
 
-    clearRuleBranch: (ruleId) => {
+    clearRuleConditions: (ruleId) => {
       const { schema } = getState();
       if (!schema) return;
       const rules = schema.form.rules ?? [];
@@ -159,8 +166,74 @@ export function createRuleActions({ getState, set }: StateSetters): SchemaStateR
       const newRules = [...rules];
       newRules[idx] = {
         ...rules[idx],
-        branch: { when: { logic: 'all', children: [] }, actions: [] },
+        when: { logic: 'all', children: [] },
+        actions: [],
+      } as Rule;
+      const newSchema: FormSchema = {
+        ...schema,
+        form: { ...schema.form, rules: newRules },
       };
+      commit(newSchema);
+    },
+
+    addAction: (ruleId, action, index) => {
+      const { schema } = getState();
+      if (!schema) return;
+      const rules = schema.form.rules ?? [];
+      const ruleIdx = rules.findIndex((r) => r.id === ruleId);
+      if (ruleIdx === -1) return;
+      const target = rules[ruleIdx];
+      const actions = target.actions ? [...target.actions] : [];
+      const newAction = { ...deepClone(action), id: generateId() } as Action;
+      if (index !== undefined && index >= 0 && index <= actions.length) {
+        actions.splice(index, 0, newAction);
+      } else {
+        actions.push(newAction);
+      }
+      const newRules = [...rules];
+      newRules[ruleIdx] = { ...target, actions } as Rule;
+      const newSchema: FormSchema = {
+        ...schema,
+        form: { ...schema.form, rules: newRules },
+      };
+      commit(newSchema);
+      return newAction;
+    },
+
+    updateAction: (ruleId, actionId, next) => {
+      const { schema } = getState();
+      if (!schema) return;
+      const rules = schema.form.rules ?? [];
+      const ruleIdx = rules.findIndex((r) => r.id === ruleId);
+      if (ruleIdx === -1) return;
+      const target = rules[ruleIdx];
+      const actions = target.actions ? [...target.actions] : [];
+      const actionIdx = actions.findIndex((a) => a.id === actionId);
+      if (actionIdx === -1) return;
+      const nextAction: Action = { ...(next as Action), id: actionId };
+      actions[actionIdx] = nextAction;
+      const newRules = [...rules];
+      newRules[ruleIdx] = { ...target, actions } as Rule;
+      const newSchema: FormSchema = {
+        ...schema,
+        form: { ...schema.form, rules: newRules },
+      };
+      commit(newSchema);
+    },
+
+    removeAction: (ruleId, actionId) => {
+      const { schema } = getState();
+      if (!schema) return;
+      const rules = schema.form.rules ?? [];
+      const ruleIdx = rules.findIndex((r) => r.id === ruleId);
+      if (ruleIdx === -1) return;
+      const target = rules[ruleIdx];
+      const actions = target.actions ? [...target.actions] : [];
+      const actionIdx = actions.findIndex((a) => a.id === actionId);
+      if (actionIdx === -1) return;
+      actions.splice(actionIdx, 1);
+      const newRules = [...rules];
+      newRules[ruleIdx] = { ...target, actions } as Rule;
       const newSchema: FormSchema = {
         ...schema,
         form: { ...schema.form, rules: newRules },

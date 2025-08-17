@@ -22,6 +22,7 @@ export {
   StringOperator,
 } from './constants/operator.constant';
 export { PropSettingsTemplate } from './constants/prop-settings.constant';
+export { RuleAction } from './constants/rule-action.constant';
 export {
   CustomPropertyType,
   PropertyType,
@@ -119,36 +120,19 @@ export type {
 } from './types/property-definition';
 export type {
   Action,
-  AddFieldErrorAction,
-  ClearFieldErrorAction,
-  ClearValueAction,
   ConditionNode,
   ConditionOptions,
   ConditionTree,
-  CopyValueAction,
   CustomAction,
   CustomActionDefinition,
-  DisplayMessageAction,
   ErrorItem,
-  FocusFieldAction,
   HideFieldsAction,
-  HidePagesAction,
   JsonPrimitive,
   JsonValue,
   Operand,
-  RecoverAction,
-  ReorderFieldsAction,
-  ReorderPagesAction,
   Rule,
-  RuleBranch,
-  ScrollIntoViewAction,
-  SetEnabledAction,
-  SetOptionsAction,
   SetRequiredAction,
-  SetValueAction,
   ShowFieldsAction,
-  ShowPagesAction,
-  SkipToPageAction,
 } from './types/root-rule.type';
 export type {
   FieldConfig,
@@ -199,16 +183,11 @@ export type {
 } from './types/settings-config';
 export type { ValueSpec } from './types/value-spec.type';
 
-import type { Action, Rule, RuleBranch } from './types/root-rule.type';
+import type { Action, Rule } from './types/root-rule.type';
 // Runtime no-op to keep rule-related types from being tree-shaken in d.ts bundling
-// Accepts optional generic referencing Action/Rule/RuleBranch so they remain exported
-export function __keepRuleTypes<
-  T extends {
-    action?: Action;
-    rule?: Rule;
-    branch?: RuleBranch;
-  },
->(_: T | undefined): void {
+export function __keepRuleTypes<T extends { action?: Action; rule?: Rule }>(
+  _: T | undefined,
+): void {
   // noop
 }
 export { getColorObject, hslaToHex, rgbaToHex } from './utils/colors';

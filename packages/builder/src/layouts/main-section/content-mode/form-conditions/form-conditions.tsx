@@ -12,8 +12,8 @@ export default function FormConditions() {
   const selectedConditionId = useSettingsStore((state) => state.selectedConditionId);
   const rule = useSchemaStore((state) => state.findRuleById(selectedConditionId));
   const updateRule = useSchemaStore((state) => state.updateRule);
-  const updateRuleBranch = useSchemaStore((s) => s.updateRuleBranch);
-  const clearRuleBranch = useSchemaStore((s) => s.clearRuleBranch);
+  const updateRuleConditions = useSchemaStore((s) => s.updateRuleConditions);
+  const clearRuleConditions = useSchemaStore((s) => s.clearRuleConditions);
 
   if (!rule) return;
 
@@ -30,10 +30,10 @@ export default function FormConditions() {
         {/* IF block */}
         <div className="overflow-x-auto">
           <ConditionGroup
-            tree={toUi(rule.branch.when as ConditionTree)}
-            mode={(rule.branch.when as ConditionTree).logic}
-            onChange={(next) => updateRuleBranch(rule.id, { when: toEngine(next) })}
-            onRemove={() => clearRuleBranch(rule.id)}
+            tree={toUi(rule.when as ConditionTree)}
+            mode={(rule.when as ConditionTree).logic}
+            onChange={(next) => updateRuleConditions(rule.id, { when: toEngine(next) })}
+            onRemove={() => clearRuleConditions(rule.id)}
           />
         </div>
         {/* THEN block */}

@@ -33,17 +33,15 @@ export default function RulesTab() {
       id: '',
       enabled: true,
       triggers: [],
-      branch: {
-        actions: [],
-        when: {
-          logic: 'all',
-          children: [
-            {
-              left: { kind: 'fieldValue', field: '' },
-              operator: 'equal',
-            },
-          ],
-        },
+      actions: [],
+      when: {
+        logic: 'all',
+        children: [
+          {
+            left: { kind: 'fieldValue', field: '' },
+            operator: 'equal',
+          },
+        ],
       },
     });
   };

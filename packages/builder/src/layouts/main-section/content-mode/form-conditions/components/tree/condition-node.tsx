@@ -1,5 +1,5 @@
 import type { FormField, Operator as RuleOperator } from '@efie-form/core';
-import { SharedOperator } from '@efie-form/core';
+import { FieldInputType, SharedOperator } from '@efie-form/core';
 import { useEffect, useMemo, useState } from 'react';
 import { FieldTypeOperators, OPERATORS_NAME } from '../../../../../../lib/constant';
 import { useSchemaStore } from '../../../../../../lib/state/schema.state';
@@ -92,7 +92,11 @@ export default function ConditionNodeEditor({ node, onChange }: ConditionNodePro
   return (
     <div className={cn('grid grid-cols-1 gap-3 sm:grid-cols-3')}>
       <div className="sm:col-span-1">
-        <FieldsSelect value={field} onChange={handleFieldChange} />
+        <FieldsSelect
+          value={field}
+          onChange={handleFieldChange}
+          fieldTypes={Object.values(FieldInputType)}
+        />
       </div>
       <div className="sm:col-span-1">
         <OperatorSelect
