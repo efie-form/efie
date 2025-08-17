@@ -1,8 +1,8 @@
-import type { Rule } from '@efie-form/core';
+import type { ConditionNode, ConditionTree, Rule } from '@efie-form/core';
 import { useMemo } from 'react';
-import { AiFillCaretRight } from 'react-icons/ai';
-import { cn } from '../../../../lib/utils';
-import { type ActionLine, buildStructuredSummary } from './rule-helpers';
+import { type ConditionLine, getActionLines, isGroup, renderConditionNode } from './rule-helpers';
+import { ActionsList } from './rule-summary-actions';
+import { buildSegmentsInline, ConditionsList } from './rule-summary-conditions';
 
 export interface RuleSummaryPanelProps {
   rule: Rule;
@@ -10,97 +10,45 @@ export interface RuleSummaryPanelProps {
 }
 
 export function RuleSummaryPanel({ rule, fieldLabelMap }: RuleSummaryPanelProps) {
-  const { conditionLines, actionLines } = useMemo(
-    () => buildStructuredSummary(rule, { fieldLabelMap }),
-    [rule, fieldLabelMap],
-  );
+  const { conditionLines, actionLines } = useMemo(() => {
+    const ctx = { fieldLabelMap };
+    const root: ConditionTree = rule.when
+      ? (rule.when as ConditionTree)
+      : ({ logic: 'all', children: [] } as ConditionTree);
+    const lines: ConditionLine[] = [];
 
-  // Track how many group headers encountered to decide IF vs ELSE IF
-  let groupCount = 0;
+    const walk = (node: ConditionTree | ConditionNode, depth: number) => {
+      if (isGroup(node)) {
+        if (!node.children.length) {
+          lines.push({ text: 'Always', depth, kind: 'condition' });
+          return;
+        }
+        lines.push({
+          text: node.logic === 'all' ? 'ALL of:' : 'ANY of:',
+          depth,
+          kind: 'group',
+          logic: node.logic,
+        });
+        for (const child of node.children) walk(child as ConditionTree | ConditionNode, depth + 1);
+      } else {
+        const cn = node as ConditionNode;
+        lines.push({
+          text: renderConditionNode(cn, ctx),
+          depth,
+          kind: 'condition',
+          segments: buildSegmentsInline(cn, ctx),
+        });
+      }
+    };
+
+    walk(root, 0);
+    return { conditionLines: lines, actionLines: getActionLines(rule.actions || [], ctx) };
+  }, [rule, fieldLabelMap]);
 
   return (
     <div className="flex flex-1 flex-col gap-1 text-start">
-      {conditionLines.map((line, i) => {
-        const segments = line.segments;
-        const isGroup = line.kind === 'group';
-        const isAlways = line.text === 'Always' && !conditionLines.some((l) => l.kind === 'group');
-        let prefix: JSX.Element | null = null;
-        if (isGroup) {
-          const thisGroupIndex = groupCount++;
-          prefix = (
-            <span className="me-1 rounded-sm bg-neutral-200 px-1 py-0.5 text-neutral-700">
-              {thisGroupIndex === 0 ? 'IF' : 'ELSE IF'}
-            </span>
-          );
-        } else if (isAlways) {
-          prefix = (
-            <span className="me-1 rounded-sm bg-neutral-200 px-1 py-0.5 text-neutral-700">IF</span>
-          );
-        } else {
-          // condition line (non-group)
-          prefix = (
-            <span className="me-1 inline-flex items-center text-neutral-500">
-              <AiFillCaretRight />
-            </span>
-          );
-        }
-        return (
-          <div
-            key={i}
-            className={cn(
-              'typography-body3 leading-snug',
-              isGroup ? 'text-neutral-700' : 'text-neutral-700',
-            )}
-            style={{ paddingLeft: `${line.depth * 12}px` }}
-          >
-            {prefix}
-            {isGroup ? (
-              <span className="font-medium text-neutral-600">{line.text}</span>
-            ) : segments?.length ? (
-              segments.map((s, idx) => (
-                <span
-                  key={idx}
-                  className={cn({
-                    'font-medium text-primary-700 bg-primary-200 p-0.5 rounded-sm':
-                      s.kind === 'field',
-                    'text-neutral-500': s.kind === 'operator',
-                    'text-neutral-800': s.kind === 'value',
-                    'text-neutral-700': s.kind === 'plain',
-                  })}
-                >
-                  {s.text}
-                </span>
-              ))
-            ) : (
-              <span>{line.text}</span>
-            )}
-          </div>
-        );
-      })}
-      <div className="mt-2 flex flex-col gap-1">
-        {actionLines.map((a: ActionLine, idx) => (
-          <div key={idx} className="typography-body3 leading-snug text-neutral-600">
-            <span className="me-1 rounded-sm bg-neutral-200 px-1 py-0.5 text--700">DO</span>
-            {a.segments?.length ? (
-              a.segments.map((s, i2) => (
-                <span
-                  key={i2}
-                  className={cn({
-                    'font-medium text-primary-700': s.kind === 'field',
-                    'text-neutral-500': s.kind === 'operator',
-                    'text-neutral-800': s.kind === 'value',
-                    'text-neutral-700': s.kind === 'plain',
-                  })}
-                >
-                  {s.text}
-                </span>
-              ))
-            ) : (
-              <span className="text-neutral-700">{a.text}</span>
-            )}
-          </div>
-        ))}
-      </div>
+      <ConditionsList lines={conditionLines} />
+      <ActionsList lines={actionLines} />
     </div>
   );
 }
