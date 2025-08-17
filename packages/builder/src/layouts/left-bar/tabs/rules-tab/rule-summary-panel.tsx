@@ -1,6 +1,7 @@
 import type { ConditionNode, ConditionTree, Rule } from '@efie-form/core';
 import { useMemo } from 'react';
 import { type ConditionLine, getActionLines, isGroup, renderConditionNode } from './rule-helpers';
+import RuleIfSummary from './rule-if-summary';
 import { ActionsList } from './rule-summary-actions';
 import { buildSegmentsInline, ConditionsList } from './rule-summary-conditions';
 
@@ -47,6 +48,8 @@ export function RuleSummaryPanel({ rule, fieldLabelMap }: RuleSummaryPanelProps)
 
   return (
     <div className="flex flex-1 flex-col gap-1 text-start">
+      <RuleIfSummary tree={rule.when} />
+      <div className="border-t border-neutral-400" />
       <ConditionsList lines={conditionLines} />
       <ActionsList lines={actionLines} />
     </div>

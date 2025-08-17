@@ -90,15 +90,15 @@ export default function ConditionNodeEditor({ node, onChange }: ConditionNodePro
   };
 
   return (
-    <div className={cn('grid grid-cols-1 gap-3 sm:grid-cols-3')}>
-      <div className="sm:col-span-1">
+    <div className="flex gap-2 flex-wrap">
+      <div className="flex-1 min-w-24">
         <FieldsSelect
           value={field}
           onChange={handleFieldChange}
           fieldTypes={Object.values(FieldInputType)}
         />
       </div>
-      <div className="sm:col-span-1">
+      <div className="flex-1 min-w-24">
         <OperatorSelect
           options={operatorOptions}
           value={operator}
@@ -106,7 +106,7 @@ export default function ConditionNodeEditor({ node, onChange }: ConditionNodePro
           disabled={!field}
         />
       </div>
-      <div className="sm:col-span-1">
+      <div className="flex-1 min-w-24">
         <ValueEditor field={field} operator={operator} value={value} onChange={handleValueChange} />
       </div>
     </div>

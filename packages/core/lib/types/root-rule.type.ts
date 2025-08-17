@@ -11,7 +11,6 @@ export interface Rule {
   id: string;
   enabled?: boolean;
   triggers?: ('onChange' | 'onPageEnter' | 'onSubmit')[];
-  // Flattened: previously nested under branch.when / branch.actions
   when: ConditionTree;
   actions: Action[];
 }
@@ -45,7 +44,7 @@ export type Operand =
       state: 'touched' | 'dirty' | 'valid' | 'visible' | 'enabled' | 'required';
     }
   | { kind: 'fieldLength'; field: string }
-  | { kind: 'constant'; value: JsonValue }
+  | { kind: 'constant'; value: JsonPrimitive }
   | { kind: 'now' }
   | { kind: 'today' }
   | { kind: 'env'; name: string };
