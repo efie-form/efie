@@ -51,6 +51,12 @@ Key packages include:
     - Use `useCallback` for memoizing selectors.
     - For local component state, use `useState` (React) or `ref`/`reactive` (Vue).
 - **Modularity**: Break down complex components into smaller, reusable ones.
+- **Component Logic Organization**:
+    - **AVOID**: Creating separate helper methods that process all information and return complex data structures for rendering with many small components. This makes the code hard to maintain and follow.
+    - **PREFER**: Keep logic within each component. Each component should handle its own specific case and logic.
+    - **AVOID**: Complex nested ternary operators like `condition ? value1 : condition2 ? value2 : condition3 ? value3 : defaultValue`. This becomes unreadable and hard to maintain.
+    - **PREFER**: Use switch statements or if-else blocks for complex conditional logic. This is more readable and maintainable.
+    - **Example of GOOD pattern**: Each component handles its own rendering logic internally rather than relying on external helper functions to process data.
 - **Accessibility**: Ensure components are accessible (ARIA attributes, keyboard navigation, etc.).
 
 ### Testing (Jest)
@@ -87,6 +93,69 @@ Key packages include:
 - Be mindful of performance, especially in the core library and rendering paths.
 - Avoid unnecessary re-renders in UI components.
 - Profile and optimize critical code paths if performance issues are identified.
+
+### Code Patterns & Maintainability
+
+#### Preferred Patterns
+- **Component Encapsulation**: Each component should contain its own logic rather than relying on external helper functions to process data and return complex structures.
+- **Conditional Logic**: Use switch statements or clear if-else blocks instead of deeply nested ternary operators.
+- **Component Responsibility**: Components should handle their specific rendering case internally.
+
+#### Anti-Patterns to Avoid
+- **External Data Processing**: Avoid creating helper methods that process all information and return complex data structures that are then consumed by many small rendering components.
+- **Complex Ternary Chains**: Never use patterns like:
+  ```typescript
+  // AVOID - Hard to read and maintain
+  const value = condition1 ? value1 
+              : condition2 ? value2 
+              : condition3 ? value3 
+              : condition4 ? value4 
+              : defaultValue;
+  ```
+- **Over-abstraction**: Don't create unnecessary abstraction layers when simple, direct component logic would be clearer.
+
+#### Example of Good vs Bad Patterns
+
+**❌ Bad Pattern (Hard to Maintain)**:
+```typescript
+// External helper that processes everything
+function buildComplexSegments(data) {
+  return data.map(item => ({
+    text: item.kind === 'type1' ? processType1(item) 
+        : item.kind === 'type2' ? processType2(item) 
+        : item.kind === 'type3' ? processType3(item) 
+        : defaultProcess(item),
+    style: item.urgent ? 'urgent' : item.warning ? 'warning' : 'normal'
+  }));
+}
+
+// Component just renders processed data
+function MyComponent({ data }) {
+  const segments = buildComplexSegments(data);
+  return segments.map(segment => <Segment {...segment} />);
+}
+```
+
+**✅ Good Pattern (Maintainable)**:
+```typescript
+// Each component handles its own logic
+function MyComponent({ data }) {
+  return data.map(item => <ItemRenderer key={item.id} item={item} />);
+}
+
+function ItemRenderer({ item }) {
+  switch (item.kind) {
+    case 'type1':
+      return <Type1Component item={item} />;
+    case 'type2':
+      return <Type2Component item={item} />;
+    case 'type3':
+      return <Type3Component item={item} />;
+    default:
+      return <DefaultComponent item={item} />;
+  }
+}
+```
 
 ## Specific Project Knowledge
 
