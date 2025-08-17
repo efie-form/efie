@@ -169,3 +169,175 @@ export function buildMultilineSummary(
   }
   return { conditions, actions: renderActions(rule.actions || [], ctx) };
 }
+
+// ---------- Structured representation (with nesting) -----------------------
+export interface ConditionLine {
+  text: string; // rendered text (group header or condition)
+  depth: number; // nesting level starting at 0 for root group header (if included) / first conditions
+  kind: 'group' | 'condition';
+  logic?: 'all' | 'any'; // only for group
+  // For kind === 'condition', a segmented breakdown for syntax highlighting
+  segments?: TextSegment[];
+}
+
+export interface TextSegment {
+  text: string;
+  kind: 'field' | 'operator' | 'value' | 'plain';
+}
+
+export interface ActionLine {
+  text: string; // full fallback plain text
+  segments?: TextSegment[]; // segmented version for highlighting
+}
+
+export interface StructuredSummary {
+  conditionLines: ConditionLine[];
+  actionLines: ActionLine[]; // each action textual / segmented
+}
+
+export function buildStructuredSummary(rule: Rule, ctx: BuildSummaryCtx): StructuredSummary {
+  const root: ConditionTree = rule.when
+    ? (rule.when as ConditionTree)
+    : ({ logic: 'all', children: [] } as ConditionTree);
+  const lines: ConditionLine[] = [];
+
+  const walk = (node: ConditionTree | ConditionNode, depth: number, isRoot: boolean) => {
+    if (isGroup(node)) {
+      // Add header except when root has no children (Always)
+      if (!node.children.length) {
+        lines.push({ text: 'Always', depth, kind: 'condition' });
+        return;
+      }
+      if (!isRoot || isRoot) {
+        // show group header even for root (clearer nesting)
+        lines.push({
+          text: node.logic === 'all' ? 'ALL of:' : 'ANY of:',
+          depth,
+          kind: 'group',
+          logic: node.logic,
+        });
+      }
+      for (const child of node.children) {
+        walk(child as ConditionTree | ConditionNode, depth + 1, false);
+      }
+    } else {
+      const conditionNode = node as ConditionNode;
+      lines.push({
+        text: renderConditionNode(conditionNode, ctx),
+        depth,
+        kind: 'condition',
+        segments: buildConditionSegments(conditionNode, ctx),
+      });
+    }
+  };
+
+  walk(root, 0, true);
+
+  const actionLines = getActionLines(rule.actions || [], ctx);
+  return { conditionLines: lines, actionLines };
+}
+// ---------- Segmentation helpers for highlighting -------------------------
+
+function buildConditionSegments(node: ConditionNode, ctx: BuildSummaryCtx): TextSegment[] {
+  const segs: TextSegment[] = [];
+  // LEFT operand
+  const left = node.left;
+  if (left.kind === 'fieldValue') {
+    const label = ctx.fieldLabelMap.get(left.field) || left.field || 'Field';
+    segs.push({ text: label, kind: 'field' });
+  } else {
+    segs.push({ text: left.kind, kind: 'plain' });
+  }
+
+  const opRaw = node.operator as string;
+  const opPhrase = OPERATOR_PHRASES[opRaw] || opRaw.replaceAll('_', ' ');
+  segs.push({ text: ` ${opPhrase}`, kind: 'operator' });
+
+  if (!NO_VALUE_OPERATORS.has(opRaw)) {
+    const rightText = extractRightValue(node.right, ctx);
+    if (rightText) {
+      // Attempt to split multiple values for highlighting field references
+      if (Array.isArray(node.right)) {
+        const parts: Operand[] = node.right as Operand[];
+        parts.forEach((p, idx) => {
+          const isField = p.kind === 'fieldValue';
+          const txt = operandToString(p, ctx);
+          if (idx === 0) segs.push({ text: ' ', kind: 'plain' });
+          if (isField) segs.push({ text: txt, kind: 'field' });
+          else segs.push({ text: txt, kind: 'value' });
+          if (idx < parts.length - 1) segs.push({ text: ', ', kind: 'plain' });
+        });
+      } else {
+        const singleOperand = node.right as Operand;
+        const isField = singleOperand && singleOperand.kind === 'fieldValue';
+        segs.push({ text: ' ', kind: 'plain' });
+        segs.push({ text: rightText, kind: isField ? 'field' : 'value' });
+      }
+    }
+  }
+  return segs;
+}
+
+function getActionLines(actions: Action[], ctx: BuildSummaryCtx): ActionLine[] {
+  if (!actions.length) return [{ text: 'No actions' }];
+  const out: ActionLine[] = [];
+  for (const a of actions) {
+    switch (a.type) {
+      case RuleAction.SHOW_FIELDS: {
+        const { text, segments } = formatFieldListSegments('show', a.fields, ctx);
+        out.push({ text, segments });
+        break;
+      }
+      case RuleAction.HIDE_FIELDS: {
+        const { text, segments } = formatFieldListSegments('hide', a.fields, ctx);
+        out.push({ text, segments });
+        break;
+      }
+      case RuleAction.SET_REQUIRED: {
+        const { text, segments } = formatFieldListSegments('set required', a.fields, ctx);
+        out.push({ text, segments });
+        break;
+      }
+      case RuleAction.SET_OPTIONAL: {
+        const { text, segments } = formatFieldListSegments('set optional', a.fields, ctx);
+        out.push({ text, segments });
+        break;
+      }
+      default: {
+        const custom = a as Extract<Action, { type: 'custom' }>;
+        if (custom.type === 'custom') {
+          out.push({ text: `custom action ${custom.name || ''}`.trim() });
+        }
+      }
+    }
+  }
+  return out;
+}
+
+function formatFieldListSegments(
+  prefix: string,
+  ids: string[],
+  ctx: BuildSummaryCtx,
+): { text: string; segments: TextSegment[] } {
+  if (!ids.length)
+    return {
+      text: `${prefix} (no fields)`,
+      segments: [
+        { text: prefix, kind: 'plain' },
+        { text: ' (no fields)', kind: 'value' },
+      ],
+    };
+  const labels = ids.map((id) => ctx.fieldLabelMap.get(id) || id);
+  const truncated = labels.length > 3 ? labels.slice(0, 3).concat('…') : labels;
+  const text = `${prefix} ${truncated.join(', ')}`;
+  const segments: TextSegment[] = [
+    { text: prefix, kind: 'plain' },
+    { text: ' ', kind: 'plain' },
+  ];
+  truncated.forEach((label, idx) => {
+    const isEllipsis = label === '…';
+    segments.push({ text: label, kind: isEllipsis ? 'plain' : 'field' });
+    if (idx < truncated.length - 1) segments.push({ text: ', ', kind: 'plain' });
+  });
+  return { text, segments };
+}
