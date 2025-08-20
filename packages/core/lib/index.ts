@@ -24,6 +24,13 @@ export {
 export { PropSettingsTemplate } from './constants/prop-settings.constant';
 export { RuleAction } from './constants/rule-action.constant';
 export {
+  type FieldState,
+  type FieldUpdate,
+  RuleEngine,
+  type RuleEngineResult,
+  type RuleEvaluationContext,
+} from './engine/rule-engine';
+export {
   CustomPropertyType,
   PropertyType,
 } from './property-type';
