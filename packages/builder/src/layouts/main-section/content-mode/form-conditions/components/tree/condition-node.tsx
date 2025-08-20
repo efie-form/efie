@@ -65,7 +65,7 @@ export default function ConditionNodeEditor({ node, onChange }: ConditionNodePro
       })),
     ];
     // Always reset operator to first available for the new field and clear the value
-    const nextOp = opts[0]?.value ?? operator;
+    const nextOp = opts[0]?.value ?? undefined;
     const nextValue = undefined;
     setOperator(nextOp);
     setValue(nextValue);
