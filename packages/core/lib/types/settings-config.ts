@@ -207,7 +207,6 @@ export interface FieldConfigFile {
     | FieldSystemConfigAccept
     | FieldSystemConfigRequired
     | FieldSystemConfigHidden
-    | FieldSystemConfigHidden
     | FieldCustomConfig
   >;
 }
