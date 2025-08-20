@@ -16,15 +16,6 @@ interface BaseProps<T extends string> {
   filterFn?: (option: { value: T; label: string }, query: string) => boolean;
   // Trigger presentation variant
   triggerVariant?: 'default' | 'icon-only' | 'label-only';
-  /**
-   * Controls the dropdown panel minimum width.
-   * - true (default): applies Tailwind class 'min-w-48'.
-   * - false: no enforced minimum width (shrinks to trigger width / content).
-   * - number: treated as pixel value (e.g. 180 => min-width: 180px).
-   * - string:
-   *    - If starts with 'min-w-' it's assumed to be a Tailwind utility class and is appended to className.
-   *    - Otherwise it's treated as a raw CSS length value (e.g. '12rem', '240px', '50%').
-   */
   dropdownMinWidth?: boolean | number | string;
 }
 

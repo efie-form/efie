@@ -81,7 +81,7 @@ export function ActionItem({
   });
 
   return (
-    <div className="rounded-md border border-neutral-100 bg-neutral-50 p-3 shadow-inner">
+    <div className="rounded-md border border-neutral-200 p-3">
       <div className="mb-2 flex items-center justify-between">
         <p className="typography-body2 text-neutral-700">Action #{index + 1}</p>
         <SimpleMenu

@@ -3,7 +3,7 @@ import { FieldInputType, SharedOperator } from '@efie-form/core';
 import { useEffect, useMemo, useState } from 'react';
 import { FieldTypeOperators, OPERATORS_NAME } from '../../../../../../lib/constant';
 import { useSchemaStore } from '../../../../../../lib/state/schema.state';
-import { cn, isInputField } from '../../../../../../lib/utils';
+import { isInputField } from '../../../../../../lib/utils';
 import FieldsSelect from '../../fields-select';
 import { operatorNeedsNoValue } from '../../value-editors/common';
 import OperatorSelect from '../operator-select';
@@ -11,7 +11,7 @@ import ValueEditor from '../value-editor';
 
 export interface ConditionNodeUI {
   left: { kind: 'fieldValue'; field: string };
-  operator: RuleOperator;
+  operator?: RuleOperator;
   right?: unknown;
   options?: Record<string, unknown>;
 }

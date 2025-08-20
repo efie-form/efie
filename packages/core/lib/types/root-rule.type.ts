@@ -21,8 +21,8 @@ export interface ConditionTree {
 }
 
 export interface ConditionNode {
-  left: Operand;
-  operator: Operator;
+  left?: Operand;
+  operator?: Operator;
   right?: Operand | Operand[];
   options?: ConditionOptions;
 }

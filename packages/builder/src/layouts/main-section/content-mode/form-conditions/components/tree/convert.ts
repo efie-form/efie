@@ -35,7 +35,7 @@ export function toUi(tree: ConditionTree | undefined): ConditionTreeUI {
 
 function mapEngineNodeToUi(node: ConditionTree | ConditionNode): ConditionTreeUI | ConditionNodeUI {
   if (isGroupEngine(node)) return toUi(node);
-  const leftField = node.left.kind === 'fieldValue' ? node.left.field : '';
+  const leftField = node.left?.kind === 'fieldValue' ? node.left.field : '';
   let rightValue: unknown;
   if (Array.isArray(node.right)) {
     // map array of constants to raw values; otherwise leave undefined

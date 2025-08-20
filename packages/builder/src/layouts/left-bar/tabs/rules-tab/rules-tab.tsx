@@ -32,12 +32,7 @@ function RulesTab() {
       actions: [],
       when: {
         logic: 'all',
-        children: [
-          {
-            left: { kind: 'fieldValue', field: '' },
-            operator: 'equal',
-          },
-        ],
+        children: [{}],
       },
     });
   };

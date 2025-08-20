@@ -59,37 +59,47 @@ interface RuleIfSummaryProps {
 }
 
 export default function RuleIfSummary({ tree }: RuleIfSummaryProps) {
-  return <TreeChild node={tree} />;
+  return <TreeChild node={tree} isRoot />;
 }
 
 interface TreeChildProps {
   node: ConditionTree | ConditionNode;
+  isRoot?: boolean;
 }
 
-function TreeChild({ node }: TreeChildProps) {
+function TreeChild({ node, isRoot }: TreeChildProps) {
   if ('children' in node) {
     return (
-      <div className="">
-        <p className="typography-body3">
-          <span className="me-1 rounded-sm bg-neutral-200 px-1 py-0.5 text-neutral-700">IF</span>
-          <span className="font-medium text-neutral-600">{LOGIC_LABEL[node.logic]}</span>
-        </p>
+      <>
+        <div className="flex gap-2 typography-body3">
+          {isRoot ? (
+            <span className="me-1 rounded-sm bg-neutral-200 px-1 py-0.5 text-neutral-700 uppercase">
+              If
+            </span>
+          ) : (
+            <span className="text-neutral-500">
+              <AiFillCaretRight className="size-3 mt-0.5" />
+            </span>
+          )}
+          <p className="font-medium text-neutral-600">{LOGIC_LABEL[node.logic]}</p>
+        </div>
         {node.children.map((child, index) => (
           <div key={index} className="ms-2 mt-1">
             <TreeChild node={child} />
           </div>
         ))}
-      </div>
+      </>
     );
   }
+
   return (
     <div className="flex gap-2 items-start typography-body3">
-      <span className="items-center text-neutral-500">
-        <AiFillCaretRight className="size-3" />
+      <span className="text-neutral-500">
+        <AiFillCaretRight className="size-3 mt-0.5" />
       </span>
       <p className="space-x-1">
         <NodeItem node={node} />
-        <span className="text-neutral-500">{OPERATOR_LABEL[node.operator]}</span>
+        {node.operator && <span className="text-neutral-500">{OPERATOR_LABEL[node.operator]}</span>}
         <NodeValue operand={node.right} />
       </p>
     </div>
@@ -101,12 +111,12 @@ interface NodeItemProps {
 }
 
 function NodeItem({ node }: NodeItemProps) {
-  switch (node.left.kind) {
+  switch (node.left?.kind) {
     case 'fieldValue':
       return <NodeFieldValue fieldId={node.left.field} />;
   }
 
-  return <span className="">{node.left.kind}</span>;
+  return <span className="">{node.left?.kind}</span>;
 }
 
 interface NodeFieldValueProps {

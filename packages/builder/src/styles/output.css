@@ -664,6 +664,18 @@ video {
   top: 100%;
 }
 
+.top-2 {
+  top: 0.5rem;
+}
+
+.top-3 {
+  top: 0.75rem;
+}
+
+.top-4 {
+  top: 1rem;
+}
+
 .z-10 {
   z-index: 10;
 }
@@ -783,6 +795,10 @@ video {
 
 .me-1 {
   margin-inline-end: 0.25rem;
+}
+
+.mt-0\.5 {
+  margin-top: 0.125rem;
 }
 
 .line-clamp-3 {
@@ -1102,6 +1118,14 @@ video {
 
 .w-5 {
   width: 1.25rem;
+}
+
+.w-1 {
+  width: 0.25rem;
+}
+
+.w-\[1px\] {
+  width: 1px;
 }
 
 .min-w-0 {

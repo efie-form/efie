@@ -34,14 +34,19 @@ export default function ConditionGroup({ tree, mode, onChange, onRemove }: Condi
   };
 
   const addCondition = () => {
-    updateItems([
-      ...items,
-      {
-        left: { kind: 'fieldValue', field: '' },
-        operator: 'equal',
-      },
-    ]);
+    const indexBeforeGroup = items.findIndex((item) => isGroup(item));
+    const newItem: ConditionNodeUI = {
+      left: { kind: 'fieldValue', field: '' },
+    };
+    if (indexBeforeGroup >= 0) {
+      items.splice(indexBeforeGroup, 0, newItem);
+    } else {
+      items.push(newItem);
+    }
+
+    updateItems(items);
   };
+
   const addGroupAnd = () => {
     updateItems([
       ...items,
@@ -53,7 +58,6 @@ export default function ConditionGroup({ tree, mode, onChange, onRemove }: Condi
               kind: 'fieldValue',
               field: '',
             },
-            operator: 'equal',
           },
         ],
       },
@@ -94,7 +98,7 @@ export default function ConditionGroup({ tree, mode, onChange, onRemove }: Condi
           {items.map((n, idx) => (
             <div key={idx} className="flex justify-between gap-4">
               <div className="w-16">
-                {idx === 0 && <p className="text-end typography-body2">When</p>}
+                {idx === 0 && <p className="text-end typography-body2 text-neutral-700">When</p>}
                 {idx === 1 && (
                   <div className="flex">
                     <StyledSelect
