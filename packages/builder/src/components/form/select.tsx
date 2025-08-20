@@ -1,4 +1,4 @@
-import { useControllableState } from '@radix-ui/react-use-controllable-state';
+import { useControllableState } from '../../lib/hooks/use-controllable-state';
 import { cn } from '../../lib/utils';
 
 interface SelectProps<T extends string> {
@@ -18,8 +18,8 @@ function Select<T extends string>({
 }: SelectProps<T>) {
   const [inputValue, setInputValue] = useControllableState({
     onChange,
-    prop: value,
-    defaultProp: '' as T,
+    value,
+    defaultValue: '' as T,
   });
 
   return (

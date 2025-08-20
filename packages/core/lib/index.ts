@@ -1,9 +1,28 @@
 export type { BuilderInterface } from './builder';
 export { default as Builder } from './builder';
 export { default as Client } from './client';
-export { FieldType } from './constants/field-type';
+export {
+  FieldActionType,
+  FieldInputType,
+  FieldLayoutType,
+  FieldStaticType,
+  FieldType,
+} from './constants/field-type';
 export { SizeType, SizeUnit } from './constants/form-schema.constant';
+export {
+  AddressOperator,
+  BooleanOperator,
+  DateTimeOperator,
+  EmailOperator,
+  NumberOperator,
+  Operator,
+  OptionsOperator,
+  PhoneOperator,
+  SharedOperator,
+  StringOperator,
+} from './constants/operator.constant';
 export { PropSettingsTemplate } from './constants/prop-settings.constant';
+export { RuleAction } from './constants/rule-action.constant';
 export {
   CustomPropertyType,
   PropertyType,
@@ -27,19 +46,6 @@ export type {
   SizeRelative,
   WidthHeightSize,
 } from './types/common.type';
-export type {
-  FieldCondition,
-  FieldConditionGroup,
-  FieldConditionOperator,
-  FieldConditionValue,
-  FieldValue,
-  ValidationCase,
-  ValidationCondition,
-  ValidationGroup,
-  ValidationOperator,
-  ValidationRule,
-  ValidationSchema,
-} from './types/field-conditions.type';
 export type {
   BorderRadius,
   PropValue,
@@ -102,6 +108,7 @@ export type {
   FieldSystemPropColumnWidth,
   FieldSystemPropFieldName,
   FieldSystemPropHeadingContent,
+  FieldSystemPropHidden,
   FieldSystemPropImageSrc,
   FieldSystemPropLabel,
   FieldSystemPropName,
@@ -111,6 +118,22 @@ export type {
   FieldSystemPropRequired,
   PropertyDefinition,
 } from './types/property-definition';
+export type {
+  Action,
+  ConditionNode,
+  ConditionOptions,
+  ConditionTree,
+  CustomAction,
+  CustomActionDefinition,
+  ErrorItem,
+  HideFieldsAction,
+  JsonPrimitive,
+  JsonValue,
+  Operand,
+  Rule,
+  SetRequiredAction,
+  ShowFieldsAction,
+} from './types/root-rule.type';
 export type {
   FieldConfig,
   FieldConfigAddress,
@@ -149,6 +172,7 @@ export type {
   FieldSystemConfigButtonAction,
   FieldSystemConfigColumnWidth,
   FieldSystemConfigFieldName,
+  FieldSystemConfigHidden,
   FieldSystemConfigImageSrc,
   FieldSystemConfigLabel,
   FieldSystemConfigOptions,
@@ -157,6 +181,15 @@ export type {
   FieldSystemConfigRequired,
   FieldsConfigsMap,
 } from './types/settings-config';
+export type { ValueSpec } from './types/value-spec.type';
+
+import type { Action, Rule } from './types/root-rule.type';
+// Runtime no-op to keep rule-related types from being tree-shaken in d.ts bundling
+export function __keepRuleTypes<T extends { action?: Action; rule?: Rule }>(
+  _: T | undefined,
+): void {
+  // noop
+}
 export { getColorObject, hslaToHex, rgbaToHex } from './utils/colors';
 export { default as getDefaultSchema } from './utils/default-schema/get-default-schema';
 export {

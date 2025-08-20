@@ -9,14 +9,14 @@ interface FieldNameSettingsProps {
 
 export default function FieldNameSettings({ fieldId }: FieldNameSettingsProps) {
   const fieldNameEditable = useSettingsStore((state) => state.fieldNameEditable);
-  const fieldName = useSchemaStore((state) => state.getFieldName(fieldId));
+  const fieldName = useSchemaStore((state) => state.getFieldName(fieldId)) || '';
   const setFieldName = useSchemaStore((state) => state.setFieldName);
 
   if (!fieldNameEditable) return null;
 
   return (
     <SettingsFieldVertical label="Field Name" divider>
-      <Input value={fieldName || ''} onChange={(newValue) => setFieldName(fieldId, newValue)} />
+      <Input value={fieldName} onChange={(newValue) => setFieldName(fieldId, newValue)} />
     </SettingsFieldVertical>
   );
 }

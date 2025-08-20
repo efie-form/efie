@@ -1,4 +1,5 @@
 import { type PhoneFormField, PropertyType } from '@efie-form/core';
+import { PhoneInput } from '../../../../components/form';
 import { useSchemaStore } from '../../../../lib/state/schema.state';
 
 interface PhoneFieldProps {
@@ -26,11 +27,7 @@ export default function PhoneField({ field }: PhoneFieldProps) {
         className="typography-body2 mb-2 w-full cursor-text bg-white bg-opacity-0 focus:outline-none"
         type="text"
       />
-      <input
-        type="tel"
-        placeholder={placeholderProp?.value}
-        className="typography-body3 w-full rounded-md border border-neutral-300 px-4 py-2 outline-primary"
-      />
+      <PhoneInput placeholder={placeholderProp?.value} />
       {required && <p className="typography-body4 mt-1 text-danger-600">* Required</p>}
     </div>
   );

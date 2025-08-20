@@ -4,24 +4,24 @@ import type { SchemaStateFieldActions } from './field-actions';
 import type { SchemaStateFormDataActions } from './form-data-actions';
 import type { SchemaStateHistory } from './history-actions';
 import type { SchemaStatePropertyActions } from './property-actions';
+import type { SchemaStateRuleActions } from './rule-actions';
+import type { SchemaStateSchemaActions } from './schema-actions';
 
 export interface SchemaState
   extends SchemaStateHistory,
     SchemaStateFieldActions,
     SchemaStateAccessMethods,
     SchemaStateFormDataActions,
-    SchemaStatePropertyActions {
+    SchemaStateSchemaActions,
+    SchemaStatePropertyActions,
+    SchemaStateRuleActions {
   schema?: FormSchema;
-  setSchema: (schema: FormSchema) => void;
-  setFields: (fields: FormField[]) => void;
 
   fieldMap: Map<string, FormField>;
-  fieldKeyMap: Map<string, string>;
   fieldParentMap: Map<string, string>;
 }
 
 export interface FieldMaps {
-  fieldKeyMap: Map<string, string>;
   fieldMap: Map<string, FormField>;
   fieldParentMap: Map<string, string>;
 }

@@ -6,6 +6,7 @@ const settingsConfig: FieldsConfigsMap = {
       { type: PropertyType.LABEL, label: 'Label' },
       { type: PropertyType.PLACEHOLDER, label: 'Input Placeholder' },
       { type: PropertyType.REQUIRED, label: 'Required' },
+      { type: PropertyType.HIDDEN, label: 'Hide field' },
     ],
   },
 
@@ -14,6 +15,7 @@ const settingsConfig: FieldsConfigsMap = {
       { type: PropertyType.LABEL, label: 'Label' },
       { type: PropertyType.PLACEHOLDER, label: 'Input Placeholder' },
       { type: PropertyType.REQUIRED, label: 'Required' },
+      { type: PropertyType.HIDDEN, label: 'Hide field' },
     ],
   },
   [FieldType.NUMBER]: {
@@ -21,6 +23,7 @@ const settingsConfig: FieldsConfigsMap = {
       { type: PropertyType.LABEL, label: 'Label' },
       { type: PropertyType.PLACEHOLDER, label: 'Input Placeholder' },
       { type: PropertyType.REQUIRED, label: 'Required' },
+      { type: PropertyType.HIDDEN, label: 'Hide field' },
     ],
   },
   [FieldType.SINGLE_CHOICE]: {
@@ -28,6 +31,7 @@ const settingsConfig: FieldsConfigsMap = {
       { type: PropertyType.LABEL, label: 'Label' },
       { type: PropertyType.OPTIONS, label: 'Options' },
       { type: PropertyType.REQUIRED, label: 'Required' },
+      { type: PropertyType.HIDDEN, label: 'Hide field' },
     ],
   },
   [FieldType.MULTIPLE_CHOICES]: {
@@ -35,24 +39,28 @@ const settingsConfig: FieldsConfigsMap = {
       { type: PropertyType.LABEL, label: 'Label' },
       { type: PropertyType.OPTIONS, label: 'Options' },
       { type: PropertyType.REQUIRED, label: 'Required' },
+      { type: PropertyType.HIDDEN, label: 'Hide field' },
     ],
   },
   [FieldType.DATE]: {
     properties: [
       { type: PropertyType.LABEL, label: 'Label' },
       { type: PropertyType.REQUIRED, label: 'Required' },
+      { type: PropertyType.HIDDEN, label: 'Hide field' },
     ],
   },
   [FieldType.TIME]: {
     properties: [
       { type: PropertyType.LABEL, label: 'Label' },
       { type: PropertyType.REQUIRED, label: 'Required' },
+      { type: PropertyType.HIDDEN, label: 'Hide field' },
     ],
   },
   [FieldType.DATE_TIME]: {
     properties: [
       { type: PropertyType.LABEL, label: 'Label' },
       { type: PropertyType.REQUIRED, label: 'Required' },
+      { type: PropertyType.HIDDEN, label: 'Hide field' },
     ],
   },
   [FieldType.FILE]: {
@@ -60,6 +68,7 @@ const settingsConfig: FieldsConfigsMap = {
       { type: PropertyType.LABEL, label: 'Label' },
       { type: PropertyType.REQUIRED, label: 'Required' },
       { type: PropertyType.ACCEPT, label: 'Accepted File Types' },
+      { type: PropertyType.HIDDEN, label: 'Hide field' },
     ],
   },
   [FieldType.DIVIDER]: {
@@ -135,12 +144,14 @@ const settingsConfig: FieldsConfigsMap = {
       { type: PropertyType.LABEL, label: 'Label' },
       { type: PropertyType.REQUIRED, label: 'Required' },
       { type: PropertyType.ADDRESS_FIELD, label: 'Address Field' },
+      { type: PropertyType.HIDDEN, label: 'Hide field' },
     ],
   },
   [FieldType.CHECKBOX]: {
     properties: [
       { type: PropertyType.LABEL, label: 'Label' },
       { type: PropertyType.REQUIRED, label: 'Required' },
+      { type: PropertyType.HIDDEN, label: 'Hide field' },
     ],
   },
   [FieldType.EMAIL]: {
@@ -148,6 +159,7 @@ const settingsConfig: FieldsConfigsMap = {
       { type: PropertyType.LABEL, label: 'Label' },
       { type: PropertyType.PLACEHOLDER, label: 'Input Placeholder' },
       { type: PropertyType.REQUIRED, label: 'Required' },
+      { type: PropertyType.HIDDEN, label: 'Hide field' },
     ],
   },
   [FieldType.PHONE]: {
@@ -155,6 +167,7 @@ const settingsConfig: FieldsConfigsMap = {
       { type: PropertyType.LABEL, label: 'Label' },
       { type: PropertyType.PLACEHOLDER, label: 'Input Placeholder' },
       { type: PropertyType.REQUIRED, label: 'Required' },
+      { type: PropertyType.HIDDEN, label: 'Hide field' },
     ],
   },
   [FieldType.PASSWORD]: {
@@ -163,6 +176,7 @@ const settingsConfig: FieldsConfigsMap = {
       { type: PropertyType.PLACEHOLDER, label: 'Input Placeholder' },
       { type: PropertyType.REQUIRED, label: 'Required' },
       { type: PropertyType.PASSWORD_RULES, label: 'Password Rules' },
+      { type: PropertyType.HIDDEN, label: 'Hide field' },
     ],
   },
 };

@@ -2,10 +2,15 @@ import type { FormField, FormSchema } from '@efie-form/core';
 import type { StateSetters } from './types';
 import { getFieldInfoMap } from './utils';
 
-export function createSchemaActions({ set, getState }: StateSetters) {
+export interface SchemaStateSchemaActions {
+  setSchema: (schema: FormSchema) => void;
+  setFields: (fields: FormField[]) => void;
+}
+
+export function createSchemaActions({ set, getState }: StateSetters): SchemaStateSchemaActions {
   return {
     setSchema: (schema: FormSchema) => {
-      const { fieldKeyMap, fieldMap, fieldParentMap } = getFieldInfoMap(schema.form.fields);
+      const { fieldMap, fieldParentMap } = getFieldInfoMap(schema.form.fields);
 
       // Get current history state
       const { maxHistories, histories, currentHistoryIndex } = getState();
@@ -23,7 +28,6 @@ export function createSchemaActions({ set, getState }: StateSetters) {
       // Single atomic state update
       set({
         schema,
-        fieldKeyMap,
         fieldMap,
         fieldParentMap,
         histories: newHistories,
@@ -35,7 +39,7 @@ export function createSchemaActions({ set, getState }: StateSetters) {
     setFields: (fields: FormField[]) => {
       const { schema } = getState();
       if (!schema?.form.fields) return;
-      const { fieldKeyMap, fieldMap, fieldParentMap } = getFieldInfoMap(fields);
+      const { fieldMap, fieldParentMap } = getFieldInfoMap(fields);
       const newSchema = {
         ...schema,
         form: { fields, rules: schema?.form.rules },
@@ -57,7 +61,6 @@ export function createSchemaActions({ set, getState }: StateSetters) {
       // Single atomic state update
       set({
         schema: newSchema,
-        fieldKeyMap,
         fieldMap,
         fieldParentMap,
         histories: newHistories,

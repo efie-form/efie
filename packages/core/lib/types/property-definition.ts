@@ -34,7 +34,8 @@ export type FieldSystemProp =
   | FieldSystemPropButtonAction
   | FieldSystemPropName // renamed from PageName
   | FieldSystemPropAddressField
-  | FieldSystemPropPasswordRules; // renamed
+  | FieldSystemPropPasswordRules // renamed
+  | FieldSystemPropHidden; // visibility
 
 export interface FieldSystemPropLabel {
   type: typeof PropertyType.LABEL;
@@ -101,6 +102,11 @@ export interface FieldSystemPropPasswordRules {
   // renamed
   type: typeof PropertyType.PASSWORD_RULES; // renamed
   value: PropValuePasswordPolicy;
+}
+
+export interface FieldSystemPropHidden {
+  type: typeof PropertyType.HIDDEN;
+  value: PropValueBoolean; // true means hidden
 }
 
 /**

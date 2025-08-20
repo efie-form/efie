@@ -3,7 +3,7 @@ import Input from './input';
 
 interface NumberProps extends Omit<InputProps, 'value' | 'onChange'> {
   value?: number;
-  onChange: (value?: number) => void;
+  onChange?: (value?: number) => void;
 }
 
 function NumberInput({ inputProps, value, onChange, ...props }: NumberProps) {
@@ -12,6 +12,7 @@ function NumberInput({ inputProps, value, onChange, ...props }: NumberProps) {
       {...props}
       value={value?.toString()}
       onChange={(newValue) => {
+        if (!onChange) return; // uncontrolled
         if (newValue === undefined || newValue === '') {
           onChange();
         } else {

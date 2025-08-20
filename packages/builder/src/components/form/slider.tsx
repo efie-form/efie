@@ -1,9 +1,9 @@
 import * as SliderPrimitive from '@radix-ui/react-slider';
-import { useControllableState } from '@radix-ui/react-use-controllable-state';
+import { useControllableState } from '../../lib/hooks/use-controllable-state';
 
 interface SliderProps {
-  value: number;
-  onChange: (value: number) => void;
+  value?: number;
+  onChange?: (value: number) => void;
   min: number;
   max: number;
   step: number;
@@ -12,9 +12,9 @@ interface SliderProps {
 
 function Slider({ value, onChange, min, max, step, disabled }: SliderProps) {
   const [inputValue, setInputValue] = useControllableState({
-    prop: [value],
-    onChange: ([value]) => onChange(value),
-    defaultProp: [0],
+    value: value !== undefined ? [value] : undefined,
+    onChange: ([val]) => onChange?.(val),
+    defaultValue: [min],
   });
 
   return (

@@ -4,6 +4,7 @@ import { createFieldActions } from './field-actions';
 import { createFormDataActions } from './form-data-actions';
 import { createHistoryActions } from './history-actions';
 import { createPropertyActions } from './property-actions';
+import { createRuleActions } from './rule-actions';
 import { createSchemaActions } from './schema-actions';
 import type { SchemaState } from './types';
 import { getFieldInfoMap } from './utils';
@@ -16,6 +17,7 @@ export const useSchemaStore = create<SchemaState>((set, getState) => {
   const fieldActions = createFieldActions(stateSetters);
   const propertyActions = createPropertyActions(stateSetters);
   const historyActions = createHistoryActions(stateSetters);
+  const ruleActions = createRuleActions(stateSetters);
   const accessMethods = createAccessMethods(stateSetters);
   const formDataActions = createFormDataActions(stateSetters);
 
@@ -24,7 +26,6 @@ export const useSchemaStore = create<SchemaState>((set, getState) => {
     schema: undefined,
     fieldParentMap: fieldInfo.fieldParentMap,
     fieldMap: fieldInfo.fieldMap,
-    fieldKeyMap: fieldInfo.fieldKeyMap,
 
     // Combine all actions
     ...accessMethods,
@@ -32,6 +33,7 @@ export const useSchemaStore = create<SchemaState>((set, getState) => {
     ...fieldActions,
     ...propertyActions,
     ...historyActions,
+    ...ruleActions,
     ...formDataActions,
   };
 });

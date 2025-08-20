@@ -2,6 +2,7 @@ import { autoScrollForElements } from '@atlaskit/pragmatic-drag-and-drop-auto-sc
 import { useEffect, useRef } from 'react';
 import invariant from 'tiny-invariant';
 import { useSettingsStore } from '../../lib/state/settings.state';
+import FormConditions from './content-mode/form-conditions/form-conditions';
 import FormContent from './content-mode/form-content';
 import FormJson from './content-mode/form-json';
 import FormPreview from './content-mode/form-preview';
@@ -36,6 +37,7 @@ export default function MainSection() {
         {mode === 'edit' && <FormContent />}
         {mode === 'json' && <FormJson />}
         {mode === 'preview' && <FormPreview />}
+        {mode === 'conditions' && <FormConditions />}
       </div>
     </>
   );

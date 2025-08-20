@@ -1,6 +1,6 @@
-import { useControllableState } from '@radix-ui/react-use-controllable-state';
-import type { ReactNode } from 'react';
+import type { ReactNode, Ref } from 'react';
 import type { InputPropsWithoutRef } from 'react-html-props';
+import { useControllableState } from '../../lib/hooks/use-controllable-state';
 import { cn } from '../../lib/utils';
 
 export interface InputProps {
@@ -14,6 +14,7 @@ export interface InputProps {
   suffixType?: 'icon' | 'text';
   disabled?: boolean;
   inputProps?: InputPropsWithoutRef;
+  inputRef?: Ref<HTMLInputElement>;
 }
 
 function Input({
@@ -27,11 +28,12 @@ function Input({
   suffixType,
   disabled,
   inputProps,
+  inputRef,
 }: InputProps) {
   const [inputValue, setInputValue] = useControllableState({
-    prop: value,
+    value,
     onChange,
-    defaultProp: '',
+    defaultValue: '',
   });
 
   return (
@@ -47,6 +49,7 @@ function Input({
       <RenderPrefixSuffix type={prefixType}>{prefix}</RenderPrefixSuffix>
       <input
         {...inputProps}
+        ref={inputRef}
         disabled={disabled}
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}

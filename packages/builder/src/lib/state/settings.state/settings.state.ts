@@ -10,7 +10,7 @@ interface SettingsState {
   selectedFieldId?: string;
   setSelectedFieldId: (id: string) => void;
   clearSelectedFieldId: () => void;
-  mode: 'edit' | 'preview' | 'json';
+  mode: 'edit' | 'preview' | 'json' | 'conditions';
   setMode: (mode: SettingsState['mode']) => void;
   previewDevice: 'desktop' | 'mobile';
   setPreviewDevice: (previewDevice: SettingsState['previewDevice']) => void;
@@ -27,6 +27,9 @@ interface SettingsState {
   setIsInputReusable: (inputReusable: SettingsState['isInputReusable']) => void;
   config: FieldsConfigsMap;
   setConfig: (config: FieldsConfigsMap) => void;
+  selectedConditionId?: string;
+  setSelectedConditionId: (id: string) => void;
+  clearSelectedConditionId: () => void;
 }
 
 export const useSettingsStore = create<SettingsState>((set) => ({
@@ -81,5 +84,12 @@ export const useSettingsStore = create<SettingsState>((set) => ({
   config: settingsConfig,
   setConfig: (config) => {
     set({ config });
+  },
+  selectedConditionId: undefined,
+  setSelectedConditionId: (id) => {
+    set({ selectedConditionId: id });
+  },
+  clearSelectedConditionId: () => {
+    set({ selectedConditionId: undefined });
   },
 }));

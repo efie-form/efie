@@ -1,5 +1,6 @@
 import type { FormField } from '@efie-form/core';
 import type { StateSetters } from './types';
+import { getAllFields } from './utils';
 
 export interface SchemaStateAccessMethods {
   // Core field access methods
@@ -8,6 +9,7 @@ export interface SchemaStateAccessMethods {
   getFieldParentId: (fieldId?: string) => string | undefined;
 
   listChildrenId: (fieldId: string) => string[];
+  getAllFields: () => FormField[];
 }
 
 export function createAccessMethods({ getState }: StateSetters): SchemaStateAccessMethods {
@@ -28,6 +30,11 @@ export function createAccessMethods({ getState }: StateSetters): SchemaStateAcce
       if (!field || !('children' in field)) return [];
 
       return getChildrenId(field);
+    },
+
+    getAllFields: () => {
+      const { schema } = getState();
+      return getAllFields(schema?.form.fields || []);
     },
   };
 }

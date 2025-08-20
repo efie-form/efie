@@ -3,53 +3,33 @@ import { FaCode, FaEye } from 'react-icons/fa6';
 import { useSettingsStore } from '../../../lib/state/settings.state';
 import { cn } from '../../../lib/utils';
 
+const MODES = [
+  { mode: 'edit', Icon: FaRegEdit },
+  { mode: 'preview', Icon: FaEye },
+  { mode: 'json', Icon: FaCode },
+] as const;
+
 export default function ModeSwitcher() {
   const { setMode, mode } = useSettingsStore();
-  const isEdit = mode === 'edit';
-  const isPreview = mode === 'preview';
-  const isCode = mode === 'json';
 
   return (
     <div className="flex overflow-hidden rounded-lg bg-neutral-50">
-      <button
-        type="button"
-        className="rounded-lg bg-neutral-50 p-2.5 hover:bg-neutral-100/50"
-        onClick={() => setMode('edit')}
-        aria-label="Switch to edit mode"
-      >
-        <FaRegEdit
-          className={cn('transition-all', {
-            'text-neutral-800': isEdit,
-            'text-neutral-300': !isEdit,
-          })}
-        />
-      </button>
-      <button
-        type="button"
-        className="rounded-lg bg-neutral-50 p-2.5 hover:bg-neutral-100/50"
-        onClick={() => setMode('preview')}
-        aria-label="Switch to preview mode"
-      >
-        <FaEye
-          className={cn('transition-all', {
-            'text-neutral-800': isPreview,
-            'text-neutral-300': !isPreview,
-          })}
-        />
-      </button>
-      <button
-        type="button"
-        className="rounded-lg bg-neutral-50 p-2.5 hover:bg-neutral-100/50"
-        onClick={() => setMode('json')}
-        aria-label="Switch to JSON mode"
-      >
-        <FaCode
-          className={cn('transition-all', {
-            'text-neutral-800': isCode,
-            'text-neutral-300': !isCode,
-          })}
-        />
-      </button>
+      {MODES.map((m) => (
+        <button
+          key={m.mode}
+          type="button"
+          className="rounded-lg bg-neutral-50 p-2.5 hover:bg-neutral-100/50"
+          onClick={() => setMode(m.mode)}
+          aria-label={`Switch to ${m.mode} mode`}
+        >
+          <m.Icon
+            className={cn(
+              'transition-all',
+              m.mode === mode ? 'text-neutral-800' : 'text-neutral-300',
+            )}
+          />
+        </button>
+      ))}
     </div>
   );
 }

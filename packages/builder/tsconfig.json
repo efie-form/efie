@@ -13,5 +13,5 @@
       "@efie-form/core": ["../core/lib"]
     }
   },
-  "include": ["src/**/*", "../core/lib/types/settings-config.ts"]
+  "include": ["src/**/*"]
 }
