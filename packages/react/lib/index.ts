@@ -32,7 +32,7 @@ export type {
 export { FormProvider } from './components/form-provider';
 export { FormRenderer } from './components/form-renderer';
 export { default as ReactForm } from './form';
-export type { FormBuilderRef } from './form-builder/form-builder';
-export { default as FormBuilder } from './form-builder/form-builder';
+export type { FormBuilderProps, FormBuilderRef } from './form-builder/form-builder';
+export { FormBuilder } from './form-builder/form-builder';
 export { useFieldRuleState, useRuleEngine } from './hooks/use-rule-engine';
 export { FormRuleProvider, useFormRuleContext } from './providers/form-rule-provider';

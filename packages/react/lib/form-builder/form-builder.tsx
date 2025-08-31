@@ -3,7 +3,7 @@ import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 're
 
 const DIV_ID = 'efie-form-builder';
 
-interface FormBuilderProps {
+export interface FormBuilderProps {
   height: number;
   formInputs?: CustomInputDef[];
   formKeyNonEditable?: boolean;
@@ -131,4 +131,4 @@ const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
 
 FormBuilder.displayName = 'FormBuilder';
 
-export default FormBuilder;
+export { FormBuilder };
