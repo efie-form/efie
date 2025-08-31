@@ -9,6 +9,7 @@ export interface FormBuilderProps {
   formKeyNonEditable?: boolean;
   inputNonReusable?: boolean;
   maxHistories?: number;
+  a: string;
 }
 
 export interface FormBuilderRef {
@@ -35,7 +36,7 @@ const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
       getSchema: () => schema,
       setSchema: (newSchema: FormSchema) => {
         if (!clientRef.current) return;
-        clientRef.current.setSchema(newSchema);
+        // clientRef.current.setSchema(newSchema);
         setSchema(newSchema);
       },
     }));
@@ -54,7 +55,7 @@ const FormBuilder = forwardRef<FormBuilderRef, FormBuilderProps>(
         client.cleanup();
         clientRef.current = null;
       };
-    }, []);
+    }, [schema]);
 
     // Update height when it changes
     useEffect(() => {

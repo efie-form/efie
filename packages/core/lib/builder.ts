@@ -1,6 +1,5 @@
 import type { CustomInputDef } from './types/builder-custom-input.type';
 import type { FormSchema } from './types/form-schema.type';
-import getDefaultSchema from './utils/default-schema/get-default-schema';
 
 interface IframeProps {
   onReady?: () => void;
@@ -49,6 +48,7 @@ export default class Builder {
       switch (data.type) {
         case 'SET_SCHEMA':
           if (data.payload && this.builderInterface) {
+            console.log('set schema', data.payload);
             this.builderInterface.resetSchema(data.payload as FormSchema);
           }
           break;
@@ -82,7 +82,7 @@ export default class Builder {
   }
 
   private loadDefaultSchema() {
-    this.builderInterface?.resetSchema(getDefaultSchema('v1'));
+    // this.builderInterface?.resetSchema(getDefaultSchema('v1'));
   }
 
   private notifyReady() {
