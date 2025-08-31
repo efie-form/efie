@@ -29,7 +29,7 @@ function FieldPropertiesTab() {
     }
   };
 
-  if (!field) return <></>;
+  if (!field) return null;
 
   return (
     <div className="relative flex h-full flex-col">

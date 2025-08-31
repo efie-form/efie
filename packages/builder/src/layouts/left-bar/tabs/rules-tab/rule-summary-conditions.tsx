@@ -223,5 +223,5 @@ export function buildSegmentsInline(
 }
 
 function truncateInline(s: string, max = 24) {
-  return s.length > max ? s.slice(0, max - 1) + '…' : s;
+  return s.length > max ? `${s.slice(0, max - 1)}…` : s;
 }

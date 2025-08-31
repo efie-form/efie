@@ -13,7 +13,7 @@ interface DateProviderProps {
 }
 
 function DateProvider({ field, Component, value = '', onChange = () => {} }: DateProviderProps) {
-  if (!Component) return <></>;
+  if (!Component) return null;
 
   const label = field.props.find((prop) => prop.type === PropertyType.LABEL);
 

@@ -1,3 +1,4 @@
+import type { ChainedCommands } from '@tiptap/core';
 import { Extension } from '@tiptap/core';
 
 export interface FontSizeOptions {
@@ -5,17 +6,15 @@ export interface FontSizeOptions {
   sizes: string[];
 }
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 const setFontSizeCommand =
   (fontSize: string) =>
-  ({ chain }: any) => {
+  ({ chain }: { chain: () => ChainedCommands }) => {
     return chain().setMark('textStyle', { fontSize }).run();
   };
 
-/* eslint-disable unicorn/consistent-function-scoping */
 const unsetFontSizeCommand =
   () =>
-  ({ chain }: any) => {
+  ({ chain }: { chain: () => ChainedCommands }) => {
     return chain().setMark('textStyle', { fontSize: undefined }).removeEmptyTextStyle().run();
   };
 

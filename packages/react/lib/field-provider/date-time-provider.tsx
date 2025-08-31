@@ -18,7 +18,7 @@ function DateTimeProvider({
   value = '',
   onChange = () => {},
 }: DateTimeProviderProps) {
-  if (!Component) return <></>;
+  if (!Component) return null;
 
   const label = field.props.find((prop) => prop.type === PropertyType.LABEL);
 

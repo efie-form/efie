@@ -9,7 +9,7 @@ interface ImageProviderProps {
 }
 
 function ImageProvider({ field, Component }: ImageProviderProps) {
-  if (!Component) return <></>;
+  if (!Component) return null;
 
   const src = field.props.find((prop) => prop.type === PropertyType.IMAGE_SRC);
 

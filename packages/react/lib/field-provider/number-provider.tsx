@@ -16,7 +16,7 @@ function NumberProvider({
   value = '',
   onChange = () => {},
 }: NumberProviderProps) {
-  if (!Component) return <></>;
+  if (!Component) return null;
 
   const label = field.props.find((prop) => prop.type === PropertyType.LABEL);
   const placeholder = field.props.find((prop) => prop.type === PropertyType.PLACEHOLDER);

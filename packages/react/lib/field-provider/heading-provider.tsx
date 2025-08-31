@@ -10,7 +10,7 @@ interface HeadingProviderProps {
 }
 
 function HeadingProvider({ field, Component }: HeadingProviderProps) {
-  if (!Component) return <></>;
+  if (!Component) return null;
 
   const content = field.props.find((prop) => prop.type === PropertyType.HEADING_CONTENT);
 

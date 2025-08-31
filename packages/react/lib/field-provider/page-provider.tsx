@@ -12,19 +12,24 @@ interface PageProviderProps extends Partial<FieldPropsMap> {
 
 function PageProvider({ field, Component, ...props }: PageProviderProps) {
   const { page } = useFormContext();
-  if (!Component || page !== field.id) return <></>;
+  if (!Component || page !== field.id) return null;
 
-  return createElement(Component, {
-    id: field.id,
-    field: field,
-    children: (
-      <>
-        {field.children.map((field) => (
-          <RenderField key={field.id} field={field} {...props} />
-        ))}
-      </>
-    ),
-  });
+  const children = (
+    <>
+      {field.children.map((field) => (
+        <RenderField key={field.id} field={field} {...props} />
+      ))}
+    </>
+  );
+
+  return createElement(
+    Component,
+    {
+      id: field.id,
+      field: field,
+    },
+    children,
+  );
 }
 
 export default PageProvider;

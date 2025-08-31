@@ -11,7 +11,7 @@ interface FileProviderProps {
 }
 
 function FileProvider({ field, Component, value, onChange = () => {} }: FileProviderProps) {
-  if (!Component) return <></>;
+  if (!Component) return null;
 
   const label = field.props.find((prop) => prop.type === PropertyType.LABEL);
   const accept = field.props.find((prop) => prop.type === PropertyType.ACCEPT);
