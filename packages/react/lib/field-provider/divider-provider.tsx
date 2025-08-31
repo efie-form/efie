@@ -9,7 +9,7 @@ interface DividerProviderProps {
 }
 
 function DividerProvider({ field, Component }: DividerProviderProps) {
-  if (!Component) return <></>;
+  if (!Component) return null;
 
   return createElement(Component, {
     id: field.id,

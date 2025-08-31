@@ -18,7 +18,7 @@ const buttonType = {
 function ButtonProvider({ field, Component }: ButtonProviderProps) {
   const { setPage } = useFormContext();
 
-  if (!Component) return <></>;
+  if (!Component) return null;
 
   const label = field.props.find((prop) => prop.type === PropertyType.LABEL);
   const buttonAction = field.props.find((prop) => prop.type === PropertyType.BUTTON_ACTION);

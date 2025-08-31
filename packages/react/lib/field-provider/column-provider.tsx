@@ -10,27 +10,32 @@ interface ColumnProviderProps extends Partial<FieldPropsMap> {
 }
 
 function ColumnProvider({ field, Component, ...props }: ColumnProviderProps) {
-  if (!Component) return <></>;
+  if (!Component) return null;
 
   const width = field.props.find((prop) => prop.type === PropertyType.COLUMN_WIDTH);
 
   // Extract width value safely
   const columnWidth = sizeToStyle(width?.value);
 
-  return createElement(Component, {
-    id: field.id,
-    field,
-    width: columnWidth || '100%',
-    children: (
-      <>
-        {field.children.map((field) => (
-          <div key={field.id}>
-            <RenderField field={field} {...props} />
-          </div>
-        ))}
-      </>
-    ),
-  });
+  const children = (
+    <>
+      {field.children.map((field) => (
+        <div key={field.id}>
+          <RenderField field={field} {...props} />
+        </div>
+      ))}
+    </>
+  );
+
+  return createElement(
+    Component,
+    {
+      id: field.id,
+      field,
+      width: columnWidth || '100%',
+    },
+    children,
+  );
 }
 
 export default ColumnProvider;

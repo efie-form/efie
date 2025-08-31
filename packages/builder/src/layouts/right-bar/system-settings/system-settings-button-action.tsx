@@ -5,7 +5,7 @@ import {
   PropertyType,
   type PropValueButtonAction,
 } from '@efie-form/core';
-import { useRef } from 'react';
+import { useId, useRef } from 'react';
 import { Input, Select, Switch } from '../../../components/form';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 

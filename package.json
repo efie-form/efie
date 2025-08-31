@@ -45,7 +45,7 @@
   },
   "homepage": "https://github.com/pwkang/efie#readme",
   "devDependencies": {
-    "@biomejs/biome": "^2.1.2",
+    "@biomejs/biome": "^2.2.2",
     "@changesets/cli": "^2.29.4",
     "@nx/jest": "20.7.1",
     "@nx/vite": "20.7.1",
