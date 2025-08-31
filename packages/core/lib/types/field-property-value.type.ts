@@ -1,4 +1,6 @@
-import type { JSONContent } from '@tiptap/core';
+// Type-only import that may not be available in all environments
+type JSONContent = Record<string, unknown>; // Fallback type when @tiptap/core is not available
+
 import type { BoxShadow, Color, Size } from './common.type';
 
 export type PropValueString = string;

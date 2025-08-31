@@ -4,11 +4,13 @@ import type { CSSProperties, ElementType, ReactNode } from 'react';
 interface FormFieldProps<T = unknown> {
   value: T;
   onChange: (value: T) => void;
+  required?: boolean;
 }
 
 interface BaseFieldProps {
   id: string;
   field: FormField;
+  hidden?: boolean;
 }
 
 export interface ShortTextFieldProps extends BaseFieldProps, FormFieldProps<string> {
