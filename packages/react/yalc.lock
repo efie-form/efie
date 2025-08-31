@@ -1,0 +1,10 @@
+{
+  "version": "v1",
+  "packages": {
+    "@efie-form/core": {
+      "signature": "9b9deff84323f8b347323039987be029",
+      "file": true,
+      "replaced": "workspace:*"
+    }
+  }
+}

@@ -26,7 +26,8 @@
   "files": [
     "LICENSE",
     "dist/",
-    "README.md"
+    "README.md",
+    ".yalc"
   ],
   "exports": {
     ".": {
@@ -49,7 +50,7 @@
     "test:types": "tsd"
   },
   "dependencies": {
-    "@efie-form/core": "workspace:*",
+    "@efie-form/core": "file:.yalc/@efie-form/core",
     "@tiptap/core": "^3.3.0"
   },
   "devDependencies": {
@@ -75,5 +76,8 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "eslintIgnore": [
+    ".yalc"
+  ]
 }
