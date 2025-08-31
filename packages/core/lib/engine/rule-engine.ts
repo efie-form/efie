@@ -91,7 +91,9 @@ export class RuleEngine {
       for (const fieldId of changedFields) {
         const dependentRules = this.fieldDependencies.get(fieldId);
         if (dependentRules) {
-          dependentRules.forEach((ruleId) => rulesToEvaluate.add(ruleId));
+          dependentRules.forEach((ruleId) => {
+            rulesToEvaluate.add(ruleId);
+          });
         }
       }
     }
