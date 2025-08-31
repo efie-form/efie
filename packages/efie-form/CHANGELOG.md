@@ -1,5 +1,14 @@
 # efie-form
 
+## 0.2.2
+
+### Patch Changes
+
+- Updated dependencies [2cef497]
+  - @efie-form/builder@0.3.0
+  - @efie-form/core@0.3.0
+  - @efie-form/react@0.3.0
+
 ## 0.2.1
 
 ### Patch Changes

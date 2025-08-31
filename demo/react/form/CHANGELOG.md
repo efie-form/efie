@@ -1,5 +1,12 @@
 # demo-react-form
 
+## 0.0.3
+
+### Patch Changes
+
+- Updated dependencies [2cef497]
+  - @efie-form/react@0.3.0
+
 ## 0.0.2
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # @efie-form/core
 
+## 0.3.0
+
+### Minor Changes
+
+- 2cef497: - Enhance react library
+  - Added rules & conditions UI
+
 ## 0.2.1
 
 ### Patch Changes
