@@ -2,7 +2,16 @@ import type { ConditionNode, Operand } from '@efie-form/core';
 import { useMemo } from 'react';
 import { AiFillCaretRight } from 'react-icons/ai';
 import { cn } from '../../../../lib/utils';
-import type { ConditionLine } from './rule-helpers';
+
+export interface ConditionLine {
+  kind: 'group' | 'condition';
+  text: string;
+  depth?: number;
+  segments?: Array<{
+    text: string;
+    kind: 'field' | 'operator' | 'value' | 'plain';
+  }>;
+}
 
 export interface ConditionsListProps {
   lines: ConditionLine[];
@@ -60,7 +69,7 @@ function ConditionLineRow({ line, groupOrder, hasAnyGroup }: ConditionLineRowPro
   return (
     <div
       className={cn('typography-body3 leading-snug', 'text-neutral-700')}
-      style={{ paddingLeft: `${line.depth * 12}px` }}
+      style={{ paddingLeft: `${(line.depth || 0) * 12}px` }}
     >
       {prefix}
       {isGrp ? (
@@ -144,6 +153,11 @@ export function buildSegmentsInline(
 ) {
   const segs: NonNullable<ConditionLine['segments']> = [];
   const left = node.left;
+
+  if (!left) {
+    return segs;
+  }
+
   if (left.kind === 'fieldValue') {
     const label = ctx.fieldLabelMap.get(left.field) || left.field || 'Field';
     segs.push({ text: label, kind: 'field' });
