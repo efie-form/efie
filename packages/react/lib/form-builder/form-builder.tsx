@@ -9,7 +9,6 @@ export interface FormBuilderProps {
   formKeyNonEditable?: boolean;
   inputNonReusable?: boolean;
   maxHistories?: number;
-  a: string;
 }
 
 export interface FormBuilderRef {

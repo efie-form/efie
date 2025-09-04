@@ -48,7 +48,6 @@ export default class Builder {
       switch (data.type) {
         case 'SET_SCHEMA':
           if (data.payload && this.builderInterface) {
-            console.log('set schema', data.payload);
             this.builderInterface.resetSchema(data.payload as FormSchema);
           }
           break;

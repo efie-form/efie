@@ -53,5 +53,8 @@
   "publishConfig": {
     "access": "public"
   },
-  "yalcSig": "9b9deff84323f8b347323039987be029"
+  "eslintIgnore": [
+    ".yalc"
+  ],
+  "yalcSig": "d8b45e8e3f58deec8cb4eec896c71e28"
 }

@@ -34,145 +34,141 @@ function FieldRenderer({ field, components, fieldValues, onFieldChange }: FieldR
   const value = fieldValues[field.id];
   const onChange = (newValue: JsonValue) => onFieldChange(field.id, newValue);
 
-  const renderField = () => {
-    switch (field.type) {
-      case FieldType.SHORT_TEXT:
-        return (
-          <FieldProviders.ShortTextProvider
-            field={field}
-            Component={components.shortText}
-            value={String(value || '')}
-            onChange={(v: string) => onChange(v)}
-          />
-        );
+  switch (field.type) {
+    case FieldType.SHORT_TEXT:
+      return (
+        <FieldProviders.ShortTextProvider
+          field={field}
+          Component={components.shortText}
+          value={String(value || '')}
+          onChange={(v: string) => onChange(v)}
+        />
+      );
 
-      case FieldType.LONG_TEXT:
-        return (
-          <FieldProviders.LongTextProvider
-            field={field}
-            Component={components.longText}
-            value={String(value || '')}
-            onChange={(v: string) => onChange(v)}
-          />
-        );
+    case FieldType.LONG_TEXT:
+      return (
+        <FieldProviders.LongTextProvider
+          field={field}
+          Component={components.longText}
+          value={String(value || '')}
+          onChange={(v: string) => onChange(v)}
+        />
+      );
 
-      case FieldType.NUMBER:
-        return (
-          <FieldProviders.NumberProvider
-            field={field}
-            Component={components.number}
-            value={value as number | string}
-            onChange={(v: number | string) => onChange(v)}
-          />
-        );
+    case FieldType.NUMBER:
+      return (
+        <FieldProviders.NumberProvider
+          field={field}
+          Component={components.number}
+          value={value as number | string}
+          onChange={(v: number | string) => onChange(v)}
+        />
+      );
 
-      case FieldType.SINGLE_CHOICE:
-        return (
-          <FieldProviders.SingleChoiceProvider
-            field={field}
-            Component={components.singleChoice}
-            value={String(value || '')}
-            onChange={(v: string) => onChange(v)}
-          />
-        );
+    case FieldType.SINGLE_CHOICE:
+      return (
+        <FieldProviders.SingleChoiceProvider
+          field={field}
+          Component={components.singleChoice}
+          value={String(value || '')}
+          onChange={(v: string) => onChange(v)}
+        />
+      );
 
-      case FieldType.MULTIPLE_CHOICES:
-        return (
-          <FieldProviders.MultipleChoicesProvider
-            field={field}
-            Component={components.multipleChoices}
-            value={Array.isArray(value) ? value.map(String) : []}
-            onChange={(v: string[]) => onChange(v)}
-          />
-        );
+    case FieldType.MULTIPLE_CHOICES:
+      return (
+        <FieldProviders.MultipleChoicesProvider
+          field={field}
+          Component={components.multipleChoices}
+          value={Array.isArray(value) ? value.map(String) : []}
+          onChange={(v: string[]) => onChange(v)}
+        />
+      );
 
-      case FieldType.DATE:
-        return (
-          <FieldProviders.DateProvider
-            field={field}
-            Component={components.date}
-            value={value as Date | string}
-            onChange={(v: Date | string) => onChange(v instanceof Date ? v.toISOString() : v)}
-          />
-        );
+    case FieldType.DATE:
+      return (
+        <FieldProviders.DateProvider
+          field={field}
+          Component={components.date}
+          value={value as Date | string}
+          onChange={(v: Date | string) => onChange(v instanceof Date ? v.toISOString() : v)}
+        />
+      );
 
-      case FieldType.TIME:
-        return (
-          <FieldProviders.TimeProvider
-            field={field}
-            Component={components.time}
-            value={String(value || '')}
-            onChange={(v: string) => onChange(v)}
-          />
-        );
+    case FieldType.TIME:
+      return (
+        <FieldProviders.TimeProvider
+          field={field}
+          Component={components.time}
+          value={String(value || '')}
+          onChange={(v: string) => onChange(v)}
+        />
+      );
 
-      case FieldType.DATE_TIME:
-        return (
-          <FieldProviders.DateTimeProvider
-            field={field}
-            Component={components.dateTime}
-            value={value as Date | string}
-            onChange={(v: Date | string) => onChange(v instanceof Date ? v.toISOString() : v)}
-          />
-        );
+    case FieldType.DATE_TIME:
+      return (
+        <FieldProviders.DateTimeProvider
+          field={field}
+          Component={components.dateTime}
+          value={value as Date | string}
+          onChange={(v: Date | string) => onChange(v instanceof Date ? v.toISOString() : v)}
+        />
+      );
 
-      case FieldType.FILE:
-        return (
-          <FieldProviders.FileProvider
-            field={field}
-            Component={components.file}
-            value={value as unknown as File | File[] | undefined}
-            onChange={(v?: File | File[]) => {
-              // File objects can't be stored as JsonValue, so we store metadata instead
-              if (v instanceof File) {
-                onChange({ name: v.name, size: v.size, type: v.type });
-              } else if (Array.isArray(v)) {
-                onChange(v.map((file) => ({ name: file.name, size: file.size, type: file.type })));
-              } else {
-                onChange(null);
-              }
-            }}
-          />
-        );
+    case FieldType.FILE:
+      return (
+        <FieldProviders.FileProvider
+          field={field}
+          Component={components.file}
+          value={value as unknown as File | File[] | undefined}
+          onChange={(v?: File | File[]) => {
+            // File objects can't be stored as JsonValue, so we store metadata instead
+            if (v instanceof File) {
+              onChange({ name: v.name, size: v.size, type: v.type });
+            } else if (Array.isArray(v)) {
+              onChange(v.map((file) => ({ name: file.name, size: file.size, type: file.type })));
+            } else {
+              onChange(null);
+            }
+          }}
+        />
+      );
 
-      case FieldType.BUTTON:
-        return <FieldProviders.ButtonProvider field={field} Component={components.button} />;
+    case FieldType.BUTTON:
+      return <FieldProviders.ButtonProvider field={field} Component={components.button} />;
 
-      case FieldType.DIVIDER:
-        return <FieldProviders.DividerProvider field={field} Component={components.divider} />;
+    case FieldType.DIVIDER:
+      return <FieldProviders.DividerProvider field={field} Component={components.divider} />;
 
-      case FieldType.HEADING:
-        return <FieldProviders.HeadingProvider field={field} Component={components.heading} />;
+    case FieldType.HEADING:
+      return <FieldProviders.HeadingProvider field={field} Component={components.heading} />;
 
-      case FieldType.IMAGE:
-        return <FieldProviders.ImageProvider field={field} Component={components.image} />;
+    case FieldType.IMAGE:
+      return <FieldProviders.ImageProvider field={field} Component={components.image} />;
 
-      case FieldType.ROW:
-      case FieldType.COLUMN:
-      case FieldType.BLOCK:
-      case FieldType.PAGE:
-        // For container fields, render children recursively
-        return (
-          <div key={field.id} data-field-type={field.type}>
-            {field.children?.map((child) => (
-              <FieldRenderer
-                key={child.id}
-                field={child}
-                components={components}
-                fieldValues={fieldValues}
-                onFieldChange={onFieldChange}
-              />
-            ))}
-          </div>
-        );
+    case FieldType.ROW:
+    case FieldType.COLUMN:
+    case FieldType.BLOCK:
+    case FieldType.PAGE:
+      // For container fields, render children recursively
+      return (
+        <div key={field.id} data-field-type={field.type}>
+          {field.children?.map((child) => (
+            <FieldRenderer
+              key={child.id}
+              field={child}
+              components={components}
+              fieldValues={fieldValues}
+              onFieldChange={onFieldChange}
+            />
+          ))}
+        </div>
+      );
 
-      default:
-        console.warn(`Unknown field type: ${field.type}`);
-        return null;
-    }
-  };
-
-  return renderField();
+    default:
+      console.warn(`Unknown field type: ${field.type}`);
+      return null;
+  }
 }
 
 /**
