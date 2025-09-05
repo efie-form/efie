@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { useContext } from 'react';
 import { describe, expect, it, vi } from 'vitest';
 import { FormContext } from '../../form-context';
-import { FormProvider } from '../form-provider';
+import { FormContextProvider } from '../form-provider';
 
 // Mock the React version utility
 vi.mock('../../utils/react-version', () => ({
@@ -28,9 +28,9 @@ describe('FormProvider', () => {
     };
 
     render(
-      <FormProvider {...testProps}>
+      <FormContextProvider {...testProps}>
         <TestConsumer />
-      </FormProvider>,
+      </FormContextProvider>,
     );
 
     const contextValue = screen.getByTestId('context-value');
@@ -57,9 +57,9 @@ describe('FormProvider', () => {
     }
 
     render(
-      <FormProvider {...testProps}>
+      <FormContextProvider {...testProps}>
         <TestWithCallback />
-      </FormProvider>,
+      </FormContextProvider>,
     );
 
     const button = screen.getByTestId('set-page-button');

@@ -50,7 +50,7 @@ export interface DateTimeFieldProps extends BaseFieldProps, FormFieldProps<Date 
   fieldLabel?: string;
 }
 
-export interface FileFieldProps extends BaseFieldProps, FormFieldProps<File | File[]> {
+export interface FileFieldProps extends BaseFieldProps, FormFieldProps<File | File[] | undefined> {
   fieldLabel?: string;
   accept?: string;
   multiple?: boolean;

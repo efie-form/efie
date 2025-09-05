@@ -1,6 +1,6 @@
 import type { CustomInputDef, FieldsConfigsMap } from '@efie-form/core';
 import { create } from 'zustand';
-import type { RightBarTab } from '../../constant';
+import { RIGHT_BAR_TABS, type RightBarTab } from '../../constant';
 import settingsConfig from './settings-config';
 
 interface SettingsState {
@@ -17,8 +17,8 @@ interface SettingsState {
   page?: string;
   setPage: (page: SettingsState['page']) => void;
   clearPage: () => void;
-  activeTab: RightBarTab;
-  setActiveTab: (tab: RightBarTab) => void;
+  activeTab: RightBarTab | null;
+  setActiveTab: (tab: RightBarTab | null) => void;
   height?: number;
   setHeight: (height: SettingsState['height']) => void;
   fieldNameEditable: boolean;
@@ -65,7 +65,7 @@ export const useSettingsStore = create<SettingsState>((set) => ({
   clearPage: () => {
     set({ page: undefined });
   },
-  activeTab: 'form',
+  activeTab: RIGHT_BAR_TABS.PAGE,
   setActiveTab: (tab) => {
     set({ activeTab: tab });
   },

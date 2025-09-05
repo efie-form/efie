@@ -39,7 +39,13 @@ function RightBar() {
 
   return (
     <div className="flex h-full w-full">
-      <div className="flex-1 overflow-hidden">{TabContent && <TabContent />}</div>
+      <div className="flex-1 overflow-hidden">
+        {TabContent && activeTab && (
+          <div className="w-[16rem]">
+            <TabContent />
+          </div>
+        )}
+      </div>
       <div className="h-full bg-neutral-100/40">
         {tabs
           .filter((tab) => !tab.hidden)
@@ -53,7 +59,7 @@ function RightBar() {
                     '!bg-neutral-200/80': tab.id === activeTab,
                   },
                 )}
-                onClick={() => setActiveTab(tab.id)}
+                onClick={() => setActiveTab(tab.id === activeTab ? null : tab.id)}
               >
                 <tab.Icon size={16} className="text-neutral-800" />
               </button>

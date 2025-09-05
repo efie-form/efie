@@ -17,7 +17,9 @@ A React component library for building dynamic forms with drag-and-drop function
 - 🧰 **Rich Field Types**: Support for text, number, date, file, and more
 - 🎯 **TypeScript**: Full TypeScript support with comprehensive type definitions
 - 🔄 **Form State Management**: Compatible with popular form libraries like react-hook-form
-- 🏗️ **Layout Components**: Support for complex layouts with blocks, rows, and columns
+- �️ **Value Provider**: Centralized form state management with automatic value synchronization
+- 🧠 **Rule Engine**: Dynamic form behavior with conditional logic (preview)
+- �🏗️ **Layout Components**: Support for complex layouts with blocks, rows, and columns
 
 ## Installation
 
@@ -100,6 +102,54 @@ function MyFormRenderer({ schema }: { schema: FormSchema }) {
   );
 }
 ```
+
+### 3. Form Value Provider (New!)
+
+For advanced form state management and rule engine integration, use the `FormValueProvider`:
+
+```tsx
+import React from 'react';
+import { FormValueProvider, FormWithRuleEngine } from '@efie-form/react';
+import { MyTextField, MySelectField } from './components';
+
+function SmartForm({ schema }) {
+  return (
+    <FormWithRuleEngine
+      schema={schema}
+      defaultValues={{ name: '', email: '' }}
+      onValuesChange={(values) => {
+        // Automatically called when any field value changes
+        console.log('Form values updated:', values);
+      }}
+      onFieldsVisibilityChange={(visibleFields) => {
+        // Called when rule engine updates field visibility
+        console.log('Visible fields:', visibleFields);
+      }}
+      shortText={MyTextField}
+      singleChoice={MySelectField}
+      // ... other field components
+    />
+  );
+}
+
+// For manual form state management
+function CustomForm() {
+  return (
+    <FormValueProvider
+      defaultValues={{ name: 'John', email: '' }}
+      onValuesChange={(values) => console.log(values)}
+    >
+      {/* Your form content here */}
+    </FormValueProvider>
+  );
+}
+```
+
+**Benefits:**
+- 🔄 Automatic value synchronization across all fields
+- 🎯 Optimized re-renders with react-hook-form
+- 🧠 Rule engine integration for conditional logic
+- 🪝 Easy access to form values with custom hooks
 
 ## Detailed Usage
 
@@ -669,6 +719,82 @@ A headless component that renders a form based on a schema. You must provide you
 | `button` | `ElementType<ButtonFieldProps>` | No | Component for button fields |
 
 **Note:** If a field type is not provided, those fields will not render. This allows you to selectively support only the field types you need.
+
+#### `FormValueProvider`
+
+A provider component that manages form state using react-hook-form.
+
+**Props:**
+
+| Prop | Type | Required | Description |
+|------|------|----------|-------------|
+| `defaultValues` | `FieldValues` | No | Default values for form fields |
+| `onValuesChange` | `(values: FieldValues) => void` | No | Callback when form values change |
+| `children` | `ReactNode` | Yes | Form content |
+
+#### `FormWithValueProvider`
+
+A convenience component that renders fields with automatic value management.
+
+**Props:**
+
+| Prop | Type | Required | Description |
+|------|------|----------|-------------|
+| `fields` | `FormField[]` | Yes | Array of form fields to render |
+| `defaultValues` | `FieldValues` | No | Default values for form fields |
+| `onValuesChange` | `(values: FieldValues) => void` | No | Callback when form values change |
+| All field component props | Various | No | Same as ReactForm field component props |
+
+#### `FormWithRuleEngine`
+
+A complete form component with rule engine integration for conditional logic.
+
+**Props:**
+
+| Prop | Type | Required | Description |
+|------|------|----------|-------------|
+| `schema` | `FormSchema` | Yes | Form schema with rules |
+| `defaultValues` | `FieldValues` | No | Default values for form fields |
+| `onValuesChange` | `(values: FieldValues) => void` | No | Callback when form values change |
+| `onFieldsVisibilityChange` | `(visibleFieldIds: string[]) => void` | No | Callback when field visibility changes |
+| All field component props | Various | No | Same as ReactForm field component props |
+
+### Hooks
+
+#### `useFormValue()`
+
+Access the form context. Returns `null` if no provider is available.
+
+```tsx
+const formContext = useFormValue();
+if (formContext) {
+  const { form, getValue, setValue, watch } = formContext;
+}
+```
+
+#### `useFormValueRequired()`
+
+Access the form context. Throws error if no provider is available.
+
+```tsx
+const { form, watch } = useFormValueRequired();
+```
+
+#### `useFieldValue(fieldId: string)`
+
+Hook for managing a specific field's value.
+
+```tsx
+const { value, onChange } = useFieldValue('fieldId');
+```
+
+#### `useFormFieldValue(field: FormField)`
+
+Hook for managing a field's value using FormField object.
+
+```tsx
+const { value, onChange } = useFormFieldValue(field);
+```
 
 ### Types
 
