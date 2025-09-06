@@ -43,42 +43,78 @@ export function useCondition({ schema, initialFieldStates = {}, env }: UseCondit
     }
   }, [schema]);
 
-  // Create field states with default values - memoized properly
+  // Create field states with default values using the Condition class
   const createFieldStates = useCallback((): FieldState => {
-    const fieldStates: FieldState = {};
-
-    for (const field of schema.form.fields) {
-      fieldStates[field.id] = {
-        touched: false,
-        dirty: false,
-        valid: true, // Would need validation integration
-        visible: true,
-        enabled: true,
-        required: false,
-        ...initialFieldStates[field.id],
-      };
+    if (!conditionRef.current) {
+      // Fallback for when condition is not yet initialized
+      const fieldStates: FieldState = {};
+      for (const field of schema.form.fields) {
+        fieldStates[field.id] = {
+          touched: false,
+          dirty: false,
+          valid: true,
+          visible: true,
+          enabled: true,
+          required: false,
+          ...initialFieldStates[field.id],
+        };
+      }
+      return fieldStates;
     }
 
-    return fieldStates;
-  }, [schema, initialFieldStates]); // Use schema instead of schema.form.fields
+    return conditionRef.current.createDefaultFieldStates(initialFieldStates);
+  }, [schema, initialFieldStates]);
 
-  // Convert ActionResult to ConditionState - Reset state instead of accumulating
-  const updateConditionState = useCallback((actionResult: ActionResult) => {
-    if (isUpdatingRef.current) return; // Prevent cascading updates
+  // Convert ActionResult to ConditionState - Merge with initial field states
+  const updateConditionState = useCallback(
+    (actionResult: ActionResult, fieldStates?: FieldState) => {
+      if (isUpdatingRef.current) return; // Prevent cascading updates
 
-    isUpdatingRef.current = true;
-    setConditionState({
-      hidden: new Set(actionResult.hidden),
-      visible: new Set(actionResult.visible),
-      required: new Set(actionResult.required),
-      optional: new Set(actionResult.optional),
-      customActions: [...actionResult.custom],
-    });
-    // Reset the flag in the next tick
-    setTimeout(() => {
-      isUpdatingRef.current = false;
-    }, 0);
-  }, []);
+      isUpdatingRef.current = true;
+
+      // Start with current rule-based results
+      const hidden = new Set(actionResult.hidden);
+      const visible = new Set(actionResult.visible);
+      const required = new Set(actionResult.required);
+      const optional = new Set(actionResult.optional);
+
+      // If we have field states, merge the initial states for fields not affected by rules
+      if (fieldStates) {
+        for (const [fieldId, state] of Object.entries(fieldStates)) {
+          // Only set initial state if this field is not already affected by rules
+          if (!hidden.has(fieldId) && !visible.has(fieldId)) {
+            if (!state.visible) {
+              hidden.add(fieldId);
+            } else {
+              visible.add(fieldId);
+            }
+          }
+
+          if (!required.has(fieldId) && !optional.has(fieldId)) {
+            if (state.required) {
+              required.add(fieldId);
+            } else {
+              optional.add(fieldId);
+            }
+          }
+        }
+      }
+
+      setConditionState({
+        hidden,
+        visible,
+        required,
+        optional,
+        customActions: [...actionResult.custom],
+      });
+
+      // Reset the flag in the next tick
+      setTimeout(() => {
+        isUpdatingRef.current = false;
+      }, 0);
+    },
+    [],
+  );
 
   // Process form changes
   const processFormChange = useCallback(
@@ -94,7 +130,7 @@ export function useCondition({ schema, initialFieldStates = {}, env }: UseCondit
         fieldStates,
         env,
       );
-      updateConditionState(actionResult);
+      updateConditionState(actionResult, fieldStates);
     },
     [createFieldStates, env, updateConditionState],
   );
@@ -107,9 +143,10 @@ export function useCondition({ schema, initialFieldStates = {}, env }: UseCondit
     const formValues = watch();
     lastFormValuesRef.current = formValues;
 
+    // Evaluate rules and merge with initial field states
     const actionResult = conditionRef.current.evaluateAll(formValues, fieldStates, env);
-    updateConditionState(actionResult);
-  }, [createFieldStates, env, updateConditionState]); // Removed watch from dependencies
+    updateConditionState(actionResult, fieldStates);
+  }, [createFieldStates, env, updateConditionState]); // Removed initializeConditionState since we don't need it anymore
 
   // Watch for form changes without causing infinite re-renders
   useEffect(() => {
@@ -124,7 +161,7 @@ export function useCondition({ schema, initialFieldStates = {}, env }: UseCondit
       lastFormValuesRef.current = value;
       const fieldStates = createFieldStates();
       const actionResult = conditionRef.current.evaluateAll(value, fieldStates, env);
-      updateConditionState(actionResult);
+      updateConditionState(actionResult, fieldStates);
     });
 
     return () => subscription.unsubscribe();

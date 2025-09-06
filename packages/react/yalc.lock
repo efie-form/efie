@@ -2,7 +2,7 @@
   "version": "v1",
   "packages": {
     "@efie-form/core": {
-      "signature": "fc5f4186d648e33e5c048e3d79fd2108",
+      "signature": "b4141da01e122e6039650e1ea7347620",
       "file": true,
       "replaced": "workspace:*"
     }

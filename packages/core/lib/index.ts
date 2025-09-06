@@ -202,6 +202,11 @@ export { RuleEngine } from './engine/rule-engine';
 export { getColorObject, hslaToHex, rgbaToHex } from './utils/colors';
 export { default as getDefaultSchema } from './utils/default-schema/get-default-schema';
 export {
+  getFieldProperty,
+  isFieldHidden,
+  isFieldRequired,
+} from './utils/field-utils';
+export {
   borderRadiusToStyle,
   boxShadowToStyle,
   colorToStyle,

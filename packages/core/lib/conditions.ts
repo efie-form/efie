@@ -4,8 +4,10 @@ import {
   type FormData,
   RuleEngine,
 } from './engine/rule-engine';
+import type { FormField } from './types/form-field.type';
 import type { FormSchema } from './types/form-schema.type';
 import type { JsonValue } from './types/root-rule.type';
+import { isFieldHidden, isFieldRequired } from './utils/field-utils';
 
 interface ConditionProps {
   schema: FormSchema;
@@ -24,6 +26,43 @@ export default class Condition {
   updateSchema(schema: FormSchema): void {
     this.props = { schema };
     this.ruleEngine.updateSchema(schema);
+  }
+
+  /**
+   * Create default field states based on field properties
+   */
+  createDefaultFieldStates(initialFieldStates: Partial<FieldState> = {}): FieldState {
+    const fieldStates: FieldState = {};
+
+    // Recursively process all fields including nested children
+    const processField = (field: FormField) => {
+      // Process the current field if it's a form field with an ID
+      if (field.id) {
+        fieldStates[field.id] = {
+          touched: false,
+          dirty: false,
+          valid: true,
+          visible: !isFieldHidden(field), // Set based on HIDDEN property
+          enabled: true,
+          required: isFieldRequired(field), // Set based on REQUIRED property
+          ...initialFieldStates[field.id],
+        };
+      }
+
+      // Recursively process children if they exist
+      if ('children' in field && field.children && Array.isArray(field.children)) {
+        for (const child of field.children) {
+          processField(child);
+        }
+      }
+    };
+
+    // Process all top-level fields
+    for (const field of this.props.schema.form.fields) {
+      processField(field);
+    }
+
+    return fieldStates;
   }
 
   /**
