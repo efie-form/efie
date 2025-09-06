@@ -190,6 +190,15 @@ export function __keepRuleTypes<T extends { action?: Action; rule?: Rule }>(
 ): void {
   // noop
 }
+
+export { default as Condition } from './conditions';
+export type {
+  ActionResult,
+  FieldState,
+  FormData,
+  RuleEvaluationContext,
+} from './engine/rule-engine';
+export { RuleEngine } from './engine/rule-engine';
 export { getColorObject, hslaToHex, rgbaToHex } from './utils/colors';
 export { default as getDefaultSchema } from './utils/default-schema/get-default-schema';
 export {

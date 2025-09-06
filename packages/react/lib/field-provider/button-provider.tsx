@@ -1,8 +1,9 @@
-import { type ButtonFormField, PropertyType } from '@efie-form/core';
+import { type ButtonFormField, PropertyType, type PropValueButtonAction } from '@efie-form/core';
 import type { ElementType } from 'react';
 import { createElement } from 'react';
 import type { ButtonFieldProps } from '../../types/field-props';
 import { useFormContext } from '../form-context';
+import { useFieldCondition } from '../hooks/use-field-condition';
 
 interface ButtonProviderProps {
   field: ButtonFormField;
@@ -17,11 +18,23 @@ const buttonType = {
 
 function ButtonProvider({ field, Component }: ButtonProviderProps) {
   const { setPage } = useFormContext();
+  const { isVisible } = useFieldCondition(field.id);
 
   if (!Component) return null;
 
-  const label = field.props.find((prop) => prop.type === PropertyType.LABEL);
-  const buttonAction = field.props.find((prop) => prop.type === PropertyType.BUTTON_ACTION);
+  // Check if field should be visible
+  if (!isVisible) {
+    return null;
+  }
+
+  const label = field.props.find(
+    (prop): prop is { type: typeof PropertyType.LABEL; value: string } =>
+      prop.type === PropertyType.LABEL,
+  );
+  const buttonAction = field.props.find(
+    (prop): prop is { type: typeof PropertyType.BUTTON_ACTION; value: PropValueButtonAction } =>
+      prop.type === PropertyType.BUTTON_ACTION,
+  );
 
   const handleClick = () => {
     if (buttonAction?.value.action !== 'navigate') return;

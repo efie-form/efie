@@ -127,6 +127,9 @@ function RenderField({ field, ...props }: RenderFieldProps) {
     case FieldType.PAGE: {
       return <PageProvider field={field} Component={props.page} {...props} />;
     }
+    case FieldType.ADDRESS: {
+      return <></>;
+    }
     default: {
       return null;
     }

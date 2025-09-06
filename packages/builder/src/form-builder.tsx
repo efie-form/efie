@@ -6,7 +6,7 @@ import { cn } from './lib/utils';
 import './styles/output.css';
 
 const FormBuilder = () => {
-  const { height, activeTab } = useSettingsStore();
+  const { height } = useSettingsStore();
 
   return (
     <div
