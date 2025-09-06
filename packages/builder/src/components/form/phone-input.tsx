@@ -97,7 +97,7 @@ export default function PhoneInput({
   );
 
   return (
-    <div className="flex w-full items-stretch gap-2">
+    <div className="flex w-full items-stretch gap-1">
       <div className="w-12">
         <StyledSelect
           options={countryOptions}

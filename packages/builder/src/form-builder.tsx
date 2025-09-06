@@ -23,7 +23,7 @@ const FormBuilder = () => {
       <main className="flex w-[40rem] flex-1 flex-col bg-primary-50">
         <MainSection />
       </main>
-      <aside className="w-[24rem] overflow-y-auto bg-neutral-50">
+      <aside className="overflow-y-auto bg-neutral-50">
         <RightBar />
       </aside>
     </div>

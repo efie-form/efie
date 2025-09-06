@@ -26,7 +26,8 @@
   "files": [
     "LICENSE",
     "dist/",
-    "README.md"
+    "README.md",
+    ".yalc"
   ],
   "exports": {
     ".": {
@@ -50,7 +51,8 @@
   },
   "dependencies": {
     "@efie-form/core": "workspace:*",
-    "@tiptap/core": "^3.3.0"
+    "@tiptap/core": "^3.3.0",
+    "react-hook-form": "^7.53.1"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.1.0",
@@ -75,5 +77,8 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "eslintIgnore": [
+    ".yalc"
+  ]
 }

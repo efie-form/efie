@@ -1,13 +1,6 @@
 export type { FormSchema } from '@efie-form/core';
 // Rule engine exports
-export {
-  type FieldState,
-  FieldType,
-  type FieldUpdate,
-  RuleEngine,
-  type RuleEngineResult,
-  type RuleEvaluationContext,
-} from '@efie-form/core';
+export { FieldType } from '@efie-form/core';
 export type {
   BlockFieldProps,
   ButtonFieldProps,
@@ -28,11 +21,12 @@ export type {
   SingleChoiceFieldProps,
   TimeFieldProps,
 } from '../types/field-props';
+// Condition exports
+export { ConditionProvider, useConditionContext } from './components/condition-provider';
 // Existing exports
-export { FormProvider } from './components/form-provider';
-export { FormRenderer } from './components/form-renderer';
+export { FormContextProvider as FormProvider } from './components/form-provider';
 export { default as ReactForm } from './form';
 export type { FormBuilderProps, FormBuilderRef } from './form-builder/form-builder';
 export { FormBuilder } from './form-builder/form-builder';
-export { useFieldRuleState, useRuleEngine } from './hooks/use-rule-engine';
-export { FormRuleProvider, useFormRuleContext } from './providers/form-rule-provider';
+export { useCondition } from './hooks/use-condition';
+export { useFieldCondition } from './hooks/use-field-condition';

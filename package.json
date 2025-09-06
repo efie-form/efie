@@ -32,7 +32,10 @@
     "changeset:publish": "pnpm build:packages && changeset publish",
     "release": "pnpm build:packages && pnpm changeset:publish",
     "version-packages": "changeset version && pnpm install --lockfile-only",
-    "prepare": "husky"
+    "prepare": "husky",
+    "yalc:dev": "cd packages/core && yalc publish && cd ../react && yalc add @efie-form/core && yalc publish",
+    "yalc:remove": "cd packages/react && yalc remove @efie-form/core",
+    "yalc:watch": "cd packages/core && yalc publish && cd ../react && yalc update && yalc publish"
   },
   "repository": {
     "type": "git",
@@ -76,5 +79,8 @@
     "onlyBuiltDependencies": [
       "nx"
     ]
-  }
+  },
+  "eslintIgnore": [
+    ".yalc"
+  ]
 }

@@ -24,13 +24,6 @@ export {
 export { PropSettingsTemplate } from './constants/prop-settings.constant';
 export { RuleAction } from './constants/rule-action.constant';
 export {
-  type FieldState,
-  type FieldUpdate,
-  RuleEngine,
-  type RuleEngineResult,
-  type RuleEvaluationContext,
-} from './engine/rule-engine';
-export {
   CustomPropertyType,
   PropertyType,
 } from './property-type';
@@ -197,8 +190,22 @@ export function __keepRuleTypes<T extends { action?: Action; rule?: Rule }>(
 ): void {
   // noop
 }
+
+export { default as Condition } from './conditions';
+export type {
+  ActionResult,
+  FieldState,
+  FormData,
+  RuleEvaluationContext,
+} from './engine/rule-engine';
+export { RuleEngine } from './engine/rule-engine';
 export { getColorObject, hslaToHex, rgbaToHex } from './utils/colors';
 export { default as getDefaultSchema } from './utils/default-schema/get-default-schema';
+export {
+  getFieldProperty,
+  isFieldHidden,
+  isFieldRequired,
+} from './utils/field-utils';
 export {
   borderRadiusToStyle,
   boxShadowToStyle,

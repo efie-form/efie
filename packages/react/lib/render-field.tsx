@@ -1,4 +1,5 @@
 import { FieldType, type FormField } from '@efie-form/core';
+import { useController } from 'react-hook-form';
 import type { FieldPropsMap } from '../types/field-props';
 import {
   BlockProvider,
@@ -25,12 +26,32 @@ interface RenderFieldProps extends Partial<FieldPropsMap> {
 }
 
 function RenderField({ field, ...props }: RenderFieldProps) {
+  const {
+    field: { value, onChange },
+  } = useController({
+    name: field.id,
+  });
+
   switch (field.type) {
     case FieldType.SHORT_TEXT: {
-      return <ShortTextProvider field={field} Component={props.shortText} />;
+      return (
+        <ShortTextProvider
+          field={field}
+          Component={props.shortText}
+          value={value}
+          onChange={onChange}
+        />
+      );
     }
     case FieldType.LONG_TEXT: {
-      return <LongTextProvider field={field} Component={props.longText} />;
+      return (
+        <LongTextProvider
+          field={field}
+          Component={props.longText}
+          value={value}
+          onChange={onChange}
+        />
+      );
     }
     case FieldType.DIVIDER: {
       return <DividerProvider field={field} Component={props.divider} />;
@@ -42,25 +63,52 @@ function RenderField({ field, ...props }: RenderFieldProps) {
       return <ImageProvider field={field} Component={props.image} />;
     }
     case FieldType.FILE: {
-      return <FileProvider field={field} Component={props.file} />;
+      return (
+        <FileProvider field={field} Component={props.file} value={value} onChange={onChange} />
+      );
     }
     case FieldType.SINGLE_CHOICE: {
-      return <SingleChoiceProvider field={field} Component={props.singleChoice} />;
+      return (
+        <SingleChoiceProvider
+          field={field}
+          Component={props.singleChoice}
+          value={value}
+          onChange={onChange}
+        />
+      );
     }
     case FieldType.MULTIPLE_CHOICES: {
-      return <MultipleChoicesProvider field={field} Component={props.multipleChoices} />;
+      return (
+        <MultipleChoicesProvider
+          field={field}
+          Component={props.multipleChoices}
+          value={value}
+          onChange={onChange}
+        />
+      );
     }
     case FieldType.HEADING: {
       return <HeadingProvider field={field} Component={props.heading} />;
     }
     case FieldType.DATE: {
-      return <DateProvider field={field} Component={props.date} />;
+      return (
+        <DateProvider field={field} Component={props.date} value={value} onChange={onChange} />
+      );
     }
     case FieldType.TIME: {
-      return <TimeProvider field={field} Component={props.time} />;
+      return (
+        <TimeProvider field={field} Component={props.time} value={value} onChange={onChange} />
+      );
     }
     case FieldType.DATE_TIME: {
-      return <DateTimeProvider field={field} Component={props.dateTime} />;
+      return (
+        <DateTimeProvider
+          field={field}
+          Component={props.dateTime}
+          value={value}
+          onChange={onChange}
+        />
+      );
     }
     case FieldType.COLUMN: {
       return <ColumnProvider field={field} Component={props.column} {...props} />;
@@ -69,13 +117,18 @@ function RenderField({ field, ...props }: RenderFieldProps) {
       return <RowProvider field={field} Component={props.row} {...props} />;
     }
     case FieldType.NUMBER: {
-      return <NumberProvider field={field} Component={props.number} />;
+      return (
+        <NumberProvider field={field} Component={props.number} value={value} onChange={onChange} />
+      );
     }
     case FieldType.BUTTON: {
       return <ButtonProvider field={field} Component={props.button} />;
     }
     case FieldType.PAGE: {
       return <PageProvider field={field} Component={props.page} {...props} />;
+    }
+    case FieldType.ADDRESS: {
+      return <></>;
     }
     default: {
       return null;
