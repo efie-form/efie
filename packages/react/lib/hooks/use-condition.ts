@@ -1,11 +1,15 @@
-import type { FormSchema, JsonValue } from '@efie-form/core';
-import { type ActionResult, Condition, type FieldState } from '@efie-form/core';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import {
+  type ActionResult,
+  Condition,
+  type FieldState,
+  type FormSchema,
+  type JsonValue,
+} from '@efie-form/core';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 interface UseConditionProps {
   schema: FormSchema;
-  initialFieldStates?: Partial<FieldState>;
   env?: Record<string, JsonValue>;
 }
 
@@ -17,12 +21,22 @@ interface ConditionState {
   customActions: Array<{ id: string; type: string; name: string; input?: JsonValue }>;
 }
 
-export function useCondition({ schema, initialFieldStates = {}, env }: UseConditionProps) {
+export function useCondition({ schema, env }: UseConditionProps) {
   const { watch } = useFormContext();
 
   const conditionRef = useRef<Condition>();
   const lastFormValuesRef = useRef<Record<string, JsonValue>>({});
   const isUpdatingRef = useRef(false);
+
+  // Create a stable reference for schema using a hash or stringified version
+  const schemaHash = useMemo(() => {
+    // Use a simple hash of critical schema properties to detect real changes
+    return JSON.stringify({
+      fields: schema.form.fields.map((f) => ({ id: f.id, type: f.type })),
+      rules: schema.form.rules,
+    });
+  }, [schema.form.fields, schema]);
+
   const [conditionState, setConditionState] = useState<ConditionState>({
     hidden: new Set(),
     visible: new Set(),
@@ -31,17 +45,19 @@ export function useCondition({ schema, initialFieldStates = {}, env }: UseCondit
     customActions: [],
   });
 
-  // Initialize condition engine
+  // Initialize condition engine only when schema actually changes
   useEffect(() => {
+    console.log('Initializing Condition with schema:', schema);
+    if (!schema || conditionRef.current) return;
     conditionRef.current = new Condition({ schema });
-  }, [schema]);
+  }, [schemaHash]); // Use schemaHash instead of schema
 
-  // Update schema when it changes
+  // Update schema when it actually changes
   useEffect(() => {
     if (conditionRef.current) {
       conditionRef.current.updateSchema(schema);
     }
-  }, [schema]);
+  }, [schemaHash]); // Use schemaHash instead of schema
 
   // Create field states with default values using the Condition class
   const createFieldStates = useCallback((): FieldState => {
@@ -56,14 +72,13 @@ export function useCondition({ schema, initialFieldStates = {}, env }: UseCondit
           visible: true,
           enabled: true,
           required: false,
-          ...initialFieldStates[field.id],
         };
       }
       return fieldStates;
     }
 
-    return conditionRef.current.createDefaultFieldStates(initialFieldStates);
-  }, [schema, initialFieldStates]);
+    return conditionRef.current.createDefaultFieldStates();
+  }, [schemaHash]); // Use schemaHash instead of schema
 
   // Convert ActionResult to ConditionState - Merge with initial field states
   const updateConditionState = useCallback(

@@ -1,5 +1,5 @@
 import type { FormSchema, JsonValue } from '@efie-form/core';
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import type { FieldPropsMap } from '../types/field-props';
 import { ConditionProvider } from './components/condition-provider';
@@ -38,15 +38,9 @@ function FormContent({ schema, env, currentPage, setCurrentPage, ...props }: For
 }
 
 function ReactForm({ schema, env, ...props }: ReactFormProps) {
-  const [currentPage, setCurrentPage] = useState('');
+  const firstPageId = schema.form.fields.find((field) => field.type === 'page')?.id;
+  const [currentPage, setCurrentPage] = useState(firstPageId || '');
   const methods = useForm({});
-
-  useEffect(() => {
-    const firstPage = schema.form.fields.find((field) => field.type === 'page');
-    if (firstPage) {
-      setCurrentPage(firstPage.id);
-    }
-  }, [schema]); // Include schema in dependency array to update when schema changes
 
   return (
     <FormProvider {...methods}>

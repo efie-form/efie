@@ -31,7 +31,7 @@ export default class Condition {
   /**
    * Create default field states based on field properties
    */
-  createDefaultFieldStates(initialFieldStates: Partial<FieldState> = {}): FieldState {
+  createDefaultFieldStates(): FieldState {
     const fieldStates: FieldState = {};
 
     // Recursively process all fields including nested children
@@ -45,7 +45,6 @@ export default class Condition {
           visible: !isFieldHidden(field), // Set based on HIDDEN property
           enabled: true,
           required: isFieldRequired(field), // Set based on REQUIRED property
-          ...initialFieldStates[field.id],
         };
       }
 
