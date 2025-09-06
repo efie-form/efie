@@ -46,7 +46,7 @@ function ReactForm({ schema, env, ...props }: ReactFormProps) {
     if (firstPage) {
       setCurrentPage(firstPage.id);
     }
-  }, []); // Use schema instead of schema.form.fields to avoid reference issues
+  }, [schema]); // Include schema in dependency array to update when schema changes
 
   return (
     <FormProvider {...methods}>

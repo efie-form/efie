@@ -22,6 +22,7 @@ export function useCondition({ schema, initialFieldStates = {}, env }: UseCondit
 
   const conditionRef = useRef<Condition>();
   const lastFormValuesRef = useRef<Record<string, JsonValue>>({});
+  const isUpdatingRef = useRef(false);
   const [conditionState, setConditionState] = useState<ConditionState>({
     hidden: new Set(),
     visible: new Set(),
@@ -63,6 +64,9 @@ export function useCondition({ schema, initialFieldStates = {}, env }: UseCondit
 
   // Convert ActionResult to ConditionState - Reset state instead of accumulating
   const updateConditionState = useCallback((actionResult: ActionResult) => {
+    if (isUpdatingRef.current) return; // Prevent cascading updates
+
+    isUpdatingRef.current = true;
     setConditionState({
       hidden: new Set(actionResult.hidden),
       visible: new Set(actionResult.visible),
@@ -70,6 +74,10 @@ export function useCondition({ schema, initialFieldStates = {}, env }: UseCondit
       optional: new Set(actionResult.optional),
       customActions: [...actionResult.custom],
     });
+    // Reset the flag in the next tick
+    setTimeout(() => {
+      isUpdatingRef.current = false;
+    }, 0);
   }, []);
 
   // Process form changes
@@ -91,7 +99,7 @@ export function useCondition({ schema, initialFieldStates = {}, env }: UseCondit
     [createFieldStates, env, updateConditionState],
   );
 
-  // Initial evaluation on mount only
+  // Initial evaluation on mount and schema change
   useEffect(() => {
     if (!conditionRef.current) return;
 
@@ -101,12 +109,12 @@ export function useCondition({ schema, initialFieldStates = {}, env }: UseCondit
 
     const actionResult = conditionRef.current.evaluateAll(formValues, fieldStates, env);
     updateConditionState(actionResult);
-  }, [watch, createFieldStates, env, updateConditionState]);
+  }, [createFieldStates, env, updateConditionState]); // Removed watch from dependencies
 
   // Watch for form changes without causing infinite re-renders
   useEffect(() => {
     const subscription = watch((value) => {
-      if (!conditionRef.current) return;
+      if (!conditionRef.current || isUpdatingRef.current) return;
 
       // Only update if values actually changed
       if (JSON.stringify(value) === JSON.stringify(lastFormValuesRef.current)) {
