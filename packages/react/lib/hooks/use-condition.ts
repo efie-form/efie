@@ -19,9 +19,9 @@ interface ConditionState {
 
 export function useCondition({ schema, initialFieldStates = {}, env }: UseConditionProps) {
   const { watch } = useFormContext();
-  const formValues = watch();
 
   const conditionRef = useRef<Condition>();
+  const lastFormValuesRef = useRef<Record<string, JsonValue>>({});
   const [conditionState, setConditionState] = useState<ConditionState>({
     hidden: new Set(),
     visible: new Set(),
@@ -42,7 +42,7 @@ export function useCondition({ schema, initialFieldStates = {}, env }: UseCondit
     }
   }, [schema]);
 
-  // Create field states with default values
+  // Create field states with default values - memoized properly
   const createFieldStates = useCallback((): FieldState => {
     const fieldStates: FieldState = {};
 
@@ -59,17 +59,17 @@ export function useCondition({ schema, initialFieldStates = {}, env }: UseCondit
     }
 
     return fieldStates;
-  }, [schema.form.fields, initialFieldStates]);
+  }, [schema, initialFieldStates]); // Use schema instead of schema.form.fields
 
-  // Convert ActionResult to ConditionState
+  // Convert ActionResult to ConditionState - Reset state instead of accumulating
   const updateConditionState = useCallback((actionResult: ActionResult) => {
-    setConditionState((prev) => ({
-      hidden: new Set([...prev.hidden, ...actionResult.hidden]),
-      visible: new Set([...prev.visible, ...actionResult.visible]),
-      required: new Set([...prev.required, ...actionResult.required]),
-      optional: new Set([...prev.optional, ...actionResult.optional]),
-      customActions: [...prev.customActions, ...actionResult.custom],
-    }));
+    setConditionState({
+      hidden: new Set(actionResult.hidden),
+      visible: new Set(actionResult.visible),
+      required: new Set(actionResult.required),
+      optional: new Set(actionResult.optional),
+      customActions: [...actionResult.custom],
+    });
   }, []);
 
   // Process form changes
@@ -78,6 +78,7 @@ export function useCondition({ schema, initialFieldStates = {}, env }: UseCondit
       if (!conditionRef.current) return;
 
       const fieldStates = createFieldStates();
+      const formValues = lastFormValuesRef.current;
       const actionResult = conditionRef.current.onChange(
         fieldId,
         value,
@@ -87,17 +88,39 @@ export function useCondition({ schema, initialFieldStates = {}, env }: UseCondit
       );
       updateConditionState(actionResult);
     },
-    [formValues, createFieldStates, env, updateConditionState],
+    [createFieldStates, env, updateConditionState],
   );
 
-  // Initial evaluation on mount
+  // Initial evaluation on mount only
   useEffect(() => {
     if (!conditionRef.current) return;
 
     const fieldStates = createFieldStates();
+    const formValues = watch();
+    lastFormValuesRef.current = formValues;
+
     const actionResult = conditionRef.current.evaluateAll(formValues, fieldStates, env);
     updateConditionState(actionResult);
-  }, [formValues, createFieldStates, env, updateConditionState]);
+  }, [watch, createFieldStates, env, updateConditionState]);
+
+  // Watch for form changes without causing infinite re-renders
+  useEffect(() => {
+    const subscription = watch((value) => {
+      if (!conditionRef.current) return;
+
+      // Only update if values actually changed
+      if (JSON.stringify(value) === JSON.stringify(lastFormValuesRef.current)) {
+        return;
+      }
+
+      lastFormValuesRef.current = value;
+      const fieldStates = createFieldStates();
+      const actionResult = conditionRef.current.evaluateAll(value, fieldStates, env);
+      updateConditionState(actionResult);
+    });
+
+    return () => subscription.unsubscribe();
+  }, [watch, createFieldStates, env, updateConditionState]);
 
   // Helper functions for field providers
   const isFieldHidden = useCallback(
