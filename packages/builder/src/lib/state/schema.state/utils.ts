@@ -2,7 +2,13 @@ import type { FormField } from '@efie-form/core';
 import type { FieldMaps } from './types';
 
 // Helper function to generate unique IDs
-export const generateId = (): string => Math.random().toString(36).slice(2, 12);
+export const generateId = (length: number = 10): string => {
+  let result = '';
+  while (result.length < length) {
+    result += Math.random().toString(36).slice(2);
+  }
+  return result.slice(0, length);
+};
 
 // Helper function to deep clone objects
 export const deepClone = <T>(obj: T): T => {
