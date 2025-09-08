@@ -19,7 +19,7 @@ import {
 } from '@efie-form/core';
 import { type MouseEvent, useEffect, useRef, useState } from 'react';
 import { AiOutlineDrag } from 'react-icons/ai';
-import { HiTrash } from 'react-icons/hi2';
+import { HiOutlineDocumentDuplicate, HiTrash } from 'react-icons/hi2';
 import invariant from 'tiny-invariant';
 import { RIGHT_BAR_TABS } from '../../../lib/constant';
 import useDropField from '../../../lib/hooks/use-drop-field';
@@ -62,7 +62,7 @@ function RenderField({ field, noSelect, parentId, childIndex }: RenderFieldProps
   const { setSelectedFieldId, clearSelectedFieldId, setActiveTab } = useSettingsStore();
   const selectedFieldId = useSettingsStore((state) => state.selectedFieldId);
   const isSelected = selectedFieldId === field.id;
-  const { deleteField } = useSchemaStore();
+  const { deleteField, duplicateField } = useSchemaStore();
   const fieldRef = useRef<HTMLDivElement>(null);
   const dragHandlerRef = useRef<HTMLDivElement>(null);
   const [isDraggedOver, setIsDraggedOver] = useState(false);
@@ -91,6 +91,16 @@ function RenderField({ field, noSelect, parentId, childIndex }: RenderFieldProps
     if (selectedFieldId === field.id) return;
     setSelectedFieldId(field.id);
     setActiveTab(RIGHT_BAR_TABS.FIELD_SETTINGS);
+  };
+
+  const handleDuplicateField = (e: MouseEvent) => {
+    e.stopPropagation();
+    const duplicatedFieldId = duplicateField(field.id);
+    if (duplicatedFieldId) {
+      // Select the newly duplicated field
+      setSelectedFieldId(duplicatedFieldId);
+      setActiveTab(RIGHT_BAR_TABS.FIELD_SETTINGS);
+    }
   };
 
   useEffect(() => {
@@ -190,17 +200,26 @@ function RenderField({ field, noSelect, parentId, childIndex }: RenderFieldProps
         <FieldItem field={field} />
       </div>
       {isSelected && (
-        <div className="-translate-x-full absolute top-0 left-0">
+        <div className="-translate-x-full absolute top-0 left-0 flex flex-col">
           <div ref={dragHandlerRef} className="cursor-grab bg-primary p-1 text-white">
             <AiOutlineDrag />
           </div>
           <button
             type="button"
-            className="bg-danger p-1 text-white"
+            className="bg-success p-1 text-white hover:bg-success-600 transition-colors"
+            onClick={handleDuplicateField}
+            title="Duplicate field"
+          >
+            <HiOutlineDocumentDuplicate />
+          </button>
+          <button
+            type="button"
+            className="bg-danger p-1 text-white hover:bg-danger-600 transition-colors"
             onClick={() => {
               deleteField(field.id);
               clearSelectedFieldId();
             }}
+            title="Delete field"
           >
             <HiTrash />
           </button>

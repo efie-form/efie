@@ -33,7 +33,7 @@ describe('schema.state field-actions', () => {
     expect(st.fieldMap.get('s1')).toEqual(updated);
   });
 
-  test('duplicateField deep clones with new ids', () => {
+  test('duplicateField deep clones with new ids and adds to schema', () => {
     const p1 = makePage('p1');
     const g1: FormField = { id: 'g1', type: FieldType.GROUP, children: [], props: [] };
     const s1 = makeShort('s1');
@@ -41,11 +41,23 @@ describe('schema.state field-actions', () => {
     (p1 as any).children = [g1];
     initSchema([p1]);
 
-    const dup = useSchemaStore.getState().duplicateField('g1');
-    expect(dup).toBeDefined();
-    const d = dup as any;
-    expect(d.id).not.toBe('g1');
-    expect(d.children[0].id).not.toBe('s1');
+    const duplicatedFieldId = useSchemaStore.getState().duplicateField('g1');
+    expect(duplicatedFieldId).toBeDefined();
+    expect(duplicatedFieldId).not.toBe('g1');
+
+    // Check that the duplicated field was added to the schema
+    const state = useSchemaStore.getState();
+    const duplicatedField = state.fieldMap.get(duplicatedFieldId as string);
+    expect(duplicatedField).toBeDefined();
+    expect(duplicatedField?.id).toBe(duplicatedFieldId);
+    expect((duplicatedField as any)?.children[0].id).not.toBe('s1');
+
+    // Check that both original and duplicated fields exist in the schema
+    const schema = state.schema as any;
+    const pageChildren = schema.form.fields[0].children;
+    expect(pageChildren.length).toBe(2); // Original + duplicated
+    expect(pageChildren.some((child: any) => child.id === 'g1')).toBe(true);
+    expect(pageChildren.some((child: any) => child.id === duplicatedFieldId)).toBe(true);
   });
 
   test('moveField moves between parents and updates maps/history', () => {

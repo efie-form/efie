@@ -32,9 +32,9 @@ function FormContent() {
   const hasChildren = selectedPage.children.length > 0;
 
   return (
-    <form id="form-zone" className="h-full">
+    <form className="h-full">
       <div className="h-full min-h-full">
-        <div className="flex h-full flex-col p-4">
+        <div className="flex h-full flex-col py-4 px-8">
           <div
             className="mx-auto flex w-full flex-col transition-all"
             style={{

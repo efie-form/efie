@@ -1555,6 +1555,11 @@ video {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
+.bg-success {
+  --tw-bg-opacity: 1;
+  background-color: rgb(from var(--color-green-500) r g b / var(--tw-bg-opacity));
+}
+
 .bg-opacity-0 {
   --tw-bg-opacity: 0;
 }
@@ -1663,6 +1668,16 @@ video {
 .py-4 {
   padding-top: 1rem;
   padding-bottom: 1rem;
+}
+
+.px-6 {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.px-8 {
+  padding-left: 2rem;
+  padding-right: 2rem;
 }
 
 .pb-4 {
@@ -2461,6 +2476,16 @@ div.tiptap:focus-visible {
 .hover\:bg-primary-600:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(from var(--color-primary-600) r g b / var(--tw-bg-opacity));
+}
+
+.hover\:bg-danger-600:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(from var(--color-red-600) r g b / var(--tw-bg-opacity));
+}
+
+.hover\:bg-success-600:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(from var(--color-green-600) r g b / var(--tw-bg-opacity));
 }
 
 .hover\:text-danger:hover {
