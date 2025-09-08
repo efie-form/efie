@@ -12,7 +12,7 @@ export interface SchemaStateFieldActions {
   // Field management methods
   addField: (field: FormField, parentId?: string, index?: number) => void;
   updateField: (fieldId: string, updates: FormField) => void;
-  duplicateField: (fieldId: string) => FormField | undefined;
+  duplicateField: (fieldId: string) => string | undefined;
   moveField: (fieldId: string, newParentId: string, newIndex: number) => void;
   deleteField: (fieldId: string) => void;
   movePage: (from: number, to: number) => void;
@@ -128,7 +128,10 @@ export function createFieldActions({ set, getState }: StateSetters): SchemaState
       }
     },
 
-    duplicateField: (fieldId: string): FormField | undefined => {
+    duplicateField: (fieldId: string): string | undefined => {
+      const { schema, fieldParentMap } = getState();
+      if (!schema?.form.fields) return undefined;
+
       const field = getState().fieldMap.get(fieldId);
       if (!field) return undefined;
 
@@ -143,7 +146,58 @@ export function createFieldActions({ set, getState }: StateSetters): SchemaState
         return newField;
       };
 
-      return duplicateFieldRecursive(field);
+      const duplicatedField = duplicateFieldRecursive(field);
+
+      // Find the parent and index of the original field
+      const parentId = fieldParentMap.get(fieldId);
+      let insertIndex: number | undefined;
+
+      if (parentId) {
+        const parent = getState().fieldMap.get(parentId);
+        if (parent && 'children' in parent && parent.children) {
+          const originalIndex = parent.children.findIndex((child) => child.id === fieldId);
+          insertIndex = originalIndex + 1; // Insert right after the original
+        }
+      } else {
+        // Root level field
+        const originalIndex = schema.form.fields.findIndex((field) => field.id === fieldId);
+        insertIndex = originalIndex + 1; // Insert right after the original
+      }
+
+      // Add the duplicated field to the schema
+      const newFields = addFieldToTree(schema.form.fields, duplicatedField, parentId, insertIndex);
+
+      const newSchema = {
+        ...schema,
+        form: { ...schema.form, fields: newFields },
+      };
+
+      const { fieldMap, fieldParentMap: newFieldParentMap } = getFieldInfoMap(newFields);
+
+      // Get current history state
+      const { maxHistories, histories, currentHistoryIndex } = getState();
+      const stringifiedSchema = JSON.stringify(newSchema);
+
+      // Prepare new history
+      let newHistories = histories.slice(0, currentHistoryIndex + 1);
+      if (newHistories.length === 0 || newHistories.at(-1) !== stringifiedSchema) {
+        newHistories.push(stringifiedSchema);
+        if (newHistories.length > maxHistories) {
+          newHistories = newHistories.slice(newHistories.length - maxHistories);
+        }
+      }
+
+      // Single atomic state update
+      set({
+        schema: newSchema,
+        fieldMap,
+        fieldParentMap: newFieldParentMap,
+        histories: newHistories,
+        totalHistories: newHistories.length,
+        currentHistoryIndex: newHistories.length - 1,
+      });
+
+      return duplicatedField.id;
     },
 
     moveField: (fieldId: string, newParentId: string, newIndex: number) => {
