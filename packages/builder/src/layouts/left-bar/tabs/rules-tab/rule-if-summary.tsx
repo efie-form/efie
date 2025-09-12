@@ -1,10 +1,4 @@
-import {
-  type ConditionNode,
-  type ConditionTree,
-  type Operand,
-  Operator,
-  PropertyType,
-} from '@efie-form/core';
+import { type ConditionNode, type ConditionTree, type Operand, Operator } from '@efie-form/core';
 import { AiFillCaretRight } from 'react-icons/ai';
 import { useSchemaStore } from '../../../../lib/state/schema.state';
 import { getFieldProp } from '../../../../lib/utils';
@@ -126,11 +120,10 @@ interface NodeFieldValueProps {
 function NodeFieldValue({ fieldId }: NodeFieldValueProps) {
   const field = useSchemaStore((s) => s.getFieldById(fieldId));
   if (!field) return null;
-  const label = getFieldProp(field, PropertyType.LABEL);
 
   return (
     <span className="font-medium text-primary-700 bg-primary-200 p-0.5 rounded-sm">
-      {label?.value || ''}
+      {field.sys.name}
     </span>
   );
 }

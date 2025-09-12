@@ -4,7 +4,6 @@ import {
   FieldLayoutType,
   type FormField,
   type HideFieldsAction,
-  PropertyType,
   RuleAction,
   type SetRequiredAction,
   type ShowFieldsAction,
@@ -12,11 +11,8 @@ import {
 import { HiDotsHorizontal } from 'react-icons/hi';
 import { SimpleMenu } from '../../../../../components/elements/dropdown-menu';
 import { StyledSelect } from '../../../../../components/form';
-import { FIELDS_NAME } from '../../../../../lib/constant';
 import { fieldIcons } from '../../../../../lib/fields-tab/fields';
-import { getFieldProp } from '../../../../../lib/utils';
 
-// Local definition mirroring optional action
 interface SetOptionalActionLocal {
   id: string;
   type: typeof RuleAction.SET_OPTIONAL;
@@ -58,9 +54,7 @@ export function ActionItem({
     const Icon = fieldIcons[field.type];
     return {
       value: field.id,
-      label:
-        (getFieldProp(field, PropertyType.LABEL)?.value as string | undefined) ||
-        `${FIELDS_NAME[field.type]} #${field.id}`,
+      label: field.sys.name,
       Icon,
       __type: field.type,
     } as const;

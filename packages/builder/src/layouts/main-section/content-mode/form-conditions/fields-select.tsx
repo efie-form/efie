@@ -1,11 +1,9 @@
-import { type FieldType, type FormField, PropertyType } from '@efie-form/core';
+import type { FieldType, FormField } from '@efie-form/core';
 import { useMemo } from 'react';
 import { StyledSelect } from '../../../../components/form';
-import { FIELDS_NAME } from '../../../../lib/constant';
 import { fieldIcons } from '../../../../lib/fields-tab/fields';
 import { useSchemaStore } from '../../../../lib/state/schema.state';
 import { getAllFields } from '../../../../lib/state/schema.state/utils';
-import { getFieldProp } from '../../../../lib/utils';
 
 interface FieldsSelectProps {
   value?: FormField;
@@ -14,7 +12,6 @@ interface FieldsSelectProps {
 }
 
 export default function FieldsSelect({ value, onChange, fieldTypes }: FieldsSelectProps) {
-  // Select only the fields tree from the store; derive a stable flattened list locally.
   const fieldsTree = useSchemaStore((state) => state.schema?.form.fields);
   const allFields = useMemo(() => (fieldsTree ? getAllFields(fieldsTree) : []), [fieldsTree]);
 
@@ -26,9 +23,7 @@ export default function FieldsSelect({ value, onChange, fieldTypes }: FieldsSele
           const Icon = fieldIcons[field.type];
           return {
             value: field.id,
-            label:
-              getFieldProp(field, PropertyType.LABEL)?.value ||
-              `${FIELDS_NAME[field.type]} #${field.id}`,
+            label: field.sys.name,
             Icon: Icon,
           };
         })}
