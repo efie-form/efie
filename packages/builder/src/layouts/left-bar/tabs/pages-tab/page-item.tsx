@@ -33,7 +33,7 @@ export default function PageItem({ page, onDelete, isCurrentPage, onSelect }: Pa
   const updateFieldProperty = useSchemaStore((state) => state.updateFieldProperty);
   const name = getValue(fieldProperty?.value);
 
-  const [inputName, setInputName] = useState(name);
+  const [inputName, setInputName] = useState(page.sys.name);
 
   const style: CSSProperties = {
     transform: transform ? `translateY(${transform.y}px)` : undefined,

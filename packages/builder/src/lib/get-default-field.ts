@@ -205,15 +205,10 @@ export function getDefaultField<T extends FieldType>({
         type: FieldType.PAGE,
         id: generateId(ID_LENGTH),
         sys: {
-          name: generateFieldName(type, nextFieldCount),
+          name: page?.name || generateFieldName(type, nextFieldCount),
         },
         children: [],
-        props: [
-          {
-            type: PropertyType.NAME,
-            value: page?.name || 'Page',
-          },
-        ],
+        props: [],
       } satisfies GetDefaultFieldReturn[typeof FieldType.PAGE];
     }
     case FieldType.DATE: {

@@ -16,6 +16,7 @@ export interface SchemaStateFieldActions {
   moveField: (fieldId: string, newParentId: string, newIndex: number) => void;
   deleteField: (fieldId: string) => void;
   movePage: (from: number, to: number) => void;
+  renameField: (fieldId: string, newName: string) => void;
 }
 export function createFieldActions({ set, getState }: StateSetters): SchemaStateFieldActions {
   return {
@@ -129,7 +130,7 @@ export function createFieldActions({ set, getState }: StateSetters): SchemaState
     },
 
     duplicateField: (fieldId: string): string | undefined => {
-      const { schema, fieldParentMap } = getState();
+      const { schema, fieldParentMap, setSchema } = getState();
       if (!schema?.form.fields) return undefined;
 
       const field = getState().fieldMap.get(fieldId);
@@ -172,36 +173,13 @@ export function createFieldActions({ set, getState }: StateSetters): SchemaState
         form: { ...schema.form, fields: newFields },
       };
 
-      const { fieldMap, fieldParentMap: newFieldParentMap } = getFieldInfoMap(newFields);
-
-      // Get current history state
-      const { maxHistories, histories, currentHistoryIndex } = getState();
-      const stringifiedSchema = JSON.stringify(newSchema);
-
-      // Prepare new history
-      let newHistories = histories.slice(0, currentHistoryIndex + 1);
-      if (newHistories.length === 0 || newHistories.at(-1) !== stringifiedSchema) {
-        newHistories.push(stringifiedSchema);
-        if (newHistories.length > maxHistories) {
-          newHistories = newHistories.slice(newHistories.length - maxHistories);
-        }
-      }
-
-      // Single atomic state update
-      set({
-        schema: newSchema,
-        fieldMap,
-        fieldParentMap: newFieldParentMap,
-        histories: newHistories,
-        totalHistories: newHistories.length,
-        currentHistoryIndex: newHistories.length - 1,
-      });
+      setSchema(newSchema);
 
       return duplicatedField.id;
     },
 
     moveField: (fieldId: string, newParentId: string, newIndex: number) => {
-      const { schema } = getState();
+      const { schema, setSchema } = getState();
       if (!schema?.form.fields) return;
       const field = getState().fieldMap.get(fieldId);
 
@@ -240,34 +218,11 @@ export function createFieldActions({ set, getState }: StateSetters): SchemaState
       newSchema.form.fields = removeFromParent(newSchema.form.fields);
       newSchema.form.fields = addToParent(newSchema.form.fields);
 
-      const { fieldMap, fieldParentMap } = getFieldInfoMap(newSchema.form.fields);
-
-      // Get current history state
-      const { maxHistories, histories, currentHistoryIndex } = getState();
-      const stringifiedSchema = JSON.stringify(newSchema);
-
-      // Prepare new history
-      let newHistories = histories.slice(0, currentHistoryIndex + 1);
-      if (newHistories.length === 0 || newHistories.at(-1) !== stringifiedSchema) {
-        newHistories.push(stringifiedSchema);
-        if (newHistories.length > maxHistories) {
-          newHistories = newHistories.slice(newHistories.length - maxHistories);
-        }
-      }
-
-      // Single atomic state update
-      set({
-        schema: newSchema,
-        fieldMap,
-        fieldParentMap,
-        histories: newHistories,
-        totalHistories: newHistories.length,
-        currentHistoryIndex: newHistories.length - 1,
-      });
+      setSchema(newSchema);
     },
 
     deleteField: (fieldId: string) => {
-      const { schema } = getState();
+      const { schema, setSchema } = getState();
       if (!schema?.form.fields) return;
 
       const newFields = removeFieldFromTree(schema.form.fields, fieldId);
@@ -277,30 +232,7 @@ export function createFieldActions({ set, getState }: StateSetters): SchemaState
         form: { ...schema.form, fields: newFields },
       };
 
-      const { fieldMap, fieldParentMap } = getFieldInfoMap(newFields);
-
-      // Get current history state
-      const { maxHistories, histories, currentHistoryIndex } = getState();
-      const stringifiedSchema = JSON.stringify(newSchema);
-
-      // Prepare new history
-      let newHistories = histories.slice(0, currentHistoryIndex + 1);
-      if (newHistories.length === 0 || newHistories.at(-1) !== stringifiedSchema) {
-        newHistories.push(stringifiedSchema);
-        if (newHistories.length > maxHistories) {
-          newHistories = newHistories.slice(newHistories.length - maxHistories);
-        }
-      }
-
-      // Single atomic state update
-      set({
-        schema: newSchema,
-        fieldMap,
-        fieldParentMap,
-        histories: newHistories,
-        totalHistories: newHistories.length,
-        currentHistoryIndex: newHistories.length - 1,
-      });
+      setSchema(newSchema);
     },
 
     movePage: (from: number, to: number) => {
@@ -325,6 +257,23 @@ export function createFieldActions({ set, getState }: StateSetters): SchemaState
       };
 
       set({ schema: newSchema });
+    },
+
+    renameField: (fieldId: string, newName: string) => {
+      const { schema, fieldMap, updateField } = getState();
+      if (!schema?.form.fields) return;
+      const field = fieldMap.get(fieldId);
+      if (!field) return;
+
+      const _updatedField = {
+        ...field,
+        sys: {
+          ...field.sys,
+          name: newName,
+        },
+      };
+
+      updateField(fieldId, _updatedField);
     },
   };
 }

@@ -44,6 +44,7 @@ function GroupField({ field }: GroupFieldProps) {
             onKeyDown={(e) => {
               if (e.key === 'Enter') commit();
               if (e.key === 'Escape') {
+                e.stopPropagation();
                 setValue(name);
                 setEditMode(false);
               }
@@ -55,7 +56,7 @@ function GroupField({ field }: GroupFieldProps) {
         )}
       </button>
       {field.children.map((child, index) => (
-        <RenderField field={child} key={child.id} parentId={field.id} childIndex={index} />
+        <RenderField fieldId={child.id} key={child.id} parentId={field.id} childIndex={index} />
       ))}
       {field.children.length === 0 && <EmptyArea parentId={field.id} />}
     </div>

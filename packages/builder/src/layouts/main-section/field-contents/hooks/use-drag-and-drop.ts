@@ -15,7 +15,7 @@ import { useEffect, useState } from 'react';
 import invariant from 'tiny-invariant';
 
 interface UseDragAndDropProps {
-  field: FormField;
+  field?: FormField;
   fieldRef: React.RefObject<HTMLDivElement>;
   dragHandlerRef: React.RefObject<HTMLDivElement>;
   handleDrop: (payload: ElementDropTargetEventBasePayload) => void;
@@ -54,6 +54,7 @@ export function useDragAndDrop({
     const dragEl = dragHandlerRef.current;
 
     invariant(el, 'RenderField element is not defined');
+    if (!field) return;
 
     const fn = [
       dropTargetForElements({
@@ -104,7 +105,7 @@ export function useDragAndDrop({
     }
 
     return combine(...fn);
-  }, [field.id, field.type, handleDrop, childIndex, parentId, canDrop, onChange]);
+  }, [field?.id, field?.type, handleDrop, childIndex, parentId, canDrop, onChange]);
 
   return {
     isDraggedOver,
