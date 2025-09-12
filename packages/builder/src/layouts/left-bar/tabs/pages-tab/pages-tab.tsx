@@ -11,6 +11,7 @@ import { SortableContext, sortableKeyboardCoordinates } from '@dnd-kit/sortable'
 import { FieldType, type PageFormField } from '@efie-form/core';
 import { FaPlus } from 'react-icons/fa6';
 import Button from '../../../../components/elements/button';
+import { getNextFieldCount } from '../../../../lib/generate-field-name';
 import { getDefaultField } from '../../../../lib/get-default-field';
 import { useSchemaStore } from '../../../../lib/state/schema.state';
 import { useSettingsStore } from '../../../../lib/state/settings.state';
@@ -34,6 +35,7 @@ function PagesTab() {
       page: {
         name: `Page ${pages.length + 1}`,
       },
+      nextFieldCount: getNextFieldCount(schema),
     });
 
     addField(newPage);

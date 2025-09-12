@@ -21,6 +21,9 @@ import type {
 export interface BaseFormField {
   id: string;
   type: FieldType;
+  sys: {
+    name: string;
+  };
 }
 
 export interface FormInputField {
