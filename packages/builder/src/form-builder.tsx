@@ -10,8 +10,6 @@ const FormBuilder = () => {
 
   return (
     <div
-      role="button"
-      tabIndex={0}
       className={cn('flex w-full', {
         'h-screen': !height,
       })}

@@ -26,7 +26,7 @@ export function FieldContainer({
       data-field="true"
       id={`field-container-${field.id}`}
       className={cn(
-        '-outline-offset-2 relative h-full transform rounded-md p-1 outline outline-2 outline-[#00000000]',
+        '-outline-offset-2 relative h-full transform rounded-md rounded-br-none p-1 outline outline-2 outline-[#00000000]',
         {
           '!outline-primary relative z-50': isSelected,
           '[&:not(:has(div[data-field=true]:hover))]:hover:outline-neutral-100':
