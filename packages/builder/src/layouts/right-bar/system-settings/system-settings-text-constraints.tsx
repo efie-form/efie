@@ -28,10 +28,7 @@ export default function SystemSettingsTextConstraints({
 
   const toggleEnabled = (next: boolean) => {
     if (next) {
-      const base: PropValueTextConstraints = lastConstraintsRef.current || {
-        minChars: 1,
-        maxChars: 500,
-      };
+      const base: PropValueTextConstraints = lastConstraintsRef.current || {};
       setValue(base);
     } else {
       lastConstraintsRef.current = constraintsValue ? { ...constraintsValue } : undefined;
@@ -41,19 +38,50 @@ export default function SystemSettingsTextConstraints({
 
   const updateConstraint = (field: keyof PropValueTextConstraints, value?: number) => {
     if (!constraintsValue) return;
+    console.log(value);
 
-    const updatedConstraints = { ...constraintsValue };
+    // Start with a simple update
+    let updatedConstraints = {
+      ...constraintsValue,
+      [field]: value,
+    };
 
-    if (value === undefined) {
-      // Remove the field when value is undefined
-      delete updatedConstraints[field];
-    } else {
-      updatedConstraints[field] = value;
+    // Apply validation only when setting a value (not when clearing)
+    if (value !== undefined) {
+      if (
+        field === 'minChars' &&
+        updatedConstraints.maxChars !== undefined &&
+        value > updatedConstraints.maxChars
+      ) {
+        updatedConstraints = { ...updatedConstraints, maxChars: value };
+      }
+      if (
+        field === 'maxChars' &&
+        updatedConstraints.minChars !== undefined &&
+        value < updatedConstraints.minChars
+      ) {
+        updatedConstraints = { ...updatedConstraints, minChars: value };
+      }
+      if (
+        field === 'minWords' &&
+        updatedConstraints.maxWords !== undefined &&
+        value > updatedConstraints.maxWords
+      ) {
+        updatedConstraints = { ...updatedConstraints, maxWords: value };
+      }
+      if (
+        field === 'maxWords' &&
+        updatedConstraints.minWords !== undefined &&
+        value < updatedConstraints.minWords
+      ) {
+        updatedConstraints = { ...updatedConstraints, minWords: value };
+      }
     }
 
-    setValue(updatedConstraints);
+    setValue(updatedConstraints as PropValueTextConstraints);
   };
 
+  console.log(constraintsValue);
   return (
     <SettingsFieldSwitchWithDropdown
       label={config.label}
@@ -61,45 +89,54 @@ export default function SystemSettingsTextConstraints({
       onOpenChange={toggleEnabled}
       divider
     >
-      <div className="space-y-3">
-        <div className="grid grid-cols-2 gap-2">
-          <div>
-            <div className="text-xs text-gray-600 mb-1">Min Characters</div>
-            <NumberInput
-              value={constraintsValue?.minChars}
-              onChange={(v) => updateConstraint('minChars', v)}
-              disabled={!enabled}
-              inputProps={{ min: 0 }}
-            />
-          </div>
-          <div>
-            <div className="text-xs text-gray-600 mb-1">Max Characters</div>
-            <NumberInput
-              value={constraintsValue?.maxChars}
-              onChange={(v) => updateConstraint('maxChars', v)}
-              disabled={!enabled}
-              inputProps={{ min: 1 }}
-            />
+      <div className="space-y-4">
+        {/* Characters Section */}
+        <div>
+          <div className="text-xs font-medium text-gray-700 mb-2">Characters</div>
+          <div className="grid grid-cols-2 gap-2">
+            <div>
+              <div className="text-xs text-gray-500 mb-1">Min</div>
+              <NumberInput
+                value={constraintsValue?.minChars}
+                onChange={(v) => updateConstraint('minChars', v)}
+                disabled={!enabled}
+                inputProps={{ min: 0 }}
+              />
+            </div>
+            <div>
+              <div className="text-xs text-gray-500 mb-1">Max</div>
+              <NumberInput
+                value={constraintsValue?.maxChars}
+                onChange={(v) => updateConstraint('maxChars', v)}
+                disabled={!enabled}
+                inputProps={{ min: constraintsValue?.minChars || 1 }}
+              />
+            </div>
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-2">
-          <div>
-            <div className="text-xs text-gray-600 mb-1">Min Words</div>
-            <NumberInput
-              value={constraintsValue?.minWords}
-              onChange={(v) => updateConstraint('minWords', v)}
-              disabled={!enabled}
-              inputProps={{ min: 0 }}
-            />
-          </div>
-          <div>
-            <div className="text-xs text-gray-600 mb-1">Max Words</div>
-            <NumberInput
-              value={constraintsValue?.maxWords}
-              onChange={(v) => updateConstraint('maxWords', v)}
-              disabled={!enabled}
-              inputProps={{ min: 1 }}
-            />
+
+        {/* Words Section */}
+        <div>
+          <div className="text-xs font-medium text-gray-700 mb-2">Words</div>
+          <div className="grid grid-cols-2 gap-2">
+            <div>
+              <div className="text-xs text-gray-500 mb-1">Min</div>
+              <NumberInput
+                value={constraintsValue?.minWords}
+                onChange={(v) => updateConstraint('minWords', v)}
+                disabled={!enabled}
+                inputProps={{ min: 0 }}
+              />
+            </div>
+            <div>
+              <div className="text-xs text-gray-500 mb-1">Max</div>
+              <NumberInput
+                value={constraintsValue?.maxWords}
+                onChange={(v) => updateConstraint('maxWords', v)}
+                disabled={!enabled}
+                inputProps={{ min: constraintsValue?.minWords || 1 }}
+              />
+            </div>
           </div>
         </div>
       </div>

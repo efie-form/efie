@@ -10,10 +10,10 @@ function NumberInput({ inputProps, value, onChange, ...props }: NumberProps) {
   return (
     <Input
       {...props}
-      value={value?.toString()}
+      value={isEmpty(value) ? '' : value?.toString()}
       onChange={(newValue) => {
         if (!onChange) return; // uncontrolled
-        if (newValue === undefined || newValue === '') {
+        if (isEmpty(newValue)) {
           onChange();
         } else {
           onChange(Number.parseInt(newValue, 10));
@@ -28,3 +28,7 @@ function NumberInput({ inputProps, value, onChange, ...props }: NumberProps) {
 }
 
 export default NumberInput;
+
+function isEmpty(value?: string | number | null) {
+  return value === undefined || value === null || value === '';
+}
