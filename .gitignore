@@ -153,3 +153,7 @@ dist-ssr
 
 # Cursor files
 .cursor/
+
+# Yalc files (local package development)
+.yalc/
+yalc.lock
