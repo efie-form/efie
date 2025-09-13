@@ -1,8 +1,9 @@
 import { FieldType } from '@efie-form/core';
 import { HiX } from 'react-icons/hi';
 import { LuCornerLeftUp } from 'react-icons/lu';
+import EditableText from '../../../components/elements/editable-text';
 import Tooltip from '../../../components/elements/tooltip';
-import { FIELDS_NAME, RIGHT_BAR_TABS } from '../../../lib/constant';
+import { RIGHT_BAR_TABS } from '../../../lib/constant';
 import getSettingsParentField from '../../../lib/get-selectable-parent-field';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import { useSettingsStore } from '../../../lib/state/settings.state';
@@ -11,7 +12,7 @@ import RenderSettings from '../render-settings';
 function FieldPropertiesTab() {
   const { selectedFieldId, clearSelectedFieldId, setActiveTab, setSelectedFieldId } =
     useSettingsStore();
-  const { getFieldById } = useSchemaStore();
+  const { getFieldById, renameField } = useSchemaStore();
 
   const field = getFieldById(selectedFieldId);
 
@@ -40,7 +41,15 @@ function FieldPropertiesTab() {
               <LuCornerLeftUp className="size-3.5" />
             </button>
           </Tooltip>
-          <p className="typography-body1 font-medium text-neutral-700">{FIELDS_NAME[field.type]}</p>
+          <EditableText
+            className="typography-body1 font-medium text-neutral-700"
+            defaultValue={field.sys.name}
+            onSave={(newName) => {
+              renameField(field.id, newName);
+            }}
+            inputClassName="typography-body1 font-medium text-neutral-700"
+            fallback="Untitled field"
+          />
         </div>
         <button
           type="button"

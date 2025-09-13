@@ -6,9 +6,10 @@ import {
   type PropValue,
   type PropValueString,
 } from '@efie-form/core';
-import { type CSSProperties, useEffect, useRef, useState } from 'react';
+import { type CSSProperties, useState } from 'react';
 import { FaCheck, FaTrash, FaXmark } from 'react-icons/fa6';
 import { MdOutlineDragIndicator } from 'react-icons/md';
+import EditableText from '../../../../components/elements/editable-text';
 import { useSchemaStore } from '../../../../lib/state/schema.state';
 import { cn } from '../../../../lib/utils';
 
@@ -25,39 +26,21 @@ export default function PageItem({ page, onDelete, isCurrentPage, onSelect }: Pa
     id: page.id,
   });
   const [deleteConfirm, setDeleteConfirm] = useState(false);
-  const [editMode, setEditMode] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
   const fieldProperty = useSchemaStore((state) =>
     state.getFieldProperty(page.id, PropertyType.NAME),
   );
   const updateFieldProperty = useSchemaStore((state) => state.updateFieldProperty);
-  const name = getValue(fieldProperty?.value);
-
-  const [inputName, setInputName] = useState(page.sys.name);
 
   const style: CSSProperties = {
     transform: transform ? `translateY(${transform.y}px)` : undefined,
     transition,
   };
 
-  useEffect(() => {
-    if (editMode) {
-      inputRef.current?.focus();
-    }
-  }, [editMode]);
-
-  const handleRename = () => {
+  const handleRename = (newName: string) => {
     updateFieldProperty(page.id, {
       type: PropertyType.NAME,
-      value: inputName,
+      value: newName,
     });
-
-    setEditMode(false);
-  };
-
-  const handleCancelRename = () => {
-    setInputName(name);
-    setEditMode(false);
   };
 
   return (
@@ -77,9 +60,6 @@ export default function PageItem({ page, onDelete, isCurrentPage, onSelect }: Pa
       onClick={onSelect}
       onKeyDown={onSelect}
       tabIndex={0}
-      onDoubleClick={() => {
-        setEditMode(true);
-      }}
       onMouseLeave={() => setDeleteConfirm(false)}
     >
       <div className="flex items-center">
@@ -91,26 +71,12 @@ export default function PageItem({ page, onDelete, isCurrentPage, onSelect }: Pa
         >
           <MdOutlineDragIndicator />
         </span>
-        {editMode ? (
-          <input
-            ref={inputRef}
-            value={inputName}
-            className="typography-body3 px-1 py-0.5 outline-primary"
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                handleRename();
-              } else if (e.key === 'Escape') {
-                handleCancelRename();
-              }
-            }}
-            onChange={(e) => setInputName(e.target.value)}
-            onBlur={() => {
-              handleRename();
-            }}
-          />
-        ) : (
-          <span className="typography-body3 text-neutral-900">{inputName}</span>
-        )}
+        <EditableText
+          defaultValue={getValue(fieldProperty?.value)}
+          onSave={handleRename}
+          className="typography-body3 text-neutral-900"
+          fallback="Untitled page"
+        />
       </div>
       <span className="invisible flex gap-2 pe-2 group-hover:visible">
         {deleteConfirm ? (
