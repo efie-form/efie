@@ -18,7 +18,7 @@ export interface SchemaStateRuleActions {
   removeAction: (ruleId: string, actionId: string) => void;
 }
 
-export function createRuleActions({ getState, set }: StateSetters): SchemaStateRuleActions {
+export function createRuleActions({ getState }: StateSetters): SchemaStateRuleActions {
   return {
     getAllRules: () => {
       const { schema } = getState();

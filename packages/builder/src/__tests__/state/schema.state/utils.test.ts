@@ -16,6 +16,9 @@ import {
 const makePage = (id: string, name = 'Page'): FormField => ({
   id,
   type: FieldType.PAGE,
+  sys: {
+    name: id,
+  },
   children: [],
   props: [{ type: PropertyType.NAME, value: name }],
 });
@@ -23,6 +26,9 @@ const makePage = (id: string, name = 'Page'): FormField => ({
 const makeShort = (id: string, label = 'Short', name = 'short'): FormField => ({
   id,
   type: FieldType.SHORT_TEXT,
+  sys: {
+    name: id,
+  },
   form: { name },
   props: [{ type: PropertyType.LABEL, value: label }],
 });

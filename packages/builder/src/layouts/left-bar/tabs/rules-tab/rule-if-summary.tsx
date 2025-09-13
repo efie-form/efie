@@ -1,7 +1,6 @@
 import { type ConditionNode, type ConditionTree, type Operand, Operator } from '@efie-form/core';
 import { AiFillCaretRight } from 'react-icons/ai';
 import { useSchemaStore } from '../../../../lib/state/schema.state';
-import { getFieldProp } from '../../../../lib/utils';
 
 const LOGIC_LABEL = {
   all: 'ALL of:',

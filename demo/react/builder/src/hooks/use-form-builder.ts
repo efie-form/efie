@@ -9,10 +9,16 @@ const sampleSchema: FormSchema = {
       {
         id: 'page1',
         type: FieldType.PAGE,
+        sys: {
+          name: 'page1',
+        },
         children: [
           {
             id: 'field1',
             type: FieldType.SHORT_TEXT,
+            sys: {
+              name: 'field1',
+            },
             form: {
               name: 'sample_field',
             },
