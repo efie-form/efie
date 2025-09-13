@@ -16,8 +16,8 @@ function ColumnsField({ field }: ColumnsFieldProps) {
           {field.children.map((child, index) => (
             <RenderField
               key={`${field.id}-${child.id}`}
-              field={child}
               parentId={field.id}
+              fieldId={child.id}
               childIndex={index}
             />
           ))}

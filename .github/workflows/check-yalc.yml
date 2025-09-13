@@ -1,0 +1,74 @@
+name: Check Yalc Cleanup
+
+on:
+  pull_request:
+    branches: 
+      - main
+    types: [opened, synchronize, reopened]
+
+jobs:
+  check-yalc:
+    name: Check Yalc Files and Dependencies
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Check for yalc.lock files
+        run: |
+          echo "Checking for yalc.lock files..."
+          YALC_LOCK_FILES=$(find . -name "yalc.lock" -type f 2>/dev/null || true)
+          if [ -n "$YALC_LOCK_FILES" ]; then
+            echo "❌ Found yalc.lock files that should be removed before merge:"
+            echo "$YALC_LOCK_FILES"
+            exit 1
+          else
+            echo "✅ No yalc.lock files found"
+          fi
+
+      - name: Check for .yalc directories
+        run: |
+          echo "Checking for .yalc directories..."
+          YALC_DIRS=$(find . -name ".yalc" -type d 2>/dev/null || true)
+          if [ -n "$YALC_DIRS" ]; then
+            echo "❌ Found .yalc directories that should be removed before merge:"
+            echo "$YALC_DIRS"
+            exit 1
+          else
+            echo "✅ No .yalc directories found"
+          fi
+
+      - name: Check for yalc file:// dependencies in package.json files
+        run: |
+          echo "Checking for yalc file:// dependencies in package.json files..."
+          YALC_DEPS=$(grep -r "file:\.yalc" --include="package.json" --exclude-dir=node_modules . 2>/dev/null || true)
+          if [ -n "$YALC_DEPS" ]; then
+            echo "❌ Found yalc file:// dependencies that should be removed before merge:"
+            echo "$YALC_DEPS"
+            echo ""
+            echo "These dependencies should be changed back to proper version numbers."
+            echo "Run 'pnpm yalc:remove' or manually update the package.json files."
+            exit 1
+          else
+            echo "✅ No yalc file:// dependencies found"
+          fi
+
+      - name: Check for yalcSig in package.json files
+        run: |
+          echo "Checking for yalcSig entries in package.json files..."
+          YALC_SIG=$(grep -r "yalcSig" --include="package.json" --exclude-dir=node_modules . 2>/dev/null || true)
+          if [ -n "$YALC_SIG" ]; then
+            echo "❌ Found yalcSig entries that should be removed before merge:"
+            echo "$YALC_SIG"
+            echo ""
+            echo "These signatures indicate yalc usage and should be cleaned up."
+            exit 1
+          else
+            echo "✅ No yalcSig entries found"
+          fi
+
+      - name: Success message
+        run: |
+          echo "🎉 All yalc cleanup checks passed!"
+          echo "The codebase is ready for merge without yalc remnants."

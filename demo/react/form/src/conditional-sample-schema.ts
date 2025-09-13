@@ -7,10 +7,16 @@ export const conditionalSampleSchema: FormSchema = {
       {
         id: 'main_page',
         type: 'page',
+        sys: {
+          name: 'main_page',
+        },
         children: [
           {
             type: 'heading',
             id: 'title_heading',
+            sys: {
+              name: 'title_heading',
+            },
             props: [
               {
                 type: 'heading_content',
@@ -39,6 +45,9 @@ export const conditionalSampleSchema: FormSchema = {
           {
             id: 'has_experience',
             type: 'single_choice',
+            sys: {
+              name: 'has_experience',
+            },
             form: {
               name: 'has_experience',
             },
@@ -59,6 +68,9 @@ export const conditionalSampleSchema: FormSchema = {
           {
             id: 'experience_years',
             type: 'number',
+            sys: {
+              name: 'experience_years',
+            },
             form: {
               name: 'experience_years',
             },
@@ -76,6 +88,9 @@ export const conditionalSampleSchema: FormSchema = {
           {
             id: 'beginner_help',
             type: 'long_text',
+            sys: {
+              name: 'beginner_help',
+            },
             form: {
               name: 'beginner_help',
             },
@@ -93,6 +108,9 @@ export const conditionalSampleSchema: FormSchema = {
           {
             id: 'advanced_tools',
             type: 'multiple_choices',
+            sys: {
+              name: 'advanced_tools',
+            },
             form: {
               name: 'advanced_tools',
             },
@@ -115,6 +133,9 @@ export const conditionalSampleSchema: FormSchema = {
           {
             id: 'submit_button',
             type: 'button',
+            sys: {
+              name: 'submit_button',
+            },
             props: [
               {
                 type: 'label',

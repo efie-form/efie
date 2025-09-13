@@ -18,27 +18,7 @@ export interface SchemaStateRuleActions {
   removeAction: (ruleId: string, actionId: string) => void;
 }
 
-export function createRuleActions({ getState, set }: StateSetters): SchemaStateRuleActions {
-  const commit = (newSchema: FormSchema) => {
-    const { maxHistories, histories, currentHistoryIndex } = getState();
-    const stringifiedSchema = JSON.stringify(newSchema);
-
-    let newHistories = histories.slice(0, currentHistoryIndex + 1);
-    if (newHistories.length === 0 || newHistories.at(-1) !== stringifiedSchema) {
-      newHistories.push(stringifiedSchema);
-      if (newHistories.length > maxHistories) {
-        newHistories = newHistories.slice(newHistories.length - maxHistories);
-      }
-    }
-
-    set({
-      schema: newSchema,
-      histories: newHistories,
-      totalHistories: newHistories.length,
-      currentHistoryIndex: newHistories.length - 1,
-    });
-  };
-
+export function createRuleActions({ getState }: StateSetters): SchemaStateRuleActions {
   return {
     getAllRules: () => {
       const { schema } = getState();
@@ -49,7 +29,7 @@ export function createRuleActions({ getState, set }: StateSetters): SchemaStateR
       return schema?.form.rules?.find((r) => r.id === ruleId);
     },
     addRule: (rule, index) => {
-      const { schema } = getState();
+      const { schema, setSchema } = getState();
       if (!schema) return;
 
       const newRule = deepClone(rule);
@@ -68,11 +48,11 @@ export function createRuleActions({ getState, set }: StateSetters): SchemaStateR
         form: { ...schema.form, rules: newRules },
       };
 
-      commit(newSchema);
+      setSchema(newSchema);
     },
 
     removeRule: (ruleId) => {
-      const { schema } = getState();
+      const { schema, setSchema } = getState();
       if (!schema || !schema.form.rules?.length) return;
       const newRules = schema.form.rules.filter((r) => r.id !== ruleId);
       if (newRules.length === schema.form.rules.length) return; // no-op
@@ -81,11 +61,11 @@ export function createRuleActions({ getState, set }: StateSetters): SchemaStateR
         ...schema,
         form: { ...schema.form, rules: newRules },
       };
-      commit(newSchema);
+      setSchema(newSchema);
     },
 
     moveRule: (from, to) => {
-      const { schema } = getState();
+      const { schema, setSchema } = getState();
       const rules = schema?.form.rules ?? [];
       if (!schema || rules.length === 0) return;
       if (from < 0 || from >= rules.length || to < 0 || to >= rules.length || from === to) {
@@ -99,11 +79,11 @@ export function createRuleActions({ getState, set }: StateSetters): SchemaStateR
         ...schema,
         form: { ...schema.form, rules: newRules },
       };
-      commit(newSchema);
+      setSchema(newSchema);
     },
 
     updateRule: (ruleId, patch) => {
-      const { schema } = getState();
+      const { schema, setSchema } = getState();
       if (!schema || !schema.form.rules?.length) return;
       let changed = false;
       const newRules = schema.form.rules.map((r) => {
@@ -119,11 +99,11 @@ export function createRuleActions({ getState, set }: StateSetters): SchemaStateR
         ...schema,
         form: { ...schema.form, rules: newRules },
       };
-      commit(newSchema);
+      setSchema(newSchema);
     },
 
     setRuleConditions: (ruleId, when, actions) => {
-      const { schema } = getState();
+      const { schema, setSchema } = getState();
       if (!schema) return;
       const rules = schema.form.rules ?? [];
       const idx = rules.findIndex((r) => r.id === ruleId);
@@ -134,11 +114,11 @@ export function createRuleActions({ getState, set }: StateSetters): SchemaStateR
         ...schema,
         form: { ...schema.form, rules: newRules },
       };
-      commit(newSchema);
+      setSchema(newSchema);
     },
 
     updateRuleConditions: (ruleId, patch) => {
-      const { schema } = getState();
+      const { schema, setSchema } = getState();
       if (!schema) return;
       const rules = schema.form.rules ?? [];
       const idx = rules.findIndex((r) => r.id === ruleId);
@@ -154,11 +134,11 @@ export function createRuleActions({ getState, set }: StateSetters): SchemaStateR
         ...schema,
         form: { ...schema.form, rules: newRules },
       };
-      commit(newSchema);
+      setSchema(newSchema);
     },
 
     clearRuleConditions: (ruleId) => {
-      const { schema } = getState();
+      const { schema, setSchema } = getState();
       if (!schema) return;
       const rules = schema.form.rules ?? [];
       const idx = rules.findIndex((r) => r.id === ruleId);
@@ -173,11 +153,11 @@ export function createRuleActions({ getState, set }: StateSetters): SchemaStateR
         ...schema,
         form: { ...schema.form, rules: newRules },
       };
-      commit(newSchema);
+      setSchema(newSchema);
     },
 
     addAction: (ruleId, action, index) => {
-      const { schema } = getState();
+      const { schema, setSchema } = getState();
       if (!schema) return;
       const rules = schema.form.rules ?? [];
       const ruleIdx = rules.findIndex((r) => r.id === ruleId);
@@ -196,12 +176,12 @@ export function createRuleActions({ getState, set }: StateSetters): SchemaStateR
         ...schema,
         form: { ...schema.form, rules: newRules },
       };
-      commit(newSchema);
+      setSchema(newSchema);
       return newAction;
     },
 
     updateAction: (ruleId, actionId, next) => {
-      const { schema } = getState();
+      const { schema, setSchema } = getState();
       if (!schema) return;
       const rules = schema.form.rules ?? [];
       const ruleIdx = rules.findIndex((r) => r.id === ruleId);
@@ -218,11 +198,11 @@ export function createRuleActions({ getState, set }: StateSetters): SchemaStateR
         ...schema,
         form: { ...schema.form, rules: newRules },
       };
-      commit(newSchema);
+      setSchema(newSchema);
     },
 
     removeAction: (ruleId, actionId) => {
-      const { schema } = getState();
+      const { schema, setSchema } = getState();
       if (!schema) return;
       const rules = schema.form.rules ?? [];
       const ruleIdx = rules.findIndex((r) => r.id === ruleId);
@@ -238,7 +218,7 @@ export function createRuleActions({ getState, set }: StateSetters): SchemaStateR
         ...schema,
         form: { ...schema.form, rules: newRules },
       };
-      commit(newSchema);
+      setSchema(newSchema);
     },
   };
 }

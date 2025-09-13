@@ -7,10 +7,16 @@ export const sampleSchema: FormSchema = {
       {
         id: 'TpRISVLvxQ',
         type: 'page',
+        sys: {
+          name: 'TpRISVLvxQ',
+        },
         children: [
           {
             type: 'heading',
             id: 'd08i87t5ap',
+            sys: {
+              name: 'd08i87t5ap',
+            },
             props: [
               {
                 type: 'heading_content',
@@ -39,6 +45,9 @@ export const sampleSchema: FormSchema = {
           {
             id: 'r6mi72do2v',
             type: 'short_text',
+            sys: {
+              name: 'r6mi72do2v',
+            },
             form: {
               name: '',
             },
@@ -56,6 +65,9 @@ export const sampleSchema: FormSchema = {
           {
             id: '70r0bi5q3c',
             type: 'button',
+            sys: {
+              name: '70r0bi5q3c',
+            },
             props: [
               {
                 type: 'label',

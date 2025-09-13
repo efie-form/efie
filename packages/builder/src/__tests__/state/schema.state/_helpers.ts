@@ -4,6 +4,9 @@ import { clearAllDebounceTimers, useSchemaStore } from '../../../lib/state/schem
 export const makePage = (id: string, name = 'Page'): FormField => ({
   id,
   type: FieldType.PAGE,
+  sys: {
+    name: id,
+  },
   children: [],
   props: [{ type: PropertyType.NAME, value: name }],
 });
@@ -11,6 +14,9 @@ export const makePage = (id: string, name = 'Page'): FormField => ({
 export const makeShort = (id: string, label = 'Short', name = 'short'): FormField => ({
   id,
   type: FieldType.SHORT_TEXT,
+  sys: {
+    name: id,
+  },
   form: { name },
   props: [{ type: PropertyType.LABEL, value: label }],
 });
@@ -18,6 +24,9 @@ export const makeShort = (id: string, label = 'Short', name = 'short'): FormFiel
 export const makeGroup = (id: string): FormField => ({
   id,
   type: FieldType.GROUP,
+  sys: {
+    name: id,
+  },
   children: [],
   props: [],
 });

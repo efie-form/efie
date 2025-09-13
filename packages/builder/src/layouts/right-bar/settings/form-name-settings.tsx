@@ -15,7 +15,7 @@ export default function FieldNameSettings({ fieldId }: FieldNameSettingsProps) {
   if (!fieldNameEditable) return null;
 
   return (
-    <SettingsFieldVertical label="Field Name" divider>
+    <SettingsFieldVertical label="Form Input Name" divider>
       <Input value={fieldName} onChange={(newValue) => setFieldName(fieldId, newValue)} />
     </SettingsFieldVertical>
   );

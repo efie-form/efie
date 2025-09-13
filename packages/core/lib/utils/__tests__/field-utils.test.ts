@@ -6,6 +6,9 @@ describe('Field Utils', () => {
   const createTestField = (hidden = false, required = false): ShortTextFormField => ({
     id: 'test-field',
     type: 'short_text',
+    sys: {
+      name: 'test-field',
+    },
     form: {
       name: 'test-name',
     },
@@ -44,6 +47,9 @@ describe('Field Utils', () => {
       const field: ShortTextFormField = {
         id: 'test-field',
         type: 'short_text',
+        sys: {
+          name: 'test-field',
+        },
         form: {
           name: 'test-name',
         },
@@ -73,6 +79,9 @@ describe('Field Utils', () => {
       const field: ShortTextFormField = {
         id: 'test-field',
         type: 'short_text',
+        sys: {
+          name: 'test-field',
+        },
         form: {
           name: 'test-name',
         },

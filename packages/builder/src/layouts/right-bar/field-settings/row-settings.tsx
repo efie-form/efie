@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { FaPlus, FaTrash } from 'react-icons/fa6';
 import Button from '../../../components/elements/button';
 import IconButton from '../../../components/elements/icon-button';
+import { getNextFieldCount } from '../../../lib/generate-field-name';
 import { getDefaultField } from '../../../lib/get-default-field';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import { getFieldProp } from '../../../lib/utils';
@@ -24,7 +25,7 @@ interface RowSettingsProps {
 }
 
 function RowSettings({ field }: RowSettingsProps) {
-  const { deleteField, updateField } = useSchemaStore();
+  const { deleteField, updateField, schema } = useSchemaStore();
   const [currentTab, setCurrentTab] = useState(field.children?.[0]?.id || '');
 
   const applyLayout = (columns: number[]) => {
@@ -50,6 +51,7 @@ function RowSettings({ field }: RowSettingsProps) {
       const newColumn = getDefaultField({
         type: FieldType.COLUMN,
         column: { width },
+        nextFieldCount: getNextFieldCount(schema),
       });
 
       newColumns.push(newColumn);
@@ -68,6 +70,7 @@ function RowSettings({ field }: RowSettingsProps) {
     const newColumn = getDefaultField({
       type: FieldType.COLUMN,
       column: { width: avgWidth },
+      nextFieldCount: getNextFieldCount(schema),
     });
 
     const newColumns = equalColumnWidths([...field.children, newColumn]);

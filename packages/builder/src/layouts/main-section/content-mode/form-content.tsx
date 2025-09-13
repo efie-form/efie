@@ -21,7 +21,6 @@ function FormContent() {
         clearSelectedFieldId();
       }
     };
-
     document.addEventListener('keydown', handleEscape);
     return () => {
       document.removeEventListener('keydown', handleEscape);
@@ -43,10 +42,10 @@ function FormContent() {
           >
             {selectedPage.children.map((field, index) => (
               <RenderField
-                field={field}
                 key={field.id}
                 childIndex={index}
                 parentId={selectedPage.id}
+                fieldId={field.id}
               />
             ))}
             {!hasChildren && <EmptyArea key={selectedPage.id} parentId={selectedPage.id} />}

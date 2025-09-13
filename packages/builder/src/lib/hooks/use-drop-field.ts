@@ -6,6 +6,7 @@ import { extractInstruction } from '@atlaskit/pragmatic-drag-and-drop-hitbox/lis
 import { FieldType } from '@efie-form/core';
 import invariant from 'tiny-invariant';
 import { isMoveField, isNewField } from '../field-type-guard';
+import { getNextFieldCount } from '../generate-field-name';
 import { getDefaultField } from '../get-default-field';
 import { useSchemaStore } from '../state/schema.state';
 
@@ -18,7 +19,7 @@ interface UseDropFieldProps {
 }
 
 export default function useDropField({ index, parentId, fieldType }: UseDropFieldProps) {
-  const { addField, moveField, listChildrenId } = useSchemaStore();
+  const { addField, moveField, listChildrenId, schema } = useSchemaStore();
 
   const handleAddField = ({ self, source }: ElementDropTargetEventBasePayload) => {
     const instruction = extractInstruction(self.data);
@@ -34,7 +35,8 @@ export default function useDropField({ index, parentId, fieldType }: UseDropFiel
 
     const newField = getDefaultField({
       type: source.data.type,
-      fieldName: source.data.formKey,
+      formName: source.data.formKey,
+      nextFieldCount: getNextFieldCount(schema),
     });
 
     addField(newField, parentId, targetIndex);

@@ -32,7 +32,7 @@ function RowField({ field }: RowFieldProps) {
             }}
             className="self-stretch"
           >
-            <RenderField field={child} noSelect parentId={field.id} childIndex={index} />
+            <RenderField fieldId={child.id} noSelect parentId={field.id} childIndex={index} />
           </div>
         ))}
     </div>

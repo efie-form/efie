@@ -1,7 +1,6 @@
 import type { Action } from '@efie-form/core';
-import { PropertyType, RuleAction } from '@efie-form/core';
+import { RuleAction } from '@efie-form/core';
 import { useSchemaStore } from '../../../../lib/state/schema.state';
-import { getFieldProp } from '../../../../lib/utils';
 
 const ACTION_LABEL: Record<string, string> = {
   [RuleAction.SHOW_FIELDS]: 'show',
@@ -105,12 +104,9 @@ function FieldLabel({ fieldId }: FieldLabelProps) {
   const field = useSchemaStore((s) => s.getFieldById(fieldId));
   if (!field) return <span className="text-neutral-800">{fieldId}</span>;
 
-  const label = getFieldProp(field, PropertyType.LABEL);
-  const displayLabel = label?.value || fieldId;
-
   return (
     <span className="font-medium text-primary-700 bg-primary-200 p-0.5 rounded-sm">
-      {displayLabel}
+      {field.sys.name}
     </span>
   );
 }

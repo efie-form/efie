@@ -7,10 +7,16 @@ export const schema: FormSchema = {
       {
         id: 'giqmxeQnUJ',
         type: 'page',
+        sys: {
+          name: 'giqmxeQnUJ',
+        },
         children: [
           {
             type: 'heading',
             id: 'm9z0ftl1sz',
+            sys: {
+              name: 'm9z0ftl1sz',
+            },
             props: [
               {
                 type: 'heading_content',
@@ -40,6 +46,9 @@ export const schema: FormSchema = {
           {
             id: 's3sy9yr992',
             type: 'short_text',
+            sys: {
+              name: 's3sy9yr992',
+            },
             form: {
               name: '',
             },

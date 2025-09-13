@@ -35,7 +35,13 @@ describe('schema.state field-actions', () => {
 
   test('duplicateField deep clones with new ids and adds to schema', () => {
     const p1 = makePage('p1');
-    const g1: FormField = { id: 'g1', type: FieldType.GROUP, children: [], props: [] };
+    const g1: FormField = {
+      id: 'g1',
+      type: FieldType.GROUP,
+      sys: { name: 'g1' },
+      children: [],
+      props: [],
+    };
     const s1 = makeShort('s1');
     (g1 as any).children = [s1];
     (p1 as any).children = [g1];
