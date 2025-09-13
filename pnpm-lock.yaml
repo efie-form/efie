@@ -427,9 +427,6 @@ importers:
 
   packages/react:
     dependencies:
-      '@efie-form/core':
-        specifier: workspace:*
-        version: link:../core
       '@tiptap/core':
         specifier: ^3.3.0
         version: 3.3.0(@tiptap/pm@2.10.3)

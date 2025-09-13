@@ -63,6 +63,7 @@ export type {
   PropValuePasswordPolicy, // restored export
   PropValueSize,
   PropValueString,
+  PropValueTextConstraints,
 } from './types/field-property-value.type';
 export type {
   AddressFormField,
@@ -116,6 +117,7 @@ export type {
   FieldSystemPropPasswordRules,
   FieldSystemPropPlaceholder,
   FieldSystemPropRequired,
+  FieldSystemPropTextConstraints,
   PropertyDefinition,
 } from './types/property-definition';
 export type {
@@ -176,9 +178,10 @@ export type {
   FieldSystemConfigImageSrc,
   FieldSystemConfigLabel,
   FieldSystemConfigOptions,
-  FieldSystemConfigPasswordRules, // renamed
+  FieldSystemConfigPasswordRules,
   FieldSystemConfigPlaceholder,
   FieldSystemConfigRequired,
+  FieldSystemConfigTextConstraints,
   FieldsConfigsMap,
 } from './types/settings-config';
 export type { ValueSpec } from './types/value-spec.type';

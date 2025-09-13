@@ -17,6 +17,7 @@ import SystemSettingsLabel from './system-settings/system-settings-label';
 import SystemSettingsOptions from './system-settings/system-settings-options';
 import SystemSettingsPasswordRules from './system-settings/system-settings-password-policy'; // renamed for label usage
 import SystemSettingsPlaceholder from './system-settings/system-settings-placeholder';
+import SystemSettingsTextConstraints from './system-settings/system-settings-text-constraints';
 
 interface FieldSettingsProps {
   config: FieldConfig[];
@@ -99,6 +100,9 @@ export default function FieldSettings({
       }
       case PropertyType.PASSWORD_RULES: {
         return <SystemSettingsPasswordRules key={item.type} fieldId={fieldId} config={item} />;
+      }
+      case PropertyType.TEXT_CONSTRAINTS: {
+        return <SystemSettingsTextConstraints key={item.type} fieldId={fieldId} config={item} />;
       }
       default: {
         return item;
