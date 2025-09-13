@@ -11,6 +11,7 @@ import type {
   PropValuePasswordPolicy, // added
   PropValueSize,
   PropValueString,
+  PropValueTextConstraints,
 } from './field-property-value.type';
 
 export type FieldCustomProp =
@@ -35,7 +36,8 @@ export type FieldSystemProp =
   | FieldSystemPropName // renamed from PageName
   | FieldSystemPropAddressField
   | FieldSystemPropPasswordRules // renamed
-  | FieldSystemPropHidden; // visibility
+  | FieldSystemPropHidden // visibility
+  | FieldSystemPropTextConstraints;
 
 export interface FieldSystemPropLabel {
   type: typeof PropertyType.LABEL;
@@ -107,6 +109,11 @@ export interface FieldSystemPropPasswordRules {
 export interface FieldSystemPropHidden {
   type: typeof PropertyType.HIDDEN;
   value: PropValueBoolean; // true means hidden
+}
+
+export interface FieldSystemPropTextConstraints {
+  type: typeof PropertyType.TEXT_CONSTRAINTS;
+  value: PropValueTextConstraints;
 }
 
 /**

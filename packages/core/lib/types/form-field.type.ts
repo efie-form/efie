@@ -15,6 +15,7 @@ import type {
   FieldSystemPropPasswordRules, // fixed name
   FieldSystemPropPlaceholder,
   FieldSystemPropRequired,
+  FieldSystemPropTextConstraints,
 } from './property-definition';
 
 // Base form field interface
@@ -39,6 +40,7 @@ export interface ShortTextFormField extends BaseFormField, FormInputField {
     | FieldSystemPropPlaceholder
     | FieldSystemPropRequired
     | FieldSystemPropHidden
+    | FieldSystemPropTextConstraints
     | FieldCustomProp
   )[];
 }
@@ -50,6 +52,7 @@ export interface LongTextFormField extends BaseFormField, FormInputField {
     | FieldSystemPropPlaceholder
     | FieldSystemPropRequired
     | FieldSystemPropHidden
+    | FieldSystemPropTextConstraints
     | FieldCustomProp
   )[];
 }

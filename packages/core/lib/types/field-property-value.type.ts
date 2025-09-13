@@ -83,6 +83,13 @@ export type PropValueAddressField = {
   };
 };
 
+export interface PropValueTextConstraints {
+  minChars?: number;
+  maxChars?: number;
+  minWords?: number;
+  maxWords?: number;
+}
+
 export type PropValue =
   | PropValueString
   | PropValueNumber
@@ -98,4 +105,5 @@ export type PropValue =
   | PropValueJsonContent
   | PropValueButtonAction
   | PropValueAddressField
-  | PropValuePasswordPolicy; // combined
+  | PropValuePasswordPolicy
+  | PropValueTextConstraints;

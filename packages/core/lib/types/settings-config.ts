@@ -70,6 +70,11 @@ export interface FieldSystemConfigPasswordRules {
   label: string;
 }
 
+export interface FieldSystemConfigTextConstraints {
+  type: typeof PropertyType.TEXT_CONSTRAINTS;
+  label: string;
+}
+
 interface FieldCustomConfigBase {
   id: string;
   type: typeof PropertyType.CUSTOM;
@@ -123,7 +128,8 @@ export type FieldSystemConfig =
   | FieldSystemConfigImageSrc
   | FieldSystemConfigButtonAction
   | FieldSystemConfigColumnWidth
-  | FieldSystemConfigPasswordRules; // renamed
+  | FieldSystemConfigPasswordRules // renamed
+  | FieldSystemConfigTextConstraints;
 
 export type FieldCustomConfig =
   | FieldCustomConfigText
@@ -139,6 +145,7 @@ export interface FieldConfigShortText {
     | FieldSystemConfigPlaceholder
     | FieldSystemConfigRequired
     | FieldSystemConfigHidden
+    | FieldSystemConfigTextConstraints
     | FieldCustomConfig
   >;
 }
@@ -149,6 +156,7 @@ export interface FieldConfigLongText {
     | FieldSystemConfigPlaceholder
     | FieldSystemConfigRequired
     | FieldSystemConfigHidden
+    | FieldSystemConfigTextConstraints
     | FieldCustomConfig
   >;
 }

@@ -50,6 +50,7 @@
     "test:types": "tsd"
   },
   "dependencies": {
+    "@efie-form/core": "file:.yalc/@efie-form/core",
     "@tiptap/core": "^3.3.0",
     "react-hook-form": "^7.53.1"
   },
