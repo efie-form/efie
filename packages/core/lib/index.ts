@@ -56,6 +56,7 @@ export type {
   PropValueButtonAction,
   PropValueColor,
   PropValueJsonContent,
+  PropValueLimit,
   PropValueMargin,
   PropValueNumber,
   PropValueOptions,
@@ -181,6 +182,7 @@ export type {
   FieldSystemConfigPasswordRules,
   FieldSystemConfigPlaceholder,
   FieldSystemConfigRequired,
+  FieldSystemConfigSelectionLimit,
   FieldSystemConfigTextConstraints,
   FieldsConfigsMap,
 } from './types/settings-config';

@@ -15,6 +15,7 @@ import type {
   FieldSystemPropPasswordRules, // fixed name
   FieldSystemPropPlaceholder,
   FieldSystemPropRequired,
+  FieldSystemPropSelectionLimit,
   FieldSystemPropTextConstraints,
 } from './property-definition';
 
@@ -86,6 +87,7 @@ export interface MultipleChoiceFormField extends BaseFormField, FormInputField {
     | FieldSystemPropOptions
     | FieldSystemPropRequired
     | FieldSystemPropHidden
+    | FieldSystemPropSelectionLimit
     | FieldCustomProp
   )[];
 }
