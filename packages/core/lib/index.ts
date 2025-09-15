@@ -181,6 +181,7 @@ export type {
   FieldSystemConfigPasswordRules,
   FieldSystemConfigPlaceholder,
   FieldSystemConfigRequired,
+  FieldSystemConfigSelectionLimit,
   FieldSystemConfigTextConstraints,
   FieldsConfigsMap,
 } from './types/settings-config';

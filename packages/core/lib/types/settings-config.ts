@@ -75,6 +75,11 @@ export interface FieldSystemConfigTextConstraints {
   label: string;
 }
 
+export interface FieldSystemConfigSelectionLimit {
+  type: typeof PropertyType.SELECTION_LIMIT;
+  label: string;
+}
+
 interface FieldCustomConfigBase {
   id: string;
   type: typeof PropertyType.CUSTOM;
@@ -129,7 +134,8 @@ export type FieldSystemConfig =
   | FieldSystemConfigButtonAction
   | FieldSystemConfigColumnWidth
   | FieldSystemConfigPasswordRules // renamed
-  | FieldSystemConfigTextConstraints;
+  | FieldSystemConfigTextConstraints
+  | FieldSystemConfigSelectionLimit;
 
 export type FieldCustomConfig =
   | FieldCustomConfigText
@@ -187,6 +193,7 @@ export interface FieldConfigMultipleChoices {
     | FieldSystemConfigOptions
     | FieldSystemConfigRequired
     | FieldSystemConfigHidden
+    | FieldSystemConfigSelectionLimit
     | FieldCustomConfig
   >;
 }

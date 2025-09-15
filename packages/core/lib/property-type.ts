@@ -14,6 +14,7 @@ export const PropertyType = {
   PASSWORD_RULES: 'password_rules',
   HIDDEN: 'hidden',
   TEXT_CONSTRAINTS: 'text_constraints',
+  SELECTION_LIMIT: 'selection_limit',
   CUSTOM: 'custom',
 } as const;
 

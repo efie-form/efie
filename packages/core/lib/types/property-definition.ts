@@ -6,6 +6,7 @@ import type {
   PropValueButtonAction,
   PropValueColor,
   PropValueJsonContent,
+  PropValueLimit,
   PropValueNumber,
   PropValueOptions,
   PropValuePasswordPolicy, // added
@@ -114,6 +115,11 @@ export interface FieldSystemPropHidden {
 export interface FieldSystemPropTextConstraints {
   type: typeof PropertyType.TEXT_CONSTRAINTS;
   value: PropValueTextConstraints;
+}
+
+export interface FieldSystemPropSelectionLimit {
+  type: typeof PropertyType.SELECTION_LIMIT;
+  value: PropValueLimit;
 }
 
 /**

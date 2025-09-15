@@ -17,6 +17,7 @@ import SystemSettingsLabel from './system-settings/system-settings-label';
 import SystemSettingsOptions from './system-settings/system-settings-options';
 import SystemSettingsPasswordRules from './system-settings/system-settings-password-policy'; // renamed for label usage
 import SystemSettingsPlaceholder from './system-settings/system-settings-placeholder';
+import SystemSettingsSelectionLimit from './system-settings/system-settings-selection-limit';
 import SystemSettingsTextConstraints from './system-settings/system-settings-text-constraints';
 
 interface FieldSettingsProps {
@@ -103,6 +104,9 @@ export default function FieldSettings({
       }
       case PropertyType.TEXT_CONSTRAINTS: {
         return <SystemSettingsTextConstraints key={item.type} fieldId={fieldId} config={item} />;
+      }
+      case PropertyType.SELECTION_LIMIT: {
+        return <SystemSettingsSelectionLimit key={item.type} fieldId={fieldId} config={item} />;
       }
       default: {
         return item;

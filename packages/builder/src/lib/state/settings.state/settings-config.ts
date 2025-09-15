@@ -40,6 +40,7 @@ const settingsConfig: FieldsConfigsMap = {
     properties: [
       { type: PropertyType.LABEL, label: 'Label' },
       { type: PropertyType.OPTIONS, label: 'Options' },
+      { type: PropertyType.SELECTION_LIMIT, label: 'Selection Limit' },
       { type: PropertyType.REQUIRED, label: 'Required' },
       { type: PropertyType.HIDDEN, label: 'Hide field' },
     ],
