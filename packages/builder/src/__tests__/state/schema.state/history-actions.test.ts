@@ -59,15 +59,15 @@ describe('schema.state history-actions', () => {
     useSchemaStore.getState().setSchema(s2);
 
     const beforeUndo = useSchemaStore.getState().schema;
-    expect(beforeUndo?.form.fields[0].id).toBe('p2');
+    expect(beforeUndo?.form.fields[0].sys.id).toBe('p2');
 
     useSchemaStore.getState().undo();
     const afterUndo = useSchemaStore.getState().schema;
-    expect(afterUndo?.form.fields[0].id).toBe('p1');
+    expect(afterUndo?.form.fields[0].sys.id).toBe('p1');
 
     useSchemaStore.getState().redo();
     const afterRedo = useSchemaStore.getState().schema;
-    expect(afterRedo?.form.fields[0].id).toBe('p2');
+    expect(afterRedo?.form.fields[0].sys.id).toBe('p2');
   });
 
   test('clearHistories resets to single current entry', () => {

@@ -28,9 +28,11 @@ describe('schema.state access-methods', () => {
   test('listChildrenId returns nested ids', () => {
     const p1 = makePage('p1');
     const g1: FormField = {
-      id: 'g1',
-      type: FieldType.GROUP,
-      sys: { name: 'g1' },
+      sys: {
+        id: 'g1',
+        name: 'g1',
+        type: FieldType.GROUP,
+      },
       children: [],
       props: [],
     };
