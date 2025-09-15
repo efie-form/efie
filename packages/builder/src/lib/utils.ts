@@ -1,5 +1,11 @@
 import type { PropertyDefinition } from '@efie-form/core';
-import { FieldInputType, FieldType, type FormField, type PropertyType } from '@efie-form/core';
+import {
+  FieldInputType,
+  FieldType,
+  type FormField,
+  isFieldOfTypes,
+  type PropertyType,
+} from '@efie-form/core';
 import classNames from 'classnames';
 import { twMerge } from 'tailwind-merge';
 
@@ -29,8 +35,6 @@ export function getFieldProp<T extends PropertyType>(
   return prop as Extract<PropertyDefinition, { type: T }>;
 }
 
-export function isInputField(
-  field: FormField,
-): field is Extract<FormField, { type: FieldInputType }> {
-  return Object.values(FieldInputType).some((f) => f === field.sys.type);
+export function isInputField(field: FormField) {
+  return isFieldOfTypes(field, ...Object.values(FieldInputType));
 }

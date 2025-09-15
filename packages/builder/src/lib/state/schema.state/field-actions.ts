@@ -265,15 +265,9 @@ export function createFieldActions({ set, getState }: StateSetters): SchemaState
       const field = fieldMap.get(fieldId);
       if (!field) return;
 
-      const _updatedField = {
-        ...field,
-        sys: {
-          ...field.sys,
-          name: newName,
-        },
-      };
+      field.sys.name = newName;
 
-      updateField(fieldId, _updatedField);
+      updateField(fieldId, field);
     },
   };
 }

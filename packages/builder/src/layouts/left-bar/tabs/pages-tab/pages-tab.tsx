@@ -8,7 +8,7 @@ import {
   useSensors,
 } from '@dnd-kit/core';
 import { SortableContext, sortableKeyboardCoordinates } from '@dnd-kit/sortable';
-import { FieldType, type PageFormField } from '@efie-form/core';
+import { FieldType, isFieldOfTypes, type PageFormField } from '@efie-form/core';
 import { FaPlus } from 'react-icons/fa6';
 import Button from '../../../../components/elements/button';
 import { getNextFieldCount } from '../../../../lib/generate-field-name';
@@ -27,7 +27,7 @@ function PagesTab() {
     }),
   );
 
-  const pages = schema?.form.fields.filter((field) => field.sys.type === FieldType.PAGE) || [];
+  const pages = schema?.form.fields.filter((field) => isFieldOfTypes(field, FieldType.PAGE)) || [];
 
   const handleAddNewPage = () => {
     const newPage = getDefaultField({

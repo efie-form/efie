@@ -28,9 +28,9 @@ export default function FieldsSelect({ value, onChange, fieldTypes }: FieldsSele
           };
         })}
       searchable
-      value={value?.id}
+      value={value?.sys.id}
       onChange={(id) => {
-        const field = allFields.find((f) => f.id === id);
+        const field = allFields.find((f) => f.sys.id === id);
 
         if (field) onChange?.(field);
       }}

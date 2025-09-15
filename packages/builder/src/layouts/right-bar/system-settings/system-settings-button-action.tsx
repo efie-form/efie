@@ -52,8 +52,8 @@ export default function SystemSettingsButtonAction({
         const pageNameProp = page.props?.find((prop) => prop.type === PropertyType.NAME);
         const pageName = isStringValue(pageNameProp?.value)
           ? pageNameProp.value
-          : `Page ${page.id}`;
-        return { value: page.id, label: pageName };
+          : `Page ${page.sys.id}`;
+        return { value: page.sys.id, label: pageName };
       }) || [];
 
   // Store previous values to restore when switching between action types

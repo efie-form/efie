@@ -1,4 +1,4 @@
-import { FieldType } from '@efie-form/core';
+import { FieldType, isFieldOfTypes } from '@efie-form/core';
 import { useEffect } from 'react';
 import { useSchemaStore } from '../../../lib/state/schema.state';
 import { useSettingsStore } from '../../../lib/state/settings.state';
@@ -27,7 +27,7 @@ function FormContent() {
     };
   }, [clearSelectedFieldId]);
 
-  if (!selectedPage || selectedPage.type !== FieldType.PAGE) return null;
+  if (!selectedPage || !isFieldOfTypes(selectedPage, FieldType.PAGE)) return null;
   const hasChildren = selectedPage.children.length > 0;
 
   return (
@@ -44,11 +44,11 @@ function FormContent() {
               <RenderField
                 key={field.sys.id}
                 childIndex={index}
-                parentId={selectedPage.id}
+                parentId={selectedPage.sys.id}
                 fieldId={field.sys.id}
               />
             ))}
-            {!hasChildren && <EmptyArea key={selectedPage.id} parentId={selectedPage.id} />}
+            {!hasChildren && <EmptyArea key={selectedPage.sys.id} parentId={selectedPage.sys.id} />}
           </div>
           {hasChildren && (
             <div
@@ -58,7 +58,7 @@ function FormContent() {
               }}
             >
               <BottomDropArea
-                parentId={selectedPage.id}
+                parentId={selectedPage.sys.id}
                 totalChildren={selectedPage.children.length}
               />
             </div>

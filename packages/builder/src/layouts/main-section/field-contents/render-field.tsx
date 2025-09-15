@@ -20,7 +20,7 @@ function RenderField({ fieldId, noSelect, parentId, childIndex }: RenderFieldPro
   const { setSelectedFieldId, clearSelectedFieldId, setActiveTab } = useSettingsStore();
   const field = useSchemaStore((state) => state.getFieldById(fieldId));
   const selectedFieldId = useSettingsStore((state) => state.selectedFieldId);
-  const isSelected = selectedFieldId === field?.id;
+  const isSelected = selectedFieldId === field?.sys.id;
   const { deleteField, duplicateField } = useSchemaStore();
   const fieldRef = useRef<HTMLDivElement>(null);
   const dragHandlerRef = useRef<HTMLDivElement>(null);
@@ -28,7 +28,7 @@ function RenderField({ fieldId, noSelect, parentId, childIndex }: RenderFieldPro
   const { handleDrop, canDrop } = useDropField({
     index: childIndex,
     parentId,
-    fieldType: field?.type,
+    fieldType: field?.sys.type,
   });
 
   const { isDraggedOver, operation } = useDragAndDrop({

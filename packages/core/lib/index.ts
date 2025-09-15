@@ -220,6 +220,7 @@ export {
   toSize,
   widthToStyle,
 } from './utils/props-parse';
+export { isFieldOfTypes } from './utils/type-guards';
 export { default as validateSchema } from './utils/validations';
 export {
   isAcceptValue,

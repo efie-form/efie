@@ -56,7 +56,7 @@ export default function ConditionNodeEditor({ node, onChange }: ConditionNodePro
 
   // Handlers that emit changes upward
   const handleFieldChange = (newField: FormField) => {
-    const list = isInputField(newField) ? (FieldTypeOperators[newField.type] ?? []) : [];
+    const list = isInputField(newField) ? (FieldTypeOperators[newField.sys.type] ?? []) : [];
     const opts = [
       ...list.map((op) => ({ value: op, label: OPERATORS_NAME[op] })),
       ...Object.values(SharedOperator).map((op) => ({
@@ -71,7 +71,7 @@ export default function ConditionNodeEditor({ node, onChange }: ConditionNodePro
     setValue(nextValue);
     onChange({
       ...node,
-      left: { kind: 'fieldValue', field: newField.id },
+      left: { kind: 'fieldValue', field: newField.sys.id },
       operator: nextOp,
       right: nextValue,
     });

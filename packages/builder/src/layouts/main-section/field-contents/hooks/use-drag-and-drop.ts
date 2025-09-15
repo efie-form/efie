@@ -105,7 +105,7 @@ export function useDragAndDrop({
     }
 
     return combine(...fn);
-  }, [field?.id, field?.type, handleDrop, childIndex, parentId, canDrop, onChange]);
+  }, [field?.sys.id, field?.sys.type, handleDrop, childIndex, parentId, canDrop, onChange]);
 
   return {
     isDraggedOver,
