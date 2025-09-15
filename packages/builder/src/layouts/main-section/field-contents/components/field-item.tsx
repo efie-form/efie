@@ -36,7 +36,7 @@ interface FieldItemProps {
 }
 
 export function FieldItem({ field }: FieldItemProps): JSX.Element | never {
-  switch (field.type) {
+  switch (field.sys.type) {
     case FieldType.ROW: {
       return <RowField field={field} />;
     }

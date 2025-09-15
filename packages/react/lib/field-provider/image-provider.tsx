@@ -10,7 +10,7 @@ interface ImageProviderProps {
 }
 
 function ImageProvider({ field, Component }: ImageProviderProps) {
-  const { isVisible } = useFieldCondition(field.id);
+  const { isVisible } = useFieldCondition(field.sys.id);
 
   if (!Component) return null;
 
@@ -25,7 +25,7 @@ function ImageProvider({ field, Component }: ImageProviderProps) {
   );
 
   return createElement(Component, {
-    id: field.id,
+    id: field.sys.id,
     field,
     src: src?.value || '',
   });

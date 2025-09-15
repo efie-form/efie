@@ -37,8 +37,8 @@ export default class Condition {
     // Recursively process all fields including nested children
     const processField = (field: FormField) => {
       // Process the current field if it's a form field with an ID
-      if (field.id) {
-        fieldStates[field.id] = {
+      if (field.sys.id) {
+        fieldStates[field.sys.id] = {
           touched: false,
           dirty: false,
           valid: true,

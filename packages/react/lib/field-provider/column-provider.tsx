@@ -20,7 +20,7 @@ function ColumnProvider({ field, Component, ...props }: ColumnProviderProps) {
   const children = (
     <>
       {field.children.map((field) => (
-        <div key={field.id}>
+        <div key={field.sys.id}>
           <RenderField field={field} {...props} />
         </div>
       ))}
@@ -30,7 +30,7 @@ function ColumnProvider({ field, Component, ...props }: ColumnProviderProps) {
   return createElement(
     Component,
     {
-      id: field.id,
+      id: field.sys.id,
       field,
       width: columnWidth || '100%',
     },

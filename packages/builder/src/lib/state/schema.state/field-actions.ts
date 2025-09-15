@@ -25,7 +25,7 @@ export function createFieldActions({ set, getState }: StateSetters): SchemaState
       const { schema } = getState();
       if (!schema?.form.fields) return;
       const newField = deepClone(field);
-      newField.id = generateId();
+      newField.sys.id = generateId();
 
       const newFields = addFieldToTree(schema.form.fields, newField, parentId, index);
 
@@ -67,7 +67,7 @@ export function createFieldActions({ set, getState }: StateSetters): SchemaState
       // Update field in schema using optimized tree traversal
       const updateFieldInTree = (fields: FormField[]): FormField[] => {
         return fields.map((f) => {
-          if (f.id === fieldId) {
+          if (f.sys.id === fieldId) {
             return updatedField;
           }
           if ('children' in f && f.children) {
@@ -138,7 +138,7 @@ export function createFieldActions({ set, getState }: StateSetters): SchemaState
 
       const duplicateFieldRecursive = (originalField: FormField): FormField => {
         const newField = deepClone(originalField) as FormField;
-        newField.id = generateId();
+        newField.sys.id = generateId();
 
         if ('children' in newField && newField.children) {
           newField.children = newField.children.map((child) => duplicateFieldRecursive(child));
@@ -156,12 +156,12 @@ export function createFieldActions({ set, getState }: StateSetters): SchemaState
       if (parentId) {
         const parent = getState().fieldMap.get(parentId);
         if (parent && 'children' in parent && parent.children) {
-          const originalIndex = parent.children.findIndex((child) => child.id === fieldId);
+          const originalIndex = parent.children.findIndex((child) => child.sys.id === fieldId);
           insertIndex = originalIndex + 1; // Insert right after the original
         }
       } else {
         // Root level field
-        const originalIndex = schema.form.fields.findIndex((field) => field.id === fieldId);
+        const originalIndex = schema.form.fields.findIndex((field) => field.sys.id === fieldId);
         insertIndex = originalIndex + 1; // Insert right after the original
       }
 
@@ -175,7 +175,7 @@ export function createFieldActions({ set, getState }: StateSetters): SchemaState
 
       setSchema(newSchema);
 
-      return duplicatedField.id;
+      return duplicatedField.sys.id;
     },
 
     moveField: (fieldId: string, newParentId: string, newIndex: number) => {
@@ -191,7 +191,7 @@ export function createFieldActions({ set, getState }: StateSetters): SchemaState
       // Remove from old location
       const removeFromParent = (fields: FormField[]): FormField[] => {
         return fields
-          .filter((f) => f.id !== fieldId)
+          .filter((f) => f.sys.id !== fieldId)
           .map((f) => {
             if ('children' in f && f.children) {
               return { ...f, children: removeFromParent(f.children) } as FormField;
@@ -203,7 +203,7 @@ export function createFieldActions({ set, getState }: StateSetters): SchemaState
       // Add to new location
       const addToParent = (fields: FormField[]): FormField[] => {
         return fields.map((f) => {
-          if (f.id === newParentId && 'children' in f) {
+          if (f.sys.id === newParentId && 'children' in f) {
             const newChildren = [...f.children];
             newChildren.splice(newIndex, 0, field);
             return { ...f, children: newChildren } as FormField;
@@ -238,7 +238,7 @@ export function createFieldActions({ set, getState }: StateSetters): SchemaState
     movePage: (from: number, to: number) => {
       const { schema } = getState();
       if (!schema?.form.fields) return;
-      const pages = schema?.form.fields.filter((field) => field.type === FieldType.PAGE) || [];
+      const pages = schema?.form.fields.filter((field) => field.sys.type === FieldType.PAGE) || [];
 
       if (from < 0 || from >= pages.length || to < 0 || to >= pages.length || from === to) {
         return; // Invalid indices or no change needed

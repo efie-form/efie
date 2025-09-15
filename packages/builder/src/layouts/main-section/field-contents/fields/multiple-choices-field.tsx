@@ -6,7 +6,7 @@ interface MultipleChoicesProps {
 }
 
 function MultipleChoicesField({ field }: MultipleChoicesProps) {
-  return <ChoiceFieldBase fieldId={field.id} inputType="checkbox" field={field} />;
+  return <ChoiceFieldBase fieldId={field.sys.id} inputType="checkbox" field={field} />;
 }
 
 export default MultipleChoicesField;

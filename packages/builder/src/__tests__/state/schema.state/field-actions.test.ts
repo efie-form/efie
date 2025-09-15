@@ -36,9 +36,11 @@ describe('schema.state field-actions', () => {
   test('duplicateField deep clones with new ids and adds to schema', () => {
     const p1 = makePage('p1');
     const g1: FormField = {
-      id: 'g1',
-      type: FieldType.GROUP,
-      sys: { name: 'g1' },
+      sys: {
+        id: 'g1',
+        type: FieldType.GROUP,
+        name: 'g1',
+      },
       children: [],
       props: [],
     };
@@ -55,8 +57,8 @@ describe('schema.state field-actions', () => {
     const state = useSchemaStore.getState();
     const duplicatedField = state.fieldMap.get(duplicatedFieldId as string);
     expect(duplicatedField).toBeDefined();
-    expect(duplicatedField?.id).toBe(duplicatedFieldId);
-    expect((duplicatedField as any)?.children[0].id).not.toBe('s1');
+    expect(duplicatedField?.sys.id).toBe(duplicatedFieldId);
+    expect((duplicatedField as any)?.children[0].sys.id).not.toBe('s1');
 
     // Check that both original and duplicated fields exist in the schema
     const schema = state.schema as any;

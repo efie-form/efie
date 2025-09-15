@@ -18,7 +18,7 @@ const buttonType = {
 
 function ButtonProvider({ field, Component }: ButtonProviderProps) {
   const { setPage } = useFormContext();
-  const { isVisible } = useFieldCondition(field.id);
+  const { isVisible } = useFieldCondition(field.sys.id);
 
   if (!Component) return null;
 
@@ -64,7 +64,7 @@ function ButtonProvider({ field, Component }: ButtonProviderProps) {
   };
 
   return createElement(Component, {
-    id: field.id,
+    id: field.sys.id,
     field,
     label: label?.value || '',
     buttonType: buttonAction ? buttonType[buttonAction.value.action] : 'button',

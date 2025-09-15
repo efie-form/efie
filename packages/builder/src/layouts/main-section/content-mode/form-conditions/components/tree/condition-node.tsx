@@ -41,7 +41,7 @@ export default function ConditionNodeEditor({ node, onChange }: ConditionNodePro
   const operatorOptions = useMemo(() => {
     const opts: { value: RuleOperator; label: string }[] = [];
     if (field && isInputField(field)) {
-      const list = FieldTypeOperators[field.type] ?? [];
+      const list = FieldTypeOperators[field.sys.type] ?? [];
       for (const op of list) {
         opts.push({ value: op, label: OPERATORS_NAME[op] });
       }

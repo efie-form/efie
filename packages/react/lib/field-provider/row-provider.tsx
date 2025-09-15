@@ -15,7 +15,7 @@ function RowProvider({ field, Component, ...props }: RowProviderProps) {
   return createElement(
     Component,
     {
-      id: field.id,
+      id: field.sys.id,
       field,
     },
     field.children.map((child) => <RenderField key={child.id} field={child} {...props} />),

@@ -32,5 +32,5 @@ export function getFieldProp<T extends PropertyType>(
 export function isInputField(
   field: FormField,
 ): field is Extract<FormField, { type: FieldInputType }> {
-  return Object.values(FieldInputType).some((f) => f === field.type);
+  return Object.values(FieldInputType).some((f) => f === field.sys.type);
 }

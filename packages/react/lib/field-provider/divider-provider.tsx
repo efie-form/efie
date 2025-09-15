@@ -10,7 +10,7 @@ interface DividerProviderProps {
 }
 
 function DividerProvider({ field, Component }: DividerProviderProps): ReactElement | null {
-  const { isVisible, isHidden } = useFieldCondition(field.id);
+  const { isVisible, isHidden } = useFieldCondition(field.sys.id);
 
   if (!Component) return null;
 
@@ -20,7 +20,7 @@ function DividerProvider({ field, Component }: DividerProviderProps): ReactEleme
   }
 
   return createElement(Component, {
-    id: field.id,
+    id: field.sys.id,
     field,
     hidden: isHidden,
   } satisfies DividerFieldProps);

@@ -47,7 +47,7 @@ export default function SystemSettingsButtonAction({
   // Page options to avoid recalculation on every render
   const pageOptions =
     schema?.form.fields
-      .filter((field) => field.type === FieldType.PAGE)
+      .filter((field) => field.sys.type === FieldType.PAGE)
       .map((page) => {
         const pageNameProp = page.props?.find((prop) => prop.type === PropertyType.NAME);
         const pageName = isStringValue(pageNameProp?.value)

@@ -6,8 +6,10 @@ interface CheckboxFieldProps {
 }
 
 export default function CheckboxField({ field }: CheckboxFieldProps) {
-  const labelProp = useSchemaStore((s) => s.getFieldProperty(field.id, PropertyType.LABEL));
-  const requiredProp = useSchemaStore((s) => s.getFieldProperty(field.id, PropertyType.REQUIRED));
+  const labelProp = useSchemaStore((s) => s.getFieldProperty(field.sys.id, PropertyType.LABEL));
+  const requiredProp = useSchemaStore((s) =>
+    s.getFieldProperty(field.sys.id, PropertyType.REQUIRED),
+  );
   const updateFieldProperty = useSchemaStore((s) => s.updateFieldProperty);
 
   const label = labelProp?.value || '';
@@ -20,7 +22,7 @@ export default function CheckboxField({ field }: CheckboxFieldProps) {
         <input
           value={label}
           onChange={(e) =>
-            updateFieldProperty(field.id, { type: PropertyType.LABEL, value: e.target.value })
+            updateFieldProperty(field.sys.id, { type: PropertyType.LABEL, value: e.target.value })
           }
           className="typography-body2 w-full cursor-text bg-white bg-opacity-0 focus:outline-none"
           type="text"

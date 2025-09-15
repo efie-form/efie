@@ -17,7 +17,7 @@ function SingleChoiceProvider({
   value = '',
   onChange = () => {},
 }: SingleChoiceProviderProps) {
-  const { isVisible, isRequired, isHidden, createChangeHandler } = useFieldCondition(field.id);
+  const { isVisible, isRequired, isHidden, createChangeHandler } = useFieldCondition(field.sys.id);
 
   if (!Component) return null;
 
@@ -43,7 +43,7 @@ function SingleChoiceProvider({
   const handleChange = createChangeHandler(onChange);
 
   return createElement(Component, {
-    id: field.id,
+    id: field.sys.id,
     field,
     value,
     onChange: handleChange,

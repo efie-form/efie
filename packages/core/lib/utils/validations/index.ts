@@ -36,13 +36,16 @@ function validateField(field: unknown): field is FormField {
   if (!isObject(field)) {
     return false;
   }
-  if (!('id' in field) || typeof field.id !== 'string') {
+  if (!('sys' in field) || !isObject(field.sys)) {
     return false;
   }
-  if (!('type' in field) || typeof field.type !== 'string') {
+  if (!('id' in field.sys) || typeof field.sys.id !== 'string') {
     return false;
   }
-  if (!Object.values(FieldType).includes(field.type as FieldType)) {
+  if (!('type' in field.sys) || typeof field.sys.type !== 'string') {
+    return false;
+  }
+  if (!Object.values(FieldType).includes(field.sys.type as FieldType)) {
     return false;
   }
 

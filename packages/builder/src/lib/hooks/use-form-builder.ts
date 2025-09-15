@@ -14,9 +14,9 @@ export default function useFormBuilder() {
   const resetSchema = (data: FormSchema) => {
     setSchema(data);
     validateSchema(data);
-    const firstPage = data.form.fields.find((field) => field.type === FieldType.PAGE);
+    const firstPage = data.form.fields.find((field) => field.sys.type === FieldType.PAGE);
     if (firstPage) {
-      setPage(firstPage.id);
+      setPage(firstPage.sys.id);
     }
   };
 

@@ -12,7 +12,7 @@ interface TimeProviderProps {
 }
 
 function TimeProvider({ field, Component, value = '', onChange = () => {} }: TimeProviderProps) {
-  const { isVisible, isRequired, isHidden, createChangeHandler } = useFieldCondition(field.id);
+  const { isVisible, isRequired, isHidden, createChangeHandler } = useFieldCondition(field.sys.id);
 
   if (!Component) return null;
 
@@ -30,7 +30,7 @@ function TimeProvider({ field, Component, value = '', onChange = () => {} }: Tim
   const handleChange = createChangeHandler(onChange);
 
   return createElement(Component, {
-    id: field.id,
+    id: field.sys.id,
     field,
     value,
     onChange: handleChange,

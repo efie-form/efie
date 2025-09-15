@@ -68,7 +68,6 @@ export type {
 } from './types/field-property-value.type';
 export type {
   AddressFormField,
-  BaseFormField,
   BlockFormField,
   ButtonFormField,
   CheckboxFormField,

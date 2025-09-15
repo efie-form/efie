@@ -154,7 +154,7 @@ export class RuleEngine {
   private cacheFields(): void {
     this.fieldsMap.clear();
     for (const field of this.schema.form.fields) {
-      this.fieldsMap.set(field.id, field);
+      this.fieldsMap.set(field.sys.id, field);
     }
   }
 

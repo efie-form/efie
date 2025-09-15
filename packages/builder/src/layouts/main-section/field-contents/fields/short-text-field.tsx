@@ -7,10 +7,10 @@ interface ShortTextFieldProps {
 
 function ShortTextField({ field }: ShortTextFieldProps) {
   const placeholderProp = useSchemaStore((state) =>
-    state.getFieldProperty(field.id, PropertyType.PLACEHOLDER),
+    state.getFieldProperty(field.sys.id, PropertyType.PLACEHOLDER),
   );
   const fieldProperty = useSchemaStore((state) =>
-    state.getFieldProperty(field.id, PropertyType.LABEL),
+    state.getFieldProperty(field.sys.id, PropertyType.LABEL),
   );
   const label = fieldProperty?.value || '';
   const updateFieldProperty = useSchemaStore((state) => state.updateFieldProperty);
@@ -20,7 +20,7 @@ function ShortTextField({ field }: ShortTextFieldProps) {
       <input
         value={label}
         onChange={(e) =>
-          updateFieldProperty(field.id, {
+          updateFieldProperty(field.sys.id, {
             type: PropertyType.LABEL,
             value: e.target.value,
           })

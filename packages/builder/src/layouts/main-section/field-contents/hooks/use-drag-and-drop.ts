@@ -60,7 +60,7 @@ export function useDragAndDrop({
       dropTargetForElements({
         getData: ({ element, input }) => {
           const data = {
-            id: field.id,
+            id: field.sys.id,
           };
           return attachInstruction(data, {
             input,
@@ -97,8 +97,8 @@ export function useDragAndDrop({
           dragHandle: dragEl,
           getInitialData: () => ({
             action: 'drag',
-            type: field.type,
-            id: field.id,
+            type: field.sys.type,
+            id: field.sys.id,
           }),
         }),
       );

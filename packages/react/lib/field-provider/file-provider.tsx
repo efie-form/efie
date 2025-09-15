@@ -13,7 +13,7 @@ interface FileProviderProps {
 }
 
 function FileProvider({ field, Component, value, onChange = () => {} }: FileProviderProps) {
-  const { isVisible, isRequired, isHidden } = useFieldCondition(field.id);
+  const { isVisible, isRequired, isHidden } = useFieldCondition(field.sys.id);
   const { processFormChange } = useConditionContext();
 
   if (!Component) return null;
@@ -47,11 +47,11 @@ function FileProvider({ field, Component, value, onChange = () => {} }: FileProv
         serializableValue = value.name;
       }
     }
-    processFormChange(field.id, serializableValue);
+    processFormChange(field.sys.id, serializableValue);
   };
 
   return createElement(Component, {
-    id: field.id,
+    id: field.sys.id,
     field,
     fieldLabel: label?.value || '',
     value,

@@ -18,11 +18,11 @@ export default function FieldsSelect({ value, onChange, fieldTypes }: FieldsSele
   return (
     <StyledSelect
       options={allFields
-        .filter((field) => !fieldTypes || fieldTypes?.includes(field.type))
+        .filter((field) => !fieldTypes || fieldTypes?.includes(field.sys.type))
         .map((field) => {
-          const Icon = fieldIcons[field.type];
+          const Icon = fieldIcons[field.sys.type];
           return {
-            value: field.id,
+            value: field.sys.id,
             label: field.sys.name,
             Icon: Icon,
           };

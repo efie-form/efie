@@ -29,10 +29,10 @@ function RenderField({ field, ...props }: RenderFieldProps) {
   const {
     field: { value, onChange },
   } = useController({
-    name: field.id,
+    name: field.sys.id,
   });
 
-  switch (field.type) {
+  switch (field.sys.type) {
     case FieldType.SHORT_TEXT: {
       return (
         <ShortTextProvider

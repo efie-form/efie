@@ -42,10 +42,10 @@ function FormContent() {
           >
             {selectedPage.children.map((field, index) => (
               <RenderField
-                key={field.id}
+                key={field.sys.id}
                 childIndex={index}
                 parentId={selectedPage.id}
-                fieldId={field.id}
+                fieldId={field.sys.id}
               />
             ))}
             {!hasChildren && <EmptyArea key={selectedPage.id} parentId={selectedPage.id} />}

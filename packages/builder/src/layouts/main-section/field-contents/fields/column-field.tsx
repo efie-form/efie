@@ -15,8 +15,8 @@ function ColumnsField({ field }: ColumnsFieldProps) {
         <div>
           {field.children.map((child, index) => (
             <RenderField
-              key={`${field.id}-${child.id}`}
-              parentId={field.id}
+              key={`${field.sys.id}-${child.id}`}
+              parentId={field.sys.id}
               fieldId={child.id}
               childIndex={index}
             />
@@ -25,7 +25,7 @@ function ColumnsField({ field }: ColumnsFieldProps) {
       )}
       {!hasChildren && (
         <div className="p-2">
-          <EmptyArea parentId={field.id} />
+          <EmptyArea parentId={field.sys.id} />
         </div>
       )}
     </>

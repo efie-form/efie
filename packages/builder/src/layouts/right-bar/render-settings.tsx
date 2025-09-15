@@ -11,7 +11,7 @@ interface RenderSettingsProps {
 function RenderSettings({ field }: RenderSettingsProps) {
   if (!field) return null;
 
-  switch (field?.type) {
+  switch (field.sys.type) {
     case FieldType.NUMBER:
     case FieldType.SHORT_TEXT:
     case FieldType.SINGLE_CHOICE:
@@ -28,7 +28,7 @@ function RenderSettings({ field }: RenderSettingsProps) {
       return <RowSettings field={field} />;
     }
     default: {
-      return <SharedSettings field={field} fieldType={field.type} />;
+      return <SharedSettings field={field} fieldType={field.sys.type} />;
     }
   }
 }
@@ -45,18 +45,18 @@ function SharedSettings({ field, fieldType }: SharedSettingsProps) {
 
   return (
     <div>
-      <FieldSettings fieldId={field.id} config={config.properties} />
+      <FieldSettings fieldId={field.sys.id} config={config.properties} />
     </div>
   );
 }
 
 function InputSettings({ field }: { field: FormField }) {
-  const config = useSettingsStore((state) => state.config[field.type]);
+  const config = useSettingsStore((state) => state.config[field.sys.type]);
 
   return (
     <div>
-      <FieldNameSettings fieldId={field.id} />
-      <FieldSettings fieldId={field.id} config={config.properties} />
+      <FieldNameSettings fieldId={field.sys.id} />
+      <FieldSettings fieldId={field.sys.id} config={config.properties} />
     </div>
   );
 }

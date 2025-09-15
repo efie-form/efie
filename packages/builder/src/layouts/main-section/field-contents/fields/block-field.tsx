@@ -10,9 +10,9 @@ function BlockField({ field }: BlockFieldProps) {
   return (
     <div className="relative min-h-20 w-full rounded-lg bg-white p-4 shadow-md transition-all">
       {field.children.map((child, index) => (
-        <RenderField fieldId={child.id} key={child.id} parentId={field.id} childIndex={index} />
+        <RenderField fieldId={child.id} key={child.id} parentId={field.sys.id} childIndex={index} />
       ))}
-      {field.children.length === 0 && <EmptyArea parentId={field.id} />}
+      {field.children.length === 0 && <EmptyArea parentId={field.sys.id} />}
     </div>
   );
 }

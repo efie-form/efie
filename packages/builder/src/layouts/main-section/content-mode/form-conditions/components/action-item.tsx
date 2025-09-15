@@ -51,12 +51,12 @@ export function ActionItem({
   allFields,
 }: ActionItemProps) {
   const optionsAll = allFields.map((field) => {
-    const Icon = fieldIcons[field.type];
+    const Icon = fieldIcons[field.sys.type];
     return {
-      value: field.id,
+      value: field.sys.id,
       label: field.sys.name,
       Icon,
-      __type: field.type,
+      __type: field.sys.type,
     } as const;
   });
 

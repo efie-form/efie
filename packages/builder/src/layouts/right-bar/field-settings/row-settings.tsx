@@ -26,7 +26,7 @@ interface RowSettingsProps {
 
 function RowSettings({ field }: RowSettingsProps) {
   const { deleteField, updateField, schema } = useSchemaStore();
-  const [currentTab, setCurrentTab] = useState(field.children?.[0]?.id || '');
+  const [currentTab, setCurrentTab] = useState(field.children?.[0]?.sys.id || '');
 
   const applyLayout = (columns: number[]) => {
     const newColumns: ColumnFormField[] = [];
@@ -57,11 +57,11 @@ function RowSettings({ field }: RowSettingsProps) {
       newColumns.push(newColumn);
     }
 
-    updateField(field.id, {
+    updateField(field.sys.id, {
       ...field,
       children: newColumns,
     });
-    setCurrentTab(newColumns[0]?.id || '');
+    setCurrentTab(newColumns[0]?.sys.id || '');
   };
 
   const addColumn = () => {
@@ -75,31 +75,31 @@ function RowSettings({ field }: RowSettingsProps) {
 
     const newColumns = equalColumnWidths([...field.children, newColumn]);
 
-    updateField(field.id, {
+    updateField(field.sys.id, {
       ...field,
       children: newColumns,
     });
 
-    setCurrentTab(newColumn.id);
+    setCurrentTab(newColumn.sys.id);
   };
 
   const removeColumn = (index: number) => {
     if (index === -1 || field.children.length <= 1) return;
 
-    const removedFieldId = field.children[index].id;
+    const removedFieldId = field.children[index].sys.id;
 
     const newColumns = field.children.filter((_, i) => i !== index);
 
     deleteField(removedFieldId);
 
-    updateField(field.id, {
+    updateField(field.sys.id, {
       ...field,
       children: equalColumnWidths(newColumns),
     });
 
-    const prevFieldId = field.children[index - 1]?.id;
+    const prevFieldId = field.children[index - 1]?.sys.id;
 
-    setCurrentTab(prevFieldId || newColumns[0]?.id || '');
+    setCurrentTab(prevFieldId || newColumns[0]?.sys.id || '');
   };
 
   function equalColumnWidths(columns: ColumnFormField[]) {
@@ -148,7 +148,9 @@ function RowSettings({ field }: RowSettingsProps) {
             Icon={FaTrash}
             variant="danger"
             disabled={field.children.length <= 1}
-            onClick={() => removeColumn(field.children.findIndex((col) => col.id === currentTab))}
+            onClick={() =>
+              removeColumn(field.children.findIndex((col) => col.sys.id === currentTab))
+            }
             className="ml-2"
           />
         </div>
@@ -159,8 +161,8 @@ function RowSettings({ field }: RowSettingsProps) {
           <Tabs.List className="flex flex-1 overflow-x-auto">
             {field.children.map((column, index) => (
               <Tabs.Trigger
-                key={column.id}
-                value={column.id}
+                key={column.sys.id}
+                value={column.sys.id}
                 className="typography-body3 whitespace-nowrap border-primary border-b-2 border-opacity-0 px-4 py-2 text-neutral-700 transition-colors data-[state=active]:border-opacity-100 data-[state=active]:text-primary"
               >
                 Column {index + 1}
@@ -170,9 +172,9 @@ function RowSettings({ field }: RowSettingsProps) {
         </div>
 
         {field.children
-          .filter((column) => column.type === FieldType.COLUMN)
+          .filter((column) => column.sys.type === FieldType.COLUMN)
           .map((column) => (
-            <Tabs.Content key={column.id} value={column.id}>
+            <Tabs.Content key={column.sys.id} value={column.sys.id}>
               <ColumnSettings field={column} />
             </Tabs.Content>
           ))}

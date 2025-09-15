@@ -32,7 +32,7 @@ export function useCondition({ schema, env }: UseConditionProps) {
   const schemaHash = useMemo(() => {
     // Use a simple hash of critical schema properties to detect real changes
     return JSON.stringify({
-      fields: schema.form.fields.map((f) => ({ id: f.id, type: f.type })),
+      fields: schema.form.fields.map((f) => ({ id: f.sys.id, type: f.sys.type })),
       rules: schema.form.rules,
     });
   }, [schema.form.fields, schema]);
@@ -65,7 +65,7 @@ export function useCondition({ schema, env }: UseConditionProps) {
       // Fallback for when condition is not yet initialized
       const fieldStates: FieldState = {};
       for (const field of schema.form.fields) {
-        fieldStates[field.id] = {
+        fieldStates[field.sys.id] = {
           touched: false,
           dirty: false,
           valid: true,

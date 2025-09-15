@@ -19,23 +19,18 @@ import type {
   FieldSystemPropTextConstraints,
 } from './property-definition';
 
-// Base form field interface
-export interface BaseFormField {
-  id: string;
-  type: FieldType;
-  sys: {
-    name: string;
-  };
-}
-
 export interface FormInputField {
   form: {
     name: string;
   };
 }
 
-export interface ShortTextFormField extends BaseFormField, FormInputField {
-  type: typeof FieldType.SHORT_TEXT;
+export interface ShortTextFormField extends FormInputField {
+  sys: {
+    id: string;
+    type: typeof FieldType.SHORT_TEXT;
+    name: string;
+  };
   props: (
     | FieldSystemPropLabel
     | FieldSystemPropPlaceholder
@@ -46,8 +41,12 @@ export interface ShortTextFormField extends BaseFormField, FormInputField {
   )[];
 }
 
-export interface LongTextFormField extends BaseFormField, FormInputField {
-  type: typeof FieldType.LONG_TEXT;
+export interface LongTextFormField extends FormInputField {
+  sys: {
+    id: string;
+    type: typeof FieldType.LONG_TEXT;
+    name: string;
+  };
   props: (
     | FieldSystemPropLabel
     | FieldSystemPropPlaceholder
@@ -58,8 +57,12 @@ export interface LongTextFormField extends BaseFormField, FormInputField {
   )[];
 }
 
-export interface NumberFormField extends BaseFormField, FormInputField {
-  type: typeof FieldType.NUMBER;
+export interface NumberFormField extends FormInputField {
+  sys: {
+    id: string;
+    type: typeof FieldType.NUMBER;
+    name: string;
+  };
   props: (
     | FieldSystemPropLabel
     | FieldSystemPropPlaceholder
@@ -69,8 +72,12 @@ export interface NumberFormField extends BaseFormField, FormInputField {
   )[];
 }
 
-export interface SingleChoiceFormField extends BaseFormField, FormInputField {
-  type: typeof FieldType.SINGLE_CHOICE;
+export interface SingleChoiceFormField extends FormInputField {
+  sys: {
+    id: string;
+    type: typeof FieldType.SINGLE_CHOICE;
+    name: string;
+  };
   props: (
     | FieldSystemPropLabel
     | FieldSystemPropOptions
@@ -80,8 +87,12 @@ export interface SingleChoiceFormField extends BaseFormField, FormInputField {
   )[];
 }
 
-export interface MultipleChoiceFormField extends BaseFormField, FormInputField {
-  type: typeof FieldType.MULTIPLE_CHOICES;
+export interface MultipleChoiceFormField extends FormInputField {
+  sys: {
+    id: string;
+    type: typeof FieldType.MULTIPLE_CHOICES;
+    name: string;
+  };
   props: (
     | FieldSystemPropLabel
     | FieldSystemPropOptions
@@ -92,8 +103,12 @@ export interface MultipleChoiceFormField extends BaseFormField, FormInputField {
   )[];
 }
 
-export interface DateFormField extends BaseFormField, FormInputField {
-  type: typeof FieldType.DATE;
+export interface DateFormField extends FormInputField {
+  sys: {
+    id: string;
+    type: typeof FieldType.DATE;
+    name: string;
+  };
   props: (
     | FieldSystemPropLabel
     | FieldSystemPropRequired
@@ -102,8 +117,12 @@ export interface DateFormField extends BaseFormField, FormInputField {
   )[];
 }
 
-export interface TimeFormField extends BaseFormField, FormInputField {
-  type: typeof FieldType.TIME;
+export interface TimeFormField extends FormInputField {
+  sys: {
+    id: string;
+    type: typeof FieldType.TIME;
+    name: string;
+  };
   props: (
     | FieldSystemPropLabel
     | FieldSystemPropRequired
@@ -112,8 +131,12 @@ export interface TimeFormField extends BaseFormField, FormInputField {
   )[];
 }
 
-export interface DateTimeFormField extends BaseFormField, FormInputField {
-  type: typeof FieldType.DATE_TIME;
+export interface DateTimeFormField extends FormInputField {
+  sys: {
+    id: string;
+    type: typeof FieldType.DATE_TIME;
+    name: string;
+  };
   props: (
     | FieldSystemPropLabel
     | FieldSystemPropRequired
@@ -123,8 +146,12 @@ export interface DateTimeFormField extends BaseFormField, FormInputField {
 }
 
 // File field type
-export interface FileFormField extends BaseFormField, FormInputField {
-  type: typeof FieldType.FILE;
+export interface FileFormField extends FormInputField {
+  sys: {
+    id: string;
+    type: typeof FieldType.FILE;
+    name: string;
+  };
   props: (
     | FieldSystemPropLabel
     | FieldSystemPropAccept
@@ -134,8 +161,12 @@ export interface FileFormField extends BaseFormField, FormInputField {
   )[];
 }
 
-export interface EmailFormField extends BaseFormField, FormInputField {
-  type: typeof FieldType.EMAIL;
+export interface EmailFormField extends FormInputField {
+  sys: {
+    id: string;
+    type: typeof FieldType.EMAIL;
+    name: string;
+  };
   props: (
     | FieldSystemPropLabel
     | FieldSystemPropPlaceholder
@@ -145,8 +176,12 @@ export interface EmailFormField extends BaseFormField, FormInputField {
   )[];
 }
 
-export interface PhoneFormField extends BaseFormField, FormInputField {
-  type: typeof FieldType.PHONE;
+export interface PhoneFormField extends FormInputField {
+  sys: {
+    id: string;
+    type: typeof FieldType.PHONE;
+    name: string;
+  };
   props: (
     | FieldSystemPropLabel
     | FieldSystemPropPlaceholder
@@ -156,8 +191,12 @@ export interface PhoneFormField extends BaseFormField, FormInputField {
   )[];
 }
 
-export interface CheckboxFormField extends BaseFormField, FormInputField {
-  type: typeof FieldType.CHECKBOX;
+export interface CheckboxFormField extends FormInputField {
+  sys: {
+    id: string;
+    type: typeof FieldType.CHECKBOX;
+    name: string;
+  };
   props: (
     | FieldSystemPropLabel
     | FieldSystemPropOptions
@@ -167,8 +206,12 @@ export interface CheckboxFormField extends BaseFormField, FormInputField {
   )[];
 }
 
-export interface AddressFormField extends BaseFormField, FormInputField {
-  type: typeof FieldType.ADDRESS;
+export interface AddressFormField extends FormInputField {
+  sys: {
+    id: string;
+    type: typeof FieldType.ADDRESS;
+    name: string;
+  };
   props: (
     | FieldSystemPropLabel
     | FieldSystemPropRequired
@@ -178,8 +221,12 @@ export interface AddressFormField extends BaseFormField, FormInputField {
   )[];
 }
 
-export interface PasswordFormField extends BaseFormField, FormInputField {
-  type: typeof FieldType.PASSWORD;
+export interface PasswordFormField extends FormInputField {
+  sys: {
+    id: string;
+    type: typeof FieldType.PASSWORD;
+    name: string;
+  };
   props: (
     | FieldSystemPropLabel
     | FieldSystemPropPlaceholder
@@ -191,44 +238,72 @@ export interface PasswordFormField extends BaseFormField, FormInputField {
 }
 
 // Layout field types
-export interface BlockFormField extends BaseFormField {
-  type: typeof FieldType.BLOCK;
+export interface BlockFormField {
+  sys: {
+    id: string;
+    type: typeof FieldType.BLOCK;
+    name: string;
+  };
   children: FormField[];
   props: (FieldSystemPropHidden | FieldCustomProp)[];
 }
 
-export interface RowFormField extends BaseFormField {
-  type: typeof FieldType.ROW;
+export interface RowFormField {
+  sys: {
+    id: string;
+    type: typeof FieldType.ROW;
+    name: string;
+  };
   children: ColumnFormField[];
   props: (FieldSystemPropHidden | FieldCustomProp)[];
 }
 
-export interface ColumnFormField extends BaseFormField {
-  type: typeof FieldType.COLUMN;
+export interface ColumnFormField {
+  sys: {
+    id: string;
+    type: typeof FieldType.COLUMN;
+    name: string;
+  };
   children: FormField[];
   props: (FieldSystemPropColumnWidth | FieldSystemPropHidden | FieldCustomProp)[];
 }
 
-export interface GroupFormField extends BaseFormField {
-  type: typeof FieldType.GROUP;
+export interface GroupFormField {
+  sys: {
+    id: string;
+    type: typeof FieldType.GROUP;
+    name: string;
+  };
   children: FormField[];
   props: (FieldSystemPropHidden | FieldCustomProp)[];
 }
 
-export interface HeadingFormField extends BaseFormField {
-  type: typeof FieldType.HEADING;
+export interface HeadingFormField {
+  sys: {
+    id: string;
+    type: typeof FieldType.HEADING;
+    name: string;
+  };
   props: (FieldSystemPropHeadingContent | FieldSystemPropHidden | FieldCustomProp)[];
 }
 
 // Image field type
-export interface ImageFormField extends BaseFormField {
-  type: typeof FieldType.IMAGE;
+export interface ImageFormField {
+  sys: {
+    id: string;
+    type: typeof FieldType.IMAGE;
+    name: string;
+  };
   props: (FieldSystemPropImageSrc | FieldSystemPropHidden | FieldCustomProp)[];
 }
 
 // Button field type
-export interface ButtonFormField extends BaseFormField {
-  type: typeof FieldType.BUTTON;
+export interface ButtonFormField {
+  sys: {
+    id: string;
+    type: typeof FieldType.BUTTON;
+    name: string;
+  };
   props: (
     | FieldSystemPropButtonAction
     | FieldSystemPropLabel
@@ -238,15 +313,23 @@ export interface ButtonFormField extends BaseFormField {
 }
 
 // Page field type
-export interface PageFormField extends BaseFormField {
-  type: typeof FieldType.PAGE;
+export interface PageFormField {
+  sys: {
+    id: string;
+    type: typeof FieldType.PAGE;
+    name: string;
+  };
   children: FormField[];
   props: (FieldSystemPropName | FieldSystemPropHidden | FieldCustomProp)[];
 }
 
 // Divider field type
-export interface DividerFormField extends BaseFormField {
-  type: typeof FieldType.DIVIDER;
+export interface DividerFormField {
+  sys: {
+    id: string;
+    type: typeof FieldType.DIVIDER;
+    name: string;
+  };
   props: (FieldSystemPropHidden | FieldCustomProp)[];
 }
 

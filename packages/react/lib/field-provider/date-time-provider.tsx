@@ -20,7 +20,7 @@ function DateTimeProvider({
   value = '',
   onChange = () => {},
 }: DateTimeProviderProps) {
-  const { isVisible, isRequired, isHidden } = useFieldCondition(field.id);
+  const { isVisible, isRequired, isHidden } = useFieldCondition(field.sys.id);
   const { processFormChange } = useConditionContext();
 
   if (!Component) return null;
@@ -39,11 +39,11 @@ function DateTimeProvider({
     onChange(value);
     // Process conditions with serializable value
     const serializableValue = value instanceof Date ? value.toISOString() : value;
-    processFormChange(field.id, serializableValue);
+    processFormChange(field.sys.id, serializableValue);
   };
 
   return createElement(Component, {
-    id: field.id,
+    id: field.sys.id,
     field,
     value,
     onChange: conditionAwareOnChange,

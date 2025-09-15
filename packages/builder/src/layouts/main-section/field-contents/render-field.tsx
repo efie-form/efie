@@ -43,15 +43,15 @@ function RenderField({ fieldId, noSelect, parentId, childIndex }: RenderFieldPro
 
   const handleSelectField = (e: MouseEvent) => {
     e.stopPropagation();
-    if (!field || selectedFieldId === field.id) return;
-    setSelectedFieldId(field.id);
+    if (!field || selectedFieldId === field.sys.id) return;
+    setSelectedFieldId(field.sys.id);
     setActiveTab(RIGHT_BAR_TABS.FIELD_SETTINGS);
   };
 
   const handleDuplicateField = (e: MouseEvent) => {
     e.stopPropagation();
     if (!field) return;
-    const duplicatedFieldId = duplicateField(field.id);
+    const duplicatedFieldId = duplicateField(field.sys.id);
     if (duplicatedFieldId) {
       // Select the newly duplicated field
       setSelectedFieldId(duplicatedFieldId);
@@ -61,7 +61,7 @@ function RenderField({ fieldId, noSelect, parentId, childIndex }: RenderFieldPro
 
   const handleDeleteField = () => {
     if (!field) return;
-    deleteField(field.id);
+    deleteField(field.sys.id);
     clearSelectedFieldId();
   };
 

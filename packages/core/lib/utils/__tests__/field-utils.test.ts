@@ -4,9 +4,9 @@ import { isFieldHidden, isFieldRequired } from '../field-utils';
 
 describe('Field Utils', () => {
   const createTestField = (hidden = false, required = false): ShortTextFormField => ({
-    id: 'test-field',
-    type: 'short_text',
     sys: {
+      id: 'test-field',
+      type: 'short_text',
       name: 'test-field',
     },
     form: {
@@ -45,9 +45,9 @@ describe('Field Utils', () => {
 
     it('should return false when field has hidden property set to false', () => {
       const field: ShortTextFormField = {
-        id: 'test-field',
-        type: 'short_text',
         sys: {
+          id: 'test-field',
+          type: 'short_text',
           name: 'test-field',
         },
         form: {
@@ -77,9 +77,9 @@ describe('Field Utils', () => {
 
     it('should return false when field has required property set to false', () => {
       const field: ShortTextFormField = {
-        id: 'test-field',
-        type: 'short_text',
         sys: {
+          id: 'test-field',
+          type: 'short_text',
           name: 'test-field',
         },
         form: {

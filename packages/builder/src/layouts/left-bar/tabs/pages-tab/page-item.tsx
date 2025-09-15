@@ -23,11 +23,11 @@ interface PageItemProps {
 export default function PageItem({ page, onDelete, isCurrentPage, onSelect }: PageItemProps) {
   const { schema } = useSchemaStore();
   const { attributes, listeners, setNodeRef, transition, transform, isDragging } = useSortable({
-    id: page.id,
+    id: page.sys.id,
   });
   const [deleteConfirm, setDeleteConfirm] = useState(false);
   const fieldProperty = useSchemaStore((state) =>
-    state.getFieldProperty(page.id, PropertyType.NAME),
+    state.getFieldProperty(page.sys.id, PropertyType.NAME),
   );
   const updateFieldProperty = useSchemaStore((state) => state.updateFieldProperty);
 
@@ -37,7 +37,7 @@ export default function PageItem({ page, onDelete, isCurrentPage, onSelect }: Pa
   };
 
   const handleRename = (newName: string) => {
-    updateFieldProperty(page.id, {
+    updateFieldProperty(page.sys.id, {
       type: PropertyType.NAME,
       value: newName,
     });
