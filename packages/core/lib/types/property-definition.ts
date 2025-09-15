@@ -38,7 +38,8 @@ export type FieldSystemProp =
   | FieldSystemPropAddressField
   | FieldSystemPropPasswordRules // renamed
   | FieldSystemPropHidden // visibility
-  | FieldSystemPropTextConstraints;
+  | FieldSystemPropTextConstraints
+  | FieldSystemPropSelectionLimit;
 
 export interface FieldSystemPropLabel {
   type: typeof PropertyType.LABEL;

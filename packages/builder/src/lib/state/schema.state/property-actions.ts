@@ -17,6 +17,8 @@ export interface SchemaStatePropertyActions {
   findFieldCustomProperty: (fieldId: string, id: string) => FieldCustomProp | undefined;
 
   updateFieldCustomProperty: (fieldId: string, id: string, property: FieldCustomProp) => void;
+
+  removeFieldProperty: (fieldId: string, type: PropertyDefinition['type']) => void;
 }
 
 export function createPropertyActions({ getState }: StateSetters): SchemaStatePropertyActions {
@@ -82,6 +84,18 @@ export function createPropertyActions({ getState }: StateSetters): SchemaStatePr
       const updatedField = { ...field, props: newProps } as FormField;
 
       updateField(fieldId, updatedField);
+    },
+
+    removeFieldProperty: (fieldId, type) => {
+      const { fieldMap, updateField } = getState();
+      const field = fieldMap.get(fieldId);
+      if (!field) return;
+
+      const newProps = field.props.filter((prop) => prop.type !== type);
+
+      const newField = { ...field, props: newProps } as FormField;
+
+      updateField(fieldId, newField);
     },
   };
 }

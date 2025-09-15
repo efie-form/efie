@@ -84,8 +84,8 @@ export type PropValueAddressField = {
 };
 
 export interface PropValueLimit {
-  min: number;
-  max: number;
+  min?: number;
+  max?: number;
 }
 
 export interface PropValueTextConstraints {

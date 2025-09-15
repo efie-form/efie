@@ -56,6 +56,7 @@ export type {
   PropValueButtonAction,
   PropValueColor,
   PropValueJsonContent,
+  PropValueLimit,
   PropValueMargin,
   PropValueNumber,
   PropValueOptions,
