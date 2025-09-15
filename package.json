@@ -24,6 +24,7 @@
     "type-check:watch": "tsc --noEmit --watch --jsx react-jsx",
     "type-check:packages": "pnpm --filter './packages/*' --filter '!@efie-form/iframe' --filter '!@efie-form/efie-form' run type-check --jsx react-jsx",
     "type-check:packages:watch": "pnpm --filter './packages/*' --filter '!@efie-form/iframe' --filter '!@efie-form/efie-form' run type-check:watch --jsx react-jsx",
+    "check": "pnpm lint && pnpm type-check:packages",
     "build": "pnpm --filter './packages/*' --filter '!@efie-form/iframe' --filter '!@efie-form/efie-form' run build",
     "build:all": "pnpm --filter './packages/*' --filter '!@efie-form/efie-form' run build",
     "build:packages": "pnpm --filter './packages/*' --filter '!@efie-form/iframe' --filter '!@efie-form/efie-form' run build",
@@ -69,6 +70,9 @@
   "lint-staged": {
     "*.{js,jsx,ts,tsx,json,css}": [
       "biome check --write --no-errors-on-unmatched"
+    ],
+    "*.{ts,tsx}": [
+      "pnpm type-check:packages"
     ]
   },
   "pnpm": {
