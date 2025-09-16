@@ -4,11 +4,11 @@ import { clearAllDebounceTimers, useSchemaStore } from '../../../lib/state/schem
 export const makePage = (id: string, name = 'Page'): FormField => ({
   sys: {
     id,
-    name: id,
+    name,
     type: FieldType.PAGE,
   },
   children: [],
-  props: [{ type: PropertyType.NAME, value: name }],
+  props: [],
 });
 
 export const makeShort = (id: string, label = 'Short', name = 'short'): FormField => ({
