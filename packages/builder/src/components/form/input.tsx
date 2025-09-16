@@ -39,7 +39,7 @@ function Input({
   return (
     <div
       className={cn(
-        'relative flex h-7 w-full items-center overflow-hidden rounded-md border border-neutral-200 bg-white focus-within:outline focus-within:outline-1 focus-within:outline-primary',
+        'relative flex h-7 w-full items-center overflow-hidden rounded-md border border-neutral-200 bg-white focus-within:outline-solid focus-within:outline-1 focus-within:outline-primary',
         className,
         {
           'bg-neutral-100': disabled,
@@ -55,7 +55,7 @@ function Input({
         onChange={(e) => setInputValue(e.target.value)}
         placeholder={placeholder}
         className={cn(
-          'typography-body3 w-full flex-1 py-1 placeholder-neutral-400 outline-none',
+          'typography-body3 w-full flex-1 py-1 placeholder-neutral-400 outline-hidden',
           prefix ? 'ps-1' : 'ps-2',
           suffix ? 'pe-1' : 'pe-2',
           disabled ? 'text-neutral-600' : 'text-neutral-800',

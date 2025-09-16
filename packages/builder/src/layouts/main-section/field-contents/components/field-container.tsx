@@ -26,12 +26,12 @@ export function FieldContainer({
       data-field="true"
       id={`field-container-${field.sys.id}`}
       className={cn(
-        '-outline-offset-2 relative h-full transform rounded-md rounded-br-none p-1 outline outline-2 outline-[#00000000]',
+        '-outline-offset-2 relative h-full transform rounded-md rounded-br-none p-1 outline-solid outline-2 outline-[#00000000]',
         {
-          '!outline-primary relative z-50': isSelected,
+          'outline-primary! relative z-50': isSelected,
           '[&:not(:has(div[data-field=true]:hover))]:hover:outline-neutral-100':
             field.sys.type !== FieldType.COLUMN,
-          'z-[100]': isDraggedOver,
+          'z-100': isDraggedOver,
         },
       )}
       {...(!noSelect &&

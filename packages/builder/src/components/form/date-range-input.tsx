@@ -88,7 +88,7 @@ const DateRangeInput = ({
           type="button"
           disabled={disabled}
           className={cn(
-            'relative flex h-7 w-full items-center justify-between rounded-md border border-neutral-200 bg-white px-2 text-left outline-none focus-visible:outline focus-visible:outline-1 focus-visible:outline-primary',
+            'relative flex h-7 w-full items-center justify-between rounded-md border border-neutral-200 bg-white px-2 text-left outline-hidden focus-visible:outline-solid focus-visible:outline-1 focus-visible:outline-primary',
             disabled && 'cursor-not-allowed bg-neutral-100 text-neutral-600',
             className,
           )}
@@ -106,7 +106,7 @@ const DateRangeInput = ({
                 e.stopPropagation();
                 clear();
               }}
-              className="ml-1 inline-flex size-5 items-center justify-center rounded text-neutral-500 hover:bg-neutral-100 hover:text-neutral-700"
+              className="ml-1 inline-flex size-5 items-center justify-center rounded-sm text-neutral-500 hover:bg-neutral-100 hover:text-neutral-700"
               tabIndex={-1}
             >
               <HiMiniXMark className="size-4" />
@@ -122,7 +122,7 @@ const DateRangeInput = ({
           sideOffset={4}
           onEscapeKeyDown={() => triggerRef.current?.focus()}
           onOpenAutoFocus={(e) => e.preventDefault()}
-          className="z-50 w-[280px] rounded-md border border-neutral-200 bg-white p-2 shadow-lg outline-none"
+          className="z-50 w-[280px] rounded-md border border-neutral-200 bg-white p-2 shadow-lg outline-hidden"
         >
           {timeMode ? (
             <div className="flex flex-col gap-2">
@@ -144,7 +144,7 @@ const DateRangeInput = ({
               <div className="flex justify-end gap-2">
                 <button
                   type="button"
-                  className="typography-body4 rounded px-2 py-1 text-neutral-600 hover:bg-neutral-100"
+                  className="typography-body4 rounded-sm px-2 py-1 text-neutral-600 hover:bg-neutral-100"
                   onClick={() => clear()}
                 >
                   Clear
@@ -193,7 +193,7 @@ const DateRangeInput = ({
                       key={c.key}
                       type="button"
                       className={cn(
-                        'flex h-7 w-7 items-center justify-center rounded text-sm outline-none',
+                        'flex h-7 w-7 items-center justify-center rounded-sm text-sm outline-hidden',
                         'hover:bg-neutral-100 focus-visible:ring-2 focus-visible:ring-primary-500/50',
                         c.inRange && 'bg-primary-50',
                         c.isEdge && 'bg-primary-600 text-white hover:bg-primary-600',
@@ -236,7 +236,7 @@ const DateRangeInput = ({
                       key={m.month}
                       type="button"
                       className={cn(
-                        'typography-body4 rounded px-2 py-1 text-neutral-700 hover:bg-neutral-100',
+                        'typography-body4 rounded-sm px-2 py-1 text-neutral-700 hover:bg-neutral-100',
                         m.isCurrent && 'bg-primary-600 text-white hover:bg-primary-600',
                       )}
                       onClick={m.onSelect}
@@ -253,7 +253,7 @@ const DateRangeInput = ({
                       key={y.year}
                       type="button"
                       className={cn(
-                        'typography-body4 rounded px-2 py-1 text-neutral-700 hover:bg-neutral-100',
+                        'typography-body4 rounded-sm px-2 py-1 text-neutral-700 hover:bg-neutral-100',
                         y.isCurrent && 'bg-primary-600 text-white hover:bg-primary-600',
                       )}
                       onClick={y.onSelect}
@@ -266,7 +266,7 @@ const DateRangeInput = ({
               <div className="mt-1 flex justify-end gap-2">
                 <button
                   type="button"
-                  className="typography-body4 rounded px-2 py-1 text-neutral-600 hover:bg-neutral-100"
+                  className="typography-body4 rounded-sm px-2 py-1 text-neutral-600 hover:bg-neutral-100"
                   onClick={() => clear()}
                 >
                   Clear

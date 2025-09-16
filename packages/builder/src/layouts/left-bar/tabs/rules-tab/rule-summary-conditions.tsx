@@ -49,14 +49,14 @@ function ConditionLineRow({ line, groupOrder, hasAnyGroup }: ConditionLineRowPro
   const prefix = useMemo(() => {
     if (isGrp) {
       return (
-        <span className="me-1 rounded-sm bg-neutral-200 px-1 py-0.5 text-neutral-700">
+        <span className="me-1 rounded-xs bg-neutral-200 px-1 py-0.5 text-neutral-700">
           {groupOrder === 0 ? 'IF' : 'ELSE IF'}
         </span>
       );
     }
     if (isAlways) {
       return (
-        <span className="me-1 rounded-sm bg-neutral-200 px-1 py-0.5 text-neutral-700">IF</span>
+        <span className="me-1 rounded-xs bg-neutral-200 px-1 py-0.5 text-neutral-700">IF</span>
       );
     }
     return (
@@ -94,7 +94,7 @@ function ConditionSegment({ text, kind }: ConditionSegmentProps) {
   return (
     <span
       className={cn({
-        'font-medium text-primary-700 bg-primary-200 p-0.5 rounded-sm': kind === 'field',
+        'font-medium text-primary-700 bg-primary-200 p-0.5 rounded-xs': kind === 'field',
         'text-neutral-500': kind === 'operator',
         'text-neutral-800': kind === 'value',
         'text-neutral-700': kind === 'plain',

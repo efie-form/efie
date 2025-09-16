@@ -46,7 +46,7 @@ const ActionsPanel = () => {
   const fieldActions = actions.filter(isFieldAction);
 
   return (
-    <div className={cn('rounded-md border border-neutral-200 bg-white p-4 shadow-sm')}>
+    <div className={cn('rounded-md border border-neutral-200 bg-white p-4 shadow-xs')}>
       <div className="mb-3 flex items-center justify-between">
         <p className="typography-body1">Do</p>
         <button

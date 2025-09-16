@@ -156,7 +156,7 @@ function RichTextEditor({
                 if (el) setPopperElement(el);
               }}
               style={styles.popper}
-              className="z-[99]"
+              className="z-99"
               {...popperAttributes.popper}
             >
               <EditorToolbar editor={editor} options={options} />

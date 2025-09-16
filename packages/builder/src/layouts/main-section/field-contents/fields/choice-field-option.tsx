@@ -48,7 +48,7 @@ function ChoiceFieldOption({
       <div className="flex-1">
         <input
           type="text"
-          className="typography-body3 w-full text-neutral-800 focus:outline-none"
+          className="typography-body3 w-full text-neutral-800 focus:outline-hidden"
           value={option.label}
           ref={inputRef}
           onFocus={(e) => {

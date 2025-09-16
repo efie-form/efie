@@ -30,7 +30,7 @@ export function RuleItem({ rule }: RuleItemProps) {
       ref={setNodeRef}
       {...attributes}
       className={cn(
-        'group relative flex w-full px-1 py-2 text-left gap-1 hover:bg-neutral-100 focus:outline-none border-b border-neutral-100',
+        'group relative flex w-full px-1 py-2 text-left gap-1 hover:bg-neutral-100 focus:outline-hidden border-b border-neutral-100',
         isDragging ? 'z-50 shadow-lg' : 'cursor-pointer',
         {
           'bg-neutral-100': selectedConditionId === rule.id,

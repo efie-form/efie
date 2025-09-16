@@ -28,7 +28,7 @@ function Select<T extends string>({
       value={inputValue}
       onChange={(e) => setInputValue(e.target.value as T)}
       className={cn(
-        'typography-body3 w-full rounded-md border border-neutral-200 bg-white px-1 py-1 text-neutral-800 outline-none',
+        'typography-body3 w-full rounded-md border border-neutral-200 bg-white px-1 py-1 text-neutral-800 outline-hidden',
         className,
       )}
     >

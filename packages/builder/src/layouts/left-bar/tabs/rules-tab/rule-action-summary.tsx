@@ -17,7 +17,7 @@ export default function RuleActionSummary({ actions }: RuleActionSummaryProps) {
   if (!actions.length) {
     return (
       <div className="typography-body3 leading-snug text-neutral-600">
-        <span className="me-1 rounded-sm bg-neutral-200 px-1 py-0.5 text-neutral-700">DO</span>
+        <span className="me-1 rounded-xs bg-neutral-200 px-1 py-0.5 text-neutral-700">DO</span>
         <span className="text-neutral-700">No actions</span>
       </div>
     );
@@ -39,7 +39,7 @@ interface ActionItemProps {
 function ActionItem({ action }: ActionItemProps) {
   return (
     <div className="typography-body3 leading-snug text-neutral-600">
-      <span className="me-1 rounded-sm bg-neutral-200 px-1 py-0.5 text-neutral-700">DO</span>
+      <span className="me-1 rounded-xs bg-neutral-200 px-1 py-0.5 text-neutral-700">DO</span>
       <ActionContent action={action} />
     </div>
   );
@@ -105,7 +105,7 @@ function FieldLabel({ fieldId }: FieldLabelProps) {
   if (!field) return <span className="text-neutral-800">{fieldId}</span>;
 
   return (
-    <span className="font-medium text-primary-700 bg-primary-200 p-0.5 rounded-sm">
+    <span className="font-medium text-primary-700 bg-primary-200 p-0.5 rounded-xs">
       {field.sys.name}
     </span>
   );

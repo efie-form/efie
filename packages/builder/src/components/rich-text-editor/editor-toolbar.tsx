@@ -40,7 +40,7 @@ export default function EditorToolbar({ editor, options }: EditorToolbarProps) {
     options?.bold || options?.italic || options?.underline || options?.strike;
 
   return (
-    <div className="rounded-lg border border-neutral-200 bg-white p-2 shadow-xl backdrop-blur-sm">
+    <div className="rounded-lg border border-neutral-200 bg-white p-2 shadow-xl backdrop-blur-xs">
       <div className="flex flex-wrap items-center gap-1">
         {/* Style Controls */}
         <ToolbarGroup label="Style">
