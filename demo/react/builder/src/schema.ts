@@ -8,7 +8,7 @@ export const schema: FormSchema = {
         sys: {
           id: 'giqmxeQnUJ',
           type: 'page',
-          name: 'giqmxeQnUJ',
+          name: 'Page 1',
         },
         children: [
           {
@@ -64,12 +64,7 @@ export const schema: FormSchema = {
             ],
           },
         ],
-        props: [
-          {
-            type: 'name',
-            value: 'Page 1',
-          },
-        ],
+        props: [],
       },
     ],
     rules: [],

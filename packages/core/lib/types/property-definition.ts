@@ -12,7 +12,6 @@ import type {
   PropValuePasswordPolicy, // added
   PropValueSize,
   PropValueString,
-  PropValueTextConstraints,
 } from './field-property-value.type';
 
 export type FieldCustomProp =
@@ -34,11 +33,11 @@ export type FieldSystemProp =
   | FieldSystemPropColumnWidth
   | FieldSystemPropHeadingContent
   | FieldSystemPropButtonAction
-  | FieldSystemPropName // renamed from PageName
   | FieldSystemPropAddressField
-  | FieldSystemPropPasswordRules // renamed
-  | FieldSystemPropHidden // visibility
-  | FieldSystemPropTextConstraints
+  | FieldSystemPropPasswordRules
+  | FieldSystemPropHidden
+  | FieldSystemPropCharacterLimit
+  | FieldSystemPropWordLimit
   | FieldSystemPropSelectionLimit;
 
 export interface FieldSystemPropLabel {
@@ -91,12 +90,6 @@ export interface FieldSystemPropButtonAction {
   value: PropValueButtonAction;
 }
 
-export interface FieldSystemPropName {
-  // renamed from FieldSystemPropPageName
-  type: typeof PropertyType.NAME;
-  value: PropValueString;
-}
-
 export interface FieldSystemPropAddressField {
   type: typeof PropertyType.ADDRESS_FIELD;
   value: PropValueAddressField;
@@ -113,9 +106,14 @@ export interface FieldSystemPropHidden {
   value: PropValueBoolean; // true means hidden
 }
 
-export interface FieldSystemPropTextConstraints {
-  type: typeof PropertyType.TEXT_CONSTRAINTS;
-  value: PropValueTextConstraints;
+export interface FieldSystemPropCharacterLimit {
+  type: typeof PropertyType.CHARACTER_LIMIT;
+  value: PropValueLimit;
+}
+
+export interface FieldSystemPropWordLimit {
+  type: typeof PropertyType.WORD_LIMIT;
+  value: PropValueLimit;
 }
 
 export interface FieldSystemPropSelectionLimit {

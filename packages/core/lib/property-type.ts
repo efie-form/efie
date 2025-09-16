@@ -13,7 +13,8 @@ export const PropertyType = {
   ADDRESS_FIELD: 'address_field',
   PASSWORD_RULES: 'password_rules',
   HIDDEN: 'hidden',
-  TEXT_CONSTRAINTS: 'text_constraints',
+  CHARACTER_LIMIT: 'character_limit',
+  WORD_LIMIT: 'word_limit',
   SELECTION_LIMIT: 'selection_limit',
   CUSTOM: 'custom',
 } as const;

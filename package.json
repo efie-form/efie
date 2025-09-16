@@ -70,9 +70,6 @@
   "lint-staged": {
     "*.{js,jsx,ts,tsx,json,css}": [
       "biome check --write --no-errors-on-unmatched"
-    ],
-    "*.{ts,tsx}": [
-      "pnpm type-check:packages"
     ]
   },
   "pnpm": {

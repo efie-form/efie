@@ -5,18 +5,18 @@ import type {
   FieldSystemPropAccept,
   FieldSystemPropAddressField,
   FieldSystemPropButtonAction,
+  FieldSystemPropCharacterLimit,
   FieldSystemPropColumnWidth,
   FieldSystemPropHeadingContent,
   FieldSystemPropHidden,
   FieldSystemPropImageSrc,
   FieldSystemPropLabel,
-  FieldSystemPropName, // changed
   FieldSystemPropOptions,
   FieldSystemPropPasswordRules, // fixed name
   FieldSystemPropPlaceholder,
   FieldSystemPropRequired,
   FieldSystemPropSelectionLimit,
-  FieldSystemPropTextConstraints,
+  FieldSystemPropWordLimit,
 } from './property-definition';
 
 export interface FormInputField {
@@ -36,8 +36,9 @@ export interface ShortTextFormField extends FormInputField {
     | FieldSystemPropPlaceholder
     | FieldSystemPropRequired
     | FieldSystemPropHidden
-    | FieldSystemPropTextConstraints
     | FieldCustomProp
+    | FieldSystemPropCharacterLimit
+    | FieldSystemPropWordLimit
   )[];
 }
 
@@ -52,7 +53,8 @@ export interface LongTextFormField extends FormInputField {
     | FieldSystemPropPlaceholder
     | FieldSystemPropRequired
     | FieldSystemPropHidden
-    | FieldSystemPropTextConstraints
+    | FieldSystemPropCharacterLimit
+    | FieldSystemPropWordLimit
     | FieldCustomProp
   )[];
 }
@@ -320,7 +322,7 @@ export interface PageFormField {
     type: (typeof FieldType)['PAGE'];
   };
   children: FormField[];
-  props: (FieldSystemPropName | FieldSystemPropHidden | FieldCustomProp)[];
+  props: (FieldSystemPropHidden | FieldCustomProp)[];
 }
 
 // Divider field type

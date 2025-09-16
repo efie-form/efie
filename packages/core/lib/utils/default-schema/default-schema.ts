@@ -13,12 +13,7 @@ const defaultSchema: FormSchema = {
       {
         sys: { name: 'Page 1', type: 'page', id: 'GwBdzomJRf' },
         children: [],
-        props: [
-          {
-            type: 'name',
-            value: 'Page 1',
-          },
-        ],
+        props: [],
       },
     ],
     rules: [],

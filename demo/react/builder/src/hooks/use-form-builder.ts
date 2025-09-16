@@ -30,12 +30,7 @@ const sampleSchema: FormSchema = {
             ],
           },
         ],
-        props: [
-          {
-            type: 'name',
-            value: 'Sample Page',
-          },
-        ],
+        props: [],
       },
     ],
     rules: [],

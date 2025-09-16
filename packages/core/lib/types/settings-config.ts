@@ -70,8 +70,13 @@ export interface FieldSystemConfigPasswordRules {
   label: string;
 }
 
-export interface FieldSystemConfigTextConstraints {
-  type: typeof PropertyType.TEXT_CONSTRAINTS;
+export interface FieldSystemConfigCharacterLimit {
+  type: typeof PropertyType.CHARACTER_LIMIT;
+  label: string;
+}
+
+export interface FieldSystemConfigWordLimit {
+  type: typeof PropertyType.WORD_LIMIT;
   label: string;
 }
 
@@ -134,8 +139,9 @@ export type FieldSystemConfig =
   | FieldSystemConfigButtonAction
   | FieldSystemConfigColumnWidth
   | FieldSystemConfigPasswordRules // renamed
-  | FieldSystemConfigTextConstraints
-  | FieldSystemConfigSelectionLimit;
+  | FieldSystemConfigSelectionLimit
+  | FieldSystemConfigCharacterLimit
+  | FieldSystemConfigWordLimit;
 
 export type FieldCustomConfig =
   | FieldCustomConfigText
@@ -151,7 +157,8 @@ export interface FieldConfigShortText {
     | FieldSystemConfigPlaceholder
     | FieldSystemConfigRequired
     | FieldSystemConfigHidden
-    | FieldSystemConfigTextConstraints
+    | FieldSystemConfigCharacterLimit
+    | FieldSystemConfigWordLimit
     | FieldCustomConfig
   >;
 }
@@ -162,7 +169,8 @@ export interface FieldConfigLongText {
     | FieldSystemConfigPlaceholder
     | FieldSystemConfigRequired
     | FieldSystemConfigHidden
-    | FieldSystemConfigTextConstraints
+    | FieldSystemConfigCharacterLimit
+    | FieldSystemConfigWordLimit
     | FieldCustomConfig
   >;
 }
