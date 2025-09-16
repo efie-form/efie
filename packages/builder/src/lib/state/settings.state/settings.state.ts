@@ -10,7 +10,7 @@ interface SettingsState {
   selectedFieldId?: string;
   setSelectedFieldId: (id: string) => void;
   clearSelectedFieldId: () => void;
-  mode: 'edit' | 'preview' | 'json' | 'conditions';
+  mode: 'edit' | 'json' | 'conditions';
   setMode: (mode: SettingsState['mode']) => void;
   previewDevice: 'desktop' | 'mobile';
   setPreviewDevice: (previewDevice: SettingsState['previewDevice']) => void;
@@ -21,6 +21,10 @@ interface SettingsState {
   setActiveTab: (tab: RightBarTab | null) => void;
   height?: number;
   setHeight: (height: SettingsState['height']) => void;
+  leftBarWidth: number;
+  setLeftBarWidth: (width: SettingsState['leftBarWidth']) => void;
+  rightBarWidth: number;
+  setRightBarWidth: (width: SettingsState['rightBarWidth']) => void;
   fieldNameEditable: boolean;
   setFieldNameEditable: (fieldNameEditable: SettingsState['fieldNameEditable']) => void;
   isInputReusable: boolean;
@@ -72,6 +76,14 @@ export const useSettingsStore = create<SettingsState>((set) => ({
   height: undefined,
   setHeight: (height) => {
     set({ height });
+  },
+  leftBarWidth: 320, // Default width in pixels (20rem = 320px)
+  setLeftBarWidth: (leftBarWidth) => {
+    set({ leftBarWidth });
+  },
+  rightBarWidth: 320, // Default width in pixels (20rem = 320px)
+  setRightBarWidth: (rightBarWidth) => {
+    set({ rightBarWidth });
   },
   fieldNameEditable: true,
   setFieldNameEditable: (fieldNameEditable) => {

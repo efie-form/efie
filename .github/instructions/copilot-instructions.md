@@ -1,37 +1,93 @@
-# Efie Form builder
+# Efie Form - AI Coding Instructions
 
-This is a npm library that provides a drag-and-drop form builder interface for creating and managing forms. The form builder is written in React and will be served via an iframe elements. Developers can integrate this form builder into any language or framework that supports iframes. The form builder will provide a user-friendly interface for creating forms, configure complex form logic without having to build it from scratch. This library will handle the logic and state management of the form, allowing developers to focus on business requirements by providing a headless way for developers to render the form using their own UI components, form handling libraries, and styling. There are few customization options available for developers to tailor the form builder to their specific needs.
+Efie Form is a framework-agnostic form builder library with visual editor capabilities. Understanding the architecture and patterns below will make you immediately productive in this codebase.
 
-## Tech stack in use
+## Architecture Overview
 
-### Common
-- Rollup as bundler
-- TypeScript
-- Vitest as test runner
-- React Testing Library for React components testing
+**Monorepo Structure**: pnpm workspaces with 4 core packages:
+- `@efie-form/core`: Framework-agnostic types, constants, and business logic
+- `@efie-form/builder`: React-based visual form builder (Zustand + Tailwind)
+- `@efie-form/react`: React runtime components for rendering forms
+- `@efie-form/vue`: Vue runtime components (preview)
+
+**Data Flow**: Schema-driven architecture where forms are JSON configurations that flow from builder → runtime rendering. The `FormField` union type in `packages/core/lib/types/form-field.type.ts` defines all possible field configurations.
+
+## Critical Development Patterns
+
+### Field Type System
+Each field type requires updates across multiple files. Follow the guide in `.github/instructions/adding-field-types.instructions.md` when adding new fields. Key files:
+- `packages/core/lib/constants/field-type.ts` - Field type constants
+- `packages/core/lib/types/form-field.type.ts` - TypeScript interfaces
+- `packages/builder/src/lib/get-default-field.ts` - Default field factories
+- `packages/builder/src/layouts/main-section/field-contents/fields/` - Field rendering components
+
+### Zustand State Management (Builder)
+Use direct subscription with selectors for performance:
+```tsx
+const fieldProperty = useSchemaStore(
+  useCallback((state) => state.getFieldProperty(fieldId, type), [fieldId, type])
+);
+```
+**Avoid** manual `useEffect` subscriptions. State is split between `useSchemaStore` (form data) and `useSettingsStore` (editor settings).
+
+### Component Patterns
+- **Preferred**: Each component handles its own logic internally
+- **Avoid**: Helper functions that build complex data structures for rendering
+- **Rule**: Max one level of ternary operators (`a ? b : c`); use switch statements for complex conditions
+
+## Development Workflow
+
+### Essential Commands
+```bash
+# Development with hot reload across packages
+pnpm watch
+
+# Type checking (required before commits)
+pnpm type-check:packages
+
+# Testing with coverage
+pnpm test:coverage
+
+# Lint and format (uses Biome, not Prettier)
+pnpm lint:fix
+```
+
+### Testing Approach
+- Jest + React Testing Library for builder components
+- Tests in `__tests__` directories alongside source
+- Mock external dependencies in `src/__mocks__/`
+- Focus on state mutations and component behavior, not styling
+
+### Build System
+- Individual packages use `tsup` for bundling
+- Nx for task orchestration and caching
+- Watch mode handles cross-package dependencies automatically
+
+## Package-Specific Knowledge
 
 ### @efie-form/core
-- Do not consists of any framework
+- Pure TypeScript, no framework dependencies
+- Exports field types, property definitions, and utility functions
+- `PropertyType` enum defines all configurable field properties
+- Default schema in `lib/default-schema.ts`
 
 ### @efie-form/builder
-- React 19
-- Form builder app
-- Tailwind CSS for styling
-- atlaskit for drag-and-drop functionality
-- zustand for state management
-- @efie-form/core as a core library
+- Three-panel layout: LeftBar (fields) | MainSection (canvas) | RightBar (settings)
+- Zustand stores split by concern: schema manipulation vs. editor state
+- Field components in `layouts/main-section/field-contents/fields/` handle inline editing
+- Custom `cn()` utility for conditional Tailwind classes with `tailwind-merge`
 
+### Styling Conventions
+- Tailwind CSS with custom color tokens (`primary-*`, `success-*`, `neutral-*`, `danger-*`)
+- Typography classes: `typography-body1`, `typography-body2`, etc.
+- Use `cn()` utility from `@/lib/utils` for conditional styling
+- Component-specific styles over global CSS
 
-### @efie-form/iframe
-- React 19
+## Integration Points
 
-### @efie-form/react
-- React as peer dependency
-
-
-## Project and code guidelines
-
-
-## Project structure
+- **Framework Adapters**: Runtime packages provide framework-specific components that consume core schemas
+- **IFrame Embedding**: Builder served via iframe for cross-framework integration
+- **Schema Export/Import**: JSON serialization enables headless rendering in any environment
+- **Property System**: Extensible property definitions allow custom field configurations
 
 

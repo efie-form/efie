@@ -558,6 +558,10 @@ video {
   pointer-events: none;
 }
 
+.visible {
+  visibility: visible;
+}
+
 .invisible {
   visibility: hidden;
 }
@@ -872,6 +876,10 @@ video {
   height: 100vh;
 }
 
+.h-8 {
+  height: 2rem;
+}
+
 .max-h-56 {
   max-height: 14rem;
 }
@@ -1002,6 +1010,10 @@ video {
 
 .w-px {
   width: 1px;
+}
+
+.w-1 {
+  width: 0.25rem;
 }
 
 .min-w-0 {
@@ -1150,6 +1162,14 @@ video {
 
 .cursor-text {
   cursor: text;
+}
+
+.cursor-col-resize {
+  cursor: col-resize;
+}
+
+.cursor-row-resize {
+  cursor: row-resize;
 }
 
 .touch-none {
@@ -1350,6 +1370,10 @@ video {
 
 .border-2 {
   border-width: 2px;
+}
+
+.border-0 {
+  border-width: 0px;
 }
 
 .border-b {
@@ -1586,6 +1610,11 @@ video {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
+.bg-primary-300 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(from var(--color-primary-300) r g b / var(--tw-bg-opacity));
+}
+
 .bg-opacity-0 {
   --tw-bg-opacity: 0;
 }
@@ -1629,6 +1658,10 @@ video {
 
 .p-\[2px\] {
   padding: 2px;
+}
+
+.p-0 {
+  padding: 0px;
 }
 
 .px-0\.5 {
@@ -2426,6 +2459,14 @@ div.tiptap:focus-visible {
   outline-color: rgb(from var(--color-primary-500) r g b / 1);
 }
 
+.hover\:h-2:hover {
+  height: 0.5rem;
+}
+
+.hover\:w-2:hover {
+  width: 0.5rem;
+}
+
 .hover\:scale-100:hover {
   --tw-scale-x: 1;
   --tw-scale-y: 1;
@@ -2509,6 +2550,11 @@ div.tiptap:focus-visible {
   background-color: rgb(from var(--color-green-600) r g b / var(--tw-bg-opacity));
 }
 
+.hover\:bg-neutral-300:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(from var(--color-neutral-300) r g b / var(--tw-bg-opacity));
+}
+
 .hover\:text-danger:hover {
   --tw-text-opacity: 1;
   color: rgb(from var(--color-red-500) r g b / var(--tw-text-opacity));
@@ -2537,6 +2583,10 @@ div.tiptap:focus-visible {
 .hover\:text-primary-700:hover {
   --tw-text-opacity: 1;
   color: rgb(from var(--color-primary-700) r g b / var(--tw-text-opacity));
+}
+
+.hover\:opacity-100:hover {
+  opacity: 1;
 }
 
 .focus\:bg-neutral-100:focus {
