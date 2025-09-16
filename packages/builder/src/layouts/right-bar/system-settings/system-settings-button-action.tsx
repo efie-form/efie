@@ -1,8 +1,6 @@
 import {
   type FieldSystemConfigButtonAction,
   FieldType,
-  isStringValue,
-  PropertyType,
   type PropValueButtonAction,
 } from '@efie-form/core';
 import { useRef } from 'react';
@@ -48,13 +46,7 @@ export default function SystemSettingsButtonAction({
   const pageOptions =
     schema?.form.fields
       .filter((field) => field.sys.type === FieldType.PAGE)
-      .map((page) => {
-        const pageNameProp = page.props?.find((prop) => prop.type === PropertyType.NAME);
-        const pageName = isStringValue(pageNameProp?.value)
-          ? pageNameProp.value
-          : `Page ${page.sys.id}`;
-        return { value: page.sys.id, label: pageName };
-      }) || [];
+      .map((page) => ({ value: page.sys.id, label: page.sys.name })) || [];
 
   // Store previous values to restore when switching between action types
   const prevValuesRef = useRef<Record<string, PropValueButtonAction>>({

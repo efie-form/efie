@@ -150,12 +150,7 @@ export const conditionalSampleSchema: FormSchema = {
             ],
           },
         ],
-        props: [
-          {
-            type: 'name',
-            value: 'Main Page',
-          },
-        ],
+        props: [],
       },
     ],
     rules: [

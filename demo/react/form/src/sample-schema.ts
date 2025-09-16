@@ -82,12 +82,7 @@ export const sampleSchema: FormSchema = {
             ],
           },
         ],
-        props: [
-          {
-            type: 'name',
-            value: 'Page 1',
-          },
-        ],
+        props: [],
       },
     ],
     rules: [],
