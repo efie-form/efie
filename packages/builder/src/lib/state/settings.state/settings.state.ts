@@ -3,6 +3,26 @@ import { create } from 'zustand';
 import { RIGHT_BAR_TABS, type RightBarTab } from '../../constant';
 import settingsConfig from './settings-config';
 
+// Helper functions for localStorage
+const getStoredWidth = (key: string, defaultValue: number): number => {
+  if (typeof window === 'undefined') return defaultValue;
+  try {
+    const stored = localStorage.getItem(key);
+    return stored ? parseInt(stored, 10) : defaultValue;
+  } catch {
+    return defaultValue;
+  }
+};
+
+const setStoredWidth = (key: string, value: number): void => {
+  if (typeof window === 'undefined') return;
+  try {
+    localStorage.setItem(key, value.toString());
+  } catch {
+    // Silently fail if localStorage is not available
+  }
+};
+
 interface SettingsState {
   formInputs: CustomInputDef[];
   setFormInputs: (inputs: SettingsState['formInputs']) => void;
@@ -77,12 +97,14 @@ export const useSettingsStore = create<SettingsState>((set) => ({
   setHeight: (height) => {
     set({ height });
   },
-  leftBarWidth: 320, // Default width in pixels (20rem = 320px)
+  leftBarWidth: getStoredWidth('efie-left-bar-width', 320), // Default width in pixels (20rem = 320px)
   setLeftBarWidth: (leftBarWidth) => {
+    setStoredWidth('efie-left-bar-width', leftBarWidth);
     set({ leftBarWidth });
   },
-  rightBarWidth: 320, // Default width in pixels (20rem = 320px)
+  rightBarWidth: getStoredWidth('efie-right-bar-width', 320), // Default width in pixels (20rem = 320px)
   setRightBarWidth: (rightBarWidth) => {
+    setStoredWidth('efie-right-bar-width', rightBarWidth);
     set({ rightBarWidth });
   },
   fieldNameEditable: true,
