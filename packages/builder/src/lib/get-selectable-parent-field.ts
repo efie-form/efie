@@ -17,7 +17,7 @@ function getSelectableParentField(fieldId: string) {
   if (!parentId) return;
 
   const parentField = getFieldById(parentId);
-  if (!parentField || nonSelectableFields.has(parentField.type)) {
+  if (!parentField || nonSelectableFields.has(parentField.sys.type)) {
     return getSelectableParentField(parentId);
   }
 

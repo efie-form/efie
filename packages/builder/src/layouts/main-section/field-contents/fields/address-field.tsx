@@ -6,12 +6,14 @@ interface AddressFieldProps {
 }
 
 function AddressField({ field }: AddressFieldProps) {
-  const labelProp = useSchemaStore((state) => state.getFieldProperty(field.id, PropertyType.LABEL));
+  const labelProp = useSchemaStore((state) =>
+    state.getFieldProperty(field.sys.id, PropertyType.LABEL),
+  );
   const requiredProp = useSchemaStore((state) =>
-    state.getFieldProperty(field.id, PropertyType.REQUIRED),
+    state.getFieldProperty(field.sys.id, PropertyType.REQUIRED),
   );
   const addressConfigProp = useSchemaStore((state) =>
-    state.getFieldProperty(field.id, PropertyType.ADDRESS_FIELD),
+    state.getFieldProperty(field.sys.id, PropertyType.ADDRESS_FIELD),
   );
   const updateFieldProperty = useSchemaStore((state) => state.updateFieldProperty);
 
@@ -24,7 +26,7 @@ function AddressField({ field }: AddressFieldProps) {
       <input
         value={label}
         onChange={(e) =>
-          updateFieldProperty(field.id, {
+          updateFieldProperty(field.sys.id, {
             type: PropertyType.LABEL,
             value: e.target.value,
           })

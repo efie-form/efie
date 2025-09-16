@@ -6,11 +6,13 @@ interface PasswordFieldProps {
 }
 
 export default function PasswordField({ field }: PasswordFieldProps) {
-  const labelProp = useSchemaStore((s) => s.getFieldProperty(field.id, PropertyType.LABEL));
-  const requiredProp = useSchemaStore((s) => s.getFieldProperty(field.id, PropertyType.REQUIRED));
+  const labelProp = useSchemaStore((s) => s.getFieldProperty(field.sys.id, PropertyType.LABEL));
+  const requiredProp = useSchemaStore((s) =>
+    s.getFieldProperty(field.sys.id, PropertyType.REQUIRED),
+  );
   const updateFieldProperty = useSchemaStore((s) => s.updateFieldProperty);
   const placeholderProp = useSchemaStore((s) =>
-    s.getFieldProperty(field.id, PropertyType.PLACEHOLDER),
+    s.getFieldProperty(field.sys.id, PropertyType.PLACEHOLDER),
   );
 
   const label = labelProp?.value || '';
@@ -21,7 +23,7 @@ export default function PasswordField({ field }: PasswordFieldProps) {
       <input
         value={label}
         onChange={(e) =>
-          updateFieldProperty(field.id, { type: PropertyType.LABEL, value: e.target.value })
+          updateFieldProperty(field.sys.id, { type: PropertyType.LABEL, value: e.target.value })
         }
         className="typography-body2 mb-2 w-full cursor-text bg-white bg-opacity-0 focus:outline-none"
         type="text"

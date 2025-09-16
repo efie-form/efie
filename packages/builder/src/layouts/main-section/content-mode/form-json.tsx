@@ -35,8 +35,8 @@ export default function FormJson() {
     if (!schema || !isChanged()) return;
     setInternalIndex((prev) => prev + 1);
     setIsUpdating(true);
-    const firstPage = schema.form.fields.find((f) => f.type === FieldType.PAGE);
-    if (firstPage) setPage(firstPage.id);
+    const firstPage = schema.form.fields.find((f) => f.sys.type === FieldType.PAGE);
+    if (firstPage) setPage(firstPage.sys.id);
     setSchema(schema);
   };
 

@@ -6,7 +6,7 @@ interface SingleChoiceProps {
 }
 
 function SingleChoiceField({ field }: SingleChoiceProps) {
-  return <ChoiceFieldBase fieldId={field.id} field={field} inputType="radio" />;
+  return <ChoiceFieldBase fieldId={field.sys.id} field={field} inputType="radio" />;
 }
 
 export default SingleChoiceField;

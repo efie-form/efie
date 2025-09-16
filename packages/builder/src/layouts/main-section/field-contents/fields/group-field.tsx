@@ -11,7 +11,7 @@ interface GroupFieldProps {
 }
 
 function GroupField({ field }: GroupFieldProps) {
-  const nameProp = useSchemaStore((s) => s.getFieldProperty(field.id, PropertyType.NAME));
+  const nameProp = useSchemaStore((s) => s.getFieldProperty(field.sys.id, PropertyType.NAME));
   const updateFieldProperty = useSchemaStore((s) => s.updateFieldProperty);
   const name = typeof nameProp?.value === 'string' ? nameProp.value : 'Group';
   const [editMode, setEditMode] = useState(false);
@@ -23,7 +23,7 @@ function GroupField({ field }: GroupFieldProps) {
   }, [editMode]);
 
   const commit = () => {
-    updateFieldProperty(field.id, { type: PropertyType.NAME, value });
+    updateFieldProperty(field.sys.id, { type: PropertyType.NAME, value });
     setEditMode(false);
   };
 
@@ -56,9 +56,14 @@ function GroupField({ field }: GroupFieldProps) {
         )}
       </button>
       {field.children.map((child, index) => (
-        <RenderField fieldId={child.id} key={child.id} parentId={field.id} childIndex={index} />
+        <RenderField
+          fieldId={child.sys.id}
+          key={child.sys.id}
+          parentId={field.sys.id}
+          childIndex={index}
+        />
       ))}
-      {field.children.length === 0 && <EmptyArea parentId={field.id} />}
+      {field.children.length === 0 && <EmptyArea parentId={field.sys.id} />}
     </div>
   );
 }

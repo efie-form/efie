@@ -18,19 +18,19 @@ export default function FieldsSelect({ value, onChange, fieldTypes }: FieldsSele
   return (
     <StyledSelect
       options={allFields
-        .filter((field) => !fieldTypes || fieldTypes?.includes(field.type))
+        .filter((field) => !fieldTypes || fieldTypes?.includes(field.sys.type))
         .map((field) => {
-          const Icon = fieldIcons[field.type];
+          const Icon = fieldIcons[field.sys.type];
           return {
-            value: field.id,
+            value: field.sys.id,
             label: field.sys.name,
             Icon: Icon,
           };
         })}
       searchable
-      value={value?.id}
+      value={value?.sys.id}
       onChange={(id) => {
-        const field = allFields.find((f) => f.id === id);
+        const field = allFields.find((f) => f.sys.id === id);
 
         if (field) onChange?.(field);
       }}

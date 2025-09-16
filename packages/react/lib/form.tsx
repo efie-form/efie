@@ -28,7 +28,7 @@ function FormContent({ schema, env, currentPage, setCurrentPage, ...props }: For
     <ConditionProvider value={conditionState}>
       <FormContextProvider page={currentPage} setPage={setCurrentPage}>
         {schema.form.fields.map((field) => (
-          <Fragment key={field.id}>
+          <Fragment key={field.sys.id}>
             <RenderField field={field} {...props} />
           </Fragment>
         ))}
@@ -38,7 +38,7 @@ function FormContent({ schema, env, currentPage, setCurrentPage, ...props }: For
 }
 
 function ReactForm({ schema, env, ...props }: ReactFormProps) {
-  const firstPageId = schema.form.fields.find((field) => field.type === 'page')?.id;
+  const firstPageId = schema.form.fields.find((field) => field.sys.type === 'page')?.sys.id;
   const [currentPage, setCurrentPage] = useState(firstPageId || '');
   const methods = useForm({});
 

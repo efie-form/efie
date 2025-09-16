@@ -8,7 +8,7 @@ import {
   useSensors,
 } from '@dnd-kit/core';
 import { SortableContext, sortableKeyboardCoordinates } from '@dnd-kit/sortable';
-import { FieldType, type PageFormField } from '@efie-form/core';
+import { FieldType, isFieldOfTypes, type PageFormField } from '@efie-form/core';
 import { FaPlus } from 'react-icons/fa6';
 import Button from '../../../../components/elements/button';
 import { getNextFieldCount } from '../../../../lib/generate-field-name';
@@ -27,7 +27,7 @@ function PagesTab() {
     }),
   );
 
-  const pages = schema?.form.fields.filter((field) => field.type === FieldType.PAGE) || [];
+  const pages = schema?.form.fields.filter((field) => isFieldOfTypes(field, FieldType.PAGE)) || [];
 
   const handleAddNewPage = () => {
     const newPage = getDefaultField({
@@ -46,13 +46,13 @@ function PagesTab() {
   };
 
   const handleDeletePage = (deletedPage: PageFormField) => {
-    const currentPageIndex = pages.findIndex((p) => p.id === deletedPage.id);
-    const newPages = pages.filter((p) => p.id !== deletedPage.id);
+    const currentPageIndex = pages.findIndex((p) => p.sys.id === deletedPage.sys.id);
+    const newPages = pages.filter((p) => p.sys.id !== deletedPage.sys.id);
 
-    deleteField(deletedPage.id);
+    deleteField(deletedPage.sys.id);
 
-    if (deletedPage.id === page) {
-      setPage(newPages[currentPageIndex]?.id ?? newPages[currentPageIndex - 1]?.id);
+    if (deletedPage.sys.id === page) {
+      setPage(newPages[currentPageIndex]?.sys.id ?? newPages[currentPageIndex - 1]?.sys.id);
     }
   };
 
@@ -60,8 +60,8 @@ function PagesTab() {
     const { active, over } = props;
     if (!active || !over || active.id === over.id) return;
 
-    const activeIndex = pages.findIndex((p) => p.id === active.id);
-    const overIndex = pages.findIndex((p) => p.id === over.id);
+    const activeIndex = pages.findIndex((p) => p.sys.id === active.id);
+    const overIndex = pages.findIndex((p) => p.sys.id === over.id);
 
     if (activeIndex === -1 || overIndex === -1) return;
 
@@ -76,15 +76,15 @@ function PagesTab() {
         </Button>
       </div>
       <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-        <SortableContext items={pages.map((p) => p.id)}>
+        <SortableContext items={pages.map((p) => p.sys.id)}>
           <ul>
             {pages.map((p) => (
-              <li key={p.id}>
+              <li key={p.sys.id}>
                 <PageItem
                   page={p}
                   onDelete={() => handleDeletePage(p)}
-                  isCurrentPage={p.id === page}
-                  onSelect={() => setPage(p.id)}
+                  isCurrentPage={p.sys.id === page}
+                  onSelect={() => setPage(p.sys.id)}
                 />
               </li>
             ))}

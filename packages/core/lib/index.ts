@@ -68,7 +68,6 @@ export type {
 } from './types/field-property-value.type';
 export type {
   AddressFormField,
-  BaseFormField,
   BlockFormField,
   ButtonFormField,
   CheckboxFormField,
@@ -221,6 +220,7 @@ export {
   toSize,
   widthToStyle,
 } from './utils/props-parse';
+export { isFieldOfTypes } from './utils/type-guards';
 export { default as validateSchema } from './utils/validations';
 export {
   isAcceptValue,

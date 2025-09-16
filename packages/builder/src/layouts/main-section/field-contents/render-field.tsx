@@ -20,7 +20,7 @@ function RenderField({ fieldId, noSelect, parentId, childIndex }: RenderFieldPro
   const { setSelectedFieldId, clearSelectedFieldId, setActiveTab } = useSettingsStore();
   const field = useSchemaStore((state) => state.getFieldById(fieldId));
   const selectedFieldId = useSettingsStore((state) => state.selectedFieldId);
-  const isSelected = selectedFieldId === field?.id;
+  const isSelected = selectedFieldId === field?.sys.id;
   const { deleteField, duplicateField } = useSchemaStore();
   const fieldRef = useRef<HTMLDivElement>(null);
   const dragHandlerRef = useRef<HTMLDivElement>(null);
@@ -28,7 +28,7 @@ function RenderField({ fieldId, noSelect, parentId, childIndex }: RenderFieldPro
   const { handleDrop, canDrop } = useDropField({
     index: childIndex,
     parentId,
-    fieldType: field?.type,
+    fieldType: field?.sys.type,
   });
 
   const { isDraggedOver, operation } = useDragAndDrop({
@@ -43,15 +43,15 @@ function RenderField({ fieldId, noSelect, parentId, childIndex }: RenderFieldPro
 
   const handleSelectField = (e: MouseEvent) => {
     e.stopPropagation();
-    if (!field || selectedFieldId === field.id) return;
-    setSelectedFieldId(field.id);
+    if (!field || selectedFieldId === field.sys.id) return;
+    setSelectedFieldId(field.sys.id);
     setActiveTab(RIGHT_BAR_TABS.FIELD_SETTINGS);
   };
 
   const handleDuplicateField = (e: MouseEvent) => {
     e.stopPropagation();
     if (!field) return;
-    const duplicatedFieldId = duplicateField(field.id);
+    const duplicatedFieldId = duplicateField(field.sys.id);
     if (duplicatedFieldId) {
       // Select the newly duplicated field
       setSelectedFieldId(duplicatedFieldId);
@@ -61,7 +61,7 @@ function RenderField({ fieldId, noSelect, parentId, childIndex }: RenderFieldPro
 
   const handleDeleteField = () => {
     if (!field) return;
-    deleteField(field.id);
+    deleteField(field.sys.id);
     clearSelectedFieldId();
   };
 

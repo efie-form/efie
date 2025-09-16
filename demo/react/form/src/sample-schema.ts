@@ -5,16 +5,16 @@ export const sampleSchema: FormSchema = {
   form: {
     fields: [
       {
-        id: 'TpRISVLvxQ',
-        type: 'page',
         sys: {
+          id: 'TpRISVLvxQ',
+          type: 'page',
           name: 'TpRISVLvxQ',
         },
         children: [
           {
-            type: 'heading',
-            id: 'd08i87t5ap',
             sys: {
+              type: 'heading',
+              id: 'd08i87t5ap',
               name: 'd08i87t5ap',
             },
             props: [
@@ -43,9 +43,9 @@ export const sampleSchema: FormSchema = {
             ],
           },
           {
-            id: 'r6mi72do2v',
-            type: 'short_text',
             sys: {
+              id: 'r6mi72do2v',
+              type: 'short_text',
               name: 'r6mi72do2v',
             },
             form: {
@@ -63,9 +63,9 @@ export const sampleSchema: FormSchema = {
             ],
           },
           {
-            id: '70r0bi5q3c',
-            type: 'button',
             sys: {
+              id: '70r0bi5q3c',
+              type: 'button',
               name: '70r0bi5q3c',
             },
             props: [

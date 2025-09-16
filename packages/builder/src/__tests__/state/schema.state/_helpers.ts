@@ -2,30 +2,30 @@ import { FieldType, type FormField, type FormSchema, PropertyType } from '@efie-
 import { clearAllDebounceTimers, useSchemaStore } from '../../../lib/state/schema.state';
 
 export const makePage = (id: string, name = 'Page'): FormField => ({
-  id,
-  type: FieldType.PAGE,
   sys: {
+    id,
     name: id,
+    type: FieldType.PAGE,
   },
   children: [],
   props: [{ type: PropertyType.NAME, value: name }],
 });
 
 export const makeShort = (id: string, label = 'Short', name = 'short'): FormField => ({
-  id,
-  type: FieldType.SHORT_TEXT,
   sys: {
+    id,
     name: id,
+    type: FieldType.SHORT_TEXT,
   },
   form: { name },
   props: [{ type: PropertyType.LABEL, value: label }],
 });
 
 export const makeGroup = (id: string): FormField => ({
-  id,
-  type: FieldType.GROUP,
   sys: {
+    id,
     name: id,
+    type: FieldType.GROUP,
   },
   children: [],
   props: [],

@@ -7,7 +7,7 @@ interface DateFieldProps {
 
 function DateField({ field }: DateFieldProps) {
   const fieldProperty = useSchemaStore((state) =>
-    state.getFieldProperty(field.id, PropertyType.LABEL),
+    state.getFieldProperty(field.sys.id, PropertyType.LABEL),
   );
   const label = fieldProperty?.value || '';
   const updateFieldProperty = useSchemaStore((state) => state.updateFieldProperty);
@@ -17,7 +17,7 @@ function DateField({ field }: DateFieldProps) {
       <input
         value={label}
         onChange={(e) =>
-          updateFieldProperty(field.id, {
+          updateFieldProperty(field.sys.id, {
             type: PropertyType.LABEL,
             value: e.target.value,
           })

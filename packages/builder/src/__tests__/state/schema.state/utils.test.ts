@@ -14,20 +14,20 @@ import {
 
 // helper to make a simple schema
 const makePage = (id: string, name = 'Page'): FormField => ({
-  id,
-  type: FieldType.PAGE,
   sys: {
+    id,
     name: id,
+    type: FieldType.PAGE,
   },
   children: [],
   props: [{ type: PropertyType.NAME, value: name }],
 });
 
 const makeShort = (id: string, label = 'Short', name = 'short'): FormField => ({
-  id,
-  type: FieldType.SHORT_TEXT,
   sys: {
+    id,
     name: id,
+    type: FieldType.SHORT_TEXT,
   },
   form: { name },
   props: [{ type: PropertyType.LABEL, value: label }],
@@ -82,10 +82,10 @@ describe('schema.state utils', () => {
     const out = findFieldInTree(
       [p1],
       's1',
-      (field: FormField) => ({ ...field, id: 's1x' }) as FormField,
+      (field: FormField) => ({ ...field, sys: { ...field.sys, id: 's1x' } }) as FormField,
     );
     const child = (out[0] as any).children[0] as FormField;
-    expect(child.id).toBe('s1x');
+    expect(child.sys.id).toBe('s1x');
   });
 
   test('removeFieldFromTree removes nested node', () => {
@@ -102,11 +102,11 @@ describe('schema.state utils', () => {
     const p2 = makePage('p2');
 
     const rootAdded = addFieldToTree([p1], p2);
-    expect(rootAdded.map((f: FormField) => f.id)).toEqual(['p1', 'p2']);
+    expect(rootAdded.map((f: FormField) => f.sys.id)).toEqual(['p1', 'p2']);
 
     const s1 = makeShort('s1');
     const withChild = addFieldToTree([p1], s1, 'p1', 0);
-    expect(((withChild[0] as any).children[0] as FormField).id).toBe('s1');
+    expect(((withChild[0] as any).children[0] as FormField).sys.id).toBe('s1');
   });
 
   test('moveFieldInTree removes first and inserts under new parent', () => {
@@ -117,7 +117,7 @@ describe('schema.state utils', () => {
     const p2 = makePage('p2');
 
     const out = moveFieldInTree([p1, p2], 's1', 'p2', 0, s1);
-    expect(((out[1] as any).children[0] as FormField).id).toBe('s1');
+    expect(((out[1] as any).children[0] as FormField).sys.id).toBe('s1');
     expect(((out[0] as any).children as any[]).length).toBe(0);
   });
 

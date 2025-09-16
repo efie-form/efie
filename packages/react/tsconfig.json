@@ -10,10 +10,7 @@
     "jsx": "react-jsx",
     // src
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "baseUrl": ".",
-    "paths": {
-      "@efie-form/core": ["../core/lib"]
-    }
+    "baseUrl": "."
   },
   "include": ["lib/**/*", "types/**/*", "lib/index.ts"]
 }

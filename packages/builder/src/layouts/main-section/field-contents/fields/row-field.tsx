@@ -21,10 +21,10 @@ function RowField({ field }: RowFieldProps) {
     >
       {field.children
         .filter(Boolean)
-        .filter((child) => child.type === FieldType.COLUMN)
+        .filter((child) => child.sys.type === FieldType.COLUMN)
         .map((child, index) => (
           <div
-            key={`${field.id}-${child.id}`}
+            key={`${field.sys.id}-${child.sys.id}`}
             style={{
               width: isMobile
                 ? '100%'
@@ -32,7 +32,12 @@ function RowField({ field }: RowFieldProps) {
             }}
             className="self-stretch"
           >
-            <RenderField fieldId={child.id} noSelect parentId={field.id} childIndex={index} />
+            <RenderField
+              fieldId={child.sys.id}
+              noSelect
+              parentId={field.sys.id}
+              childIndex={index}
+            />
           </div>
         ))}
     </div>

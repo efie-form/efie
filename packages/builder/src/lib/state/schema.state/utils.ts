@@ -28,14 +28,14 @@ export function getFieldInfoMap(fields: FormField[]): FieldMaps {
 
   const buildMaps = (currentFields: FormField[], parentId?: string) => {
     for (const field of currentFields.values()) {
-      fieldMap.set(field.id, field);
+      fieldMap.set(field.sys.id, field);
 
       if (parentId) {
-        fieldParentMap.set(field.id, parentId);
+        fieldParentMap.set(field.sys.id, parentId);
       }
 
       if ('children' in field && field.children) {
-        buildMaps(field.children, field.id);
+        buildMaps(field.children, field.sys.id);
       }
     }
   };
@@ -74,7 +74,7 @@ export function findFieldInTree(
   for (let i = 0; i < newFields.length; i++) {
     const field = newFields[i];
 
-    if (field.id === fieldId) {
+    if (field.sys.id === fieldId) {
       const result = callback(field, i, parent);
       if (result) {
         newFields[i] = result;
@@ -97,7 +97,7 @@ export function findFieldInTree(
 // Helper function to remove field from tree structure efficiently
 export function removeFieldFromTree(fields: FormField[], fieldId: string): FormField[] {
   return fields
-    .filter((field) => field.id !== fieldId)
+    .filter((field) => field.sys.id !== fieldId)
     .map((field) => {
       if ('children' in field && field.children) {
         field.children = removeFieldFromTree(field.children, fieldId);
@@ -126,7 +126,7 @@ export function addFieldToTree(
 
   // Add to specific parent
   return fields.map((field) => {
-    if (field.id === parentId && 'children' in field) {
+    if (field.sys.id === parentId && 'children' in field) {
       const newChildren = [...field.children];
       if (index !== undefined && index >= 0 && index <= newChildren.length) {
         newChildren.splice(index, 0, newField);

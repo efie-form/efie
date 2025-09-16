@@ -1,11 +1,5 @@
 import { useSortable } from '@dnd-kit/sortable';
-import {
-  isStringValue,
-  type PageFormField,
-  PropertyType,
-  type PropValue,
-  type PropValueString,
-} from '@efie-form/core';
+import type { PageFormField } from '@efie-form/core';
 import { type CSSProperties, useState } from 'react';
 import { FaCheck, FaTrash, FaXmark } from 'react-icons/fa6';
 import { MdOutlineDragIndicator } from 'react-icons/md';
@@ -21,15 +15,12 @@ interface PageItemProps {
 }
 
 export default function PageItem({ page, onDelete, isCurrentPage, onSelect }: PageItemProps) {
-  const { schema } = useSchemaStore();
+  const { schema, renameField } = useSchemaStore();
+  const field = useSchemaStore((s) => s.getFieldById(page.sys.id));
   const { attributes, listeners, setNodeRef, transition, transform, isDragging } = useSortable({
-    id: page.id,
+    id: page.sys.id,
   });
   const [deleteConfirm, setDeleteConfirm] = useState(false);
-  const fieldProperty = useSchemaStore((state) =>
-    state.getFieldProperty(page.id, PropertyType.NAME),
-  );
-  const updateFieldProperty = useSchemaStore((state) => state.updateFieldProperty);
 
   const style: CSSProperties = {
     transform: transform ? `translateY(${transform.y}px)` : undefined,
@@ -37,10 +28,8 @@ export default function PageItem({ page, onDelete, isCurrentPage, onSelect }: Pa
   };
 
   const handleRename = (newName: string) => {
-    updateFieldProperty(page.id, {
-      type: PropertyType.NAME,
-      value: newName,
-    });
+    if (!field) return;
+    renameField(field.sys.id, newName);
   };
 
   return (
@@ -72,7 +61,7 @@ export default function PageItem({ page, onDelete, isCurrentPage, onSelect }: Pa
           <MdOutlineDragIndicator />
         </span>
         <EditableText
-          defaultValue={getValue(fieldProperty?.value)}
+          defaultValue={field?.sys.name}
           onSave={handleRename}
           className="typography-body3 text-neutral-900"
           fallback="Untitled page"
@@ -126,11 +115,4 @@ export default function PageItem({ page, onDelete, isCurrentPage, onSelect }: Pa
       </span>
     </div>
   );
-}
-
-function getValue(value?: PropValue): PropValueString {
-  if (isStringValue(value)) {
-    return value;
-  }
-  return '';
 }

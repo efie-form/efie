@@ -15,8 +15,11 @@ export const createValidSchema = (): FormSchema => ({
 // Helper function to create a valid field with minimal props
 export const createValidField = (type: FieldType, additionalProps: unknown[] = []): FormField =>
   ({
-    id: 'test-id',
-    type,
+    sys: {
+      id: 'test-id',
+      type,
+      name: 'test-name',
+    },
     props: [
       {
         type: 'label' as const,

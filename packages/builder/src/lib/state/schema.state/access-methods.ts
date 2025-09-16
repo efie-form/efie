@@ -46,6 +46,6 @@ const getChildrenId = (field: FormField): string[] => {
 
   return field.children.flatMap((child) => {
     const childIds = getChildrenId(child);
-    return [child.id, ...childIds];
+    return [child.sys.id, ...childIds];
   });
 };

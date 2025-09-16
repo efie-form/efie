@@ -1,4 +1,4 @@
-import { FieldType, type FormField } from '@efie-form/core';
+import { FieldType, type FormField, isFieldOfTypes } from '@efie-form/core';
 import { useSettingsStore } from '../../lib/state/settings.state';
 import FieldSettings from './field-settings';
 import RowSettings from './field-settings/row-settings';
@@ -11,26 +11,29 @@ interface RenderSettingsProps {
 function RenderSettings({ field }: RenderSettingsProps) {
   if (!field) return null;
 
-  switch (field?.type) {
-    case FieldType.NUMBER:
-    case FieldType.SHORT_TEXT:
-    case FieldType.SINGLE_CHOICE:
-    case FieldType.TIME:
-    case FieldType.MULTIPLE_CHOICES:
-    case FieldType.DATE_TIME:
-    case FieldType.LONG_TEXT:
-    case FieldType.FILE:
-    case FieldType.CHECKBOX:
-    case FieldType.DATE: {
-      return <InputSettings field={field} />;
-    }
-    case FieldType.ROW: {
-      return <RowSettings field={field} />;
-    }
-    default: {
-      return <SharedSettings field={field} fieldType={field.type} />;
-    }
+  if (isFieldOfTypes(field, FieldType.ROW)) {
+    return <RowSettings field={field} />;
   }
+
+  if (
+    isFieldOfTypes(
+      field,
+      FieldType.NUMBER,
+      FieldType.SHORT_TEXT,
+      FieldType.SINGLE_CHOICE,
+      FieldType.TIME,
+      FieldType.MULTIPLE_CHOICES,
+      FieldType.DATE_TIME,
+      FieldType.LONG_TEXT,
+      FieldType.FILE,
+      FieldType.CHECKBOX,
+      FieldType.DATE,
+    )
+  ) {
+    return <InputSettings field={field} />;
+  }
+
+  return <SharedSettings field={field} fieldType={field.sys.type} />;
 }
 
 export default RenderSettings;
@@ -45,18 +48,18 @@ function SharedSettings({ field, fieldType }: SharedSettingsProps) {
 
   return (
     <div>
-      <FieldSettings fieldId={field.id} config={config.properties} />
+      <FieldSettings fieldId={field.sys.id} config={config.properties} />
     </div>
   );
 }
 
 function InputSettings({ field }: { field: FormField }) {
-  const config = useSettingsStore((state) => state.config[field.type]);
+  const config = useSettingsStore((state) => state.config[field.sys.type]);
 
   return (
     <div>
-      <FieldNameSettings fieldId={field.id} />
-      <FieldSettings fieldId={field.id} config={config.properties} />
+      <FieldNameSettings fieldId={field.sys.id} />
+      <FieldSettings fieldId={field.sys.id} config={config.properties} />
     </div>
   );
 }

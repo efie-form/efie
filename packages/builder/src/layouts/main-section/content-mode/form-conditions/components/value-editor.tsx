@@ -22,7 +22,7 @@ const ValueEditor = ({ field, operator, value, onChange }: ValueEditorProps) => 
   if (!field || !isInputField(field)) return null;
   if (operatorNeedsNoValue(operator)) return null;
 
-  const type = field.type as FieldInputType;
+  const type = field.sys.type as FieldInputType;
 
   // String-like
   if (

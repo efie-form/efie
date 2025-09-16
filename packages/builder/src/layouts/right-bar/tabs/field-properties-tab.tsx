@@ -21,11 +21,11 @@ function FieldPropertiesTab() {
     const parentField = getSettingsParentField(selectedFieldId);
     if (!parentField) return;
 
-    if (parentField.type === FieldType.PAGE) {
+    if (parentField.sys.type === FieldType.PAGE) {
       clearSelectedFieldId();
       setActiveTab(RIGHT_BAR_TABS.PAGE);
     } else {
-      setSelectedFieldId(parentField.id);
+      setSelectedFieldId(parentField.sys.id);
       setActiveTab(RIGHT_BAR_TABS.FIELD_SETTINGS);
     }
   };
@@ -45,7 +45,7 @@ function FieldPropertiesTab() {
             className="typography-body1 font-medium text-neutral-700"
             defaultValue={field.sys.name}
             onSave={(newName) => {
-              renameField(field.id, newName);
+              renameField(field.sys.id, newName);
             }}
             inputClassName="typography-body1 font-medium text-neutral-700"
             fallback="Untitled field"

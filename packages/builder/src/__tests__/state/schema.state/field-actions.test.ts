@@ -13,7 +13,7 @@ describe('schema.state field-actions', () => {
     const st = useSchemaStore.getState();
     const schema = st.schema as any;
     expect(schema.form.fields.length).toBe(1);
-    expect(st.fieldMap.get(schema.form.fields[0].id)).toBeDefined();
+    expect(st.fieldMap.get(schema.form.fields[0].sys.id)).toBeDefined();
     expect(st.histories.length).toBeGreaterThan(0);
   });
 
@@ -36,9 +36,11 @@ describe('schema.state field-actions', () => {
   test('duplicateField deep clones with new ids and adds to schema', () => {
     const p1 = makePage('p1');
     const g1: FormField = {
-      id: 'g1',
-      type: FieldType.GROUP,
-      sys: { name: 'g1' },
+      sys: {
+        id: 'g1',
+        type: FieldType.GROUP,
+        name: 'g1',
+      },
       children: [],
       props: [],
     };
@@ -55,15 +57,15 @@ describe('schema.state field-actions', () => {
     const state = useSchemaStore.getState();
     const duplicatedField = state.fieldMap.get(duplicatedFieldId as string);
     expect(duplicatedField).toBeDefined();
-    expect(duplicatedField?.id).toBe(duplicatedFieldId);
-    expect((duplicatedField as any)?.children[0].id).not.toBe('s1');
+    expect(duplicatedField?.sys.id).toBe(duplicatedFieldId);
+    expect((duplicatedField as any)?.children[0].sys.id).not.toBe('s1');
 
     // Check that both original and duplicated fields exist in the schema
     const schema = state.schema as any;
     const pageChildren = schema.form.fields[0].children;
     expect(pageChildren.length).toBe(2); // Original + duplicated
-    expect(pageChildren.some((child: any) => child.id === 'g1')).toBe(true);
-    expect(pageChildren.some((child: any) => child.id === duplicatedFieldId)).toBe(true);
+    expect(pageChildren.some((child: any) => child.sys.id === 'g1')).toBe(true);
+    expect(pageChildren.some((child: any) => child.sys.id === duplicatedFieldId)).toBe(true);
   });
 
   test('moveField moves between parents and updates maps/history', () => {
@@ -77,7 +79,7 @@ describe('schema.state field-actions', () => {
 
     const st = useSchemaStore.getState();
     const schema = st.schema as any;
-    expect(schema.form.fields[1].children[0].id).toBe('s1');
+    expect(schema.form.fields[1].children[0].sys.id).toBe('s1');
     expect(schema.form.fields[0].children.length).toBe(0);
   });
 
@@ -102,7 +104,7 @@ describe('schema.state field-actions', () => {
 
     useSchemaStore.getState().movePage(0, 1);
 
-    const ids = (useSchemaStore.getState().schema as any).form.fields.map((f: any) => f.id);
+    const ids = (useSchemaStore.getState().schema as any).form.fields.map((f: any) => f.sys.id);
     expect(ids).toEqual(['p2', 'p1']);
   });
 });

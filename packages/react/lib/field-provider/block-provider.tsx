@@ -13,12 +13,12 @@ function BlockProvider({ field, Component, ...props }: BlockProviderProps) {
   if (!Component) return null;
 
   return createElement(Component, {
-    id: field.id,
+    id: field.sys.id,
     field,
     children: (
       <>
         {field.children.map((field) => (
-          <RenderField key={field.id} field={field} {...props} />
+          <RenderField key={field.sys.id} field={field} {...props} />
         ))}
       </>
     ),

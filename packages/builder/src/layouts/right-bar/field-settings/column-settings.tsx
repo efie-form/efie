@@ -17,7 +17,7 @@ function ColumnSettings({ field }: ColumnSettingsProps) {
 
   return (
     <div className="mb-4">
-      <FieldSettings config={withColumnWidthSettings(config.properties)} fieldId={field.id} />
+      <FieldSettings config={withColumnWidthSettings(config.properties)} fieldId={field.sys.id} />
     </div>
   );
 }

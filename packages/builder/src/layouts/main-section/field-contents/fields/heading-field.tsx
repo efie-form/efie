@@ -9,7 +9,7 @@ interface HeadingFieldProps {
 
 function HeadingField({ field }: HeadingFieldProps) {
   const content = useSchemaStore((state) =>
-    state.getFieldProperty(field.id, PropertyType.HEADING_CONTENT),
+    state.getFieldProperty(field.sys.id, PropertyType.HEADING_CONTENT),
   );
   const updateFieldProperty = useSchemaStore((state) => state.updateFieldProperty);
   const { selectedFieldId } = useSettingsStore();
@@ -20,12 +20,12 @@ function HeadingField({ field }: HeadingFieldProps) {
       <RichTextEditor
         value={content?.value?.jsonContent || {}}
         onChange={(newContent) => {
-          updateFieldProperty(field.id, {
+          updateFieldProperty(field.sys.id, {
             type: PropertyType.HEADING_CONTENT,
             value: { jsonContent: newContent },
           });
         }}
-        active={selectedFieldId === field.id}
+        active={selectedFieldId === field.sys.id}
         options={{
           bold: config?.formats.bold,
           italic: config?.formats.italic,

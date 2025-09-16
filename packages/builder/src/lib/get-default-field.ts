@@ -84,9 +84,9 @@ export function getDefaultField<T extends FieldType>({
   switch (type) {
     case FieldType.SHORT_TEXT: {
       return {
-        id: generateId(ID_LENGTH),
-        type: FieldType.SHORT_TEXT,
         sys: {
+          id: generateId(ID_LENGTH),
+          type: FieldType.SHORT_TEXT,
           name: generateFieldName(type, nextFieldCount),
         },
         form: {
@@ -106,9 +106,9 @@ export function getDefaultField<T extends FieldType>({
     }
     case FieldType.LONG_TEXT: {
       return {
-        type: FieldType.LONG_TEXT,
-        id: generateId(ID_LENGTH),
         sys: {
+          id: generateId(ID_LENGTH),
+          type: FieldType.LONG_TEXT,
           name: generateFieldName(type, nextFieldCount),
         },
         form: {
@@ -128,9 +128,9 @@ export function getDefaultField<T extends FieldType>({
     }
     case FieldType.NUMBER: {
       return {
-        type: FieldType.NUMBER,
-        id: generateId(ID_LENGTH),
         sys: {
+          id: generateId(ID_LENGTH),
+          type: FieldType.NUMBER,
           name: generateFieldName(type, nextFieldCount),
         },
         form: {
@@ -150,9 +150,9 @@ export function getDefaultField<T extends FieldType>({
     }
     case FieldType.SINGLE_CHOICE: {
       return {
-        type: FieldType.SINGLE_CHOICE,
-        id: generateId(ID_LENGTH),
         sys: {
+          id: generateId(ID_LENGTH),
+          type: FieldType.SINGLE_CHOICE,
           name: generateFieldName(type, nextFieldCount),
         },
         form: {
@@ -176,9 +176,9 @@ export function getDefaultField<T extends FieldType>({
     }
     case FieldType.MULTIPLE_CHOICES: {
       return {
-        type: FieldType.MULTIPLE_CHOICES,
-        id: generateId(ID_LENGTH),
         sys: {
+          id: generateId(ID_LENGTH),
+          type: FieldType.MULTIPLE_CHOICES,
           name: generateFieldName(type, nextFieldCount),
         },
         form: {
@@ -202,9 +202,9 @@ export function getDefaultField<T extends FieldType>({
     }
     case FieldType.PAGE: {
       return {
-        type: FieldType.PAGE,
-        id: generateId(ID_LENGTH),
         sys: {
+          type: FieldType.PAGE,
+          id: generateId(ID_LENGTH),
           name: page?.name || generateFieldName(type, nextFieldCount),
         },
         children: [],
@@ -213,9 +213,11 @@ export function getDefaultField<T extends FieldType>({
     }
     case FieldType.DATE: {
       return {
-        type: FieldType.DATE,
-        id: generateId(ID_LENGTH),
         sys: {
+          id: generateId(ID_LENGTH),
+
+          type: FieldType.DATE,
+
           name: generateFieldName(type, nextFieldCount),
         },
         form: {
@@ -231,9 +233,11 @@ export function getDefaultField<T extends FieldType>({
     }
     case FieldType.TIME: {
       return {
-        type: FieldType.TIME,
-        id: generateId(ID_LENGTH),
         sys: {
+          id: generateId(ID_LENGTH),
+
+          type: FieldType.TIME,
+
           name: generateFieldName(type, nextFieldCount),
         },
         form: {
@@ -249,9 +253,11 @@ export function getDefaultField<T extends FieldType>({
     }
     case FieldType.DATE_TIME: {
       return {
-        type: FieldType.DATE_TIME,
-        id: generateId(ID_LENGTH),
         sys: {
+          id: generateId(ID_LENGTH),
+
+          type: FieldType.DATE_TIME,
+
           name: generateFieldName(type, nextFieldCount),
         },
         form: {
@@ -267,9 +273,11 @@ export function getDefaultField<T extends FieldType>({
     }
     case FieldType.FILE: {
       return {
-        type: FieldType.FILE,
-        id: generateId(ID_LENGTH),
         sys: {
+          id: generateId(ID_LENGTH),
+
+          type: FieldType.FILE,
+
           name: generateFieldName(type, nextFieldCount),
         },
         form: {
@@ -292,9 +300,11 @@ export function getDefaultField<T extends FieldType>({
     }
     case FieldType.DIVIDER: {
       return {
-        type: FieldType.DIVIDER,
-        id: generateId(ID_LENGTH),
         sys: {
+          id: generateId(ID_LENGTH),
+
+          type: FieldType.DIVIDER,
+
           name: generateFieldName(type, nextFieldCount),
         },
         props: [],
@@ -302,9 +312,11 @@ export function getDefaultField<T extends FieldType>({
     }
     case FieldType.HEADING: {
       return {
-        type: FieldType.HEADING,
-        id: generateId(ID_LENGTH),
         sys: {
+          id: generateId(ID_LENGTH),
+
+          type: FieldType.HEADING,
+
           name: generateFieldName(type, nextFieldCount),
         },
         props: [
@@ -319,9 +331,11 @@ export function getDefaultField<T extends FieldType>({
     }
     case FieldType.IMAGE: {
       return {
-        type: FieldType.IMAGE,
-        id: generateId(ID_LENGTH),
         sys: {
+          id: generateId(ID_LENGTH),
+
+          type: FieldType.IMAGE,
+
           name: generateFieldName(type, nextFieldCount),
         },
         props: [
@@ -334,17 +348,19 @@ export function getDefaultField<T extends FieldType>({
     }
     case FieldType.ROW: {
       return {
-        type: FieldType.ROW,
-        id: generateId(ID_LENGTH),
         sys: {
+          id: generateId(ID_LENGTH),
+
+          type: FieldType.ROW,
+
           name: generateFieldName(type, nextFieldCount),
         },
         props: [],
         children: [
           {
-            id: generateId(ID_LENGTH),
-            type: FieldType.COLUMN,
             sys: {
+              id: generateId(ID_LENGTH),
+              type: FieldType.COLUMN,
               name: generateFieldName(type, nextFieldCount + 1),
             },
             props: [
@@ -359,9 +375,9 @@ export function getDefaultField<T extends FieldType>({
             children: [],
           },
           {
-            id: generateId(ID_LENGTH),
-            type: FieldType.COLUMN,
             sys: {
+              id: generateId(ID_LENGTH),
+              type: FieldType.COLUMN,
               name: generateFieldName(type, nextFieldCount + 2),
             },
             props: [
@@ -380,9 +396,11 @@ export function getDefaultField<T extends FieldType>({
     }
     case FieldType.COLUMN: {
       return {
-        type: FieldType.COLUMN,
-        id: generateId(ID_LENGTH),
         sys: {
+          id: generateId(ID_LENGTH),
+
+          type: FieldType.COLUMN,
+
           name: generateFieldName(type, nextFieldCount),
         },
         props: [
@@ -399,9 +417,9 @@ export function getDefaultField<T extends FieldType>({
     }
     case FieldType.BLOCK: {
       return {
-        id: generateId(ID_LENGTH),
-        type: FieldType.BLOCK,
         sys: {
+          id: generateId(ID_LENGTH),
+          type: FieldType.BLOCK,
           name: generateFieldName(type, nextFieldCount),
         },
         children: [],
@@ -410,9 +428,9 @@ export function getDefaultField<T extends FieldType>({
     }
     case FieldType.BUTTON: {
       return {
-        id: generateId(ID_LENGTH),
-        type: FieldType.BUTTON,
         sys: {
+          id: generateId(ID_LENGTH),
+          type: FieldType.BUTTON,
           name: generateFieldName(type, nextFieldCount),
         },
         props: [
@@ -431,9 +449,9 @@ export function getDefaultField<T extends FieldType>({
     }
     case FieldType.ADDRESS: {
       return {
-        id: generateId(ID_LENGTH),
-        type: FieldType.ADDRESS,
         sys: {
+          id: generateId(ID_LENGTH),
+          type: FieldType.ADDRESS,
           name: generateFieldName(type, nextFieldCount),
         },
         form: {
@@ -459,9 +477,9 @@ export function getDefaultField<T extends FieldType>({
     }
     case FieldType.CHECKBOX: {
       return {
-        id: generateId(ID_LENGTH),
-        type: FieldType.CHECKBOX,
         sys: {
+          id: generateId(ID_LENGTH),
+          type: FieldType.CHECKBOX,
           name: generateFieldName(type, nextFieldCount),
         },
         form: {
@@ -477,9 +495,9 @@ export function getDefaultField<T extends FieldType>({
     }
     case FieldType.EMAIL: {
       return {
-        id: generateId(ID_LENGTH),
-        type: FieldType.EMAIL,
         sys: {
+          id: generateId(ID_LENGTH),
+          type: FieldType.EMAIL,
           name: generateFieldName(type, nextFieldCount),
         },
         form: {
@@ -499,9 +517,9 @@ export function getDefaultField<T extends FieldType>({
     }
     case FieldType.PHONE: {
       return {
-        id: generateId(ID_LENGTH),
-        type: FieldType.PHONE,
         sys: {
+          id: generateId(ID_LENGTH),
+          type: FieldType.PHONE,
           name: generateFieldName(type, nextFieldCount),
         },
         form: {
@@ -521,9 +539,9 @@ export function getDefaultField<T extends FieldType>({
     }
     case FieldType.PASSWORD: {
       return {
-        id: generateId(ID_LENGTH),
-        type: FieldType.PASSWORD,
         sys: {
+          id: generateId(ID_LENGTH),
+          type: FieldType.PASSWORD,
           name: generateFieldName(type, nextFieldCount),
         },
         form: {
@@ -554,9 +572,9 @@ export function getDefaultField<T extends FieldType>({
     }
     case FieldType.GROUP: {
       return {
-        id: generateId(ID_LENGTH),
-        type: FieldType.GROUP,
         sys: {
+          id: generateId(ID_LENGTH),
+          type: FieldType.GROUP,
           name: generateFieldName(type, nextFieldCount),
         },
         props: [],

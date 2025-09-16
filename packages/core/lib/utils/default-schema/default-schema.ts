@@ -11,9 +11,7 @@ const defaultSchema: FormSchema = {
   form: {
     fields: [
       {
-        id: 'GwBdzomJRf',
-        type: 'page',
-        sys: { name: 'Page 1' },
+        sys: { name: 'Page 1', type: 'page', id: 'GwBdzomJRf' },
         children: [],
         props: [
           {

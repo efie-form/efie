@@ -11,7 +11,7 @@ interface HeadingProviderProps {
 }
 
 function HeadingProvider({ field, Component }: HeadingProviderProps) {
-  const { isVisible } = useFieldCondition(field.id);
+  const { isVisible } = useFieldCondition(field.sys.id);
 
   if (!Component) return null;
 
@@ -35,7 +35,7 @@ function HeadingProvider({ field, Component }: HeadingProviderProps) {
   };
 
   return createElement(Component, {
-    id: field.id,
+    id: field.sys.id,
     field,
     render: renderContent,
   });
