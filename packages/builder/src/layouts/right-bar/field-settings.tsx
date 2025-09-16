@@ -9,6 +9,7 @@ import SystemSettingsRequired from './system-settings/system-settings.required';
 import SystemSettingsAccept from './system-settings/system-settings-accept';
 import SystemSettingsAddressField from './system-settings/system-settings-address-field';
 import SystemSettingsButtonAction from './system-settings/system-settings-button-action';
+import SystemSettingsCharacterLimit from './system-settings/system-settings-character-limit';
 import SystemSettingsColumnWidth from './system-settings/system-settings-column-width';
 import SystemSettingsFieldName from './system-settings/system-settings-field-name';
 import SystemSettingsHidden from './system-settings/system-settings-hidden';
@@ -18,7 +19,7 @@ import SystemSettingsOptions from './system-settings/system-settings-options';
 import SystemSettingsPasswordRules from './system-settings/system-settings-password-policy'; // renamed for label usage
 import SystemSettingsPlaceholder from './system-settings/system-settings-placeholder';
 import SystemSettingsSelectionLimit from './system-settings/system-settings-selection-limit';
-import SystemSettingsTextConstraints from './system-settings/system-settings-text-constraints';
+import SystemSettingsWordLimit from './system-settings/system-settings-word-limit';
 
 interface FieldSettingsProps {
   config: FieldConfig[];
@@ -102,11 +103,14 @@ export default function FieldSettings({
       case PropertyType.PASSWORD_RULES: {
         return <SystemSettingsPasswordRules key={item.type} fieldId={fieldId} config={item} />;
       }
-      case PropertyType.TEXT_CONSTRAINTS: {
-        return <SystemSettingsTextConstraints key={item.type} fieldId={fieldId} config={item} />;
-      }
       case PropertyType.SELECTION_LIMIT: {
         return <SystemSettingsSelectionLimit key={item.type} fieldId={fieldId} config={item} />;
+      }
+      case PropertyType.CHARACTER_LIMIT: {
+        return <SystemSettingsCharacterLimit key={item.type} fieldId={fieldId} config={item} />;
+      }
+      case PropertyType.WORD_LIMIT: {
+        return <SystemSettingsWordLimit key={item.type} fieldId={fieldId} config={item} />;
       }
       default: {
         return item;

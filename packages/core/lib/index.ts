@@ -106,18 +106,19 @@ export type {
   FieldSystemPropAccept,
   FieldSystemPropAddressField,
   FieldSystemPropButtonAction,
+  FieldSystemPropCharacterLimit,
   FieldSystemPropColumnWidth,
   FieldSystemPropFieldName,
   FieldSystemPropHeadingContent,
   FieldSystemPropHidden,
   FieldSystemPropImageSrc,
   FieldSystemPropLabel,
-  FieldSystemPropName,
   FieldSystemPropOptions,
   FieldSystemPropPasswordRules,
   FieldSystemPropPlaceholder,
   FieldSystemPropRequired,
-  FieldSystemPropTextConstraints,
+  FieldSystemPropSelectionLimit,
+  FieldSystemPropWordLimit,
   PropertyDefinition,
 } from './types/property-definition';
 export type {
@@ -172,6 +173,7 @@ export type {
   FieldSystemConfigAccept,
   FieldSystemConfigAddressField,
   FieldSystemConfigButtonAction,
+  FieldSystemConfigCharacterLimit,
   FieldSystemConfigColumnWidth,
   FieldSystemConfigFieldName,
   FieldSystemConfigHidden,
@@ -182,7 +184,7 @@ export type {
   FieldSystemConfigPlaceholder,
   FieldSystemConfigRequired,
   FieldSystemConfigSelectionLimit,
-  FieldSystemConfigTextConstraints,
+  FieldSystemConfigWordLimit,
   FieldsConfigsMap,
 } from './types/settings-config';
 export type { ValueSpec } from './types/value-spec.type';

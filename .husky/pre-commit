@@ -1,1 +1,7 @@
+#!/bin/sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Add common Node.js paths
+export PATH="/usr/local/bin:/opt/homebrew/bin:$PATH"
+
 pnpm lint-staged    

@@ -12,7 +12,7 @@ function RenderSettings({ field }: RenderSettingsProps) {
   if (!field) return null;
 
   if (isFieldOfTypes(field, FieldType.ROW)) {
-    return <RowSettings field={field} />;
+    return <RowSettings key={field.sys.id} field={field} />;
   }
 
   if (
@@ -30,10 +30,10 @@ function RenderSettings({ field }: RenderSettingsProps) {
       FieldType.DATE,
     )
   ) {
-    return <InputSettings field={field} />;
+    return <InputSettings key={field.sys.id} field={field} />;
   }
 
-  return <SharedSettings field={field} fieldType={field.sys.type} />;
+  return <SharedSettings key={field.sys.id} field={field} fieldType={field.sys.type} />;
 }
 
 export default RenderSettings;
