@@ -5,16 +5,16 @@ export const conditionalSampleSchema: FormSchema = {
   form: {
     fields: [
       {
-        id: 'main_page',
-        type: 'page',
         sys: {
+          id: 'main_page',
+          type: 'page',
           name: 'main_page',
         },
         children: [
           {
-            type: 'heading',
-            id: 'title_heading',
             sys: {
+              type: 'heading',
+              id: 'title_heading',
               name: 'title_heading',
             },
             props: [
@@ -43,9 +43,9 @@ export const conditionalSampleSchema: FormSchema = {
             ],
           },
           {
-            id: 'has_experience',
-            type: 'single_choice',
             sys: {
+              id: 'has_experience',
+              type: 'single_choice',
               name: 'has_experience',
             },
             form: {
@@ -66,9 +66,9 @@ export const conditionalSampleSchema: FormSchema = {
             ],
           },
           {
-            id: 'experience_years',
-            type: 'number',
             sys: {
+              id: 'experience_years',
+              type: 'number',
               name: 'experience_years',
             },
             form: {
@@ -86,9 +86,9 @@ export const conditionalSampleSchema: FormSchema = {
             ],
           },
           {
-            id: 'beginner_help',
-            type: 'long_text',
             sys: {
+              id: 'beginner_help',
+              type: 'long_text',
               name: 'beginner_help',
             },
             form: {
@@ -106,9 +106,9 @@ export const conditionalSampleSchema: FormSchema = {
             ],
           },
           {
-            id: 'advanced_tools',
-            type: 'multiple_choices',
             sys: {
+              id: 'advanced_tools',
+              type: 'multiple_choices',
               name: 'advanced_tools',
             },
             form: {
@@ -131,9 +131,9 @@ export const conditionalSampleSchema: FormSchema = {
             ],
           },
           {
-            id: 'submit_button',
-            type: 'button',
             sys: {
+              id: 'submit_button',
+              type: 'button',
               name: 'submit_button',
             },
             props: [

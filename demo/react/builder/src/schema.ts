@@ -5,16 +5,16 @@ export const schema: FormSchema = {
   form: {
     fields: [
       {
-        id: 'giqmxeQnUJ',
-        type: 'page',
         sys: {
+          id: 'giqmxeQnUJ',
+          type: 'page',
           name: 'giqmxeQnUJ',
         },
         children: [
           {
-            type: 'heading',
-            id: 'm9z0ftl1sz',
             sys: {
+              type: 'heading',
+              id: 'm9z0ftl1sz',
               name: 'm9z0ftl1sz',
             },
             props: [
@@ -44,9 +44,9 @@ export const schema: FormSchema = {
             ],
           },
           {
-            id: 's3sy9yr992',
-            type: 'short_text',
             sys: {
+              id: 's3sy9yr992',
+              type: 'short_text',
               name: 's3sy9yr992',
             },
             form: {

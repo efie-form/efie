@@ -7,16 +7,16 @@ const sampleSchema: FormSchema = {
   form: {
     fields: [
       {
-        id: 'page1',
-        type: FieldType.PAGE,
         sys: {
+          id: 'page1',
+          type: FieldType.PAGE,
           name: 'page1',
         },
         children: [
           {
-            id: 'field1',
-            type: FieldType.SHORT_TEXT,
             sys: {
+              id: 'field1',
+              type: FieldType.SHORT_TEXT,
               name: 'field1',
             },
             form: {

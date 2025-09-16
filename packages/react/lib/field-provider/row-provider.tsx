@@ -18,7 +18,7 @@ function RowProvider({ field, Component, ...props }: RowProviderProps) {
       id: field.sys.id,
       field,
     },
-    field.children.map((child) => <RenderField key={child.id} field={child} {...props} />),
+    field.children.map((child) => <RenderField key={child.sys.id} field={child} {...props} />),
   );
 }
 
