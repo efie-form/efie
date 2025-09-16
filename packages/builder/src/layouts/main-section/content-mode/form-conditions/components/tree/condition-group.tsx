@@ -90,7 +90,7 @@ export default function ConditionGroup({ tree, mode, onChange, onRemove }: Condi
   return (
     <div
       className={cn(
-        'rounded-md border border-neutral-200 bg-white p-4 shadow-sm space-y-3 relative',
+        'rounded-md border border-neutral-200 bg-white p-4 shadow-xs space-y-3 relative',
       )}
     >
       <div className="flex items-start gap-2 w-full">

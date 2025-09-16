@@ -42,7 +42,7 @@ export default function HeadingDropdown({ editor, options }: HeadingDropdownProp
       <button
         type="button"
         className={cn(
-          'flex items-center gap-1 rounded border border-neutral-200 px-2 py-1.5 font-medium text-sm transition-all duration-200 hover:border-neutral-300 hover:bg-neutral-50',
+          'flex items-center gap-1 rounded-sm border border-neutral-200 px-2 py-1.5 font-medium text-sm transition-all duration-200 hover:border-neutral-300 hover:bg-neutral-50',
           { 'border-primary-200 bg-primary-100 text-primary-600': editor.isActive('heading') },
         )}
         onClick={() => setIsOpen(!isOpen)}

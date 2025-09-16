@@ -18,7 +18,7 @@ interface ColorPicker2Props<T extends ColorValue = Color> {
   onClose?: () => void;
 }
 
-const inputStyle = 'text-xs outline-none border border-neutral-200 rounded-md px-2 py-1';
+const inputStyle = 'text-xs outline-hidden border border-neutral-200 rounded-md px-2 py-1';
 
 type ColorMode = keyof Color;
 
@@ -216,10 +216,10 @@ export default function ColorPicker<T extends ColorValue>({
         <button
           type="button"
           aria-label="Open color picker"
-          className="relative inline-block cursor-pointer rounded-sm border border-neutral-200 p-[2px] focus:outline-primary"
+          className="relative inline-block cursor-pointer rounded-xs border border-neutral-200 p-[2px] focus:outline-primary"
         >
           <div
-            className="size-6 rounded-sm"
+            className="size-6 rounded-xs"
             style={{
               backgroundColor: getDisplayColor(internalColor),
             }}

@@ -70,7 +70,7 @@ function RenderField({ fieldId, noSelect, parentId, childIndex }: RenderFieldPro
   return (
     <div
       className={cn('relative translate-x-0 bg-primary-50', {
-        'z-[100]': isDraggedOver || isSelected,
+        'z-100': isDraggedOver || isSelected,
       })}
       ref={fieldRef}
     >

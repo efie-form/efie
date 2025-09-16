@@ -54,7 +54,7 @@ export default function BottomDropArea({ parentId, totalChildren }: BottomDropAr
   return (
     <div ref={ref} className="relative h-full min-h-64 w-full">
       {isDraggedOver && (
-        <div className="-translate-y-1/2 absolute top-0 right-0 left-0 z-[999] h-1 rounded-full bg-primary-400">
+        <div className="-translate-y-1/2 absolute top-0 right-0 left-0 z-999 h-1 rounded-full bg-primary-400">
           <div className="-translate-x-1/2 -translate-y-1/2 absolute top-0 left-1/2 rounded-full bg-primary-400 px-3 py-1">
             <p className="typography-body3 text-neutral-50">Drop here</p>
           </div>

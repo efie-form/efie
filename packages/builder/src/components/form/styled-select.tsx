@@ -186,7 +186,7 @@ export default function StyledSelect<T extends string>(props: StyledSelectProps<
           aria-haspopup="listbox"
           aria-expanded={open}
           className={cn(
-            'group typography-body3 inline-flex w-full items-center rounded-md border border-neutral-200 bg-white text-neutral-800 outline-none',
+            'group typography-body3 inline-flex w-full items-center rounded-md border border-neutral-200 bg-white text-neutral-800 outline-hidden',
             triggerVariant === 'default' && 'gap-2 text-left justify-between px-2 py-1',
             triggerVariant === 'icon-only' && 'justify-between ps-2 pe-1 py-0.5',
             'focus-visible:ring-2 focus-visible:ring-primary-500/50',
@@ -239,7 +239,7 @@ export default function StyledSelect<T extends string>(props: StyledSelectProps<
               typeof dropdownMinWidth === 'string' &&
                 dropdownMinWidth.startsWith('min-w-') &&
                 dropdownMinWidth,
-              'rounded-md border border-neutral-200 bg-white p-1 shadow-lg outline-none',
+              'rounded-md border border-neutral-200 bg-white p-1 shadow-lg outline-hidden',
               'focus-visible:ring-2 focus-visible:ring-primary-500/50',
             )}
             style={{
@@ -300,7 +300,7 @@ export default function StyledSelect<T extends string>(props: StyledSelectProps<
                       title={opt.label}
                       data-index={idx}
                       className={cn(
-                        'typography-body3 flex w-full items-center gap-1 rounded-sm px-2 py-1 text-left outline-none',
+                        'typography-body3 flex w-full items-center gap-1 rounded-xs px-2 py-1 text-left outline-hidden',
                         isHighlighted && 'bg-neutral-100',
                         isSelected && 'font-medium text-primary-700',
                         'hover:bg-neutral-100 focus:bg-neutral-100',

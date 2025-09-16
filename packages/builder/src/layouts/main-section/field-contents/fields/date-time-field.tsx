@@ -22,7 +22,7 @@ function DateTimeField({ field }: DateTimeFieldProps) {
             value: e.target.value,
           })
         }
-        className="typography-body2 mb-2 w-full cursor-text bg-white bg-opacity-0 focus:outline-none"
+        className="typography-body2 mb-2 w-full cursor-text bg-white bg-opacity-0 focus:outline-hidden"
         type="text"
       />
       <input

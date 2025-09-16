@@ -28,7 +28,7 @@ function FileField({ field }: FileFieldProps) {
             value: e.target.value,
           })
         }
-        className="typography-body2 mb-2 w-full cursor-text bg-white bg-opacity-0 focus:outline-none"
+        className="typography-body2 mb-2 w-full cursor-text bg-white bg-opacity-0 focus:outline-hidden"
         type="text"
       />
       <div className="flex flex-col items-center justify-center gap-2 rounded-md border-2 border-neutral-300 border-dashed px-4 py-12">

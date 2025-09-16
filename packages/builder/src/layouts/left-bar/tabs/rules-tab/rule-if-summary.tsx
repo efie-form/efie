@@ -66,7 +66,7 @@ function TreeChild({ node, isRoot }: TreeChildProps) {
       <>
         <div className="flex gap-2 typography-body3">
           {isRoot ? (
-            <span className="me-1 rounded-sm bg-neutral-200 px-1 py-0.5 text-neutral-700 uppercase">
+            <span className="me-1 rounded-xs bg-neutral-200 px-1 py-0.5 text-neutral-700 uppercase">
               If
             </span>
           ) : (
@@ -121,7 +121,7 @@ function NodeFieldValue({ fieldId }: NodeFieldValueProps) {
   if (!field) return null;
 
   return (
-    <span className="font-medium text-primary-700 bg-primary-200 p-0.5 rounded-sm">
+    <span className="font-medium text-primary-700 bg-primary-200 p-0.5 rounded-xs">
       {field.sys.name}
     </span>
   );

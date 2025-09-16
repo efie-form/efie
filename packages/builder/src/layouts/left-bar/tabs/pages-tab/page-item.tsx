@@ -43,7 +43,7 @@ export default function PageItem({ page, onDelete, isCurrentPage, onSelect }: Pa
         isDragging ? 'z-50 cursor-grabbing' : 'cursor-pointer',
         {
           'bg-neutral-200': isDragging,
-          '!bg-neutral-100': isCurrentPage,
+          'bg-neutral-100!': isCurrentPage,
         },
       )}
       onClick={onSelect}

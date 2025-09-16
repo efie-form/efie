@@ -89,10 +89,10 @@ export default function SizeInput({ value, onChange, className, id }: SizeInputP
   return (
     <div
       className={cn(
-        `relative flex h-7 w-28 items-center overflow-hidden rounded-md border border-neutral-200 bg-white focus-within:outline focus-within:outline-1 focus-within:outline-primary`,
+        `relative flex h-7 w-28 items-center overflow-hidden rounded-md border border-neutral-200 bg-white focus-within:outline-solid focus-within:outline-1 focus-within:outline-primary`,
         className,
         {
-          '!outline-danger-400 bg-danger-50 outline': valueRequired && !isValidNumber,
+          'outline-danger-400! bg-danger-50 outline-solid': valueRequired && !isValidNumber,
         },
       )}
     >
@@ -103,7 +103,7 @@ export default function SizeInput({ value, onChange, className, id }: SizeInputP
             value={internalValue.value ?? ''}
             placeholder="0"
             className={cn(
-              'typography-body3 hide-input-arrow h-full w-full px-1 text-center focus:outline-none',
+              'typography-body3 hide-input-arrow h-full w-full px-1 text-center focus:outline-hidden',
               {
                 'cursor-not-allowed bg-neutral-50 text-neutral-500': internalValue.type === 'auto',
               },
@@ -141,7 +141,7 @@ export default function SizeInput({ value, onChange, className, id }: SizeInputP
       )}
       <select
         className={cn(
-          'typography-body3 h-full border-none bg-transparent px-0.5 text-center outline-none focus:outline-none focus:ring-0',
+          'typography-body3 h-full border-none bg-transparent px-0.5 text-center outline-hidden focus:outline-hidden focus:ring-0',
           valueRequired ? 'w-12' : 'w-full',
         )}
         value={internalValue.type}
