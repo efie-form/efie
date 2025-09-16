@@ -3,6 +3,26 @@ import { create } from 'zustand';
 import { RIGHT_BAR_TABS, type RightBarTab } from '../../constant';
 import settingsConfig from './settings-config';
 
+// Helper functions for localStorage
+const getStoredWidth = (key: string, defaultValue: number): number => {
+  if (typeof window === 'undefined') return defaultValue;
+  try {
+    const stored = localStorage.getItem(key);
+    return stored ? parseInt(stored, 10) : defaultValue;
+  } catch {
+    return defaultValue;
+  }
+};
+
+const setStoredWidth = (key: string, value: number): void => {
+  if (typeof window === 'undefined') return;
+  try {
+    localStorage.setItem(key, value.toString());
+  } catch {
+    // Silently fail if localStorage is not available
+  }
+};
+
 interface SettingsState {
   formInputs: CustomInputDef[];
   setFormInputs: (inputs: SettingsState['formInputs']) => void;
@@ -10,7 +30,7 @@ interface SettingsState {
   selectedFieldId?: string;
   setSelectedFieldId: (id: string) => void;
   clearSelectedFieldId: () => void;
-  mode: 'edit' | 'preview' | 'json' | 'conditions';
+  mode: 'edit' | 'json' | 'conditions';
   setMode: (mode: SettingsState['mode']) => void;
   previewDevice: 'desktop' | 'mobile';
   setPreviewDevice: (previewDevice: SettingsState['previewDevice']) => void;
@@ -21,6 +41,10 @@ interface SettingsState {
   setActiveTab: (tab: RightBarTab | null) => void;
   height?: number;
   setHeight: (height: SettingsState['height']) => void;
+  leftBarWidth: number;
+  setLeftBarWidth: (width: SettingsState['leftBarWidth']) => void;
+  rightBarWidth: number;
+  setRightBarWidth: (width: SettingsState['rightBarWidth']) => void;
   fieldNameEditable: boolean;
   setFieldNameEditable: (fieldNameEditable: SettingsState['fieldNameEditable']) => void;
   isInputReusable: boolean;
@@ -72,6 +96,16 @@ export const useSettingsStore = create<SettingsState>((set) => ({
   height: undefined,
   setHeight: (height) => {
     set({ height });
+  },
+  leftBarWidth: getStoredWidth('efie-left-bar-width', 320), // Default width in pixels (20rem = 320px)
+  setLeftBarWidth: (leftBarWidth) => {
+    setStoredWidth('efie-left-bar-width', leftBarWidth);
+    set({ leftBarWidth });
+  },
+  rightBarWidth: getStoredWidth('efie-right-bar-width', 320), // Default width in pixels (20rem = 320px)
+  setRightBarWidth: (rightBarWidth) => {
+    setStoredWidth('efie-right-bar-width', rightBarWidth);
+    set({ rightBarWidth });
   },
   fieldNameEditable: true,
   setFieldNameEditable: (fieldNameEditable) => {

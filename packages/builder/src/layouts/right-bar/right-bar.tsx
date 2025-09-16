@@ -39,13 +39,7 @@ function RightBar() {
 
   return (
     <div className="flex h-full w-full">
-      <div className="flex-1 overflow-hidden">
-        {TabContent && activeTab && (
-          <div className="w-[16rem]">
-            <TabContent />
-          </div>
-        )}
-      </div>
+      <div className="flex-1 overflow-hidden">{TabContent && activeTab && <TabContent />}</div>
       <div className="h-full bg-neutral-100/40">
         {tabs
           .filter((tab) => !tab.hidden)

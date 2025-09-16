@@ -5,7 +5,6 @@ import { useSettingsStore } from '../../lib/state/settings.state';
 import FormConditions from './content-mode/form-conditions/form-conditions';
 import FormContent from './content-mode/form-content';
 import FormJson from './content-mode/form-json';
-import FormPreview from './content-mode/form-preview';
 import LayoutSwitcher from './toolbars/layout-switcher';
 import LeftToolbar from './toolbars/left-toolbar';
 import ModeSwitcher from './toolbars/mode-switcher';
@@ -36,7 +35,6 @@ export default function MainSection() {
       <div className="flex-1 overflow-y-auto" ref={ref}>
         {mode === 'edit' && <FormContent />}
         {mode === 'json' && <FormJson />}
-        {mode === 'preview' && <FormPreview />}
         {mode === 'conditions' && <FormConditions />}
       </div>
     </>
