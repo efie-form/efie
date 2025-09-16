@@ -100,10 +100,10 @@ export default function UrlPreview({ url, className }: UrlPreviewProps) {
     return (
       <div className={cn('rounded-lg border border-neutral-300 bg-neutral-50 p-3', className)}>
         <div className="flex items-center space-x-3">
-          <div className="h-4 w-4 animate-pulse rounded bg-neutral-300" />
+          <div className="h-4 w-4 animate-pulse rounded-sm bg-neutral-300" />
           <div className="flex-1 space-y-2">
-            <div className="h-4 animate-pulse rounded bg-neutral-300" />
-            <div className="h-3 w-3/4 animate-pulse rounded bg-neutral-300" />
+            <div className="h-4 animate-pulse rounded-sm bg-neutral-300" />
+            <div className="h-3 w-3/4 animate-pulse rounded-sm bg-neutral-300" />
           </div>
         </div>
       </div>
@@ -114,7 +114,7 @@ export default function UrlPreview({ url, className }: UrlPreviewProps) {
     return (
       <div className={cn('rounded-lg border border-neutral-300 bg-neutral-50 p-3', className)}>
         <div className="flex items-center space-x-3">
-          <div className="flex h-4 w-4 items-center justify-center rounded bg-neutral-400">
+          <div className="flex h-4 w-4 items-center justify-center rounded-sm bg-neutral-400">
             <span className="text-neutral-600 text-xs">!</span>
           </div>
           <div className="flex-1">
@@ -137,19 +137,19 @@ export default function UrlPreview({ url, className }: UrlPreviewProps) {
       )}
     >
       <div className="flex items-start space-x-3">
-        <div className="flex-shrink-0">
+        <div className="shrink-0">
           {metadata.favicon ? (
             <img
               src={metadata.favicon}
               alt="Favicon"
-              className="h-4 w-4 rounded"
+              className="h-4 w-4 rounded-sm"
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
                 target.style.display = 'none';
               }}
             />
           ) : (
-            <div className="flex h-4 w-4 items-center justify-center rounded bg-neutral-400">
+            <div className="flex h-4 w-4 items-center justify-center rounded-sm bg-neutral-400">
               <span className="text-white text-xs">🌐</span>
             </div>
           )}
@@ -170,7 +170,7 @@ export default function UrlPreview({ url, className }: UrlPreviewProps) {
             {formatUrl(metadata.url)}
           </p>
         </div>
-        <div className="flex-shrink-0">
+        <div className="shrink-0">
           <a
             type="button"
             href={metadata.url}

@@ -17,7 +17,7 @@ function SettingsFieldVertical({ children, label, divider }: SettingsFieldBasicP
       </div>
       {divider && (
         <div className="mx-4">
-          <div className="h-[1px] w-full border-neutral-400 border-t-[0.5px]" />
+          <div className="h-px w-full border-neutral-400 border-t-[0.5px]" />
         </div>
       )}
     </>

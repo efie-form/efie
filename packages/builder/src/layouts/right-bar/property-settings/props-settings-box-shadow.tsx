@@ -124,7 +124,7 @@ export default function PropsSettingsBoxShadow({
         </div>
       </div>
       <div className="mx-4">
-        <div className="h-[1px] w-full border-neutral-400 border-t-[0.5px]" />
+        <div className="h-px w-full border-neutral-400 border-t-[0.5px]" />
       </div>
     </>
   );
@@ -149,7 +149,7 @@ function ShadowItem({ index, shadow, onUpdate, onRemove }: ShadowItemProps) {
     transition: transform ? transition : undefined,
   };
 
-  const handleSizeUpdate = (property: 'x' | 'y' | 'blur' | 'spread', newSize: Size) => {
+  const handleSizeUpdate = (property: 'x' | 'y' | 'blur-sm' | 'spread', newSize: Size) => {
     onUpdate({ [property]: newSize });
   };
 
@@ -180,7 +180,7 @@ function ShadowItem({ index, shadow, onUpdate, onRemove }: ShadowItemProps) {
           <div className="flex items-center gap-2">
             <button
               type="button"
-              className="cursor-grab rounded p-1 hover:bg-neutral-100"
+              className="cursor-grab rounded-sm p-1 hover:bg-neutral-100"
               {...attributes}
               {...listeners}
               onClick={(e) => e.stopPropagation()}
@@ -193,7 +193,7 @@ function ShadowItem({ index, shadow, onUpdate, onRemove }: ShadowItemProps) {
               <span>{sizeToString(shadow.blur)}</span>
               <span>{sizeToString(shadow.spread)}</span>
               <div
-                className="h-4 w-4 rounded border border-neutral-300"
+                className="h-4 w-4 rounded-sm border border-neutral-300"
                 style={{ backgroundColor: shadow.color.hex }}
               />
               {shadow.inset && (
@@ -208,7 +208,7 @@ function ShadowItem({ index, shadow, onUpdate, onRemove }: ShadowItemProps) {
                 e.stopPropagation();
                 onRemove();
               }}
-              className="invisible rounded p-1 hover:bg-neutral-100 group-hover:visible"
+              className="invisible rounded-sm p-1 hover:bg-neutral-100 group-hover:visible"
             >
               <MdOutlineDelete className="text-neutral-500 hover:text-danger" />
             </button>
@@ -259,7 +259,7 @@ function ShadowItem({ index, shadow, onUpdate, onRemove }: ShadowItemProps) {
               <SizeInput
                 id={`blur-${index}`}
                 value={shadow.blur}
-                onChange={(newSize) => handleSizeUpdate('blur', newSize)}
+                onChange={(newSize) => handleSizeUpdate('blur-sm', newSize)}
                 className="w-full"
               />
             </div>

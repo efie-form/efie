@@ -18,7 +18,7 @@ export function DropdownContent({ className, sideOffset = 4, ...props }: Dropdow
       <DropdownMenuPrimitive.Content
         sideOffset={sideOffset}
         className={cn(
-          'z-50 min-w-[8rem] rounded-md border border-neutral-200 bg-white p-1 shadow focus:outline-none',
+          'z-50 min-w-32 rounded-md border border-neutral-200 bg-white p-1 shadow-sm focus:outline-hidden',
           className,
         )}
         {...props}
@@ -49,7 +49,7 @@ export const DropdownItem = React.forwardRef<HTMLDivElement, DropdownItemProps>(
         ref={ref}
         onSelect={handleSelect}
         className={cn(
-          'typography-body3 flex w-full cursor-pointer select-none items-center rounded px-3 py-1.5 text-left text-neutral-700 outline-none hover:bg-neutral-50',
+          'typography-body3 flex w-full cursor-pointer select-none items-center rounded-sm px-3 py-1.5 text-left text-neutral-700 outline-hidden hover:bg-neutral-50',
           danger && 'text-danger-600 hover:bg-danger-50',
           className,
         )}

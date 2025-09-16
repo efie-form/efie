@@ -151,7 +151,7 @@ export default function SystemSettingsImageSrc({ config, fieldId }: PropsTemplat
           {/* Preview */}
           {hasImage && (
             <div className="grid grid-cols-3">
-              <div className="flex aspect-square resize items-center justify-center rounded border border-neutral-200 bg-neutral-100/30 p-1">
+              <div className="flex aspect-square resize items-center justify-center rounded-sm border border-neutral-200 bg-neutral-100/30 p-1">
                 <img
                   src={value}
                   alt="Preview"

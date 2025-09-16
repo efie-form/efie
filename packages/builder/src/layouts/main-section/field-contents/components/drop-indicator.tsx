@@ -8,7 +8,7 @@ interface DropIndicatorProps {
 export function DropIndicator({ operation }: DropIndicatorProps) {
   return (
     <div
-      className={cn('absolute right-0 left-0 z-[999] h-1 rounded-full bg-primary-400 ', {
+      className={cn('absolute right-0 left-0 z-999 h-1 rounded-full bg-primary-400 ', {
         '-translate-y-1/2 top-0': operation === 'reorder-before',
         'bottom-0 translate-y-1/2': operation === 'reorder-after',
       })}

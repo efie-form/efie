@@ -50,7 +50,7 @@ function RightBar() {
                 className={cn(
                   'block cursor-pointer p-3 transition-all duration-100 hover:bg-neutral-200/30',
                   {
-                    '!bg-neutral-200/80': tab.id === activeTab,
+                    'bg-neutral-200/80!': tab.id === activeTab,
                   },
                 )}
                 onClick={() => setActiveTab(tab.id === activeTab ? null : tab.id)}

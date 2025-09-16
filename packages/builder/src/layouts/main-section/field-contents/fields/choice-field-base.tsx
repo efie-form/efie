@@ -113,7 +113,7 @@ function ChoiceFieldBase({ fieldId, field, inputType }: ChoiceFieldBaseProps) {
             value: e.target.value,
           })
         }
-        className="typography-body2 mb-2 w-full cursor-text bg-white bg-opacity-0 focus:outline-none"
+        className="typography-body2 mb-2 w-full cursor-text bg-white bg-opacity-0 focus:outline-hidden"
         type="text"
       />
       <div id={`${fieldId}-options-container`} className="flex flex-col gap-0.5 px-2">
