@@ -7,11 +7,11 @@ import { cn } from '../../../lib/utils';
 
 function FieldsTab() {
   return (
-    <div className="px-4 py-2">
+    <div className="px-4 py-2 @container">
       {generateFieldItems().map((group) => (
         <div key={group.id} className="mb-4">
           <p className="typography-body2 text-neutral-700">{group.label}</p>
-          <div className="mt-3 flex flex-col gap-1.5">
+          <div className="mt-3 grid grid-cols-1 @min-[250px]:grid-cols-2 @sm:grid-cols-3 gap-1.5">
             {group.children.map((field) => (
               <FieldItem
                 key={field.type}

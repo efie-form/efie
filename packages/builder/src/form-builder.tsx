@@ -13,7 +13,7 @@ const FormBuilder = () => {
   const handleLeftBarResize = (delta: number) => {
     const newWidth = leftBarWidth + delta;
     // Apply constraints: min 200px, max 500px
-    const constrainedWidth = Math.max(200, Math.min(500, newWidth));
+    const constrainedWidth = Math.max(200, Math.min(600, newWidth));
     if (constrainedWidth !== leftBarWidth) {
       setLeftBarWidth(constrainedWidth);
     }
